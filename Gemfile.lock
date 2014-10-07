@@ -57,6 +57,8 @@ GEM
     rails-api (0.2.1)
       actionpack (>= 3.2.11)
       railties (>= 3.2.11)
+    rails_config (0.4.2)
+      activesupport (>= 3.0)
     railties (4.1.5)
       actionpack (= 4.1.5)
       activesupport (= 4.1.5)
@@ -105,6 +107,7 @@ PLATFORMS
 DEPENDENCIES
   rails (= 4.1.5)
   rails-api
+  rails_config
   rspec-rails (~> 3.0.0)
   spring
   sqlite3
