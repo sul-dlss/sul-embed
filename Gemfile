@@ -4,13 +4,18 @@ gem 'rails', '4.1.5'
 
 gem 'rails-api'
 
-gem 'spring', :group => :development
+gem 'faraday'
 
-gem 'sqlite3'
+gem 'nokogiri'
+
+gem 'dor-rights-auth'
+
+gem 'rails_config'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
 end
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
