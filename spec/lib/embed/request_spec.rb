@@ -29,6 +29,8 @@ describe Embed::Request do
     it 'should raise an error when a URL is provided that does not match the scheme' do
       expect(->{ Embed::Request.new({url: 'http://library.stanford.edu'}) }).to raise_error(Embed::Request::InvalidURLScheme)
     end
+    it 'should raise an error when an invalid format is requested' do
+      expect(->{ Embed::Request.new({url: 'http://purl.stanford.edu/', format: 'yml'}) }).to raise_error(Embed::Request::InvalidFormat)
+    end
   end
 end
-

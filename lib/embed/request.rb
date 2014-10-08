@@ -35,6 +35,7 @@ module Embed
     def validate
       require_url_parameter
       validate_url_scheme
+      validate_format
     end
     def require_url_parameter
       raise NoURLProvided unless url.present?
@@ -47,6 +48,14 @@ module Embed
         url =~ scheme
       end
     end
+    def validate_format
+      fail InvalidFormat unless format_is_valid?
+    end
+    def format_is_valid?
+      [/^json$/, /^xml$/].any? do |supported_format|
+        format =~ supported_format
+      end
+    end
     class NoURLProvided < StandardError
       def initialize(msg="You must provide a URL parameter")
         super
@@ -54,6 +63,11 @@ module Embed
     end
     class InvalidURLScheme < StandardError
       def initialize(msg="The provided URL is not a supported scheme for this embed service")
+        super
+      end
+    end
+    class InvalidFormat < StandardError
+      def initialize(msg='The provided format is not supported for this embed service')
         super
       end
     end
