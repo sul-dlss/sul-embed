@@ -4,6 +4,8 @@ require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'fixtures/purl_fixtures'
+require 'capybara/rails'
+require 'capybara/rspec'
 
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -46,4 +48,9 @@ end
 
 def stub_purl_response_with_fixture(fixture)
   expect_any_instance_of(Embed::PURL).to receive(:response).and_return(fixture)
+end
+
+def stub_purl_response_and_request(fixture, request)
+  stub_purl_response_with_fixture(fixture)
+  expect(request).to receive(:purl_object).and_return(Embed::PURL.new('12345'))
 end

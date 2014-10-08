@@ -1,11 +1,12 @@
 module Embed
   class Viewer
+    require 'embed/viewer/file'
     delegate :height, :width, to: :viewer
-    def initialize(purl_object)
-      @purl_object = purl_object
+    def initialize(request)
+      @request = request
     end
     def viewer
-      @viewer ||= registered_or_default_viewer.new(@purl_object)
+      @viewer ||= registered_or_default_viewer.new(@request)
     end
     private
     def registered_or_default_viewer
@@ -18,7 +19,7 @@ module Embed
     end
     def registered_viewer
       @registered_type ||= Embed.registered_viewers.find do |type_class|
-        type_class.supported_types.include?(@purl_object.type.to_sym)
+        type_class.supported_types.include?(@request.purl_object.type.to_sym)
       end
     end
   end

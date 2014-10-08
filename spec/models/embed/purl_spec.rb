@@ -38,6 +38,12 @@ describe Embed::PURL do
       end).to be true
     end
   end
+  describe 'all_resource_files' do
+    it 'should return a flattened array of resource files' do
+      stub_purl_response_with_fixture(multi_resource_multi_file_purl)
+      expect(Embed::PURL.new('12345').all_resource_files.count).to eq 4
+    end
+  end
   describe 'PURL::Resource' do
     it 'should get the sequence attribute' do
       stub_purl_response_with_fixture(file_purl)
