@@ -93,11 +93,13 @@ describe Embed::PURL do
             stub_purl_response_with_fixture(file_purl)
             expect(Embed::PURL.new('12345').contents.first.files.all?(&:stanford_only?)).to be false
           end
-          pending 'should identify file-level stanford_only rights' do
+          it 'should identify file-level stanford_only rights' do
             stub_purl_response_with_fixture(stanford_restricted_file_purl)
-            files = Embed::PURL.new('12345').contents.first.files
-            expect(files.first).to be_stanford_only
-            expect(files.last).to_not be_stanford_only
+            contents = Embed::PURL.new('12345').contents
+            first_file = contents.first.files.first
+            last_file = contents.last.files.first
+            expect(first_file).to be_stanford_only
+            expect(last_file).to_not be_stanford_only
           end
         end
       end
