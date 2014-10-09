@@ -46,7 +46,7 @@ module Embed
     def url_scheme_is_valid?
       url_schemes.any? do |scheme|
         url =~ scheme
-      end
+      end && url =~ /\/\w+$/
     end
     def validate_format
       fail InvalidFormat unless format_is_valid?

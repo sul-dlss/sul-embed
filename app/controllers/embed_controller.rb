@@ -21,6 +21,10 @@ class EmbedController < ApplicationController
     render body: e.to_s, status: 404
   end
 
+  rescue_from Embed::PURL::ResourceNotAvailable do |e|
+    render body: e.to_s, status: 404
+  end
+
   rescue_from Embed::Request::InvalidFormat do |e|
     render body: e.to_s, status: 501
   end
