@@ -6,7 +6,14 @@ require 'rspec/rails'
 require 'fixtures/purl_fixtures'
 require 'capybara/rails'
 require 'capybara/rspec'
+require 'capybara/poltergeist'
 
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, {timeout: 60})
+end
+Capybara.javascript_driver = :poltergeist
+
+Capybara.default_wait_time = 10
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -53,4 +60,11 @@ end
 def stub_purl_response_and_request(fixture, request)
   stub_purl_response_with_fixture(fixture)
   expect(request).to receive(:purl_object).and_return(Embed::PURL.new('12345'))
+end
+
+def send_embed_response
+  visit page_path(id: 'sandbox')
+  fill_in 'Api-Endpoint', with: embed_path
+  fill_in 'Url-Scheme', with: 'http://purl.stanford.edu/ab123cd4567'
+  click_button 'Embed'
 end
