@@ -14,7 +14,7 @@ module Embed
         # We should use https but it's not enabled on our servers yet.
         "http://#{@request.rails_request.host_with_port}"
       end
-      
+
       def stacks_url
         "#{Settings.stacks_url}/file/druid:#{@purl_object.druid}"
       end
@@ -26,7 +26,9 @@ module Embed
       def header_html
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-header') do
-            doc.text @purl_object.title
+            doc.span(class: 'sul-embed-header-title') do
+              doc.text @purl_object.title
+            end
           end
         end.to_html
       end

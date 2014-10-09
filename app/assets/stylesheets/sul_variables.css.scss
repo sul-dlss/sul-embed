@@ -1,7 +1,11 @@
 // Colors
 $beige-10-percent: #f2f1eb;
+$beige-30-percent: #e3dfd5;
+$white-60-percent-opaque: rgba(255, 255, 255, 0.6);
 
 // Namespace
 $namespace: 'sul-embed';
 
 $sul-background: $beige-10-percent;
+$sul-border-color: $beige-30-percent;
+$sul-osd-toolbar-bg: $white-60-percent-opaque;

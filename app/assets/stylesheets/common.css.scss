@@ -3,37 +3,42 @@
 @import 'mixins';
 
 .#{$namespace}-container {
+  border: 1px solid $sul-border-color;
   font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
-  
+
   .#{$namespace}-header {
     background: $sul-background;
     font-size: 1.1em;
+    min-height: 30px;
     overflow: hidden;
     @include container-padding;
-    text-overflow: ellipsis;
     white-space: nowrap;
+
+    .#{$namespace}-header-title {
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+      width: 100%;
+    }
   }
-  
+
   .#{$namespace}-body {
     @include container-padding;
   }
-  
+
   .#{$namespace}-footer {
     background: $sul-background;
-    min-height: 50px;
+    min-height: 30px;
     position: relative;
-    
+
     .#{$namespace}-purl-link {
       @include container-padding;
       bottom: 0;
       clear: both;
       font-size: .8em;
-      height: 50%;
-      margin: auto;
-      overflow: auto;
       position: absolute;
       right: 0;
-      top: 0;
 
       .#{$namespace}-rosette {
         padding-right: 5px;

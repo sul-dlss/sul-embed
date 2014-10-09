@@ -1,0 +1,42 @@
+@import 'common';
+
+.sul-embed-container {
+  .sul-embed-body {
+    max-height: 600px;
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  .sul-embed-download {
+    i:after {
+      content: '\00a0';
+    }
+  }
+
+  .sul-embed-image-list {
+    overflow: auto;
+    position: relative;
+
+    .sul-embed-osd {
+      height: 300px;
+      position: relative;
+      width: 100%;
+
+      .sul-embed-osd-toolbar {
+        background-color: $sul-osd-toolbar-bg;
+        border-radius: 5px;
+        font-size: 1.5em;
+        padding: 4px;
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        z-index: 10000;
+
+        i.fa {
+          cursor: pointer;
+          margin: 4px 4px 0 4px;
+        }
+      }
+    }
+  }
+}

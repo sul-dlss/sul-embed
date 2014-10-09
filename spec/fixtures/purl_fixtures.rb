@@ -37,7 +37,7 @@ module PURLFixtures
         <contentMetadata type="image">
           <resource sequence="1" type="image">
             <label>Image1</label>
-            <file size="12345" mimetype="application/pdf" id="Title_of_the_image.png">
+            <file size="12345" mimetype="application/pdf" id="Title_of_the_image.jp2">
               <imageData height="123" width="321" />
             </file>
           </resource>
