@@ -33,7 +33,7 @@ module Embed
                 end
               end
             end
-            doc.script { doc.text ";jQuery.getScript(#{asset_path('file.js')});" }
+            doc.script { doc.text ";jQuery.getScript(\"#{asset_path('file.js')}\");" }
           end
         end.to_html
       end

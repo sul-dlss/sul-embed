@@ -17,6 +17,7 @@ group :development, :test do
   gem 'capybara'
 end
 
+gem 'uglifier'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
