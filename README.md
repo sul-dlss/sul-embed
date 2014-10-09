@@ -2,6 +2,10 @@
 
 An [oEmbed](http://oembed.com/) provider for embedding resources from the Stanford University Library.
 
+## Development/Test Sandbox
+
+There is an embedded static page available at `/pages/sandbox` in your development and test environments. Make sure that you use the same host on the service input (first text field) as you are accessing the site from (e.g. localhost or 127.0.0.1).
+
 ## oEmbed specification details
 
 URL scheme: `http://purl.stanford.edu/*`
@@ -14,12 +18,12 @@ Example: `TBD?url=http://purl.stanford.edu/zw200wd8767&format=json`
 
 You can create a viewer by implementing a class with a pretty simple API.
 
-The viewer class will be instantiated with an Embed::PURL object.
+The viewer class will be instantiated with an Embed::Request object.
 
     module Embed
       class DemoViewer
-        def initialize(purl_object)
-          @purl_object = purl_object
+        def initialize(request)
+          @request = request
         end
       end
     end
@@ -28,11 +32,11 @@ The class must implement a `#to_html` method which will be called on the instanc
 
     module Embed
       class DemoViewer
-        def initialize(purl_object)
-          @purl_object = purl_object
+        def initialize(request)
+          @request = request
         end
         def to_html
-          "<h1>#{@purl_object.title}</h1>"
+          "<h1>#{@request.purl_object.title}</h1>"
         end
       end
     end
@@ -42,11 +46,11 @@ The class must define a class method returning an array of which types it will s
 
     module Embed
       class DemoViewer
-        def initialize(purl_object)
-          @purl_object = purl_object
+        def initialize(request)
+          @request = request
         end
         def to_html
-          "<h1>#{@purl_object.title}</h1>"
+          "<h1>#{@request.purl_object.title}</h1>"
         end
         def self.supported_types
           [:demo_type]
@@ -59,11 +63,11 @@ The file that the class is defined in (or your preferred method) should register
 
     module Embed
       class DemoViewer
-        def initialize(purl_object)
-          @purl_object = purl_object
+        def initialize(request)
+          @request = request
         end
         def to_html
-          "<h1>#{@purl_object.title}</h1>"
+          "<h1>#{@request.purl_object.title}</h1>"
         end
         def self.supported_types
           [:demo_type]
@@ -77,8 +81,8 @@ The file that the class is defined in (or your preferred method) should register
 
     $ viewer = Embed.registered_viewers.first
     => Embed::DemoViewer
-    $ purl = Embed::PURL.new('bb112fp0199')
-    => #<Embed::PURL>
-    $ viewer.new(purl).to_html
+    $ request = Embed::Request.new({url: 'http://purl.stanford.edu/bb112fp0199'})
+    => #<Embed::Request>
+    $ viewer.new(request).to_html
     => "<h1>Writings - \"How to Test a Good Trumpet,\" The Instrumentalist 31(8):57-58 (reprint, 2 pp.)</h1>"
 
