@@ -15,9 +15,12 @@ gem 'rails_config'
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'capybara'
+  gem 'poltergeist'
 end
 
 gem 'uglifier'
+
+gem 'high_voltage'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

@@ -1,0 +1,175 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>embed tester</title>
+  <style>
+    html {
+     box-sizing: border-box;
+    }
+
+    *, *:before, *:after {
+      box-sizing: inherit;
+    }
+
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      color: #333;
+      font-family: 'Open Sans';
+    }
+
+    input[type=text] {
+      padding: 2px 4px;
+    }
+
+    .form-params {
+      background-color: #bdc3c7;
+      line-height: 3em;
+      padding: 10px 20px;
+    }
+
+    .form-params .btn-render {
+      background-color: #22313f;
+      border-width: 0;
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+      font-family: 'Open Sans';
+      padding: 6px 12px;
+    }
+
+    .content {
+      padding: 20px;
+      width: 600px;
+    }
+
+    .viewer {
+      clear: left;
+      display: block;
+      margin: 5px 0;
+    }
+  </style>
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <form action="" class="form-params">
+    <input type="text" name = "Api-Endpoint" class="api-endpoint" value="http://127.0.0.1:3000/embed" size="50">/?url=
+    <input type="text" name = "Url-Scheme" class="url-scheme" value="http://purl.stanford.edu/tv536bn1915" size="50">
+    <label for="">&format=</label>
+    <select name="select-format" id="select-format">
+      <option value="json">JSON</option>
+      <option value="xml">XML</option>
+    </select>
+    <label for="">&maxwidth=</label><input type="text" class="max-width" size="4" value="">
+    <label for="">&maxheight=</label><input type="text" class="max-height" size="4" value="">
+    <br>
+    <input type="button" class="btn-render" value="Embed">
+  </form>
+
+  <div class="content">
+    <p>
+      Nam sit amet mi ut lectus lobortis volutpat. Fusce bibendum sem quis odio feugiat, nec consectetur orci fermentum.
+      Aliquam vel dignissim purus. Aliquam id urna ut nisl fermentum tempus et in odio. Donec varius interdum ex,
+      sed finibus odio. Vivamus in sodales velit, non fermentum odio. Nunc in posuere lacus.
+    </p>
+    <div class="viewer"></div>
+    <p>
+      Proin vestibulum quam sed turpis blandit molestie. Ut a massa a est consequat semper vitae eu augue. Sed consequat
+      euismod molestie. Vivamus tempus venenatis lorem nec facilisis. Mauris ultricies mauris felis. Maecenas efficitur
+      sollicitudin sem non ullamcorper. Praesent auctor vehicula lorem id lobortis. Maecenas eu sapien eu massa facilisis
+      lacinia eget eget eros. Duis in augue augue.
+    </p>
+  </div>
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script>
+    $(function() {
+      $('.btn-render').on('click', function() {
+        embed.render();
+      });
+    });
+
+    var embed = (function() {
+      var url, format, data;
+
+      function init() {
+        if (isValidUrl()) {
+          submitRequest(url);
+        };
+      }
+
+      function isValidUrl() {
+        var apiEndpoint = $.trim($('.api-endpoint').val()),
+            urlScheme = $.trim($('.url-scheme').val()),
+            maxWidth = parseInt($('.max-width').val(), 10),
+            maxHeight = parseInt($('.max-height').val(), 10);
+
+        format = $('#select-format').val();
+
+        if (apiEndpoint !== "" && urlScheme !== "") {
+          url = apiEndpoint + "/?url=" + urlScheme + "&format=" + format;
+
+          if (!isNaN(maxWidth)) url += "&maxwidth=" + maxWidth;
+          if (!isNaN(maxHeight)) url += "&maxheight=" + maxHeight;
+
+        } else {
+          alert('Error:\nEmpty API endpoint and/or URL scheme')
+          return false;
+        }
+
+        return true;
+      }
+
+      function appendContent(response) {
+        var $viewer = $('.viewer'),
+            thumbnail_url,
+            width,
+            height;
+
+        if (format === "json") {
+          html = response.html;
+        }
+
+        if (format === "xml") {
+          // xmlDoc = $.parseXML( response );
+        }
+
+        $viewer.empty().width(width).height(height);
+        $viewer.append($('<div>' + html + '</div>'));
+      }
+
+      function submitRequest(url) {
+        var request = $.ajax({
+          type: "GET",
+          url: url,
+          dataType: format
+        });
+
+        request.done(function(response) {
+          appendContent(response);
+        });
+
+        request.fail(function(jqXhr, status) {
+          alert('Request failed : ' + status);
+        });
+      }
+
+      return {
+        render: function() { init(); }
+      };
+
+    })();
+  </script>
+</body>
+
+</html>

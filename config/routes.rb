@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
   get 'embed' => 'embed#get'
+
+  unless Rails.env.production?
+    get '/pages/*id' => 'pages#show', as: :page, format: false
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
