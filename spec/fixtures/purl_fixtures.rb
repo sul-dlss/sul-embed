@@ -85,6 +85,41 @@ module PURLFixtures
       </publicObject>
     XML
   end
+  def multi_resource_multi_file_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Files and what not</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="file">
+          <resource sequence="1" type="file">
+            <attr name="label">Resource Label</attr>
+            <file size="12345" mimetype="application/pdf" id="Page1.pdf" />
+            <file size="12346" mimetype="application/pdf" id="Page2.pdf" />
+          </resource>
+        </contentMetadata>
+        <contentMetadata type="media">
+          <resource sequence="2" type="filez">
+            <attr name="label">Resource Label</attr>
+            <file size="12345" mimetype="application/pdf" id="Page1.pdf" />
+            <file size="12346" mimetype="application/pdf" id="Page2.pdf" />
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="discover">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+          <access type="read">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
   def stanford_restricted_purl
     <<-XML
       <publicObject>

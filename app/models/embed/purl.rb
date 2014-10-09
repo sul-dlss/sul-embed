@@ -36,6 +36,10 @@ module Embed
       @ng_xml ||= Nokogiri::XML(response)
     end
 
+    def all_resource_files
+      contents.map(&:files).flatten
+    end
+
     private
 
     def rights_xml

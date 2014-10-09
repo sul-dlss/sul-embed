@@ -31,7 +31,7 @@ module Embed
     end
     private
     def viewer
-      @viewer ||= Embed::Viewer.new(@request.purl_object).viewer
+      @viewer ||= Embed::Viewer.new(@request).viewer
     end
   end
 end

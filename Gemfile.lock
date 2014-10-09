@@ -29,6 +29,12 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
     builder (3.2.2)
+    capybara (2.3.0)
+      mime-types (>= 1.16)
+      nokogiri (>= 1.3.3)
+      rack (>= 1.0.0)
+      rack-test (>= 0.5.4)
+      xpath (~> 2.0)
     diff-lcs (1.2.5)
     dor-rights-auth (1.0.0)
       nokogiri
@@ -106,11 +112,14 @@ GEM
       polyglot (>= 0.3.1)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    xpath (2.0.0)
+      nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  capybara
   dor-rights-auth
   faraday
   nokogiri
