@@ -64,7 +64,7 @@ end
 
 def send_embed_response
   visit page_path(id: 'sandbox')
-  fill_in 'Api-Endpoint', with: embed_path
-  fill_in 'Url-Scheme', with: 'http://purl.stanford.edu/ab123cd4567'
+  fill_in 'api-endpoint', with: embed_path
+  fill_in 'url-scheme', with: 'http://purl.stanford.edu/ab123cd4567'
   click_button 'Embed'
 end
