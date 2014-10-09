@@ -33,8 +33,13 @@ module Embed
                 end
               end
             end
+            doc.script { doc.text ";jQuery.getScript(#{asset_path('file.js')});" }
           end
         end.to_html
+      end
+
+      def asset_path(file)
+        ActionController::Base.helpers.asset_path(file)
       end
 
       def self.supported_types
