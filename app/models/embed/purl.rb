@@ -53,16 +53,23 @@ module Embed
     def response
       @response ||= begin
         conn = Faraday.new(url: purl_url)
-        conn.get do |request|
+        response = conn.get do |request|
           request.options = {
             timeout: 2,
             open_timeout: 2
           }
-        end.body
+        end
+        raise ResourceNotAvailable unless response.success?
+        response.body
       rescue Faraday::Error::ConnectionFailed => error
         nil
       rescue Faraday::Error::TimeoutError => error
         nil
+      end
+    end
+    class ResourceNotAvailable < StandardError
+      def initialize(msg = "The requested PURL resource was not available")
+        super
       end
     end
     class Resource
