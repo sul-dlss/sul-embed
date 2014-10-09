@@ -74,8 +74,12 @@ The file that the class is defined in (or your preferred method) should register
         end
       end
     end
-    
+
     Embed.register_viewer(Embed::DemoViewer) if Embed.respond_to?(:register_viewer)
+
+Last step is to include your viewer module in Embed::Viewer class
+
+    require 'embed/viewer/demo_viewer'
 
 ### Console Example
 
@@ -85,4 +89,3 @@ The file that the class is defined in (or your preferred method) should register
     => #<Embed::Request>
     $ viewer.new(request).to_html
     => "<h1>Writings - \"How to Test a Good Trumpet,\" The Instrumentalist 31(8):57-58 (reprint, 2 pp.)</h1>"
-
