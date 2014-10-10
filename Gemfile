@@ -36,6 +36,8 @@ gem 'high_voltage'
 
 gem 'sass-rails'
 
+gem 'filesize'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

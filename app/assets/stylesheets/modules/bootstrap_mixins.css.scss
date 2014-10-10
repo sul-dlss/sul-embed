@@ -1,0 +1,67 @@
+
+// https://github.com/twbs/bootstrap-sass/blob/d5625c907168b6311be122b99d89614e02448475/assets/stylesheets/bootstrap/mixins/_clearfix.scss
+
+// Clearfix
+//
+// For modern browsers
+// 1. The space content is one way to avoid an Opera bug when the
+//    contenteditable attribute is included anywhere else in the document.
+//    Otherwise it causes space to appear at the top and bottom of elements
+//    that are clearfixed.
+// 2. The use of `table` rather than `block` is only necessary if using
+//    `:before` to contain the top-margins of child elements.
+//
+// Source: http://nicolasgallagher.com/micro-clearfix-hack/
+
+@mixin clearfix() {
+  &:before,
+  &:after {
+    content: " "; // 1
+    display: table; // 2
+  }
+  &:after {
+    clear: both;
+  }
+}
+
+// https://github.com/twbs/bootstrap-sass/blob/d5625c907168b6311be122b99d89614e02448475/assets/stylesheets/bootstrap/mixins/_center-block.scss
+
+// Center-align a block level element
+
+@mixin center-block() {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// https://github.com/twbs/bootstrap-sass/blob/d5625c907168b6311be122b99d89614e02448475/assets/stylesheets/bootstrap/mixins/_hide-text.scss
+
+// CSS image replacement
+//
+// Heads up! v3 launched with with only `.hide-text()`, but per our pattern for
+// mixins being reused as classes with the same name, this doesn't hold up. As
+// of v3.0.1 we have added `.text-hide()` and deprecated `.hide-text()`.
+//
+// Source: https://github.com/h5bp/html5-boilerplate/commit/aa0396eae757
+
+// Deprecated as of v3.0.1 (will be removed in v4)
+@mixin hide-text() {
+  font: #{0/0} a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+// New mixin to use as of v3.0.1
+@mixin text-hide() {
+  @include hide-text();
+}
+
+
+// https://github.com/twbs/bootstrap-sass/blob/d5625c907168b6311be122b99d89614e02448475/assets/stylesheets/bootstrap/mixins/_vendor-prefixes.scss
+
+@mixin translate3d($x, $y, $z) {
+  -webkit-transform: translate3d($x, $y, $z);
+          transform: translate3d($x, $y, $z);
+}

@@ -1,0 +1,57 @@
+// Adapted from https://github.com/twbs/bootstrap-sass/blob/master/assets/stylesheets/bootstrap/_media.scss
+// Media objects
+// Source: http://stubbornella.org/content/?p=497
+// --------------------------------------------------
+
+
+// Common styles
+// -------------------------
+
+// Clear the floats
+.#{$namespace}-media,
+.#{$namespace}-media-body {
+  overflow: hidden;
+  zoom: 1;
+}
+
+// Proper spacing between instances of .media
+.#{$namespace}-media,
+.#{$namespace}-media .#{$namespace}-media {
+  margin-top: 15px;
+}
+.#{$namespace}-media:first-child {
+  margin-top: 0;
+}
+
+// For images and videos, set to block
+.#{$namespace}-media-object {
+  display: block;
+}
+
+// Reset margins on headings for tighter default spacing
+.#{$namespace}-media-heading {
+  margin: 0 0 5px;
+}
+
+
+// Media image alignment
+// -------------------------
+
+.#{$namespace}-media {
+  > .pull-left {
+    margin-right: 10px;
+  }
+  > .pull-right {
+    margin-left: 10px;
+  }
+}
+
+
+// Media list variation
+// -------------------------
+
+// Undo default ul/ol styles
+.#{$namespace}-media-list {
+  padding-left: 0;
+  list-style: none;
+}

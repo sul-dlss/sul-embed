@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe Embed::Viewer::CommonViewer do
   include PURLFixtures
+  let(:rails_request) { double('rails_request') }
   let(:request) { double('request') }
   let(:file_viewer) { Embed::Viewer::File.new(request) }
 
@@ -15,6 +16,8 @@ describe Embed::Viewer::CommonViewer do
   describe 'footer_html' do
     it 'should return the objects footer' do
       stub_request(request)
+      expect(request).to receive(:rails_request).and_return(rails_request)
+      expect(rails_request).to receive(:host_with_port).and_return('example.com')
       html = Capybara.string(file_viewer.footer_html)
       expect(html).to have_css 'div.sul-embed-footer a', text: 'http://purl.stanford.edu/12345'
     end
