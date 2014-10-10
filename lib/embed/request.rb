@@ -1,9 +1,10 @@
 module Embed
   class Request
     include URLSchemes
-    attr_reader :params
-    def initialize(params)
+    attr_reader :params, :rails_request
+    def initialize(params, rails_request=nil)
       @params = params
+      @rails_request = rails_request
       validate
     end
 

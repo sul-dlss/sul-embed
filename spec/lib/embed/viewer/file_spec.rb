@@ -36,6 +36,7 @@ describe Embed::Viewer::File do
   describe 'body_html' do
     it 'should return a table of files' do
       stub_purl_response_and_request(multi_resource_multi_file_purl, request)
+      expect(file_viewer).to receive(:asset_host).and_return('http://example.com/')
       html = Capybara.string(file_viewer.to_html)
       expect(html).to have_css 'table'
       expect(html).to have_css 'tr', count: 4

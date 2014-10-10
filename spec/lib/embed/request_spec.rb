@@ -15,6 +15,12 @@ describe Embed::Request do
       expect(Embed::Request.new({url: purl}).object_druid).to eq "abc123"
     end
   end
+  describe 'rails_request' do
+    let(:rails_request) { double('rails-request') }
+    it 'should include the rails request (for generating asset URLs in viewer HTML)' do
+      expect(Embed::Request.new({url: purl}, rails_request).rails_request).to eq rails_request
+    end
+  end
   describe 'purl_object' do
     let(:object) { double('purl') }
     it 'should instantiate a PURL object w/ the object druid' do
