@@ -12,11 +12,23 @@ gem 'dor-rights-auth'
 
 gem 'rails_config'
 
+gem 'therubyracer'
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'capybara'
   gem 'poltergeist'
 end
+
+
+group :deployment do
+  gem 'capistrano', '~> 3.0'
+  gem 'capistrano-rvm'
+  gem 'capistrano-bundler'
+  gem 'capistrano-rails'
+  gem 'lyberteam-capistrano-devel', git: 'https://github.com/sul-dlss/lyberteam-capistrano-devel'
+end
+
 
 gem 'uglifier'
 
