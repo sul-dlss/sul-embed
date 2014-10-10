@@ -6,8 +6,13 @@ module Embed
         @purl_object = request.purl_object
       end
 
-      def asset_path(file)
-        ActionController::Base.helpers.asset_path(file)
+      def asset_url(file)
+        "#{asset_host}#{ActionController::Base.helpers.asset_url(file)}"
+      end
+
+      def asset_host
+        # We should use https but it's not enabled on our servers yet.
+        "http://#{@request.rails_request.host_with_port}"
       end
 
       def to_html
