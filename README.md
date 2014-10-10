@@ -22,7 +22,7 @@ The viewer class will be instantiated with an Embed::Request object. The `initia
 
     module Embed
       class DemoViewer
-        include CommonViewer
+        include Embed::Viewer::CommonViewer
         
       end
     end
@@ -31,7 +31,7 @@ The class must implement a `#body_html` method which will be called on the insta
 
     module Embed
       class DemoViewer
-        include CommonViewer
+        include Embed::Viewer::CommonViewer
         
         def body_html
           "<p>#{@purl_object.type}</p>"
@@ -44,7 +44,7 @@ The class must define a class method returning an array of which types it will s
 
     module Embed
       class DemoViewer
-        include CommonViewer
+        include Embed::Viewer::CommonViewer
 
         def body_html
           "<p>#{@purl_object.type}</p>"
@@ -60,7 +60,7 @@ The file that the class is defined in (or your preferred method) should register
 
     module Embed
       class DemoViewer
-        include CommonViewer
+        include Embed::Viewer::CommonViewer
         
         def body_html
           "<p>#{@purl_object.type}</p>"
@@ -73,9 +73,6 @@ The file that the class is defined in (or your preferred method) should register
 
     Embed.register_viewer(Embed::DemoViewer) if Embed.respond_to?(:register_viewer)
 
-Last step is to include your viewer module in Embed::Viewer class
-
-    require 'embed/viewer/demo_viewer'
 
 ### Console Example
 
