@@ -6,7 +6,9 @@ describe 'feature testing of viewers', js: true do
     it 'should make purl embed request and embed correctly' do
       stub_purl_response_with_fixture(file_purl)
       send_embed_response
+      expect(page).to have_css('.sul-embed-header')
       expect(page).to have_css('table')
+      expect(page).to have_css('.sul-embed-footer')
     end
   end
 end

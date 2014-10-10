@@ -59,6 +59,10 @@ end
 
 def stub_purl_response_and_request(fixture, request)
   stub_purl_response_with_fixture(fixture)
+  stub_request(request)
+end
+
+def stub_request(request)
   expect(request).to receive(:purl_object).and_return(Embed::PURL.new('12345'))
 end
 
