@@ -1,7 +1,7 @@
 module Embed
   class Viewer
     class File
-      include CommonViewer
+      include Embed::Viewer::CommonViewer
 
       def self.default_viewer?
         true
