@@ -33,12 +33,7 @@ describe Embed::Viewer::File do
       expect(file_viewer.height).to_not be nil
     end
   end
-  describe 'to_html' do
-    it 'should return the objects title' do
-      stub_purl_response_and_request(file_purl, request)
-      html = Capybara.string(file_viewer.to_html)
-      expect(html).to have_css 'p.sul-embed-title', text: 'File Title'
-    end
+  describe 'body_html' do
     it 'should return a table of files' do
       stub_purl_response_and_request(multi_resource_multi_file_purl, request)
       html = Capybara.string(file_viewer.to_html)

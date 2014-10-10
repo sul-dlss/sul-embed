@@ -40,19 +40,23 @@ module Embed
       contents.map(&:files).flatten
     end
 
+    def purl_url
+      "#{Settings.purl_url}/#{@druid}"
+    end
+
     private
 
     def rights_xml
       @rights_xml ||= ng_xml.xpath('//rightsMetadata').to_s
     end
 
-    def purl_url
+    def purl_xml_url
       "#{Settings.purl_url}/#{@druid}.xml"
     end
 
     def response
       @response ||= begin
-        conn = Faraday.new(url: purl_url)
+        conn = Faraday.new(url: purl_xml_url)
         response = conn.get do |request|
           request.options = {
             timeout: 2,

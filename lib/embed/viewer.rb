@@ -1,5 +1,6 @@
 module Embed
   class Viewer
+    require 'embed/viewer/common_viewer'
     require 'embed/viewer/file'
     delegate :height, :width, to: :viewer
     def initialize(request)

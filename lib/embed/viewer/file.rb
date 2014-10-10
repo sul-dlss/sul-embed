@@ -1,10 +1,7 @@
 module Embed
   class Viewer
     class File
-      def initialize(request)
-        @request = request
-        @purl_object = request.purl_object
-      end
+      include CommonViewer
 
       def self.default_viewer?
         true
@@ -18,10 +15,9 @@ module Embed
         '300'
       end
 
-      def to_html
+      def body_html
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-file') do
-            doc.p(class: 'sul-embed-title') { doc.text @purl_object.title }
             doc.div(class: 'sul-embed-file-list') do
               doc.table do
                 @purl_object.all_resource_files.each do |file|
@@ -36,10 +32,6 @@ module Embed
             doc.script { doc.text ";jQuery.getScript(\"#{asset_path('file.js')}\");" }
           end
         end.to_html
-      end
-
-      def asset_path(file)
-        ActionController::Base.helpers.asset_path(file)
       end
 
       def self.supported_types
