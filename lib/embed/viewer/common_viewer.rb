@@ -16,7 +16,7 @@ module Embed
       end
 
       def to_html
-        header_html << body_html << footer_html
+        '<div class="sul-embed-container">' << header_html << body_html << footer_html << '</div>'
       end
 
       def header_html

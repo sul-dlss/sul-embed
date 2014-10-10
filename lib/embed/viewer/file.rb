@@ -17,7 +17,7 @@ module Embed
 
       def body_html
         Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-file') do
+          doc.div(class: 'sul-embed-file', 'data-sul-embed-theme' => "#{asset_url('file.css')}") do
             doc.div(class: 'sul-embed-file-list') do
               doc.table do
                 @purl_object.all_resource_files.each do |file|

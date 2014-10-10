@@ -34,6 +34,8 @@ gem 'uglifier'
 
 gem 'high_voltage'
 
+gem 'sass-rails'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
