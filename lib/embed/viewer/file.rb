@@ -12,18 +12,10 @@ module Embed
         true
       end
 
-      def height
-        '300'
-      end
-
-      def width
-        '300'
-      end
-
       def body_html
         file_count = 0
         Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-body sul-embed-file', 'data-sul-embed-theme' => "#{asset_url('file.css')}") do
+          doc.div(class: 'sul-embed-body sul-embed-file', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => "#{asset_url('file.css')}") do
             doc.div(class: 'sul-embed-file-list') do
               doc.ul(class: 'sul-embed-media-list') do
                 @purl_object.contents.each do |resource|
@@ -81,6 +73,10 @@ module Embed
 
       def file_url(title)
         "#{stacks_url}/#{title}"
+      end
+
+      def default_body_height
+        600
       end
 
       def preview_file_toggle(file, doc)

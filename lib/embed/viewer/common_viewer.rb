@@ -19,8 +19,16 @@ module Embed
         "#{Settings.stacks_url}/file/druid:#{@purl_object.druid}"
       end
 
+      def height
+        @request.maxheight || calculate_height
+      end
+
+      def width
+        @request.maxwidth || default_width
+      end
+
       def to_html
-        '<div class="sul-embed-container" id="sul-embed-object" style="display:none;">' << header_html << body_html << metadata_html << footer_html << '</div>'
+        "<div class='sul-embed-container' id='sul-embed-object' style='display:none; #{container_styles}'>" << header_html << body_html << metadata_html << footer_html << '</div>'
       end
 
       def header_html
@@ -115,6 +123,50 @@ module Embed
         header_tools_logic.any? do |logic_method|
           send(logic_method)
         end
+      end
+
+      def container_styles
+        if height_style.present? || width_style.present?
+          "#{[height_style, width_style].compact.join(' ')}"
+        end
+      end
+      def height_style
+        "max-height:#{height}px;" if height
+      end
+      def width_style
+        "max-width:#{width}px;" if width
+      end
+      def header_height
+        return 0 unless display_header?
+        if header_tools_logic.length == 1
+          34
+        else
+          58
+        end
+      end
+      # Set a specific height for the body. We need to subtract
+      # the header and footer heights from the consumer
+      # requested maxheight, otherwise we set a default
+      # which can be set by the specific viewers.
+      def body_height
+        if @request.maxheight
+          (@request.maxheight.to_i - (header_height + footer_height)) - 2
+        else
+          default_body_height
+        end
+      end
+      def footer_height
+        30
+      end
+      def calculate_height
+        return nil unless body_height
+        body_height + header_height + footer_height
+      end
+      def default_width
+        nil
+      end
+      def default_body_height
+        nil
       end
     end
   end

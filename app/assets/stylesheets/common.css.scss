@@ -9,6 +9,7 @@
   border: 1px solid $sul-border-color;
   color: $sul-font-color;
   font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
+  overflow-y: hidden;
 
   .#{$namespace}-header {
     background: $sul-background;
