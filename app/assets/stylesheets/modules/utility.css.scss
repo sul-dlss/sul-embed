@@ -1,0 +1,59 @@
+@import 'modules/bootstrap_mixins';
+// From Bootstrap SASS https://github.com/twbs/bootstrap-sass/blob/master/assets/stylesheets/bootstrap/_utilities.scss
+//
+// Utility classes
+// --------------------------------------------------
+
+
+// Floats
+// -------------------------
+
+.#{$namespace}-clearfix {
+  @include clearfix();
+}
+.#{$namespace}-center-block {
+  @include center-block();
+}
+.#{$namespace}-pull-right {
+  float: right !important;
+}
+.#{$namespace}-pull-left {
+  float: left !important;
+}
+
+
+// Toggling content
+// -------------------------
+
+// Note: Deprecated .hide in favor of .hidden or .sr-only (as appropriate) in v3.0.1
+.#{$namespace}-hide {
+  display: none !important;
+}
+.#{$namespace}-show {
+  display: block !important;
+}
+.#{$namespace}-invisible {
+  visibility: hidden;
+}
+.#{$namespace}-text-hide {
+  @include text-hide();
+}
+
+
+// Hide from screenreaders and browsers
+//
+// Credit: HTML5 Boilerplate
+
+.#{$namespace}-hidden {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+
+// For Affix plugin
+// -------------------------
+
+.#{$namespace}-affix {
+  position: fixed;
+  @include translate3d(0, 0, 0);
+}

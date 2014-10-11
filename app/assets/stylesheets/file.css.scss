@@ -1,1 +1,16 @@
 @import 'common';
+@import 'modules/utility';
+@import 'modules/media';
+
+.sul-embed-container {
+  .sul-embed-body {
+    max-height: 600px;
+    overflow-y: scroll;
+  }
+  
+  .sul-embed-download {
+    i:after {
+      content: '\00a0';
+    }
+  }
+}

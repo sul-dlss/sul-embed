@@ -38,9 +38,7 @@ describe Embed::Viewer::File do
       stub_purl_response_and_request(multi_resource_multi_file_purl, request)
       expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
       html = Capybara.string(file_viewer.to_html)
-      expect(html).to have_css 'table'
-      expect(html).to have_css 'tr', count: 4
-      expect(html).to have_css 'td', count: 12
+      expect(html).to have_css '.sul-embed-file-list'
     end
   end
 end

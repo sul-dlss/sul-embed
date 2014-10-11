@@ -2,6 +2,7 @@ module Embed
   class PURL
     require 'dor/rights_auth'
     delegate :embargoed?, to: :rights
+    attr_reader :druid
     def initialize(druid)
       @druid = druid
     end

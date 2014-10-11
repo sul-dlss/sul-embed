@@ -1,7 +1,44 @@
 // All classes should be scoped within the .sul-embed-container
+@import 'sul_variables';
+@import 'mixins';
 
-.sul-embed-container {
-  .sul-embed-header {
-    color: #f00;
+.#{$namespace}-container {
+  font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
+  
+  .#{$namespace}-header {
+    background: $sul-background;
+    font-size: 1.1em;
+    overflow: hidden;
+    @include container-padding;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .#{$namespace}-body {
+    @include container-padding;
+  }
+  
+  .#{$namespace}-footer {
+    background: $sul-background;
+    min-height: 50px;
+    position: relative;
+    
+    .#{$namespace}-purl-link {
+      @include container-padding;
+      bottom: 0;
+      clear: both;
+      font-size: .8em;
+      height: 50%;
+      margin: auto;
+      overflow: auto;
+      position: absolute;
+      right: 0;
+      top: 0;
+
+      .#{$namespace}-rosette {
+        padding-right: 5px;
+        vertical-align: middle;
+      }
+    }
   }
 }
