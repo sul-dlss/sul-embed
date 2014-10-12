@@ -153,20 +153,25 @@
 
       function appendContent(response) {
         var $viewer = $('.viewer'),
-            thumbnail_url,
-            width,
-            height;
+            xmlDoc, width, height, html;
 
         if (format === "json") {
-          html = response.html;
+          html   = response.html;
+          width  = response.width;
+          height = response.height;
         }
 
         if (format === "xml") {
-          // xmlDoc = $.parseXML( response );
+          xmlDoc = $(response);
+          html   = $(xmlDoc.find('html').text());
+          width  = xmlDoc.find('width').text();
+          height = xmlDoc.find('height').text();
         }
 
-        $viewer.empty().width(width).height(height);
-        $viewer.append($('<div>' + html + '</div>'));
+        $viewer
+          .empty()
+          //.width(width).height(height)
+          .append(html);
       }
 
       function submitRequest(url) {
@@ -176,7 +181,7 @@
           dataType: format
         });
 
-        request.done(function(response) {
+        request.success(function(response) {
           appendContent(response);
         });
 
