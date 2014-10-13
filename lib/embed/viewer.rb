@@ -3,7 +3,7 @@ module Embed
     require 'embed/viewer/common_viewer'
     # Auto-require all .rb files in the viewer directory
     Dir[File.join(File.dirname(__FILE__), 'viewer', '*.rb')].each {|file| require file }
-
+    
     delegate :height, :width, to: :viewer
     def initialize(request)
       @request = request
