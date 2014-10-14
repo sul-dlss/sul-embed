@@ -33,8 +33,16 @@ describe Embed::Viewer::File do
       expect(file_viewer.height).to_not be nil
     end
   end
+  describe 'header tools' do
+    it 'should include the search in the header tools' do
+      stub_request(request)
+      expect(file_viewer.send(:header_tools_logic)).to include(:file_search_logic)
+    end
+  end
   describe 'body_html' do
     it 'should return a table of files' do
+      expect(request).to receive(:params).at_least(:once).and_return({})
+      expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
       stub_purl_response_and_request(multi_resource_multi_file_purl, request)
       expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
       html = Capybara.string(file_viewer.to_html)

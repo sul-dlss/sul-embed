@@ -24,6 +24,10 @@ module Embed
       params[:maxwidth]
     end
 
+    def hide_title?
+      params[:hide_title] && params[:hide_title] == "true"
+    end
+
     def object_druid
       url[/\w*$/]
     end

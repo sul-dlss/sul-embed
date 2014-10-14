@@ -82,3 +82,24 @@ The file that the class is defined in (or your preferred method) should register
     => #<Embed::Request>
     $ viewer.new(request).to_html
     => # your body_html with header and footer html
+
+### Adding Header Tools
+
+Viewers can dynamically add their own elements to the header, change element order, or remove elements from the viewer.  In order to add your own tools to the header you need to append a method (represented by a symbol) to the `header_tools_logic` array.
+
+    def initialize(*args)
+      super
+      header_tools_logic << :render_demo_tool
+    end
+
+The method added to the `header_tools_logic` array should return false if the tool should not display or return a symbol representing a method that will return HTML given the `Nokigiri::HTML` document context.
+
+    def render_demo_tool
+      return false if should_render_demo_tool?
+      :demo_tool_html
+    end
+    def domo_tool_html(document)
+      document.div(class: 'sul-embed-demo-tool') do
+        document.text("ToolText")
+      end
+    end

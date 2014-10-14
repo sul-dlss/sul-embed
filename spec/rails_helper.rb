@@ -66,10 +66,18 @@ def stub_request(request)
   expect(request).to receive(:purl_object).and_return(Embed::PURL.new('12345'))
 end
 
-def send_embed_response
+def visit_sandbox
   visit page_path(id: 'sandbox')
+end
+
+def fill_in_default_sandbox_form
   fill_in 'api-endpoint', with: embed_path
   fill_in 'url-scheme', with: 'http://purl.stanford.edu/ab123cd4567'
+end
+
+def send_embed_response
+  visit_sandbox
+  fill_in_default_sandbox_form
   click_button 'Embed'
   expect(page).to have_css('.sul-embed-container')
 end

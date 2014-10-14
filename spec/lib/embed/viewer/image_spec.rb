@@ -46,6 +46,7 @@ describe Embed::Viewer::Image do
   end
   describe 'body_html' do
     it 'should return image(s) list' do
+      expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
       stub_purl_response_and_request(image_purl, request)
       expect(image_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
       html = Capybara.string(image_viewer.to_html)
