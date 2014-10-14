@@ -41,4 +41,14 @@ describe Embed::Viewer::File do
       expect(html).to have_css '.sul-embed-file-list'
     end
   end
+  describe 'file_type_icon' do
+    it 'should return default file icon if mimetype is not recognized' do
+      expect(request).to receive(:purl_object).and_return(nil)
+      expect(file_viewer.file_type_icon('application/null')).to eq 'fa-file-o'
+    end
+    it 'should return translated file icon for recognized mime type' do
+      expect(request).to receive(:purl_object).and_return(nil)
+      expect(file_viewer.file_type_icon('application/zip')).to eq 'fa-file-archive-o'
+    end
+  end
 end

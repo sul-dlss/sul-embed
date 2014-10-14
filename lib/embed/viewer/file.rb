@@ -28,7 +28,7 @@ module Embed
                         doc.text file_count += 1
                       end
                       doc.div(class: 'sul-embed-media-object pull-left') do
-                        doc.i(class: 'fa fa-file fa-3x')
+                        doc.i(class: "fa fa-3x #{file_type_icon(file.mimetype)}")
                       end
                       doc.div(class: 'sul-embed-media-body') do
                         doc.div(class: 'sul-embed-media-heading') do
@@ -54,6 +54,14 @@ module Embed
             doc.script { doc.text ";jQuery.getScript(\"#{asset_url('file.js')}\");" }
           end
         end.to_html
+      end
+
+      def file_type_icon(mimetype)
+        if Constants::FILE_ICON[mimetype].nil?
+          'fa-file-o'
+        else
+          Constants::FILE_ICON[mimetype]
+        end
       end
 
       def pretty_filesize(size)
