@@ -20,7 +20,7 @@ module Embed
       end
 
       def to_html
-        '<div class="sul-embed-container">' << header_html << body_html << footer_html << '</div>'
+        '<div class="sul-embed-container" id="sul-embed-object">' << header_html << body_html << footer_html << '</div>'
       end
 
       def header_html
@@ -28,6 +28,12 @@ module Embed
           doc.div(class: 'sul-embed-header') do
             doc.span(class: 'sul-embed-header-title') do
               doc.text @purl_object.title
+            end
+            doc.div(class: 'sul-embed-header-tools') do
+              doc.div(class: 'sul-embed-search sul-embed-hidden') do
+                doc.label(for: 'sul-embed-search-input') { doc.text 'Search this list' }
+                doc.input(class: 'sul-embed-search-input', id: 'sul-embed-search-input')
+              end
             end
           end
         end.to_html

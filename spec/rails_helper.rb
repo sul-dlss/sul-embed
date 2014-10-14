@@ -71,4 +71,5 @@ def send_embed_response
   fill_in 'api-endpoint', with: embed_path
   fill_in 'url-scheme', with: 'http://purl.stanford.edu/ab123cd4567'
   click_button 'Embed'
+  expect(page).to have_css('.sul-embed-container')
 end

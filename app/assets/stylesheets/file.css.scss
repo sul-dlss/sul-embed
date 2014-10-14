@@ -3,6 +3,13 @@
 @import 'modules/media';
 
 .sul-embed-container {
+  .sul-embed-search {
+    label {
+      font-size: .7em;
+      padding-right: 5px;
+    }
+  }
+  
   .sul-embed-body {
     max-height: 600px;
     overflow-y: scroll;
