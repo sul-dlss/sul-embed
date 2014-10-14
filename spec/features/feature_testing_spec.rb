@@ -22,10 +22,10 @@ describe 'feature testing of viewers', js: true do
       expect(page).to have_css('.sul-embed-description', text: 'File1 Label')
       expect(page).to have_css('.sul-embed-download', text: '12.06 kiB')
     end
-    it 'should contain 2 files in file list' do
+    it 'should contain 4 files in file list' do
       stub_purl_response_with_fixture(multi_resource_multi_file_purl)
       send_embed_response
-      expect(page).to have_css('.sul-embed-count', count: 2)
+      expect(page).to have_css('.sul-embed-count', count: 4)
     end
   end
 end
