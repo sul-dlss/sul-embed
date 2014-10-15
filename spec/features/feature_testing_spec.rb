@@ -8,8 +8,16 @@ describe 'feature testing of viewers', js: true do
       send_embed_response
       expect(page).to have_css('.sul-embed-container')
       expect(page).to have_css('.sul-embed-header')
+      expect(page).to have_css('.sul-embed-header-title')
       expect(page).to have_css('.sul-embed-body')
       expect(page).to have_css('.sul-embed-footer')
+    end
+    it 'should hide the title when requested' do
+      stub_purl_response_with_fixture(file_purl)
+      visit_sandbox
+      check("Hide title?")
+      click_button "Embed"
+      expect(page).to_not have_css('.sul-embed-header-title')
     end
   end
   describe 'file viewer' do

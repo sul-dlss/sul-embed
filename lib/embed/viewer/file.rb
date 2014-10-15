@@ -3,6 +3,11 @@ module Embed
     class File
       include Embed::Viewer::CommonViewer
 
+      def initialize(*args)
+        super
+        header_tools_logic << :file_search_logic
+      end
+
       def self.default_viewer?
         true
       end
@@ -74,6 +79,22 @@ module Embed
 
       def self.supported_types
         [:media]
+      end
+
+      private
+
+      def file_search_logic
+        return false if @request.params[:hide_search] && @request.params[:hide_search] == 'true'
+        :file_search_html
+      end
+
+      def file_search_html(doc)
+        doc.div(class: 'sul-embed-header-tools') do
+          doc.div(class: 'sul-embed-search') do
+            doc.label(for: 'sul-embed-search-input') { doc.text 'Search this list' }
+            doc.input(class: 'sul-embed-search-input', id: 'sul-embed-search-input')
+          end
+        end
       end
     end
   end

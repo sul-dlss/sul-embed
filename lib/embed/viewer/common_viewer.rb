@@ -26,16 +26,8 @@ module Embed
       def header_html
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-header') do
-            doc.span(class: 'sul-embed-header-title') do
-              doc.text @purl_object.title
-            end
-            doc.div(class: 'sul-embed-header-tools') do
-              doc.div(class: 'sul-embed-search sul-embed-hidden') do
-                doc.label(for: 'sul-embed-search-input') { doc.text 'Search this list' }
-                doc.input(class: 'sul-embed-search-input', id: 'sul-embed-search-input')
-              end
-            end
-          end
+            render_header_tools(doc)
+          end if display_header?
         end.to_html
       end
 
@@ -50,6 +42,43 @@ module Embed
             end
           end
         end.to_html
+      end
+
+      private
+
+      # Loops through all of the header tools logic methods
+      # and calls the corresponding method that is the return value
+      def render_header_tools(doc)
+        header_tools_logic.each do |logic_method|
+          if (tool = send(logic_method))
+            send(tool, doc)
+          end
+        end
+      end
+
+      # Array of method containing symbols representing method names.
+      # These methods should return false if the particular tool should not display,
+      # otherwise it should return the method name that will return the HTML for the tool (given the Nokogiri document context).
+      # See #header_title_logic and #header_title_html as examples.
+      def header_tools_logic
+        @header_tools_logic ||= [:header_title_logic]
+      end
+
+      def header_title_logic
+        return false if @request.hide_title?
+        :header_title_html
+      end
+
+      def header_title_html(doc)
+        doc.span(class: 'sul-embed-header-title') do
+          doc.text @purl_object.title
+        end
+      end
+
+      def display_header?
+        header_tools_logic.any? do |logic_method|
+          send(logic_method)
+        end
       end
     end
   end

@@ -12,12 +12,8 @@
 
     return {
       init: function() {
-        this.showSearchInput();
         mediaObjectList = new List("sul-embed-object", options);
         return mediaObjectList;
-      },
-      showSearchInput: function() {
-        $(".sul-embed-search").removeClass("sul-embed-hidden");
       }
     };
   })();

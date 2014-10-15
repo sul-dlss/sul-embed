@@ -10,6 +10,14 @@ describe Embed::Request do
       expect(Embed::Request.new({url: purl, format: 'xml'}).format).to eq 'xml'
     end
   end
+  describe 'hide_title?' do
+    it 'should return false by default' do
+      expect(Embed::Request.new({url: purl}).hide_title?).to be_falsy
+    end
+    it 'should return true if the incoming request asked to hide the title' do
+      expect(Embed::Request.new({url: purl, hide_title: 'true'}).hide_title?).to be_truthy
+    end
+  end
   describe 'object_druid' do
     it 'should parse the druid out of the incoming URL parameter' do
       expect(Embed::Request.new({url: purl}).object_druid).to eq "abc123"
