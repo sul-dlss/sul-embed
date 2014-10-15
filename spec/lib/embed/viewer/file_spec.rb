@@ -38,7 +38,8 @@ describe Embed::Viewer::File do
       stub_purl_response_and_request(multi_resource_multi_file_purl, request)
       expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
       html = Capybara.string(file_viewer.to_html)
-      expect(html).to have_css '.sul-embed-file-list'
+      # visible false because we display:none the container until we've loaded the CSS.
+      expect(html).to have_css '.sul-embed-file-list', visible: false
     end
   end
   describe 'file_type_icon' do

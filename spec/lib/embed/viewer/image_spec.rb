@@ -49,8 +49,9 @@ describe Embed::Viewer::Image do
       stub_purl_response_and_request(image_purl, request)
       expect(image_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
       html = Capybara.string(image_viewer.to_html)
-      expect(html).to have_css '.sul-embed-image-list'
-      expect(html).to have_css '#osd-Title_of_the_image.sul-embed-osd'
+      # visible false because we display:none the container until we've loaded the CSS.
+      expect(html).to have_css '.sul-embed-image-list', visible: false
+      expect(html).to have_css '#osd-Title_of_the_image.sul-embed-osd', visible: false
 
       within '.sul-embed-osd-toolbar' do
         expect(html).to have_css '#osd-Title_of_the_image-zoom-in.fa.fa-plus-circle'
