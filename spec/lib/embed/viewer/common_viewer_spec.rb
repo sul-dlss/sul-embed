@@ -38,10 +38,11 @@ describe Embed::Viewer::CommonViewer do
       expect(file_viewer).to receive(:header_html).and_return('<div class="sul-embed-header"></div>')
       expect(file_viewer).to receive(:footer_html).and_return('<div class="sul-embed-footer"></div>')
       html = Capybara.string(file_viewer.to_html)
-      expect(html).to have_css 'div.sul-embed-container'
-      expect(html).to have_css 'div.sul-embed-body'
-      expect(html).to have_css 'div.sul-embed-header'
-      expect(html).to have_css 'div.sul-embed-footer'
+      # visible false because we display:none the container until we've loaded the CSS.
+      expect(html).to have_css 'div.sul-embed-container', visible: false
+      expect(html).to have_css 'div.sul-embed-body', visible: false
+      expect(html).to have_css 'div.sul-embed-header', visible: false
+      expect(html).to have_css 'div.sul-embed-footer', visible: false
     end
   end
 end

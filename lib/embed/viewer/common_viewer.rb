@@ -20,7 +20,7 @@ module Embed
       end
 
       def to_html
-        '<div class="sul-embed-container" id="sul-embed-object">' << header_html << body_html << footer_html << '</div>'
+        '<div class="sul-embed-container" id="sul-embed-object" style="display:none;">' << header_html << body_html << footer_html << '</div>'
       end
 
       def header_html
