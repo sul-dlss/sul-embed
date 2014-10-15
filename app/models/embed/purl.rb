@@ -25,6 +25,14 @@ module Embed
       @rights ||= ::Dor::RightsAuth.parse(rights_xml)
     end
 
+    def use_and_reproduction
+      ng_xml.xpath('//rightsMetadata/use/human[@type="useAndReproduction"]').first.try(:content)
+    end
+
+    def copyright
+      ng_xml.xpath('//rightsMetadata/copyright').first.try(:content)
+    end
+
     def embargo_release_date
       @embargo_release_date ||= begin
         if embargoed?

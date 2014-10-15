@@ -1,0 +1,43 @@
+@import 'sul_variables';
+
+.#{$namespace}-container {
+  .sul-embed-metadata-panel-container {
+    height: 0px;
+    position: relative;
+    
+    .#{$namespace}-metadata-panel {
+      @include container-padding;
+      background: $sul-metadata-bg;
+      border: 1px $sul-border-color solid;
+      bottom: 0;
+      height: 300px;
+      overflow: auto;
+      position: absolute;
+      
+      .#{$namespace}-metadata-header {
+        height: 30px;
+        .#{$namespace}-close {
+          float: right;
+        }
+        
+        .#{$namespace}-header-title {
+          display: inline-block;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          vertical-align: middle;
+          width: 100%;
+        }
+      }
+      
+      .#{$namespace}-metadata-section {
+        padding-bottom: 20px;
+        padding-top: 20px;
+      }
+      
+      .#{$namespace}-metadata-heading {
+        color: lighten($sul-font-color, 20%);
+        text-transform: uppercase;
+      }
+    }
+  }
+}

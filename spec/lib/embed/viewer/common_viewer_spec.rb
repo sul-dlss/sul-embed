@@ -22,6 +22,14 @@ describe Embed::Viewer::CommonViewer do
       expect(html).to_not have_css '.sul-embed-header-title'
     end
   end
+  describe 'metadata_html' do
+    it 'should return the metadata panel html' do
+      stub_purl_response_and_request(file_purl, request)
+      html = Capybara.string(file_viewer.metadata_html)
+      expect(html).to have_css 'div.sul-embed-metadata-panel-container'
+      expect(html).to have_css 'div.sul-embed-metadata-panel', visible: false
+    end
+  end
   describe 'footer_html' do
     it 'should return the objects footer' do
       stub_request(request)
@@ -36,12 +44,14 @@ describe Embed::Viewer::CommonViewer do
       stub_request(request)
       expect(file_viewer).to receive(:body_html).and_return('<div class="sul-embed-body"></div>')
       expect(file_viewer).to receive(:header_html).and_return('<div class="sul-embed-header"></div>')
+      expect(file_viewer).to receive(:metadata_html).and_return('<div class="sul-embed-metadata-container"></div>')
       expect(file_viewer).to receive(:footer_html).and_return('<div class="sul-embed-footer"></div>')
       html = Capybara.string(file_viewer.to_html)
       # visible false because we display:none the container until we've loaded the CSS.
       expect(html).to have_css 'div.sul-embed-container', visible: false
       expect(html).to have_css 'div.sul-embed-body', visible: false
       expect(html).to have_css 'div.sul-embed-header', visible: false
+      expect(html).to have_css 'div.sul-embed-metadata-container', visible: false
       expect(html).to have_css 'div.sul-embed-footer', visible: false
     end
   end

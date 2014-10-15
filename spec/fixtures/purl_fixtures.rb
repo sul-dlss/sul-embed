@@ -24,6 +24,11 @@ module PURLFixtures
               <world/>
             </machine>
           </access>
+          <use>
+            <human type="useAndReproduction">
+              You can use this.
+            </human>
+          </use>
         </rightsMetadata>
       </publicObject>
     XML
