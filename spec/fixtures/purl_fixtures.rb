@@ -10,7 +10,7 @@ module PURLFixtures
             <label>File1 Label</label>
             <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf">
               <location type="url">http://stacks.stanford.edu/file/druid:abc123/Title_of_the_PDF.pdf</location>
-            </file
+            </file>
           </resource>
         </contentMetadata>
         <rightsMetadata>
@@ -37,7 +37,7 @@ module PURLFixtures
         <contentMetadata type="image">
           <resource sequence="1" type="image">
             <label>Image1</label>
-            <file size="12345" mimetype="application/pdf" id="Title_of_the_image.jp2">
+            <file size="12345" mimetype="image/jp2" id="Title_of_the_image.jp2">
               <imageData height="123" width="321" />
             </file>
           </resource>
@@ -186,6 +186,32 @@ module PURLFixtures
             <machine>
               <embargoReleaseDate>#{(Time.now + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
               <group>stanford</group>
+            </machine>
+          </access>
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
+  def hybrid_object_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>File Title</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="file">
+          <resource sequence="1" type="image">
+            <label>File1 Label</label>
+            <file size="12345" mimetype="image/jp2" id="tn629pk3948_img_1.jp2" />
+          </resource>
+          <resource sequence="1" type="file">
+            <label>File1 Label</label>
+            <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf" />
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="read">
+            <machine>
+              <world/>
             </machine>
           </access>
         </rightsMetadata>

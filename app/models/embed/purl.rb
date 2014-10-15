@@ -111,6 +111,9 @@ module Embed
         def mimetype
           @file.attributes['mimetype'].try(:value)
         end
+        def previewable?
+          preview_types.include?(mimetype)
+        end
         def size
           @file.attributes['size'].try(:value)
         end
@@ -132,6 +135,9 @@ module Embed
         end
         def has_location_data?
           @file.xpath('./location[@type="url"]').present?
+        end
+        def preview_types
+          ["image/jp2"]
         end
       end
     end

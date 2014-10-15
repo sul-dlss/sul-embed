@@ -33,7 +33,11 @@ module Embed
                         doc.text file_count += 1
                       end
                       doc.div(class: 'sul-embed-media-object pull-left') do
-                        doc.i(class: "fa fa-3x #{file_type_icon(file.mimetype)}")
+                        if file.previewable?
+                          doc.img(class: 'sul-embed-square-image',src: "#{image_url(file)}_square")
+                        else
+                          doc.i(class: "fa fa-3x #{file_type_icon(file.mimetype)}")
+                        end
                       end
                       doc.div(class: 'sul-embed-media-body') do
                         doc.div(class: 'sul-embed-media-heading') do
@@ -50,8 +54,10 @@ module Embed
                             doc.text pretty_filesize(file.size)
                           end
                         end
+                        preview_file_toggle(file, doc)
                       end
                     end
+                    preview_file_window(file, doc)
                   end
                 end
               end
@@ -77,6 +83,28 @@ module Embed
         "#{stacks_url}/#{title}"
       end
 
+      def preview_file_toggle(file, doc)
+        if file.previewable?
+          doc.span(class: 'sul-embed-preview-toggle', 'data-sul-embed-file-preview-toggle' => 'true') do
+            doc.i(class: 'fa fa-toggle-right')
+            doc.span(class: 'sul-embed-preview-text') do
+              doc.a(href: '#', 'data-sul-embed-file-preview-toggle-text' => 'true') do
+                doc.text('Preview')
+              end
+            end
+          end
+        end
+      end
+      def preview_file_window(file, doc)
+        if file.previewable?
+          doc.div(style: 'display: none;', class: 'sul-embed-preview', 'data-sul-embed-file-preview-window' => 'true') do
+            doc.img(src: "#{image_url(file)}_thumb")
+          end
+        end
+      end
+      def image_url(file)
+        "#{Settings.stacks_url}/image/#{@purl_object.druid}/#{file.title.gsub(/\.\w+$/, '')}"
+      end
       def self.supported_types
         [:media]
       end

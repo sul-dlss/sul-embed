@@ -14,10 +14,23 @@
     max-height: 600px;
     overflow-y: scroll;
   }
-
+  .sul-embed-square-image {
+    max-width: 41px;
+  }
   .sul-embed-download {
+    display: inline;
     i:after {
       content: '\00a0';
+    }
+  }
+  .sul-embed-preview {
+    text-align: center;
+  }
+  .sul-embed-preview-toggle {
+    margin-left: 5px;
+    cursor: pointer;
+    .sul-embed-preview-text {
+      margin-left: 3px;
     }
   }
 }
