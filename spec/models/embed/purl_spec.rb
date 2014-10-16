@@ -83,6 +83,16 @@ describe Embed::PURL do
           expect(resource_file.size).to eq '12345'
         end
       end
+      describe 'previewable?' do
+        it 'should return true if the mimetype of the file is previewable' do
+          stub_purl_response_with_fixture(image_purl)
+          expect(Embed::PURL.new('12345').contents.first.files.first).to be_previewable
+        end
+        it 'should return false if the mimetype of the file is not previewable' do
+          stub_purl_response_with_fixture(file_purl)
+          expect(Embed::PURL.new('12345').contents.first.files.first).to_not be_previewable
+        end
+      end
       describe 'rights' do
         describe 'stanford_only?' do
           it 'should identify stanford_only objects' do
