@@ -60,4 +60,14 @@ describe Embed::Viewer::File do
       expect(file_viewer.file_type_icon('application/zip')).to eq 'fa-file-archive-o'
     end
   end
+  describe 'embargo/Stanford only' do
+    it 'does something' do
+      stub_purl_response_and_request(embargoed_purl, request)
+      expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com')
+      html = Capybara.string(file_viewer.body_html)
+      expect(html).to have_css('li[data-sul-embed-tooltip="true"]')
+      expect(html).to have_css("li[title='Available only to Stanford-affiliated patrons until #{(Time.now + 1.month).strftime('%Y-%m-%d')}']")
+      expect(html).to have_css('.sul-embed-media-heading.stanford-only')
+    end
+  end
 end

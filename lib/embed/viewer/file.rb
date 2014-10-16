@@ -28,7 +28,7 @@ module Embed
               doc.ul(class: 'sul-embed-media-list') do
                 @purl_object.contents.each do |resource|
                   resource.files.each do |file|
-                    doc.li(class: 'sul-embed-media') do
+                    doc.li(class: 'sul-embed-media', title: tooltip_text(file), 'data-sul-embed-tooltip' => file_is_stanford_only?(file)) do
                       doc.div(class: 'sul-embed-count pull-left') do
                         doc.text file_count += 1
                       end
@@ -40,7 +40,7 @@ module Embed
                         end
                       end
                       doc.div(class: 'sul-embed-media-body') do
-                        doc.div(class: 'sul-embed-media-heading') do
+                        doc.div(class: "sul-embed-media-heading #{'stanford-only' if file_is_stanford_only?(file)}") do
                           doc.a(href: file_url(file.title)) do
                             doc.text file.title
                           end
@@ -111,6 +111,14 @@ module Embed
 
       private
 
+      def tooltip_text(file)
+        if file_is_stanford_only?(file)
+          ["Available only to Stanford-affiliated patrons", @purl_object.embargo_release_date].compact.join(" until ")
+        end
+      end
+      def file_is_stanford_only?(file)
+        @purl_object.embargoed? || file.stanford_only?
+      end
       def file_search_logic
         return false if @request.params[:hide_search] && @request.params[:hide_search] == 'true'
         :file_search_html
