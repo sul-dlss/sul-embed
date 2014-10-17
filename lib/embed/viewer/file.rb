@@ -56,8 +56,8 @@ module Embed
                         end
                         preview_file_toggle(file, doc)
                       end
+                      preview_file_window(file, doc)
                     end
-                    preview_file_window(file, doc)
                   end
                 end
               end
