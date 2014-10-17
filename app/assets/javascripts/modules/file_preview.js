@@ -38,7 +38,7 @@
         }
       },
       togglePreviewWindow: function(preview) {
-        var previewWindow = preview.closest('li').next('[data-sul-embed-file-preview-window="true"]');
+        var previewWindow = preview.closest('li').find('[data-sul-embed-file-preview-window="true"]');
         var icon = $('.fa', preview);
         if(icon.hasClass('fa-toggle-down')) {
           previewWindow.slideDown();
