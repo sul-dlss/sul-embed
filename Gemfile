@@ -16,8 +16,8 @@ gem 'therubyracer'
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
-  gem 'capybara'
-  gem 'poltergeist'
+  gem 'capybara', '~> 2.4.4'
+  gem 'capybara-webkit'
 end
 
 
