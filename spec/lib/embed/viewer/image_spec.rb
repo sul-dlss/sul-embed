@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Embed::Viewer::Image do
   include PURLFixtures
   let(:purl_object) { double('purl_object') }
-  let(:request) { double('request') }
+  let(:request) { Embed::Request.new({url: 'http://purl.stanford.edu/abc123'}) }
   let(:image_viewer) { Embed::Viewer::Image.new(request) }
 
   describe 'initialize' do
@@ -15,18 +15,6 @@ describe Embed::Viewer::Image do
   describe 'self.supported_types' do
     it 'should return an array of supported types' do
       expect(Embed::Viewer::Image.supported_types).to eq [:image]
-    end
-  end
-  describe 'width' do
-    it 'should return a width' do
-      expect(request).to receive(:purl_object).and_return(nil)
-      expect(image_viewer.width).to_not be nil
-    end
-  end
-  describe 'height' do
-    it 'should return a height' do
-      expect(request).to receive(:purl_object).and_return(nil)
-      expect(image_viewer.height).to_not be nil
     end
   end
   describe 'image_id' do

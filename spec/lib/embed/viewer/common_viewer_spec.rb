@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Embed::Viewer::CommonViewer do
   include PURLFixtures
   let(:rails_request) { double('rails_request') }
-  let(:request) { double('request') }
+  let(:request) { Embed::Request.new({url: 'http://purl.stanford.edu/abc123'}) }
   let(:file_viewer) { Embed::Viewer::File.new(request) }
 
   describe 'header_html' do
@@ -53,6 +53,30 @@ describe Embed::Viewer::CommonViewer do
       expect(html).to have_css 'div.sul-embed-header', visible: false
       expect(html).to have_css 'div.sul-embed-metadata-container', visible: false
       expect(html).to have_css 'div.sul-embed-footer', visible: false
+    end
+    it 'should include the height/width style in the container if maxheight/width is passed' do
+      expect(request).to receive(:maxheight).at_least(:once).and_return(200)
+      expect(request).to receive(:maxwidth).at_least(:once).and_return(200)
+      stub_request(request)
+      expect(file_viewer).to receive(:body_html).and_return('<div class="sul-embed-body"></div>')
+      expect(file_viewer).to receive(:header_html).and_return('<div class="sul-embed-header"></div>')
+      expect(file_viewer).to receive(:metadata_html).and_return('<div class="sul-embed-metadata-panel"></div>')
+      expect(file_viewer).to receive(:footer_html).and_return('<div class="sul-embed-footer"></div>')
+      html = Capybara.string(file_viewer.to_html)
+      expect(html).to have_css '.sul-embed-container[style="display:none; max-height:200px; max-width:200px;"]', visible: false
+    end
+  end
+  describe 'height/width' do
+    it 'should set a default height and default width to nil (which can be overridden at the viewer level)' do
+      stub_request(request)
+      expect(file_viewer.send(:default_width)).to be_nil
+    end
+    it 'should use the incoming maxheight/maxwidth parameters from the request' do
+      expect(request).to receive(:maxheight).at_least(:once).and_return(100)
+      expect(request).to receive(:maxwidth).at_least(:once).and_return(200)
+      stub_request(request)
+      expect(file_viewer.height).to eq 100
+      expect(file_viewer.width).to eq 200
     end
   end
 end
