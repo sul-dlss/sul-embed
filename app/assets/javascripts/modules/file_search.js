@@ -12,7 +12,7 @@
         valueNames: [ "sul-embed-media-heading", "sul-embed-description" ]
       };
 
-    $(".sul-embed-footer").append(itemCount);
+    $(".sul-embed-footer").prepend(itemCount);
 
     return {
       init: function() {
