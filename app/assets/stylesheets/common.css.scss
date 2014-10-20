@@ -1,9 +1,13 @@
 // All classes should be scoped within the .sul-embed-container
 @import 'sul_variables';
 @import 'mixins';
+@import 'modules/buttons';
+@import 'modules/metadata_panel';
+@import 'modules/utility';
 
 .#{$namespace}-container {
   border: 1px solid $sul-border-color;
+  color: $sul-font-color;
   font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
 
   .#{$namespace}-header {
@@ -29,7 +33,7 @@
 
   .#{$namespace}-footer {
     background: $sul-background;
-    min-height: 30px;
+    min-height: 40px;
     position: relative;
     
     .#{$namespace}-item-count {
@@ -40,7 +44,7 @@
 
     .#{$namespace}-purl-link {
       @include container-padding;
-      bottom: 0;
+      bottom: 5px;
       clear: both;
       font-size: .8em;
       position: absolute;
@@ -50,6 +54,9 @@
         padding-right: 5px;
         vertical-align: middle;
       }
+    }
+    .#{$namespace}-footer-toolbar {
+      padding-top: 10px;
     }
   }
 }

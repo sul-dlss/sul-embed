@@ -20,7 +20,7 @@ module Embed
       end
 
       def to_html
-        '<div class="sul-embed-container" id="sul-embed-object" style="display:none;">' << header_html << body_html << footer_html << '</div>'
+        '<div class="sul-embed-container" id="sul-embed-object" style="display:none;">' << header_html << body_html << metadata_html << footer_html << '</div>'
       end
 
       def header_html
@@ -34,10 +34,46 @@ module Embed
       def footer_html
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-footer') do
+            doc.div(class: 'sul-embed-footer-toolbar') do
+              doc.button(class: 'sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-info-circle', 'data-toggle' => 'sul-embed-metadata-panel')
+            end
             doc.div(class: 'sul-embed-purl-link') do
               doc.img(class: 'sul-embed-rosette', src: asset_url('sul-rosette.png'))
               doc.a(href: @purl_object.purl_url) do
                 doc.text @purl_object.purl_url
+              end
+            end
+          end
+        end.to_html
+      end
+
+      def metadata_html
+        Nokogiri::HTML::Builder.new do |doc|
+          doc.div(class: 'sul-embed-metadata-panel-container') do
+            doc.div(class: 'sul-embed-metadata-panel', style: 'display:none;') do
+              doc.div(class: 'sul-embed-metadata-header') do
+                doc.button(class: 'sul-embed-close', 'data-toggle' => 'sul-embed-metadata-panel') do
+                  doc.span('aria-hidden' => true, class: 'fa fa-close') {}
+                  doc.span(class: 'sul-embed-sr-only') { doc.text "Close" }
+                end
+                doc.div(class: 'sul-embed-metadata-title') do
+                  doc.text @purl_object.title
+                end
+              end
+              doc.hr
+              doc.div(class: 'sul-embed-metadata-body') do
+                doc.div(class: 'sul-embed-metadata-section') do
+                  doc.div(class: 'sul-embed-metadata-heading') do
+                    doc.text 'Use and reproduction'
+                  end
+                  doc.text @purl_object.use_and_reproduction
+                end
+                doc.div(class: 'sul-embed-metadata-section') do
+                  doc.div(class: 'sul-embed-metadata-heading') do
+                    doc.text 'Copyright'
+                  end
+                  doc.text @purl_object.copyright
+                end
               end
             end
           end
