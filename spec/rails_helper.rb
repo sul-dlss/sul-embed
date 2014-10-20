@@ -6,12 +6,8 @@ require 'rspec/rails'
 require 'fixtures/purl_fixtures'
 require 'capybara/rails'
 require 'capybara/rspec'
-require 'capybara/poltergeist'
 
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, {timeout: 60})
-end
-Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :webkit
 
 Capybara.default_wait_time = 10
 
