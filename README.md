@@ -14,6 +14,26 @@ API endpoint: `TBD`
 
 Example: `TBD?url=http://purl.stanford.edu/zw200wd8767&format=json`
 
+## Adding vendor assets with bower
+  
+Requires [bower](http://bower.io/) and uses [bower-rails](https://github.com/42dev/bower-rails) gem
+
+    npm install -g bower
+    
+Assets can be installed using bower commands
+
+    bower install listjs --save
+    
+Make sure to run the clean rake task to remove all of the extra stuff from bower packages (leaves the specified main file)
+
+    rake bower:clean
+    
+Assets can now be referenced in the assset pipeline
+
+    //= require listjs/dist/list
+    
+Assets used for production should be checked in so that dev and prod servers do not need to depend on nodejs and bower.
+
 ## Creating Viewers
 
 You can create a viewer by implementing a class with a pretty simple API.

@@ -1,4 +1,4 @@
-//= require vendor/openseadragon.min
+//= require openseadragon/built-openseadragon/openseadragon/openseadragon.min
 //= require modules/css_injection
 //= require modules/jquery.embedOsdViewer
 //= require modules/common_viewer_behavior
