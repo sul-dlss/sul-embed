@@ -21,9 +21,9 @@
           metaHeight = $(".sul-embed-metadata-panel").height();
 
         if (metaHeight < totalHeight){
-          $(".sul-embed-metadata-panel").height(totalHeight);
+          $(".sul-embed-metadata-panel").height(totalHeight - footerHeight - 10);
         }else {
-          $(".sul-embed-metadata-panel").css("maxHeight", totalHeight - footerHeight);
+          $(".sul-embed-metadata-panel").css("maxHeight", totalHeight - footerHeight + 10);
         }
       }
     };
