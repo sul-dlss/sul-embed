@@ -32,7 +32,7 @@ module Embed
                         end
                       end
                       doc.div(class: 'sul-embed-media-body') do
-                        doc.div(class: "sul-embed-media-heading #{'stanford-only' if file_is_stanford_only?(file)}") do
+                        doc.div(class: "sul-embed-media-heading #{'sul-embed-stanford-only' if file_is_stanford_only?(file)}") do
                           doc.a(href: file_url(file.title), title: tooltip_text(file), 'data-sul-embed-tooltip' => file_is_stanford_only?(file)) do
                             doc.text file.title
                           end
