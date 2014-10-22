@@ -65,7 +65,7 @@ describe Embed::Viewer::File do
       html = Capybara.string(file_viewer.body_html)
       expect(html).to have_css('a[data-sul-embed-tooltip="true"]')
       expect(html).to have_css("a[title='Available only to Stanford-affiliated patrons until #{(Time.now + 1.month).strftime('%Y-%m-%d')}']")
-      expect(html).to have_css('.sul-embed-media-heading.stanford-only')
+      expect(html).to have_css('.sul-embed-media-heading.sul-embed-stanford-only')
     end
   end
 end
