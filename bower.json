@@ -13,6 +13,7 @@
   ],
   "dependencies": {
     "listjs": "~1.1.1",
-    "openseadragon": "~1.1.1"
+    "openseadragon": "~1.1.1",
+    "pdfjs-dist": "~1.0.925"
   }
 }
