@@ -38,6 +38,8 @@ gem 'sass-rails'
 
 gem 'filesize'
 
+gem 'bower-rails'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 

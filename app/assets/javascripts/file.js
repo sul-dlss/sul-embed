@@ -1,5 +1,5 @@
 //= require modules/css_injection
-//= require vendor/list.min
+//= require listjs/dist/list
 //= require vendor/tooltip
 //= require modules/file_search
 //= require modules/common_viewer_behavior
