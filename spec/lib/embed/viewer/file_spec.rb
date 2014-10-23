@@ -33,6 +33,11 @@ describe Embed::Viewer::File do
       expect(viewer.send(:body_height)).to eq 310
     end
   end
+  describe 'pretty_file_size' do
+    it 'should return the correct size' do
+      expect(file_viewer.pretty_filesize(123_45)).to eq '12.35 kB'
+    end
+  end
   describe 'header tools' do
     it 'should include the search in the header tools' do
       stub_request(request)

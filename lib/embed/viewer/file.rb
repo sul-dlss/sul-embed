@@ -68,7 +68,11 @@ module Embed
       end
 
       def pretty_filesize(size)
-        Filesize.from("#{size} B").pretty
+        Filesize.from("#{to_kilobyte(size)} KB").pretty
+      end
+
+      def to_kilobyte(size)
+        size.to_f / 1000
       end
 
       def file_url(title)
