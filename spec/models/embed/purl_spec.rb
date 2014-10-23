@@ -44,6 +44,24 @@ describe Embed::PURL do
       expect(Embed::PURL.new('12345').all_resource_files.count).to eq 4
     end
   end
+  describe 'licence' do
+    it 'should return cc license if present' do
+      stub_purl_response_with_fixture(file_purl)
+      purl = Embed::PURL.new('12345')
+      expect(purl.license[:human]).to eq 'CC Attribution Non-Commercial license'
+      expect(purl.license[:machine]).to eq 'by-nc'
+    end
+    it 'should return odc license if present' do
+      stub_purl_response_with_fixture(hybrid_object_purl)
+      purl = Embed::PURL.new('12345')
+      expect(purl.license[:human]).to eq 'ODC-By Attribution License'
+      expect(purl.license[:machine]).to eq 'odc-by'
+    end
+    it 'should return nil if no license is present' do
+      stub_purl_response_with_fixture(embargoed_purl)
+      expect(Embed::PURL.new('12345').license).to eq nil
+    end
+  end
   describe 'PURL::Resource' do
     it 'should get the sequence attribute' do
       stub_purl_response_with_fixture(file_purl)
