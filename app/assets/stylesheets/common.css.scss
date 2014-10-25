@@ -9,11 +9,19 @@
   border: 1px solid $sul-border-color;
   color: $sul-font-color;
   font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
+  font-size: $font-size-base;
   overflow-y: hidden;
+
+  a,
+  a:hover,
+  a:focus {
+    border-bottom: 1px dotted $sul-link-border-color;
+    color: $sul-font-color;
+    text-decoration: none;
+  }
 
   .#{$namespace}-header {
     background: $sul-background;
-    font-size: 1.1em;
     min-height: 30px;
     overflow: hidden;
     @include container-padding;
@@ -21,6 +29,7 @@
 
     .#{$namespace}-header-title {
       display: inline-block;
+      font-size: $sul-title-size;
       overflow: hidden;
       text-overflow: ellipsis;
       vertical-align: middle;
@@ -29,7 +38,7 @@
   }
 
   .#{$namespace}-body {
-    @include container-padding;
+    @include padding-top;
   }
 
   .#{$namespace}-footer {
@@ -39,7 +48,7 @@
     
     .#{$namespace}-item-count {
       float: left;
-      padding-left: 5px;
+      padding-left: 7px;
       padding-top: 12px;
       padding-right: 8px;
     }
@@ -48,7 +57,7 @@
       @include container-padding;
       bottom: 5px;
       clear: both;
-      font-size: .8em;
+      font-size: .9em;
       position: absolute;
       right: 0;
 
@@ -58,7 +67,9 @@
       }
     }
     .#{$namespace}-footer-toolbar {
-      padding-top: 10px;
+      line-height: 40px;
+      padding-top: 0;
+      vertical-align: middle;
     }
   }
 }

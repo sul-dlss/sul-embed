@@ -68,7 +68,6 @@ module Embed
                   doc.text @purl_object.title
                 end
               end
-              doc.hr
               doc.div(class: 'sul-embed-metadata-body') do
                 doc.div(class: 'sul-embed-metadata-section') do
                   doc.div(class: 'sul-embed-metadata-heading') do

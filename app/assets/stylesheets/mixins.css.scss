@@ -1,5 +1,9 @@
 @import 'modules/bootstrap_mixins';
 
 @mixin container-padding {
-  padding: 4px 10px;
+  padding: 4px 7px;
+}
+
+@mixin padding-top {
+  padding: 7px;
 }

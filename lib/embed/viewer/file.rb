@@ -127,8 +127,8 @@ module Embed
       def file_search_html(doc)
         doc.div(class: 'sul-embed-header-tools') do
           doc.div(class: 'sul-embed-search') do
-            doc.label(for: 'sul-embed-search-input') { doc.text 'Search this list' }
-            doc.input(class: 'sul-embed-search-input', id: 'sul-embed-search-input')
+            doc.label(for: 'sul-embed-search-input', class: 'sul-embed-sr-only') { doc.text 'Search this list' }
+            doc.input(class: 'sul-embed-search-input', id: 'sul-embed-search-input', placeholder: 'Search this list')
           end
         end
       end

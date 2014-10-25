@@ -2,33 +2,59 @@
 @import 'modules/media';
 @import 'vendor/tooltip';
 
-.sul-embed-container {
-  .sul-embed-search {
+.#{$namespace}-container {
+  .#{$namespace}-search {
+    padding-top: 4px;
+
     label {
-      font-size: .7em;
-      padding-right: 5px;
+      display: none;
+    }
+    
+    .#{$namespace}-search-input {
+      @include container-padding;
+      border: 1px solid $sul-input-border;
+      border-radius: 3px;
+      width: 15em;
     }
   }
+
+  .#{$namespace}-body {
+    overflow-y: auto;
+  }
   
-  .sul-embed-body {
-    overflow-y: scroll;
+  .#{$namespace}-description {
+    color: $sul-description-font-color;
   }
-  .sul-embed-square-image {
-    max-width: 41px;
+  
+  .#{$namespace}-count {
+    color: $sul-count-font-color;
   }
-  .sul-embed-download {
+
+  .#{$namespace}-square-image {
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  .#{$namespace}-download {
     display: inline;
+    font-size: .9em;
+
     i:after {
       content: '\00a0';
     }
   }
-  .sul-embed-preview {
+
+  .#{$namespace}-preview {
+    @include padding-top;
     text-align: center;
   }
-  .sul-embed-preview-toggle {
-    margin-left: 5px;
+
+  .#{$namespace}-preview-toggle {
     cursor: pointer;
-    .sul-embed-preview-text {
+    font-size: .9em;
+    margin-left: 5px;
+    
+    .#{$namespace}-preview-text {
       margin-left: 3px;
     }
   }
