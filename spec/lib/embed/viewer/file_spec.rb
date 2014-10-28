@@ -30,7 +30,7 @@ describe Embed::Viewer::File do
       height_request = Embed::Request.new({url: 'http://purl.stanford.edu/abc123', maxheight: '400'})
       stub_request(height_request)
       viewer = Embed::Viewer::File.new(height_request)
-      expect(viewer.send(:body_height)).to eq 310
+      expect(viewer.send(:body_height)).to eq 300
     end
   end
   describe 'pretty_file_size' do
