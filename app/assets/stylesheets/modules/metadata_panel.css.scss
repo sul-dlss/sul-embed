@@ -7,36 +7,36 @@
     position: relative;
     
     .#{$namespace}-metadata-panel {
-      @include container-padding;
       background: $sul-metadata-bg;
-      border: 1px $sul-border-color solid;
+      border: none;
       bottom: 0;
       height: 300px;
       overflow: auto;
+      padding: 10px 7px;
       position: absolute;
       
       .#{$namespace}-metadata-header {
+        border-bottom: 1px solid #e3dfd5;
+        font-size: 1.1em;
         height: 30px;
+        
         .#{$namespace}-close {
           float: right;
         }
         
-        .#{$namespace}-header-title {
-          display: inline-block;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          vertical-align: middle;
-          width: 100%;
+        .#{$namespace}-metadata-title {
+          font-size: $sul-title-size;
         }
       }
       
       .#{$namespace}-metadata-section {
-        padding-bottom: 20px;
-        padding-top: 20px;
+        padding-bottom: 0px;
+        padding-top: 15px;
       }
       
       .#{$namespace}-metadata-heading {
-        color: lighten($sul-font-color, 20%);
+        color: $sul-metadata-heading-color;
+        font-size: .9em;
         text-transform: uppercase;
       }
     }

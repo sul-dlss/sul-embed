@@ -26,12 +26,23 @@
 
 // For images and videos, set to block
 .#{$namespace}-media-object {
+  border: 1px solid $sul-border-color;
+  border-radius: 3px;
   display: block;
+  height: 50px;
+  overflow: hidden;
+  text-align: center;
+  width: 50px;
+  
+  .fa-3x {
+    line-height: 50px;
+    vertical-align: middle;
+  }
 }
 
 // Reset margins on headings for tighter default spacing
 .#{$namespace}-media-heading {
-  margin: 0 0 5px;
+  margin: 0;
 }
 
 
