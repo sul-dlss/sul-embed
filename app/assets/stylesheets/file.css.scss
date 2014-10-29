@@ -47,6 +47,9 @@
   .#{$namespace}-preview {
     @include padding-top;
     text-align: center;
+    img {
+      max-width: 100%;
+    }
   }
 
   .#{$namespace}-preview-toggle {
