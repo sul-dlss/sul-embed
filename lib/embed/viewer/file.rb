@@ -18,40 +18,7 @@ module Embed
           doc.div(class: 'sul-embed-body sul-embed-file', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => "#{asset_url('file.css')}") do
             doc.div(class: 'sul-embed-file-list') do
               doc.ul(class: 'sul-embed-media-list') do
-                @purl_object.contents.each do |resource|
-                  resource.files.each do |file|
-                    doc.li(class: 'sul-embed-media') do
-                      doc.div(class: 'sul-embed-count pull-left') do
-                        doc.text file_count += 1
-                      end
-                      doc.div(class: 'sul-embed-media-object pull-left') do
-                        if file.previewable?
-                          doc.img(class: 'sul-embed-square-image',src: "#{image_url(file)}_square")
-                        else
-                          doc.i(class: "fa fa-3x #{file_type_icon(file.mimetype)}")
-                        end
-                      end
-                      doc.div(class: 'sul-embed-media-body') do
-                        doc.div(class: "sul-embed-media-heading #{'sul-embed-stanford-only' if file_is_stanford_only?(file)}") do
-                          doc.a(href: file_url(file.title), title: tooltip_text(file), 'data-sul-embed-tooltip' => file_is_stanford_only?(file)) do
-                            doc.text file.title
-                          end
-                        end
-                        doc.div(class: 'sul-embed-description') do
-                          doc.text resource.description
-                        end
-                        doc.div(class: 'sul-embed-download') do
-                          doc.i(class: 'fa fa-download')
-                          doc.a(href: file_url(file.title), download: nil) do
-                            doc.text pretty_filesize(file.size)
-                          end
-                        end
-                        preview_file_toggle(file, doc)
-                      end
-                      preview_file_window(file, doc)
-                    end
-                  end
-                end
+                file_list_html(@purl_object.contents, file_count, doc)
               end
             end
             doc.script { doc.text ";jQuery.getScript(\"#{asset_url('file.js')}\");" }
@@ -81,6 +48,48 @@ module Embed
 
       def default_body_height
         600
+      end
+      
+      def file_list_html(contents, file_count, doc)
+        if contents.count == 1
+          doc.div('data-sul-embed-pdf' => contents.first.files.first.location ) { doc.canvas(id: 'sul-embed-pdf-canvas') }
+          doc.script { doc.text ";jQuery.getScript(\"#{asset_url('pdfjs-dist/build/pdf.js')}\")" }
+        else
+          contents.each do |resource|
+            resource.files.each do |file|
+              doc.li(class: 'sul-embed-media') do
+                doc.div(class: 'sul-embed-count pull-left') do
+                  doc.text file_count += 1
+                end
+                doc.div(class: 'sul-embed-media-object pull-left') do
+                  if file.previewable?
+                    doc.img(class: 'sul-embed-square-image',src: "#{image_url(file)}_square")
+                  else
+                    doc.i(class: "fa fa-3x #{file_type_icon(file.mimetype)}")
+                  end
+                end
+                doc.div(class: 'sul-embed-media-body') do
+                  doc.div(class: "sul-embed-media-heading #{'stanford-only' if file_is_stanford_only?(file)}") do
+                    doc.a(href: file_url(file.title), title: tooltip_text(file), 'data-sul-embed-tooltip' => file_is_stanford_only?(file)) do
+                      doc.text file.title
+                    end
+                  end
+                  doc.div(class: 'sul-embed-description') do
+                    doc.text resource.description
+                  end
+                  doc.div(class: 'sul-embed-download') do
+                    doc.i(class: 'fa fa-download')
+                    doc.a(href: file_url(file.title), download: nil) do
+                      doc.text pretty_filesize(file.size)
+                    end
+                  end
+                  preview_file_toggle(file, doc)
+                end
+                preview_file_window(file, doc)
+              end
+            end
+          end
+        end
       end
 
       def preview_file_toggle(file, doc)
