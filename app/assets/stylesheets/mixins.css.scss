@@ -7,3 +7,12 @@
 @mixin padding-top {
   padding: 7px;
 }
+
+@mixin license-images($license, $asset-url) {
+  background: url(#{$asset-url}#{$license}.png) no-repeat left;
+  background: url(#{$asset-url}#{$license}.svg) no-repeat left;
+  display: inline-block;
+  height: 15px;
+  margin-right: 6px;
+  width: 80px;
+}

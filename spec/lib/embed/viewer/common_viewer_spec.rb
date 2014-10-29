@@ -29,6 +29,36 @@ describe Embed::Viewer::CommonViewer do
       expect(html).to have_css 'div.sul-embed-metadata-panel-container'
       expect(html).to have_css 'div.sul-embed-metadata-panel', visible: false
     end
+    it 'should return use and reproduction' do
+      stub_purl_response_and_request(file_purl, request)
+      html = Capybara.string(file_viewer.metadata_html)
+      expect(html).to have_content 'Use and reproduction'
+    end
+    it 'should not return use and reproduction' do
+      stub_purl_response_and_request(image_purl, request)
+      html = Capybara.string(file_viewer.metadata_html)
+      expect(html).to_not have_content 'Use and reproduction'
+    end
+    it 'should return copyright' do
+      stub_purl_response_and_request(image_purl, request)
+      html = Capybara.string(file_viewer.metadata_html)
+      expect(html).to have_content 'Copyright'
+    end
+    it 'should not return copyright' do
+      stub_purl_response_and_request(file_purl, request)
+      html = Capybara.string(file_viewer.metadata_html)
+      expect(html).to_not have_content 'Copyright'
+    end
+    it 'should return license' do
+      stub_purl_response_and_request(file_purl, request)
+      html = Capybara.string(file_viewer.metadata_html)
+      expect(html).to have_content 'License'
+    end
+    it 'should not return license' do
+      stub_purl_response_and_request(image_purl, request)
+      html = Capybara.string(file_viewer.metadata_html)
+      expect(html).to_not have_content 'License'
+    end
   end
   describe 'footer_html' do
     it 'should return the objects footer' do

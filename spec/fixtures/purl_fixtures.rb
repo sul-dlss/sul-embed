@@ -28,6 +28,8 @@ module PURLFixtures
             <human type="useAndReproduction">
               You can use this.
             </human>
+            <machine type="creativeCommons">by-nc</machine>
+            <human type="creativeCommons">CC Attribution Non-Commercial license</human>
           </use>
         </rightsMetadata>
       </publicObject>
@@ -58,6 +60,11 @@ module PURLFixtures
               <world/>
             </machine>
           </access>
+          <copyright>
+            <human type="copyright">
+              Copyright © 1976 The Board of Trustees of the Leland Stanford Junior University. All rights reserved.
+            </human>
+          </copyright>
         </rightsMetadata>
       </publicObject>
     XML
@@ -219,6 +226,10 @@ module PURLFixtures
               <world/>
             </machine>
           </access>
+          <use>
+            <human type="openDataCommons">ODC-By Attribution License</human>
+            <machine type="openDataCommons">odc-by</machine>
+          </use>
         </rightsMetadata>
       </publicObject>
     XML
