@@ -32,7 +32,7 @@ module Embed
       end
 
       def default_body_height
-        300
+        500
       end
 
       def self.supported_types

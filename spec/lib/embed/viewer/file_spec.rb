@@ -22,9 +22,9 @@ describe Embed::Viewer::File do
     end
   end
   describe 'body_height' do
-    it 'should default to 600' do
+    it 'should default to 400 minus the footer and header height' do
       stub_request(request)
-      expect(file_viewer.send(:body_height)).to eq 600
+      expect(file_viewer.send(:body_height)).to eq 302
     end
     it 'consumer requested maxheight minus the header/footer height' do
       height_request = Embed::Request.new({url: 'http://purl.stanford.edu/abc123', maxheight: '400'})
