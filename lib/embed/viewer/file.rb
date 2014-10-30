@@ -83,7 +83,7 @@ module Embed
       end
 
       def default_body_height
-        600
+        400 - (header_height + footer_height)
       end
 
       def preview_file_toggle(file, doc, file_count)

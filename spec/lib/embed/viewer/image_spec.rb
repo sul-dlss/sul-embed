@@ -32,6 +32,11 @@ describe Embed::Viewer::Image do
       expect(image_viewer.iiif_info_url(image)).to eq 'https://stacks.stanford.edu/image/iiif/12345%252FTitle_of_the_image/info.json'
     end
   end
+  describe 'body height' do
+    it 'should default to 500' do
+      expect(image_viewer.send(:body_height)).to eq 500
+    end
+  end
   describe 'body_html' do
     it 'should return image(s) list' do
       expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
