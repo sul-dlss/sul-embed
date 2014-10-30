@@ -4,15 +4,13 @@
   var Module = (function() {
 
     var mediaObjectList,
-      itemCount = $("<div class='sul-embed-item-count'></div>"),
+      itemCount = $(".sul-embed-item-count"),
       options = {
         listClass: "sul-embed-media-list",
         page: 99999,
         searchClass: "sul-embed-search-input",
         valueNames: [ "sul-embed-media-heading", "sul-embed-description" ]
       };
-
-    $(".sul-embed-footer").prepend(itemCount);
 
     return {
       init: function() {
