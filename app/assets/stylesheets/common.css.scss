@@ -35,6 +35,15 @@
       vertical-align: middle;
       width: 100%;
     }
+    
+    h2.#{$namespace}-item-count {
+      display: inline;
+      font-size: $font-size-base;
+      font-weight: normal;
+      float: left;
+      padding-right: 8px;
+      padding-top: 8px;
+    }
   }
 
   .#{$namespace}-body {
@@ -45,13 +54,6 @@
     background: $sul-background;
     min-height: 40px;
     position: relative;
-    
-    .#{$namespace}-item-count {
-      float: left;
-      padding-left: 7px;
-      padding-top: 12px;
-      padding-right: 8px;
-    }
 
     .#{$namespace}-purl-link {
       @include container-padding;

@@ -5,7 +5,7 @@ module Embed
 
       def initialize(*args)
         super
-        header_tools_logic << :file_search_logic
+        header_tools_logic << :file_count_logic << :file_search_logic
       end
 
       def self.default_viewer?
@@ -43,10 +43,13 @@ module Embed
                         doc.div(class: 'sul-embed-download') do
                           doc.i(class: 'fa fa-download')
                           doc.a(href: file_url(file.title), download: nil) do
+                            doc.span(class: 'sul-embed-sr-only') do
+                              doc.text "Download item #{file_count}"
+                            end
                             doc.text pretty_filesize(file.size)
                           end
                         end
-                        preview_file_toggle(file, doc)
+                        preview_file_toggle(file, doc, file_count)
                       end
                       preview_file_window(file, doc)
                     end
@@ -83,13 +86,16 @@ module Embed
         600
       end
 
-      def preview_file_toggle(file, doc)
+      def preview_file_toggle(file, doc, file_count)
         if file.previewable?
           doc.span(class: 'sul-embed-preview-toggle', 'data-sul-embed-file-preview-toggle' => 'true') do
             doc.i(class: 'fa fa-toggle-right')
             doc.span(class: 'sul-embed-preview-text') do
-              doc.a(href: '#', 'data-sul-embed-file-preview-toggle-text' => 'true') do
+              doc.a(href: '#', 'data-sul-embed-file-preview-toggle-text' => 'true', 'aria-expanded' => false) do
                 doc.text('Preview')
+                doc.span(class: 'sul-embed-sr-only') do
+                  doc.text " item #{file_count}"
+                end
               end
             end
           end
@@ -97,7 +103,7 @@ module Embed
       end
       def preview_file_window(file, doc)
         if file.previewable?
-          doc.div(style: 'display: none;', class: 'sul-embed-preview', 'data-sul-embed-file-preview-window' => 'true') do
+          doc.div(style: 'display: none;', class: 'sul-embed-preview', 'data-sul-embed-file-preview-window' => 'true', 'aria-hidden' => true) do
             doc.img(src: "#{image_url(file)}_thumb")
           end
         end
@@ -125,12 +131,18 @@ module Embed
       end
 
       def file_search_html(doc)
-        doc.div(class: 'sul-embed-header-tools') do
-          doc.div(class: 'sul-embed-search') do
-            doc.label(for: 'sul-embed-search-input', class: 'sul-embed-sr-only') { doc.text 'Search this list' }
-            doc.input(class: 'sul-embed-search-input', id: 'sul-embed-search-input', placeholder: 'Search this list')
-          end
+        doc.div(class: 'sul-embed-search') do
+          doc.label(for: 'sul-embed-search-input', class: 'sul-embed-sr-only') { doc.text 'Search this list' }
+          doc.input(class: 'sul-embed-search-input', id: 'sul-embed-search-input', placeholder: 'Search this list')
         end
+      end
+
+      def file_count_logic
+        :file_count_html
+      end
+
+      def file_count_html(doc)
+        doc.h2(class: 'sul-embed-item-count', 'aria-live' => 'polite') {}
       end
     end
   end

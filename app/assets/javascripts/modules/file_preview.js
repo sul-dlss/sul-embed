@@ -30,11 +30,15 @@
         }
       },
       togglePreviewText: function(preview) {
-        var text = $('[data-sul-embed-file-preview-toggle-text="true"]', preview);
-        if(text.text() == "Preview") {
-          text.text("Close preview")
-        }else{
-          text.text("Preview")
+        var content = $('[data-sul-embed-file-preview-toggle-text="true"]', preview),
+          text = content.text(),
+          srText = text.substring(text.indexOf("item"), text.length);
+        if (text.indexOf("Preview") > -1) {
+          content.html("Close preview <span class='sul-embed-sr-only'> " + srText + "</span>");
+          content.attr("aria-expanded", true);
+        }else {
+          content.html("Preview <span class='sul-embed-sr-only'> " + srText + "</span>");
+          content.attr("aria-expanded", false);
         }
       },
       togglePreviewWindow: function(preview) {
@@ -42,8 +46,10 @@
         var icon = $('.fa', preview);
         if(icon.hasClass('fa-toggle-down')) {
           previewWindow.slideDown();
-        }else{
+          previewWindow.attr("aria-hidden", false);
+        }else {
           previewWindow.slideUp();
+          previewWindow.attr("aria-hidden", true);
         }
       }
     };
