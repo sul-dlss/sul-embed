@@ -168,7 +168,7 @@ module Embed
         end
       end
       def footer_height
-        30
+        40
       end
       def calculate_height
         return nil unless body_height
