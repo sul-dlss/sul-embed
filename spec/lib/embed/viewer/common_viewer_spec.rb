@@ -20,6 +20,7 @@ describe Embed::Viewer::CommonViewer do
       stub_request(request)
       html = Capybara.string(file_viewer.header_html)
       expect(html).to_not have_css '.sul-embed-header-title'
+      expect(html).to_not have_css '.sul-embed-metadata-title'
     end
   end
   describe 'metadata_html' do
