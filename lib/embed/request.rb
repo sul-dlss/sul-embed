@@ -28,6 +28,10 @@ module Embed
       params[:hide_title] && params[:hide_title] == "true"
     end
 
+    def hide_metadata?
+      params[:hide_metadata] && params[:hide_metadata] == 'true'
+    end
+
     def object_druid
       url[/\w*$/]
     end
