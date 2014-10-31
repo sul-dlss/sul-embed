@@ -2,7 +2,7 @@
 @import 'mixins';
 
 .#{$namespace}-container {
-  .sul-embed-metadata-panel-container {
+  .#{$namespace}-metadata-panel-container {
     height: 0px;
     position: relative;
     
@@ -14,6 +14,7 @@
       overflow: auto;
       padding: 10px 7px;
       position: absolute;
+      width: 100%;
       
       .#{$namespace}-metadata-header {
         border-bottom: 1px solid #e3dfd5;
@@ -26,6 +27,9 @@
         
         .#{$namespace}-metadata-title {
           font-size: $sul-title-size;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
       

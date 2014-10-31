@@ -64,8 +64,10 @@ module Embed
                   doc.span('aria-hidden' => true, class: 'fa fa-close') {}
                   doc.span(class: 'sul-embed-sr-only') { doc.text "Close" }
                 end
-                doc.div(class: 'sul-embed-metadata-title') do
-                  doc.text @purl_object.title
+                unless @request.hide_title?
+                  doc.div(class: 'sul-embed-metadata-title') do
+                    doc.text @purl_object.title
+                  end
                 end
               end
               doc.div(class: 'sul-embed-metadata-body') do
