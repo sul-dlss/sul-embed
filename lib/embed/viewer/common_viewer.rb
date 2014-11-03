@@ -28,7 +28,7 @@ module Embed
       end
 
       def to_html
-        "<div class='sul-embed-container' id='sul-embed-object' style='display:none; #{container_styles}'>" << header_html << body_html << metadata_html << footer_html << '</div>'
+        "<div class='sul-embed-container' id='sul-embed-object' style='display:none; #{container_styles}'>" << header_html << body_html << metadata_html << embed_this_html << footer_html << '</div>'
       end
 
       def header_html
@@ -46,6 +46,9 @@ module Embed
               unless @request.hide_metadata?
                 doc.button(class: 'sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-info-circle', 'data-toggle' => 'sul-embed-metadata-panel')
               end
+              unless @request.hide_embed_this?
+                doc.button(class: 'sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-share-alt', 'data-toggle' => 'sul-embed-embed-this-panel')
+              end
             end
             doc.div(class: 'sul-embed-purl-link') do
               doc.img(class: 'sul-embed-rosette', src: asset_url('sul-rosette.png'))
@@ -60,18 +63,18 @@ module Embed
       def metadata_html
         unless @request.hide_metadata?
           Nokogiri::HTML::Builder.new do |doc|
-            doc.div(class: 'sul-embed-metadata-panel-container') do
-              doc.div(class: 'sul-embed-metadata-panel', style: 'display:none;') do
-                doc.div(class: 'sul-embed-metadata-header') do
+            doc.div(class: 'sul-embed-panel-container') do
+              doc.div(class: 'sul-embed-panel sul-embed-metadata-panel', style: 'display:none;') do
+                doc.div(class: 'sul-embed-panel-header') do
                   doc.button(class: 'sul-embed-close', 'data-toggle' => 'sul-embed-metadata-panel') do
                     doc.span('aria-hidden' => true, class: 'fa fa-close') {}
                     doc.span(class: 'sul-embed-sr-only') { doc.text "Close" }
                   end
-                  doc.div(class: 'sul-embed-metadata-title') do
+                  doc.div(class: 'sul-embed-panel-title') do
                     doc.text @purl_object.title
                   end
                 end
-                doc.div(class: 'sul-embed-metadata-body') do
+                doc.div(class: 'sul-embed-panel-body') do
                   if @purl_object.use_and_reproduction.present?
                     doc.div(class: 'sul-embed-metadata-section') do
                       doc.div(class: 'sul-embed-metadata-heading') do
@@ -95,6 +98,57 @@ module Embed
                       end
                       doc.span(class: "sul-embed-license-#{@purl_object.license[:machine]}")
                       doc.text @purl_object.license[:human]
+                    end
+                  end
+                end
+              end
+            end
+          end.to_html
+        else
+          ''
+        end
+      end
+
+      def embed_this_html
+        unless @request.hide_embed_this?
+          Nokogiri::HTML::Builder.new do |doc|
+            doc.div(class: 'sul-embed-panel-container') do
+              doc.div(class: 'sul-embed-panel sul-embed-embed-this-panel', style: 'display:none;') do
+                doc.div(class: 'sul-embed-panel-header') do
+                  doc.button(class: 'sul-embed-close', 'data-toggle' => 'sul-embed-embed-this-panel') do
+                    doc.span('aria-hidden' => true, class: 'fa fa-close') {}
+                    doc.span(class: 'sul-embed-sr-only') { doc.text "Close" }
+                  end
+                  doc.div(class: 'sul-embed-panel-title') do
+                    doc.text "Embed"
+                  end
+                end
+                doc.div(class: 'sul-embed-panel-body') do
+                  doc.div(class: 'sul-embed-embed-this-form') do
+                    doc.span(class: 'sul-embed-options-label') do
+                      doc.text "Select options:"
+                    end
+                    doc.div(class: 'sul-embed-section') do
+                      doc.input(type: 'checkbox', id: 'title', checked: true)
+                      doc.label(for: 'title') { doc.text("title (#{@purl_object.title})") }
+                    end
+                    if self.is_a?(Embed::Viewer::File)
+                      doc.div(class: 'sul-embed-section') do
+                        doc.input(type: 'checkbox', id: 'search', checked: true)
+                        doc.label(for: 'search') { doc.text("search") }
+                      end
+                    end
+                    doc.div(class: 'sul-embed-section') do
+                      doc.input(type: 'checkbox', id: 'embed', checked: true)
+                      doc.label(for: 'embed') { doc.text("embed") }
+                    end
+                    doc.div do
+                      doc.div do
+                        doc.label(for: 'iframe-code') { doc.text("Embed code:") }
+                      end
+                      doc.textarea(id: 'iframe-code', 'data-behavior' => 'iframe-code', rows: 4) do
+                        doc.text("<iframe src='#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{@purl_object.druid}' height='#{height}px' width='#{width || height}px' frameborder='0'></iframe>")
+                      end
                     end
                   end
                 end

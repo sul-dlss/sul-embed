@@ -27,7 +27,7 @@ describe Embed::Viewer::CommonViewer do
     it 'should return the metadata panel html' do
       stub_purl_response_and_request(file_purl, request)
       html = Capybara.string(file_viewer.metadata_html)
-      expect(html).to have_css 'div.sul-embed-metadata-panel-container'
+      expect(html).to have_css 'div.sul-embed-panel-container'
       expect(html).to have_css 'div.sul-embed-metadata-panel', visible: false
     end
     it 'should return use and reproduction' do
@@ -79,23 +79,23 @@ describe Embed::Viewer::CommonViewer do
   end
   describe 'to_html' do
     it 'should return html that has header, body, and footer wrapped in a container' do
-      stub_request(request)
+      stub_purl_response_and_request(file_purl, request)
       expect(file_viewer).to receive(:body_html).and_return('<div class="sul-embed-body"></div>')
       expect(file_viewer).to receive(:header_html).and_return('<div class="sul-embed-header"></div>')
-      expect(file_viewer).to receive(:metadata_html).and_return('<div class="sul-embed-metadata-container"></div>')
+      expect(file_viewer).to receive(:metadata_html).and_return('<div class="sul-embed-panel-container"></div>')
       expect(file_viewer).to receive(:footer_html).and_return('<div class="sul-embed-footer"></div>')
       html = Capybara.string(file_viewer.to_html)
       # visible false because we display:none the container until we've loaded the CSS.
       expect(html).to have_css 'div.sul-embed-container', visible: false
       expect(html).to have_css 'div.sul-embed-body', visible: false
       expect(html).to have_css 'div.sul-embed-header', visible: false
-      expect(html).to have_css 'div.sul-embed-metadata-container', visible: false
+      expect(html).to have_css 'div.sul-embed-panel-container', visible: false
       expect(html).to have_css 'div.sul-embed-footer', visible: false
     end
     it 'should include the height/width style in the container if maxheight/width is passed' do
       expect(request).to receive(:maxheight).at_least(:once).and_return(200)
       expect(request).to receive(:maxwidth).at_least(:once).and_return(200)
-      stub_request(request)
+      stub_purl_response_and_request(file_purl, request)
       expect(file_viewer).to receive(:body_html).and_return('<div class="sul-embed-body"></div>')
       expect(file_viewer).to receive(:header_html).and_return('<div class="sul-embed-header"></div>')
       expect(file_viewer).to receive(:metadata_html).and_return('<div class="sul-embed-metadata-panel"></div>')
