@@ -22,14 +22,26 @@ describe Embed::Viewer::Image do
     let(:image) { Embed::PURL.new('12345').contents.first.files.first }
     it 'should return an image id' do
       expect(request).to receive(:purl_object).and_return(nil)
-      expect(image_viewer.image_id(image)).to eq 'Title_of_the_image'
+      expect(image_viewer.image_id(image)).to eq 'image_001'
     end
   end
-  describe 'iiif_info_url' do
-    let(:image) { Embed::PURL.new('12345').contents.first.files.first }
-    it 'should return an IIIF info.json URL' do
-      stub_purl_response_and_request(image_purl, request)
-      expect(image_viewer.iiif_info_url(image)).to eq 'https://stacks.stanford.edu/image/iiif/12345%252FTitle_of_the_image/info.json'
+  describe 'iiif_image_id' do
+    before { stub_purl_response_with_fixture(image_purl) }
+    let(:image) { Embed::PURL.new('abc123').contents.first.files.first }
+    it 'should return an IIIF image id' do
+      expect(image_viewer.iiif_image_id(image)).to eq 'abc123%252Fimage_001'
+    end
+  end
+  describe 'iiif_image_ids' do
+    before { stub_purl_response_with_fixture(image_purl) }
+    let(:contents) { Embed::PURL.new('abc123').contents }
+    it 'should return an IIIF image ids' do
+      expect(image_viewer.iiif_image_ids(contents)).to eq ["abc123%252Fimage_001", "abc123%252Fimage_002"]
+    end
+  end
+  describe 'iiif_server' do
+    it 'should return an IIIF server URL' do
+      expect(image_viewer.iiif_server()).to eq 'https://stacks.stanford.edu/image/iiif'
     end
   end
   describe 'body height' do
@@ -45,13 +57,13 @@ describe Embed::Viewer::Image do
       html = Capybara.string(image_viewer.to_html)
       # visible false because we display:none the container until we've loaded the CSS.
       expect(html).to have_css '.sul-embed-image-list', visible: false
-      expect(html).to have_css '#osd-Title_of_the_image.sul-embed-osd', visible: false
+      expect(html).to have_css '.sul-embed-iiif-osd', visible: false
 
-      within '.sul-embed-osd-toolbar' do
-        expect(html).to have_css '#osd-Title_of_the_image-zoom-in.fa.fa-plus-circle'
-        expect(html).to have_css '#osd-Title_of_the_image-zoom-out.fa.fa-minus-circle'
-        expect(html).to have_css '#osd-Title_of_the_image-home.fa.fa-rotate'
-        expect(html).to have_css '#osd-Title_of_the_image-full-page.fa.fa-expand'
+      within '.sul-embed-iiif-osd' do
+        expect(html).to have_css '.iov .iov-menu-bar'
+        expect(html).to have_css '.iov .iov-list-view'
+        expect(html).to have_css '.iov .iov-gallery-view'
+        expect(html).to have_css '.iov .iov-horizontal-view'
       end
     end
   end

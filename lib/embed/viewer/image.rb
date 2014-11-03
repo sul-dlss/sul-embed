@@ -5,18 +5,10 @@ module Embed
 
       def body_html
         Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-body sul-embed-file', 'data-sul-embed-theme' => "#{asset_url('image.css')}") do
+          doc.div(class: 'sul-embed-body sul-embed-file', 'data-sul-embed-theme' => "#{asset_url('image.css')}", 'data-plugin-styles' => "#{asset_url('iiifOsdViewer.css')}") do
             doc.div(class: 'sul-embed-image-list') do
-              image = @purl_object.contents.first.files.first
-              image_id = image_id(image)
-              doc.div(class: 'sul-embed-osd', style: "#{('height: ' + body_height.to_s + 'px') if body_height}", id: "osd-#{image_id}", 'data-iiif-info-url' => "#{iiif_info_url(image)}") do
-                doc.div(class: 'sul-embed-osd-toolbar') do
-                  doc.i(class: 'fa fa-plus-circle', id: "osd-#{image_id}-zoom-in")
-                  doc.i(class: 'fa fa-minus-circle', id: "osd-#{image_id}-zoom-out")
-                  doc.i(class: 'fa fa-repeat', id: "osd-#{image_id}-home")
-                  doc.i(class: 'fa fa-expand', id: "osd-#{image_id}-full-page")
-                end
-              end
+              height = body_height ? ('height: ' + body_height.to_s + 'px') : ""
+              doc.div(class: 'sul-embed-iiif-osd', style: "#{height}", 'data-iiif-image-ids' => "#{iiif_image_ids(@purl_object.contents).join(',')}", 'data-iiif-server' => "#{iiif_server()}")
             end
             doc.script { doc.text ";jQuery.getScript(\"#{asset_url('image.js')}\");" }
           end
@@ -27,8 +19,24 @@ module Embed
         ::File.basename(image.title, ::File.extname(image.title))
       end
 
-      def iiif_info_url(image)
-        "#{Settings.iiif_stacks_url}/image/iiif/#{@purl_object.druid}%252F#{image_id(image)}/info.json"
+      def iiif_image_id(image)
+        @purl_object.druid + '%252F' + image_id(image)
+      end
+
+      def iiif_image_ids(contents)
+        iiif_image_ids = []
+
+        contents.each do |resource|
+          resource.files.each do |image|
+            iiif_image_ids.push(iiif_image_id(image))
+          end
+        end
+
+        iiif_image_ids
+      end
+
+      def iiif_server
+        "#{Settings.iiif_stacks_url}/image/iiif"
       end
 
       def default_body_height

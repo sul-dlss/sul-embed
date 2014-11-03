@@ -44,8 +44,14 @@ module PURLFixtures
         <contentMetadata type="image">
           <resource sequence="1" type="image">
             <label>Image1</label>
-            <file size="12345" mimetype="image/jp2" id="Title_of_the_image.jp2">
+            <file size="12345" mimetype="image/jp2" id="image_001.jp2">
               <imageData height="123" width="321" />
+            </file>
+          </resource>
+          <resource sequence="2" type="image">
+            <label>Image2</label>
+            <file size="23456" mimetype="image/jp2" id="image_002.jp2">
+              <imageData height="246" width="123" />
             </file>
           </resource>
         </contentMetadata>
