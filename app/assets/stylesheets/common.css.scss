@@ -12,6 +12,11 @@
   font-size: $font-size-base;
   overflow-y: hidden;
 
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
   a,
   a:hover,
   a:focus {

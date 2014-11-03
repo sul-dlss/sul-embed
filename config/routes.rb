@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   get 'embed' => 'embed#get'
 
+  get 'iframe' => 'embed#iframe'
+
   unless Rails.env.production?
     get '/pages/*id' => 'pages#show', as: :page, format: false
   end

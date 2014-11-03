@@ -27,4 +27,38 @@ describe EmbedController do
       expect(response.status).to eq(200)
     end
   end
+  describe 'GET iframe' do
+    it 'has a 400 status code without url params' do
+      get :iframe
+      expect(response.status).to eq(400)
+    end
+    it 'has a 404 status code without matched url scheme params' do
+      get :iframe, url: 'http://www.example.com'
+      expect(response.status).to eq(404)
+    end
+    it 'has a 404 status code without a druid in the URL' do
+      get :iframe, url: 'http://purl.stanford.edu/'
+      expect(response.status).to eq(404)
+    end
+    it 'has a 404 status for a PURL object that does not exists' do
+      get :iframe, url: 'http://purl.stanford.edu/abc123notanobject'
+      expect(response.status).to eq(404)
+    end
+    it 'has a 501 status code for an invalid format' do
+      get :iframe, url: 'http://purl.stanford.edu/abc123', format: 'yml'
+      expect(response.status).to eq(501)
+    end
+    it 'should not have an X-Frame-Options in the headers (so embedding in an iframe is allowed)' do
+      get :iframe, url: 'http://purl.stanford.edu/fn662rv4961'
+      expect(response.headers['X-Frame-Options']).to be_nil
+    end
+    it 'should return HTML' do
+      get :iframe, url: 'http://purl.stanford.edu/fn662rv4961'
+      expect(response.status).to eq(200)
+      body = Capybara.string(response.body)
+      expect(body).to have_css("html")
+      expect(body).to have_css("body")
+      expect(body).to have_css(".sul-embed-header", visible: false)
+    end
+  end
 end
