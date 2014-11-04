@@ -5,7 +5,7 @@
   .#{$namespace}-metadata-panel-container {
     height: 0px;
     position: relative;
-    
+
     .#{$namespace}-metadata-panel {
       background: $sul-metadata-bg;
       border: none;
@@ -15,16 +15,17 @@
       padding: 10px 7px;
       position: absolute;
       width: 100%;
-      
+      z-index: 2000;
+
       .#{$namespace}-metadata-header {
         border-bottom: 1px solid #e3dfd5;
         font-size: 1.1em;
         height: 30px;
-        
+
         .#{$namespace}-close {
           float: right;
         }
-        
+
         .#{$namespace}-metadata-title {
           font-size: $sul-title-size;
           overflow: hidden;
@@ -32,12 +33,12 @@
           white-space: nowrap;
         }
       }
-      
+
       .#{$namespace}-metadata-section {
         padding-bottom: 0px;
         padding-top: 15px;
       }
-      
+
       .#{$namespace}-metadata-heading {
         color: $sul-metadata-heading-color;
         font-size: .9em;
@@ -45,31 +46,31 @@
       }
     }
   }
-  
+
   .#{$namespace}-license-by {
     @include license-images("by", $asset_url)
   }
-  
+
   .#{$namespace}-license-by-sa {
     @include license-images("by-sa", $asset_url)
   }
-  
+
   .#{$namespace}-license-by-nd {
     @include license-images("by-nd", $asset_url)
   }
-  
+
   .#{$namespace}-license-by-nc {
     @include license-images("by-nc", $asset_url)
   }
-  
+
   .#{$namespace}-license-by-nc-sa {
     @include license-images("by-nc-sa", $asset_url)
   }
-  
+
   .#{$namespace}-license-by-nc-nd {
     @include license-images("by-nc-nd", $asset_url)
   }
-  
+
   .#{$namespace}-license-pdm {
     @include license-images("pdm", $asset_url)
   }
