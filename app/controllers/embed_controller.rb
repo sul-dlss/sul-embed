@@ -1,5 +1,6 @@
 class EmbedController < ApplicationController
   before_action :validate_request
+  before_filter :allow_iframe, only: :iframe
 
   def get
     if @embed_request.format.to_sym == :xml
@@ -7,6 +8,10 @@ class EmbedController < ApplicationController
     else
       render json: Embed::Response.new(@embed_request).embed_hash
     end
+  end
+
+  def iframe
+    render html: "<html><head><script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script></head><body>#{Embed::Response.new(@embed_request).html}</body></html>".html_safe
   end
 
   def validate_request
@@ -28,4 +33,11 @@ class EmbedController < ApplicationController
   rescue_from Embed::Request::InvalidFormat do |e|
     render body: e.to_s, status: 501
   end
+
+  private
+
+  def allow_iframe
+    response.headers.delete('X-Frame-Options')
+  end
+
 end
