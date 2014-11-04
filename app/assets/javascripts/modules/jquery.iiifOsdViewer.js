@@ -27,7 +27,6 @@
           $viewer = $('<div>').addClass('iov'),
           $menuBar, $menuControls, $selectViews,
           views = {},
-          currentView,
           osd;
 
       $menuControls = $([
@@ -45,22 +44,23 @@
       $parent.append($viewer);
       init();
 
+
       function init() {
         config.defaultView = config.defaultView || config.availableViews[0];
         config.totalImages = 0;
-        currentView = config.defaultView;
+        config.currentView = config.defaultView;
 
-        $.each(config.images, function(index, collection) {
-          config.totalImages += collection.ids.length || 0;
+        $.each(config.data, function(index, collection) {
+          config.totalImages += collection.images.length || 0;
         });
 
         addMenuBar();
         attachEvents();
         initializeViews();
-
-        views[currentView].show();
-        $selectViews.val(currentView);
+        views[config.currentView].load();
+        $selectViews.val(config.currentView);
       }
+
 
       function addMenuBar() {
         $.each(config.availableViews, function(index, view) {
@@ -78,13 +78,20 @@
         $.each(config.availableViews, function(index, view) {
           views[view] = iovViews[view]($viewer, config);
 
-          $viewer.append(views[view].html);
+          $viewer.append(views[view].html());
           views[view].hide();
         });
       }
 
-      function jumpTo(view, hashCode) {
+      function jumpTo(view) {
+        return function(_, hashCode) {
+          hideAllViews();
 
+          views[view].show();
+          views[view].jumpToImg(hashCode);
+          $selectViews.val(view);
+          config.currentView = view;
+        }
       }
 
       function attachEvents() {
@@ -98,22 +105,20 @@
 
           if ($fullscreen.length && $fullscreen.hasClass('iov')) {
             $ctrlFullScreen.removeClass('fa-expand').addClass('fa-compress');
-
           } else {
             $ctrlFullScreen.removeClass('fa-compress').addClass('fa-expand');
           }
 
-          if (currentView === 'horizontal') {
-            views[currentView].resize();
+          if (config.currentView === 'horizontal') {
+            views[config.currentView].resize();
           }
-
         });
 
         $selectViews.on('change', function() {
-          currentView = $(this).val();
+          config.currentView = $(this).val();
 
           hideAllViews();
-          views[currentView].show();
+          views[config.currentView].load();
         });
       }
 
@@ -149,6 +154,8 @@
       function fullscreenElement() {
         return (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement);
       }
+
+      $.subscribe('iov-jump-to-list-view', jumpTo('list'));
 
     });
 
@@ -199,14 +206,14 @@
       }
 
       function loadListViewThumbs() {
-        $.each(config.images, function(index, collection) {
-          $.each(collection.ids, function(index, id) {
-            var imgUrl = getIiifImageUrl(collection.iiifServer, id, config.listView.thumbsWidth, null),
-                infoUrl = getIiifInfoUrl(collection.iiifServer, id),
+        $.each(config.data, function(index, collection) {
+          $.each(collection.images, function(index, image) {
+            var imgUrl = getIiifImageUrl(collection.iiifServer, image.id, config.listView.thumbsWidth, null),
+                infoUrl = getIiifInfoUrl(collection.iiifServer, image.id),
                 $imgItem = $('<li>');
 
             $imgItem
-              .data('iov-list-view-id', hashCode(id))
+              .addClass('iov-list-view-id-' + hashCode(image.id))
               .data('iiif-info-url', infoUrl);
 
             $thumbsList.append($imgItem.append('<a href="javascript:;"><img src="' + imgUrl + '"></a> '));
@@ -238,13 +245,27 @@
           });
         }
 
+        scrollThumbsViewport($imgItem);
+      }
+
+      function scrollThumbsViewport($imgItem) {
+        var scrollTo = 0,
+            top = $imgItem.position().top;
+
+        if (typeof top !== 'undefined') {
+          scrollTo = top - Math.round($thumbsViewport.height()/2) + Math.round($imgItem.height()/2) - 10; // 10 = padding
+
+          $thumbsViewport.animate({
+            scrollTop: scrollTo
+          }, 250);
+        }
       }
 
       function jumpToImg(hashCode) {
-        var $imgItem = $thumbsList.find('[data-iov-list-view-id=="' + hashCode + '"]');
+        var $imgItem = $thumbsList.find('.iov-list-view-id-' + hashCode);
 
-        if ($imgItem.length > 0) {
-          loadOsdInstanceg($imgItem);
+        if ($imgItem.length) {
+          $imgItem.click();
         }
       }
 
@@ -264,6 +285,11 @@
         },
 
         show: function() {
+          $listViewControls.show();
+          $listView.show();
+        },
+
+        load: function() {
           $listViewControls.show();
           $listView.show();
           $thumbsList.find('li[data-iov-list-view-id!=""]')[0].click();
@@ -294,19 +320,19 @@
       }
 
       function loadGalleryViewThumbs() {
-        $.each(config.images, function(index, collection) {
-          $.each(collection.ids, function(index, id) {
-            var imgUrl = getIiifImageUrl(collection.iiifServer, id, null, config.galleryView.thumbsHeight),
+        $.each(config.data, function(index, collection) {
+          $.each(collection.images, function(index, image) {
+            var imgUrl = getIiifImageUrl(collection.iiifServer, image.id, null, config.galleryView.thumbsHeight),
                 $imgItem = $('<li>');
 
-            $imgItem.data('iov-gallery-view-id', hashCode(id));
-            $thumbsList.append($imgItem.append('<img src="' + imgUrl + '">'));
+            $imgItem.data('iov-gallery-view-id', hashCode(image.id));
+            $thumbsList.append($imgItem.append('<a href="javascript:;"><img src="' + imgUrl + '"></a>'));
 
-            // if ($.inArray('list', config.availableViews) !== -1) {
-            //   $imgItem.on('click', function() {
-            //     jumpTo('list', $(this).data('iov-gallery-view-id'));
-            //   });
-            // }
+            if ($.inArray('list', config.availableViews) !== -1) {
+              $imgItem.on('click', function() {
+                $.publish('iov-jump-to-list-view', $(this).data('iov-gallery-view-id'));
+              });
+            }
           });
         });
 
@@ -327,10 +353,13 @@
           $galleryView.show();
         },
 
+        load: function() {
+          $galleryView.show();
+        },
+
         resize: function() {
 
         }
-
       };
     }
 
@@ -350,16 +379,25 @@
       }
 
       function loadHorizontalImageStubs() {
-        $.each(config.images, function(index, collection) {
-          $.each(collection.ids, function(index, id) {
+        $.each(config.data, function(index, collection) {
+          $.each(collection.images, function(index, image) {
             var $imgItem = $('<li>');
 
             $imgItem
-              .data('iov-horizontal-view-id', hashCode(id))
+              .data('iov-horizontal-view-id', hashCode(image.id))
+              .data('iov-height', image.height)
+              .data('iov-width', image.width)
               .data('iov-iiif-server', collection.iiifServer)
-              .data('iov-iiif-image-id', id);
+              .data('iov-iiif-image-id', image.id);
 
-            $imgsList.append($imgItem.append('<img src="">'));
+            $imgsList.append($imgItem.append('<a href="javascript:;"><img src=""></a>'));
+
+            if ($.inArray('list', config.availableViews) !== -1) {
+              $imgItem.on('click', function() {
+                $.publish('iov-jump-to-list-view', $(this).data('iov-horizontal-view-id'));
+              });
+            }
+
           });
         });
 
@@ -367,7 +405,8 @@
       }
 
       function loadHorizontalViewImages() {
-        var height0,
+        var height,
+            imgsListWidth = 0,
             imgsList = $imgsList.find('li[data-horizontal-view-id!=""]');
 
         $viewport.detach();
@@ -381,8 +420,10 @@
               imgUrl = getIiifImageUrl(iiifServer, id, null, height);
 
           $imgItem.find('img').attr('src', imgUrl);
+          imgsListWidth += Math.round(($imgItem.data('iov-width') * height) / $imgItem.data('iov-height')) + 10;
         });
 
+        $imgsList.width(imgsListWidth);
         $horizontalView.append($viewport);
       }
 
@@ -401,6 +442,11 @@
           loadHorizontalViewImages();
         },
 
+        load: function() {
+          $horizontalView.show();
+          loadHorizontalViewImages();
+        },
+
         resize: function() {
           loadHorizontalViewImages();
         }
@@ -412,5 +458,30 @@
 
 
 
-
 })( jQuery );
+
+/*
+ * jQuery Tiny Pub/Sub
+ * https://github.com/cowboy/jquery-tiny-pubsub
+ *
+ * Copyright (c) 2013 "Cowboy" Ben Alman
+ * Licensed under the MIT license.
+ */
+
+(function($) {
+
+  var o = $({});
+
+  $.subscribe = function() {
+    o.on.apply(o, arguments);
+  };
+
+  $.unsubscribe = function() {
+    o.off.apply(o, arguments);
+  };
+
+  $.publish = function() {
+    o.trigger.apply(o, arguments);
+  };
+
+}(jQuery));

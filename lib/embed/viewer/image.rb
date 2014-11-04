@@ -8,7 +8,7 @@ module Embed
           doc.div(class: 'sul-embed-body sul-embed-file', 'data-sul-embed-theme' => "#{asset_url('image.css')}", 'data-plugin-styles' => "#{asset_url('iiifOsdViewer.css')}") do
             doc.div(class: 'sul-embed-image-list') do
               height = body_height ? ('height: ' + body_height.to_s + 'px') : ""
-              doc.div(class: 'sul-embed-iiif-osd', style: "#{height}", 'data-iiif-image-ids' => "#{iiif_image_ids(@purl_object.contents).join(',')}", 'data-iiif-server' => "#{iiif_server()}")
+              doc.div(class: 'sul-embed-iiif-osd', style: "#{height}", 'data-iiif-image-info' => "#{iiif_image_info(@purl_object.contents).to_json}", 'data-iiif-server' => "#{iiif_server()}")
             end
             doc.script { doc.text ";jQuery.getScript(\"#{asset_url('image.js')}\");" }
           end
@@ -23,16 +23,20 @@ module Embed
         @purl_object.druid + '%252F' + image_id(image)
       end
 
-      def iiif_image_ids(contents)
-        iiif_image_ids = []
+      def iiif_image_info(contents)
+        data = []
 
         contents.each do |resource|
           resource.files.each do |image|
-            iiif_image_ids.push(iiif_image_id(image))
+            data.push({
+              id: iiif_image_id(image),
+              height: image.image_height,
+              width: image.image_width
+            })
           end
         end
 
-        iiif_image_ids
+        data
       end
 
       def iiif_server
