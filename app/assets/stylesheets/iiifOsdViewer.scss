@@ -60,6 +60,10 @@
   margin-left: 100px;
 }
 
+.iov-list-view .iov-remove-margin {
+  margin-left: 0;
+}
+
 .iov-list-view .iov-list-view-thumbs-viewport ul {
   margin: 0;
   padding: 5px 0;
@@ -126,7 +130,7 @@
 
 .iov-horizontal-view ul {
   margin: 5px 0 5px 0;
-  padding: 0;  
+  padding: 0;
 }
 
 .iov-horizontal-view li {
