@@ -18,7 +18,7 @@ describe Embed::Viewer::File do
   end
   describe 'self.supported_types' do
     it 'should return an array of supported types' do
-      expect(Embed::Viewer::File.supported_types).to eq [:media]
+      expect(Embed::Viewer::File.supported_types).to eq [:file]
     end
   end
   describe 'body_height' do
