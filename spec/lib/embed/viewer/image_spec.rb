@@ -32,11 +32,16 @@ describe Embed::Viewer::Image do
       expect(image_viewer.iiif_image_id(image)).to eq 'abc123%252Fimage_001'
     end
   end
-  describe 'iiif_image_ids' do
+  describe 'iiif_image_info' do
     before { stub_purl_response_with_fixture(image_purl) }
     let(:contents) { Embed::PURL.new('abc123').contents }
-    it 'should return an IIIF image ids' do
-      expect(image_viewer.iiif_image_ids(contents)).to eq ["abc123%252Fimage_001", "abc123%252Fimage_002"]
+
+    image_info = [
+      {:id=>"abc123%252Fimage_001", :height=>"123", :width=>"321"},
+      {:id=>"abc123%252Fimage_002", :height=>"246", :width=>"123"}]
+
+    it 'should return an IIIF image info' do
+      expect(image_viewer.iiif_image_info(contents)).to eq image_info
     end
   end
   describe 'iiif_server' do

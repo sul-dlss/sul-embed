@@ -14,12 +14,12 @@ MetadataPanel.init();
 function embedIiifOsdViewer() {
   var $sulEmbedIiifOsd = $('.sul-embed-iiif-osd'),
       iiifServer = $sulEmbedIiifOsd.data('iiif-server'),
-      iiifImageIds = $sulEmbedIiifOsd.data('iiif-image-ids').split(',');
+      iiifImageInfo = $sulEmbedIiifOsd.data('iiif-image-info');
 
  $('.sul-embed-iiif-osd').iiifOsdViewer({
-    images: [{
+    data: [{
       iiifServer: iiifServer,
-      ids: iiifImageIds
+      images: iiifImageInfo
     }]
   });
 }
