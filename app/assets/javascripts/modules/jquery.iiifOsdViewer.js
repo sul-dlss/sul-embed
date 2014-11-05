@@ -38,8 +38,6 @@
       $selectViews = $('<select class="iov-view-options"></select>');
       $menuBar = $('<div class="iov-menu-bar"></div>');
 
-      $menuBar.append($selectViews).append($menuControls);
-
       $viewer.height('100%');
       $parent.append($viewer);
       init();
@@ -63,14 +61,21 @@
 
 
       function addMenuBar() {
-        $.each(config.availableViews, function(index, view) {
-          if (typeof iovViews[view] === 'function') {
-            $selectViews.append('<option value="' + view + '">' + view + ' view</option>');
-          } else {
-            config.availableViews.splice(index, 1);
-          }
-        });
+        if (config.totalImages > 1) {
+          $menuBar.append($selectViews);
 
+          $.each(config.availableViews, function(index, view) {
+            if (typeof iovViews[view] === 'function') {
+              $selectViews.append('<option value="' + view + '">' + view + ' view</option>');
+            } else {
+              config.availableViews.splice(index, 1);
+            }
+          });
+        } else {
+          config.availableViews = ['list'];
+        }
+
+        $menuBar.append($menuControls);
         $viewer.append($menuBar);
       }
 
@@ -187,7 +192,7 @@
       $thumbsViewport = $('<div class="iov-list-view-thumbs-viewport"></div>');
       $thumbsList = $('<ul class="iov-list-view-thumbs"></ul>');
 
-      $listView = $('<div class="iov-list-view"></div>').append($listViewOsd);
+      $listView = $('<div class="iov-list-view"></div>');
 
       function render() {
         $listViewControls = $([
@@ -198,11 +203,10 @@
           '</div>'
         ].join(''));
 
-        // if (config.totalImages > 1) {
-          loadListViewThumbs();
-        // }
-
+        $listView.append($listViewOsd);
         $viewer.find('.iov-menu-bar').prepend($listViewControls);
+
+        loadListViewThumbs();
       }
 
       function loadListViewThumbs() {
@@ -223,29 +227,37 @@
 
               $self.addClass('iov-list-view-thumb-selected');
               $self.siblings().removeClass('iov-list-view-thumb-selected');
-              loadOsdInstance($self);
+              updateView($self);
             });
           });
         });
 
         $listView.prepend($thumbsViewport.append($thumbsList));
+
+        if (config.totalImages == 1) {
+          $listViewOsd.addClass('iov-remove-margin');
+          $thumbsViewport.hide();
+        }
       }
 
-      function loadOsdInstance($imgItem) {
+      function updateView($imgItem) {
+        loadOsdInstance($imgItem.data('iiif-info-url'));
+        scrollThumbsViewport($imgItem);
+      }
+
+      function loadOsdInstance(infoUrl) {
         if (typeof osd !== 'undefined') {
-          osd.open($imgItem.data('iiif-info-url'));
+          osd.open(infoUrl);
         } else {
           osd = OpenSeadragon({
-            id: 'iov-list-view-osd',
-            tileSources:    $imgItem.data('iiif-info-url'),
+            id:             'iov-list-view-osd',
+            tileSources:    infoUrl,
             zoomInButton:   'iov-list-zoom-in',
             zoomOutButton:  'iov-list-zoom-out',
             homeButton:     'iov-list-home',
             showFullPageControl: false
           });
         }
-
-        scrollThumbsViewport($imgItem);
       }
 
       function scrollThumbsViewport($imgItem) {
