@@ -112,7 +112,7 @@ module Embed
         "#{Settings.stacks_url}/image/#{@purl_object.druid}/#{file.title.gsub(/\.\w+$/, '')}"
       end
       def self.supported_types
-        [:media]
+        [:file]
       end
 
       private

@@ -48,7 +48,7 @@ module Embed
       end
 
       def self.supported_types
-        [:image]
+        [:image, :manuscript, :map, :book]
       end
     end
   end
