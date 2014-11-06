@@ -76,6 +76,7 @@
     <label for="hide-title">Hide title?</label> <input type="checkbox" id="hide-title" class="hide-title" />
     <label for="hide-search">Hide search?</label> <input type="checkbox" id="hide-search" class="hide-search" />
     <label for="hide-metadata">Hide metadata?</label> <input type="checkbox" id="hide-metadata" class="hide-metadata" />
+    <label for="hide-embed">Hide embed?</label> <input type="checkbox" id="hide-embed" class="hide-embed" />
     <br>
     <input type="button" class="btn-render" value="Embed">
   </form>
@@ -118,6 +119,7 @@
             hideTitle = $('.hide-title').is(':checked'),
             hideSearch = $('.hide-search').is(':checked'),
             hideMetadata = $('.hide-metadata').is(':checked'),
+            hideEmbed = $('.hide-embed').is(':checked'),
             maxWidth = parseInt($('.max-width').val(), 10),
             maxHeight = parseInt($('.max-height').val(), 10);
 
@@ -129,6 +131,7 @@
           if (hideTitle) url += "&hide_title=true";
           if (hideSearch) url += "&hide_search=true";
           if (hideMetadata) url += "&hide_metadata=true";
+          if (hideEmbed) url += "&hide_embed=true";
           if (!isNaN(maxWidth)) url += "&maxwidth=" + maxWidth;
           if (!isNaN(maxHeight)) url += "&maxheight=" + maxHeight;
 
