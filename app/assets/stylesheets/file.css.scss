@@ -3,8 +3,11 @@
 @import 'vendor/tooltip';
 
 .#{$namespace}-container {
+  .#{$namespace}-file-list {
+    padding: 15px;
+  }
   .#{$namespace}-search {
-    padding-top: 4px;
+    padding-top: 8px;
 
     label {
       display: none;

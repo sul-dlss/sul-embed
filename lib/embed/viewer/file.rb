@@ -28,7 +28,7 @@ module Embed
                         if file.previewable?
                           doc.img(class: 'sul-embed-square-image',src: "#{image_url(file)}_square")
                         else
-                          doc.i(class: "fa fa-3x #{file_type_icon(file.mimetype)}")
+                          doc.i(class: "fa fa-2x #{file_type_icon(file.mimetype)}")
                         end
                       end
                       doc.div(class: 'sul-embed-media-body') do

@@ -7,6 +7,7 @@
 
 .#{$namespace}-container {
   border: 1px solid $sul-border-color;
+  background: white;
   color: $sul-font-color;
   font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
   font-size: $font-size-base;
@@ -26,47 +27,63 @@
   }
 
   .#{$namespace}-header {
-    background: $sul-background;
-    min-height: 30px;
+    background: $sul-border-color;
+    min-height: 40px;
     overflow: hidden;
-    @include container-padding;
+    padding: 0 15px;
     white-space: nowrap;
+    box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.2);
 
     .#{$namespace}-header-title {
+      color: white;
       display: inline-block;
       font-size: $sul-title-size;
       overflow: hidden;
       text-overflow: ellipsis;
       vertical-align: middle;
       width: 100%;
+      margin-top: 4px;
     }
     
     h2.#{$namespace}-item-count {
-      display: inline;
+      color: white;
+      border-bottom: 0;
       font-size: $font-size-base;
       font-weight: normal;
+      min-width: 75px;
+      line-height: 40px;
+      vertical-align: middle;
+      padding: 0;
+      display: inline;
       float: left;
-      padding-right: 8px;
-      padding-top: 8px;
     }
   }
 
-  .#{$namespace}-body {
-    @include padding-top;
-  }
-
   .#{$namespace}-footer {
-    background: $sul-background;
-    min-height: 40px;
+    background: $sul-border-color;
+    min-height: 30px;
     position: relative;
+    box-shadow: 0px -2px 8px 0px rgba(0, 0, 0, 0.2);
+    padding: 0 15px;
 
+    a, a:hover, a:focus {
+      color: white;
+      border-bottom: 1px dotted white;
+    }
+
+    .#{$namespace}-footer-tool {
+      margin: 4px 15px 0 0;
+    }
     .#{$namespace}-purl-link {
-      @include container-padding;
-      bottom: 5px;
-      clear: both;
       font-size: .9em;
       position: absolute;
       right: 0;
+      font-size: .9em;
+      line-height: 30px;
+      vertical-align: middle;
+      position: absolute;
+      right: 15px;
+      top: 0;
 
       .#{$namespace}-rosette {
         padding-right: 5px;
@@ -74,7 +91,7 @@
       }
     }
     .#{$namespace}-footer-toolbar {
-      line-height: 40px;
+      line-height: 30px;
       padding-top: 0;
       vertical-align: middle;
     }
