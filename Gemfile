@@ -18,6 +18,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'capybara'
   gem 'poltergeist'
+  gem 'high_voltage'
 end
 
 
@@ -31,8 +32,6 @@ end
 
 
 gem 'uglifier'
-
-gem 'high_voltage'
 
 gem 'sass-rails'
 
