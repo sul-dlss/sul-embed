@@ -135,7 +135,12 @@ module Embed
                     if self.is_a?(Embed::Viewer::File)
                       doc.div(class: 'sul-embed-section') do
                         doc.input(type: 'checkbox', id: 'search', checked: true)
-                        doc.label(for: 'search') { doc.text("search") }
+                        doc.label(for: 'search') { doc.text("add search box") }
+                        doc.label(for: 'min_files_to_search') do
+                          doc.text(' for')
+                          doc.input(type: 'text', id: 'min_files_to_search', value: '10')
+                          doc.text('or more files')
+                        end
                       end
                     end
                     doc.div(class: 'sul-embed-section') do

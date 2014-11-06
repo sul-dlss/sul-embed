@@ -17,7 +17,7 @@ describe Embed::Viewer::CommonViewer do
     it 'should not return the object title if the consumer requested to hide it' do
       expect(request).to receive(:params).at_least(:once).and_return({})
       expect(request).to receive(:hide_title?).at_least(:once).and_return(true)
-      stub_request(request)
+      stub_purl_response_and_request(file_purl, request)
       html = Capybara.string(file_viewer.header_html)
       expect(html).to_not have_css '.sul-embed-header-title'
       expect(html).to_not have_css '.sul-embed-metadata-title'
