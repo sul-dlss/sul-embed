@@ -44,7 +44,7 @@ module Embed
           doc.div(class: 'sul-embed-footer') do
             doc.div(class: 'sul-embed-footer-toolbar') do
               unless @request.hide_metadata?
-                doc.button(class: 'sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-info-circle', 'data-toggle' => 'sul-embed-metadata-panel')
+                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-info-circle', 'data-toggle' => 'sul-embed-metadata-panel')
               end
             end
             doc.div(class: 'sul-embed-purl-link') do
