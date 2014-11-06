@@ -73,6 +73,11 @@
 
     .#{$namespace}-footer-tool {
       margin: 4px 15px 0 0;
+      &:hover {
+        color: $sul-botton-hover-color;
+        background-color: $sul-botton-hover-bg;
+        border-color: $sul-botton-hover-border-color;
+      }
     }
     .#{$namespace}-purl-link {
       font-size: .9em;
