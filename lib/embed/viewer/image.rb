@@ -28,11 +28,13 @@ module Embed
 
         contents.each do |resource|
           resource.files.each do |image|
-            data.push({
-              id: iiif_image_id(image),
-              height: image.image_height,
-              width: image.image_width
-            })
+            if image.is_image?
+              data.push({
+                id: iiif_image_id(image),
+                height: image.image_height,
+                width: image.image_width
+              })
+            end
           end
         end
 

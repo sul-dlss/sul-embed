@@ -150,6 +150,9 @@ module Embed
         def previewable?
           preview_types.include?(mimetype)
         end
+        def is_image?
+          mimetype =~ /image\/jp2/i
+        end
         def size
           @file.attributes['size'].try(:value)
         end
@@ -179,4 +182,3 @@ module Embed
     end
   end
 end
-
