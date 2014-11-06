@@ -1,3 +1,4 @@
 purl_url: 'http://purl.stanford.edu'
 stacks_url: 'http://stacks.stanford.edu'
 iiif_stacks_url: 'https://stacks.stanford.edu'
+embed_iframe_url: 'http://embed.stanford.edu/iframe'

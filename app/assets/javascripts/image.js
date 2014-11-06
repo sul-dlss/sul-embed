@@ -2,14 +2,16 @@
 //= require modules/css_injection
 //= require modules/jquery.iiifOsdViewer
 //= require modules/common_viewer_behavior
-//= require modules/metadata_panel
+//= require modules/popup_panels
+//= require modules/embed_this
 
 CssInjection.injectFontAwesome();
 CssInjection.appendToHead();
 CssInjection.injectPluginStyles();
 CommonViewerBehavior.showViewer();
 embedIiifOsdViewer();
-MetadataPanel.init();
+PopupPanels.init();
+EmbedThis.init();
 
 function embedIiifOsdViewer() {
   var $sulEmbedIiifOsd = $('.sul-embed-iiif-osd'),

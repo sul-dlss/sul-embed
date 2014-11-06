@@ -2,11 +2,11 @@
 @import 'mixins';
 
 .#{$namespace}-container {
-  .#{$namespace}-metadata-panel-container {
+  .#{$namespace}-panel-container {
     height: 0px;
     position: relative;
 
-    .#{$namespace}-metadata-panel {
+    .#{$namespace}-panel {
       background: $sul-metadata-bg;
       border: none;
       bottom: 0;
@@ -17,7 +17,7 @@
       width: 100%;
       z-index: 2000;
 
-      .#{$namespace}-metadata-header {
+      .#{$namespace}-panel-header {
         border-bottom: 1px solid #e3dfd5;
         font-size: 1.1em;
         height: 30px;
@@ -26,7 +26,7 @@
           float: right;
         }
 
-        .#{$namespace}-metadata-title {
+        .#{$namespace}-panel-title {
           font-size: $sul-title-size;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -39,10 +39,27 @@
         padding-top: 15px;
       }
 
-      .#{$namespace}-metadata-heading {
+      .#{$namespace}-panel-heading {
         color: $sul-metadata-heading-color;
         font-size: .9em;
         text-transform: uppercase;
+      }
+
+      &.#{$namespace}-embed-this-panel {
+        .#{$namespace}-embed-this-form {
+          input[type='checkbox'] {
+            margin-right: 3px;
+          }
+          .#{$namespace}-options-label {
+            float: left;
+          }
+          .#{$namespace}-section {
+            margin-left: 100px;
+          }
+          textarea {
+            width: 90%;
+          }
+        }
       }
     }
   }
