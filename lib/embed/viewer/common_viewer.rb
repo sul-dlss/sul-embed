@@ -47,7 +47,7 @@ module Embed
                 doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-info-circle', 'data-toggle' => 'sul-embed-metadata-panel')
               end
               unless @request.hide_embed_this?
-                doc.button(class: 'sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-share-alt', 'data-toggle' => 'sul-embed-embed-this-panel')
+                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-share-alt', 'data-toggle' => 'sul-embed-embed-this-panel')
               end
             end
             doc.div(class: 'sul-embed-purl-link') do
