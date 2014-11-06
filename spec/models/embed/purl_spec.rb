@@ -111,6 +111,16 @@ describe Embed::PURL do
           expect(Embed::PURL.new('12345').contents.first.files.first).to_not be_previewable
         end
       end
+      describe 'is_image?' do
+        it 'should return true if the mimetype of the file is an image' do
+          stub_purl_response_with_fixture(image_purl)
+          expect(Embed::PURL.new('12345').contents.first.files.first).to be_is_image
+        end
+        it 'should return false if the mimetype of the file is not an image' do
+          stub_purl_response_with_fixture(file_purl)
+          expect(Embed::PURL.new('12345').contents.first.files.first).to_not be_is_image
+        end
+      end
       describe 'rights' do
         describe 'stanford_only?' do
           it 'should identify stanford_only objects' do
