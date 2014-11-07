@@ -23,4 +23,7 @@ module Constants
     'video/quicktime' => 'fa-file-video-o',
     'video/x-msvideo' => 'fa-file-video-o'
   }
+  IMAGE_DOWNLOAD_SIZES = [
+    'default', 'small', 'medium', 'large', 'xlarge', 'full'
+  ]
 end

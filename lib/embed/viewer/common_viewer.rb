@@ -28,7 +28,7 @@ module Embed
       end
 
       def to_html
-        "<div class='sul-embed-container' id='sul-embed-object' style='display:none; #{container_styles}'>" << header_html << body_html << metadata_html << embed_this_html << footer_html << '</div>'
+        "<div class='sul-embed-container' id='sul-embed-object' style='display:none; #{container_styles}'>" << header_html << body_html << metadata_html << embed_this_html << download_html << footer_html << '</div>'
       end
 
       def header_html
@@ -48,6 +48,9 @@ module Embed
               end
               unless @request.hide_embed_this?
                 doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-share-alt', 'data-toggle' => 'sul-embed-embed-this-panel')
+              end
+              if self.is_a?(Embed::Viewer::Image)
+                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-download', 'data-toggle' => 'sul-embed-download-panel')
               end
             end
             doc.div(class: 'sul-embed-purl-link') do
@@ -163,6 +166,10 @@ module Embed
         else
           ''
         end
+      end
+
+      def download_html
+        ''
       end
 
       private

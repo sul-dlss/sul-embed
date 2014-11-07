@@ -65,6 +65,12 @@
           }
         }
       }
+
+      &.#{$namespace}-download-panel {
+        .#{$namespace}-download-options {
+          margin: 20px 10px;
+        }
+      }
     }
   }
 
