@@ -126,8 +126,19 @@ module Embed
         @purl_object.embargoed? || file.stanford_only?
       end
       def file_search_logic
-        return false if @request.params[:hide_search] && @request.params[:hide_search] == 'true'
+        return false unless display_file_search?
         :file_search_html
+      end
+
+      def display_file_search?
+        @display_file_search ||= begin
+          @request.params[:hide_search] != 'true' &&
+          @purl_object.contents.map(&:files).flatten.length >= min_files_to_search
+        end
+      end
+
+      def min_files_to_search
+        (@request.params[:min_files_to_search] || 10).to_i
       end
 
       def file_search_html(doc)

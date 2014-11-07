@@ -47,8 +47,12 @@
 
       &.#{$namespace}-embed-this-panel {
         .#{$namespace}-embed-this-form {
-          input[type='checkbox'] {
+          input[type='checkbox'], input[type='text'] {
             margin-right: 3px;
+          }
+          input[type='text'] {
+            margin-left: 3px;
+            width: 26px;
           }
           .#{$namespace}-options-label {
             float: left;
