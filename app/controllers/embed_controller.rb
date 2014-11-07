@@ -12,7 +12,7 @@ class EmbedController < ApplicationController
   end
 
   def iframe
-    render html: "<html><head><script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script></head><body>#{Embed::Response.new(@embed_request).html}</body></html>".html_safe
+    render html: "<html><head><script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script></head><body class='sul-embed-iframe-body'>#{Embed::Response.new(@embed_request).html}</body></html>".html_safe
   end
 
   def validate_request
