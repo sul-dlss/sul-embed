@@ -97,6 +97,11 @@
       &.#{$namespace}-download-panel {
         .#{$namespace}-download-options {
           margin: 20px 10px;
+          width: 80%;
+
+          .#{$namespace}-stanford-only a {
+            border-width: 0;
+          }
         }
       }
     }

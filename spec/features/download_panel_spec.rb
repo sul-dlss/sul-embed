@@ -15,6 +15,12 @@ describe 'download panel', js: true do
 
       page.find('[data-toggle="sul-embed-download-panel"]', match: :first).click
       expect(page).to have_css('.sul-embed-download-panel', visible: true)
+
+      expect(page).to have_css('.sul-embed-download-small', visible: true)
+      expect(page).to have_css('.sul-embed-download-medium', visible: true)
+      expect(page).to have_css('.sul-embed-download-large', visible: true)
+      expect(page).to have_css('.sul-embed-download-xlarge', visible: true)
+      expect(page).to have_css('.sul-embed-download-full', visible: true)
     end
   end
   describe 'hide download?' do

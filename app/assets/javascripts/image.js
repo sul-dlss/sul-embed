@@ -1,6 +1,7 @@
 //= require openseadragon/built-openseadragon/openseadragon/openseadragon.min
 //= require modules/css_injection
 //= require modules/download_panel
+//= require vendor/tooltip
 //= require modules/jquery.iiifOsdViewer
 //= require modules/common_viewer_behavior
 //= require modules/popup_panels

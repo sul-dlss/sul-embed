@@ -145,8 +145,8 @@ describe Embed::PURL do
         before { stub_purl_response_with_fixture(image_purl) }
         let(:image) { Embed::PURL.new('12345').contents.first.files.first }
         it 'should get the image height and width for image objects' do
-          expect(image.image_height).to eq '123'
-          expect(image.image_width).to eq '321'
+          expect(image.image_height).to eq '6123'
+          expect(image.image_width).to eq '5321'
         end
       end
       describe 'file data' do

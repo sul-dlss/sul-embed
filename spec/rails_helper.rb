@@ -54,7 +54,7 @@ RSpec.configure do |config|
 end
 
 def stub_purl_response_with_fixture(fixture)
-  expect_any_instance_of(Embed::PURL).to receive(:response).and_return(fixture)
+  expect_any_instance_of(Embed::PURL).to receive(:response).at_least(:once).and_return(fixture)
 end
 
 def stub_purl_response_and_request(fixture, request)

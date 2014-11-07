@@ -36,20 +36,22 @@ module Embed
                   doc.tr do
                     doc.td(:class => "sul-embed-download-size-type sul-embed-download-#{size}") do
                       if (size != 'default')
-                        doc.a(href: 'javascript:;') {
+                        doc.a(class: 'download-link', href: 'javascript:;') {
                           doc.text "#{size} ("
-                          doc.span(class: "sul-embed-download-#{size}-dimensions")
+                          doc.span(class: "sul-embed-download-dimensions")
                           doc.text ")"
                         }
+                        doc.span(class: "sul-embed-stanford-only", style: "display: none;") do
+                          doc.a(href: 'javascript:;', title: '', 'data-sul-embed-tooltip' => false) {}
+                        end
                       else
                         doc.span() {
                           doc.text "#{size} ("
-                          doc.span(class: "sul-embed-download-#{size}-dimensions")
+                          doc.span(class: "sul-embed-download-dimensions")
                           doc.text ")"
                         }
                       end
                     end
-                    doc.td(class: "sul-embed-download-file-size sul-embed-download-#{size}-size")
                   end
                 end
               end
@@ -76,7 +78,9 @@ module Embed
                 id: iiif_image_id(image),
                 height: image.image_height,
                 width: image.image_width,
-                label: resource.description
+                label: resource.description,
+                stanford_only: image.stanford_only?,
+                tooltip_text: tooltip_text(image)
               })
             end
           end
