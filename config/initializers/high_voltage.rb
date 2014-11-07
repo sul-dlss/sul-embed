@@ -1,3 +1,3 @@
 HighVoltage.configure do |config|
   config.routes = false
-end
+end unless Rails.env.production?
