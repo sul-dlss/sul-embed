@@ -49,7 +49,7 @@ module Embed
               unless @request.hide_embed_this?
                 doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-share-alt', 'data-toggle' => 'sul-embed-embed-this-panel')
               end
-              if self.is_a?(Embed::Viewer::Image)
+              if self.is_a?(Embed::Viewer::Image) && !@request.hide_download?
                 doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-download', 'data-toggle' => 'sul-embed-download-panel')
               end
             end
@@ -144,6 +144,12 @@ module Embed
                           doc.input(type: 'text', id: 'min_files_to_search', value: '10')
                           doc.text('or more files')
                         end
+                      end
+                    end
+                    if self.is_a?(Embed::Viewer::Image)
+                      doc.div(class: 'sul-embed-section') do
+                        doc.input(type: 'checkbox', id: 'download', checked: true)
+                        doc.label(for: 'download') { doc.text("download") }
                       end
                     end
                     doc.div(class: 'sul-embed-section') do

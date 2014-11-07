@@ -36,6 +36,10 @@ module Embed
       params[:hide_embed] && params[:hide_embed] == 'true'
     end
 
+    def hide_download?
+      params[:hide_download] && params[:hide_download] == 'true'
+    end
+
     def object_druid
       url[/\w*$/]
     end

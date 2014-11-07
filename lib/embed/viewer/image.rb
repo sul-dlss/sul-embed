@@ -16,6 +16,7 @@ module Embed
       end
 
       def download_html
+        return '' if @request.hide_download?
         sizes = Constants::IMAGE_DOWNLOAD_SIZES
 
         Nokogiri::HTML::Builder.new do |doc|
@@ -31,7 +32,7 @@ module Embed
                 end
               end
               doc.table(class: 'sul-embed-download-options', :'data-download-sizes' => "#{sizes.to_json}", :'data-stacks-url' => "#{Settings.stacks_url}") do
-	              sizes.each do |size|
+                sizes.each do |size|
                   doc.tr do
                     doc.td(:class => "sul-embed-download-size-type sul-embed-download-#{size}") do
                       if (size != 'default')
