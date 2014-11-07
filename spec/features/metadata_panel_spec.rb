@@ -16,10 +16,10 @@ describe 'metadata panel', js: true do
     stub_purl_response_with_fixture(file_purl)
     send_embed_response
     page.find('[data-toggle="sul-embed-metadata-panel"]', match: :first).click
-    expect(page).to have_css('.sul-embed-metadata-heading', text: 'Use and reproduction')
-    expect(page).to have_css('.sul-embed-metadata-heading', text: 'License')
+    expect(page).to have_css('dt', text: 'Use and reproduction')
+    expect(page).to have_css('dt', text: 'License')
     within '.sul-embed-metadata-panel' do
-      expect(page).to have_content 'You can use this.'
+      expect(page).to have_css 'dd', text: 'You can use this.'
     end
   end
 end

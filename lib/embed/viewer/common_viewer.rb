@@ -78,29 +78,21 @@ module Embed
                   end
                 end
                 doc.div(class: 'sul-embed-panel-body') do
-                  if @purl_object.use_and_reproduction.present?
-                    doc.div(class: 'sul-embed-metadata-section') do
-                      doc.div(class: 'sul-embed-metadata-heading') do
-                        doc.text 'Use and reproduction'
-                      end
-                      doc.text @purl_object.use_and_reproduction
+                  doc.dl do
+                    if @purl_object.use_and_reproduction.present?
+                      doc.dt { doc.text('Use and reproduction') }
+                      doc.dd { doc.text(@purl_object.use_and_reproduction) }
                     end
-                  end
-                  if @purl_object.copyright.present?
-                    doc.div(class: 'sul-embed-metadata-section') do
-                      doc.div(class: 'sul-embed-metadata-heading') do
-                        doc.text 'Copyright'
-                      end
-                      doc.text @purl_object.copyright
+                    if @purl_object.copyright.present?
+                      doc.dt { doc.text('Copyright') }
+                      doc.dd { doc.text(@purl_object.copyright) }
                     end
-                  end
-                  if @purl_object.license.present?
-                    doc.div(class: 'sul-embed-metadata-section') do
-                      doc.div(class: 'sul-embed-metadata-heading') do
-                        doc.text 'License'
+                    if @purl_object.license.present?
+                      doc.dt { doc.text('License') }
+                      doc.dd do
+                        doc.span(class: "sul-embed-license-#{@purl_object.license[:machine]}")
+                        doc.text(@purl_object.license[:human])
                       end
-                      doc.span(class: "sul-embed-license-#{@purl_object.license[:machine]}")
-                      doc.text @purl_object.license[:human]
                     end
                   end
                 end
