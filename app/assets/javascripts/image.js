@@ -10,9 +10,9 @@ CssInjection.injectFontAwesome();
 CssInjection.appendToHead();
 CssInjection.injectPluginStyles();
 CommonViewerBehavior.showViewer();
-embedIiifOsdViewer();
 PopupPanels.init();
 EmbedThis.init();
+embedIiifOsdViewer();
 
 function embedIiifOsdViewer() {
   var $sulEmbedIiifOsd = $('.sul-embed-iiif-osd'),
