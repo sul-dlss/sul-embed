@@ -12,6 +12,7 @@
         $("[data-toggle]").on("click", function() {
           toggleElements = $("." + $(this).data("toggle"));
           _this.setHeights();
+          _this.setWidth();
           toggleElements.slideToggle();
         });
       },
@@ -25,6 +26,12 @@
           }else {
             toggleElements.css("maxHeight", totalHeight - footerHeight + 10);
           }
+        }
+      },
+      setWidth: function() {
+        if (toggleElements.length > 0) {
+          var containerWidth = toggleElements.closest('#sul-embed-object').outerWidth();
+          toggleElements.outerWidth(containerWidth - 2);
         }
       }
     };

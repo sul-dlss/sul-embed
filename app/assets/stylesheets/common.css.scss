@@ -5,6 +5,11 @@
 @import 'modules/popup_panels';
 @import 'modules/utility';
 
+.#{$namespace}-iframe-body {
+  margin: 0;
+  padding: 0;
+}
+
 .#{$namespace}-container {
   border: 1px solid $sul-border-color;
   background: white;
