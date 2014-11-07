@@ -15,6 +15,48 @@ module Embed
         end.to_html
       end
 
+      def download_html
+        sizes = Constants::IMAGE_DOWNLOAD_SIZES
+
+        Nokogiri::HTML::Builder.new do |doc|
+          doc.div(class: 'sul-embed-panel-container') do
+            doc.div(class: 'sul-embed-panel sul-embed-download-panel', style: 'display:none;') do
+              doc.div(class: 'sul-embed-panel-header') do
+                doc.button(class: 'sul-embed-close', 'data-toggle' => 'sul-embed-download-panel') do
+                  doc.span('aria-hidden' => true, class: 'fa fa-close') {}
+                  doc.span(class: 'sul-embed-sr-only') { doc.text "Close" }
+                end
+                doc.div(class: 'sul-embed-panel-title') do
+                  doc.text "Download image"
+                end
+              end
+              doc.table(class: 'sul-embed-download-options', :'data-download-sizes' => "#{sizes.to_json}", :'data-stacks-url' => "#{Settings.stacks_url}") do
+	              sizes.each do |size|
+                  doc.tr do
+                    doc.td(:class => "sul-embed-download-size-type sul-embed-download-#{size}") do
+                      if (size != 'default')
+                        doc.a(href: 'javascript:;') {
+                          doc.text "#{size} ("
+                          doc.span(class: "sul-embed-download-#{size}-dimensions")
+                          doc.text ")"
+                        }
+                      else
+                        doc.span() {
+                          doc.text "#{size} ("
+                          doc.span(class: "sul-embed-download-#{size}-dimensions")
+                          doc.text ")"
+                        }
+                      end
+                    end
+                    doc.td(class: "sul-embed-download-file-size sul-embed-download-#{size}-size")
+                  end
+                end
+              end
+            end
+          end
+        end.to_html
+      end
+
       def image_id(image)
         ::File.basename(image.title, ::File.extname(image.title))
       end

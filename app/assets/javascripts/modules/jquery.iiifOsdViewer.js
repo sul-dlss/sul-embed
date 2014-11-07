@@ -52,13 +52,17 @@
           config.totalImages += collection.images.length || 0;
         });
 
+        $.subscribe('iov-jump-to-list-view', jumpTo('list'));
+        $.subscribe('iov-list-view-load', updateDownloadPanel());
+        $.subscribe('iov-gallery-view-load', disableDownload());
+        $.subscribe('iov-horizontal-view-load', disableDownload());
+
         addMenuBar();
         attachEvents();
         initializeViews();
         views[config.currentView].load();
         $selectViews.val(config.currentView);
       }
-
 
       function addMenuBar() {
         if (config.totalImages > 1) {
@@ -96,6 +100,22 @@
           views[view].jumpToImg(hashCode);
           $selectViews.val(view);
           config.currentView = view;
+        }
+      }
+
+      function updateDownloadPanel() {
+        return function(_, hashCode) {
+          var $imgItem = $('.iov-list-view-id-' + hashCode);
+
+          if ($imgItem.length) {
+            sulEmbedDownloadPanel.update($imgItem.data());
+          }
+        }
+      }
+
+      function disableDownload() {
+        return function(_) {
+          sulEmbedDownloadPanel.disableDownload();
         }
       }
 
@@ -160,8 +180,6 @@
         return (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement);
       }
 
-      $.subscribe('iov-jump-to-list-view', jumpTo('list'));
-
     });
 
     function hashCode(str) {
@@ -218,7 +236,13 @@
 
             $imgItem
               .addClass('iov-list-view-id-' + hashCode(image.id))
-              .data('iiif-info-url', infoUrl);
+              .data({
+                'iov-list-view-id': hashCode(image.id),
+                'image-id': image.id,
+                'iov-height': image.height,
+                'iov-width': image.width,
+                'iiif-info-url': infoUrl
+              });
 
             $thumbsList.append($imgItem.append('<a href="javascript:;"><img src="' + imgUrl + '"></a> '));
 
@@ -228,6 +252,8 @@
               $self.addClass('iov-list-view-thumb-selected');
               $self.siblings().removeClass('iov-list-view-thumb-selected');
               updateView($self);
+
+              $.publish('iov-list-view-load', $imgItem.data('iov-list-view-id'));
             });
           });
         });
@@ -366,6 +392,7 @@
         },
 
         load: function() {
+          $.publish('iov-gallery-view-load');
           $galleryView.show();
         },
 
@@ -455,6 +482,7 @@
         },
 
         load: function() {
+          $.publish('iov-horizontal-view-load');
           $horizontalView.show();
           loadHorizontalViewImages();
         },
