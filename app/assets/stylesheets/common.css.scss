@@ -105,6 +105,6 @@
 
 .#{$namespace}-stanford-only a{
     padding-right: 20px;
-    background: url(#{$asset_url}stanford_s.png) no-repeat right;
-    background: url(#{$asset_url}stanford_s.svg) no-repeat right, none;
+    background: asset-url('#{$asset_url}stanford_s.png') no-repeat right;
+    background: asset-url('#{$asset_url}stanford_s.svg') no-repeat right, none;
 }
