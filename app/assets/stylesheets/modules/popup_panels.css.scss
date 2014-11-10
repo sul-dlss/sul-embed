@@ -6,13 +6,28 @@
     height: 0px;
     position: relative;
 
+    * {
+      margin-bottom: 5px;
+    }
+
+    dt, .#{$namespace}-options-label {
+      color: $sul-metadata-label-color;
+      font-weight: normal;
+      font-size: .9em;
+      text-transform: uppercase !important;
+      padding-top: 15px;
+    }
+    dd {
+      margin-left: 15px;
+    }
+
     .#{$namespace}-panel {
       background: $sul-metadata-bg;
       border: none;
       bottom: 0;
+      margin-bottom: 0;
       height: 300px;
       overflow: auto;
-      padding: 10px 7px;
       position: absolute;
       width: 100%;
       z-index: 2000;
@@ -21,6 +36,7 @@
         border-bottom: 1px solid #e3dfd5;
         font-size: 1.1em;
         height: 30px;
+        padding: 10px 15px 0 15px;
 
         .#{$namespace}-close {
           float: right;
@@ -32,6 +48,10 @@
           text-overflow: ellipsis;
           white-space: nowrap;
         }
+      }
+
+      .#{$namespace}-panel-body {
+        padding: 0 15px 15px 15px;
       }
 
       .#{$namespace}-metadata-section {
@@ -54,11 +74,19 @@
             margin-left: 3px;
             width: 26px;
           }
+          .#{$namespace}-embed-title-section {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          .#{$namespace}-embed-title {
+            font-style: italic;
+          }
           .#{$namespace}-options-label {
-            float: left;
+            display: block;
           }
           .#{$namespace}-section {
-            margin-left: 100px;
+            margin-left: 15px;
           }
           textarea {
             width: 90%;

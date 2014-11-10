@@ -21,7 +21,7 @@
             totalHeight = $(".sul-embed-container").height(),
             metaHeight = toggleElements.height();
           if (metaHeight < totalHeight){
-            toggleElements.height(totalHeight - footerHeight - 10);
+            toggleElements.height(totalHeight - footerHeight);
           }else {
             toggleElements.css("maxHeight", totalHeight - footerHeight + 10);
           }

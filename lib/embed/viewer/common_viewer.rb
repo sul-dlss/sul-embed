@@ -123,9 +123,16 @@ module Embed
                     doc.span(class: 'sul-embed-options-label') do
                       doc.text "Select options:"
                     end
-                    doc.div(class: 'sul-embed-section') do
+                    doc.div(class: 'sul-embed-section sul-embed-embed-title-section') do
                       doc.input(type: 'checkbox', id: 'title', checked: true)
-                      doc.label(for: 'title') { doc.text("title (#{@purl_object.title})") }
+                      doc.label(for: 'title') do
+                        doc.text("title")
+                        if @purl_object.title.present?
+                          doc.span(class: 'sul-embed-embed-title') do
+                            doc.text(" (#{@purl_object.title})")
+                          end
+                        end
+                      end
                     end
                     if self.is_a?(Embed::Viewer::File)
                       doc.div(class: 'sul-embed-section') do
@@ -149,11 +156,13 @@ module Embed
                       doc.label(for: 'embed') { doc.text("embed") }
                     end
                     doc.div do
-                      doc.div do
+                      doc.div(class: 'sul-embed-options-label') do
                         doc.label(for: 'iframe-code') { doc.text("Embed code:") }
                       end
-                      doc.textarea(id: 'iframe-code', 'data-behavior' => 'iframe-code', rows: 4) do
-                        doc.text("<iframe src='#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{@purl_object.druid}' height='#{height}px' width='#{width || height}px' frameborder='0'></iframe>")
+                      doc.div(class: 'sul-embed-section') do
+                        doc.textarea(id: 'iframe-code', 'data-behavior' => 'iframe-code', rows: 4) do
+                          doc.text("<iframe src='#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{@purl_object.druid}' height='#{height}px' width='#{width || height}px' frameborder='0'></iframe>")
+                        end
                       end
                     end
                   end
