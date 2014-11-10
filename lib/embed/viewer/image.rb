@@ -75,7 +75,8 @@ module Embed
               data.push({
                 id: iiif_image_id(image),
                 height: image.image_height,
-                width: image.image_width
+                width: image.image_width,
+                label: resource.description
               })
             end
           end

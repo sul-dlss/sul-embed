@@ -115,8 +115,22 @@
   float: left;
   list-style-type: none;
   padding: 5px;
+  min-width: 72px;
 }
 
+.iov-list-view-thumbs li:after, .iov-gallery-view li:after, .iov-horizontal-view-images li:after {
+  content: attr(data-alt);
+  display: block;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.9em;
+}
+
+.iov-gallery-view li:after {
+  max-width: 72px;
+}
 
 .iov-horizontal-view {
   height: 100%;
@@ -129,7 +143,7 @@
 }
 
 .iov-horizontal-view ul {
-  margin: 5px 0 5px 0;
+  margin: 2px 0 5px 0;
   padding: 0;
 }
 
