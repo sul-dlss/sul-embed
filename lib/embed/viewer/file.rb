@@ -140,13 +140,6 @@ module Embed
         end
       end
 
-      def file_count_logic
-        :file_count_html
-      end
-
-      def file_count_html(doc)
-        doc.h2(class: 'sul-embed-item-count', 'aria-live' => 'polite') {}
-      end
     end
   end
 end

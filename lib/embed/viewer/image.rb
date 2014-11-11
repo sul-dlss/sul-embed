@@ -3,9 +3,14 @@ module Embed
     class Image
       include Embed::Viewer::CommonViewer
 
+      def initialize(*args)
+        super
+        header_tools_logic << :file_count_logic
+      end
+
       def body_html
         Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-body sul-embed-file', 'data-sul-embed-theme' => "#{asset_url('image.css')}", 'data-plugin-styles' => "#{asset_url('iiifOsdViewer.css')}") do
+          doc.div(class: 'sul-embed-body sul-embed-image', 'data-sul-embed-theme' => "#{asset_url('image.css')}", 'data-plugin-styles' => "#{asset_url('iiifOsdViewer.css')}") do
             doc.div(class: 'sul-embed-image-list') do
               height = body_height ? ('height: ' + body_height.to_s + 'px') : ""
               doc.div(class: 'sul-embed-iiif-osd', style: "#{height}", 'data-iiif-image-info' => "#{iiif_image_info(@purl_object.contents).to_json}", 'data-iiif-server' => "#{iiif_server()}")

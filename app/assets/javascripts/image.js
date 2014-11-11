@@ -18,7 +18,11 @@ embedIiifOsdViewer();
 function embedIiifOsdViewer() {
   var $sulEmbedIiifOsd = $('.sul-embed-iiif-osd'),
       iiifServer = $sulEmbedIiifOsd.data('iiif-server'),
-      iiifImageInfo = $sulEmbedIiifOsd.data('iiif-image-info');
+      iiifImageInfo = $sulEmbedIiifOsd.data('iiif-image-info'),
+      count = iiifImageInfo.length,
+      suffix = (count > 1) ? 's' : '';
+
+  $('h2.sul-embed-item-count').html(count + ' item' + suffix);
 
  $('.sul-embed-iiif-osd').iiifOsdViewer({
     data: [{
