@@ -44,13 +44,13 @@ module Embed
           doc.div(class: 'sul-embed-footer') do
             doc.div(class: 'sul-embed-footer-toolbar') do
               unless @request.hide_metadata?
-                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-info-circle', 'data-toggle' => 'sul-embed-metadata-panel')
+                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-info-circle', 'aria-expanded' => 'false', 'data-toggle' => 'sul-embed-metadata-panel')
               end
               unless @request.hide_embed_this?
-                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-share-alt', 'data-toggle' => 'sul-embed-embed-this-panel')
+                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-share-alt', 'aria-expanded' => 'false', 'data-toggle' => 'sul-embed-embed-this-panel')
               end
               if self.is_a?(Embed::Viewer::Image) && !@request.hide_download?
-                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-download', 'data-toggle' => 'sul-embed-download-panel')
+                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-download', 'aria-expanded' => 'false', 'data-toggle' => 'sul-embed-download-panel')
               end
             end
             doc.div(class: 'sul-embed-purl-link') do
@@ -67,7 +67,7 @@ module Embed
         unless @request.hide_metadata?
           Nokogiri::HTML::Builder.new do |doc|
             doc.div(class: 'sul-embed-panel-container') do
-              doc.div(class: 'sul-embed-panel sul-embed-metadata-panel', style: 'display:none;') do
+              doc.div(class: 'sul-embed-panel sul-embed-metadata-panel', style: 'display:none;', :'aria-hidden' => 'true') do
                 doc.div(class: 'sul-embed-panel-header') do
                   doc.button(class: 'sul-embed-close', 'data-toggle' => 'sul-embed-metadata-panel') do
                     doc.span('aria-hidden' => true, class: 'fa fa-close') {}
@@ -108,7 +108,7 @@ module Embed
         unless @request.hide_embed_this?
           Nokogiri::HTML::Builder.new do |doc|
             doc.div(class: 'sul-embed-panel-container') do
-              doc.div(class: 'sul-embed-panel sul-embed-embed-this-panel', style: 'display:none;') do
+              doc.div(class: 'sul-embed-panel sul-embed-embed-this-panel', style: 'display:none;', :'aria-hidden' => 'true') do
                 doc.div(class: 'sul-embed-panel-header') do
                   doc.button(class: 'sul-embed-close', 'data-toggle' => 'sul-embed-embed-this-panel') do
                     doc.span('aria-hidden' => true, class: 'fa fa-close') {}
