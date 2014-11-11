@@ -241,6 +241,8 @@
                 'image-id': image.id,
                 'iov-height': image.height,
                 'iov-width': image.width,
+                'iov-stanford-only': image.stanford_only,
+                'iov-tooltip-text': image.tooltip_text,
                 'iiif-info-url': infoUrl
               });
 

@@ -11,6 +11,8 @@
          fullWidth,
          fullHeight,
          stacksUrl,
+         stanfordOnly,
+         tooltipText,
          druid,
          imageId,
          levels;
@@ -24,12 +26,22 @@
     function updateDownloadLinks() {
       $.each(sizes, function(index, size) {
         var dimensions = getDimensionsForSize(size),
-            downloadLink = [stacksUrl, 'image', druid, imageId + '_' + size + '?action=download'].join('/');
+            downloadLink = [stacksUrl, 'image', druid, imageId + '_' + size + '?action=download'].join('/'),
+            $downloadSize = $downloadOptions.find('.sul-embed-download-' + size);
 
-        $downloadOptions.find('.sul-embed-download-' + size + '-dimensions').html(dimensions);
+        $downloadSize.find('.sul-embed-download-dimensions').html(dimensions);
 
         if (size !== 'default') {
-          $downloadOptions.find('.sul-embed-download-' + size + ' a').attr('href', downloadLink);
+          $downloadSize.find('a.download-link').attr('href', downloadLink);
+
+          if (stanfordOnly) {
+            $downloadSize.find('.sul-embed-stanford-only a')
+              .prop('title', tooltipText)
+              .data('sul-embed-tooltip', 'true')
+              .tooltip();
+
+            $downloadSize.find('.sul-embed-stanford-only').show();
+          }
         }
       });
     }
@@ -42,6 +54,8 @@
       fullWidth = parseInt(imageData['iov-width'], 10);
       fullHeight = parseInt(imageData['iov-height'], 10);
       fullFileSize = parseInt(imageData['iov-file-size'], 10);
+      stanfordOnly = imageData['iov-stanford-only'];
+      tooltipText = imageData['iov-tooltip-text'] || '';
       stacksUrl = $downloadOptions.data('stacks-url');
       levels = jp2Levels(fullWidth, fullHeight);
     }

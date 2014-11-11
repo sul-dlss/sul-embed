@@ -45,13 +45,13 @@ module PURLFixtures
           <resource sequence="1" type="image">
             <label>Image1</label>
             <file size="12345" mimetype="image/jp2" id="image_001.jp2">
-              <imageData height="123" width="321" />
+              <imageData height="6123" width="5321" />
             </file>
           </resource>
           <resource sequence="2" type="image">
             <label>Image2</label>
             <file size="23456" mimetype="image/jp2" id="image_002.jp2">
-              <imageData height="246" width="123" />
+              <imageData height="7246" width="6123" />
             </file>
           </resource>
         </contentMetadata>
@@ -154,6 +154,31 @@ module PURLFixtures
           <access type="read">
             <machine>
               <group>stanford</group>
+            </machine>
+          </access>
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
+  def stanford_restricted_image_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the object</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="image">
+          <resource sequence="1" type="image">
+            <label>Image1</label>
+            <file size="12345" mimetype="image/jp2" id="image_001.jp2">
+              <imageData height="8423" width="6321" />
+            </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="read">
+            <machine>
+              <group>stanford</group>
+              <world rule="no-download"/>
             </machine>
           </access>
         </rightsMetadata>

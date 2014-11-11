@@ -181,6 +181,12 @@ module Embed
 
       private
 
+      def tooltip_text(file)
+        if file.stanford_only?
+          ["Available only to Stanford-affiliated patrons", @purl_object.embargo_release_date].compact.join(" until ")
+        end
+      end
+
       # Loops through all of the header tools logic methods
       # and calls the corresponding method that is the return value
       def render_header_tools(doc)
