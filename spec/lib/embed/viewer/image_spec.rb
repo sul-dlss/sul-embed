@@ -37,8 +37,8 @@ describe Embed::Viewer::Image do
     let(:contents) { Embed::PURL.new('abc123').contents }
 
     image_info = [
-      {:id=>"abc123%252Fimage_001", :height=>"123", :width=>"321"},
-      {:id=>"abc123%252Fimage_002", :height=>"246", :width=>"123"}]
+      {:id=>"abc123%252Fimage_001", :height=>"123", :width=>"321", :label=>"Image1"},
+      {:id=>"abc123%252Fimage_002", :height=>"246", :width=>"123", :label=>"Image2"}]
 
     it 'should return an IIIF image info' do
       expect(image_viewer.iiif_image_info(contents)).to eq image_info

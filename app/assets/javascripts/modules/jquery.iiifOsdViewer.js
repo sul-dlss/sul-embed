@@ -232,7 +232,7 @@
           $.each(collection.images, function(index, image) {
             var imgUrl = getIiifImageUrl(collection.iiifServer, image.id, config.listView.thumbsWidth, null),
                 infoUrl = getIiifInfoUrl(collection.iiifServer, image.id),
-                $imgItem = $('<li>');
+                $imgItem = $('<li data-alt="' + image.label + '">');
 
             $imgItem
               .addClass('iov-list-view-id-' + hashCode(image.id))
@@ -244,7 +244,7 @@
                 'iiif-info-url': infoUrl
               });
 
-            $thumbsList.append($imgItem.append('<a href="javascript:;"><img src="' + imgUrl + '"></a> '));
+            $thumbsList.append($imgItem.append('<a href="javascript:;"><img alt="' + image.label + '" src="' + imgUrl + '"></a> '));
 
             $imgItem.on('click', function() {
               var $self = $(this);
@@ -361,10 +361,10 @@
         $.each(config.data, function(index, collection) {
           $.each(collection.images, function(index, image) {
             var imgUrl = getIiifImageUrl(collection.iiifServer, image.id, null, config.galleryView.thumbsHeight),
-                $imgItem = $('<li>');
+                $imgItem = $('<li data-alt="' + image.label + '">');
 
             $imgItem.data('iov-gallery-view-id', hashCode(image.id));
-            $thumbsList.append($imgItem.append('<a href="javascript:;"><img src="' + imgUrl + '"></a>'));
+            $thumbsList.append($imgItem.append('<a href="javascript:;"><img alt="' + image.label + '" src="' + imgUrl + '"></a>'));
 
             if ($.inArray('list', config.availableViews) !== -1) {
               $imgItem.on('click', function() {
@@ -420,7 +420,7 @@
       function loadHorizontalImageStubs() {
         $.each(config.data, function(index, collection) {
           $.each(collection.images, function(index, image) {
-            var $imgItem = $('<li>');
+            var $imgItem = $('<li data-alt="' + image.label + '">');
 
             $imgItem
               .data('iov-horizontal-view-id', hashCode(image.id))
@@ -429,7 +429,7 @@
               .data('iov-iiif-server', collection.iiifServer)
               .data('iov-iiif-image-id', image.id);
 
-            $imgsList.append($imgItem.append('<a href="javascript:;"><img src=""></a>'));
+            $imgsList.append($imgItem.append('<a href="javascript:;"><img alt="' + image.label + '" src=""></a>'));
 
             if ($.inArray('list', config.availableViews) !== -1) {
               $imgItem.on('click', function() {
