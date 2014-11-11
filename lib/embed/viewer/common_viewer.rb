@@ -124,8 +124,8 @@ module Embed
                       doc.text "Select options:"
                     end
                     doc.div(class: 'sul-embed-section sul-embed-embed-title-section') do
-                      doc.input(type: 'checkbox', id: 'title', checked: true)
-                      doc.label(for: 'title') do
+                      doc.input(type: 'checkbox', id: 'sul-embed-embed-title', :'data-embed-attr' => 'hide_title', checked: true)
+                      doc.label(for: 'sul-embed-embed-title') do
                         doc.text("title")
                         if @purl_object.title.present?
                           doc.span(class: 'sul-embed-embed-title') do
@@ -136,31 +136,31 @@ module Embed
                     end
                     if self.is_a?(Embed::Viewer::File)
                       doc.div(class: 'sul-embed-section') do
-                        doc.input(type: 'checkbox', id: 'search', checked: true)
-                        doc.label(for: 'search') { doc.text("add search box") }
-                        doc.label(for: 'min_files_to_search') do
+                        doc.input(type: 'checkbox', id: 'sul-embed-embed-search', :'data-embed-attr' => 'hide_search', checked: true)
+                        doc.label(for: 'sul-embed-embed-search') { doc.text("add search box") }
+                        doc.label(for: 'sul-embed-min_files_to_search') do
                           doc.text(' for')
-                          doc.input(type: 'text', id: 'min_files_to_search', value: '10')
+                          doc.input(type: 'text', id: 'sul-embed-min_files_to_search', :'data-embed-attr' => 'min_files_to_search', value: '10')
                           doc.text('or more files')
                         end
                       end
                     end
                     if self.is_a?(Embed::Viewer::Image)
                       doc.div(class: 'sul-embed-section') do
-                        doc.input(type: 'checkbox', id: 'download', checked: true)
-                        doc.label(for: 'download') { doc.text("download") }
+                        doc.input(type: 'checkbox', id: 'sul-embed-embed-download', :'data-embed-attr' => 'hide_download', checked: true)
+                        doc.label(for: 'sul-embed-embed-download') { doc.text("download") }
                       end
                     end
                     doc.div(class: 'sul-embed-section') do
-                      doc.input(type: 'checkbox', id: 'embed', checked: true)
-                      doc.label(for: 'embed') { doc.text("embed") }
+                      doc.input(type: 'checkbox', id: 'sul-embed-embed', :'data-embed-attr' => 'hide_embed', checked: true)
+                      doc.label(for: 'sul-embed-embed') { doc.text("embed") }
                     end
                     doc.div do
                       doc.div(class: 'sul-embed-options-label') do
-                        doc.label(for: 'iframe-code') { doc.text("Embed code:") }
+                        doc.label(for: 'sul-embed-iframe-code') { doc.text("Embed code:") }
                       end
                       doc.div(class: 'sul-embed-section') do
-                        doc.textarea(id: 'iframe-code', 'data-behavior' => 'iframe-code', rows: 4) do
+                        doc.textarea(id: 'sul-embed-iframe-code', 'data-behavior' => 'iframe-code', rows: 4) do
                           doc.text("<iframe src='#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{@purl_object.druid}' height='#{height}px' width='#{width || height}px' frameborder='0'></iframe>")
                         end
                       end

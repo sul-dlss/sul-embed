@@ -18,7 +18,7 @@
           var checked   = $(this).is(':checked'),
               inputType = $(this).attr('type');
               src       = textarea.text().match(/src='(\S+)'/)[1],
-              urlAttr   = '&hide_' + $(this).attr('id') + '=true';
+              urlAttr   = '&' + $(this).data('embed-attr') + '=true';
           if(inputType == 'checkbox'){
             if(checked) {
               textarea.text(textarea.text().replace(urlAttr, ''));
@@ -26,10 +26,10 @@
               textarea.text(textarea.text().replace(src, src + urlAttr));
             }
           }else{
-            if(oldParam = textarea.text().match('&' + $(this).attr('id') + "=\\w+")) {
-              textarea.text(textarea.text().replace(oldParam, '&' + $(this).attr('id') + '=' + $(this).val()));
+            if(oldParam = textarea.text().match('&' + $(this).data('embed-attr') + "=\\w+")) {
+              textarea.text(textarea.text().replace(oldParam, '&' + $(this).data('embed-attr') + '=' + $(this).val()));
             }else{
-              textarea.text(textarea.text().replace(src, src + '&' + $(this).attr('id') + '=' + $(this).val()));
+              textarea.text(textarea.text().replace(src, src + '&' + $(this).data('embed-attr') + '=' + $(this).val()));
             }
           }
         });
