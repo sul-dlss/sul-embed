@@ -2,6 +2,7 @@
 
 (function( global ) {
   var Module = (function() {
+    var clickTarget;
     var toggleElements;
     return {
       init: function() {
@@ -10,8 +11,10 @@
       setupListeners: function() {
         var _this = this;
         $("[data-toggle]").on("click", function() {
-          toggleElements = $("." + $(this).data("toggle"));
+          clickTarget = $(this);
+          toggleElements = $("." + clickTarget.data("toggle"));
           _this.setHeights();
+          _this.toggleAriaAttributes();
           toggleElements.slideToggle();
         });
       },
@@ -25,6 +28,15 @@
           }else {
             toggleElements.css("maxHeight", totalHeight - footerHeight + 10);
           }
+        }
+      },
+      toggleAriaAttributes: function() {
+        if(toggleElements.is(':visible')) {
+          clickTarget.attr('aria-expanded', 'false');
+          toggleElements.attr('aria-hidden', 'true');
+        }else{
+          clickTarget.attr('aria-expanded', 'true');
+          toggleElements.attr('aria-hidden', 'false');
         }
       }
     };
