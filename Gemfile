@@ -30,6 +30,9 @@ group :deployment do
   gem 'lyberteam-capistrano-devel', git: 'https://github.com/sul-dlss/lyberteam-capistrano-devel'
 end
 
+gem 'squash_ruby', require: 'squash/ruby'
+gem 'squash_rails', require: 'squash/rails'
+
 
 gem 'uglifier'
 
