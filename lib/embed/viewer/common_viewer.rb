@@ -229,10 +229,10 @@ module Embed
       end
       def header_height
         return 0 unless display_header?
-        if header_tools_logic.length == 1
-          34
+        if !header_tools_logic.include?(:header_title_logic)
+          40
         else
-          58
+          63
         end
       end
       # Set a specific height for the body. We need to subtract
@@ -241,13 +241,13 @@ module Embed
       # which can be set by the specific viewers.
       def body_height
         if @request.maxheight
-          (@request.maxheight.to_i - (header_height + footer_height)) - 2
+          @request.maxheight.to_i - (header_height + footer_height)
         else
           default_body_height
         end
       end
       def footer_height
-        40
+        30
       end
       def calculate_height
         return nil unless body_height
