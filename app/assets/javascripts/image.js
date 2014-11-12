@@ -22,7 +22,7 @@ function embedIiifOsdViewer() {
       count = iiifImageInfo.length,
       suffix = (count > 1) ? 's' : '';
 
-  $('h2.sul-embed-item-count').html(count + ' item' + suffix);
+  $('h2.sul-embed-item-count').html(count + ' image' + suffix);
 
  $('.sul-embed-iiif-osd').iiifOsdViewer({
     data: [{
