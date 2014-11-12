@@ -192,6 +192,35 @@
       return [server, id, 'full/' + width + ',' + height, '0/native.jpg'].join('/');
     }
 
+    function lazyLoadThumbsVerticalList($list, viewportHeight) {
+      var listPositionTop = $list.position().top;
+
+      $list.find('li').each(function() {
+        var $item = $(this),
+            $img = $item.find('a img').first(),
+            top = $item.position().top + listPositionTop;
+            position = top + $img.height();
+
+        if (position > 0 && top < viewportHeight) {
+          $img.prop('src', $img.data('iov-img-url'));
+        }
+      });
+    }
+
+    function lazyLoadThumbsHorizontalList($list, viewportWidth) {
+      $list.find('li').each(function() {
+        var $item = $(this),
+            $img = $item.find('a img').first(),
+            left = $item.position().left,
+            position = left + $img.width();
+
+        if (position > 0 && left < viewportWidth) {
+          $img.prop('src', $img.data('iov-img-url'));
+        }
+      });
+    }
+
+
     // View modules
 
 
@@ -225,6 +254,10 @@
         $viewer.find('.iov-menu-bar').prepend($listViewControls);
 
         loadListViewThumbs();
+
+        $thumbsViewport.scrollStop(function() {
+          lazyLoadThumbsVerticalList($thumbsList, $listView.height());
+        });
       }
 
       function loadListViewThumbs() {
@@ -232,7 +265,9 @@
           $.each(collection.images, function(index, image) {
             var imgUrl = getIiifImageUrl(collection.iiifServer, image.id, config.listView.thumbsWidth, null),
                 infoUrl = getIiifInfoUrl(collection.iiifServer, image.id),
-                $imgItem = $('<li data-alt="' + image.label + '">');
+                $imgItem = $('<li data-alt="' + image.label + '">'),
+                $img = $('<img>'),
+                imgHeight = Math.round((image.height / image.width) * config.listView.thumbsWidth);
 
             $imgItem
               .addClass('iov-list-view-id-' + hashCode(image.id))
@@ -246,7 +281,13 @@
                 'iiif-info-url': infoUrl
               });
 
-            $thumbsList.append($imgItem.append('<a href="javascript:;"><img alt="' + image.label + '" src="' + imgUrl + '"></a> '));
+            $img
+              .prop('alt', image.label)
+              .height(imgHeight)
+              .data('iov-img-url', imgUrl);
+
+            $imgItem.append($('<a href="javascript:;"></a>').append($img));
+            $thumbsList.append($imgItem);
 
             $imgItem.on('click', function() {
               var $self = $(this);
@@ -333,6 +374,7 @@
           $listViewControls.show();
           $listView.show();
           $thumbsList.find('li[data-iov-list-view-id!=""]')[0].click();
+          $thumbsViewport.trigger('scroll');
         },
 
         jumpToImg: function(hashCode) {
@@ -362,11 +404,21 @@
       function loadGalleryViewThumbs() {
         $.each(config.data, function(index, collection) {
           $.each(collection.images, function(index, image) {
-            var imgUrl = getIiifImageUrl(collection.iiifServer, image.id, null, config.galleryView.thumbsHeight),
+            var imgWidth = Math.round((image.width / image.height) * config.galleryView.thumbsHeight);
+                imgUrl = getIiifImageUrl(collection.iiifServer, image.id, imgWidth, config.galleryView.thumbsHeight),
+                $img = $('<img>'),
                 $imgItem = $('<li data-alt="' + image.label + '">');
 
             $imgItem.data('iov-gallery-view-id', hashCode(image.id));
-            $thumbsList.append($imgItem.append('<a href="javascript:;"><img alt="' + image.label + '" src="' + imgUrl + '"></a>'));
+
+            $img
+              .prop('alt', image.label)
+              .width(imgWidth)
+              .height(config.galleryView.thumbsHeight)
+              .data('iov-img-url', imgUrl);
+
+            $imgItem.append($('<a href="javascript:;"></a>').append($img));
+            $thumbsList.append($imgItem);
 
             if ($.inArray('list', config.availableViews) !== -1) {
               $imgItem.on('click', function() {
@@ -377,6 +429,10 @@
         });
 
         $galleryView.prepend($thumbsList);
+
+        $galleryView.scrollStop(function() {
+          lazyLoadThumbsVerticalList($thumbsList, $galleryView.height());
+        });
       }
 
       return {
@@ -396,6 +452,7 @@
         load: function() {
           $.publish('iov-gallery-view-load');
           $galleryView.show();
+          $galleryView.trigger('scroll');
         },
 
         resize: function() {
@@ -458,14 +515,24 @@
           var $imgItem = $(imgItem),
               iiifServer = $imgItem.data('iov-iiif-server'),
               id = $imgItem.data('iov-iiif-image-id'),
-              imgUrl = getIiifImageUrl(iiifServer, id, null, height);
+              $img = $imgItem.find('img'),
+              imgWidth =  Math.round(($imgItem.data('iov-width') * height) / $imgItem.data('iov-height')),
+              imgUrl = getIiifImageUrl(iiifServer, id, imgWidth, height);
 
-          $imgItem.find('img').attr('src', imgUrl);
-          imgsListWidth += Math.round(($imgItem.data('iov-width') * height) / $imgItem.data('iov-height')) + 10;
+          $img
+            .height(height)
+            .width(imgWidth)
+            .data('iov-img-url', imgUrl);
+
+          imgsListWidth += imgWidth + 10;
         });
 
         $imgsList.width(imgsListWidth);
         $horizontalView.append($viewport);
+
+        $viewport.scrollStop(function() {
+          lazyLoadThumbsHorizontalList($imgsList, $viewport.width());
+        });
       }
 
       return {
@@ -487,6 +554,7 @@
           $.publish('iov-horizontal-view-load');
           $horizontalView.show();
           loadHorizontalViewImages();
+          $viewport.trigger('scroll');
         },
 
         resize: function() {
@@ -494,11 +562,7 @@
         }
       };
     }
-
-
   };
-
-
 
 })( jQuery );
 
@@ -509,9 +573,7 @@
  * Copyright (c) 2013 "Cowboy" Ben Alman
  * Licensed under the MIT license.
  */
-
 (function($) {
-
   var o = $({});
 
   $.subscribe = function() {
@@ -525,5 +587,19 @@
   $.publish = function() {
     o.trigger.apply(o, arguments);
   };
-
 }(jQuery));
+
+
+// source: http://stackoverflow.com/questions/14035083/jquery-bind-event-on-scroll-stops
+jQuery.fn.scrollStop = function(callback) {
+  $(this).scroll(function() {
+    var self  = this,
+    $this = $(self);
+
+    if ($this.data('scrollTimeout')) {
+      clearTimeout($this.data('scrollTimeout'));
+    }
+
+    $this.data('scrollTimeout', setTimeout(callback, 250, self));
+  });
+};
