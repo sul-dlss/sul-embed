@@ -35,8 +35,8 @@
       .#{$namespace}-panel-header {
         border-bottom: 1px solid #e3dfd5;
         font-size: 1.1em;
-        height: 30px;
-        padding: 10px 15px 0 15px;
+        height: auto;
+        padding: 10px 15px;
 
         .#{$namespace}-close {
           float: right;
