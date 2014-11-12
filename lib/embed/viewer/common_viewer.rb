@@ -11,8 +11,7 @@ module Embed
       end
 
       def asset_host
-        # We should use https but it's not enabled on our servers yet.
-        "http://#{@request.rails_request.host_with_port}"
+        "//#{@request.rails_request.host_with_port}"
       end
 
       def stacks_url
