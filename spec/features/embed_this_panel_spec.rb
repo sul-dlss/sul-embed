@@ -7,6 +7,17 @@ describe 'embed this panel', js: true do
     stub_purl_response_with_fixture(spec_fixture)
     send_embed_response
   end
+  describe 'embed code' do
+    let(:spec_fixture) { file_purl }
+    it 'should include the allowfullscreen no-scrolling, no-border, and no margin/padding attributes' do
+      page.find('[data-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match /<iframe.*frameborder='0'.*><\/iframe>/
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match /<iframe.*marginwidth='0'.*><\/iframe>/
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match /<iframe.*marginheight='0'.*><\/iframe>/
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match /<iframe.*scrolling='no'.*><\/iframe>/
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match /<iframe.*allowfullscreen.*><\/iframe>/
+    end
+  end
   describe 'file objects' do
     let(:spec_fixture) { file_purl }
     it 'should be present after a user clicks the button' do
