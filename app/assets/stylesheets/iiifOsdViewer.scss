@@ -1,3 +1,7 @@
+@import 'sul_variables';
+$controls-z-index: 1000;
+$sidebar-width: 100px;
+
 .iov {
   box-sizing: border-box;
   position: relative;
@@ -8,7 +12,7 @@
   position: absolute;
   right: 10px;
   top: 10px;
-  z-index: 1000;
+  z-index: $controls-z-index;
 }
 
 
@@ -40,7 +44,7 @@
   float: right;
   height: 100%;
   width: 100%;
-  margin-left: -100px;
+  margin-left: -$sidebar-width;
 }
 
 .iov-list-view .iov-list-view-thumbs-viewport,
@@ -52,11 +56,12 @@
   float: left;
   height: 100%;
   overflow-y: scroll;
-  width: 100px;
+  position: relative;
+  width: $sidebar-width;
 }
 
 .iov-list-view .iov-list-view-osd {
-  margin-left: 100px;
+  margin-left: $sidebar-width;
 }
 
 .iov-list-view .iov-remove-margin {
@@ -78,6 +83,24 @@
 .iov-list-view .iov-list-view-thumbs-viewport li img {
   position: relative;
   width: 100%;
+}
+
+.iov .iov-list-view-left-nav, .iov .iov-list-view-right-nav {
+  position: absolute;
+  top: 50%;
+  z-index: $controls-z-index;
+  color: silver;
+  border-bottom: none;
+}
+.iov .iov-list-view-left-nav:hover, .iov .iov-list-view-right-nav:hover {
+  border-bottom: none;
+  color: $gray-dark;
+}
+.iov .iov-list-view-left-nav {
+  left: $sidebar-width;
+}
+.iov .iov-list-view-right-nav {
+  right: 1px;
 }
 
 .iov-list-view-thumb-selected {

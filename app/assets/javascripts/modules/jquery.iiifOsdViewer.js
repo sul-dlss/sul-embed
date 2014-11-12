@@ -238,6 +238,9 @@
       $listViewOsd = $('<div class="iov-list-view-osd" id="iov-list-view-osd"></div>');
       $thumbsViewport = $('<div class="iov-list-view-thumbs-viewport"></div>');
       $thumbsList = $('<ul class="iov-list-view-thumbs"></ul>');
+      $leftNav  = $('<a class="iov-list-view-left-nav fa fa-3x fa-chevron-left" href="javascript:;"><span class="sul-embed-sr-only">Previous image</span></a>');
+      $rightNav = $('<a class="iov-list-view-right-nav fa fa-3x fa-chevron-right" href="javascript:;"><span class="sul-embed-sr-only">Next image</span></a>');
+
 
       $listView = $('<div class="iov-list-view"></div>');
 
@@ -254,6 +257,7 @@
         $viewer.find('.iov-menu-bar').prepend($listViewControls);
 
         loadListViewThumbs();
+        addImageNavBehavior();
 
         $thumbsViewport.scrollStop(function() {
           lazyLoadThumbsVerticalList($thumbsList, $listView.height());
@@ -306,6 +310,34 @@
         if (config.totalImages == 1) {
           $listViewOsd.addClass('iov-remove-margin');
           $thumbsViewport.hide();
+        }
+      }
+
+      function addImageNavBehavior(){
+        if (config.totalImages > 1) {
+          var $controls = $viewer.find('.iov-menu-bar');
+          $controls.after($rightNav);
+          $controls.after($leftNav);
+
+          $.each([$leftNav, $rightNav], function(){
+            $(this).on('click', function(){
+              var activeThumb = $('.iov-list-view-thumb-selected', $(this).closest('.iov'));
+              var nextThumb;
+              if($(this).attr('class') == $rightNav.attr('class')) {
+                nextThumb = activeThumb.next('li');
+              }else{
+                nextThumb = activeThumb.prev('li');
+              }
+
+              if(nextThumb.length > 0) {
+                nextThumb.addClass('iov-list-view-thumb-selected');
+                activeThumb.removeClass('iov-list-view-thumb-selected');
+                updateView(nextThumb);
+
+                $.publish('iov-list-view-load', nextThumb.data('iov-list-view-id'));
+              }
+            });
+          });
         }
       }
 
@@ -375,6 +407,8 @@
           $listView.show();
           $thumbsList.find('li[data-iov-list-view-id!=""]')[0].click();
           $thumbsViewport.trigger('scroll');
+          $leftNav.show();
+          $rightNav.show();
         },
 
         jumpToImg: function(hashCode) {
@@ -453,6 +487,8 @@
           $.publish('iov-gallery-view-load');
           $galleryView.show();
           $galleryView.trigger('scroll');
+          $leftNav.hide();
+          $rightNav.hide();
         },
 
         resize: function() {
@@ -555,6 +591,8 @@
           $horizontalView.show();
           loadHorizontalViewImages();
           $viewport.trigger('scroll');
+          $leftNav.hide();
+          $rightNav.hide();
         },
 
         resize: function() {
