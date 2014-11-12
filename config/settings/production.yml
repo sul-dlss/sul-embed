@@ -1,2 +1,2 @@
-static_assets_url: 'http://embed.stanford.edu/assets/'
+static_assets_url: '//embed.stanford.edu/assets/'
 cache_life: <%= 1.week.to_s %>
