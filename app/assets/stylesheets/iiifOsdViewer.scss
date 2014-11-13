@@ -51,8 +51,7 @@
 .iov-list-view .iov-list-view-thumbs-viewport {
   float: left;
   height: 100%;
-  overflow: auto;
-  position: relative;
+  overflow-y: scroll;
   width: 100px;
 }
 
@@ -77,6 +76,7 @@
 }
 
 .iov-list-view .iov-list-view-thumbs-viewport li img {
+  position: relative;
   width: 100%;
 }
 
