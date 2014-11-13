@@ -13,21 +13,25 @@
         $("[data-toggle]").on("click", function() {
           clickTarget = $(this);
           toggleElements = $("." + clickTarget.data("toggle"));
-          _this.setHeights();
+          _this.hideAllOtherPanels();
           _this.toggleAriaAttributes();
+          _this.setMaxHeight();
           toggleElements.slideToggle();
         });
       },
-      setHeights: function() {
+      hideAllOtherPanels: function() {
+        $("[data-toggle]").each(function(){
+          if(clickTarget.data("toggle") != $(this).data('toggle')) {
+            $("." + $(this).data("toggle") + ':visible').hide();
+          }
+        });
+      },
+      setMaxHeight: function() {
         if (toggleElements.length > 0) {
           var footerHeight = $(".sul-embed-footer").height(),
-            totalHeight = $(".sul-embed-container").height(),
-            metaHeight = toggleElements.height();
-          if (metaHeight < totalHeight){
-            toggleElements.height(totalHeight - footerHeight);
-          }else {
-            toggleElements.css("maxHeight", totalHeight - footerHeight);
-          }
+              totalHeight  = $(".sul-embed-container").height(),
+              metaHeight   = toggleElements.height();
+          toggleElements.css("maxHeight", totalHeight - footerHeight);
         }
       },
       toggleAriaAttributes: function() {
