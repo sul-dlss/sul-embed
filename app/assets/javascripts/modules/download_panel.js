@@ -10,6 +10,7 @@
          fullFileSize,
          fullWidth,
          fullHeight,
+         label,
          stacksUrl,
          stanfordOnly,
          tooltipText,
@@ -24,6 +25,8 @@
     }
 
     function updateDownloadLinks() {
+      $('.sul-embed-download-panel .sul-embed-panel-item-label').html('(' + label + ')');
+
       $.each(sizes, function(index, size) {
         var dimensions = getDimensionsForSize(size),
             downloadLink = [stacksUrl, 'image', druid, imageId + '_' + size + '?action=download'].join('/'),
@@ -56,6 +59,7 @@
       fullFileSize = parseInt(imageData['iov-file-size'], 10);
       stanfordOnly = imageData['iov-stanford-only'];
       tooltipText = imageData['iov-tooltip-text'] || '';
+      label = imageData['iov-label'] || '';
       stacksUrl = $downloadOptions.data('stacks-url');
       levels = jp2Levels(fullWidth, fullHeight);
     }
