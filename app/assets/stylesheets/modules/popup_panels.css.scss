@@ -24,9 +24,10 @@
     .#{$namespace}-panel {
       background: $sul-metadata-bg;
       border: none;
+      border-top: 1px solid $sul-border-color;
       bottom: 0;
       margin-bottom: 0;
-      height: 300px;
+      height: auto;
       overflow: auto;
       position: absolute;
       width: 100%;
