@@ -11,7 +11,11 @@ module Embed
       end
 
       def asset_host
-        "//#{@request.rails_request.host_with_port}"
+        if Rails.env.production?
+          Settings.static_assets_base
+        else
+          "//#{@request.rails_request.host_with_port}"
+        end
       end
 
       def stacks_url
