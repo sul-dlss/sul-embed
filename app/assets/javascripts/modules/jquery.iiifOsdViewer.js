@@ -291,6 +291,20 @@
               .height(imgHeight)
               .data('iov-img-url', imgUrl);
 
+            // when an image load errors (i.e. WebAuth challenge)
+            $img.on('error', function(){
+              if($("li", $thumbsList).index($imgItem) == 0) {
+                $leftNav.hide();
+                $rightNav.hide();
+                $thumbsViewport.hide();
+                $('.iov-menu-bar').hide();
+                $listViewOsd
+                  .removeClass('iov-list-view-osd')
+                  .css('text-align', 'center')
+                  .html('<img src="' + getThumbUrl(collection.iiifServer, image.id) + '" />')
+              }
+            });
+
             $imgItem.append($('<a href="javascript:;"></a>').append($img));
             $thumbsList.append($imgItem);
 
@@ -312,6 +326,10 @@
           $listViewOsd.addClass('iov-remove-margin');
           $thumbsViewport.hide();
         }
+      }
+
+      function getThumbUrl(serverUrl, imageId) {
+        return [serverUrl.replace('/iiif', ''), imageId.replace('%252F', '/')].join('/') + '_thumb'
       }
 
       function addImageNavBehavior(){
