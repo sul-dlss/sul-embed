@@ -344,6 +344,8 @@
 
       function updateView($imgItem) {
         loadOsdInstance($imgItem.data('iiif-info-url'));
+        $rightNav.show();
+        $leftNav.show();
         scrollThumbsViewport($imgItem);
       }
 
