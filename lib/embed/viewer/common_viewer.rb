@@ -50,7 +50,7 @@ module Embed
                 doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-info-circle', 'aria-expanded' => 'false', 'data-toggle' => 'sul-embed-metadata-panel')
               end
               unless @request.hide_embed_this?
-                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-share-alt', 'aria-expanded' => 'false', 'data-toggle' => 'sul-embed-embed-this-panel')
+                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-code', 'aria-expanded' => 'false', 'data-toggle' => 'sul-embed-embed-this-panel')
               end
               if self.is_a?(Embed::Viewer::Image) && !@request.hide_download?
                 doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-download', 'aria-expanded' => 'false', 'data-toggle' => 'sul-embed-download-panel')
