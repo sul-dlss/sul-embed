@@ -44,7 +44,7 @@
       width: 100%;
       margin-top: 4px;
     }
-    
+
     h2.#{$namespace}-item-count {
       color: white;
       border-bottom: 0;
@@ -79,6 +79,11 @@
         border-color: $sul-botton-hover-border-color;
       }
     }
+
+    .#{$namespace}-btn.fa-code {
+      font-weight: bold;
+    }
+
     .#{$namespace}-purl-link {
       font-size: .9em;
       position: absolute;
