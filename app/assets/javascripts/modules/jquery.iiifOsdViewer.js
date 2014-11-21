@@ -334,27 +334,28 @@
 
       function addImageNavBehavior(){
         if (config.totalImages > 1) {
-          var $controls = $viewer.find('.iov-menu-bar');
-          $controls.after($rightNav);
-          $controls.after($leftNav);
+          $viewer.find('.iov-menu-bar').after($rightNav).after($leftNav);
 
-          $.each([$leftNav, $rightNav], function(){
-            $(this).on('click', function(){
-              var activeThumb = $('.iov-list-view-thumb-selected', $(this).closest('.iov'));
-              var nextThumb;
-              if($(this).attr('class') == $rightNav.attr('class')) {
+          $.each([$leftNav, $rightNav], function() {
+            
+            $(this).on('click', function() {
+              var thumbsList = $('.iov-list-view-thumbs li'),
+                  activeThumb = $thumbsList.find('.iov-list-view-thumb-selected'),
+                  nextThumb;
+
+              if ($(this).is($rightNav)) {
                 nextThumb = activeThumb.next('li');
-              }else{
+                if (nextThumb.length <= 0) nextThumb = thumbsList.first();
+              } else {
                 nextThumb = activeThumb.prev('li');
+                if (nextThumb.length <= 0) nextThumb = thumbsList.last();
               }
 
-              if(nextThumb.length > 0) {
-                nextThumb.addClass('iov-list-view-thumb-selected');
-                activeThumb.removeClass('iov-list-view-thumb-selected');
-                updateView(nextThumb);
+              nextThumb.addClass('iov-list-view-thumb-selected');
+              activeThumb.removeClass('iov-list-view-thumb-selected');
+              updateView(nextThumb);
 
-                $.publish('iov-list-view-load', nextThumb.data('iov-list-view-id'));
-              }
+              $.publish('iov-list-view-load', nextThumb.data('iov-list-view-id'));
             });
           });
         }
