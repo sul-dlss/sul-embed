@@ -12,6 +12,9 @@
       },
       galleryView: {
         thumbsHeight: 100
+      },
+      header: {
+        height: 30
       }
     }, options);
 
@@ -25,9 +28,23 @@
 
       var $parent = $(this),
           $viewer = $('<div>').addClass('iov'),
-          $menuBar, $menuControls, $selectViews,
+          $viewer, $menuBar, $menuControls, $selectViews, $views,
           views = {},
           osd;
+
+      $viewer = $([
+        '<div class="iov">',
+          '<div class="iov-header">',
+            '<div class="iov-menu-bar">',
+              '<h2 class="sul-embed-item-count"></h2>',
+            '</div>',
+          '</div>',
+        '</div>'
+      ].join(''));
+
+      $views = $viewer.find('.iov-views');
+      $header = $viewer.find('.iov-header');
+      $menuBar = $viewer.find('.iov-menu-bar');
 
       $menuControls = $([
         '<div class="iov-controls">',
@@ -36,10 +53,8 @@
       ].join(''));
 
       $selectViews = $('<select class="iov-view-options"></select>');
-      $menuBar = $('<div class="iov-menu-bar"></div>');
 
       $viewer.height('100%');
-      $parent.append($viewer);
       init();
 
 
@@ -47,6 +62,7 @@
         config.defaultView = config.defaultView || config.availableViews[0];
         config.totalImages = 0;
         config.currentView = config.defaultView;
+        config.viewHeight = $parent.height() - config.header.height;
 
         $.each(config.data, function(index, collection) {
           config.totalImages += collection.images.length || 0;
@@ -59,6 +75,7 @@
 
         addMenuBar();
         attachEvents();
+        $parent.append($viewer);
         initializeViews();
         views[config.currentView].load();
         $selectViews.val(config.currentView);
@@ -79,8 +96,7 @@
           config.availableViews = ['list'];
         }
 
-        $menuBar.append($menuControls);
-        $viewer.append($menuBar);
+        $menuBar.prepend($menuControls);
       }
 
       function initializeViews() {
@@ -134,9 +150,10 @@
             $ctrlFullScreen.removeClass('fa-compress').addClass('fa-expand');
           }
 
-          if (config.currentView === 'horizontal') {
-            views[config.currentView].resize();
-          }
+          $.each(config.availableViews, function(index, view) {
+            views[view].resize();
+          });
+
         });
 
         $selectViews.on('change', function() {
@@ -176,11 +193,17 @@
         }
       }
 
-      function fullscreenElement() {
-        return (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement);
-      }
 
     });
+
+    function isFullscreen() {
+      var $fullscreen = $(fullscreenElement());
+      return ($fullscreen.length > 0);
+    }
+
+    function fullscreenElement() {
+      return (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement);
+    }
 
     function hashCode(str) {
       return str.split("").reduce(function(a,b) { a = ((a << 5) - a) + b.charCodeAt(0); return a & a}, 0);
@@ -190,6 +213,10 @@
       width = width || '';
       height = height || '';
       return [server, id, 'full/' + width + ',' + height, '0/native.jpg'].join('/');
+    }
+
+    function setViewHeight($view) {
+      $view.height(isFullscreen() ? '100%' : config.viewHeight);
     }
 
     function lazyLoadThumbsVerticalList($list, viewportHeight) {
@@ -253,8 +280,9 @@
           '</div>'
         ].join(''));
 
+        setViewHeight($listView);
         $listView.append($listViewOsd);
-        $viewer.find('.iov-menu-bar').prepend($listViewControls);
+        $listView.prepend($listViewControls);
 
         loadListViewThumbs();
         addImageNavBehavior();
@@ -293,7 +321,7 @@
 
             // when an image load errors (i.e. WebAuth challenge)
             $img.on('error', function(){
-              if($("li", $thumbsList).index($imgItem) == 0) {
+              if ($("li", $thumbsList).index($imgItem) == 0) {
                 $leftNav.hide();
                 $rightNav.hide();
                 $thumbsViewport.hide();
@@ -337,7 +365,7 @@
           $viewer.find('.iov-menu-bar').after($rightNav).after($leftNav);
 
           $.each([$leftNav, $rightNav], function() {
-            
+
             $(this).on('click', function() {
               var thumbsList = $('.iov-list-view-thumbs li'),
                   activeThumb = $thumbsList.find('.iov-list-view-thumb-selected'),
@@ -438,7 +466,8 @@
         },
 
         resize: function() {
-
+          setViewHeight($listView);
+          $thumbsViewport.trigger('scroll');
         }
       };
     };
@@ -454,6 +483,7 @@
       $thumbsList = $('<ul class="iov-gallery-view-thumbs"></ul>');
 
       function render() {
+        setViewHeight($galleryView);
         loadGalleryViewThumbs();
       }
 
@@ -514,7 +544,8 @@
         },
 
         resize: function() {
-
+          setViewHeight($galleryView);
+          $galleryView.trigger('scroll');
         }
       };
     }
@@ -531,6 +562,7 @@
       $imgsList = $('<ul class="iov-horizontal-view-images"></ul>');
 
       function render() {
+        setViewHeight($horizontalView);
         loadHorizontalImageStubs();
       }
 
@@ -563,11 +595,15 @@
       function loadHorizontalViewImages() {
         var height,
             imgsListWidth = 0,
-            imgsList = $imgsList.find('li[data-horizontal-view-id!=""]');
+            minImgWidth = 100, // to accomodate labels for vertically thin images
+            imgsList = $imgsList.find('li[data-horizontal-view-id!=""]'),
+            offset = 40; // 20 = horizontal scrollbar, 20 = label height
 
         $viewport.detach();
 
-        height = $horizontalView.innerHeight() - 20,
+        height = $horizontalView.height() - offset;
+
+        if (isFullscreen()) height -= config.header.height;
 
         $.each(imgsList, function(index, imgItem) {
           var $imgItem = $(imgItem),
@@ -582,7 +618,7 @@
             .width(imgWidth)
             .data('iov-img-url', imgUrl);
 
-          imgsListWidth += imgWidth + 10;
+          imgsListWidth += Math.max(imgWidth, minImgWidth) + 10;
         });
 
         $imgsList.width(imgsListWidth);
@@ -618,6 +654,7 @@
         },
 
         resize: function() {
+          setViewHeight($horizontalView);
           loadHorizontalViewImages();
         }
       };

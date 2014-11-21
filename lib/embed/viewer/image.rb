@@ -5,7 +5,7 @@ module Embed
 
       def initialize(*args)
         super
-        header_tools_logic << :file_count_logic
+        header_tools_logic
       end
 
       def body_html
@@ -34,7 +34,7 @@ module Embed
                 end
                 doc.div(class: 'sul-embed-panel-title') do
                   doc.text "Download image"
-                  doc.span(class: "sul-embed-panel-item-label") 
+                  doc.span(class: "sul-embed-panel-item-label")
                 end
               end
               doc.table(class: 'sul-embed-download-options', :'data-download-sizes' => "#{sizes.to_json}", :'data-stacks-url' => "#{Settings.stacks_url}") do

@@ -4,43 +4,38 @@ $sidebar-width: 100px;
 
 .iov {
   box-sizing: border-box;
+  overflow: hidden;
   position: relative;
+  width: 100%;
+}
+
+.iov-header {
+  background: $sul-border-color;
+  overflow: auto;
+  width: 100%;
 }
 
 .iov-menu-bar {
   overflow: auto;
-  position: absolute;
-  right: 10px;
-  top: 10px;
   z-index: $controls-z-index;
 }
 
-
-.iov-menu-bar .iov-controls {
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 5px;
-  float: left;
-  padding: 4px;
+.iov-fullscreen-height {
+  height: 100%;
 }
 
-.iov-menu-bar .fa {
+.iov-menu-bar .iov-controls, .iov-menu-bar .iov-view-options {
+  float: right;
+  margin: 5px 10px 0 0;
+}
+
+.iov-menu-bar .iov-controls a, .iov-menu-bar .iov-controls a:hover {
+  color: white;
   cursor: pointer;
   font-size: 15px;
 }
 
-.iov-menu-bar .iov-view-options {
-  background-color: #333;
-  border: 4px solid rgba(255, 255, 255, 0.5);
-  color: #fff;
-  float: left;
-  margin-right: 10px;
-  padding: 10px;
-  -moz-background-clip: padding;     /* Firefox 3.6 */
-  -webkit-background-clip: padding;  /* Safari 4? Chrome 6? */
-  background-clip: padding-box;
-}
-
-.iov-list-view {
+ .iov-list-view {
   float: right;
   height: 100%;
   width: 100%;
@@ -107,11 +102,14 @@ $sidebar-width: 100px;
   background-color: #999;
 }
 
-.iov-menu-bar .iov-list-view-controls {
+.iov-list-view-controls {
   background: rgba(255, 255, 255, 0.5);
   border-radius: 5px;
   float: left;
-  margin-right: 10px;
+  position: absolute;
+  right: 10px;
+  top: 35px;
+  z-index: $controls-z-index;
 }
 
 .iov-menu-bar a {
@@ -119,7 +117,7 @@ $sidebar-width: 100px;
   text-decoration: none;
 }
 
-.iov-menu-bar .iov-list-view-controls .fa {
+.iov-list-view-controls .fa {
   padding: 4px 6px;
 }
 
@@ -131,7 +129,7 @@ $sidebar-width: 100px;
 
 .iov-gallery-view ul {
   margin: 0;
-  padding: 40px 5px 5px 5px;
+  padding: 5px;
   position: relative;
 }
 
@@ -140,6 +138,10 @@ $sidebar-width: 100px;
   list-style-type: none;
   padding: 5px;
   min-width: 72px;
+}
+
+.iov-gallery-view li img {
+  max-width: 100%;
 }
 
 .iov-list-view-thumbs li:after, .iov-gallery-view li:after, .iov-horizontal-view-images li:after {
@@ -163,7 +165,6 @@ $sidebar-width: 100px;
 .iov-horizontal-view .iov-horizontal-view-viewport {
   overflow-x: scroll;
   overflow-y: hidden;
-  height: 100%;
 }
 
 .iov-horizontal-view ul {
@@ -179,6 +180,8 @@ $sidebar-width: 100px;
 
 .iov-menu-bar a,
 .iov-controls a,
+.iov-menu-bar a, .iov-menu-bar a:hover,
+.iov-list-view-controls a, .iov-list-view-controls a:hover,
 .iov-list-view-thumbs a, .iov-list-view-thumbs a:hover,
 .iov-gallery-view a, .iov-gallery-view a:hover,
 .iov-horizontal-view-images a, .iov-horizontal-view-images a:hover {
@@ -187,7 +190,7 @@ $sidebar-width: 100px;
 }
 
 
-:-webkit-full-screen,  {
+:-webkit-full-screen  {
   height: 100%;
   left: 0;
   margin: 0;
@@ -195,7 +198,7 @@ $sidebar-width: 100px;
   width: 100%;
 }
 
-:-moz-full-screen .iov {
+:-moz-full-screen  {
   height: 100%;
   left: 0;
   margin: 0;

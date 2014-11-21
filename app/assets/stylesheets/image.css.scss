@@ -2,9 +2,21 @@
 @import 'vendor/tooltip';
 
 .sul-embed-container {
+  .sul-embed-header {
+    min-height: 30px;
+    white-space: nowrap;
+  }
+
   .sul-embed-body {
     overflow-y: auto;
     padding: 0;
+  }
+
+  h2.sul-embed-item-count {
+    display: inline-block;
+    float: left;
+    line-height: 30px;
+    padding-left: 15px;
   }
 
   .sul-embed-download {
