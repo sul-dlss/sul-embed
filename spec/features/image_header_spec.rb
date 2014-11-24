@@ -8,6 +8,5 @@ describe 'image viewer count header', js: true do
     fill_in_default_sandbox_form
     click_button 'Embed'
     expect(page).to have_css('.sul-embed-item-count', count: 1)
-    expect(page).to have_css '.sul-embed-item-count', text: '2 images'
   end
 end

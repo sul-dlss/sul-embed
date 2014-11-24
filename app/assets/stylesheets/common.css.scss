@@ -45,18 +45,19 @@
       margin-top: 4px;
     }
 
-    h2.#{$namespace}-item-count {
-      color: white;
-      border-bottom: 0;
-      font-size: $font-size-base;
-      font-weight: normal;
-      min-width: 75px;
-      line-height: 40px;
-      vertical-align: middle;
-      padding: 0;
-      display: inline;
-      float: left;
-    }
+  }
+
+  h2.#{$namespace}-item-count {
+    color: white;
+    border-bottom: 0;
+    font-size: $font-size-base;
+    font-weight: normal;
+    min-width: 75px;
+    line-height: 40px;
+    vertical-align: middle;
+    padding: 0;
+    display: inline;
+    float: left;
   }
 
   .#{$namespace}-footer {
