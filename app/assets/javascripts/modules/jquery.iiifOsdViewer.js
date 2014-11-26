@@ -324,6 +324,7 @@
               if ($("li", $thumbsList).index($imgItem) == 0) {
                 $leftNav.hide();
                 $rightNav.hide();
+                $listViewControls.hide();
                 $thumbsViewport.hide();
                 $('.iov-menu-bar').hide();
                 $listViewOsd
