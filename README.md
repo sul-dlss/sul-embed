@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/sul-dlss/sul-embed.svg?branch=master)](https://travis-ci.org/sul-dlss/sul-embed)
+
 # SUL-Embed
 
 An [oEmbed](http://oembed.com/) provider for embedding resources from the Stanford University Library.
