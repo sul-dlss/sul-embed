@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'file list accessibility', js: true do
+describe 'file list accessibility' do
   include PURLFixtures
-  it 'should relevant sr-only classes' do
+  it 'should relevant sr-only classes', js: true do
     stub_purl_response_with_fixture(hybrid_object_purl)
     send_embed_response
     expect(page).to have_content 'Download item 1'

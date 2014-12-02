@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-describe 'feature testing of viewers', js: true do
+describe 'feature testing of viewers' do
   include PURLFixtures
   describe 'basic functionality' do
-    it 'should make purl embed request and embed correctly' do
+    it 'should make purl embed request and embed correctly', js: true do
       stub_purl_response_with_fixture(file_purl)
       send_embed_response
       expect(page).to have_css('.sul-embed-container')
@@ -12,7 +12,7 @@ describe 'feature testing of viewers', js: true do
       expect(page).to have_css('.sul-embed-body')
       expect(page).to have_css('.sul-embed-footer')
     end
-    it 'should hide the title when requested' do
+    it 'should hide the title when requested', js: true do
       stub_purl_response_with_fixture(file_purl)
       visit_sandbox
       check("Hide title?")
@@ -21,7 +21,7 @@ describe 'feature testing of viewers', js: true do
     end
   end
   describe 'file viewer' do
-    it 'should contain the file list' do
+    it 'should contain the file list', js: true do
       stub_purl_response_with_fixture(file_purl)
       send_embed_response
       expect(page).to have_css('.sul-embed-file-list')
@@ -30,7 +30,7 @@ describe 'feature testing of viewers', js: true do
       expect(page).to have_css('.sul-embed-description', text: 'File1 Label')
       expect(page).to have_css('.sul-embed-download', text: '12.35 kB')
     end
-    it 'should contain 4 files in file list' do
+    it 'should contain 4 files in file list', js: true do
       stub_purl_response_with_fixture(multi_resource_multi_file_purl)
       send_embed_response
       expect(page).to have_css('.sul-embed-count', count: 4)

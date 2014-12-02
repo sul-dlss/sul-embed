@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-describe 'image viewer count header', js: true do
+describe 'image viewer count header' do
   include PURLFixtures
-  it 'should show image count in header' do
+  it 'should show image count in header', js: true do
     stub_purl_response_with_fixture(image_purl)
     visit_sandbox
     fill_in_default_sandbox_form
