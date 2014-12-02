@@ -74,7 +74,7 @@ describe Embed::Viewer::CommonViewer do
       expect(request).to receive(:rails_request).and_return(rails_request)
       expect(rails_request).to receive(:host_with_port).and_return('example.com')
       html = Capybara.string(file_viewer.footer_html)
-      expect(html).to have_css 'div.sul-embed-footer a', text: 'http://purl.stanford.edu/12345'
+      expect(html).to have_css 'div.sul-embed-footer a', text: '12345'
     end
   end
   describe 'to_html' do

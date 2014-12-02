@@ -59,7 +59,7 @@ module Embed
             doc.div(class: 'sul-embed-purl-link') do
               doc.img(class: 'sul-embed-rosette', src: asset_url('sul-rosette.png'))
               doc.a(href: @purl_object.purl_url) do
-                doc.text @purl_object.purl_url
+                doc.text @purl_object.purl_url.gsub(/^http:\/\//, '')
               end
             end
           end

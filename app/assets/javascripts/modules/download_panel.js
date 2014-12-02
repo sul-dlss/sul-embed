@@ -5,18 +5,10 @@
          sizes = $downloadOptions.data('download-sizes'),
          sizeLevelMapping = { full: 0, xlarge: -1, large: -2, medium: -3, small: -4 },
          djatokaBaseResolution = 92,
+         disableDownloadWidthCutoff = 300,
          defaultSize = 400,
-         imageData,
-         fullFileSize,
-         fullWidth,
-         fullHeight,
-         label,
-         stacksUrl,
-         stanfordOnly,
-         tooltipText,
-         druid,
-         imageId,
-         levels;
+         imageData, fullFileSize, fullWidth, fullHeight, label, stacksUrl,
+         stanfordOnly, tooltipText, druid, imageId, levels;
 
     function init(data) {
       imageData = data;
@@ -126,9 +118,13 @@
     }
 
     function disableDownloadButton() {
-      $btnDownloadPanel
-        .prop('disabled', true)
-        .text(' No image selected');
+      var embedWidth = $("#sul-embed-object").outerWidth();
+
+      $btnDownloadPanel.prop('disabled', true);
+
+      if (embedWidth > disableDownloadWidthCutoff) {
+        $btnDownloadPanel.text(' No image selected');
+      }
     }
 
     function enableDownloadButton() {
