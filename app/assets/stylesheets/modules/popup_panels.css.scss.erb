@@ -113,30 +113,44 @@
   }
 
   .#{$namespace}-license-by {
-    @include license-images("by", $asset_url)
+    @include license-base;
+    @include license-image('<%= asset_url("by.png") %>');
+    @include license-image('<%= asset_url("by.svg") %>');
   }
 
   .#{$namespace}-license-by-sa {
-    @include license-images("by-sa", $asset_url)
+    @include license-base;
+    @include license-image('<%= asset_url("by-sa.png") %>');
+    @include license-image('<%= asset_url("by-sa.svg") %>');
   }
 
   .#{$namespace}-license-by-nd {
-    @include license-images("by-nd", $asset_url)
+    @include license-base;
+    @include license-image('<%= asset_url("by-nd.png") %>');
+    @include license-image('<%= asset_url("by-nd.svg") %>');
   }
 
   .#{$namespace}-license-by-nc {
-    @include license-images("by-nc", $asset_url)
+    @include license-base;
+    @include license-image('<%= asset_url("by-nc.png") %>');
+    @include license-image('<%= asset_url("by-nc.svg") %>');
   }
 
   .#{$namespace}-license-by-nc-sa {
-    @include license-images("by-nc-sa", $asset_url)
+    @include license-base;
+    @include license-image('<%= asset_url("by-nc-sa.png") %>');
+    @include license-image('<%= asset_url("by-nc-sa.svg") %>');
   }
 
   .#{$namespace}-license-by-nc-nd {
-    @include license-images("by-nc-nd", $asset_url)
+    @include license-base;
+    @include license-image('<%= asset_url("by-nc-nd.png") %>');
+    @include license-image('<%= asset_url("by-nc-nd.svg") %>');
   }
 
   .#{$namespace}-license-pdm {
-    @include license-images("pdm", $asset_url)
+    @include license-base;
+    @include license-image('<%= asset_url("pdm.png") %>');
+    @include license-image('<%= asset_url("pdm.svg") %>');
   }
 }

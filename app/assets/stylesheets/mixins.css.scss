@@ -1,3 +1,4 @@
+@import 'sul_variables';
 @import 'modules/bootstrap_mixins';
 
 @mixin container-padding {
@@ -8,11 +9,14 @@
   padding: 7px;
 }
 
-@mixin license-images($license, $asset-url) {
-  background: asset-url('#{$asset-url}#{$license}.png') no-repeat left;
-  background: asset-url('#{$asset-url}#{$license}.svg') no-repeat left;
+@mixin license-base {
   display: inline-block;
   height: 15px;
+  margin-bottom: 0;
   margin-right: 6px;
   width: 80px;
+}
+
+@mixin license-image($license) {
+  background: url('#{$asset_base}#{$license}') no-repeat left;
 }
