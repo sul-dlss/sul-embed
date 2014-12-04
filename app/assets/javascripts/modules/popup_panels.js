@@ -10,9 +10,9 @@
       },
       setupListeners: function() {
         var _this = this;
-        $("[data-toggle]").on("click", function() {
+        $("[data-sul-embed-toggle]").on("click", function() {
           clickTarget = $(this);
-          toggleElements = $("." + clickTarget.data("toggle"));
+          toggleElements = $("." + clickTarget.data("sul-embed-toggle"));
           _this.hideAllOtherPanels();
           _this.toggleAriaAttributes();
           _this.setMaxHeight();
@@ -20,9 +20,9 @@
         });
       },
       hideAllOtherPanels: function() {
-        $("[data-toggle]").each(function(){
-          if(clickTarget.data("toggle") != $(this).data('toggle')) {
-            $("." + $(this).data("toggle") + ':visible').hide();
+        $("[data-sul-embed-toggle]").each(function(){
+          if(clickTarget.data("sul-embed-toggle") != $(this).data('sul-embed-toggle')) {
+            $("." + $(this).data("sul-embed-toggle") + ':visible').hide();
           }
         });
       },

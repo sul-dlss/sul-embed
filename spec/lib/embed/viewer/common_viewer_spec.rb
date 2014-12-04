@@ -65,7 +65,7 @@ describe Embed::Viewer::CommonViewer do
       stub_request(request)
       html = Capybara.string(file_viewer.metadata_html)
       expect(html).to_not have_css '.sul-embed-metadata-container'
-      expect(html).to_not have_css '[data-toggle="sul-embed-metadata-panel"]'
+      expect(html).to_not have_css '[data-sul-embed-toggle="sul-embed-metadata-panel"]'
     end
   end
   describe 'footer_html' do
