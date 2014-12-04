@@ -11,9 +11,9 @@ describe 'download panel', js: true do
 
     it 'should be present after a user clicks the button' do
       expect(page).to have_css('.sul-embed-download-panel', visible: false)
-      page.find('button[data-toggle="sul-embed-download-panel"]', visible: true)
+      page.find('button[data-sul-embed-toggle="sul-embed-download-panel"]', visible: true)
 
-      page.find('[data-toggle="sul-embed-download-panel"]', match: :first).click
+      page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
       expect(page).to have_css('.sul-embed-download-panel', visible: true)
 
       expect(page).to have_css('.sul-embed-panel-item-label', text: '')      
@@ -34,12 +34,12 @@ describe 'download panel', js: true do
       check("Hide download?")
       click_button 'Embed'
 
-      expect(page).to_not have_css('button[data-toggle="sul-embed-download-panel"]')
+      expect(page).to_not have_css('button[data-sul-embed-toggle="sul-embed-download-panel"]')
     end
     it 'when not selected should display the button' do
       click_button 'Embed'
 
-      expect(page).to have_css('button[data-toggle="sul-embed-download-panel"]')
+      expect(page).to have_css('button[data-sul-embed-toggle="sul-embed-download-panel"]')
     end
   end
 end

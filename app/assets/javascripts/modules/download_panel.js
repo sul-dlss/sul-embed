@@ -1,7 +1,7 @@
 (function(global) {
   global.sulEmbedDownloadPanel = (function() {
      var $downloadOptions = $('.sul-embed-download-options'),
-         $btnDownloadPanel = $('.sul-embed-footer-tool[data-toggle="sul-embed-download-panel"]'),
+         $btnDownloadPanel = $('.sul-embed-footer-tool[data-sul-embed-toggle="sul-embed-download-panel"]'),
          sizes = $downloadOptions.data('download-sizes'),
          sizeLevelMapping = { full: 0, xlarge: -1, large: -2, medium: -3, small: -4 },
          djatokaBaseResolution = 92,

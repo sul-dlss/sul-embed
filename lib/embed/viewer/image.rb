@@ -28,7 +28,7 @@ module Embed
           doc.div(class: 'sul-embed-panel-container') do
             doc.div(class: 'sul-embed-panel sul-embed-download-panel', style: 'display:none;', :'aria-hidden' => 'true') do
               doc.div(class: 'sul-embed-panel-header') do
-                doc.button(class: 'sul-embed-close', 'data-toggle' => 'sul-embed-download-panel') do
+                doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-download-panel') do
                   doc.span('aria-hidden' => true, class: 'fa fa-close') {}
                   doc.span(class: 'sul-embed-sr-only') { doc.text "Close" }
                 end
