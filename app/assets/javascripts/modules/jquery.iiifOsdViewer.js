@@ -215,6 +215,10 @@
       return [server, id, 'full/' + width + ',' + height, '0/native.jpg'].join('/');
     }
 
+    function getThumbUrl(serverUrl, imageId) {
+      return [serverUrl.replace('/iiif', ''), imageId.replace('%252F', '/')].join('/') + '_thumb'
+    }
+
     function setViewHeight($view) {
       $view.height(isFullscreen() ? '100%' : config.viewHeight);
     }
@@ -295,7 +299,7 @@
       function loadListViewThumbs() {
         $.each(config.data, function(index, collection) {
           $.each(collection.images, function(index, image) {
-            var imgUrl = getIiifImageUrl(collection.iiifServer, image.id, config.listView.thumbsWidth, null),
+            var imgUrl = getThumbUrl(collection.iiifServer, image.id),
                 infoUrl = getIiifInfoUrl(collection.iiifServer, image.id),
                 $imgItem = $('<li data-alt="' + image.label + '">'),
                 $img = $('<img>'),
@@ -355,10 +359,6 @@
           $listViewOsd.addClass('iov-remove-margin');
           $thumbsViewport.hide();
         }
-      }
-
-      function getThumbUrl(serverUrl, imageId) {
-        return [serverUrl.replace('/iiif', ''), imageId.replace('%252F', '/')].join('/') + '_thumb'
       }
 
       function addImageNavBehavior(){
@@ -492,7 +492,7 @@
         $.each(config.data, function(index, collection) {
           $.each(collection.images, function(index, image) {
             var imgWidth = Math.round((image.width / image.height) * config.galleryView.thumbsHeight);
-                imgUrl = getIiifImageUrl(collection.iiifServer, image.id, imgWidth, config.galleryView.thumbsHeight),
+                imgUrl = getThumbUrl(collection.iiifServer, image.id),
                 $img = $('<img>'),
                 $imgItem = $('<li data-alt="' + image.label + '">');
 
