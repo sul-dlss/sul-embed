@@ -8,10 +8,15 @@
     config = $.extend({
       availableViews: ['list', 'gallery', 'horizontal'],
       listView: {
-        thumbsWidth: 75
+        thumbsWidth: 75,
+        imgQualityFactor: 4
       },
       galleryView: {
-        thumbsHeight: 100
+        thumbsHeight: 100,
+        imgQualityFactor: 4
+      },
+      horizontalView: {
+        imgQualityFactor: 2
       },
       header: {
         height: 30
@@ -297,13 +302,15 @@
       }
 
       function loadListViewThumbs() {
+        var imgQualityFactor = config.listView.imgQualityFactor || 1; // factor to multiply image size and shrink in browser for better quality
+
         $.each(config.data, function(index, collection) {
           $.each(collection.images, function(index, image) {
-            var imgUrl = getThumbUrl(collection.iiifServer, image.id),
-                infoUrl = getIiifInfoUrl(collection.iiifServer, image.id),
+            var infoUrl = getIiifInfoUrl(collection.iiifServer, image.id),
                 $imgItem = $('<li data-alt="' + image.label + '">'),
                 $img = $('<img>'),
-                imgHeight = Math.round((image.height / image.width) * config.listView.thumbsWidth);
+                imgHeight = Math.round((image.height / image.width) * config.listView.thumbsWidth),
+                imgUrl = getIiifImageUrl(collection.iiifServer, image.id, parseInt(config.listView.thumbsWidth * imgQualityFactor, 10));
 
             $imgItem
               .addClass('iov-list-view-id-' + hashCode(image.id))
@@ -489,10 +496,12 @@
       }
 
       function loadGalleryViewThumbs() {
+        var imgQualityFactor = config.galleryView.imgQualityFactor || 1; // factor to multiply image size and shrink in browser for better quality
+
         $.each(config.data, function(index, collection) {
           $.each(collection.images, function(index, image) {
-            var imgWidth = Math.round((image.width / image.height) * config.galleryView.thumbsHeight);
-                imgUrl = getThumbUrl(collection.iiifServer, image.id),
+            var imgWidth = Math.round((image.width / image.height) * config.galleryView.thumbsHeight),
+                imgUrl = getIiifImageUrl(collection.iiifServer, image.id, parseInt(imgWidth * imgQualityFactor, 10)),
                 $img = $('<img>'),
                 $imgItem = $('<li data-alt="' + image.label + '">');
 
@@ -598,7 +607,8 @@
             imgsListWidth = 0,
             minImgWidth = 100, // to accomodate labels for vertically thin images
             imgsList = $imgsList.find('li[data-horizontal-view-id!=""]'),
-            offset = 40; // 20 = horizontal scrollbar, 20 = label height
+            offset = 40, // 20 = horizontal scrollbar, 20 = label height
+            imgQualityFactor = config.horizontalView.imgQualityFactor || 1; // factor to multiply image size and shrink in browser for better quality
 
         $viewport.detach();
 
@@ -612,7 +622,7 @@
               id = $imgItem.data('iov-iiif-image-id'),
               $img = $imgItem.find('img'),
               imgWidth =  Math.round(($imgItem.data('iov-width') * height) / $imgItem.data('iov-height')),
-              imgUrl = getIiifImageUrl(iiifServer, id, imgWidth, height);
+              imgUrl = getIiifImageUrl(iiifServer, id, parseInt(imgWidth * imgQualityFactor, 10), parseInt(height * imgQualityFactor, 10));
 
           $img
             .height(height)
