@@ -1,6 +1,7 @@
 @import 'sul_variables';
 $controls-z-index: 1000;
 $sidebar-width: 100px;
+$img-bg-color: #eee;
 
 .iov {
   box-sizing: border-box;
@@ -76,6 +77,7 @@ $sidebar-width: 100px;
 }
 
 .iov-list-view .iov-list-view-thumbs-viewport li img {
+  background-color: $img-bg-color;
   position: relative;
   width: 100%;
 }
@@ -141,6 +143,7 @@ $sidebar-width: 100px;
 }
 
 .iov-gallery-view li img {
+  background-color: $img-bg-color;
   max-width: 100%;
 }
 
@@ -176,6 +179,10 @@ $sidebar-width: 100px;
   float: left;
   list-style-type: none;
   padding: 0 5px;
+}
+
+.iov-horizontal-view li img {
+  background-color: $img-bg-color;
 }
 
 .iov-menu-bar a,
