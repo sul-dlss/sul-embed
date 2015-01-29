@@ -217,7 +217,7 @@
     function getIiifImageUrl(server, id, width, height) {
       width = width || '';
       height = height || '';
-      return [server, id, 'full/' + width + ',' + height, '0/native.jpg'].join('/');
+      return [server, id, 'full/' + width + ',' + height, '0/default.jpg'].join('/');
     }
 
     function getThumbUrl(serverUrl, imageId) {
