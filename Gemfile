@@ -27,7 +27,7 @@ group :deployment do
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
-  gem 'lyberteam-capistrano-devel', git: 'https://github.com/sul-dlss/lyberteam-capistrano-devel'
+  gem 'lyberteam-capistrano-devel'
 end
 
 gem 'squash_ruby', require: 'squash/ruby'
