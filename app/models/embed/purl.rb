@@ -116,6 +116,11 @@ module Embed
         super
       end
     end
+    class ResourceNotEmbeddable < StandardError
+      def initialize(msg = "The requested PURL resource was not embeddable.")
+        super
+      end
+    end
     class Resource
       def initialize(resource, rights)
         @resource = resource

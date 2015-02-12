@@ -23,6 +23,10 @@ class EmbedController < ApplicationController
     render body: e.to_s, status: 400
   end
 
+  rescue_from Embed::PURL::ResourceNotEmbeddable do |e|
+    render body: e.to_s, status: 400
+  end
+
   rescue_from Embed::Request::InvalidURLScheme do |e|
     render body: e.to_s, status: 404
   end
