@@ -45,6 +45,12 @@ class EmbedController < ApplicationController
     {}
   end
 
+  # Setting a cookies method on the controller so that squash can properly report errors
+  # Cookies do not exsist natively in Rails-API and we don't need them.
+  def cookies
+    []
+  end
+
   private
 
   def set_cache
