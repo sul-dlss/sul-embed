@@ -12,7 +12,10 @@ module Embed
     end
 
     def type
-      @type ||= ng_xml.xpath('//contentMetadata').first.attributes['type'].try(:value)
+      @type ||= begin
+        contentMetadata = ng_xml.xpath('//contentMetadata').first
+        contentMetadata.attributes['type'].try(:value) if contentMetadata.present?
+      end
     end
 
     def contents
@@ -110,6 +113,11 @@ module Embed
     end
     class ResourceNotAvailable < StandardError
       def initialize(msg = "The requested PURL resource was not available")
+        super
+      end
+    end
+    class ResourceNotEmbeddable < StandardError
+      def initialize(msg = "The requested PURL resource was not embeddable.")
         super
       end
     end

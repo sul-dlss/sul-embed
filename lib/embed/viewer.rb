@@ -7,6 +7,7 @@ module Embed
     delegate :height, :width, to: :viewer
     def initialize(request)
       @request = request
+      raise Embed::PURL::ResourceNotEmbeddable unless request.purl_object.type.present?
     end
     def viewer
       @viewer ||= registered_or_default_viewer.new(@request)

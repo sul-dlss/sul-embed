@@ -6,6 +6,10 @@ describe EmbedController do
       get :get
       expect(response.status).to eq(400)
     end
+    it 'has a 400 status when a PURL that is not embeddable is requested' do
+      get :get, url: 'http://purl.stanford.edu/tz959sb6952'
+      expect(response.status).to eq(400)
+    end
     it 'has a 404 status code without matched url scheme params' do
       get :get, url: 'http://www.example.com'
       expect(response.status).to eq(404)

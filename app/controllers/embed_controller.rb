@@ -23,6 +23,10 @@ class EmbedController < ApplicationController
     render body: e.to_s, status: 400
   end
 
+  rescue_from Embed::PURL::ResourceNotEmbeddable do |e|
+    render body: e.to_s, status: 400
+  end
+
   rescue_from Embed::Request::InvalidURLScheme do |e|
     render body: e.to_s, status: 404
   end
@@ -39,6 +43,12 @@ class EmbedController < ApplicationController
   # Flash does not exsist natively in Rails-API and we don't need it.
   def flash
     {}
+  end
+
+  # Setting a cookies method on the controller so that squash can properly report errors
+  # Cookies do not exsist natively in Rails-API and we don't need them.
+  def cookies
+    []
   end
 
   private
