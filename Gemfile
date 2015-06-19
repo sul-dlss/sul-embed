@@ -22,6 +22,15 @@ group :development, :test do
 
   # Coveralls gem for code coverage reporting
   gem 'coveralls', require: false
+
+  # Teaspoon-jasmine is a wrapper for the Jasmine javascript testing library
+  gem 'teaspoon-jasmine'
+
+  # Allows jQuery integration into the Jasmine javascript testing framework
+  gem 'jasmine-jquery-rails'
+
+  # Have jQuery local for testing
+  gem 'jquery-rails'
 end
 
 
