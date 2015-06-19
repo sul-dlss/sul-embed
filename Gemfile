@@ -19,6 +19,9 @@ group :development, :test do
   gem 'capybara'
   gem 'poltergeist'
   gem 'high_voltage'
+
+  # Coveralls gem for code coverage reporting
+  gem 'coveralls', require: false
 end
 
 
