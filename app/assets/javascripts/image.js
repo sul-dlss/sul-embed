@@ -1,3 +1,10 @@
+// Require React libraries and components (this ordering is specific)
+//= require vendor/es5-shim
+//= require vendor/es5-sham
+//= require react
+//= require components
+//= require react_ujs
+
 //= require openseadragon/built-openseadragon/openseadragon/openseadragon.min
 //= require modules/css_injection
 //= require modules/download_panel

@@ -2,7 +2,10 @@ module Embed
   class Viewer
     class File
       include Embed::Viewer::CommonViewer
-
+      include ActionView::Helpers::TagHelper
+      include ActionView::Context
+      include ActionView::Helpers::TextHelper
+      include React::Rails::ViewHelper
       def initialize(*args)
         super
         header_tools_logic << :file_count_logic << :file_search_logic

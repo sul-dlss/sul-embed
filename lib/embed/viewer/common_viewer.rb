@@ -43,27 +43,23 @@ module Embed
       end
 
       def footer_html
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-footer') do
-            doc.div(class: 'sul-embed-footer-toolbar') do
-              unless @request.hide_metadata?
-                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-info-circle', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-metadata-panel')
-              end
-              unless @request.hide_embed_this?
-                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-code', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-embed-this-panel')
-              end
-              if self.is_a?(Embed::Viewer::Image) && !@request.hide_download?
-                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-download', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-download-panel')
-              end
-            end
-            doc.div(class: 'sul-embed-purl-link') do
-              doc.img(class: 'sul-embed-rosette', src: asset_url('sul-rosette.png'))
-              doc.a(href: @purl_object.purl_url, target: "_top") do
-                doc.text @purl_object.purl_url.gsub(/^http:\/\//, '')
-              end
-            end
-          end
-        end.to_html
+        data_options = {
+          toolbarButtons: toolbar_buttons,
+          purlUrl: @purl_object.purl_url,
+          rosetteUrl: asset_url('sul-rosette.png')
+        }
+        react_component('EmbedFooter', data_options, prerender: false)
+      end
+
+      ##
+      # Creates an array of toolbar buttons that should be displayed
+      # @return[Array]
+      def toolbar_buttons
+        buttons = []
+        buttons.push(:metadata) unless @request.hide_metadata?
+        buttons.push(:embed_this) unless @request.hide_embed_this?
+        buttons.push(:download) unless @request.hide_download? || !self.is_a?(Embed::Viewer::Image)
+        buttons
       end
 
       def metadata_html

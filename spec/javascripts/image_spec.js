@@ -3,6 +3,14 @@
 
 describe('Image viewer', function() {
   describe('loads and makes available modules', function() {
+    it('React is defined', function() {
+      expect(React).toBeDefined();
+    });
+
+    it('ReactRailsUJS is defined', function() {
+      expect(ReactRailsUJS).toBeDefined();
+    });
+
     it('jQuery is defined', function() {
       expect(jQuery).toBeDefined();
     });
@@ -37,6 +45,12 @@ describe('Image viewer', function() {
 
     it('EmbedThis is defined', function() {
       expect(EmbedThis).toBeDefined();
+    });
+  });
+
+  describe('React components are available', function() {
+    it('EmbedFooter', function() {
+      expect(EmbedFooter).toBeDefined();
     });
   });
 });
