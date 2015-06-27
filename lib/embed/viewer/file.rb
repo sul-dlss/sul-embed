@@ -136,11 +136,8 @@ module Embed
         (@request.params[:min_files_to_search] || 10).to_i
       end
 
-      def file_search_html(doc)
-        doc.div(class: 'sul-embed-search') do
-          doc.label(for: 'sul-embed-search-input', class: 'sul-embed-sr-only') { doc.text 'Search this list' }
-          doc.input(class: 'sul-embed-search-input', id: 'sul-embed-search-input', placeholder: 'Search this list')
-        end
+      def file_search_html
+        'EmbedHeaderFileSearch'
       end
 
     end

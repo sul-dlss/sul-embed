@@ -35,11 +35,11 @@ module Embed
       end
 
       def header_html
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-header') do
-            render_header_tools(doc)
-          end if display_header?
-        end.to_html
+        if display_header?
+          react_component('EmbedHeader', { headerTools: display_header_tools, title: @purl_object.title }, prerender: true)
+        else
+          ''
+        end
       end
 
       def footer_html
@@ -48,7 +48,7 @@ module Embed
           purlUrl: @purl_object.purl_url,
           rosetteUrl: asset_url('sul-rosette.png')
         }
-        react_component('EmbedFooter', data_options, prerender: false)
+        react_component('EmbedFooter', data_options, prerender: true)
       end
 
       ##
@@ -186,14 +186,14 @@ module Embed
         end
       end
 
-      # Loops through all of the header tools logic methods
-      # and calls the corresponding method that is the return value
-      def render_header_tools(doc)
+      def display_header_tools
+        display = []
         header_tools_logic.each do |logic_method|
           if (tool = send(logic_method))
-            send(tool, doc)
+            display.push send(tool)
           end
         end
+        display
       end
 
       # Array of method containing symbols representing method names.
@@ -209,10 +209,8 @@ module Embed
         :header_title_html
       end
 
-      def header_title_html(doc)
-        doc.span(class: 'sul-embed-header-title') do
-          doc.text @purl_object.title
-        end
+      def header_title_html
+        'EmbedHeaderTitle'
       end
 
       def display_header?
@@ -269,8 +267,8 @@ module Embed
         :file_count_html
       end
 
-      def file_count_html(doc)
-        doc.h2(class: 'sul-embed-item-count', 'aria-live' => 'polite') {}
+      def file_count_html
+        'EmbedHeaderFileCount'
       end
 
     end
