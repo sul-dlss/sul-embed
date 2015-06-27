@@ -29,46 +29,25 @@ describe('EmbedFooter', function() {
     expect(props.rosetteUrl).toEqual('http://www.fillmurray.com/20/20');
     expect(props.toolbarButtons.length).toEqual(3);
   });
-});
 
-describe('EmbedFooterToolbar', function() {
-  var renderedEmbedFooterToolbar = TestUtils.findRenderedComponentWithType(EmbedFooterElement, EmbedFooterToolbar);
-  it('Renders an EmbedFooterToolbar component', function() {
-    expect(renderedEmbedFooterToolbar).toBeDefined();
+  describe('PURL links', function() {
+    it('Renders rosette image tag', function() {
+      var props = TestUtils.findRenderedDOMComponentWithTag(renderedEmbedFooter, 'img').props;
+      expect(props.className).toEqual('sul-embed-rosette');
+      expect(props.src).toEqual('http://www.fillmurray.com/20/20');
+    });
+
+    it('Renders purl link without http:// in text', function() {
+      var props = TestUtils.findRenderedDOMComponentWithTag(renderedEmbedFooter, 'a').props;
+      expect(props.href).toEqual('http://example.com');
+      expect(props.target).toEqual('_top');
+      expect(props.children).toEqual('example.com');
+    });
   });
 
-  it('Gets correct props from parent', function() {
-    var props = renderedEmbedFooterToolbar.props;
-    expect(props.toolbarButtons.length).toEqual(3)
-  });
-
-  it('Renders additional buttons', function() {
-    expect(TestUtils.scryRenderedDOMComponentsWithTag(renderedEmbedFooterToolbar, 'button').length).toEqual(3);
-  });
-});
-
-describe('EmbedFooterPurl', function() {
-  var renderedEmbedFooterPurl = TestUtils.findRenderedComponentWithType(EmbedFooterElement, EmbedFooterPurl);
-  it('Renders an EmbedFooterPurl component', function() {
-    expect(renderedEmbedFooterPurl).toBeDefined();
-  });
-
-  it('Gets correct props from parent', function() {
-    var props = renderedEmbedFooterPurl.props;
-    expect(props.purlUrl).toEqual('http://example.com');
-    expect(props.rosetteUrl).toEqual('http://www.fillmurray.com/20/20');
-  });
-
-  it('Renders rosette image tag', function() {
-    var props = TestUtils.findRenderedDOMComponentWithTag(renderedEmbedFooterPurl, 'img').props;
-    expect(props.className).toEqual('sul-embed-rosette');
-    expect(props.src).toEqual('http://www.fillmurray.com/20/20');
-  });
-
-  it('Renders purl link without http:// in text', function() {
-    var props = TestUtils.findRenderedDOMComponentWithTag(renderedEmbedFooterPurl, 'a').props;
-    expect(props.href).toEqual('http://example.com');
-    expect(props.target).toEqual('_top');
-    expect(props.children).toEqual('example.com');
+  describe('Toolbar', function() {
+    it('Renders buttons', function() {
+      expect(TestUtils.scryRenderedDOMComponentsWithTag(renderedEmbedFooter, 'button').length).toEqual(3);
+    });
   });
 });
