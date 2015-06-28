@@ -17,7 +17,7 @@
         $('input[type="checkbox"], input[type="text"]', formContainer).on('change', function(){
           var checked   = $(this).is(':checked'),
               inputType = $(this).attr('type');
-              src       = textarea.text().match(/src='(\S+)'/)[1],
+              src       = textarea.text().match(/src="(\S+)"/)[1],
               urlAttr   = '&' + $(this).data('embed-attr') + '=true';
           if(inputType == 'checkbox'){
             if(checked) {

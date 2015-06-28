@@ -26,48 +26,16 @@ module Embed
 
       def download_html
         return '' if @request.hide_download?
-        sizes = Constants::IMAGE_DOWNLOAD_SIZES
-
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-panel-container') do
-            doc.div(class: 'sul-embed-panel sul-embed-download-panel', style: 'display:none;', :'aria-hidden' => 'true') do
-              doc.div(class: 'sul-embed-panel-header') do
-                doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-download-panel') do
-                  doc.span('aria-hidden' => true, class: 'fa fa-close') {}
-                  doc.span(class: 'sul-embed-sr-only') { doc.text "Close" }
-                end
-                doc.div(class: 'sul-embed-panel-title') do
-                  doc.text "Download image"
-                  doc.span(class: "sul-embed-panel-item-label")
-                end
-              end
-              doc.table(class: 'sul-embed-download-options', :'data-download-sizes' => "#{sizes.to_json}", :'data-stacks-url' => "#{Settings.stacks_url}") do
-                sizes.each do |size|
-                  doc.tr do
-                    doc.td(:class => "sul-embed-download-size-type sul-embed-download-#{size}") do
-                      if (size != 'default')
-                        doc.a(class: 'download-link', href: 'javascript:;') {
-                          doc.text "#{size} ("
-                          doc.span(class: "sul-embed-download-dimensions")
-                          doc.text ")"
-                        }
-                        doc.span(class: "sul-embed-stanford-only", style: "display: none;") do
-                          doc.a(href: 'javascript:;', title: '', 'data-sul-embed-tooltip' => false) {}
-                        end
-                      else
-                        doc.span() {
-                          doc.text "#{size} ("
-                          doc.span(class: "sul-embed-download-dimensions")
-                          doc.text ")"
-                        }
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end.to_html
+        react_component('EmbedPanel',
+                        {
+                          panelType: 'EmbedPanelDownload',
+                          panelClass: 'sul-embed-download-panel',
+                          panelTitle: 'Download image <span class="sul-embed-panel-item-label"',
+                          sizes: Constants::IMAGE_DOWNLOAD_SIZES,
+                          stacksUrl: Settings.stacks_url
+                        },
+                        prerender: false
+                       )
       end
 
       def image_id(image)
