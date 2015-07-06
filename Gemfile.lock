@@ -187,12 +187,12 @@ GEM
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    term-ansicolor (1.3.0)
-      tins (~> 1.0)
     teaspoon (1.0.2)
       railties (>= 3.2.5, < 5)
     teaspoon-jasmine (2.2.0)
       teaspoon (>= 1.0.0)
+    term-ansicolor (1.3.0)
+      tins (~> 1.0)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
@@ -242,6 +242,3 @@ DEPENDENCIES
   teaspoon-jasmine
   therubyracer
   uglifier
-
-BUNDLED WITH
-   1.10.4
