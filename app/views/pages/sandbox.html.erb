@@ -27,8 +27,9 @@
     input[type=text] {
       padding: 2px 4px;
     }
+
     input#min-files {
-      width: 26px;
+      width: 30px;
     }
     .form-params {
       background-color: #bdc3c7;
@@ -46,6 +47,11 @@
       padding: 6px 12px;
     }
 
+    .form-params label {
+      margin-left: 10px;
+      margin-right: 2px;
+    }
+
     .content {
       padding: 20px;
       width: 600px;
@@ -56,6 +62,21 @@
       display: block;
       margin: 5px 0;
     }
+
+    .xml-test {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 5px 10px;
+    }
+
+    .pass {
+      background-color: #99C953;
+    }
+
+    .fail {
+      background-color: #F16F44;
+    }
+
   </style>
 
   <!--[if lt IE 9]>
@@ -83,6 +104,8 @@
     <label for="hide-download">Hide download?</label> <input type="checkbox" id="hide-download" class="hide-download" />
     <br>
     <input type="button" class="btn-render" value="Embed">
+    <br>
+    <input type="checkbox" id="test-xml-response" class="test-xml-response" /><label for="hide-download">Test XML response</label>
   </form>
 
   <div class="content">
@@ -124,13 +147,20 @@
     });
 
     var embed = (function() {
-      var url, format, data;
+      var $viewer = $('.viewer'),
+          url, format, data;
+
 
       function init() {
         if (isValidUrl()) {
           submitRequest(url);
+
+          if ($('.test-xml-response').is(':checked')) {
+            checkXmlResponse(url);
+          }
         };
       }
+
 
       function isValidUrl() {
         var apiEndpoint = $.trim($('.api-endpoint').val()),
@@ -166,33 +196,48 @@
         return true;
       }
 
-      function appendContent(response) {
-        var $viewer = $('.viewer'),
-            thumbnail_url,
-            width,
-            height;
+
+      function updatePage(response, xmlTest) {
+        var xmlDoc, width, height,
+            html = '',
+            $test = $('<p class="xml-test fail">XML response check : </p>'),
+            $icon = $('<span style="margin-left: 5px;">&#x2718;</span>');
 
         if (format === "json") {
-          html = response.html;
+          html   = response.html;
+          width  = response.width;
+          height = response.height;
         }
 
         if (format === "xml") {
-          // xmlDoc = $.parseXML( response );
+          xmlDoc = $(response);
+          html   = $(xmlDoc.find('html').text());
+          width  = xmlDoc.find('width').text();
+          height = xmlDoc.find('height').text();
         }
 
-        $viewer.empty().width(width).height(height);
-        $viewer.append($('<div>' + html + '</div>'));
+        $viewer.empty().append(html);
+
+        if (xmlTest) {
+          if (xmlDoc && html !== '') {
+            $test.removeClass('fail').addClass('pass');
+            $icon.html(' &#x2714;');
+          }
+
+          $viewer.append($test.append($icon));
+        }
       }
 
-      function submitRequest(url) {
+
+      function submitRequest(url, xmlTest) {
         var request = $.ajax({
           type: "GET",
           url: url,
           dataType: format
         });
 
-        request.done(function(response) {
-          appendContent(response);
+        request.success(function(response) {
+          updatePage(response, xmlTest);
         });
 
         request.fail(function(jqXhr, status) {
@@ -200,8 +245,18 @@
         });
       }
 
+
+      function checkXmlResponse(url) {
+        url = url.replace('format=json', 'format=xml');
+        format = 'xml';
+        submitRequest(url, true);
+      }
+
+
       return {
-        render: function() { init(); }
+        render: function() {
+          init();
+        }
       };
 
     })();
