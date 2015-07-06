@@ -8,8 +8,12 @@ module Embed
       end
 
       def body_html
-        return  "<div> I'm geo </div>"
-      end
+        Nokogiri::HTML::Builder.new do |doc|
+          doc.div(class: 'sul-embed-body sul-embed-geo', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => "#{asset_url('geo.css')}") do
+            doc.script { doc.text ";jQuery.getScript(\"#{asset_url('geo.js')}\");" }
+          end
+        end.to_html
+      end      
       
       def self.supported_types
         [:geo]
