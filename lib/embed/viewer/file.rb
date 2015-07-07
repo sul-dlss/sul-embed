@@ -1,7 +1,6 @@
 module Embed
   class Viewer
-    class File
-      include Embed::Viewer::CommonViewer
+    class File < CommonViewer
 
       def initialize(*args)
         super
