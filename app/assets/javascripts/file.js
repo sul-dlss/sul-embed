@@ -1,3 +1,10 @@
+// Require React libraries and components (this ordering is specific)
+//= require vendor/es5-shim
+//= require vendor/es5-sham
+//= require react
+//= require components
+//= require react_ujs
+
 //= require modules/css_injection
 //= require listjs/dist/list
 //= require vendor/tooltip

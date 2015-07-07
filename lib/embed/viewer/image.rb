@@ -2,6 +2,10 @@ module Embed
   class Viewer
     class Image
       include Embed::Viewer::CommonViewer
+      include ActionView::Helpers::TagHelper
+      include ActionView::Context
+      include ActionView::Helpers::TextHelper
+      include React::Rails::ViewHelper
 
       def initialize(*args)
         super

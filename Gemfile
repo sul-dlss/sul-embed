@@ -54,6 +54,9 @@ gem 'filesize'
 
 gem 'bower-rails'
 
+# Provides reactjs support
+gem 'react-rails'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
