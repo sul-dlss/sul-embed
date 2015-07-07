@@ -21,7 +21,7 @@
 
     body {
       color: #333;
-      font-family: 'Open Sans';
+      font-family: 'Open Sans', 'Helvetica Neue', Sans Serif;
     }
 
     input[type=text] {
@@ -65,6 +65,15 @@
     table {
       border-collapse: collapse;
     }
+
+    .status {
+      font-size:26px;
+      font-weight: bold;
+      text-align: center;
+    }
+    .failed {
+      color: red;
+    }
   </style>
 
   <!--[if lt IE 9]>
@@ -100,7 +109,8 @@
       Aliquam vel dignissim purus. Aliquam id urna ut nisl fermentum tempus et in odio. Donec varius interdum ex,
       sed finibus odio. Vivamus in sodales velit, non fermentum odio. Nunc in posuere lacus.
     </p>
-    <div class="viewer"></div>
+    <div class="viewer">
+    </div>
     <p>
       Proin vestibulum quam sed turpis blandit molestie. Ut a massa a est consequat semper vitae eu augue. Sed consequat
       euismod molestie. Vivamus tempus venenatis lorem nec facilisis. Mauris ultricies mauris felis. Maecenas efficitur
@@ -161,9 +171,14 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script>
     $(function() {
-      $('.btn-render').on('click', function() {
-        embed.render();
-      });
+        $('.btn-render').on('click', function() {
+            embed.render();
+        });
+        $('input').keyup(function (e) {
+            if (e.keyCode == 13) {
+                embed.render();
+            }
+        });
     });
 
     var embed = (function() {
@@ -228,6 +243,13 @@
       }
 
       function submitRequest(url) {
+        if ($('.status').length === 0) {
+            var statusFeedback = $('.viewer').append('<p/>');
+            $('.viewer p').addClass('status');
+        }
+
+        $('.status').removeClass('failed').text('Loading...');
+
         var request = $.ajax({
           type: "GET",
           url: url,
@@ -235,10 +257,14 @@
         });
 
         request.done(function(response) {
+          $('.status').remove();
           appendContent(response);
         });
 
         request.fail(function(jqXhr, status) {
+          $('.viewer').empty();
+          var statusFeedback = $('.viewer').append('<p/>');
+          $('.viewer p').addClass('status failed').text('Request Failed');
           console.log('Request failed : ' + status);
         });
       }
