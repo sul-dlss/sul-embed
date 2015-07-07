@@ -265,4 +265,26 @@ module PURLFixtures
       </publicObject>
     XML
   end
+  def geo_purl
+     <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Geo Title</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="geo">
+          <resource sequence="1" type="object">
+            <label>Data</label>
+            <file id="data.zip" mimetype="application/zip" size="127368" role="master">
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="read">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
 end
