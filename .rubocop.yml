@@ -1,0 +1,13 @@
+inherit_from:
+  - .rubocop_hound.yml
+  - .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'spec/fixtures/**/*'
+    - 'vendor/**/*'
+  RunRailsCops: true
+
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: single_quotes
