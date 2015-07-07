@@ -10,14 +10,20 @@ module Embed
       def body_html
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-body sul-embed-geo', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => "#{asset_url('geo.css')}") do
+            doc.div(id: 'sul-embed-geo-map', 'style' => "height: #{body_height}px") {}
             doc.script { doc.text ";jQuery.getScript(\"#{asset_url('geo.js')}\");" }
           end
         end.to_html
       end      
       
+      def default_body_height
+        400
+      end
+      
       def self.supported_types
         [:geo]
       end
+      
     end
   end
 end
