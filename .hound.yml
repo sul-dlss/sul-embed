@@ -2,4 +2,4 @@ javascript:
   config_file: .jshintrc
 
 ruby:
-  config_file: .rubocopy.yml
+  config_file: .rubocop.yml
