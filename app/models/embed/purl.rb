@@ -13,9 +13,9 @@ module Embed
 
     def type
       @type ||= begin
-        contentMetadata = ng_xml.xpath('//contentMetadata').first
-        contentMetadata.attributes['type'].try(:value) if contentMetadata.present?
-      end
+                  contentMetadata = ng_xml.xpath('//contentMetadata').first
+                  contentMetadata.attributes['type'].try(:value) if contentMetadata.present?
+                end
     end
 
     def contents
@@ -42,10 +42,10 @@ module Embed
 
     def embargo_release_date
       @embargo_release_date ||= begin
-        if embargoed?
-          ng_xml.xpath('//rightsMetadata/access[@type="read"]/machine/embargoReleaseDate').try(:text)
-        end
-      end
+                                  if embargoed?
+                                    ng_xml.xpath('//rightsMetadata/access[@type="read"]/machine/embargoReleaseDate').try(:text)
+                                  end
+                                end
     end
 
     def ng_xml
@@ -58,6 +58,12 @@ module Embed
 
     def purl_url
       "#{Settings.purl_url}/#{@druid}"
+    end
+    
+    def bounding_box 
+      Envelope.new(
+        ng_xml.xpath('//gml:Envelope', 'gml'=>'http://www.opengis.net/gml/3.2/').first
+      ).to_bounding_box
     end
 
     ##
@@ -104,20 +110,20 @@ module Embed
 
     def response
       @response ||= begin
-        conn = Faraday.new(url: purl_xml_url)
-        response = conn.get do |request|
-          request.options = {
-            timeout: 2,
-            open_timeout: 2
-          }
-        end
-        raise ResourceNotAvailable unless response.success?
-        response.body
-      rescue Faraday::Error::ConnectionFailed => error
-        nil
-      rescue Faraday::Error::TimeoutError => error
-        nil
-      end
+                      conn = Faraday.new(url: purl_xml_url)
+                      response = conn.get do |request|
+                        request.options = {
+                          timeout: 2,
+                          open_timeout: 2
+                        }
+                      end
+                      raise ResourceNotAvailable unless response.success?
+                      response.body
+                    rescue Faraday::Error::ConnectionFailed => error
+                      nil
+                    rescue Faraday::Error::TimeoutError => error
+                      nil
+                    end
     end
     class ResourceNotAvailable < StandardError
       def initialize(msg = "The requested PURL resource was not available")
@@ -142,10 +148,10 @@ module Embed
       end
       def description
         @description ||= if (label_element = @resource.xpath('./label').try(:text)).present?
-          label_element
-        else
-          @resource.xpath('./attr[@name="label"]').try(:text)
-        end
+                           label_element
+                         else
+                           @resource.xpath('./attr[@name="label"]').try(:text)
+                         end
       end
       def files
         @files ||= @resource.xpath('./file').map do |file|
@@ -191,8 +197,13 @@ module Embed
         def has_location_data?
           @file.xpath('./location[@type="url"]').present?
         end
+        def has_geo_data?
+          @file.xpath('//*[name()="gml:Envelope"]').present?
+        end
         def preview_types
           ["image/jp2"]
+        end
+        def bounding_points 
         end
       end
     end
