@@ -24,7 +24,7 @@ describe 'geo viewer', js: true do
     end
 
     it 'shows the Mapquest Tile' do
-      expect(page).to have_css "img[src*='mqcdn.com']"
+      expect(page).to have_css "img[src*='mqcdn.com']", count: 8
     end
   end
 end

@@ -58,5 +58,10 @@
    */
 
   // Suppress warnings about == null comparisons.
-  "eqnull": true
+  "eqnull": true,
+
+  // Custom predefined js stuff
+  "predef": [
+    "expect", "describe", "it", "spyOn", "fixture", "beforeEach", "L"
+  ]
 }
