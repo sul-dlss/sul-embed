@@ -275,6 +275,22 @@ module PURLFixtures
           <resource sequence="1" type="object">
             <label>Data</label>
             <file id="data.zip" mimetype="application/zip" size="127368" role="master">
+              <geoData>
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://purl.stanford.edu/fp756wn9369">
+                  <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">application/x-esri-shapefile; format=Shapefile</dc:format>
+                  <dc:type xmlns:dc="http://purl.org/dc/elements/1.1/">Dataset#Polygon</dc:type>
+                  <gml:boundedBy xmlns:gml="http://www.opengis.net/gml/3.2/">
+                    <gml:Envelope gml:srsName="EPSG:4326">
+                      <gml:lowerCorner>-123.387626 38.298673</gml:lowerCorner>
+                      <gml:upperCorner>-122.528843 39.399103</gml:upperCorner>
+                    </gml:Envelope>
+                  </gml:boundedBy>
+                  <dc:coverage xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:resource="" dc:language="eng" dc:title="Russian River Watershed (Calif.)"/>
+                  <dc:coverage xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:resource="http://sws.geonames.org/5397100/about.rdf" dc:language="eng" dc:title="Sonoma County (Calif.)"/>
+                  <dc:coverage xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:resource="http://sws.geonames.org/5372163/about.rdf" dc:language="eng" dc:title="Mendocino County (Calif.)"/>
+                </rdf:Description>
+              </geoData>
+            </file>
           </resource>
         </contentMetadata>
         <rightsMetadata>
