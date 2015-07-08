@@ -19,6 +19,7 @@
               subdomains: '1234'
             }
         ).addTo(map);
+        L.rectangle(boundingBox, {color: "#0000FF", weight: 4}).addTo(map)
         map.invalidateSize();
       }
     };
