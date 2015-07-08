@@ -2,10 +2,11 @@
 (function( global ) {
   'use strict';
   var Module = (function() {
-
     return {
       init: function() {
-        var map = L.map('sul-embed-geo-map').setView([51.505, -0.09], 13);
+        var boundingBox = jQuery('#sul-embed-geo-map').data().boundingBox;
+
+        var map = L.map('sul-embed-geo-map').fitBounds(boundingBox);
 
         L.tileLayer(
             'https://otile{s}-s.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
@@ -18,6 +19,7 @@
               subdomains: '1234'
             }
         ).addTo(map);
+        L.rectangle(boundingBox, {color: "#0000FF", weight: 4}).addTo(map)
         map.invalidateSize();
       }
     };
