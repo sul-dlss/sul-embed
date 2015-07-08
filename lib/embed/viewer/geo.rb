@@ -10,7 +10,7 @@ module Embed
       def body_html
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-body sul-embed-geo', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => "#{asset_url('geo.css')}") do
-            doc.div(id: 'sul-embed-geo-map', 'style' => "height: #{body_height}px") {}
+            doc.div(id: 'sul-embed-geo-map', 'style' => "height: #{body_height}px", 'data-bounding-box' => @purl_object.bounding_box) {}
             doc.script { doc.text ";jQuery.getScript(\"#{asset_url('geo.js')}\");" }
           end
         end.to_html
