@@ -44,6 +44,23 @@ describe Embed::PURL do
       expect(Embed::PURL.new('12345').all_resource_files.count).to eq 4
     end
   end
+  describe '#bounding_box' do
+    before { stub_purl_response_with_fixture(geo_purl) }
+    it 'creates an Envelope and calls #to_bounding_box on it' do
+      expect_any_instance_of(Embed::Envelope).to receive(:to_bounding_box)
+      Embed::PURL.new('12345').bounding_box
+    end
+  end
+  describe '#envelope' do
+    it 'selects the envelope element' do
+      stub_purl_response_with_fixture(geo_purl)
+      expect(Embed::PURL.new('12345').envelope).to be_an Nokogiri::XML::Element
+    end
+    it 'without an envelope present' do
+      stub_purl_response_with_fixture(image_purl)
+      expect(Embed::PURL.new('12345').envelope).to be_nil
+    end
+  end
   describe 'licence' do
     it 'should return cc license if present' do
       stub_purl_response_with_fixture(file_purl)
