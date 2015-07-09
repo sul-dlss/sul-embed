@@ -62,6 +62,16 @@ describe Embed::PURL do
       expect(Embed::PURL.new('12345').license).to eq nil
     end
   end
+  describe 'public?' do
+    it 'should return true if the object is publicly accessible' do
+      stub_purl_response_with_fixture(file_purl)
+      expect(Embed::PURL.new('12345').public?).to be_truthy
+    end
+    it 'should return false if the object is Stanford Only' do
+      stub_purl_response_with_fixture(stanford_restricted_purl)
+      expect(Embed::PURL.new('12345').public?).to be_falsy
+    end
+  end
   describe 'PURL::Resource' do
     it 'should get the sequence attribute' do
       stub_purl_response_with_fixture(file_purl)

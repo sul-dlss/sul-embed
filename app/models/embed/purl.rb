@@ -60,6 +60,14 @@ module Embed
       "#{Settings.purl_url}/#{@druid}"
     end
 
+    ##
+    # Returns true if the object is publicly accessible based on the
+    #  rights_metadata
+    # @return [Boolean] true if the object is public, otherwise false  
+    def public?
+      rights.world_unrestricted?
+    end
+    
     private
 
     def cc_license
