@@ -7,8 +7,10 @@ module Embed
     end
 
     ##
+    # Creates a bounding box as a 2D Array if an envelope is present (eg. 
+    # [[min_lng, min_lat], [max_lng, max_lat]])
     # @return [Array]
-    def to_bounding_box 
+    def to_bounding_box
       [[west, south], [east, north]] if @envelope.present?
     end
 
