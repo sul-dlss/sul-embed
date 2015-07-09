@@ -10,19 +10,17 @@ describe Embed::Envelope do
     end
   end
   describe '#to_bounding_box' do
-    let(:envelope) { 
+    let(:envelope) do
       Embed::Envelope.new(Nokogiri::XML(geo_purl).
-        xpath('//gml:Envelope','gml'=>'http://www.opengis.net/gml/3.2/').first)
-    }
-    let(:no_envelope) {
-      Embed::Envelope.new(nil)
-    }
+        at_xpath('//gml:Envelope','gml'=>'http://www.opengis.net/gml/3.2/'))
+    end
+    let(:no_envelope) { Embed::Envelope.new(nil) }
     it 'returns nil if @envelope is falsy' do
       expect(no_envelope.to_bounding_box).to be_nil
     end
     it 'returns a 2D array when @envelope is a gml envelope' do
       expect(envelope.to_bounding_box.length).to eq 2
-      expect(envelope.to_bounding_box).to eq [["38.298673", "-123.387626"], ["39.399103", "-122.528843"]]
+      expect(envelope.to_bounding_box).to eq [['38.298673', '-123.387626'], ['39.399103', '-122.528843']]
     end
   end
 end

@@ -61,9 +61,11 @@ module Embed
     end
     
     def bounding_box 
-      Envelope.new(
-        ng_xml.xpath('//gml:Envelope', 'gml'=>'http://www.opengis.net/gml/3.2/').first
-      ).to_bounding_box
+      Embed::Envelope.new(envelope).to_bounding_box
+    end
+
+    def envelope
+      ng_xml.at_xpath('//gml:Envelope', 'gml'=>'http://www.opengis.net/gml/3.2/')
     end
 
     private
