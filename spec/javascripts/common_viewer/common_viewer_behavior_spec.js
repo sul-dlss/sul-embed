@@ -5,8 +5,7 @@
 
 describe('Common Viewer Behavior', function() {
   describe('initializeViewer', function() {
-    fixture.set('<div id="sul-embed-object"><div id="sul-embed-geo-map">' +
-      '</div></div>');
+    fixture.set('<div id="sul-embed-object"></div>');
     var testObject;
     beforeEach(function(done) {
       testObject = {

@@ -38,7 +38,7 @@ Teaspoon.configure do |config|
 
     # Specify a file matcher as a regular expression and all matching files will be loaded when the suite is run. These
     # files need to be within an asset path. You can add asset paths using the `config.asset_paths`.
-    suite.matcher = "{spec/javascripts,app/assets}/**/*_spec.{js,js.coffee,coffee}"
+    suite.matcher = '{spec/javascripts,app/assets}/*_spec.{js,js.coffee,coffee}'
 
     # Load additional JS files, but requiring them in your spec helper is the preferred way to do this.
     #suite.javascripts = []
@@ -174,5 +174,17 @@ Teaspoon.configure do |config|
     #coverage.functions = nil
     #coverage.branches = nil
     #coverage.lines = nil
+  end
+  config.suite :common_viewer do |suite|
+    suite.matcher = '{spec/javascripts/common_viewer}/**/*_spec.{js,js.coffee,coffee}'
+  end
+  config.suite :geo do |suite|
+    suite.matcher = '{spec/javascripts/geo}/**/*_spec.{js,js.coffee,coffee}'
+  end
+  config.suite :image do |suite|
+    suite.matcher = '{spec/javascripts/image}/**/*_spec.{js,js.coffee,coffee}'
+  end
+  config.suite :file do |suite|
+    suite.matcher = '{spec/javascripts/file}/**/*_spec.{js,js.coffee,coffee}'
   end
 end
