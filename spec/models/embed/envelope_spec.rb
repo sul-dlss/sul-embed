@@ -2,34 +2,27 @@ require "rails_helper"
 
 describe Embed::Envelope do
   include PURLFixtures
-  describe 'to_bounding_box' do
-    it 'should extract a simple array from the xml' do
-      stub_purl_response_with_fixture(geo_purl)
-      @envelope_ng = Embed::PURL.new('1234').ng_xml.xpath('//gml:Envelope', 'gml'=>'http://www.opengis.net/gml/3.2/').first
-      expect(Embed::Envelope.new(@envelope_ng).to_bounding_box()).to eq [["38.298673","-123.387626"],[ "39.399103", "-122.528843"]] 
-    end
-    it 'should return nil if there is no envelope present' do
-      stub_purl_response_with_fixture(image_purl)
-      @envelope_nil = Embed::PURL.new('1234').ng_xml.xpath('//gml:Envelope', 'gml'=>'http://www.opengis.net/gml/3.2/').first
-      expect(Embed::Envelope.new(@envelope_nil).to_bounding_box()).to eq nil 
+  describe '#initialize' do
+    let(:envelope_object) { Embed::Envelope.new('test') }
+    it 'creates an Envelope object' do
+      expect(envelope_object).to be_an Embed::Envelope
+      expect(envelope_object.instance_variable_get(:@envelope)).to eq 'test'
     end
   end
-  describe 'lower_corner' do
-    before do
-      stub_purl_response_with_fixture(geo_purl)
-      @envelope_ng = Embed::PURL.new('1234').ng_xml.xpath('//gml:Envelope', 'gml'=>'http://www.opengis.net/gml/3.2/').first
+  describe '#to_bounding_box' do
+    let(:envelope) { 
+      Embed::Envelope.new(Nokogiri::XML(geo_purl).
+        xpath('//gml:Envelope','gml'=>'http://www.opengis.net/gml/3.2/').first)
+    }
+    let(:no_envelope) {
+      Embed::Envelope.new(nil)
+    }
+    it 'returns nil if @envelope is falsy' do
+      expect(no_envelope.to_bounding_box).to be_nil
     end
-    it 'should give the lower_corner value as array of 2 strings' do
-      expect(Embed::Envelope.new(@envelope_ng).send(:lower_corner)).to eq ["-123.387626", "38.298673"] 
-    end
-  end
-  describe 'should give the upper_corner value as array of 2 strings' do
-    before do
-      stub_purl_response_with_fixture(geo_purl)
-      @envelope_ng = Embed::PURL.new('1234').ng_xml.xpath('//gml:Envelope', 'gml'=>'http://www.opengis.net/gml/3.2/').first
-    end
-    it 'should extract a simple array from the xml' do
-      expect(Embed::Envelope.new(@envelope_ng).send(:upper_corner)).to eq ["-122.528843", "39.399103"] 
+    it 'returns a 2D array when @envelope is a gml envelope' do
+      expect(envelope.to_bounding_box.length).to eq 2
+      expect(envelope.to_bounding_box).to eq [["38.298673", "-123.387626"], ["39.399103", "-122.528843"]]
     end
   end
 end
