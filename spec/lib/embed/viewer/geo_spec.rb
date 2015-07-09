@@ -32,6 +32,7 @@ describe Embed::Viewer::Geo do
       expect(html).to have_css '.sul-embed-geo', visible: false
       expect(html).to have_css '#sul-embed-geo-map', visible: false
       expect(html).to have_css('#sul-embed-geo-map[style="height: 400px"]', visible: false)
+      expect(html).to have_css('#sul-embed-geo-map[data-bounding-box=\'[["38.298673", "-123.387626"], ["39.399103", "-122.528843"]]\']', visible: false)
     end
   end
 end
