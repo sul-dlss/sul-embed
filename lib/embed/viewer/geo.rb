@@ -23,6 +23,9 @@ module Embed
         [:geo]
       end
       
+      def external_url
+        "#{Settings.geo_external_url}#{@request.object_druid}"
+      end
     end
   end
 end
