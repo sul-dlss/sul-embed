@@ -31,6 +31,9 @@ group :development, :test do
 
   # Have jQuery local for testing
   gem 'jquery-rails'
+
+  # Needed for deploying to dev/test
+  gem 'coffee-rails'
 end
 
 
