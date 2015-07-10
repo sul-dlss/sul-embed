@@ -35,5 +35,13 @@ describe 'geo viewer', js: true do
       expect(Nokogiri::HTML.parse(page.body).css('path').length).to eq 1
     end
 
+    it 'download toolbar/panel is present with download links' do
+      find('button.sul-embed-footer-tool.fa-download').click
+      within '.sul-embed-download-panel' do
+        within '.sul-embed-panel-body' do
+          expect(page).to have_css 'li', count: 1, text: 'data.zip'
+        end
+      end
+    end
   end
 end

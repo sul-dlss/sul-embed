@@ -77,10 +77,6 @@ module Embed
         size.to_f / 1000
       end
 
-      def file_url(title)
-        "#{stacks_url}/#{title}"
-      end
-
       def default_body_height
         400 - (header_height + footer_height)
       end

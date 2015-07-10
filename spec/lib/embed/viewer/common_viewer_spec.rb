@@ -5,6 +5,8 @@ describe Embed::Viewer::CommonViewer do
   let(:rails_request) { double('rails_request') }
   let(:request) { Embed::Request.new({url: 'http://purl.stanford.edu/abc123'}) }
   let(:file_viewer) { Embed::Viewer::File.new(request) }
+  let(:image_viewer) { Embed::Viewer::Image.new(request) }
+  let(:geo_viewer) { Embed::Viewer::Geo.new(request) }
 
   describe 'header_html' do
     it 'should return the objects title' do
@@ -122,6 +124,27 @@ describe Embed::Viewer::CommonViewer do
       expect(request).to receive(:purl_object).and_return(nil)
       common_viewer = Embed::Viewer::CommonViewer.new(request)
       expect(common_viewer.external_url).to be_nil
+    end
+  end
+  describe '#file_url' do
+    it 'creates a stacks file url' do
+      expect(file_viewer.file_url('cool_file')).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file'
+    end
+  end
+
+  describe '#show_download?' do
+    it 'not shown for file viewers' do
+      expect(file_viewer.show_download?).to be_falsey
+    end
+    it 'shown for image and geo viewer' do
+      expect(image_viewer.show_download?).to be_truthy
+      expect(geo_viewer.show_download?).to be_truthy
+    end
+    it 'not shown when hide_download is specified' do
+      hide_request = Embed::Request.new({url: 'http://purl.stanford.edu/abc123',
+                                         hide_download: 'true'})
+      geo_hide_viewer = Embed::Viewer::Geo.new(hide_request)
+      expect(geo_hide_viewer.show_download?).to be_falsey
     end
   end
 end
