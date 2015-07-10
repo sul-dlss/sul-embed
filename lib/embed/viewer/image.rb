@@ -1,7 +1,6 @@
 module Embed
   class Viewer
-    class Image
-      include Embed::Viewer::CommonViewer
+    class Image < CommonViewer
 
       def initialize(*args)
         super

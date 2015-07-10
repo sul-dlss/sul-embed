@@ -1,7 +1,6 @@
 module Embed
   class Viewer
-    class Geo
-      include Embed::Viewer::CommonViewer
+    class Geo < CommonViewer
 
       def initialize(*args)
         super

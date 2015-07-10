@@ -1,6 +1,6 @@
 module Embed
   class Viewer
-    module CommonViewer
+    class CommonViewer
       def initialize(request)
         @request = request
         @purl_object = request.purl_object
