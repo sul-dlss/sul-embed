@@ -41,4 +41,25 @@ describe Embed::Viewer::Geo do
       expect(geo_viewer.external_url).to eq('http://earthworks.stanford.edu/catalog/stanford-abc123')
     end
   end
+  describe '#download_html' do
+    it 'returns an empty string when hide_download' do
+      geo_viewer = Embed::Viewer::Geo.new(
+        Embed::Request.new(
+          {url: 'http://purl.stanford.edu/abc123', hide_download: 'true'}
+        )
+      )
+      expect(geo_viewer.download_html).to eq ''
+    end
+    it 'generates a file list when file has resources' do
+      stub_purl_response_and_request(geo_purl, request)
+      html = Capybara.string(geo_viewer.download_html)
+      expect(html).to have_css 'li', visible: false, count: 1
+      expect(html).to have_css 'a[href="https://stacks.stanford.edu/file/druid:12345/data.zip"]', visible: false
+    end
+    it 'stanford only resources have the stanford-only class' do
+      stub_purl_response_and_request(stanford_restricted_file_purl, request)
+      html = Capybara.string(geo_viewer.download_html)
+      expect(html).to have_css 'li.sul-embed-stanford-only', visible: false
+    end
+  end
 end

@@ -52,7 +52,7 @@ module Embed
               unless @request.hide_embed_this?
                 doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-code', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-embed-this-panel')
               end
-              if self.is_a?(Embed::Viewer::Image) && !@request.hide_download?
+              if show_download?
                 doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-download', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-download-panel')
               end
               if external_url.present?
@@ -189,7 +189,22 @@ module Embed
       def external_url
         nil
       end
-      
+
+      ##
+      # Creates a file url for stacks
+      # @param [String] title
+      # @return [String]
+      def file_url(title)
+        "#{stacks_url}/#{title}"
+      end
+
+      ##
+      # Should the download toolbar be shown?
+      # @return [Boolean]
+      def show_download?
+        self.is_a?(Embed::Viewer::Image) || self.is_a?(Embed::Viewer::Geo) && !@request.hide_download?
+      end
+
       private
 
       def tooltip_text(file)
@@ -284,7 +299,6 @@ module Embed
       def file_count_html(doc)
         doc.h2(class: 'sul-embed-item-count', 'aria-live' => 'polite') {}
       end
-
     end
   end
 end
