@@ -54,7 +54,11 @@ module Embed
               end
               if self.is_a?(Embed::Viewer::Image) && !@request.hide_download?
                 doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-download', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-download-panel')
-              end
+              end  
+              if external_url.present?              
+               doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default fa fa-external-link', 'aria-expanded' => 'false', 
+                  onclick:"location.href='#{external_url}'",)
+              end  
             end
             doc.div(class: 'sul-embed-purl-link') do
               doc.img(class: 'sul-embed-rosette', src: asset_url('sul-rosette.png'))
@@ -182,6 +186,10 @@ module Embed
         ''
       end
 
+      def external_url
+        nil
+      end
+      
       private
 
       def tooltip_text(file)
