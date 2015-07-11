@@ -35,4 +35,10 @@ describe Embed::Viewer::Geo do
       expect(html).to have_css('#sul-embed-geo-map[data-bounding-box=\'[["38.298673", "-123.387626"], ["39.399103", "-122.528843"]]\']', visible: false)
     end
   end
+  describe '.external_url' do
+    it 'should build the external url based on settings and druid value' do
+      stub_request(request)
+      expect(geo_viewer.external_url).to eq('http://earthworks.stanford.edu/catalog/stanford-abc123')
+    end
+  end
 end

@@ -117,4 +117,11 @@ describe Embed::Viewer::CommonViewer do
       expect(file_viewer.width).to eq 200
     end
   end
+  describe 'external_url' do
+    it 'should return nil' do
+      expect(request).to receive(:purl_object).and_return(nil)
+      common_viewer = Embed::Viewer::CommonViewer.new(request)
+      expect(common_viewer.external_url).to be_nil
+    end
+  end
 end

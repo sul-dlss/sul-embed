@@ -5,3 +5,4 @@ embed_iframe_url: '//embed.stanford.edu/iframe'
 squash_api_host: 'http://squash-host.example.com'
 squash_api_key: 'abc123'
 squash_disable: <%= (Rails.env.development? || Rails.env.test?) %>
+geo_external_url: 'http://earthworks.stanford.edu/catalog/stanford-'
