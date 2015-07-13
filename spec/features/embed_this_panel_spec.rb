@@ -47,6 +47,7 @@ describe 'embed this panel', js: true do
   describe 'image objects' do
     let(:spec_fixture) { image_purl }
     it 'should include the form elements for downloading an image' do
+      pending(' is pending due to the migration to imageX viewer')
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
       expect(page).to have_css('input#sul-embed-embed-download[type="checkbox"]')
     end

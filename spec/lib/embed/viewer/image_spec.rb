@@ -14,6 +14,7 @@ describe Embed::Viewer::Image do
   end
   describe 'self.supported_types' do
     it 'should return an array of supported types' do
+      pending(' is pending due to the migration to imageX viewer')
       expect(Embed::Viewer::Image.supported_types).to eq [:image, :manuscript, :map, :book]
     end
   end
