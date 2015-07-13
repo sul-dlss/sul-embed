@@ -265,7 +265,7 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def geo_purl
+  def geo_purl_public
      <<-XML
       <publicObject>
         <identityMetadata>
@@ -299,6 +299,57 @@ module PURLFixtures
               <world/>
             </machine>
           </access>
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
+  def geo_purl_restricted
+    <<-XML
+      <publicObject id="druid:fp756wn9369" published="2015-02-04T20:03:27-08:00">
+        <identityMetadata>
+          <sourceId source="branner">rr_1100kgrdu.shp</sourceId>
+          <objectId>druid:fp756wn9369</objectId>
+        </identityMetadata>
+        <contentMetadata objectId="fp756wn9369" type="geo">
+          <resource id="fp756wn9369_1" sequence="1" type="object">
+            <label>Data</label>
+            <file id="data.zip" mimetype="application/zip" size="127368" role="master">
+              <geoData>
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://purl.stanford.edu/fp756wn9369">
+                  <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">application/x-esri-shapefile; format=Shapefile</dc:format>
+                  <dc:type xmlns:dc="http://purl.org/dc/elements/1.1/">Dataset#Polygon</dc:type>
+                  <gml:boundedBy xmlns:gml="http://www.opengis.net/gml/3.2/">
+                    <gml:Envelope gml:srsName="EPSG:4326">
+                      <gml:lowerCorner>-123.387626 38.298673</gml:lowerCorner>
+                      <gml:upperCorner>-122.528843 39.399103</gml:upperCorner>
+                    </gml:Envelope>
+                  </gml:boundedBy>
+                </rdf:Description>
+              </geoData>
+            </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="discover">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+          <access type="read">
+            <machine>
+              <group>Stanford</group>
+            </machine>
+          </access>
+          <use>
+            <human type="useAndReproduction">
+              These data are licensed by Stanford Libraries and are available to Stanford University affiliates only. Affiliates are limited to current faculty, staff and students. These data may not be reproduced or used for any purpose without permission. For more information please contact brannerlibrary@stanford.edu.
+            </human>
+            <human type="creativeCommons"/>
+            <machine type="creativeCommons"/>
+          </use>
+          <copyright>
+            <human>Copyright ownership resides with the originator.</human>
+          </copyright>
         </rightsMetadata>
       </publicObject>
     XML
