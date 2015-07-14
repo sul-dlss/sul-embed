@@ -9,7 +9,7 @@ module Embed
       def body_html
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-body sul-embed-image-x', 'data-sul-embed-theme' => "#{asset_url('image_x.css')}") do
-            doc.div(id: 'sul-embed-geo-map', 'data-manifest-url'=>manifest_json_url) {}
+            doc.div(id: 'sul-embed-image-x', 'data-manifest-url'=>manifest_json_url) {}
             doc.script { doc.text ";jQuery.getScript(\"#{asset_url('image_x.js')}\");" }
           end
         end.to_html
