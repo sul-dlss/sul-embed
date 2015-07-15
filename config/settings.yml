@@ -6,3 +6,4 @@ squash_api_host: 'http://squash-host.example.com'
 squash_api_key: 'abc123'
 squash_disable: <%= (Rails.env.development? || Rails.env.test?) %>
 geo_external_url: 'http://earthworks.stanford.edu/catalog/stanford-'
+geo_wms_url: 'https://geowebservices.stanford.edu/geoserver/wms/'

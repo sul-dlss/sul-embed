@@ -1,9 +1,9 @@
 require 'rails_helper'
+include PURLFixtures
 
-describe 'geo viewer', js: true do
-  include PURLFixtures
+describe 'geo viewer public', js: true do
   before do
-    stub_purl_response_with_fixture(geo_purl)
+    stub_purl_response_with_fixture(geo_purl_public)
     visit_sandbox
     fill_in_default_sandbox_form
     click_button 'Embed'
@@ -27,12 +27,8 @@ describe 'geo viewer', js: true do
       expect(page).to have_css("img[src*='mqcdn.com']", minimum: 6)
     end
 
-    it 'shows the bounding box' do
-      # This is a hack, but there is no other way (that we know of) to
-      # find this svg element on the page.
-      # We also need to explicitly wait for the JS to run.
-      find ".leaflet-overlay-pane"
-      expect(Nokogiri::HTML.parse(page.body).css('path').length).to eq 1
+    it 'shows the wms tiles' do
+      expect(page).to have_css("img[src*='stanford.edu']", minimum: 4)
     end
 
     it 'download toolbar/panel is present with download links' do
@@ -42,6 +38,25 @@ describe 'geo viewer', js: true do
           expect(page).to have_css 'li', count: 1, text: 'data.zip'
         end
       end
+    end
+  end
+end
+
+describe 'geo viewer restricted', js: true do
+  before do
+    stub_purl_response_with_fixture(geo_purl_restricted)
+    visit_sandbox
+    fill_in_default_sandbox_form
+    click_button 'Embed'
+  end
+  describe 'loads viewer' do
+    it 'shows the bounding box' do
+      # This is a hack, but there is no other way (that we know of) to
+      # find this svg element on the page.
+      # We also need to explicitly wait for the JS to run.
+      expect(page).to have_css('.sul-embed-geo', count: 1, visible: true)
+      find '.leaflet-overlay-pane'
+      expect(Nokogiri::HTML.parse(page.body).css('path').length).to eq 1
     end
   end
 end

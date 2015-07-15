@@ -45,7 +45,7 @@ describe Embed::PURL do
     end
   end
   describe '#bounding_box' do
-    before { stub_purl_response_with_fixture(geo_purl) }
+    before { stub_purl_response_with_fixture(geo_purl_public) }
     it 'creates an Envelope and calls #to_bounding_box on it' do
       expect_any_instance_of(Embed::Envelope).to receive(:to_bounding_box)
       Embed::PURL.new('12345').bounding_box
@@ -53,7 +53,7 @@ describe Embed::PURL do
   end
   describe '#envelope' do
     it 'selects the envelope element' do
-      stub_purl_response_with_fixture(geo_purl)
+      stub_purl_response_with_fixture(geo_purl_public)
       expect(Embed::PURL.new('12345').envelope).to be_an Nokogiri::XML::Element
     end
     it 'without an envelope present' do
