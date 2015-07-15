@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 describe 'download panel', js: true do
+  pending('is pending due to the migration to imageX viewer') do 
   include PURLFixtures
   let(:request) { Embed::Request.new( {url: 'http://purl.stanford.edu/ab123cd4567'}) }
   before do
@@ -42,4 +43,5 @@ describe 'download panel', js: true do
       expect(page).to have_css('button[data-sul-embed-toggle="sul-embed-download-panel"]')
     end
   end
+end
 end
