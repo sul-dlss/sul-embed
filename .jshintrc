@@ -62,6 +62,6 @@
 
   // Custom predefined js stuff
   "predef": [
-    "expect", "describe", "it", "spyOn", "fixture", "beforeEach", "L"
+    "expect", "describe", "it", "xit", "spyOn", "fixture", "beforeEach", "afterEach", "L", "jasmine", "TestResponses"
   ]
 }

@@ -1,4 +1,3 @@
-//= require jquery
 //= require modules/common_viewer_behavior
 
 'use strict';

@@ -1,4 +1,3 @@
-//= require jquery
 //= require file
 
 describe('File viewer', function() {

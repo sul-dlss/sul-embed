@@ -70,9 +70,9 @@ def visit_sandbox
   visit page_path(id: 'sandbox')
 end
 
-def fill_in_default_sandbox_form
+def fill_in_default_sandbox_form(druid = 'ab123cd4567')
   fill_in 'api-endpoint', with: embed_path
-  fill_in 'url-scheme', with: 'http://purl.stanford.edu/ab123cd4567'
+  fill_in 'url-scheme', with: "http://purl.stanford.edu/#{druid}"
 end
 
 def send_embed_response
