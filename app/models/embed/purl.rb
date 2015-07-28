@@ -8,7 +8,7 @@ module Embed
     end
 
     def title
-      @title ||= ng_xml.xpath('//identityMetadata/objectLabel').try(:text)
+      @title ||= ng_xml.xpath('//dc:title','dc'=>'http://purl.org/dc/elements/1.1/').try(:text)
     end
 
     def type
