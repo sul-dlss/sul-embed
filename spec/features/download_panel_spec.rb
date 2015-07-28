@@ -17,7 +17,7 @@ describe 'download panel', js: true do
       page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
       expect(page).to have_css('.sul-embed-download-panel', visible: true)
 
-      expect(page).to have_css('.sul-embed-panel-item-label', text: '')      
+      expect(page).to have_css('.sul-embed-panel-item-label', text: '') 
 
       expect(page).to have_css('.sul-embed-download-small', visible: true)
       expect(page).to have_css('.sul-embed-download-medium', visible: true)
@@ -32,7 +32,7 @@ describe 'download panel', js: true do
       fill_in_default_sandbox_form
     end
     it 'when selected should hide the button' do
-      check("Hide download?")
+      check('Hide download?')
       click_button 'Embed'
 
       expect(page).to_not have_css('button[data-sul-embed-toggle="sul-embed-download-panel"]')
@@ -43,5 +43,5 @@ describe 'download panel', js: true do
       expect(page).to have_css('button[data-sul-embed-toggle="sul-embed-download-panel"]')
     end
   end
-end
+  end
 end

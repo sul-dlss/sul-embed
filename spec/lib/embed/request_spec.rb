@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'rails_helper'
 
 describe Embed::Request do
   let(:purl) { "#{Settings.purl_url}/abc123" }
@@ -28,7 +28,7 @@ describe Embed::Request do
   end
   describe 'object_druid' do
     it 'should parse the druid out of the incoming URL parameter' do
-      expect(Embed::Request.new({url: purl}).object_druid).to eq "abc123"
+      expect(Embed::Request.new({url: purl}).object_druid).to eq 'abc123'
     end
   end
   describe 'rails_request' do
