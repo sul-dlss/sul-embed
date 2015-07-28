@@ -4,15 +4,16 @@
 @import 'mixins';
 @import 'modules/buttons';
 @import 'modules/popup_panels';
+@import 'modules/shadows';
 @import 'modules/utility';
 
 .#{$namespace}-container {
-  border: 1px solid $sul-border-color;
-  background: white;
+  background: $white-color;
   color: $sul-font-color;
   font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
   font-size: $font-size-base;
   overflow-y: hidden;
+  @include shadow(3);
 
   * {
     padding: 0;
@@ -33,7 +34,6 @@
     overflow: hidden;
     padding: 0 15px;
     white-space: nowrap;
-    box-shadow: 0 4px 8px -2px rgba(0, 0, 0, 0.2);
 
     .#{$namespace}-header-title {
       color: white;
@@ -114,4 +114,14 @@
     padding-right: 20px;
     background: url('#{$asset_base}<%= asset_url("stanford_s.png") %>') no-repeat right;
     background: url('#{$asset_base}<%= asset_url("stanford_s.svg") %>') no-repeat right, none;
+}
+
+.#{$namespace}-header {
+  @include shadow(1);
+  position: relative;
+  z-index: 10;
+}
+
+.#{$namespace}-footer {
+  @include shadow(1);
 }
