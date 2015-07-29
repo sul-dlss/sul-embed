@@ -215,7 +215,7 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def embargoed_purl
+  def embargoed_stanford_purl
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -232,6 +232,52 @@ module PURLFixtures
             <machine>
               <embargoReleaseDate>#{(Time.now + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
               <group>stanford</group>
+            </machine>
+          </access>
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
+  def embargoed_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the object</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="file">
+        <resource sequence="1" type="file">
+          <label>Resource Label</label>
+          <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf" />
+        </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="read">
+            <machine>
+              <embargoReleaseDate>#{(Time.now + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
+              <none/>
+            </machine>
+          </access>
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
+  def embargoed_edge_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the object</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="file">
+        <resource sequence="1" type="file">
+          <label>Resource Label</label>
+          <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf" />
+        </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="read">
+            <machine>
+              <none/>
+              <embargoReleaseDate>#{(Time.now + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
             </machine>
           </access>
         </rightsMetadata>

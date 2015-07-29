@@ -132,6 +132,15 @@ describe Embed::Viewer::CommonViewer do
     end
   end
 
+  describe '#sul_pretty_date' do
+    it 'parses a date into a standardized format' do
+      expect(file_viewer.sul_pretty_date((Time.now + 1.month).to_s)).to eq '29-Aug-2015'
+    end
+    it 'checks for a blank string' do
+      expect(file_viewer.sul_pretty_date(nil)).to be_nil
+    end
+  end
+
   describe '#show_download?' do
     it 'not shown for file viewers' do
       expect(file_viewer.show_download?).to be_falsey
