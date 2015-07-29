@@ -21,3 +21,6 @@
 
 en:
   hello: "Hello world"
+  date:
+    formats:
+      sul: '%d-%b-%Y'

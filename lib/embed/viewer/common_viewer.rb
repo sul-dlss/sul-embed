@@ -199,6 +199,14 @@ module Embed
       end
 
       ##
+      # Creates a pretty date in a standardized sul way
+      # @param [String] date_string
+      # @return [String]
+      def sul_pretty_date(date_string)
+        I18n.l(Date.parse(date_string), format: :sul) unless date_string.blank?
+      end
+
+      ##
       # Should the download toolbar be shown?
       # @return [Boolean]
       def show_download?
@@ -209,7 +217,9 @@ module Embed
 
       def tooltip_text(file)
         if file.stanford_only?
-          ["Available only to Stanford-affiliated patrons", @purl_object.embargo_release_date].compact.join(" until ")
+          ['Available only to Stanford-affiliated patrons',
+           sul_pretty_date(@purl_object.embargo_release_date)].
+            compact.join(' until ')
         end
       end
 

@@ -16,6 +16,11 @@ module Embed
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-body sul-embed-file', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => "#{asset_url('file.css')}") do
             doc.div(class: 'sul-embed-file-list') do
+              if @purl_object.embargoed?
+                doc.div(class: 'sul-embed-embargo-message') do
+                  doc.text embargo_message
+                end
+              end
               doc.ul(class: 'sul-embed-media-list') do
                 @purl_object.contents.each do |resource|
                   resource.files.each do |file|
@@ -31,22 +36,13 @@ module Embed
                         end
                       end
                       doc.div(class: 'sul-embed-media-body') do
-                        doc.div(class: "sul-embed-media-heading #{'sul-embed-stanford-only' if file.stanford_only?}") do
-                          doc.a(href: file_url(file.title), title: tooltip_text(file), 'data-sul-embed-tooltip' => file.stanford_only?) do
-                            doc.text file.title
-                          end
-                        end
+                        file_heading(doc, file)
                         doc.div(class: 'sul-embed-description') do
                           doc.text resource.description
                         end
                         doc.div(class: 'sul-embed-download') do
                           doc.i(class: 'fa fa-download')
-                          doc.a(href: file_url(file.title), download: nil) do
-                            doc.span(class: 'sul-embed-sr-only') do
-                              doc.text "Download item #{file_count}"
-                            end
-                            doc.text pretty_filesize(file.size)
-                          end
+                          file_download_link(doc, file, file_count)
                         end
                         preview_file_toggle(file, doc, file_count)
                       end
@@ -111,6 +107,78 @@ module Embed
       end
 
       private
+      ## 
+      # Creates an embargo message to be displayed, customized for stanford
+      # only embargoed items
+      # @return [String]
+      def embargo_message
+        message = ['Access is restricted', pretty_embargo_date]
+        if @purl_object.stanford_only_unrestricted?
+          message[0] << ' to Stanford-affiliated patrons'
+        end
+        message.compact.join(' until ')
+      end
+
+      ##
+      # Creates a pretty date for display
+      # @return [String] date in dd-mon-year format
+      def pretty_embargo_date
+        sul_pretty_date(@purl_object.embargo_release_date)
+      end
+
+      ##
+      # Creates a download link for a file header area, based off of
+      # availability/embargo of a file
+      # @param [Nokogiri::HTML::Builder] doc
+      # @param [Embed::PURL::Resource::ResourceFile] file
+      # @return [Nokogiri::HTML::Builder]
+      def file_heading(doc, file)
+        if embargoed_to_world?(file)
+          doc.span(class: 'sul-embed-disabled') do
+            doc.text file.title
+          end
+        else
+          doc.div(
+            class: 'sul-embed-media-heading '\
+              "#{'sul-embed-stanford-only' if file.stanford_only?}") do
+            doc.a(
+              href: file_url(file.title),
+              title: tooltip_text(file)
+            ) do
+              doc.text file.title
+            end
+          end
+        end
+      end
+
+      ##
+      # Creates a download link based on a file's availability/embargo
+      # @param [Nokogiri::HTML::Builder] doc
+      # @param [Embed::PURL::Resource::ResourceFile] file
+      # @param [FixNum] file_count
+      # @return [Nokogiri::HTML::Builder]
+      def file_download_link(doc, file, file_count)
+        if embargoed_to_world?(file)
+          doc.span(class: 'sul-embed-disabled') do
+            doc.text pretty_filesize(file.size)
+          end
+        else
+          doc.a(href: file_url(file.title), download: nil) do
+            doc.span(class: 'sul-embed-sr-only') do
+              doc.text "Download item #{file_count}"
+            end
+            doc.text pretty_filesize(file.size)
+          end
+        end
+      end
+
+      ##
+      # Checks to see if an item is embargoed to the world
+      # @param [Embed::PURL::Resource::ResourceFile]
+      # @return [Boolean]
+      def embargoed_to_world?(file)
+        @purl_object.embargoed? && !file.stanford_only?
+      end
 
       def file_search_logic
         return false unless display_file_search?
