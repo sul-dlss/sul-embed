@@ -3,9 +3,6 @@
 @import 'vendor/tooltip';
 
 .#{$namespace}-container {
-  .#{$namespace}-file-list {
-    padding: 15px;
-  }
   .#{$namespace}-search {
     padding-top: 8px;
 
@@ -67,5 +64,16 @@
 }
 
 .#{$namespace}-embargo-message {
+  padding: 10px;
+}
+
+.#{$namespace}-file-list {
+  background-color: $color-beige-10;
+  padding: 10px;
+}
+
+.#{$namespace}-media-list {
+  @include shadow(2);
+  background-color: $white-color;
   padding: 10px;
 }
