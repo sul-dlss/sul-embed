@@ -22,7 +22,7 @@ module Embed
     end
   end
   class DuplicateViewerRegistration < StandardError
-    def initialize(msg="A viewer has registered a supported type that another viewer has already registered.")
+    def initialize(msg='A viewer has registered a supported type that another viewer has already registered.')
       super
     end
   end

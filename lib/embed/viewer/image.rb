@@ -11,7 +11,7 @@ module Embed
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-body sul-embed-image', 'data-sul-embed-theme' => "#{asset_url('image.css')}", 'data-plugin-styles' => "#{asset_url('iiifOsdViewer.css')}") do
             doc.div(class: 'sul-embed-image-list') do
-              height = body_height ? ('height: ' + body_height.to_s + 'px') : ""
+              height = body_height ? ('height: ' + body_height.to_s + 'px') : ''
               doc.div(class: 'sul-embed-iiif-osd', style: "#{height}", 'data-iiif-image-info' => "#{iiif_image_info(@purl_object.contents).to_json}", 'data-iiif-server' => "#{iiif_server()}")
             end
             doc.script { doc.text ";jQuery.getScript(\"#{asset_url('image.js')}\");" }
@@ -29,11 +29,11 @@ module Embed
               doc.div(class: 'sul-embed-panel-header') do
                 doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-download-panel') do
                   doc.span('aria-hidden' => true, class: 'fa fa-close') {}
-                  doc.span(class: 'sul-embed-sr-only') { doc.text "Close" }
+                  doc.span(class: 'sul-embed-sr-only') { doc.text 'Close' }
                 end
                 doc.div(class: 'sul-embed-panel-title') do
-                  doc.text "Download image"
-                  doc.span(class: "sul-embed-panel-item-label")
+                  doc.text 'Download image'
+                  doc.span(class: 'sul-embed-panel-item-label')
                 end
               end
               doc.table(class: 'sul-embed-download-options', :'data-download-sizes' => "#{sizes.to_json}", :'data-stacks-url' => "#{Settings.stacks_url}") do
@@ -43,17 +43,17 @@ module Embed
                       if (size != 'default')
                         doc.a(class: 'download-link', href: 'javascript:;') {
                           doc.text "#{size} ("
-                          doc.span(class: "sul-embed-download-dimensions")
-                          doc.text ")"
+                          doc.span(class: 'sul-embed-download-dimensions')
+                          doc.text ')'
                         }
-                        doc.span(class: "sul-embed-stanford-only", style: "display: none;") do
+                        doc.span(class: 'sul-embed-stanford-only', style: 'display: none;') do
                           doc.a(href: 'javascript:;', title: '', 'data-sul-embed-tooltip' => false) {}
                         end
                       else
                         doc.span() {
                           doc.text "#{size} ("
-                          doc.span(class: "sul-embed-download-dimensions")
-                          doc.text ")"
+                          doc.span(class: 'sul-embed-download-dimensions')
+                          doc.text ')'
                         }
                       end
                     end

@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'rails_helper'
 
 class TestViewerClass
   def self.supported_types

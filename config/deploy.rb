@@ -3,7 +3,7 @@ lock '3.3.5'
 
 set :application, 'embed'
 set :repo_url, 'https://github.com/sul-dlss/sul-embed.git'
-set :deploy_host, ask("Server", 'e.g. hostname with no ".stanford.edu" or server node designator')
+set :deploy_host, ask('Server', 'e.g. hostname with no ".stanford.edu" or server node designator')
 ask :user, proc { `whoami`.chomp }.call
 
 # Default branch is :master

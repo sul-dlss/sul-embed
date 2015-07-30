@@ -22,8 +22,8 @@ describe 'file viewer search bar', js: true do
   it 'should hide the search box when requested' do
     stub_purl_response_with_fixture(file_purl)
     visit_sandbox
-    check("Hide search?")
-    click_button "Embed"
+    check('Hide search?')
+    click_button 'Embed'
     expect(page).to_not have_css('.sul-embed-search')
   end
 end

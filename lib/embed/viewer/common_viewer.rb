@@ -62,7 +62,7 @@ module Embed
             end
             doc.div(class: 'sul-embed-purl-link') do
               doc.img(class: 'sul-embed-rosette', src: asset_url('sul-rosette.png'))
-              doc.a(href: @purl_object.purl_url, target: "_top") do
+              doc.a(href: @purl_object.purl_url, target: '_top') do
                 doc.text @purl_object.purl_url.gsub(/^http:\/\//, '')
               end
             end
@@ -78,7 +78,7 @@ module Embed
                 doc.div(class: 'sul-embed-panel-header') do
                   doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-metadata-panel') do
                     doc.span('aria-hidden' => true, class: 'fa fa-close') {}
-                    doc.span(class: 'sul-embed-sr-only') { doc.text "Close" }
+                    doc.span(class: 'sul-embed-sr-only') { doc.text 'Close' }
                   end
                   doc.div(class: 'sul-embed-panel-title') do
                     doc.text @purl_object.title
@@ -119,21 +119,21 @@ module Embed
                 doc.div(class: 'sul-embed-panel-header') do
                   doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-embed-this-panel') do
                     doc.span('aria-hidden' => true, class: 'fa fa-close') {}
-                    doc.span(class: 'sul-embed-sr-only') { doc.text "Close" }
+                    doc.span(class: 'sul-embed-sr-only') { doc.text 'Close' }
                   end
                   doc.div(class: 'sul-embed-panel-title') do
-                    doc.text "Embed"
+                    doc.text 'Embed'
                   end
                 end
                 doc.div(class: 'sul-embed-panel-body') do
                   doc.div(class: 'sul-embed-embed-this-form') do
                     doc.span(class: 'sul-embed-options-label') do
-                      doc.text "Select options:"
+                      doc.text 'Select options:'
                     end
                     doc.div(class: 'sul-embed-section sul-embed-embed-title-section') do
                       doc.input(type: 'checkbox', id: 'sul-embed-embed-title', :'data-embed-attr' => 'hide_title', checked: true)
                       doc.label(for: 'sul-embed-embed-title') do
-                        doc.text("title")
+                        doc.text('title')
                         if @purl_object.title.present?
                           doc.span(class: 'sul-embed-embed-title') do
                             doc.text(" (#{@purl_object.title})")
@@ -144,7 +144,7 @@ module Embed
                     if self.is_a?(Embed::Viewer::File)
                       doc.div(class: 'sul-embed-section') do
                         doc.input(type: 'checkbox', id: 'sul-embed-embed-search', :'data-embed-attr' => 'hide_search', checked: true)
-                        doc.label(for: 'sul-embed-embed-search') { doc.text("add search box") }
+                        doc.label(for: 'sul-embed-embed-search') { doc.text('add search box') }
                         doc.label(for: 'sul-embed-min_files_to_search') do
                           doc.text(' for')
                           doc.input(type: 'text', id: 'sul-embed-min_files_to_search', :'data-embed-attr' => 'min_files_to_search', value: '10')
@@ -155,16 +155,16 @@ module Embed
                     if self.is_a?(Embed::Viewer::Image)
                       doc.div(class: 'sul-embed-section') do
                         doc.input(type: 'checkbox', id: 'sul-embed-embed-download', :'data-embed-attr' => 'hide_download', checked: true)
-                        doc.label(for: 'sul-embed-embed-download') { doc.text("download") }
+                        doc.label(for: 'sul-embed-embed-download') { doc.text('download') }
                       end
                     end
                     doc.div(class: 'sul-embed-section') do
                       doc.input(type: 'checkbox', id: 'sul-embed-embed', :'data-embed-attr' => 'hide_embed', checked: true)
-                      doc.label(for: 'sul-embed-embed') { doc.text("embed") }
+                      doc.label(for: 'sul-embed-embed') { doc.text('embed') }
                     end
                     doc.div do
                       doc.div(class: 'sul-embed-options-label') do
-                        doc.label(for: 'sul-embed-iframe-code') { doc.text("Embed code:") }
+                        doc.label(for: 'sul-embed-iframe-code') { doc.text('Embed code:') }
                       end
                       doc.div(class: 'sul-embed-section') do
                         doc.textarea(id: 'sul-embed-iframe-code', 'data-behavior' => 'iframe-code', rows: 4) do

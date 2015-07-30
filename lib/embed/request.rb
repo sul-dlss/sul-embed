@@ -25,7 +25,7 @@ module Embed
     end
 
     def hide_title?
-      params[:hide_title] && params[:hide_title] == "true"
+      params[:hide_title] && params[:hide_title] == 'true'
     end
 
     def hide_metadata?
@@ -74,12 +74,12 @@ module Embed
       end
     end
     class NoURLProvided < StandardError
-      def initialize(msg="You must provide a URL parameter")
+      def initialize(msg='You must provide a URL parameter')
         super
       end
     end
     class InvalidURLScheme < StandardError
-      def initialize(msg="The provided URL is not a supported scheme for this embed service")
+      def initialize(msg='The provided URL is not a supported scheme for this embed service')
         super
       end
     end

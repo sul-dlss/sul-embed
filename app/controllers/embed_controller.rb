@@ -5,7 +5,7 @@ class EmbedController < ApplicationController
 
   def get
     if @embed_request.format.to_sym == :xml
-      render xml:  Embed::Response.new(@embed_request).embed_hash.to_xml(root: 'oembed')
+      render xml: Embed::Response.new(@embed_request).embed_hash.to_xml(root: 'oembed')
     else
       render json: Embed::Response.new(@embed_request).embed_hash
     end

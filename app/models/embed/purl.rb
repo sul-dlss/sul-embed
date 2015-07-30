@@ -128,12 +128,12 @@ module Embed
       end
     end
     class ResourceNotAvailable < StandardError
-      def initialize(msg = "The requested PURL resource was not available")
+      def initialize(msg = 'The requested PURL resource was not available')
         super
       end
     end
     class ResourceNotEmbeddable < StandardError
-      def initialize(msg = "The requested PURL resource was not embeddable.")
+      def initialize(msg = 'The requested PURL resource was not embeddable.')
         super
       end
     end
@@ -200,7 +200,7 @@ module Embed
           @file.xpath('./location[@type="url"]').present?
         end
         def preview_types
-          ["image/jp2"]
+          ['image/jp2']
         end
       end
     end
