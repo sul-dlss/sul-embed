@@ -40,7 +40,7 @@ describe Embed::Viewer::Geo do
   describe '.external_url' do
     it 'should build the external url based on settings and druid value' do
       stub_request(request)
-      expect(geo_viewer.external_url).to eq('http://earthworks.stanford.edu/catalog/stanford-abc123')
+      expect(geo_viewer.external_url).to eq('https://earthworks.stanford.edu/catalog/stanford-abc123')
     end
   end
   describe '#download_html' do
