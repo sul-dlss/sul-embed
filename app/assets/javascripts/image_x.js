@@ -1,3 +1,4 @@
+//= require openseadragon/built-openseadragon/openseadragon/openseadragon.min
 //= require modules/css_injection
 //= require vendor/tooltip
 //= require vendor/sly
