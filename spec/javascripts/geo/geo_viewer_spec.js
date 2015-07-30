@@ -1,4 +1,3 @@
-//= require jquery
 //= require modules/geo_viewer
 
 'use strict';

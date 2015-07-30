@@ -1,4 +1,3 @@
-//= require jquery
 //= require geo
 
 'use strict';

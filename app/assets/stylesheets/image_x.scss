@@ -2,3 +2,72 @@
 @import 'modules/media';
 @import 'vendor/tooltip';
 
+$image-thumb-background-color: #fff;
+$image-thumb-slider-scroll-background-color: #fff;
+$image-thumb-slider-scroll-selected-color: $color-pantone-2925;
+$image-thumb-slider-border-color: #000;
+
+.#{$namespace}-image-x {
+  height: 400px;
+  position: relative;
+}
+
+.#{$namespace}-image-x-thumb-slider-container {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid $image-thumb-slider-border-color;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.#{$namespace}-image-x-thumb-slider-open-close {
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+}
+
+.#{$namespace}-image-x-thumb-slider {
+  height: 140px;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+
+  ul {
+    height: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.#{$namespace}-image-x-thumb-slider-scroll {
+  background: $image-thumb-slider-scroll-background-color;
+  height: 10px;
+}
+
+.#{$namespace}-image-x-thumb-slider-handle {
+  background: $image-thumb-slider-scroll-selected-color;
+  cursor: pointer;
+  height: 100%;
+}
+
+.#{$namespace}-image-x-thumb-slider-mousearea {
+  height: 20px;
+  left: 0;
+  position: absolute;
+  top: -5px;
+  width: 100%;
+}
+
+.#{$namespace}-image-x-thumb {
+  background: $image-thumb-background-color;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  cursor: pointer;
+  float: left;
+  margin: 0 5px 0 0;
+  padding: 0;
+}
+
+.#{$namespace}-image-x-label {
+  text-align: center;
+}
