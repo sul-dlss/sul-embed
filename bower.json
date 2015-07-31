@@ -14,5 +14,6 @@
   "dependencies": {
     "listjs": "~1.1.1",
     "openseadragon": "~2.0.0"
+    "pubsub-js": "~1.5.2"
   }
 }

@@ -1,4 +1,5 @@
 /*global ImageXViewer */
+
 //= require modules/image_x_viewer
 // require helpers/test_responses/manifest
 

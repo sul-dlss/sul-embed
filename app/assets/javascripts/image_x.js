@@ -1,4 +1,5 @@
 //= require openseadragon/built-openseadragon/openseadragon/openseadragon.min
+//= require pubsub-js/src/pubsub
 //= require modules/css_injection
 //= require vendor/tooltip
 //= require vendor/sly
