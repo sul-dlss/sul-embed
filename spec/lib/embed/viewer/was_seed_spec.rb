@@ -13,18 +13,67 @@ describe Embed::Viewer::WasSeed do
   end
   describe 'self.supported_types' do
     it 'should return an array of supported types' do
-      expect(Embed::Viewer::WasSeed.supported_types).to eq [:"webarchive-seed"]
+      expect(Embed::Viewer::WasSeed.supported_types).to eq [:'webarchive-seed']
     end
   end
   describe 'body_html' do
     it 'should return Was Seed viewer body' do
       expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
+
       stub_purl_response_and_request(was_seed_purl, request)
-      expect(was_seed_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
+      allow(was_seed_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
+      allow(was_seed_viewer).to receive(:thumbs_list).and_return(get_thumbs_list_fixtures)
+
       html = Capybara.string(was_seed_viewer.to_html)
-      
       # visible false because we display:none the container until we've loaded the CSS.
       expect(html).to have_css '.sul-embed-was-seed', visible: false
+      expect(html).to have_css '.sul-embed-was-thumb-list', visible: false, count: 1
+      expect(html).to have_css '.sul-embed-was-thumb-item', visible: false, count: 2
+      expect(html).to have_css '.sul-embed-was-thumb-item-div', visible: false, count: 2
+
+      expect(html).to have_css '.sul-embed-was-thumb-item-div a[href="https://swap.stanford.edu/20121129060351/http://naca.central.cranfield.ac.uk/"]', visible: false
+      expect(html).to have_css '.sul-embed-was-thumb-item-date',text: '29-Nov-2012', visible: false
+      expect(html).to have_css '.sul-embed-was-thumb-item img[src="https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20121129060351/full/200,/0/default.jpg"]', visible: false
+
+      expect(html).to have_css '.sul-embed-was-thumb-item-div a[href="https://swap.stanford.edu/20130412231301/http://naca.central.cranfield.ac.uk/"]', visible: false
+      expect(html).to have_css '.sul-embed-was-thumb-item-date',text: '12-Apr-2013', visible: false
+      expect(html).to have_css '.sul-embed-was-thumb-item img[src="https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20130412231301/full/200,/0/default.jpg"]', visible: false
     end
+  end
+ 
+  describe 'thumbs_list' do
+    it 'calls the Embed::WasSeedThumbs with the same druid id' do
+      stub_request( request)
+      allow_any_instance_of(Embed::WasSeedThumbs).to receive(:get_thumbs_list)
+
+      expect(Embed::WasSeedThumbs).to receive(:new).with('12345').and_return(Embed::WasSeedThumbs.new('12345'))
+      was_seed_viewer.thumbs_list
+    end
+    it 'calls the Embed::WasSeedThumbs with the same druid id' do
+      stub_request( request)
+      allow_any_instance_of(Embed::WasSeedThumbs).to receive(:get_thumbs_list).and_return(get_thumbs_list_fixtures)
+
+      expect(Embed::WasSeedThumbs).to receive(:new).with('12345').and_return(Embed::WasSeedThumbs.new('12345'))
+      expect(was_seed_viewer.thumbs_list).to eq(get_thumbs_list_fixtures)
+    end
+  end
+
+  describe 'format_memento_datetime' do
+    it 'returns a formated memento datetime' do
+      stub_request(request)
+      expect(was_seed_viewer.format_memento_datetime('20121129060351')).to eq('29-Nov-2012')
+    end
+  end
+
+  def get_thumbs_list_fixtures
+    thumbs_list = [{
+        'memento_uri'=> 'https://swap.stanford.edu/20121129060351/http://naca.central.cranfield.ac.uk/',
+        'memento_datetime'=> '20121129060351',
+        'thumbnail_uri'=> 'https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20121129060351/full/200,/0/default.jpg'
+      },{       
+        'memento_uri' => 'https://swap.stanford.edu/20130412231301/http://naca.central.cranfield.ac.uk/',
+        'memento_datetime' => '20130412231301',
+        'thumbnail_uri' => 'https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20130412231301/full/200,/0/default.jpg'
+    }]
   end
 end

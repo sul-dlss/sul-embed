@@ -8,17 +8,38 @@ module Embed
 
       def body_html
         Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-body sul-embed-was-seed', 'data-sul-embed-theme' => "#{asset_url('was_seed.css')}") do
-            doc.div(id: 'sul-embed-was-seed') {}
+          doc.div(class: 'sul-embed-body sul-embed-was-seed', 'data-sul-embed-theme' => "#{asset_url('was_seed.css')}", 
+                                                               'data-sul-thumbs-list'=>thumbs_list) do
+            doc.ul(class: 'sul-embed-was-thumb-list') do
+              thumbs_list.each do |thumb_record|
+                doc.li(class: 'sul-embed-was-thumb-item') do
+                  doc.div(class: 'sul-embed-was-thumb-item-div') do
+                    doc.a(href: thumb_record['memento_uri'], target: '_blank') do
+                      doc.img(src: thumb_record['thumbnail_uri']) {}
+                      doc.div(class: 'sul-embed-was-thumb-item-date') do
+                        doc.text(format_memento_datetime(thumb_record['memento_datetime']))
+                      end
+                    end
+                  end
+                end
+              end
+            end
             doc.script { doc.text ";jQuery.getScript(\"#{asset_url('was_seed.js')}\");" }
           end
         end.to_html
       end
-      
+
       def self.supported_types
         [:"webarchive-seed"]
       end
-      
+
+      def thumbs_list
+        Embed::WasSeedThumbs.new(@purl_object.druid).get_thumbs_list
+      end
+
+      def format_memento_datetime(memento_datetime)
+        I18n.l(Date.parse(memento_datetime), format: :sul) unless memento_datetime.blank?
+      end
     end
   end
 end
