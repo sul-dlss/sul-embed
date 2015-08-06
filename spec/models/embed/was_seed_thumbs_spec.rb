@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe Embed::WasSeedThumbs do
   include WasSeedThumbsFixtures
+
   describe 'initialize' do
     it 'initializes the WasSeedThumbs with the druid' do
       seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
@@ -41,13 +42,31 @@ describe Embed::WasSeedThumbs do
   end
   
   describe 'response' do
-    pending
+    let(:response) { double('response') }
+    let(:connection) { double('connection') }
+
+    it 'requests the thumb list form thumbnail-service' do
+      expect(Faraday).to receive(:new).with(url: 'https://thumbnail-service-example/ab123cd4567').and_return(connection)
+      expect(connection).to receive(:get).and_return(response)
+      expect(response).to receive(:success?).and_return(true)
+      expect(response).to receive(:body).and_return('body')
+
+      seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
+      expect(seed_thumbs.response).to eq('body')
+    end
+    it 'raises Embed::WasSeedThumbs::ResourceNotAvailable with a connection failure' do
+      expect(Faraday).to receive(:new).with(url: 'https://thumbnail-service-example/ab123cd4567').and_return(connection)
+      expect(connection).to receive(:get).and_return(response)
+      expect(response).to receive(:success?).and_return(false)
+      
+      seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
+      expect{seed_thumbs.response}.to raise_error(Embed::WasSeedThumbs::ResourceNotAvailable)
+    end
   end
 
   describe 'was_thumbs_url' do
     it 'builds the was_thumbs url based on the configuratino and druid' do
       seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
-      Settings.was_thumbs_url = 'https://thumbnail-service-example'
       expect(seed_thumbs.was_thumbs_url).to eq('https://thumbnail-service-example/ab123cd4567')
     end
   end
