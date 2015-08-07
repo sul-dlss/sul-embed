@@ -1,3 +1,25 @@
 @import 'common';
 @import 'modules/media';
 @import 'vendor/tooltip';
+@import 'modules/slider';
+
+.#{$namespace}-body {
+  height: 260px;
+  padding: 0;
+ }
+ 
+.#{$namespace}-was-thumb-list {
+  list-style: none;
+ }
+
+.#{$namespace}-was-thumb-item {
+  cursor: pointer;
+  float: left;
+  height: 100%;
+  margin: 10px;
+  width: 200px;
+}
+
+.#{$namespace}-was-thumb-item-date {
+  text-align: center;
+}

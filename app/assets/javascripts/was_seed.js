@@ -6,6 +6,7 @@
 //= require modules/popup_panels
 //= require modules/embed_this
 //= require modules/was_seed_viewer
+//= require vendor/sly
 
 CssInjection.injectFontAwesome();
 CssInjection.appendToHead();

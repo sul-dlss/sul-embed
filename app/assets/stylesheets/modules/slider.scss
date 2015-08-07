@@ -1,0 +1,24 @@
+// The common style for SLY slider in the embed viewer
+$thumb-background-color: #fff;
+$thumb-slider-scroll-background-color: #fff;
+$thumb-slider-scroll-selected-color: $color-pantone-2925;
+$thumb-slider-border-color: #000;
+
+.#{$namespace}-thumb-slider-scroll {
+  background: $thumb-slider-scroll-background-color;
+  height: 10px;
+}
+
+.#{$namespace}-thumb-slider-handle {
+  background: $thumb-slider-scroll-selected-color;
+  cursor: pointer;
+  height: 100%;
+}
+
+.#{$namespace}-thumb-slider-mousearea {
+  height: 20px;
+  left: 0;
+  position: absolute;
+  top: -5px;
+  width: 100%;
+}
