@@ -41,6 +41,10 @@ module Embed
       def format_memento_datetime(memento_datetime)
         I18n.l(Date.parse(memento_datetime), format: :sul) unless memento_datetime.blank?
       end
+
+      def external_url
+        @purl_object.ng_xml.xpath('//dc:identifier','dc'=>'http://purl.org/dc/elements/1.1/').try(:text)
+      end
     end
   end
 end

@@ -12,11 +12,13 @@ describe Embed::Viewer::WasSeed do
       expect(was_seed_viewer).to be_an Embed::Viewer::WasSeed
     end
   end
+
   describe 'self.supported_types' do
     it 'should return an array of supported types' do
       expect(Embed::Viewer::WasSeed.supported_types).to eq [:'webarchive-seed']
     end
   end
+
   describe 'body_html' do
     it 'should return Was Seed viewer body' do
       expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
@@ -70,4 +72,12 @@ describe Embed::Viewer::WasSeed do
   def get_thumbs_list_fixtures
     JSON.parse(thumbs_list)['thumbnails']
   end
+
+  describe '.external_url' do
+    it 'should build the external url based on wayback url as extracted from prul' do
+      stub_purl_response_and_request(was_seed_purl, request)
+      expect(was_seed_viewer.external_url).to eq('https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/')
+    end
+  end
+
 end
