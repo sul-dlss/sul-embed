@@ -16,7 +16,7 @@ describe Embed::WasSeedThumbs do
 
       seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
       thumbs_list = seed_thumbs.get_thumbs_list
-      expect(thumbs_list.length).to eq(2)
+      expect(thumbs_list.length).to eq(4)
       expect(thumbs_list[0]).to eq({
         'memento_uri' => 'https://swap.stanford.edu/20121129060351/http://naca.central.cranfield.ac.uk/',
         'memento_datetime' => '20121129060351',

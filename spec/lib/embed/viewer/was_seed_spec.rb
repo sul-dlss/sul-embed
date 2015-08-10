@@ -2,6 +2,7 @@ require 'rails_helper'
 
 describe Embed::Viewer::WasSeed do
   include PURLFixtures
+  include WasSeedThumbsFixtures
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:was_seed_viewer) { Embed::Viewer::WasSeed.new(request) }
 
@@ -28,8 +29,9 @@ describe Embed::Viewer::WasSeed do
       # visible false because we display:none the container until we've loaded the CSS.
       expect(html).to have_css '.sul-embed-was-seed', visible: false
       expect(html).to have_css '.sul-embed-was-thumb-list', visible: false, count: 1
-      expect(html).to have_css '.sul-embed-was-thumb-item', visible: false, count: 2
-      expect(html).to have_css '.sul-embed-was-thumb-item-div', visible: false, count: 2
+      expect(html).to have_css '.sul-embed-was-thumb-item', visible: false, count: 4
+      expect(html).to have_css '.sul-embed-was-thumb-item-div', visible: false, count: 4
+      expect(html).to have_css '.sul-embed-was-seed[data-sul-thumbs-list-count="4"]', visible: false
 
       expect(html).to have_css '.sul-embed-was-thumb-item-div a[href="https://swap.stanford.edu/20121129060351/http://naca.central.cranfield.ac.uk/"]', visible: false
       expect(html).to have_css '.sul-embed-was-thumb-item-date',text: '29-Nov-2012', visible: false
@@ -66,14 +68,6 @@ describe Embed::Viewer::WasSeed do
   end
 
   def get_thumbs_list_fixtures
-    thumbs_list = [{
-        'memento_uri'=> 'https://swap.stanford.edu/20121129060351/http://naca.central.cranfield.ac.uk/',
-        'memento_datetime'=> '20121129060351',
-        'thumbnail_uri'=> 'https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20121129060351/full/200,/0/default.jpg'
-      },{       
-        'memento_uri' => 'https://swap.stanford.edu/20130412231301/http://naca.central.cranfield.ac.uk/',
-        'memento_datetime' => '20130412231301',
-        'thumbnail_uri' => 'https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20130412231301/full/200,/0/default.jpg'
-    }]
+    JSON.parse(thumbs_list)['thumbnails']
   end
 end
