@@ -6,6 +6,7 @@
 //= require modules/common_viewer_behavior
 //= require modules/popup_panels
 //= require modules/embed_this
+//= require modules/manifest_store
 //= require modules/image_x_viewer
 
 CssInjection.injectFontAwesome();

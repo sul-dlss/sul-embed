@@ -81,41 +81,35 @@ describe('ImageX Viewer', function() {
       });
       it('call generates <li>', function(done) {
         fixture.load('image_x_fixture.html');
-        setTimeout(function () {
-          ImageXViewer.init();
-          var $thumbslider = $('.sul-embed-image-x-thumb-slider');
-          expect($thumbslider.length).toEqual(1);
-          expect($thumbslider.find('li.sul-embed-image-x-thumb').length)
-            .toEqual(36);
-          done();
-        }, 0);
+        ImageXViewer.init();
+        var $thumbslider = $('.sul-embed-image-x-thumb-slider');
+        done();
+        expect($thumbslider.length).toEqual(1);
+        expect($thumbslider.find('li.sul-embed-image-x-thumb').length)
+          .toEqual(36);
       });
       it('only loads images that are visible', function(done) {
         fixture.load('image_x_fixture.html');
-        setTimeout(function () {
-          ImageXViewer.init();
-          var $thumbslider = $('.sul-embed-image-x-thumb-slider');
-          expect($thumbslider.find('img[data-src*="stacks"]').length)
-            .toEqual(36);
-          expect($thumbslider.find('img[src*="stacks"]').length)
-            .toBeLessThan(36);
-          done();
-        }, 0);
+        ImageXViewer.init();          
+        var $thumbslider = $('.sul-embed-image-x-thumb-slider');
+        done();
+        expect($thumbslider.find('img[data-src*="stacks"]').length)
+          .toEqual(36);
+        expect($thumbslider.find('img[src*="stacks"]').length)
+          .toBeLessThan(36);
       });
       it('adds thumb slider open/close actions', function(done) {
         fixture.load('image_x_fixture.html');
-        setTimeout(function () {
-          ImageXViewer.init();
-          var $thumbslider = $('.sul-embed-image-x-thumb-slider');
-          var openClose = $('.sul-embed-image-x-thumb-slider-open-close');
-          expect(openClose.length).toEqual(1);
-          expect(openClose).not.toBeHidden();
-          expect($thumbslider.find('img')).not.toBeHidden();
-          openClose.click();
-          expect(openClose).not.toBeHidden();
-          expect($thumbslider).toBeHidden();
-          done();
-        }, 0);
+        ImageXViewer.init();
+        var $thumbslider = $('.sul-embed-image-x-thumb-slider');
+        var openClose = $('.sul-embed-image-x-thumb-slider-open-close');
+        done();
+        expect(openClose.length).toEqual(1);
+        expect(openClose).not.toBeHidden();
+        expect($thumbslider.find('img')).not.toBeHidden();
+        openClose.click();
+        expect(openClose).not.toBeHidden();
+        expect($thumbslider).toBeHidden();
       });
     });
   });
