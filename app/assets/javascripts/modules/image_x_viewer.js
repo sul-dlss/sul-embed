@@ -1,14 +1,19 @@
-/*global Sly */
+/*global Sly, ManifestStore, PubSub */
 
 (function( global ) {
   'use strict';
   var ImageXViewer = (function() {
-    var manifest;
-    var manifestDeferred = $.Deferred();
+    var manifestStore = new ManifestStore();
     var dataAttributes;
     var druid;
     var $el;
     var thumbSliderSly;
+
+    var _listenForActions = function() {
+      PubSub.subscribe('manifestStateUpdated', function() {
+        _setupThumbSlider();
+      });
+    };
 
     var _thumbSliderActions = function($element, $slider) {
       $element.on('click', function() {
@@ -33,8 +38,7 @@
     var _requestManifest = function() {
       $.get(dataAttributes.manifestUrl)
         .done(function(data) {
-          manifest = data;
-          manifestDeferred.resolve();
+          PubSub.publish('manifestDone', data);
         })
         .fail(function() {
           throw new Error('Could not access manifest.json');
@@ -97,8 +101,8 @@
       $thumbSliderScroll.append($handle);
       var $thumbSliderList = $(document.createElement('ul'));
 
-
-      $.each(manifest.sequences[0].canvases, function(i, val) {
+      var canvases = manifestStore.manifestState.manifest.sequences[0].canvases;
+      $.each(canvases, function(i, val) {
 
         // Create base <li> element, then adds the image and label to it in a
         // performant way
@@ -153,15 +157,12 @@
         // Access data attributes
         dataAttributes = $el.data();
 
+        _listenForActions();
+
         _extractDruid();
 
         // Request IIIF manifest
         _requestManifest();
-
-        // When the manifest is found doStuff
-        $.when(manifestDeferred).done(function() {
-          _setupThumbSlider();
-        });
       }
     };
   })();
