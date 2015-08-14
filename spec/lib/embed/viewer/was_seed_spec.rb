@@ -5,6 +5,7 @@ describe Embed::Viewer::WasSeed do
   include WasSeedThumbsFixtures
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:was_seed_viewer) { Embed::Viewer::WasSeed.new(request) }
+  let(:purl) { "#{Settings.purl_url}/abc123" }
 
   describe 'initialize' do
     it 'should be an Embed::Viewer::WasSeed' do
@@ -33,11 +34,14 @@ describe Embed::Viewer::WasSeed do
       expect(html).to have_css '.sul-embed-was-thumb-list', visible: false, count: 1
       expect(html).to have_css '.sul-embed-was-thumb-item', visible: false, count: 4
       expect(html).to have_css '.sul-embed-was-thumb-item-div', visible: false, count: 4
+      expect(html).to have_css '.sul-embed-was-thumb-item-div[style="height: 200px; width: 200px;"]', visible: false, count: 4
       expect(html).to have_css '.sul-embed-was-seed[data-sul-thumbs-list-count="4"]', visible: false
 
       expect(html).to have_css '.sul-embed-was-thumb-item-div a[href="https://swap.stanford.edu/20121129060351/http://naca.central.cranfield.ac.uk/"]', visible: false
       expect(html).to have_css '.sul-embed-was-thumb-item-date',text: '29-Nov-2012', visible: false
       expect(html).to have_css '.sul-embed-was-thumb-item img[src="https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20121129060351/full/200,/0/default.jpg"]', visible: false
+
+      expect(html).to have_css '.sul-embed-was-thumb-item img[style="height: 180px;"]', visible: false
 
       expect(html).to have_css '.sul-embed-was-thumb-item-div a[href="https://swap.stanford.edu/20130412231301/http://naca.central.cranfield.ac.uk/"]', visible: false
       expect(html).to have_css '.sul-embed-was-thumb-item-date',text: '12-Apr-2013', visible: false
@@ -69,15 +73,34 @@ describe Embed::Viewer::WasSeed do
     end
   end
 
-  def get_thumbs_list_fixtures
-    JSON.parse(thumbs_list)['thumbnails']
-  end
-
   describe '.external_url' do
     it 'should build the external url based on wayback url as extracted from prul' do
       stub_purl_response_and_request(was_seed_purl, request)
       expect(was_seed_viewer.external_url).to eq('https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/')
     end
+  end
+  
+  describe '.item_size' do
+    it 'returns the item_size based on the default_body_height' do
+      expect(was_seed_viewer.item_size).to eq([200,200])
+    end
+    it 'returns the item_size based on defined body_height' do
+      request_with_max_height = Embed::Request.new(maxheight: 500, url: purl)
+      customized_was_seed_viewer = Embed::Viewer::WasSeed.new(request_with_max_height) 
+      
+      expect(customized_was_seed_viewer.item_size).to eq([347,347])
+    end
+  end
+  
+  describe '.image_height' do
+    it 'returns the image_height based on the item_size' do
+      allow(was_seed_viewer).to receive(:item_size).and_return([100, 100])
+      expect(was_seed_viewer.image_height).to eq(80)
+    end
+  end
+
+  def get_thumbs_list_fixtures
+    JSON.parse(thumbs_list)['thumbnails']
   end
 
 end

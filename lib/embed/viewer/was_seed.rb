@@ -8,16 +8,17 @@ module Embed
 
       def body_html
         Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-body', 'data-sul-embed-theme' => "#{asset_url('was_seed.css')}") do
+          doc.div(class: 'sul-embed-body', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => "#{asset_url('was_seed.css')}") do
             doc.div(class: 'sul-embed-was-seed', 'data-sul-thumbs-list-count'=>thumbs_list.length) do
               doc.ul(class: 'sul-embed-was-thumb-list') do
                 thumbs_list.each do |thumb_record|
                   doc.li(class: 'sul-embed-was-thumb-item') do
-                    doc.div(class: 'sul-embed-was-thumb-item-div') do
-                      doc.img(src: thumb_record['thumbnail_uri'])
-                      doc.a(class: 'sul-embed-was-thumb-item-date',
-                            href: thumb_record['memento_uri']) do
-                        doc.text(format_memento_datetime(thumb_record['memento_datetime']))
+                    doc.div(class: 'sul-embed-was-thumb-item-div', style: "height: #{item_size[0]}px; width: #{item_size[1]}px;") do
+                      doc.img(class: 'sul-embed-was-thumb-item-img', style: "height: #{image_height}px;", src: thumb_record['thumbnail_uri'])
+                      doc.a(href: thumb_record['memento_uri']) do
+                        doc.div(class: 'sul-embed-was-thumb-item-date') do
+                          doc.text(format_memento_datetime(thumb_record['memento_datetime']))
+                        end
                       end
                     end
                   end
@@ -43,6 +44,18 @@ module Embed
 
       def external_url
         @purl_object.ng_xml.xpath('//dc:identifier','dc'=>'http://purl.org/dc/elements/1.1/').try(:text)
+      end
+
+      def default_body_height
+        260
+      end
+
+      def item_size
+        [body_height - 60, body_height - 60]
+      end
+      
+      def image_height
+        item_size[0] - 20
       end
     end
   end
