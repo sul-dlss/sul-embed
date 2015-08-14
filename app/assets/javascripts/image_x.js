@@ -10,6 +10,7 @@
 //= require modules/embed_this
 //= require vendor/d3_selection_transition
 //= require modules/manifest_store
+//= require modules/layout_store
 //= require modules/image_x_viewer
 
 CssInjection.injectFontIcons();

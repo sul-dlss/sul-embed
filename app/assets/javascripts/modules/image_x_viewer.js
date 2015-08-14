@@ -1,8 +1,9 @@
-/*global Sly, ManifestStore, PubSub */
+/*global Sly, LayoutStore, ManifestStore, PubSub */
 
 (function( global ) {
   'use strict';
   var ImageXViewer = (function() {
+    var layoutStore = new LayoutStore();
     var manifestStore = new ManifestStore();
     var dataAttributes;
     var druid;
@@ -17,6 +18,7 @@
 
     var _thumbSliderActions = function($element, $slider) {
       $element.on('click', function() {
+        PubSub.publish('thumbSliderToggle');
         if ($element.hasClass('sul-i-rotate-180')) {
           $element.removeClass('sul-i-rotate-180');
         } else {
@@ -103,15 +105,16 @@
 
       var canvases = manifestStore.manifestState.manifest.sequences[0].canvases;
       $.each(canvases, function(i, val) {
-
+        var id = val.images[0].resource.service['@id'];
         // Create base <li> element, then adds the image and label to it in a
         // performant way
         var $thumb = $(document.createElement('li'));
         $thumb.addClass('sul-embed-image-x-thumb');
+        $thumb.attr('data-id', id);
         $thumb.width((val.width * thumbSize) / val.height);
         var $image = $(document.createElement('img'));
-        $image.attr('data-src', val.images[0].resource.service['@id'] +
-          '/full/,' + thumbSize * 2 + '/0/default.jpg');
+        $image.attr('data-src', id + '/full/,' + thumbSize * 2 +
+          '/0/default.jpg');
         $image.height(thumbSize);
         var $label = $(document.createElement('div'));
         $label.text(val.label);
@@ -147,6 +150,11 @@
 
       thumbSliderSly.on('load move', function() {
         _loadImages($thumbSlider);
+      });
+
+      thumbSliderSly.on('active', function(e, i) {
+        var id = $($thumbSliderList.find('li')[i]).data('id');
+        PubSub.publish('currentImageUpdated', id);
       });
     };
 
