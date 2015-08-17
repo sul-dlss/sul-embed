@@ -1,24 +1,40 @@
+@import 'sul_variables';
 @import 'common';
 @import 'vendor/tooltip';
 @import 'modules/slider';
+@import 'modules/shadows';
 
 .#{$namespace}-body {
-  height: 260px;
+  background-color: $sul-background;
+  height: 280px;
   padding: 0;
  }
  
 .#{$namespace}-was-thumb-list {
   list-style: none;
+  padding: 10px;
  }
 
 .#{$namespace}-was-thumb-item {
   cursor: pointer;
   float: left;
   height: 100%;
-  margin: 10px;
-  width: 200px;
+  margin-bottom: 10px;
+  width: 220px;
+
+  &:hover {
+    @include shadow(2);
+    background-color: $color-beige-05;
+    transition: all 0.2s ease-in-out;
+  }
+
+  &.active {
+    @include shadow(2);
+    background-color: $white-color;
+  }
 }
 
-.#{$namespace}-was-thumb-item-date {
+.#{$namespace}-was-thumb-item-div {
+  margin: 10px;
   text-align: center;
 }

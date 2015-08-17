@@ -15,10 +15,9 @@ module Embed
                   doc.li(class: 'sul-embed-was-thumb-item') do
                     doc.div(class: 'sul-embed-was-thumb-item-div') do
                       doc.img(src: thumb_record['thumbnail_uri'])
-                      doc.a(href: thumb_record['memento_uri'], target: '_blank') do
-                        doc.div(class: 'sul-embed-was-thumb-item-date') do
-                          doc.text(format_memento_datetime(thumb_record['memento_datetime']))
-                        end
+                      doc.a(class: 'sul-embed-was-thumb-item-date',
+                            href: thumb_record['memento_uri']) do
+                        doc.text(format_memento_datetime(thumb_record['memento_datetime']))
                       end
                     end
                   end
