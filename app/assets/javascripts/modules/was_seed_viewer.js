@@ -27,7 +27,11 @@
           dynamicHandle: 1,
           startAt: dataAttributes.sulThumbsListCount-2, //The focus should be on one before the last thumb
           speed: 300,
-          elasticBounds: 1
+          elasticBounds: 1,
+          scrollSource: $wasThumbFrame,
+          scrollBy: 1,
+          scrollTrap: true,
+          scrollHijack: 100
         }).init();
       }
     };
