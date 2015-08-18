@@ -167,7 +167,11 @@ module Embed
             doc.span(class: 'sul-embed-sr-only') do
               doc.text "Download item #{file_count}"
             end
-            doc.text pretty_filesize(file.size)
+            if file.size.blank?
+              doc.text 'Download'
+            else
+              doc.text pretty_filesize(file.size)
+            end
           end
         end
       end

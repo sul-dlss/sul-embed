@@ -51,6 +51,15 @@ describe Embed::Viewer::File do
       html = Capybara.string(file_viewer.to_html)
       # visible false because we display:none the container until we've loaded the CSS.
       expect(html).to have_css '.sul-embed-file-list', visible: false
+      expect(html).to have_css 'a[download]', visible: false, text: '12.35 kB'
+    end
+    context 'without file size' do
+      it 'displays Download as the link text' do
+        stub_purl_response_and_request(file_purl_no_size, request)
+        expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
+        html = Capybara.string(file_viewer.to_html)
+        expect(html).to have_css 'a[download]', visible: false, text: /Download$/
+      end
     end
   end
   describe 'file_type_icon' do
