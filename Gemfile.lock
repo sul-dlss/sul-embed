@@ -216,7 +216,8 @@ GEM
       colorize (>= 0.7.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    sul_styles (0.1.0)
+    sul_styles (0.3.0)
+      rails (~> 4.1)
     teaspoon (1.0.2)
       railties (>= 3.2.5, < 5)
     teaspoon-jasmine (2.2.0)
@@ -271,7 +272,7 @@ DEPENDENCIES
   sass-rails
   squash_rails
   squash_ruby
-  sul_styles
+  sul_styles (~> 0.3.0)
   teaspoon-jasmine
   therubyracer
   uglifier
