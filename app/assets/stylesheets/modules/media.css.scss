@@ -34,7 +34,7 @@
   text-align: center;
   width: 50px;
   
-  .fa-2x {
+  .sul-i-2x {
     line-height: 50px;
     vertical-align: middle;
   }
@@ -50,10 +50,10 @@
 // -------------------------
 
 .#{$namespace}-media {
-  > .pull-left {
+  > .#{$namespace}-pull-left {
     margin-right: 10px;
   }
-  > .pull-right {
+  > .#{$namespace}-pull-right {
     margin-left: 10px;
   }
 }

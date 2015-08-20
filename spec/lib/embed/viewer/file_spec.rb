@@ -56,11 +56,11 @@ describe Embed::Viewer::File do
   describe 'file_type_icon' do
     it 'should return default file icon if mimetype is not recognized' do
       expect(request).to receive(:purl_object).and_return(nil)
-      expect(file_viewer.file_type_icon('application/null')).to eq 'fa-file-o'
+      expect(file_viewer.file_type_icon('application/null')).to eq 'sul-i-file-new-1'
     end
     it 'should return translated file icon for recognized mime type' do
       expect(request).to receive(:purl_object).and_return(nil)
-      expect(file_viewer.file_type_icon('application/zip')).to eq 'fa-file-archive-o'
+      expect(file_viewer.file_type_icon('application/zip')).to eq 'sul-i-file-zipped'
     end
   end
   describe 'embargo/Stanford only' do

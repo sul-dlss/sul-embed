@@ -6,7 +6,8 @@
     var linkHtml = '<link rel="stylesheet" href="{{stylesheetLink}}" type="text/css" />',
         themeUrl = $("[data-sul-embed-theme]").data("sul-embed-theme"),
         pluginStylesheets = $("[data-plugin-styles]").data("plugin-styles") || '',
-        fontAwesomeHtml = '<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">';
+        fontIconsHtml = '<link href="https://sul-cdn-dev.stanford.edu/sul_s' +
+          'tyles/0.4.1/sul-icons.min.css" rel="stylesheet">';
 
     return {
       appendToHead: function() {
@@ -16,8 +17,8 @@
         }
       },
 
-      injectFontAwesome: function() {
-        $("head").append(fontAwesomeHtml);
+      injectFontIcons: function() {
+        $('head').append(fontIconsHtml);
       },
 
       injectPluginStyles: function() {        

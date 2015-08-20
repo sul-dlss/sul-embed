@@ -25,14 +25,14 @@ module Embed
                 @purl_object.contents.each do |resource|
                   resource.files.each do |file|
                     doc.li(class: 'sul-embed-media') do
-                      doc.div(class: 'sul-embed-count pull-left') do
+                      doc.div(class: 'sul-embed-count sul-embed-pull-left') do
                         doc.text file_count += 1
                       end
-                      doc.div(class: 'sul-embed-media-object pull-left') do
+                      doc.div(class: 'sul-embed-media-object sul-embed-pull-left') do
                         if file.previewable?
                           doc.img(class: 'sul-embed-square-image',src: "#{image_url(file)}_square")
                         else
-                          doc.i(class: "fa fa-2x #{file_type_icon(file.mimetype)}")
+                          doc.i(class: "sul-i-2x #{file_type_icon(file.mimetype)}")
                         end
                       end
                       doc.div(class: 'sul-embed-media-body') do
@@ -41,7 +41,7 @@ module Embed
                           doc.text resource.description
                         end
                         doc.div(class: 'sul-embed-download') do
-                          doc.i(class: 'fa fa-download')
+                          doc.i(class: 'sul-i-download-3')
                           file_download_link(doc, file, file_count)
                         end
                         preview_file_toggle(file, doc, file_count)
@@ -59,7 +59,7 @@ module Embed
 
       def file_type_icon(mimetype)
         if Constants::FILE_ICON[mimetype].nil?
-          'fa-file-o'
+          'sul-i-file-new-1'
         else
           Constants::FILE_ICON[mimetype]
         end
@@ -80,7 +80,7 @@ module Embed
       def preview_file_toggle(file, doc, file_count)
         if file.previewable?
           doc.span(class: 'sul-embed-preview-toggle', 'data-sul-embed-file-preview-toggle' => 'true') do
-            doc.i(class: 'fa fa-toggle-right')
+            doc.i(class: 'sul-i-arrow-right-8')
             doc.span(class: 'sul-embed-preview-text') do
               doc.a(href: '#', 'data-sul-embed-file-preview-toggle-text' => 'true', 'aria-expanded' => false) do
                 doc.text('Preview')
