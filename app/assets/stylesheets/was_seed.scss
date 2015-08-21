@@ -4,7 +4,7 @@
 @import 'modules/slider';
 @import 'modules/shadows';
 
-.#{$namespace}-body {
+.#{$namespace}-was-seed {
   background-color: $sul-background;
   padding: 0;
  }
@@ -15,7 +15,6 @@
  }
 
 .#{$namespace}-was-thumb-item {
-  cursor: pointer;
   float: left;
   margin: 2px 2px 10px 2px; //top right bottom left
 

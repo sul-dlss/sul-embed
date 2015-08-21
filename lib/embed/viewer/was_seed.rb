@@ -15,8 +15,8 @@ module Embed
                   doc.li(class: 'sul-embed-was-thumb-item') do
                     doc.div(class: 'sul-embed-was-thumb-item-div', style: "height: #{item_size[0]}px; width: #{item_size[1]}px;") do
                       doc.img(class: 'sul-embed-was-thumb-item-img', style: "height: #{image_height}px;", src: thumb_record['thumbnail_uri'])
-                      doc.a(href: thumb_record['memento_uri']) do
-                        doc.div(class: 'sul-embed-was-thumb-item-date') do
+                      doc.div(class: 'sul-embed-was-thumb-item-date') do
+                        doc.a(href: thumb_record['memento_uri']) do
                           doc.text(format_memento_datetime(thumb_record['memento_datetime']))
                         end
                       end
@@ -55,7 +55,7 @@ module Embed
       end
       
       def image_height
-        item_size[0] - 20
+        item_size[0] - 24
       end
     end
   end
