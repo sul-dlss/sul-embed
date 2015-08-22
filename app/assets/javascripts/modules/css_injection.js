@@ -7,7 +7,7 @@
         themeUrl = $("[data-sul-embed-theme]").data("sul-embed-theme"),
         pluginStylesheets = $("[data-plugin-styles]").data("plugin-styles") || '',
         fontIconsHtml = '<link href="https://sul-cdn-dev.stanford.edu/sul_s' +
-          'tyles/0.4.1/sul-icons.min.css" rel="stylesheet">';
+          'tyles/0.4.2/sul-icons.min.css" rel="stylesheet">';
 
     return {
       appendToHead: function() {
