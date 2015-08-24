@@ -41,7 +41,7 @@ describe Embed::Viewer::WasSeed do
       expect(html).to have_css '.sul-embed-was-thumb-item-date',text: '29-Nov-2012', visible: false
       expect(html).to have_css '.sul-embed-was-thumb-item img[src="https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20121129060351/full/200,/0/default.jpg"]', visible: false
 
-      expect(html).to have_css '.sul-embed-was-thumb-item img[style="height: 180px;"]', visible: false
+      expect(html).to have_css '.sul-embed-was-thumb-item img[style="height: 176px;"]', visible: false
 
       expect(html).to have_css '.sul-embed-was-thumb-item-div a[href="https://swap.stanford.edu/20130412231301/http://naca.central.cranfield.ac.uk/"]', visible: false
       expect(html).to have_css '.sul-embed-was-thumb-item-date',text: '12-Apr-2013', visible: false
@@ -95,7 +95,7 @@ describe Embed::Viewer::WasSeed do
   describe '.image_height' do
     it 'returns the image_height based on the item_size' do
       allow(was_seed_viewer).to receive(:item_size).and_return([100, 100])
-      expect(was_seed_viewer.image_height).to eq(80)
+      expect(was_seed_viewer.image_height).to eq(76)
     end
   end
 
