@@ -193,4 +193,7 @@ Teaspoon.configure do |config|
   config.suite :manifest_store do |suite|
     suite.matcher = '{spec/javascripts/manifest_store}/**/*_spec.{js,js.coffee,coffee}'
   end
+  config.suite :layout_store do |suite|
+    suite.matcher = '{spec/javascripts/layout_store}/**/*_spec.{js,js.coffee,coffee}'
+  end
 end

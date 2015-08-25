@@ -31,12 +31,9 @@ describe('ManifestStore', function() {
   });
   describe('when manifestDone if fired', function() {
     it('updates state', function(done) {
-      PubSub.publish('manifestDone', {
-        manifest: 'hello world'
-      });
-      done();
+      PubSub.publishSync('manifestDone', 'hello world');
       expect(manifestStore.manifestState.manifest).toEqual('hello world');
-      expect(storeSpy).toHaveBeenCalled();
+      done();
     });
   });
 });
