@@ -8,7 +8,7 @@
 //= require modules/was_seed_viewer
 //= require vendor/sly
 
-CssInjection.injectFontAwesome();
+CssInjection.injectFontIcons();
 CssInjection.appendToHead();
 CommonViewerBehavior.initializeViewer(WasSeedViewer.init);
 PopupPanels.init();

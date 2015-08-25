@@ -1,3 +1,5 @@
+/*global CssInjection */
+
 //= require openseadragon/built-openseadragon/openseadragon/openseadragon.min
 //= require pubsub-js/src/pubsub
 //= require modules/css_injection
@@ -9,7 +11,7 @@
 //= require modules/manifest_store
 //= require modules/image_x_viewer
 
-CssInjection.injectFontAwesome();
+CssInjection.injectFontIcons();
 CssInjection.appendToHead();
 CommonViewerBehavior.initializeViewer(ImageXViewer.init);
 PopupPanels.init();

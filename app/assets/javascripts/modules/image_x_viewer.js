@@ -17,10 +17,10 @@
 
     var _thumbSliderActions = function($element, $slider) {
       $element.on('click', function() {
-        if ($element.hasClass('fa-rotate-180')) {
-          $element.removeClass('fa-rotate-180');
+        if ($element.hasClass('sul-i-rotate-180')) {
+          $element.removeClass('sul-i-rotate-180');
         } else {
-          $element.addClass('fa-rotate-180');
+          $element.addClass('sul-i-rotate-180');
         }
         $slider.slideToggle();
       });
@@ -87,9 +87,9 @@
         addClass('sul-embed-image-x-thumb-slider-container');
       var $thumbSlider = $(document.createElement('div'));
       $thumbSlider.addClass('sul-embed-image-x-thumb-slider');
-      var $openClose = $(document.createElement('i'));
-      $openClose.addClass('fa fa-chevron-down ' + 
-        'fa-2x sul-embed-image-x-thumb-slider-open-close');
+      var $openClose = $(document.createElement('div'));
+      $openClose.addClass('sul-i-arrow-down-8 ' + 
+        'sul-i-2x sul-embed-image-x-thumb-slider-open-close');
       _thumbSliderActions($openClose, $thumbSlider);
       var $thumbSliderScroll = $(document.createElement('div'));
       $thumbSliderScroll.addClass('sul-embed-image-x-thumb-slider-scroll');

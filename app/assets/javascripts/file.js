@@ -1,3 +1,5 @@
+/*global CssInjection */
+
 //= require modules/css_injection
 //= require listjs/dist/list
 //= require vendor/tooltip
@@ -7,7 +9,7 @@
 //= require modules/popup_panels
 //= require modules/embed_this
 
-CssInjection.injectFontAwesome();
+CssInjection.injectFontIcons();
 CssInjection.appendToHead();
 CommonViewerBehavior.initializeViewer();
 FileSearch.init();

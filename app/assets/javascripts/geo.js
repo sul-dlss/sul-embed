@@ -1,3 +1,5 @@
+/*global CssInjection */
+
 //= require modules/css_injection
 //= require vendor/tooltip
 //= require modules/common_viewer_behavior
@@ -6,7 +8,7 @@
 //= require leaflet
 //= require modules/geo_viewer
 
-CssInjection.injectFontAwesome();
+CssInjection.injectFontIcons();
 CssInjection.appendToHead();
 CommonViewerBehavior.initializeViewer(GeoViewer.init);
 PopupPanels.init();

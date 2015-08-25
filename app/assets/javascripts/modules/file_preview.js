@@ -20,13 +20,13 @@
         });
       },
       togglePreviewIcon: function(preview) {
-        var icon = $('.fa', preview);
-        if(icon.hasClass('fa-toggle-right')) {
-          icon.removeClass('fa-toggle-right');
-          icon.addClass('fa-toggle-down');
+        var icon = $('i', preview);
+        if(icon.hasClass('sul-i-arrow-right-8')) {
+          icon.removeClass('sul-i-arrow-right-8');
+          icon.addClass('sul-i-arrow-down-8');
         }else{
-          icon.removeClass('fa-toggle-down');
-          icon.addClass('fa-toggle-right');
+          icon.removeClass('sul-i-arrow-down-8');
+          icon.addClass('sul-i-arrow-right-8');
         }
       },
       togglePreviewText: function(preview) {
@@ -43,8 +43,8 @@
       },
       togglePreviewWindow: function(preview) {
         var previewWindow = preview.closest('li').find('[data-sul-embed-file-preview-window="true"]');
-        var icon = $('.fa', preview);
-        if(icon.hasClass('fa-toggle-down')) {
+        var icon = $('i', preview);
+        if(icon.hasClass('sul-i-arrow-down-8')) {
           previewWindow.slideDown();
           previewWindow.attr("aria-hidden", false);
         }else {

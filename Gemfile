@@ -59,7 +59,7 @@ gem 'bower-rails'
 
 gem 'leaflet-rails'
 
-gem 'sul_styles'
+gem 'sul_styles', '~>0.4.2'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'

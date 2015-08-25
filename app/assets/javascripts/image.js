@@ -1,3 +1,5 @@
+/*global CssInjection */
+
 //= require openseadragon/built-openseadragon/openseadragon/openseadragon.min
 //= require modules/css_injection
 //= require modules/download_panel
@@ -7,7 +9,7 @@
 //= require modules/popup_panels
 //= require modules/embed_this
 
-CssInjection.injectFontAwesome();
+CssInjection.injectFontIcons();
 CssInjection.appendToHead();
 CssInjection.injectPluginStyles();
 CommonViewerBehavior.showViewer();
