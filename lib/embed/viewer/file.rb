@@ -30,7 +30,7 @@ module Embed
                       end
                       doc.div(class: 'sul-embed-media-object sul-embed-pull-left') do
                         if file.previewable?
-                          doc.img(class: 'sul-embed-square-image',src: "#{image_url(file)}_square")
+                          doc.img(class: 'sul-embed-square-image',src: "#{image_url(file)}_square", alt: '')
                         else
                           doc.i(class: "sul-i-2x #{file_type_icon(file.mimetype)}")
                         end
@@ -95,7 +95,7 @@ module Embed
       def preview_file_window(file, doc)
         if file.previewable?
           doc.div(style: 'display: none;', class: 'sul-embed-preview', 'data-sul-embed-file-preview-window' => 'true', 'aria-hidden' => true) do
-            doc.img(src: "#{image_url(file)}_thumb")
+            doc.img(src: "#{image_url(file)}_thumb", alt: '')
           end
         end
       end
