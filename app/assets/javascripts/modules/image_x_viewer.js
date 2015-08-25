@@ -79,7 +79,7 @@
         }
       });
     };
-    
+
     var _setupThumbSlider = function() {
       var thumbSize = 100;
 
