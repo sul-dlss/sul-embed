@@ -1,4 +1,4 @@
-/*global ImageXViewer, PubSub, d3 */
+/*global ImageXViewer, PubSub */
 
 //= require jquery
 //= require image_x
@@ -13,15 +13,6 @@ describe('ImageX Viewer', function() {
 
     it('PubSub is defined', function() {
       expect(PubSub).toBeDefined();
-    });
-
-    describe('d3', function() {
-      it('select is defined', function() {
-        expect(d3.select).toBeDefined();
-      });
-      it('transition is defined', function() {
-        expect(d3.transition).toBeDefined();
-      });
     });
   });
 });
