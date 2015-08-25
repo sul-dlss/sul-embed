@@ -1,10 +1,11 @@
-/*global Sly, LayoutStore, ManifestStore, PubSub */
+/*global Sly, LayoutStore, ManifestStore, PubSub, manifestor */
 
 (function( global ) {
   'use strict';
   var ImageXViewer = (function() {
     var layoutStore = new LayoutStore();
     var manifestStore = new ManifestStore();
+    var contentArea;
     var dataAttributes;
     var druid;
     var $el;
@@ -13,6 +14,10 @@
     var _listenForActions = function() {
       PubSub.subscribe('manifestStateUpdated', function() {
         _setupThumbSlider();
+        _setupContentArea();
+      });
+      PubSub.subscribe('layoutStateUpdated', function() {
+        // add content area reactions here.
       });
     };
 
@@ -79,7 +84,14 @@
         }
       });
     };
-    
+
+    var _setupContentArea = function() {
+      manifestor({
+        manifest: manifestStore.state().manifest,
+        container: $('#sul-embed-image-x')
+      });
+    };
+
     var _setupThumbSlider = function() {
       var thumbSize = 100;
 
@@ -90,7 +102,7 @@
       var $thumbSlider = $(document.createElement('div'));
       $thumbSlider.addClass('sul-embed-image-x-thumb-slider');
       var $openClose = $(document.createElement('div'));
-      $openClose.addClass('sul-i-arrow-down-8 ' + 
+      $openClose.addClass('sul-i-arrow-down-8 ' +
         'sul-i-2x sul-embed-image-x-thumb-slider-open-close');
       _thumbSliderActions($openClose, $thumbSlider);
       var $thumbSliderScroll = $(document.createElement('div'));
@@ -103,7 +115,7 @@
       $thumbSliderScroll.append($handle);
       var $thumbSliderList = $(document.createElement('ul'));
 
-      var canvases = manifestStore.manifestState.manifest.sequences[0].canvases;
+      var canvases = manifestStore.state().manifest.sequences[0].canvases;
       $.each(canvases, function(i, val) {
         var id = val.images[0].resource.service['@id'];
         // Create base <li> element, then adds the image and label to it in a

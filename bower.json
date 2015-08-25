@@ -12,7 +12,6 @@
     "tests"
   ],
   "dependencies": {
-    "iiifManifestLayout": "git://github.com/aeschylus/iiifManifestLayouts.git#0.0.1",
     "listjs": "~1.1.1",
     "openseadragon": "~2.0.0",
     "pubsub-js": "~1.5.2"

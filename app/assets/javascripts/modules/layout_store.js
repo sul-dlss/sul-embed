@@ -8,11 +8,11 @@
 
     $.extend(true, _this, {
     }, options);
-    
+
     _this.init();
     _this.listenForActions();
   };
-  
+
   LayoutStore.prototype = {
     init: function() {
       var _this = this;
@@ -20,7 +20,7 @@
         // bottomPanelEnabled: true,
         bottomPanelOpen: true,
         // currentFocus: null,
-        currentImage: null,
+        currentImage: null
         // downloadPanelVisible: true,
         // height: 200,
         // mode: 'single',
@@ -52,10 +52,10 @@
       _this.layoutState = $.extend(_this.layoutState, state);
 
       if (!initial) {
-        PubSub.publish('layoutStateUpdated');  
+        PubSub.publish('layoutStateUpdated');
       }
 
-      return this.layoutState;      
+      return this.layoutState;
     }
   };
 
