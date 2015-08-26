@@ -21,6 +21,13 @@
       });
     };
 
+    var _setupButtonListeners = function() {
+      $el.parent().parent().find('[data-sul-view-mode]').on('click', function() {
+        var mode = $(this).data().sulViewMode;
+        PubSub.publish('updateMode', mode);
+      });
+    };
+
     var _thumbSliderActions = function($element, $slider) {
       $element.on('click', function() {
         PubSub.publish('thumbSliderToggle');
@@ -176,7 +183,8 @@
 
         // Access data attributes
         dataAttributes = $el.data();
-
+        
+        _setupButtonListeners();
         _listenForActions();
 
         _extractDruid();

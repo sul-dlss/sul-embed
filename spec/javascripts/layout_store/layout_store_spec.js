@@ -27,7 +27,8 @@ describe('LayoutStore', function() {
     it('sets state without publishing layoutStateUpdated', function(done) {
       expect(layoutStore.layoutState).toEqual({
         bottomPanelOpen: true,
-        currentImage: null
+        currentImage: null,
+        mode: 'single'
       });      
       expect(storeSpy).not.toHaveBeenCalled();
       done();
