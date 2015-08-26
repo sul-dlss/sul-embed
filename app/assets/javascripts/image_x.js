@@ -11,6 +11,7 @@
 //= require modules/embed_this
 //= require modules/manifest_store
 //= require modules/layout_store
+//= require modules/canvas_store
 //= require modules/image_x_viewer
 
 CssInjection.injectFontIcons();

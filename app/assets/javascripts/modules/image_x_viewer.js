@@ -1,10 +1,11 @@
-/*global Sly, LayoutStore, ManifestStore, PubSub, manifestor */
+/*global Sly, LayoutStore, ManifestStore, PubSub, CanvasStore */
 
 (function( global ) {
   'use strict';
   var ImageXViewer = (function() {
     var layoutStore = new LayoutStore();
     var manifestStore = new ManifestStore();
+    var canvasStore;
     var contentArea;
     var dataAttributes;
     var druid;
@@ -17,7 +18,7 @@
     var _listenForActions = function() {
       PubSub.subscribe('manifestStateUpdated', function() {
         _setupThumbSlider();
-        _setupContentArea();
+        canvasStore = new CanvasStore(manifestStore.state().manifest);
       });
       PubSub.subscribe('layoutStateUpdated', function() {
         // add content area reactions here.
