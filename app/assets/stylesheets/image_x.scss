@@ -12,6 +12,14 @@ $image-thumb-slider-border-color: #000;
   position: relative;
 }
 
+.#{$namespace}-image-x-buttons {
+  float: right;
+
+  .#{$namespace}-btn {
+    margin-left: 5px;
+  }
+}
+
 ##{$namespace}-image-x {
   height: 100%;
   width:100%;

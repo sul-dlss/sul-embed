@@ -4,6 +4,7 @@ module Embed
 
       def initialize(*args)
         super
+        header_tools_logic << :image_button_logic
       end
 
       def body_html
@@ -21,6 +22,21 @@ module Embed
       
       def manifest_json_url
         "#{Settings.purl_url}/#{@purl_object.druid}/iiif/manifest.json"
+      end
+
+      private
+
+      def image_button_logic
+        :image_button_html
+      end
+
+      def image_button_html(doc)
+        doc.div(class: 'sul-embed-image-x-buttons') do
+          doc.button(class: 'sul-embed-btn sul-embed-btn-xs sul-embed-btn-default sul-i-layout-none', 'data-sul-view-mode' => 'single')
+          doc.button(class: 'sul-embed-btn sul-embed-btn-xs sul-embed-btn-default sul-i-layout-4', 'data-sul-view-mode' => 'book')
+          doc.button(class: 'sul-embed-btn sul-embed-btn-xs sul-embed-btn-default sul-i-view-module-1', 'data-sul-view-mode' => 'overview')
+          doc.button(class: 'sul-embed-btn sul-embed-btn-xs sul-embed-btn-default sul-i-expand-1', 'data-sul-view-fullscreen' => 'fullscreen')
+        end
       end
     end
   end
