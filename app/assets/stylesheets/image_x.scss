@@ -12,6 +12,12 @@ $image-thumb-slider-border-color: #000;
   position: relative;
 }
 
+##{$namespace}-image-x {
+  height: 200%;
+  width:100%;
+  position: relative;
+}
+
 .#{$namespace}-image-x-thumb-slider-container {
   background: rgba(0, 0, 0, 0.5);
   border: 1px solid $image-thumb-slider-border-color;
@@ -70,4 +76,24 @@ $image-thumb-slider-border-color: #000;
 
 .#{$namespace}-image-x-label {
   text-align: center;
+}
+
+.#{$namespace}-frame {
+  position:absolute;
+  display:block;
+  border: 1px solid #000000;
+}
+
+.#{$namespace}-canvas {
+  position: absolute;
+  display: block;
+  border: 1px solid #000000;
+}
+
+.#{$namespace}-label {
+  width:100%;
+  height:35px;
+  position:absolute;
+  bottom:0;
+  text-align:center;
 }
