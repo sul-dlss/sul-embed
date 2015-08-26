@@ -10,6 +10,9 @@
     var druid;
     var $el;
     var thumbSliderSly;
+    var frameClass = 'sul-embed-frame';
+    var canvasClass = 'sul-embed-canvas';
+    var labelClass = 'sul-embed-label';
 
     var _listenForActions = function() {
       PubSub.subscribe('manifestStateUpdated', function() {
@@ -88,7 +91,10 @@
     var _setupContentArea = function() {
       manifestor({
         manifest: manifestStore.state().manifest,
-        container: $('#sul-embed-image-x')
+        container: $('#sul-embed-image-x'),
+        frameClass: frameClass,
+        canvasClass: canvasClass,
+        labelClass: labelClass
       });
     };
 

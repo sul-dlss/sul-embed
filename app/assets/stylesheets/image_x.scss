@@ -13,7 +13,7 @@ $image-thumb-slider-border-color: #000;
 }
 
 ##{$namespace}-image-x {
-  height: 200%;
+  height: 100%;
   width:100%;
   position: relative;
 }
@@ -81,7 +81,6 @@ $image-thumb-slider-border-color: #000;
 .#{$namespace}-frame {
   position:absolute;
   display:block;
-  border: 1px solid #000000;
 }
 
 .#{$namespace}-canvas {
