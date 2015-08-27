@@ -31,16 +31,16 @@
         _this.selectCanvas(canvasId);
       });
       PubSub.subscribe('updateMode', function(_, newMode) {
-        this.selectViewingMode(newMode);
+        _this.selectViewingMode(newMode);
       });
       PubSub.subscribe('updatePerspective', function(_, newPerspective) {
-        this.selectPerspective(newPerspective);
+        _this.selectPerspective(newPerspective);
       });
       PubSub.subscribe('selectPreviousCanvas', function(_, eventData) {
-        this.selectPreviousCanvas();
+        _this.selectPreviousCanvas();
       });
       PubSub.subscribe('selectNextCanvas', function(_, eventData) {
-        this.selectNextCanvas();
+        _this.selectNextCanvas();
       });
     }
   };
