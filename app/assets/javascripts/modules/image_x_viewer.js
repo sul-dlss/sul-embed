@@ -60,7 +60,7 @@
     var _enableBottomPanel = function() {
       $thumbSliderContainer.slideDown();
     };
-    
+
     var _closeThumbSlider = function() {
       PubSub.publish('thumbSliderToggle');
       $thumbOpenClose.addClass('sul-i-rotate-180');

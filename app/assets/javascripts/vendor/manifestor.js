@@ -3142,9 +3142,10 @@ var manifestor = function(options) {
     selectPerspective: selectPerspective,
     selectViewingMode: selectViewingMode,
     updateThumbSize: updateThumbSize,
-    refreshState: refreshState
+    refreshState: refreshState,
+    getState: canvasState,
+    setState: canvasState
   };
-
 };
 
 module.exports = manifestor;
