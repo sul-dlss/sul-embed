@@ -112,11 +112,11 @@
         'sul-i-2x sul-embed-image-x-thumb-slider-open-close');
       _thumbSliderActions($openClose, $thumbSlider);
       var $thumbSliderScroll = $(document.createElement('div'));
-      $thumbSliderScroll.addClass('sul-embed-image-x-thumb-slider-scroll');
+      $thumbSliderScroll.addClass('sul-embed-thumb-slider-scroll');
       var $handle = $(document.createElement('div'));
-      $handle.addClass('sul-embed-image-x-thumb-slider-handle');
+      $handle.addClass('sul-embed-thumb-slider-handle');
       var $mousearea = $(document.createElement('div'));
-      $mousearea.addClass('sul-embed-image-x-thumb-slider-mousearea');
+      $mousearea.addClass('sul-embed-thumb-slider-mousearea');
       $handle.append($mousearea);
       $thumbSliderScroll.append($handle);
       var $thumbSliderList = $(document.createElement('ul'));
