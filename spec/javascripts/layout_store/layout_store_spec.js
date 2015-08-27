@@ -26,9 +26,11 @@ describe('LayoutStore', function() {
     });
     it('sets state without publishing layoutStateUpdated', function(done) {
       expect(layoutStore.layoutState).toEqual({
+        bottomPanelEnabled: true,
         bottomPanelOpen: true,
         currentImage: null,
-        mode: 'single'
+        mode: 'single',
+        perspective: 'detail'
       });      
       expect(storeSpy).not.toHaveBeenCalled();
       done();

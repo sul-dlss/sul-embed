@@ -17,13 +17,14 @@
     init: function() {
       var _this = this;
       _this.state({
-        // bottomPanelEnabled: true,
+        bottomPanelEnabled: true,
         bottomPanelOpen: true,
         // currentFocus: null,
         currentImage: null,
         // downloadPanelVisible: true,
         // height: 200,
-        mode: 'single'
+        mode: 'single',
+        perspective: 'detail'
         // width: 200
       }, true);
     },
@@ -45,6 +46,18 @@
       PubSub.subscribe('updateMode', function(_, mode) {
         _this.state({
           mode: mode
+        });
+      });
+
+      PubSub.subscribe('updatePerspective', function(_, perspective) {
+        _this.state({
+          perspective: perspective
+        });
+      });
+
+      PubSub.subscribe('updateBottomPanel', function(_, status) {
+        _this.state({
+          bottomPanelEnabled: status
         });
       });
     },

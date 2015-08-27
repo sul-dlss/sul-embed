@@ -10,6 +10,9 @@
     var dataAttributes;
     var druid;
     var $el;
+    var $thumbSlider;
+    var $thumbOpenClose;
+    var $thumbSliderContainer;
     var thumbSliderSly;
 
     var _listenForActions = function() {
@@ -22,24 +25,61 @@
       PubSub.subscribe('layoutStateUpdated', function() {
         // add content area reactions here.
       });
-    };
-
-    var _setupButtonListeners = function() {
-      $el.parent().parent().find('[data-sul-view-mode]').on('click', function() {
-        var mode = $(this).data().sulViewMode;
-        PubSub.publish('updateMode', mode);
+      PubSub.subscribe('updatePerspective', function(_, newPerspective) {
+        if (newPerspective === 'overview') {
+          PubSub.publish('updateBottomPanel', false);
+        } else {
+          PubSub.publish('updateBottomPanel', true);
+        }
+      });
+      PubSub.subscribe('updateBottomPanel', function(_, status) {
+        if (status) {
+          _enableBottomPanel();
+        } else {
+          _disableBottomPanel();
+        }
       });
     };
 
-    var _thumbSliderActions = function($element, $slider) {
-      $element.on('click', function() {
-        PubSub.publish('thumbSliderToggle');
-        if ($element.hasClass('sul-i-rotate-180')) {
-          $element.removeClass('sul-i-rotate-180');
+    var _setupButtonListeners = function() {
+      var embedHeader = $el.parent().parent();
+      embedHeader.find('[data-sul-view-mode]').on('click', function() {
+        var mode = $(this).data().sulViewMode;
+        PubSub.publish('updateMode', mode);
+      });
+      embedHeader.find('[data-sul-view-perspective]').on('click', function() {
+        var perspective = $(this).data().sulViewPerspective;
+        PubSub.publish('updatePerspective', perspective);
+      });
+    };
+
+    var _disableBottomPanel = function() {
+      $thumbSliderContainer.slideUp();
+    };
+
+    var _enableBottomPanel = function() {
+      $thumbSliderContainer.slideDown();
+    };
+    
+    var _closeThumbSlider = function() {
+      PubSub.publish('thumbSliderToggle');
+      $thumbOpenClose.addClass('sul-i-rotate-180');
+      $thumbSlider.slideUp();
+    };
+
+    var _openThumbSlider = function() {
+      PubSub.publish('thumbSliderToggle');
+      $thumbOpenClose.removeClass('sul-i-rotate-180');
+      $thumbSlider.slideDown();
+    };
+
+    var _thumbSliderActions = function() {
+      $thumbOpenClose.on('click', function() {
+        if ($thumbOpenClose.hasClass('sul-i-rotate-180')) {
+          _openThumbSlider();
         } else {
-          $element.addClass('sul-i-rotate-180');
+          _closeThumbSlider();
         }
-        $slider.slideToggle();
       });
     };
 
@@ -102,15 +142,15 @@
       var thumbSize = 100;
 
       // Create dom base elements
-      var $thumbSliderContainer = $(document.createElement('div'));
+      $thumbSliderContainer = $(document.createElement('div'));
       $thumbSliderContainer.
         addClass('sul-embed-image-x-thumb-slider-container');
-      var $thumbSlider = $(document.createElement('div'));
+      $thumbSlider = $(document.createElement('div'));
       $thumbSlider.addClass('sul-embed-image-x-thumb-slider');
-      var $openClose = $(document.createElement('div'));
-      $openClose.addClass('sul-i-arrow-down-8 ' +
+      $thumbOpenClose = $(document.createElement('div'));
+      $thumbOpenClose.addClass('sul-i-arrow-down-8 ' +
         'sul-i-2x sul-embed-image-x-thumb-slider-open-close');
-      _thumbSliderActions($openClose, $thumbSlider);
+      _thumbSliderActions();//$openClose, $thumbSlider);
       var $thumbSliderScroll = $(document.createElement('div'));
       $thumbSliderScroll.addClass('sul-embed-thumb-slider-scroll');
       var $handle = $(document.createElement('div'));
@@ -145,7 +185,7 @@
 
       // Append everything together
       $thumbSlider.append($thumbSliderList);
-      $thumbSliderContainer.append([$openClose, $thumbSlider,
+      $thumbSliderContainer.append([$thumbOpenClose, $thumbSlider,
         $thumbSliderScroll]);
       $el.after($thumbSliderContainer);
 
