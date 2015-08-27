@@ -53,7 +53,7 @@
     };
 
     var _requestManifest = function() {
-      $.get('/teaspoon/fixtures/manifest.json')
+      $.get(dataAttributes.manifestUrl)
         .done(function(data) {
           PubSub.publish('manifestDone', data);
         })
