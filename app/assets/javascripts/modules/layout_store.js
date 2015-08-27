@@ -20,10 +20,10 @@
         // bottomPanelEnabled: true,
         bottomPanelOpen: true,
         // currentFocus: null,
-        currentImage: null
+        currentImage: null,
         // downloadPanelVisible: true,
         // height: 200,
-        // mode: 'single',
+        mode: 'single'
         // width: 200
       }, true);
     },
@@ -39,6 +39,12 @@
       PubSub.subscribe('currentImageUpdated', function(_, id) {
         _this.state({
           currentImage: id
+        });
+      });
+
+      PubSub.subscribe('updateMode', function(_, mode) {
+        _this.state({
+          mode: mode
         });
       });
     },

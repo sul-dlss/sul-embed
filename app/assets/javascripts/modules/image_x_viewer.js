@@ -11,17 +11,23 @@
     var druid;
     var $el;
     var thumbSliderSly;
-    var frameClass = 'sul-embed-frame';
-    var canvasClass = 'sul-embed-canvas';
-    var labelClass = 'sul-embed-label';
 
     var _listenForActions = function() {
       PubSub.subscribe('manifestStateUpdated', function() {
         _setupThumbSlider();
-        canvasStore = new CanvasStore(manifestStore.state().manifest);
+        canvasStore = new CanvasStore({
+            manifest: manifestStore.state().manifest
+          });
       });
       PubSub.subscribe('layoutStateUpdated', function() {
         // add content area reactions here.
+      });
+    };
+
+    var _setupButtonListeners = function() {
+      $el.parent().parent().find('[data-sul-view-mode]').on('click', function() {
+        var mode = $(this).data().sulViewMode;
+        PubSub.publish('updateMode', mode);
       });
     };
 
@@ -38,7 +44,7 @@
     };
 
     var _extractDruid = function() {
-      if (typeof dataAttributes !== 'undefined' && 
+      if (typeof dataAttributes !== 'undefined' &&
         typeof dataAttributes.manifestUrl !== 'undefined') {
         druid = dataAttributes.manifestUrl.slice(25, 36);
       } else {
@@ -90,13 +96,6 @@
     };
 
     var _setupContentArea = function() {
-      manifestor({
-        manifest: manifestStore.state().manifest,
-        container: $('#sul-embed-image-x'),
-        frameClass: frameClass,
-        canvasClass: canvasClass,
-        labelClass: labelClass
-      });
     };
 
     var _setupThumbSlider = function() {
@@ -125,11 +124,13 @@
       var canvases = manifestStore.state().manifest.sequences[0].canvases;
       $.each(canvases, function(i, val) {
         var id = val.images[0].resource.service['@id'];
+        var canvasId = val['@id'];
         // Create base <li> element, then adds the image and label to it in a
         // performant way
         var $thumb = $(document.createElement('li'));
         $thumb.addClass('sul-embed-image-x-thumb');
         $thumb.attr('data-id', id);
+        $thumb.attr('data-canvasId', canvasId);
         $thumb.width((val.width * thumbSize) / val.height);
         var $image = $(document.createElement('img'));
         $image.attr('data-src', id + '/full/,' + thumbSize * 2 +
@@ -172,7 +173,7 @@
       });
 
       thumbSliderSly.on('active', function(e, i) {
-        var id = $($thumbSliderList.find('li')[i]).data('id');
+        var id = $($thumbSliderList.find('li')[i]).data('canvasid');
         PubSub.publish('currentImageUpdated', id);
       });
     };
@@ -184,6 +185,7 @@
         // Access data attributes
         dataAttributes = $el.data();
 
+        _setupButtonListeners();
         _listenForActions();
 
         _extractDruid();

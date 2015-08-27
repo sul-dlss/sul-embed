@@ -26,6 +26,7 @@ describe Embed::Viewer::ImageX do
       # visible false because we display:none the container until we've loaded the CSS.
       expect(html).to have_css '.sul-embed-image-x', visible: false
       expect(html).to have_css('#sul-embed-image-x[data-manifest-url=\'http://purl.stanford.edu/12345/iiif/manifest.json\']', visible: false)
+      expect(html).to have_css('.sul-embed-image-x-buttons button', count: 4, visible: false)
     end
   end
 end
