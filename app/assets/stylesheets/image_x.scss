@@ -80,27 +80,32 @@ $image-thumb-slider-border-color: #000;
   float: left;
   margin: 0 5px 0 0;
   padding: 0;
+  img {
+      width:100%;
+  }
 }
 
-.#{$namespace}-image-x-label {
+.#{$namespace}-image-x-frame-label {
   text-align: center;
+  width:100%;
+  height:35px;
+  position:absolute;
+  bottom:0;
 }
 
-.#{$namespace}-frame {
+.#{$namespace}-image-x-frame {
   position:absolute;
   display:block;
 }
 
-.#{$namespace}-canvas {
+.#{$namespace}-image-x-canvas {
   position: absolute;
   display: block;
   border: 1px solid #000000;
 }
 
-.#{$namespace}-label {
+.#{$namespace}-image-x-label {
   width:100%;
-  height:35px;
-  position:absolute;
-  bottom:0;
   text-align:center;
+  margin-bottom:5px;
 }
