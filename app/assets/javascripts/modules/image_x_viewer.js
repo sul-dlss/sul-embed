@@ -32,6 +32,15 @@
           PubSub.publish('updateBottomPanel', true);
         }
       });
+      /**
+       * Enable the bottomPanel in detail perspective
+       */
+      PubSub.subscribe('canvasStateUpdated', function() {
+        var canvasState = canvasStore.getState();
+        if (canvasState.perspective === 'detail') {
+          PubSub.publish('updateBottomPanel', true);
+        }
+      });
       PubSub.subscribe('updateBottomPanel', function(_, status) {
         if (status) {
           _enableBottomPanel();

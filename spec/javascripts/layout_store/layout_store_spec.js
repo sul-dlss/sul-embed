@@ -27,19 +27,9 @@ describe('LayoutStore', function() {
     it('sets state without publishing layoutStateUpdated', function(done) {
       expect(layoutStore.layoutState).toEqual({
         bottomPanelEnabled: true,
-        bottomPanelOpen: true,
-        currentImage: null,
-        mode: 'single',
-        perspective: 'detail'
+        bottomPanelOpen: true
       });      
       expect(storeSpy).not.toHaveBeenCalled();
-      done();
-    });
-  });
-  describe('currentImageUpdated', function() {
-    it('updates state', function(done) {
-      PubSub.publishSync('currentImageUpdated', 'best_pic');
-      expect(layoutStore.layoutState.currentImage).toEqual('best_pic');
       done();
     });
   });

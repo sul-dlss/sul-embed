@@ -18,13 +18,10 @@
       var _this = this;
       _this.state({
         bottomPanelEnabled: true,
-        bottomPanelOpen: true,
+        bottomPanelOpen: true
         // currentFocus: null,
-        currentImage: null,
         // downloadPanelVisible: true,
         // height: 200,
-        mode: 'single',
-        perspective: 'detail'
         // width: 200
       }, true);
     },
@@ -36,25 +33,6 @@
           bottomPanelOpen: !_this.state().bottomPanelOpen
         });
       });
-
-      PubSub.subscribe('currentImageUpdated', function(_, id) {
-        _this.state({
-          currentImage: id
-        });
-      });
-
-      PubSub.subscribe('updateMode', function(_, mode) {
-        _this.state({
-          mode: mode
-        });
-      });
-
-      PubSub.subscribe('updatePerspective', function(_, perspective) {
-        _this.state({
-          perspective: perspective
-        });
-      });
-
       PubSub.subscribe('updateBottomPanel', function(_, status) {
         _this.state({
           bottomPanelEnabled: status
