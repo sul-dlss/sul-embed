@@ -24,6 +24,16 @@ describe Embed::PURL do
       expect(Embed::PURL.new('12345')).to_not be_embargoed
     end
   end
+  describe '#world_unrestricted?' do
+    it 'without a world restriction' do
+      stub_purl_response_with_fixture(image_purl)
+      expect(Embed::PURL.new('12345')).to be_world_unrestricted
+    end
+    it 'when it has a world restriction' do
+      stub_purl_response_with_fixture(stanford_restricted_image_purl)
+      expect(Embed::PURL.new('12345')).to_not be_world_unrestricted
+    end
+  end
   describe 'embargo_release_date' do
     before { stub_purl_response_with_fixture(embargoed_purl) }
     it 'should return the date in the embargo field' do
