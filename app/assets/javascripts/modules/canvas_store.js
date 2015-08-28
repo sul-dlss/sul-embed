@@ -10,7 +10,7 @@
         manifestorInstance = manifestor({
           manifest: options.manifest,
           container: $('#sul-embed-image-x'),
-          perspective: 'overview',
+          perspective: 'detail',
           frameClass: 'sul-embed-image-x-frame',
           canvasClass: 'sul-embed-image-x-canvas',
           labelClass: 'sul-embed-image-x-frame-label',
