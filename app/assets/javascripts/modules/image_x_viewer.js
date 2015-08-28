@@ -148,7 +148,12 @@
       });
     };
 
-    var _setupContentArea = function() {
+    var _disableClicks = function() {
+      if (dataAttributes.worldRestriction) {
+        $el.on('contextmenu', '.openseadragon-canvas', function(e) {
+          e.preventDefault();
+        });
+      }
     };
 
     var _setupThumbSlider = function() {
@@ -246,6 +251,7 @@
 
         // Request IIIF manifest
         _requestManifest();
+        _disableClicks();
       }
     };
   })();

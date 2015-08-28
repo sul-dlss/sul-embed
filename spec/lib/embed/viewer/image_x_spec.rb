@@ -27,6 +27,7 @@ describe Embed::Viewer::ImageX do
       expect(html).to have_css '.sul-embed-image-x', visible: false
       expect(html).to have_css('#sul-embed-image-x[data-manifest-url=\'http://purl.stanford.edu/12345/iiif/manifest.json\']', visible: false)
       expect(html).to have_css('.sul-embed-image-x-buttons button', count: 4, visible: false)
+      expect(html).to have_css('#sul-embed-image-x[data-world-restriction=false]', visible: false)
     end
   end
 end
