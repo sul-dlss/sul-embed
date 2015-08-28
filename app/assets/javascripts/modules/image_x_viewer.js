@@ -33,13 +33,17 @@
         }
       });
       /**
-       * Enable the bottomPanel in detail perspective
+       * Enable the bottomPanel in detail perspective and update Sly thumb
+       * slider with an overview selected new canvas
        */
       PubSub.subscribe('canvasStateUpdated', function() {
         var canvasState = canvasStore.getState();
         if (canvasState.perspective === 'detail') {
           PubSub.publish('updateBottomPanel', true);
         }
+        var thumbItem = $thumbSlider
+          .find('li[data-canvasid="' + canvasState.selectedCanvas + '"]');
+        thumbSliderSly.activate(thumbItem[0]);
       });
       PubSub.subscribe('updateBottomPanel', function(_, status) {
         if (status) {
