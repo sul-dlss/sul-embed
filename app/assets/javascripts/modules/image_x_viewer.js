@@ -184,10 +184,11 @@
         $thumb.addClass('sul-embed-image-x-thumb');
         $thumb.attr('data-id', id);
         $thumb.attr('data-canvasId', canvasId);
-        $thumb.width((val.width * thumbSize) / val.height);
+        var width = Math.ceil((thumbSize * val.width) / val.height);
+        $thumb.width(width);
         var $image = $(document.createElement('img'));
-        $image.attr('data-src', id + '/full/,' + thumbSize * 2 +
-          '/0/default.jpg');
+        $image.attr('data-src', id + '/full/' + width * 2 +
+          ',/0/default.jpg');
         $image.height(thumbSize);
         var $label = $(document.createElement('div'));
         $label.text(val.label);
