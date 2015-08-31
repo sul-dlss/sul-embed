@@ -2577,7 +2577,9 @@ var manifestor = function(options) {
       stateUpdateCallback = options.stateUpdateCallback,
       _canvasState,
       _canvasImageStates,
-      _zooming = false;
+      _zooming = false,
+      _constraintBounds = {x:0, y:0, width:container.width(), height:container.height()},
+      _inZoomConstraints;
 
   function getViewingDirection() {
     if (sequence && sequence.viewingDirection) {
@@ -2737,6 +2739,7 @@ var manifestor = function(options) {
       var viewBounds = layout.intermediate().filter(function(frame) {
         return frame.canvas.selected;
       })[0].vantage;
+      updateConstraintBounds(viewBounds);
 
       var osdBounds = new OpenSeadragon.Rect(viewBounds.x, viewBounds.y, viewBounds.width, viewBounds.height);
 
@@ -3025,6 +3028,18 @@ var manifestor = function(options) {
         synchroniseZoom();
       }
     });
+
+    viewer.addHandler('zoom', function(event) {
+      if (canvasState().perspective === 'detail') {
+        applyConstraints(_constraintBounds);
+      }
+    });
+
+    viewer.addHandler('pan', function(event) {
+      if (canvasState().perspective === 'detail') {
+        applyConstraints(_constraintBounds);
+      }
+    });
   };
 
   function synchroniseZoom() {
@@ -3046,6 +3061,79 @@ var manifestor = function(options) {
     var x = width/2;
     var y = panTop + height/2;
     viewer.viewport.panTo(new OpenSeadragon.Point(x,y), true);
+  }
+
+  function applyConstraints(constraintBounds) {
+    constraintBounds = new OpenSeadragon.Rect(
+      constraintBounds.x,
+      constraintBounds.y,
+      constraintBounds.width,
+      constraintBounds.height
+    );
+
+    if (constraintBounds && !_inZoomConstraints) {
+      var changed = false;
+      var currentBounds = viewer.viewport.getBounds();
+
+      if (currentBounds.x < constraintBounds.x - 0.00001) {
+        currentBounds.x = constraintBounds.x;
+        changed = true;
+      }
+
+      if (currentBounds.y < constraintBounds.y - 0.00001) {
+        currentBounds.y = constraintBounds.y;
+        changed = true;
+      }
+
+      if (currentBounds.width > constraintBounds.width + 0.00001) {
+        currentBounds.width = constraintBounds.width;
+        changed = true;
+      }
+
+      if (currentBounds.height > constraintBounds.height + 0.00001) {
+        currentBounds.height = constraintBounds.height;
+        changed = true;
+      }
+
+      if (currentBounds.x + currentBounds.width > constraintBounds.x + constraintBounds.width + 0.00001) {
+        currentBounds.x = (constraintBounds.x + constraintBounds.width) - currentBounds.width;
+        changed = true;
+      }
+
+      if (currentBounds.y + currentBounds.height > constraintBounds.y + constraintBounds.height + 0.00001) {
+        currentBounds.y = (constraintBounds.y + constraintBounds.height) - currentBounds.height;
+        changed = true;
+      }
+
+      if (changed) {
+        _inZoomConstraints = true;
+        viewer.viewport.fitBounds(currentBounds);
+        _inZoomConstraints = false;
+      }
+    }
+
+    // var zoom = viewer.viewport.getZoom();
+    // var maxZoom = 2;
+
+    // var zoomPoint = viewer.viewport.zoomPoint || viewer.viewport.getCenter();
+    // var info = this.hitTest(zoomPoint);
+    // if (info) {
+      // var page = this.pages[info.index];
+      // var tiledImage = page.hitTest(zoomPoint);
+      // if (tiledImage) {
+      //   maxZoom = this.viewer.maxZoomLevel;
+      //   if (!maxZoom) {
+      //     var imageWidth = tiledImage.getContentSize().x;
+      //     var viewerWidth = this.$el.width();
+      //     maxZoom = imageWidth * this.viewer.maxZoomPixelRatio / viewerWidth;
+      //     maxZoom /= tiledImage.getBounds().width;
+      //   }
+      // }
+    // }
+
+    // if (zoom > maxZoom) {
+    //   this.viewer.viewport.zoomSpring.target.value = maxZoom;
+    // }
   }
 
   function selectCanvas(item) {
@@ -3122,6 +3210,22 @@ var manifestor = function(options) {
     canvasState(state);
   }
 
+  function updateConstraintBounds(bounds) {
+    var state = canvasState();
+
+    // This should probably be integrated into
+    // some other type of store, such as
+    // one that handles state that is
+    // updated in real time (zoom level,
+    // current bounds, "_zooming", and
+    // this).
+
+    // state.constraintBounds = bounds;
+    _constraintBounds = bounds;
+
+    // canvasState(state);
+  }
+
   container.on('click', '.' + canvasClass, function(event) {
     selectCanvas($(this).data('id'));
   });
@@ -3144,7 +3248,8 @@ var manifestor = function(options) {
     updateThumbSize: updateThumbSize,
     refreshState: refreshState,
     getState: canvasState,
-    setState: canvasState
+    setState: canvasState,
+    osd: viewer
   };
 };
 
