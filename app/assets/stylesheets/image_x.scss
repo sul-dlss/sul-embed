@@ -15,10 +15,15 @@ $image-thumb-slider-background-color: $sul-background;
 
 .#{$namespace}-image-x-buttons {
   float: right;
+  padding-top: 8px;
 
   .#{$namespace}-btn {
     margin-left: 5px;
   }
+}
+
+.#{$namespace}-header-title + .#{$namespace}-image-x-buttons {
+  padding-top: 0;
 }
 
 ##{$namespace}-image-x {

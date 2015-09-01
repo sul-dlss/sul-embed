@@ -47,16 +47,16 @@ module Embed
           doc.div(class: 'sul-embed-footer') do
             doc.div(class: 'sul-embed-footer-toolbar') do
               unless @request.hide_metadata?
-                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default sul-i-infomation-circle', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-metadata-panel')
+                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-infomation-circle', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-metadata-panel')
               end
               unless @request.hide_embed_this?
-                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default sul-i-share', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-embed-this-panel')
+                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-share', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-embed-this-panel')
               end
               if show_download?
-                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default sul-i-download-3', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-download-panel')
+                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-download-3', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-download-panel')
               end
               if external_url.present?
-               doc.a(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-xs sul-embed-btn-default sul-i-link-3', 
+               doc.a(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-link-3', 
                      href: "#{external_url}")
               end
             end
