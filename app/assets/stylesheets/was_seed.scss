@@ -27,6 +27,11 @@
   &.active {
     @include shadow(2);
     background-color: $white-color;
+    
+    a {
+      font-size: 1.2em;
+      font-weight: 400;
+    }
   }
 }
 
