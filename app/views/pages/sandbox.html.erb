@@ -196,6 +196,10 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script>
     $(function() {
+      // Turn off jQuery animations on test suite
+      if ('<%= Rails.env %>' === 'test') {
+        if (window.jQuery) { jQuery.fx.off = true; }
+      }
         $('.btn-render').on('click', function() {
             embed.render();
         });
