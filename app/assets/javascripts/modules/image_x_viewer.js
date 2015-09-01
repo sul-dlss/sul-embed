@@ -64,6 +64,10 @@
         var perspective = $(this).data().sulViewPerspective;
         PubSub.publish('updatePerspective', perspective);
       });
+      embedHeader.find('[data-sul-view-fullscreen="fullscreen"]')
+        .on('click', function() {
+          canvasStore.osd.setFullScreen(true);
+      });
     };
 
     var _disableBottomPanel = function() {
