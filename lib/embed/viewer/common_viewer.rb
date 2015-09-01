@@ -311,7 +311,7 @@ module Embed
       end
 
       def file_count_html(doc)
-        doc.h2(class: 'sul-embed-item-count', 'aria-live' => 'polite') {}
+        doc.div(class: 'sul-embed-item-count', 'aria-live' => 'polite') {}
       end
     end
   end
