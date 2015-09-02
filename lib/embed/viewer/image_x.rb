@@ -4,7 +4,7 @@ module Embed
 
       def initialize(*args)
         super
-        header_tools_logic << :image_button_logic
+        header_tools_logic << :image_button_logic << :file_count_logic
       end
 
       def body_html
