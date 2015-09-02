@@ -18,6 +18,7 @@
     var _listenForActions = function() {
       PubSub.subscribe('manifestStateUpdated', function() {
         _setupThumbSlider();
+        _updateImageCount();
         canvasStore = new CanvasStore({
             manifest: manifestStore.state().manifest
           });
@@ -52,6 +53,14 @@
           _disableBottomPanel();
         }
       });
+    };
+
+    var _updateImageCount = function() {
+      var $itemCount = $el.parent().parent().find('.sul-embed-item-count');
+      var numImages = manifestStore.state().manifest.sequences[0].canvases
+        .length;
+      var text = numImages === 1 ? ' image' : ' images';
+      $itemCount.text(numImages + text);
     };
 
     var _setupButtonListeners = function() {
