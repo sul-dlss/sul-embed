@@ -10,7 +10,7 @@ describe 'file list accessibility', js: true do
     expect(page).to have_content 'Preview item 1'
     expect(page).to have_css 'a[aria-expanded="false"]'
     expect(page).to have_css 'div.sul-embed-preview[aria-hidden="true"]', visible: false
-    expect(page).to have_css 'h2.sul-embed-item-count[aria-live="polite"]'
+    expect(page).to have_css 'div.sul-embed-item-count[aria-live="polite"]'
     click_link 'Preview'
     expect(page).to have_css '.sul-embed-preview img[alt]'
     expect(page).to have_content 'Close preview item 1'
