@@ -56,7 +56,7 @@ module Embed
                 doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-download-3', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-download-panel')
               end
               if external_url.present?
-               doc.a(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-link-3', 
+               doc.a(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-navigation-next-4', 
                      href: "#{external_url}")
               end
             end
