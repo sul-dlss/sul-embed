@@ -170,7 +170,8 @@
     };
 
     var _setupThumbSlider = function() {
-      var thumbSize = 100;
+      var thumbHeight = 100;
+      var thumbDisplayHeight = 75;
 
       // Create dom base elements
       $thumbSliderContainer = $(document.createElement('div'));
@@ -202,12 +203,13 @@
         $thumb.addClass('sul-embed-image-x-thumb');
         $thumb.attr('data-id', id);
         $thumb.attr('data-canvasId', canvasId);
-        var width = Math.ceil((thumbSize * val.width) / val.height);
-        $thumb.width(width);
+        $thumb.attr('title', val.label);
+        var aspectRatio = val.width / val.height;
+        $thumb.width(Math.ceil(thumbDisplayHeight * aspectRatio));
         var $image = $(document.createElement('img'));
-        $image.attr('data-src', id + '/full/' + width * 2 +
-          ',/0/default.jpg');
-        $image.height(thumbSize);
+        $image.attr('data-src', id + '/full/' +
+          Math.ceil(thumbHeight * aspectRatio * 2) + ',/0/default.jpg');
+        $image.height(thumbDisplayHeight);
         var $label = $(document.createElement('div'));
         $label.text(val.label);
         $label.addClass('sul-embed-image-x-label');
