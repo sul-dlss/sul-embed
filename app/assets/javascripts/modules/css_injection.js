@@ -6,8 +6,8 @@
     var linkHtml = '<link rel="stylesheet" href="{{stylesheetLink}}" type="text/css" />',
         themeUrl = $("[data-sul-embed-theme]").data("sul-embed-theme"),
         pluginStylesheets = $("[data-plugin-styles]").data("plugin-styles") || '',
-        fontIconsHtml = '<link href="https://sul-cdn-dev.stanford.edu/sul_s' +
-          'tyles/0.4.2/sul-icons.min.css" rel="stylesheet">';
+        fontIconsHtml = '<link href="https://sul-cdn.stanford.edu/sul_s' +
+          'tyles/0.5.0/sul-icons.min.css" rel="stylesheet">';
 
     return {
       appendToHead: function() {
