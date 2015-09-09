@@ -18,7 +18,9 @@
       var _this = this;
       _this.state({
         bottomPanelEnabled: true,
-        bottomPanelOpen: true
+        bottomPanelOpen: true,
+        modesAvailable: true,
+        overviewPerspectiveAvailable: true
         // currentFocus: null,
         // downloadPanelVisible: true,
         // height: 200,
@@ -36,6 +38,16 @@
       PubSub.subscribe('updateBottomPanel', function(_, status) {
         _this.state({
           bottomPanelEnabled: status
+        });
+      });
+      PubSub.subscribe('disableModes', function() {
+        _this.state({
+          modesAvailable: false
+        });
+      });
+      PubSub.subscribe('disableOverviewPerspective', function() {
+        _this.state({
+          overviewPerspectiveAvailable: false
         });
       });
     },
