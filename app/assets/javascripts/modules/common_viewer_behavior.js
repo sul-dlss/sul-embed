@@ -2,16 +2,7 @@
 
 (function( global ) {
   var Module = (function() {
-    var viewerShown = $.Deferred(),
-        purlLinkWidthCutoff = 400;
-
-    function updatePurlLink(width) {
-      var $purlLink = $('.sul-embed-purl-link a');
-
-      if (width < purlLinkWidthCutoff) {
-        $purlLink.text($purlLink.text().replace('purl.stanford.edu/', ''));
-      }
-    }
+    var viewerShown = $.Deferred();
 
     return {
       initializeViewer: function(callback) {
@@ -32,7 +23,6 @@
       showViewer: function() {
         $("#sul-embed-object").show(function() {
           viewerShown.resolve();
-          updatePurlLink($("#sul-embed-object").outerWidth());
         });
       }
     };

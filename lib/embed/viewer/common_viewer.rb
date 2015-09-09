@@ -60,12 +60,6 @@ module Embed
                      href: "#{external_url}")
               end
             end
-            doc.div(class: 'sul-embed-purl-link') do
-              doc.img(class: 'sul-embed-rosette', src: asset_url('sul-rosette.png'))
-              doc.a(href: @purl_object.purl_url, target: '_top') do
-                doc.text @purl_object.purl_url.gsub(/^http:\/\//, '')
-              end
-            end
           end
         end.to_html
       end
@@ -88,6 +82,12 @@ module Embed
                 end
                 doc.div(class: 'sul-embed-panel-body') do
                   doc.dl do
+                    doc.dt { doc.text 'Available online' }
+                    doc.dd do
+                      doc.a(href: @purl_object.purl_url, target: '_top') do
+                        doc.text @purl_object.purl_url.gsub(/^http:\/\//, '')
+                      end
+                    end
                     if @purl_object.use_and_reproduction.present?
                       doc.dt { doc.text('Use and reproduction') }
                       doc.dd { doc.text(@purl_object.use_and_reproduction) }
