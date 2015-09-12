@@ -56,14 +56,8 @@ module Embed
                 doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-download-3', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-download-panel')
               end
               if external_url.present?
-               doc.a(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-link-3', 
+               doc.a(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-navigation-next-4', 
                      href: "#{external_url}")
-              end
-            end
-            doc.div(class: 'sul-embed-purl-link') do
-              doc.img(class: 'sul-embed-rosette', src: asset_url('sul-rosette.png'))
-              doc.a(href: @purl_object.purl_url, target: '_top') do
-                doc.text @purl_object.purl_url.gsub(/^http:\/\//, '')
               end
             end
           end
@@ -88,6 +82,12 @@ module Embed
                 end
                 doc.div(class: 'sul-embed-panel-body') do
                   doc.dl do
+                    doc.dt { doc.text 'Available online' }
+                    doc.dd do
+                      doc.a(href: @purl_object.purl_url, target: '_top') do
+                        doc.text @purl_object.purl_url.gsub(/^http:\/\//, '')
+                      end
+                    end
                     if @purl_object.use_and_reproduction.present?
                       doc.dt { doc.text('Use and reproduction') }
                       doc.dd { doc.text(@purl_object.use_and_reproduction) }

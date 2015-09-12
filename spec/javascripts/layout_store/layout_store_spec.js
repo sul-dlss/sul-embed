@@ -27,7 +27,9 @@ describe('LayoutStore', function() {
     it('sets state without publishing layoutStateUpdated', function(done) {
       expect(layoutStore.layoutState).toEqual({
         bottomPanelEnabled: true,
-        bottomPanelOpen: true
+        bottomPanelOpen: true,
+        modesAvailable: true,
+        overviewPerspectiveAvailable: true
       });      
       expect(storeSpy).not.toHaveBeenCalled();
       done();

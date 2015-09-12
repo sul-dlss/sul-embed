@@ -14,6 +14,7 @@
     var $thumbOpenClose;
     var $thumbSliderContainer;
     var thumbSliderSly;
+    var $embedHeader;
 
     var _listenForActions = function() {
       PubSub.subscribe('manifestStateUpdated', function() {
@@ -33,13 +34,20 @@
           PubSub.publish('updateBottomPanel', true);
         }
       });
+      PubSub.subscribe('disableModes', function() {
+        $embedHeader.find('[data-sul-view-mode]').hide();
+      });
+      PubSub.subscribe('disableOverviewPerspective', function() {
+        $embedHeader.find('[data-sul-view-perspective]').hide();
+      });
       /**
        * Enable the bottomPanel in detail perspective and update Sly thumb
        * slider with an overview selected new canvas
        */
       PubSub.subscribe('canvasStateUpdated', function() {
         var canvasState = canvasStore.getState();
-        if (canvasState.perspective === 'detail') {
+        if (canvasState.perspective === 'detail' &&
+          canvasState.overviewPerspectiveAvailable) {
           PubSub.publish('updateBottomPanel', true);
         }
         var thumbItem = $thumbSlider
@@ -64,16 +72,15 @@
     };
 
     var _setupButtonListeners = function() {
-      var embedHeader = $el.parent().parent();
-      embedHeader.find('[data-sul-view-mode]').on('click', function() {
+      $embedHeader.find('[data-sul-view-mode]').on('click', function() {
         var mode = $(this).data().sulViewMode;
         PubSub.publish('updateMode', mode);
       });
-      embedHeader.find('[data-sul-view-perspective]').on('click', function() {
+      $embedHeader.find('[data-sul-view-perspective]').on('click', function() {
         var perspective = $(this).data().sulViewPerspective;
         PubSub.publish('updatePerspective', perspective);
       });
-      embedHeader.find('[data-sul-view-fullscreen="fullscreen"]')
+      $embedHeader.find('[data-sul-view-fullscreen="fullscreen"]')
         .on('click', function() {
           canvasStore.osd.setFullScreen(true);
       });
@@ -170,8 +177,15 @@
     };
 
     var _setupThumbSlider = function() {
+      
       var thumbHeight = 100;
       var thumbDisplayHeight = 75;
+      var canvases = manifestStore.state().manifest.sequences[0].canvases;
+      if (canvases.length < 2) {
+        PubSub.publish('disableModes');
+        PubSub.publish('disableOverviewPerspective');
+        return;
+      }
 
       // Create dom base elements
       $thumbSliderContainer = $(document.createElement('div'));
@@ -193,7 +207,6 @@
       $thumbSliderScroll.append($handle);
       var $thumbSliderList = $(document.createElement('ul'));
 
-      var canvases = manifestStore.state().manifest.sequences[0].canvases;
       $.each(canvases, function(i, val) {
         var id = val.images[0].resource.service['@id'];
         var canvasId = val['@id'];
@@ -258,6 +271,7 @@
 
         // Access data attributes
         dataAttributes = $el.data();
+        $embedHeader = $el.parent().parent();
 
         _setupButtonListeners();
         _listenForActions();

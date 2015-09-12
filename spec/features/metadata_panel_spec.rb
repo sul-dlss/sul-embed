@@ -12,10 +12,11 @@ describe 'metadata panel', js: true do
     page.find('[data-sul-embed-toggle="sul-embed-metadata-panel"]', match: :first).click
     expect(page).to have_css('.sul-embed-metadata-panel', visible: false)
   end
-  it 'should have use and reproduction and license text' do
+  it 'should have purl link, use and reproduction, and license text' do
     stub_purl_response_with_fixture(file_purl)
     send_embed_response
     page.find('[data-sul-embed-toggle="sul-embed-metadata-panel"]', match: :first).click
+    expect(page).to have_css('dt', text: 'AVAILABLE ONLINE')
     expect(page).to have_css('dt', text: 'USE AND REPRODUCTION')
     expect(page).to have_css('dt', text: 'LICENSE')
     within '.sul-embed-metadata-panel' do
