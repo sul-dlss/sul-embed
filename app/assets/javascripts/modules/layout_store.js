@@ -32,7 +32,7 @@
 
       PubSub.subscribe('thumbSliderToggle', function() {
         _this.state({
-          bottomPanelOpen: !_this.state().bottomPanelOpen
+          bottomPanelOpen: !_this.getState().bottomPanelOpen
         });
       });
       PubSub.subscribe('updateBottomPanel', function(_, status) {
@@ -65,6 +65,9 @@
       }
 
       return this.layoutState;
+    },
+    getState: function() {
+      return this.state();
     }
   };
 

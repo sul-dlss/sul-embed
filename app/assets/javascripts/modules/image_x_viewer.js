@@ -21,7 +21,7 @@
         _setupThumbSlider();
         _updateImageCount();
         canvasStore = new CanvasStore({
-            manifest: manifestStore.state().manifest
+            manifest: manifestStore.getState().manifest
           });
       });
       PubSub.subscribe('layoutStateUpdated', function() {
@@ -47,7 +47,7 @@
       PubSub.subscribe('canvasStateUpdated', function() {
         var canvasState = canvasStore.getState();
         if (canvasState.perspective === 'detail' &&
-          canvasState.overviewPerspectiveAvailable) {
+          layoutStore.getState().overviewPerspectiveAvailable) {
           PubSub.publish('updateBottomPanel', true);
         }
         var thumbItem = $thumbSlider
@@ -65,7 +65,7 @@
 
     var _updateImageCount = function() {
       var $itemCount = $el.parent().parent().find('.sul-embed-item-count');
-      var numImages = manifestStore.state().manifest.sequences[0].canvases
+      var numImages = manifestStore.getState().manifest.sequences[0].canvases
         .length;
       var text = numImages === 1 ? ' image' : ' images';
       $itemCount.text(numImages + text);
@@ -180,7 +180,7 @@
       
       var thumbHeight = 100;
       var thumbDisplayHeight = 75;
-      var canvases = manifestStore.state().manifest.sequences[0].canvases;
+      var canvases = manifestStore.getState().manifest.sequences[0].canvases;
       if (canvases.length < 2) {
         PubSub.publish('disableModes');
         PubSub.publish('disableOverviewPerspective');
