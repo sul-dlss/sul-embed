@@ -45,9 +45,19 @@
           modesAvailable: false
         });
       });
+      PubSub.subscribe('enableModes', function() {
+        _this.state({
+          modesAvailable: true
+        });
+      });
       PubSub.subscribe('disableOverviewPerspective', function() {
         _this.state({
           overviewPerspectiveAvailable: false
+        });
+      });
+      PubSub.subscribe('enableOverviewPerspective', function() {
+        _this.state({
+          overviewPerspectiveAvailable: true
         });
       });
     },

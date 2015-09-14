@@ -35,10 +35,16 @@
         }
       });
       PubSub.subscribe('disableModes', function() {
-        $embedHeader.find('[data-sul-view-mode]').hide();
+        $embedHeader.find('[data-sul-view-mode]').addClass('sul-embed-hidden');
       });
       PubSub.subscribe('disableOverviewPerspective', function() {
-        $embedHeader.find('[data-sul-view-perspective]').hide();
+        $embedHeader.find('[data-sul-view-perspective]').addClass('sub-embed-hidden');
+      });
+      PubSub.subscribe('enableModes', function() {
+        $embedHeader.find('[data-sul-view-mode]').removeClass('sul-embed-hidden');
+      });
+      PubSub.subscribe('enableOverviewPerspective', function() {
+        $embedHeader.find('[data-sul-view-perspective]').removeClass('sul-embed-hidden');
       });
       /**
        * Enable the bottomPanel in detail perspective and update Sly thumb
@@ -181,9 +187,10 @@
       var thumbHeight = 100;
       var thumbDisplayHeight = 75;
       var canvases = manifestStore.getState().manifest.sequences[0].canvases;
-      if (canvases.length < 2) {
-        PubSub.publish('disableModes');
-        PubSub.publish('disableOverviewPerspective');
+      if (canvases.length > 1) {
+        PubSub.publish('enableModes');
+        PubSub.publish('enableOverviewPerspective');
+      } else {
         return;
       }
 
