@@ -40,6 +40,9 @@
       }
 
       return this.manifestState;      
+    },
+    getState: function() {
+      return this.state();
     }
   };
 
