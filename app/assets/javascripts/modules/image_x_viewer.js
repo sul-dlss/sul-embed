@@ -47,7 +47,7 @@
       PubSub.subscribe('canvasStateUpdated', function() {
         var canvasState = canvasStore.getState();
         if (canvasState.perspective === 'detail' &&
-          canvasState.overviewPerspectiveAvailable) {
+          layoutStore.getState().overviewPerspectiveAvailable) {
           PubSub.publish('updateBottomPanel', true);
         }
         var thumbItem = $thumbSlider

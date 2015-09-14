@@ -31,6 +31,9 @@
         _this.selectCanvas(canvasId);
       });
       PubSub.subscribe('updateMode', function(_, newMode) {
+        if (_this.getState().perspective === 'overview') {
+          _this.selectPerspective('detail');
+        }
         _this.selectViewingMode(newMode);
       });
       PubSub.subscribe('updatePerspective', function(_, newPerspective) {
