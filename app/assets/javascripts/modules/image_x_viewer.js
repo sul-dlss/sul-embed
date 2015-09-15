@@ -1,4 +1,4 @@
-/*global Sly, LayoutStore, ManifestStore, PubSub, CanvasStore */
+/*global Sly, LayoutStore, ManifestStore, PubSub, CanvasStore, key */
 
 (function( global ) {
   'use strict';
@@ -19,6 +19,7 @@
     var _listenForActions = function() {
       PubSub.subscribe('manifestStateUpdated', function() {
         _setupThumbSlider();
+        _setupKeyListeners();
         _updateImageCount();
         canvasStore = new CanvasStore({
             manifest: manifestStore.getState().manifest
@@ -27,9 +28,22 @@
       PubSub.subscribe('layoutStateUpdated', function() {
         // add content area reactions here.
       });
+      PubSub.subscribe('thumbSliderToggled', function() {
+        var state = layoutStore.getState();
+        if (state.bottomPanelOpen) {
+          PubSub.publish('updateKeyboardMode', 'bottomPanelOpen');
+        } else {
+          PubSub.publish('updateKeyboardMode', 'bottomPanelClosed');
+        }
+      });
+      PubSub.subscribe('keyboardModeUpdated', function() {
+        var state = layoutStore.getState();
+        key.setScope(state.keyboardNavMode);
+      });
       PubSub.subscribe('updatePerspective', function(_, newPerspective) {
         if (newPerspective === 'overview') {
           PubSub.publish('updateBottomPanel', false);
+          PubSub.publish('updateKeyboardMode', 'overview');
         } else {
           PubSub.publish('updateBottomPanel', true);
         }
@@ -94,6 +108,35 @@
         .on('click', function() {
           canvasStore.osd.setFullScreen(true);
       });
+    };
+
+    var _setupKeyListeners = function() {
+      
+      key('left', 'bottomPanelOpen', function() {
+        thumbSliderSly.prev();
+      });
+
+      key('right', 'bottomPanelOpen', function() {
+        thumbSliderSly.next();
+      });
+
+      key('left', 'bottomPanelClosed', function() {
+        return true;
+      });
+
+      key('right', 'bottomPanelClosed', function() {
+        return true;
+      });
+
+      key('left', 'overview', function() {
+        thumbSliderSly.prev();
+      });
+
+      key('right', 'overview', function() {
+        thumbSliderSly.next();
+      });
+
+      PubSub.publish('updateKeyboardMode', 'bottomPanelOpen');
     };
 
     var _disableBottomPanel = function() {

@@ -30,7 +30,8 @@ describe('LayoutStore', function() {
         bottomPanelOpen: true,
         modeIndividualsAvailable: false,
         modePagedAvailable: false,
-        overviewPerspectiveAvailable: false
+        overviewPerspectiveAvailable: false,
+        keyboardNavMode: null
       });      
       expect(storeSpy).not.toHaveBeenCalled();
       done();
