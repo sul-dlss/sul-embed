@@ -6,6 +6,7 @@
 //= require vendor/tooltip
 //= require vendor/sly
 //= require vendor/manifestor
+//= require vendor/keymaster
 //= require modules/common_viewer_behavior
 //= require modules/popup_panels
 //= require modules/embed_this
