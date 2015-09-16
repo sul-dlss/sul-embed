@@ -6,7 +6,6 @@
     var layoutStore = new LayoutStore();
     var manifestStore = new ManifestStore();
     var canvasStore;
-    var contentArea;
     var dataAttributes;
     var druid;
     var $el;
