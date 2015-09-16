@@ -21,7 +21,8 @@
         bottomPanelOpen: true,
         modeIndividualsAvailable: false,
         modePagedAvailable: false,
-        overviewPerspectiveAvailable: false
+        overviewPerspectiveAvailable: false,
+        keyboardNavMode: null
         // currentFocus: null,
         // downloadPanelVisible: true,
         // height: 200,
@@ -35,6 +36,7 @@
         _this.state({
           bottomPanelOpen: !_this.getState().bottomPanelOpen
         });
+        PubSub.publish('thumbSliderToggled');
       });
       PubSub.subscribe('updateBottomPanel', function(_, status) {
         _this.state({
@@ -50,6 +52,12 @@
         var newMode = {};
         newMode[mode] = true;
         _this.state(newMode);
+      });
+      PubSub.subscribe('updateKeyboardMode', function(_, newMode) {
+        _this.state({
+          keyboardNavMode: newMode
+        });
+        PubSub.publish('keyboardModeUpdated');
       });
       PubSub.subscribe('disableOverviewPerspective', function() {
         _this.state({

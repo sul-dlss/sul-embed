@@ -34,5 +34,33 @@ describe 'imageX viewer', js: true do
         expect(page).to have_css '.sul-embed-image-x-thumb-slider-container', visible: true
       end
     end
+    describe 'keyboard controls' do
+      it 'navigates left and right' do
+        expect(page).to have_css '.active[title="Image 1"]'
+        container = find('.sul-embed-container')
+        container.native.send_key(:Right)
+        expect(page).to have_css '.active[title="Image 2"]'
+        container.native.send_key(:Left)
+        expect(page).to have_css '.active[title="Image 1"]'
+      end
+      it 'in overview navigate left/right' do
+        expect(page).to have_css '.active[title="Image 1"]'
+        find('[data-sul-view-perspective="overview"]').click
+        container = find('.sul-embed-container')
+        container.native.send_key(:Right)
+        expect(page).to have_css '.active[title="Image 2"]'
+        container.native.send_key(:Left)
+        expect(page).to have_css '.active[title="Image 1"]'
+      end
+      it 'with closed thumb slider, do not navigate' do
+        expect(page).to have_css '.active[title="Image 1"]'
+        find('.sul-embed-image-x-thumb-slider-open-close').click
+        expect(page).to have_css '.sul-embed-image-x-thumb-slider-container',
+                                 visible: false
+        container = find('.sul-embed-container')
+        container.native.send_key(:Right)
+        expect(page).to have_css '.active[title="Image 1"]', visible: false
+      end
+    end
   end
 end
