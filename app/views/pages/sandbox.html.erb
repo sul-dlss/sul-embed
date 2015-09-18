@@ -126,6 +126,9 @@
         Multi image - fw090jw3474
       </li>
       <li>
+        Book (multi image, paged viewing hint) - cy496ky1984
+      </li>
+      <li>
         Files - tn629pk3948
       </li>
       <li>
@@ -288,6 +291,7 @@
         request.done(function(response) {
           $('.status').remove();
           appendContent(response);
+          document.activeElement.blur();
         });
 
         request.fail(function(jqXhr, status) {

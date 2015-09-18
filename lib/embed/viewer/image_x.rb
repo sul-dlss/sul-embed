@@ -32,9 +32,9 @@ module Embed
 
       def image_button_html(doc)
         doc.div(class: 'sul-embed-image-x-buttons') do
-          doc.button(class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-layout-none', 'data-sul-view-mode' => 'individuals')
-          doc.button(class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-layout-4', 'data-sul-view-mode' => 'paged')
-          doc.button(class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-view-module-1', 'data-sul-view-perspective' => 'overview')
+          doc.button(class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-layout-none sul-embed-hidden', 'data-sul-view-mode' => 'individuals')
+          doc.button(class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-layout-4 sul-embed-hidden', 'data-sul-view-mode' => 'paged')
+          doc.button(class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-view-module-1 sul-embed-hidden', 'data-sul-view-perspective' => 'overview')
           doc.button(class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-expand-1', 'data-sul-view-fullscreen' => 'fullscreen')
         end
       end

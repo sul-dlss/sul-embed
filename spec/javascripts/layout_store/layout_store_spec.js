@@ -28,8 +28,10 @@ describe('LayoutStore', function() {
       expect(layoutStore.layoutState).toEqual({
         bottomPanelEnabled: true,
         bottomPanelOpen: true,
-        modesAvailable: true,
-        overviewPerspectiveAvailable: true
+        modeIndividualsAvailable: false,
+        modePagedAvailable: false,
+        overviewPerspectiveAvailable: false,
+        keyboardNavMode: null
       });      
       expect(storeSpy).not.toHaveBeenCalled();
       done();

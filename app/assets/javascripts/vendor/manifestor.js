@@ -1,3 +1,10 @@
+/*
+ iiifManifestLayout
+ version: 0.0.4
+ https://github.com/sul-dlss/iiifManifestLayouts
+ Browserified module compilation
+*/
+
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifestor = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
@@ -2618,8 +2625,8 @@ var manifestor = function(options) {
      'position': 'absolute',
      'top': 0,
      'left': 0,
-     'overflow': 'hidden'//,
-     // 'overflow-x': 'hidden',
+     'overflow': 'hidden',
+     'overflow-x': 'hidden'
      // 'overflow-y': 'scroll'
     });
 
@@ -2691,51 +2698,56 @@ var manifestor = function(options) {
       facingCanvasPadding: 1 // precent of viewport
     });
 
-    // if (userState.perspective === 'detail' && userState.previousPerspective === 'overview') {
-    //     var endCallback = function() {console.log('rendered overview from detail'); renderLayout(layout.overview(), true);};
-    //     renderLayout(layout.intermediate(), false, endCallback);
-    // } else if (userState.perspective === 'overview' && userState.preserveViewport === 'detail'){
-    //     endCallback = function() {console.log('rendered overview from detail'); renderLayout(layout.detail(), false);};
-    //     renderLayout(targetLayout, true, endCallback);
-    // } else {
-    //     renderLayout(targetLayout, true);
-    // }
     if (userState.perspective === 'detail' && userState.previousPerspective === 'overview') {
       var endCallback = function() {
-          renderLayout(layout.overview(), false);
+          renderLayout(layout.intermediate(), false);
       };
       renderLayout(layout.intermediate(), true, endCallback);
-    } else if (userState.perspective === 'overview' && userState.previousPerspective === 'detail'){
+    } else if (userState.perspective === 'overview' && userState.previousPerspective === 'detail') {
         endCallback = function() {
-        renderLayout(layout.overview(), false);
+        renderLayout(layout.overview(), true);
       };
       renderLayout(layout.intermediate(), false, endCallback);
-    } else if (userState.perspective === 'detail' && userState.previousPerspective === 'detail'){
-      renderLayout(layout.intermediate(), false);
-    } else {
+    } else if (userState.perspective === 'detail' && userState.previousPerspective === 'detail') {
+      renderLayout(layout.intermediate(), true);
+    } else if (userState.perspective === 'overview' && userState.previousPerspective === 'overview') {
       renderLayout(layout.overview(), true);
-    }
-
-    // renderLayout(layout.intermediate(), true);
-
-    // calculate and zoom to new bounds (if relevant)
-    // Set appropriate events for mode.
+  } else if (userState.perspective === 'overview' && !userState.previousPerspective) {
+    renderLayout(layout.overview(), false);
+  } else if (userState.perspective === 'detail' && !userState.previousPerspective) {
+    renderLayout(layout.intermediate(), false);
+  }
 
     if (userState.perspective === 'detail') {
       var viewBounds = layout.intermediate().filter(function(frame) {
         return frame.canvas.selected;
       })[0].vantage;
+
       updateConstraintBounds(viewBounds);
-
       var osdBounds = new OpenSeadragon.Rect(viewBounds.x, viewBounds.y, viewBounds.width, viewBounds.height);
-
       setScrollElementEvents();
-      viewer.viewport.fitBounds(osdBounds, false);
+      if (userState.previousPerspective) {
+        console.log(userState.previousPerspective);
+        viewer.viewport.fitBounds(osdBounds, false);
+      } else {
+        console.log(userState.previousPerspective);
+        viewer.viewport.fitBounds(osdBounds, true);
+      }
+      enableZoomAndPan();
     } else {
       viewBounds = new OpenSeadragon.Rect(0, _lastScrollPosition, canvasState().width, canvasState().height);
       _zooming = true;
+      disableZoomAndPan();
       setScrollElementEvents();
-      viewer.viewport.fitBounds(viewBounds, false);
+
+      if (userState.previousPerspective) {
+        console.log(userState.previousPerspective);
+        viewer.viewport.fitBounds(viewBounds, false);
+      } else {
+        console.log(userState.previousPerspective);
+        viewer.viewport.fitBounds(viewBounds, true);
+      }
+
       setTimeout(function(){
         _zooming = false;
         setScrollElementEvents();
@@ -2748,50 +2760,46 @@ var manifestor = function(options) {
     if (!arguments.length) return _canvasImageStates;
     _canvasImageStates = state;
 
-    // if (!initial) {
-    //     jQuery.publish('annotationsTabStateUpdated' + this.windowId, this.tabState);
-    // }
-
     return _canvasImageStates;
   }
 
-  // function detailTransition(detailLayout) {
-  //     renderLayout(detailLayout);
-  // }
-  // function overviewTransition(selection) {
-  //     renderLayout(detailLayout);
-  // }
   function setScrollElementEvents() {
     var animationTiming = 1200;
     var interactionOverlay = d3.select(overlays[0]);
     if (canvasState().perspective === 'detail') {
       interactionOverlay
         .style('opacity', 0)
-        .transition()
-        .duration(animationTiming)
         .style('pointer-events', 'none');
 
       d3.select(scrollContainer[0])
-        .transition()
-        .duration(animationTiming)
         .style('pointer-events', 'none')
-        .style('overflow-x', 'hidden')
         .style('overflow-y', 'hidden');
-    } else if(!_zooming) {
 
+    } else if(!_zooming) {
       interactionOverlay
-        .style('opacity', 1)
+        .style('pointer-events', 'all')
         .transition()
-        .duration(animationTiming)
-        .style('pointer-events', 'all');
+        .duration(animationTiming/2)
+        .style('opacity', 1);
 
       d3.select(scrollContainer[0])
-        .transition()
-        .duration(animationTiming)
         .style('pointer-events', 'all')
-        .style('overflow-x', 'hidden')
         .style('overflow-y', 'scroll');
     }
+  }
+
+  function disableZoomAndPan() {
+    viewer.zoomPerClick = 1;
+    viewer.zoomPerScroll = 1;
+    viewer.panHorizontal = false;
+    viewer.panVertical = false;
+  }
+
+  function enableZoomAndPan() {
+    viewer.zoomPerClick = 2;
+    viewer.zoomPerScroll = 1.2;
+    viewer.panHorizontal = true;
+    viewer.panVertical = true;
   }
 
   function renderLayout(layoutData, animate, callback) {
@@ -2802,31 +2810,6 @@ var manifestor = function(options) {
 
     var interactionOverlay = d3.select(overlays[0]),
         animationTiming = animate ? 1000 : 0;
-
-    // var bounds = interactionOverlay.selectAll('.vantage')
-    //         .data(
-    //             (function() {
-    //                 return [layoutData.filter(function(frame){
-    //                     return frame.canvas.selected;
-    //                 })[0].vantage];
-    //             })())
-    //         .enter()
-    //         .append('div')
-    //         .attr('class', 'vantage')
-    //         .style('border', '3px solid orangered')
-    //         .style('box-sizing', 'border-box')
-    //         .style('width', function(d) { console.log (d); return d.width + 'px'; })
-    //         .style('height', function(d) { return d.height + 'px'; })
-    //         .style('position', 'absolute')
-    //         .transition()
-    //         .duration(animationTiming)
-    //         .ease('cubic-out')
-    //         .styleTween('transform', function(d) {
-    //             return d3.interpolateString(this.style.transform, 'translate(' + d.x +'px,' + d.y + 'px)');
-    //         })
-    //         .styleTween('-webkit-transform', function(d) {
-    //             return d3.interpolateString(this.style.transform, 'translate(' + d.x +'px,' + d.y + 'px)');
-    //         });
 
     var frame = interactionOverlay.selectAll('.' + frameClass)
           .data(layoutData);
@@ -2844,7 +2827,6 @@ var manifestor = function(options) {
             return d3.interpolateString(this.style.transform, 'translate(' + d.x +'px,' + d.y + 'px)');
           })
           .tween('translateTilesources', translateTilesources)
-          .each(updateImages)
           .call(endall, function() {
             if (callback) { callback();}
           });
@@ -2855,6 +2837,15 @@ var manifestor = function(options) {
       .attr('class', function(d) {
         var selected = d.canvas.selected;
         return selected ? canvasClass + ' selected' : canvasClass;
+      })
+      .transition()
+      .duration(animationTiming)
+      .ease('cubic-out')
+      .styleTween('transform', function(d) {
+        return d3.interpolateString(this.style.transform, 'translate(' + d.canvas.localX +'px,' + d.canvas.localY + 'px)');
+      })
+      .styleTween('-webkit-transform', function(d) {
+        return d3.interpolateString(this.style.transform, 'translate(' + d.canvas.localX +'px,' + d.canvas.localY + 'px)');
       });
 
     var frameEnter = frame
@@ -2877,6 +2868,7 @@ var manifestor = function(options) {
       .style('width', function(d) { return d.canvas.width + 'px'; })
       .style('height', function(d) { return d.canvas.height + 'px'; })
       .style('transform', function(d) { return 'translateX(' + d.canvas.localX + 'px) translateY(' + d.canvas.localY + 'px)'; })
+      .style('-webkit-transform', function(d) { return 'translateX(' + d.canvas.localX + 'px) translateY(' + d.canvas.localY + 'px)'; })
       .each(enterImages);
     // .append('img')
     // .attr('src', function(d) { return d.canvas.iiifService + '/full/' + Math.ceil(d.canvas.width * 2) + ',/0/default.jpg';});
@@ -2907,51 +2899,15 @@ var manifestor = function(options) {
         yi = d3.interpolate(currentBounds.y, d.canvas.y);
 
     return function(t) {
-      if (dummyObj) {
-        dummyObj.setPosition(new OpenSeadragon.Point(xi(t), yi(t)), true);
-        dummyObj.setWidth(d.canvas.width, true);
-        dummyObj.setHeight(d.canvas.height, true);
-      }
-      if (mainImageObj) {
-        console.log('yes mulowd');
         mainImageObj.setPosition(new OpenSeadragon.Point(xi(t), yi(t)), true);
         mainImageObj.setWidth(d.canvas.width, true);
         mainImageObj.setHeight(d.canvas.height, true);
-      }
     };
   }
 
   function updateImages(d) {
     var canvasData = d.canvas,
         canvasImageState = canvasImageStates()[canvasData.id];
-
-    if (canvasState().perspective === 'detail' && canvasState().selectedCanvas === canvasData.id) {
-      substitute(canvasData, canvasImageState.dummyObj, canvasImageState.tileSourceUrl);
-    }
-  }
-
-  function substitute(canvasData, dummyObj, tileSourceUrl) {
-    viewer.addTiledImage({
-      x: canvasData.x,
-      y: canvasData.y,
-      width: canvasData.width,
-      tileSource: tileSourceUrl,
-      index: 0, // Add the new image below the stand-in.
-      success: function(event) {
-        var fullImage = event.item;
-        addMainImageObj(canvasData.id, fullImage);
-
-        // The changeover will look better if we wait for the first tile to be drawn.
-        var tileDrawnHandler = function(event) {
-          if (event.tiledImage === fullImage) {
-            viewer.removeHandler('tile-drawn', tileDrawnHandler);
-            fade(dummyObj, 0, function() { viewer.world.removeItem(dummyObj); });
-          }
-        };
-
-        viewer.addHandler('tile-drawn', tileDrawnHandler);
-      }
-    });
   }
 
   function enterImages(d) {
@@ -2959,45 +2915,29 @@ var manifestor = function(options) {
     var canvasData = d.canvas,
         canvasImageState = canvasImageStates()[canvasData.id];
 
-    if (canvasState().perspective === 'detail' && canvasState().selectedCanvas === canvasData.id) {
       viewer.addTiledImage({
         x: canvasData.x,
         y: canvasData.y,
         width: canvasData.width,
-        tileSource: tileSourceUrl,
+        tileSource: canvasImageState.tileSourceUrl,
         index: 0, // Add the new image below the stand-in.
         success: function(event) {
           addMainImageObj(canvasData.id, event.item);
+          var main = event.item;
+          var tileDrawnHandler = function(event) {
+              viewer.removeHandler('tile-drawn', tileDrawnHandler);
+              main.setOpacity(0,true);
+              fade(main, 1);
+          };
+
+          viewer.addHandler('tile-drawn', tileDrawnHandler);
         }
       });
-    } else {
-
-      var dummy = {
-        type: 'legacy-image-pyramid',
-        levels: [
-          {
-            url: canvasData.thumbService + '/full/' + Math.ceil(d.canvas.width * 2) + ',/0/default.jpg',
-            width: canvasData.width,
-            height: canvasData.height
-          }
-        ]
-      };
-
-      viewer.addTiledImage({
-        tileSource: dummy,
-        x: canvasData.x,
-        y: canvasData.y,
-        width: canvasData.width,
-        success: function(event) {
-          addDummyObj(canvasData.id, event.item);
-        }
-      });
-    }
   }
 
   function fade(image, targetOpacity, callback) {
     var currentOpacity = image.getOpacity();
-    var step = (targetOpacity - currentOpacity) / 10;
+    var step = (targetOpacity - currentOpacity) / 30;
     if (step === 0) {
       callback();
       return;
@@ -3007,7 +2947,7 @@ var manifestor = function(options) {
       currentOpacity += step;
       if ((step > 0 && currentOpacity >= targetOpacity) || (step < 0 && currentOpacity <= targetOpacity)) {
         image.setOpacity(targetOpacity);
-        callback();
+        if (callback) callback();
         return;
       }
 
@@ -3027,12 +2967,8 @@ var manifestor = function(options) {
       preserveViewport: true
     });
 
-    $(viewer.container).css('position', 'absolute');
-
     viewer.addHandler('animation', function(event) {
-      if (canvasState().perspective === 'detail' || _zooming === true) {
         synchroniseZoom();
-      }
     });
 
     viewer.addHandler('zoom', function(event) {
@@ -3146,6 +3082,7 @@ var manifestor = function(options) {
   function selectCanvas(item) {
     var state = canvasState();
     state.selectedCanvas = item;
+    state.previousPerspective = state.perspective;
     state.perspective = 'detail';
     canvasState(state);
   }
@@ -3159,6 +3096,7 @@ var manifestor = function(options) {
 
   function selectViewingMode(viewingMode) {
     var state = canvasState();
+    state.previousPerspective = state.perspective;
     state.viewingMode = viewingMode;
 
     canvasState(state);
@@ -3247,8 +3185,10 @@ var manifestor = function(options) {
   });
   scrollContainer.on('scroll', function(event) {
     if (canvasState().perspective === 'overview' && _zooming === false) {
+      var width = canvasState().width;
+      var height = canvasState().height;
       _lastScrollPosition = $(this).scrollTop();
-      synchronisePan(_lastScrollPosition, $(this).width(), $(this).height());
+      synchronisePan(_lastScrollPosition, width, height);
     }
   });
 
@@ -3758,7 +3698,7 @@ var manifestLayout = function(options) {
     var nextFrame = frames[canvasPosition + 1];
 
     selectedFrame.vantage = getVantageForCanvas(selectedFrame.canvas, previousFrame, nextFrame, viewport);
-    
+
     frames.forEach(function(frame, index, allFrames) {
       if (frame.y === selectedFrame.y && frame.canvas.id !== selectedFrame.canvas.id) {
         if (index < canvasPosition) {

@@ -19,8 +19,10 @@
       _this.state({
         bottomPanelEnabled: true,
         bottomPanelOpen: true,
-        modesAvailable: true,
-        overviewPerspectiveAvailable: true
+        modeIndividualsAvailable: false,
+        modePagedAvailable: false,
+        overviewPerspectiveAvailable: false,
+        keyboardNavMode: null
         // currentFocus: null,
         // downloadPanelVisible: true,
         // height: 200,
@@ -32,22 +34,39 @@
 
       PubSub.subscribe('thumbSliderToggle', function() {
         _this.state({
-          bottomPanelOpen: !_this.state().bottomPanelOpen
+          bottomPanelOpen: !_this.getState().bottomPanelOpen
         });
+        PubSub.publish('thumbSliderToggled');
       });
       PubSub.subscribe('updateBottomPanel', function(_, status) {
         _this.state({
           bottomPanelEnabled: status
         });
       });
-      PubSub.subscribe('disableModes', function() {
+      PubSub.subscribe('disableMode', function(_, mode) {
+        var newMode = {};
+        newMode[mode] = false;
+        _this.state(newMode);
+      });
+      PubSub.subscribe('enableMode', function(_, mode) {
+        var newMode = {};
+        newMode[mode] = true;
+        _this.state(newMode);
+      });
+      PubSub.subscribe('updateKeyboardMode', function(_, newMode) {
         _this.state({
-          modesAvailable: false
+          keyboardNavMode: newMode
         });
+        PubSub.publish('keyboardModeUpdated');
       });
       PubSub.subscribe('disableOverviewPerspective', function() {
         _this.state({
           overviewPerspectiveAvailable: false
+        });
+      });
+      PubSub.subscribe('enableOverviewPerspective', function() {
+        _this.state({
+          overviewPerspectiveAvailable: true
         });
       });
     },
@@ -65,6 +84,9 @@
       }
 
       return this.layoutState;
+    },
+    getState: function() {
+      return this.state();
     }
   };
 

@@ -1,4 +1,4 @@
-/*global Sly, LayoutStore, ManifestStore, PubSub, CanvasStore */
+/*global Sly, LayoutStore, ManifestStore, PubSub, CanvasStore, key */
 
 (function( global ) {
   'use strict';
@@ -6,7 +6,6 @@
     var layoutStore = new LayoutStore();
     var manifestStore = new ManifestStore();
     var canvasStore;
-    var contentArea;
     var dataAttributes;
     var druid;
     var $el;
@@ -19,26 +18,50 @@
     var _listenForActions = function() {
       PubSub.subscribe('manifestStateUpdated', function() {
         _setupThumbSlider();
+        _setupKeyListeners();
         _updateImageCount();
         canvasStore = new CanvasStore({
-            manifest: manifestStore.state().manifest
+            manifest: manifestStore.getState().manifest
           });
       });
       PubSub.subscribe('layoutStateUpdated', function() {
         // add content area reactions here.
       });
+      PubSub.subscribe('thumbSliderToggled', function() {
+        var state = layoutStore.getState();
+        if (state.bottomPanelOpen) {
+          PubSub.publish('updateKeyboardMode', 'bottomPanelOpen');
+        } else {
+          PubSub.publish('updateKeyboardMode', 'bottomPanelClosed');
+        }
+      });
+      PubSub.subscribe('keyboardModeUpdated', function() {
+        var state = layoutStore.getState();
+        key.setScope(state.keyboardNavMode);
+      });
       PubSub.subscribe('updatePerspective', function(_, newPerspective) {
         if (newPerspective === 'overview') {
           PubSub.publish('updateBottomPanel', false);
+          PubSub.publish('updateKeyboardMode', 'overview');
         } else {
           PubSub.publish('updateBottomPanel', true);
         }
       });
-      PubSub.subscribe('disableModes', function() {
-        $embedHeader.find('[data-sul-view-mode]').hide();
+      PubSub.subscribe('disableMode', function(_, mode) {
+        $embedHeader.find('[data-sul-view-mode="' + mode + '"]')
+          .addClass('sul-embed-hidden');
       });
       PubSub.subscribe('disableOverviewPerspective', function() {
-        $embedHeader.find('[data-sul-view-perspective]').hide();
+        $embedHeader.find('[data-sul-view-perspective]')
+          .addClass('sub-embed-hidden');
+      });
+      PubSub.subscribe('enableMode', function(_, mode) {
+        $embedHeader.find('[data-sul-view-mode="' + mode + '"]')
+          .removeClass('sul-embed-hidden');
+      });
+      PubSub.subscribe('enableOverviewPerspective', function() {
+        $embedHeader.find('[data-sul-view-perspective]')
+          .removeClass('sul-embed-hidden');
       });
       /**
        * Enable the bottomPanel in detail perspective and update Sly thumb
@@ -47,7 +70,7 @@
       PubSub.subscribe('canvasStateUpdated', function() {
         var canvasState = canvasStore.getState();
         if (canvasState.perspective === 'detail' &&
-          canvasState.overviewPerspectiveAvailable) {
+          layoutStore.getState().overviewPerspectiveAvailable) {
           PubSub.publish('updateBottomPanel', true);
         }
         var thumbItem = $thumbSlider
@@ -65,7 +88,7 @@
 
     var _updateImageCount = function() {
       var $itemCount = $el.parent().parent().find('.sul-embed-item-count');
-      var numImages = manifestStore.state().manifest.sequences[0].canvases
+      var numImages = manifestStore.getState().manifest.sequences[0].canvases
         .length;
       var text = numImages === 1 ? ' image' : ' images';
       $itemCount.text(numImages + text);
@@ -84,6 +107,35 @@
         .on('click', function() {
           canvasStore.osd.setFullScreen(true);
       });
+    };
+
+    var _setupKeyListeners = function() {
+      
+      key('left', 'bottomPanelOpen', function() {
+        thumbSliderSly.prev();
+      });
+
+      key('right', 'bottomPanelOpen', function() {
+        thumbSliderSly.next();
+      });
+
+      key('left', 'bottomPanelClosed', function() {
+        return true;
+      });
+
+      key('right', 'bottomPanelClosed', function() {
+        return true;
+      });
+
+      key('left', 'overview', function() {
+        thumbSliderSly.prev();
+      });
+
+      key('right', 'overview', function() {
+        thumbSliderSly.next();
+      });
+
+      PubSub.publish('updateKeyboardMode', 'bottomPanelOpen');
     };
 
     var _disableBottomPanel = function() {
@@ -180,10 +232,15 @@
       
       var thumbHeight = 100;
       var thumbDisplayHeight = 75;
-      var canvases = manifestStore.state().manifest.sequences[0].canvases;
-      if (canvases.length < 2) {
-        PubSub.publish('disableModes');
-        PubSub.publish('disableOverviewPerspective');
+      var manifest = manifestStore.getState().manifest;
+      var canvases = manifest.sequences[0].canvases;
+      if (canvases.length > 1) {
+        PubSub.publish('enableMode', 'individuals');
+        PubSub.publish('enableOverviewPerspective');
+        if (manifest.viewingHint && manifest.viewingHint === 'paged') {
+          PubSub.publish('enableMode', 'paged');
+        }
+      } else {
         return;
       }
 
