@@ -94,6 +94,35 @@
       $itemCount.text(numImages + text);
     };
 
+    var _addLeftRightControls = function() {
+      var $leftControl = $('<div class="sul-embed-image-x-side-control sul-em' +
+        'bed-image-x-side-control-left"><div class=sul-i-arrow-left-8></div><' +
+        '/div>');
+      var $rightControl = $('<div class="sul-embed-image-x-side-control sul-e' +
+        'mbed-image-x-side-control-right"><div class=sul-i-arrow-right-8></di' +
+        'v></div>');
+      $el.append($leftControl, $rightControl);
+      $leftControl.on('click', function() {
+        thumbSliderSly.prev();
+      });
+      $rightControl.on('click', function() {
+        thumbSliderSly.next();
+      });
+      var timeout;
+      // Show controls for 2 seconds when mouse stops moving
+      $el.on('mousemove', function() {
+        $leftControl.stop();
+        $rightControl.stop();
+        $leftControl.fadeIn(200);
+        $rightControl.fadeIn(200);
+        clearTimeout(timeout);
+        timeout = setTimeout(function() {
+          $leftControl.fadeOut(2000);
+          $rightControl.fadeOut(2000);
+        }, 1000);
+      });
+    };
+
     var _setupButtonListeners = function() {
       $embedHeader.find('[data-sul-view-mode]').on('click', function() {
         var mode = $(this).data().sulViewMode;
@@ -332,6 +361,7 @@
 
         _setupButtonListeners();
         _listenForActions();
+        _addLeftRightControls();
 
         _extractDruid();
 
