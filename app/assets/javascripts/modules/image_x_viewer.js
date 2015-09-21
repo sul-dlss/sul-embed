@@ -120,11 +120,11 @@
       });
 
       key('left', 'bottomPanelClosed', function() {
-        return true;
+        thumbSliderSly.prev();
       });
 
       key('right', 'bottomPanelClosed', function() {
-        return true;
+        thumbSliderSly.next();
       });
 
       key('left', 'overview', function() {

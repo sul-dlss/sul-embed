@@ -52,14 +52,14 @@ describe 'imageX viewer', js: true do
         container.native.send_key(:Left)
         expect(page).to have_css '.active[title="Image 1"]'
       end
-      it 'with closed thumb slider, do not navigate' do
+      it 'with closed thumb slider' do
         expect(page).to have_css '.active[title="Image 1"]'
         find('.sul-embed-image-x-thumb-slider-open-close').click
         expect(page).to have_css '.sul-embed-image-x-thumb-slider-container',
                                  visible: false
         container = find('.sul-embed-container')
         container.native.send_key(:Right)
-        expect(page).to have_css '.active[title="Image 1"]', visible: false
+        expect(page).to have_css '.active[title="Image 2"]', visible: false
       end
     end
   end
