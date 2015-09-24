@@ -1,124 +1,52 @@
 (function(global) {
   global.sulEmbedDownloadPanel = (function() {
-     var $downloadOptions = $('.sul-embed-download-options'),
-         $btnDownloadPanel = $('.sul-embed-footer-tool[data-sul-embed-toggle="sul-embed-download-panel"]'),
-         sizes = $downloadOptions.data('download-sizes'),
-         sizeLevelMapping = { full: 0, xlarge: -1, large: -2, medium: -3, small: -4 },
-         djatokaBaseResolution = 92,
-         disableDownloadWidthCutoff = 300,
-         defaultSize = 400,
-         imageData, fullFileSize, fullWidth, fullHeight, label, stacksUrl,
-         stanfordOnly, tooltipText, druid, imageId, levels;
+    var $downloadPanel = $('.sul-embed-download-panel');
+    var $btnDownloadPanel = $('.sul-embed-footer-tool[data-sul-embed-toggle="' +
+      'sul-embed-download-panel"]');
+    var disableDownloadWidthCutoff = 400;
+    var imageData;
+    var imageLabel;
+    var restrictions;
 
-    function init(data) {
-      imageData = data;
-      setProperties();
+    function init() {
       updateDownloadLinks();
     }
 
     function updateDownloadLinks() {
-      $('.sul-embed-download-panel .sul-embed-panel-item-label').html('(' + label + ')');
-
-      $.each(sizes, function(index, size) {
-        var dimensions = getDimensionsForSize(size),
-            downloadLink = [stacksUrl, 'image', druid, imageId + '_' + size + '?action=download'].join('/'),
-            $downloadSize = $downloadOptions.find('.sul-embed-download-' + size);
-
-        $downloadSize.find('.sul-embed-download-dimensions').html(dimensions);
-
-        if (size !== 'default') {
-          $downloadSize.find('a.download-link').attr('href', downloadLink);
-
-          if (stanfordOnly) {
-            $downloadSize.find('.sul-embed-stanford-only a')
-              .prop('title', tooltipText)
-              .data('sul-embed-tooltip', 'true')
-              .tooltip();
-
-            $downloadSize.find('.sul-embed-stanford-only').show();
+      $('.sul-embed-download-panel .sul-embed-panel-item-label').html('(' +
+        imageLabel + ')');
+      var $downloadList = $('<ul class="sul-embed-download-list"></ul>');
+      var $listMarkup = $('<li class="sul-embed-download-list-item"></li>');
+      // Append a thumb download link
+      $downloadList.append($listMarkup.clone()
+        .append('<a class="download-link" href="' + imageData['@id'] +
+        '/full/!' + disableDownloadWidthCutoff + ',' +
+        disableDownloadWidthCutoff +
+        '/0/default.jpg" download>Download Thumbnail</a>'));
+      // Create download list from sizes
+      $.each(imageData.sizes, function(index, size) {
+        var downloadUrl = imageData['@id'] + '/full/' + size.width + ',' +
+          size.height + '/0/default.jpg?action=download';
+        var list = $listMarkup.clone();
+        var link = $('<a class="download-link" href="' + downloadUrl +
+          '">Download (' + size.width + ' x ' + size.height + ')</a>');
+        if (restrictions) {
+          if (Math.max(size.width, size.height) > disableDownloadWidthCutoff) {
+            list.addClass('sul-embed-stanford-only');
+            list.attr('title', 'Available only to Stanford-affiliated patrons');
           }
+        } else {
+          link.attr('download', '');
         }
+        list.append(link);
+        $downloadList.append(list);
       });
-    }
-
-    function setProperties() {
-      var parts = imageData['image-id'].split('%252F');
-
-      druid = parts[0];
-      imageId = parts[1];
-      fullWidth = parseInt(imageData['iov-width'], 10);
-      fullHeight = parseInt(imageData['iov-height'], 10);
-      fullFileSize = parseInt(imageData['iov-file-size'], 10);
-      stanfordOnly = imageData['iov-stanford-only'];
-      tooltipText = imageData['iov-tooltip-text'] || '';
-      label = imageData['iov-label'] || '';
-      stacksUrl = $downloadOptions.data('stacks-url');
-      levels = jp2Levels(fullWidth, fullHeight);
-    }
-
-    function getDimensionsForSize(size) {
-      var levelDelta = 0,
-          dimensions = { width: 0, height: 0 };
-
-      if (size === 'default') {
-        dimensions = getDimensionsForDefaultSize();
-      } else {
-        levelDelta = levels - getLevelForSize(size);
-        dimensions.width = Math.round(fullWidth / Math.pow(2, levelDelta));
-        dimensions.height = Math.round(fullHeight / Math.pow(2, levelDelta));
-      }
-
-      return [dimensions.width, 'x', dimensions.height].join(' ');
-    }
-
-    function getDimensionsForDefaultSize() {
-      var aspectRatio = (fullWidth/fullHeight).toPrecision(2),
-          width = defaultSize,
-          height = 0;
-
-      if (fullHeight > fullWidth) {
-        height = defaultSize;
-        width = Math.round(height * aspectRatio);
-      } else {
-        height = Math.round(width / aspectRatio);
-      }
-
-      return { width: width, height: height };
-    }
-
-    function getLevelForSize(size) {
-      var level = 0;
-
-      if (size !== 'default' && typeof sizeLevelMapping[size] !== 'undefined') {
-        level = levels + sizeLevelMapping[size];
-      }
-
-      return level;
-    }
-
-    function jp2Levels(width, height) {
-      var levels = 1;
-          longestSideDimension = Math.max(width, height);
-
-      while (longestSideDimension >= djatokaBaseResolution) {
-        ++levels;
-        longestSideDimension = Math.round(longestSideDimension / 2);
-      }
-
-      return levels;
-    }
-
-    function formatBytes(bytes) {
-      var k = 1000,
-          sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'],
-          i = Math.floor(Math.log(bytes) / Math.log(k));
-
-       if (bytes === 0) return '0 Byte';
-       return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
+      $downloadPanel.find('.sul-embed-download-list')
+        .replaceWith($downloadList);
     }
 
     function disableDownloadButton() {
-      var embedWidth = $("#sul-embed-object").outerWidth();
+      var embedWidth = $('#sul-embed-object').outerWidth();
 
       $btnDownloadPanel.prop('disabled', true);
 
@@ -135,9 +63,18 @@
 
 
     return {
-      update: function(data) {
+      /**
+       * Public method to update the download panels
+       * @param {Object} data IIIF info.json data
+       * @param {String} label for the image
+       * @param {Boolean} restrictions for the images
+       */
+      update: function(data, label, stanfordOnly) {
+        imageData = data;
+        imageLabel = label;
+        restrictions = stanfordOnly;
         enableDownloadButton();
-        init(data);
+        init();
       },
 
       disableDownload: function() {

@@ -112,6 +112,11 @@
     }
   }
 
+  ul.#{$namespace}-download-list {
+    list-style: none;
+    padding-left: 8px;
+  }
+
   .#{$namespace}-license-by {
     @include license-base;
     @include license-image('<%= asset_url("by.png") %>');

@@ -1,4 +1,4 @@
-/*global Sly, LayoutStore, ManifestStore, PubSub, CanvasStore, key */
+/*global Sly, LayoutStore, ManifestStore, PubSub, CanvasStore, key, sulEmbedDownloadPanel */
 
 (function( global ) {
   'use strict';
@@ -23,6 +23,7 @@
         canvasStore = new CanvasStore({
             manifest: manifestStore.getState().manifest
           });
+        _updateDownloadPanel(canvasStore.getState().selectedCanvas);
       });
       PubSub.subscribe('layoutStateUpdated', function() {
         // add content area reactions here.
@@ -76,12 +77,32 @@
         var thumbItem = $thumbSlider
           .find('li[data-canvasid="' + canvasState.selectedCanvas + '"]');
         thumbSliderSly.activate(thumbItem[0]);
+        _updateDownloadPanel(canvasState.selectedCanvas);
       });
       PubSub.subscribe('updateBottomPanel', function(_, status) {
         if (status) {
           _enableBottomPanel();
         } else {
           _disableBottomPanel();
+        }
+      });
+    };
+
+    /**
+     * Requests the selectedCanvas's info.json and updates the download panel
+     * @param {String} selectedCanvas
+     */
+    var _updateDownloadPanel = function(selectedCanvas) {
+      var manifest = manifestStore.getState().manifest;
+      manifest.sequences[0].canvases.forEach(function(canvas) {
+        if (selectedCanvas === canvas['@id']) {
+          $.getJSON(canvas.images[0].resource.service['@id'] + '/info.json',
+            function(data) {
+              sulEmbedDownloadPanel.update(
+                data, canvas.label, dataAttributes.worldRestriction
+              );
+          });
+          return;
         }
       });
     };
