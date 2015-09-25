@@ -9,6 +9,7 @@
 //= require vendor/keymaster
 //= require modules/common_viewer_behavior
 //= require modules/popup_panels
+//= require modules/download_panel
 //= require modules/embed_this
 //= require modules/manifest_store
 //= require modules/layout_store

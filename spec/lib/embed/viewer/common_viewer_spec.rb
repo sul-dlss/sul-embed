@@ -5,7 +5,7 @@ describe Embed::Viewer::CommonViewer do
   let(:rails_request) { double('rails_request') }
   let(:request) { Embed::Request.new({url: 'http://purl.stanford.edu/abc123'}) }
   let(:file_viewer) { Embed::Viewer::File.new(request) }
-  let(:image_viewer) { Embed::Viewer::Image.new(request) }
+  let(:image_x_viewer) { Embed::Viewer::ImageX.new(request) }
   let(:geo_viewer) { Embed::Viewer::Geo.new(request) }
 
   describe 'header_html' do
@@ -144,7 +144,7 @@ describe Embed::Viewer::CommonViewer do
       expect(file_viewer.show_download?).to be_falsey
     end
     it 'shown for image and geo viewer' do
-      expect(image_viewer.show_download?).to be_truthy
+      expect(image_x_viewer.show_download?).to be_truthy
       expect(geo_viewer.show_download?).to be_truthy
     end
     it 'not shown when hide_download is specified' do
