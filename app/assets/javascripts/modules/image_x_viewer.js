@@ -48,6 +48,14 @@
           PubSub.publish('updateBottomPanel', true);
         }
       });
+      PubSub.subscribe('disableFullscreen', function() {
+        $embedHeader.find('[data-sul-view-fullscreen]')
+          .attr('disabled', '');
+      });
+      PubSub.subscribe('enableFullscreen', function() {
+        $embedHeader.find('[data-sul-view-fullscreen]')
+          .removeAttr('disabled');
+      });
       PubSub.subscribe('disableMode', function(_, mode) {
         $embedHeader.find('[data-sul-view-mode="' + mode + '"]')
           .addClass('sul-embed-hidden');
@@ -70,9 +78,13 @@
        */
       PubSub.subscribe('canvasStateUpdated', function() {
         var canvasState = canvasStore.getState();
-        if (canvasState.perspective === 'detail' &&
-          layoutStore.getState().overviewPerspectiveAvailable) {
-          PubSub.publish('updateBottomPanel', true);
+        if (canvasState.perspective === 'detail') {
+          PubSub.publish('enableFullscreen');
+          if (layoutStore.getState().overviewPerspectiveAvailable) {
+            PubSub.publish('updateBottomPanel', true);
+          }
+        } else {
+          PubSub.publish('disableFullscreen');
         }
         var thumbItem = $thumbSlider
           .find('li[data-canvasid="' + canvasState.selectedCanvas + '"]');

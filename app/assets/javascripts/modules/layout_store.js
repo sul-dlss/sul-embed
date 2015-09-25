@@ -19,6 +19,7 @@
       _this.state({
         bottomPanelEnabled: true,
         bottomPanelOpen: true,
+        fullscreen: true,
         modeIndividualsAvailable: false,
         modePagedAvailable: false,
         overviewPerspectiveAvailable: false,
@@ -52,6 +53,16 @@
         var newMode = {};
         newMode[mode] = true;
         _this.state(newMode);
+      });
+      PubSub.subscribe('disableFullscreen', function() {
+        _this.state({
+          fullscreen: false
+        });
+      });
+      PubSub.subscribe('enableFullscreen', function() {
+        _this.state({
+          fullscreen: true
+        });
       });
       PubSub.subscribe('updateKeyboardMode', function(_, newMode) {
         _this.state({

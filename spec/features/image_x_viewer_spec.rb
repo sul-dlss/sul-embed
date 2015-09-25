@@ -8,6 +8,13 @@ describe 'imageX viewer', js: true do
     fill_in_default_sandbox_form('fw090jw3474')
     click_button 'Embed'
   end
+  describe 'fullscreen' do
+    it 'is enabled in detail perspective and disabled in overview' do
+      expect(page).to_not have_css '[data-sul-view-fullscreen][disabled]'
+      find('[data-sul-view-perspective="overview"]').click
+      expect(page).to have_css '[data-sul-view-fullscreen][disabled]'
+    end
+  end
   describe 'thumbnail viewer' do
     it 'is open by default' do
       within '.sul-embed-image-x-thumb-slider-container' do

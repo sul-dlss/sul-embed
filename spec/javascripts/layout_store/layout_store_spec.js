@@ -28,6 +28,7 @@ describe('LayoutStore', function() {
       expect(layoutStore.layoutState).toEqual({
         bottomPanelEnabled: true,
         bottomPanelOpen: true,
+        fullscreen: true,
         modeIndividualsAvailable: false,
         modePagedAvailable: false,
         overviewPerspectiveAvailable: false,
