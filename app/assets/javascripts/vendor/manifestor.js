@@ -1,6 +1,6 @@
 /*
  iiifManifestLayout
- version: 0.0.4
+ version: 0.0.7
  https://github.com/sul-dlss/iiifManifestLayouts
  Browserified module compilation
 */
@@ -18,6 +18,14 @@ module.exports = canvasLayout;
 'use strict';
 
 var iiifUtils = {
+    /**
+     * Returns the first canvas for a given array of canvases
+     * @param {Object[]} canvases
+     * @returns {String}
+     */
+    getFirst: function(canvases) {
+      return canvases[0]['@id'];
+    },
 
     getImageUrl: function(image) {
 
@@ -2576,7 +2584,7 @@ var manifestor = function(options) {
       initialViewingDirection = options.viewingDirection ? options.viewingDirection : getViewingDirection(),
       initialViewingMode = options.viewingMode ? options.viewingHint : getViewingHint(),
       initialPerspective = options.perspective ? options.perspective : 'overview',
-      selectedCanvas = options.selectedCanvas,
+      selectedCanvas = options.selectedCanvas || iiif.getFirst(canvases),
       viewer,
       canvasClass = options.canvasClass ? options.canvasClass : 'canvas',
       frameClass = options.frameClass ? options.frameClass : 'frame',
@@ -2727,10 +2735,8 @@ var manifestor = function(options) {
       var osdBounds = new OpenSeadragon.Rect(viewBounds.x, viewBounds.y, viewBounds.width, viewBounds.height);
       setScrollElementEvents();
       if (userState.previousPerspective) {
-        console.log(userState.previousPerspective);
         viewer.viewport.fitBounds(osdBounds, false);
       } else {
-        console.log(userState.previousPerspective);
         viewer.viewport.fitBounds(osdBounds, true);
       }
       enableZoomAndPan();
@@ -2741,10 +2747,8 @@ var manifestor = function(options) {
       setScrollElementEvents();
 
       if (userState.previousPerspective) {
-        console.log(userState.previousPerspective);
         viewer.viewport.fitBounds(viewBounds, false);
       } else {
-        console.log(userState.previousPerspective);
         viewer.viewport.fitBounds(viewBounds, true);
       }
 
@@ -2891,12 +2895,13 @@ var manifestor = function(options) {
 
   function translateTilesources(d, i) {
     var canvasId = d.canvas.id,
-        dummyObj = canvasImageStates()[canvasId].dummyObj,
         mainImageObj = canvasImageStates()[canvasId].mainImageObj;
 
-    var currentBounds = mainImageObj ? mainImageObj.getBounds(true) : dummyObj.getBounds(true),
+    var currentBounds = mainImageObj ? mainImageObj.getBounds(true) : null,
         xi = d3.interpolate(currentBounds.x, d.canvas.x),
         yi = d3.interpolate(currentBounds.y, d.canvas.y);
+
+    if (currentBounds === null) { return function() { /*no-op*/ }; };
 
     return function(t) {
         mainImageObj.setPosition(new OpenSeadragon.Point(xi(t), yi(t)), true);
@@ -3118,17 +3123,8 @@ var manifestor = function(options) {
     };
   }
 
-  function addDummyObj(id, osdTileObj) {
-    var canvasStates = canvasImageStates();
-
-    canvasStates[id].dummyObj = osdTileObj;
-
-    canvasImageStates(canvasStates);
-  }
-
   function addMainImageObj(id, osdTileObj) {
     var canvasStates = canvasImageStates();
-    console.log('added main image');
 
     canvasStates[id].mainImageObj = osdTileObj;
 
@@ -3180,6 +3176,96 @@ var manifestor = function(options) {
     // canvasState(state);
   }
 
+  function next() {
+    var state = canvasState(),
+        currentCanvasIndex,
+        indexIncrement;
+
+    if (state.viewingMode === "paged") {
+      currentCanvasIndex = currentPagedSequenceCanvasIndex(state.selectedCanvas);
+
+      if (currentCanvasIndex % 2 === 0) {
+        indexIncrement = currentCanvasIndex + 1;
+      } else {
+        indexIncrement = currentCanvasIndex + 2;
+      }
+    } else {
+      currentCanvasIndex = currentSequenceCanvasIndex(state.selectedCanvas);
+      indexIncrement = currentCanvasIndex + 1;
+    }
+    // return if next is greater than or equal to maximum page index
+    if (indexIncrement >= currentPagedSequenceCanvases().length) { return false; }
+    selectCanvas(canvases[indexIncrement]['@id']);
+  }
+
+  function previous() {
+    var state = canvasState(),
+        currentCanvasIndex,
+        indexIncrement;
+
+    if (state.viewingMode === "paged") {
+      currentCanvasIndex = currentPagedSequenceCanvasIndex(state.selectedCanvas);
+
+      if (currentCanvasIndex % 2 === 0) {
+        indexIncrement = currentCanvasIndex - 2;
+      } else {
+        indexIncrement = currentCanvasIndex - 1;
+      }
+    } else {
+      currentCanvasIndex = currentSequenceCanvasIndex(state.selectedCanvas);
+      indexIncrement = currentCanvasIndex - 1;
+    }
+    // return if previous is less than minimum page index "0"
+    if (indexIncrement < 0) { return false; }
+    selectCanvas(canvases[indexIncrement]['@id']);
+  }
+
+  /**
+   * Returns current paged sequence canvases
+   * @private
+   * @param
+   * @returns {Object[]}
+   */
+   function currentPagedSequenceCanvases() {
+     var currentCanvases = canvases.filter(function(canvas) {
+       return canvas.viewingHint === 'non-paged' ? false : true;
+     });
+     return currentCanvases;
+   }
+
+  /**
+   * Returns the selected canvas in the current sequence for paged viewing
+   * @private
+   * @param {String} selectedCanvas
+   * @returns {Number}
+   */
+  function currentPagedSequenceCanvasIndex(selectedCanvas) {
+    return currentSequenceCanvasIndex(selectedCanvas, currentPagedSequenceCanvases());
+  }
+
+  /**
+   * Returns the selected canvas for a given sequence, uses canvases if no
+   * currentCanvases argument is provided
+   * @private
+   * @param {String} selectedCanvas
+   * @param {Object[]} [currentCanvases]
+   * @returns {Number}
+   */
+  function currentSequenceCanvasIndex(selectedCanvas, currentCanvases) {
+    var currentCanvasIndex;
+    if (currentCanvases === undefined) {
+      currentCanvases = canvases;
+    }
+
+    canvases.forEach(function(canvas, index) {
+      if (selectedCanvas === canvas['@id']) {
+        currentCanvasIndex = index;
+        return;
+      }
+    });
+    return currentCanvasIndex;
+  }
+
   container.on('click', '.' + canvasClass, function(event) {
     selectCanvas($(this).data('id'));
   });
@@ -3193,11 +3279,9 @@ var manifestor = function(options) {
   });
 
   return {
-    // selectMode: selectMode,
-    // selectPerspective: selectPerspective,
-    // next: next,
-    // previous: previous,
     // scrollThumbs: scrollThumbs,
+    next: next,
+    previous: previous,
     resize: resize,
     selectCanvas: selectCanvas,
     selectPerspective: selectPerspective,
@@ -3242,7 +3326,7 @@ var manifestLayout = function(options) {
       containerHeight = options.height,
       containerWidth = options.width,
       canvases = options.canvases,
-      selectedCanvas = options.selectedCanvas || getFirst(),
+      selectedCanvas = options.selectedCanvas,
       framingStrategy = options.framingStrategy || 'contain',
       viewingDirection = options.viewingDirection || 'left-to-right',
       viewingMode = options.viewingMode || 'individuals',
@@ -3278,10 +3362,6 @@ var manifestLayout = function(options) {
         height: containerHeight,
         aspectRatio: containerWidth/containerHeight
       };
-
-  function getFirst() {
-    return canvases[0]['@id'];
-  }
 
   function pruneCanvas(canvas, index) {
     var prunedCanvas = {
