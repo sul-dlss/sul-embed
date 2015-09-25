@@ -1,6 +1,6 @@
 /*
  iiifManifestLayout
- version: 0.0.7
+ version: 0.0.8
  https://github.com/sul-dlss/iiifManifestLayouts
  Browserified module compilation
 */
@@ -2897,11 +2897,12 @@ var manifestor = function(options) {
     var canvasId = d.canvas.id,
         mainImageObj = canvasImageStates()[canvasId].mainImageObj;
 
-    var currentBounds = mainImageObj ? mainImageObj.getBounds(true) : null,
-        xi = d3.interpolate(currentBounds.x, d.canvas.x),
-        yi = d3.interpolate(currentBounds.y, d.canvas.y);
+    var currentBounds = mainImageObj ? mainImageObj.getBounds(true) : null;
 
-    if (currentBounds === null) { return function() { /*no-op*/ }; };
+    if (currentBounds === null) { return function() { /*no-op*/ }; }
+
+    var xi = d3.interpolate(currentBounds.x, d.canvas.x);
+    var yi = d3.interpolate(currentBounds.y, d.canvas.y);
 
     return function(t) {
         mainImageObj.setPosition(new OpenSeadragon.Point(xi(t), yi(t)), true);
