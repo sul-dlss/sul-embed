@@ -103,10 +103,10 @@
         'v></div>');
       $el.append($leftControl, $rightControl);
       $leftControl.on('click', function() {
-        thumbSliderSly.prev();
+        canvasStore.previous();
       });
       $rightControl.on('click', function() {
-        thumbSliderSly.next();
+        canvasStore.next();
       });
       var timeout;
       // Show controls for 2 seconds when mouse stops moving
@@ -139,29 +139,29 @@
     };
 
     var _setupKeyListeners = function() {
-      
+
       key('left', 'bottomPanelOpen', function() {
-        thumbSliderSly.prev();
+        canvasStore.previous();
       });
 
       key('right', 'bottomPanelOpen', function() {
-        thumbSliderSly.next();
+        canvasStore.next();
       });
 
       key('left', 'bottomPanelClosed', function() {
-        thumbSliderSly.prev();
+        canvasStore.previous();
       });
 
       key('right', 'bottomPanelClosed', function() {
-        thumbSliderSly.next();
+        canvasStore.next();
       });
 
       key('left', 'overview', function() {
-        thumbSliderSly.prev();
+        canvasStore.previous();
       });
 
       key('right', 'overview', function() {
-        thumbSliderSly.next();
+        canvasStore.next();
       });
 
       PubSub.publish('updateKeyboardMode', 'bottomPanelOpen');
