@@ -24,6 +24,7 @@
             manifest: manifestStore.getState().manifest
           });
         _updateDownloadPanel(canvasStore.getState().selectedCanvas);
+        _addLeftRightControls();
       });
       PubSub.subscribe('layoutStateUpdated', function() {
         // add content area reactions here.
@@ -116,6 +117,10 @@
     };
 
     var _addLeftRightControls = function() {
+      // Do not add left/right controls on single images
+      var manifest = manifestStore.getState().manifest;
+      if (manifest.sequences[0].canvases.length < 2) { return; }
+
       var $leftControl = $('<div class="sul-embed-image-x-side-control sul-em' +
         'bed-image-x-side-control-left"><div class=sul-i-arrow-left-8></div><' +
         '/div>');
@@ -132,6 +137,9 @@
       var timeout;
       // Show controls for 2 seconds when mouse stops moving
       $el.on('mousemove', function() {
+        // Do not show controls in overview perspective
+        var canvasState = canvasStore.getState();
+        if (canvasState.perspective === 'overview') { return; }
         $leftControl.stop();
         $rightControl.stop();
         $leftControl.fadeIn(200);
@@ -382,7 +390,6 @@
 
         _setupButtonListeners();
         _listenForActions();
-        _addLeftRightControls();
 
         _extractDruid();
 
