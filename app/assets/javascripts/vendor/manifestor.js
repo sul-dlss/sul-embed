@@ -1,6 +1,6 @@
 /*
  iiifManifestLayout
- version: 0.0.8
+ version: 0.0.9
  https://github.com/sul-dlss/iiifManifestLayouts
  Browserified module compilation
 */
@@ -2703,12 +2703,12 @@ var manifestor = function(options) {
         right: 10
       },
       minimumImageGap: 5, // precent of viewport
-      facingCanvasPadding: 1 // precent of viewport
+      facingCanvasPadding: 0.1 // precent of viewport
     });
 
     if (userState.perspective === 'detail' && userState.previousPerspective === 'overview') {
       var endCallback = function() {
-          renderLayout(layout.intermediate(), false);
+          renderLayout(layout.detail(), false);
       };
       renderLayout(layout.intermediate(), true, endCallback);
     } else if (userState.perspective === 'overview' && userState.previousPerspective === 'detail') {
@@ -2717,7 +2717,7 @@ var manifestor = function(options) {
       };
       renderLayout(layout.intermediate(), false, endCallback);
     } else if (userState.perspective === 'detail' && userState.previousPerspective === 'detail') {
-      renderLayout(layout.intermediate(), true);
+      renderLayout(layout.detail(), true);
     } else if (userState.perspective === 'overview' && userState.previousPerspective === 'overview') {
       renderLayout(layout.overview(), true);
   } else if (userState.perspective === 'overview' && !userState.previousPerspective) {
@@ -3530,8 +3530,22 @@ var manifestLayout = function(options) {
         }
       });
     } else if (viewingMode === 'continuous') {
+      // This just assumes we're talking horizontal.
+      // As you can imagine, this is going to get out of
+      // hand quickly. It would be nice to go back to
+      // named functions, even if we're going to need like
+      // 45 of them. Then the possible layouts can be
+      // expressed as sequences of a few intelligibly-named
+      // functions, configured as 3-5 step flows based on
+      // the input parameters. Another day, perhaps.
+      var boundPagePadding = {
+        top: framePadding.top,
+        bottom: framePadding.bottom,
+        left: 0,
+        right: 0
+      };
       return canvases.map(function(canvas){
-        return frame(canvas, framePadding);
+        return frame(canvas, boundPagePadding);
       });
     } else {
       return canvases.map(function(canvas){
@@ -3561,7 +3575,7 @@ var manifestLayout = function(options) {
           lineItemWidth,
           x;
 
-      if (viewingMode === 'paged') {        
+      if (viewingMode === 'paged') {
         var position = frame.canvas.sequencePosition;
         // Return the facingFrame, based on the facing page type
         var facingFrame = frames.filter(function(page) {
@@ -3649,10 +3663,6 @@ var manifestLayout = function(options) {
   }
 
   function detailLayout() {
-    // TODO: configure for viewingDirection, viewingMode,
-    // and alignment Style (scaling).
-    // return detailLayoutHorizontal(overviewLayout(), selectedCanvas, viewport);
-
     return detailLayoutHorizontal(intermediateLayout());
   }
 
@@ -3662,78 +3672,137 @@ var manifestLayout = function(options) {
    * @param {Object} previousFrame
    * @param {Object} nextFrame
    */
-  function getVantageForCanvas(selectedCanvas, previousFrame, nextFrame) {
-    var portrait,
+  function getVantageForCanvas(selectedCanvas, facingCanvas, viewport) {
+    var boundingBoxAspectRatio,
         vantageWidth,
         vantageHeight,
         horizontalMargin,
         verticalMargin,
         combinedCanvasWidths,
         x,
-        minimumViewportPadding = 5, // units in %
+        pairHeight,
+        // This requires calculating in units of the viewport pixels, and
+        // converting them to the appropriate size.
         selectionBoundingBox = {};
 
-    var paddingCalc = ((minimumViewportPadding * 2 ) / 100 );
-
     // Set the selectionBoundingBox.width, portrait, and x values based on the
-    // location of the paged frame
+    // location of the paged frame.
     if (viewingMode === 'paged') {
       var selectionIndex = selectedCanvas.sequencePosition;
       if (selectionIndex === 0) {
         // first page
         combinedCanvasWidths = selectedCanvas.width * 2;
         x = selectedCanvas.x - selectedCanvas.width;
+        pairHeight = selectedCanvas.height;
       } else if (selectionIndex % 2 === 0) {
         // right page
-        combinedCanvasWidths = selectedCanvas.width + previousFrame.canvas.width;
-        x = previousFrame.canvas.x;
+        combinedCanvasWidths = selectedCanvas.width + facingCanvas.width;
+        combinedCanvasWidths += ((facingCanvasPadding/100) * combinedCanvasWidths);
+        x = facingCanvas.x;
+        pairHeight = Math.max(selectedCanvas.height, facingCanvas.height);
       } else {
         // left page
-        combinedCanvasWidths = selectedCanvas.width + nextFrame.canvas.width;        
+        combinedCanvasWidths = selectedCanvas.width + facingCanvas.width;
+        combinedCanvasWidths += ((facingCanvasPadding/100) * combinedCanvasWidths);
         x = selectedCanvas.x;
+        pairHeight = Math.max(selectedCanvas.height, facingCanvas.height);
       }
+      selectionBoundingBox = {
+        x: x,
+        y: selectedCanvas.y,
+        width: combinedCanvasWidths,
+        height: pairHeight
+      };
     } else {
-      combinedCanvasWidths = selectedCanvas.width;
       x = selectedCanvas.x;
+      selectionBoundingBox = {
+        x: selectedCanvas.x,
+        y: selectedCanvas.y,
+        width: selectedCanvas.width,
+        height: selectedCanvas.height
+      };
     }
-    selectionBoundingBox = {
-      width: combinedCanvasWidths + (combinedCanvasWidths * paddingCalc),
-      height: selectedCanvas.height + (selectedCanvas.height * paddingCalc)
-    };
 
-    portrait = isPortrait(selectionBoundingBox.width / selectedCanvas.height);
-    if ((viewport.aspectRatio <= 1 && portrait) || (viewport.aspectRatio > 1 && !portrait)) {
-      // this handles the case where both the viewport
-      // and the canvas are portraits or both landscapes.
-      // In this case, "something's gotta give", and
-      // more padding will be added to the vantage
-      // (which is the same thing as an osd "Bounds" Rect)
-      // in order to properly display it.
-      if (portrait) {
-        vantageWidth = selectionBoundingBox.width;
-        vantageHeight = vantageWidth / viewport.aspectRatio;
-      } else {
-        vantageHeight = selectionBoundingBox.height;
-        vantageWidth = vantageHeight * viewport.aspectRatio;
-      }
+    return getVantage(selectionBoundingBox, viewport);
+  }
+
+  /**
+   * Calculates a vantage for a given bounding box.
+   * @param {Object} boundingBox
+   *     The bounding box can be from anywhere.
+   *     In our case we want it to contain a canvas
+   *     or a group of canvases.
+   * @param {Object} viewport
+   */
+  function getVantage(boundingBox, viewport) {
+    var boundingBoxAspectRatio = boundingBox.width / boundingBox.height,
+        vantageWidth,
+        vantageHeight,
+        horizontalMargin,
+        verticalMargin,
+        minimumViewportPadding = 5; // units in % of the _viewport_ width/height.
+
+    if ((viewport.aspectRatio >= boundingBoxAspectRatio)) {
+      // The primary dimension must be defined first, and the other
+      // will be scaled according to the aspect ratio. In this case,
+      // the viewport is wider than the canvas is tall. This means
+      // the canvas's longest dimension will need to fit inside the
+      // viewport's shortest dimension.
+      //
+      //   viewport
+      // -----------
+      // |   []    |
+      // | canvas  |
+      // -----------
+      //
+      // So we need to set the vantage height equal to the height of the
+      // thing it is meant to contain, and scale the x dimension (width)
+      // with the same aspect ratio.
+      //
+      // But we have another problem. We need to actually know the dimensions
+      // of this left over space, and we need to include the padding (which is
+      // a percentage of the _viewport_, not the iamge/canvas).
+      //
+      // The arithemtic is simple, but it doesn't look very nice in code and
+      // is confused by being a part of the aspect ratio scaling. The weird
+      // percent math in the primary dimension (in this case the width),
+      // is a cross multiplication of the percent of the viewport that
+      // the boundingBox is supposed to occupy.
+      //
+      // For example, if the canvas is 250 coordinate units tall, and our
+      // given padding is 5% of the viewport, then, first of all, the
+      // canvas height is going to be 90% of the viewport height (subtract
+      // both top and bottom marigns of 5%). Then:
+      //
+      //    90/100 = 250/vantageHeight <--- (we want to know what v.h. is)
+      //
+      // Cross multiply, giving:
+      //
+      //    vantageHeight = 250*100/90
+      //
+      // or, more generally, the real calculation below:
+
+      vantageHeight = (boundingBox.height*100)/(100-minimumViewportPadding*2);
+      vantageWidth = vantageHeight * viewport.aspectRatio;
+      // The remaining dimension bears the same ratio to the primary dimension
+      // that the corresponding side of the viewport does to its remaining side,
+      // hence the aspectRatio (w/h). For width we multiply, as above, for
+      // the height we divide, as below.
     } else {
-      // note here that we've already eliminated the cases
-      // where the viewport is the same aspect ratio class
-      // as the canvas.
-      if (portrait) {
-        vantageHeight = selectionBoundingBox.height;
-        vantageWidth = vantageHeight * viewport.aspectRatio;
-      } else {
-        vantageWidth = selectionBoundingBox.width;
-        vantageHeight = vantageWidth / viewport.aspectRatio;
-      }
+      vantageWidth = (boundingBox.width*100)/(100-minimumViewportPadding*2);
+      vantageHeight = vantageWidth / viewport.aspectRatio;
     }
-    horizontalMargin = (vantageWidth - combinedCanvasWidths) / 2;
-    verticalMargin = (vantageHeight - selectedCanvas.height) / 2;
 
+    horizontalMargin = (vantageWidth - boundingBox.width) / 2;
+    verticalMargin = (vantageHeight - boundingBox.height) / 2;
+
+    // This returned data is the representation of the viewport in
+    // the coordinate system of the images and overlays (the "world")
+    // coordinates. OSD/D3, other rendering environments can use this
+    // to position the camera.
     return {
-      x: x - horizontalMargin,
-      y: selectedCanvas.y - verticalMargin,
+      x: boundingBox.x - horizontalMargin,
+      y: boundingBox.y - verticalMargin,
       width: vantageWidth,
       height: vantageHeight,
       horizontalMargin: horizontalMargin,
@@ -3741,77 +3810,79 @@ var manifestLayout = function(options) {
     };
   }
 
+  function getBoundingBoxForCanvases(selectedCanvases) {
+  }
+
   function detailLayoutHorizontal(frames) {
-    var selectedFrame = frames.filter(function(frame) {
-      return frame.canvas.selected;
-    })[0],
-        previousFrames = frames.filter(function(frame, index){
-          return index < selectedFrame.canvas.sequencePosition;
-        }).reduce(function(sum, nextFrame) {
-          frame.y = selectedFrame.y;
-          return sum + nextFrame.width;
-        }, selectedFrame.vantage.width),
-        nextFrames = frames.filter(function(frame, index){
-          return index < selectedFrame.canvas.sequencePosition;
-        }).reduce(function(sum, nextFrame) {
-          return sum + nextFrame.width;
-        }, selectedFrame.vantage.width);
+    // We need to lay them out in a straight line.
+    // This will give their relative positions
+    // starting from the leftmost side of the leftmost
+    // canvas.
+    var totalX = 0;
 
-    frames.forEach(function(frame, index) {
-      if(index < selectedFrame.canvas.sequencePosition){
-        frame.x = '' - leftDisplacement;
-      } else {
-        frame.x = '' + rightDisplacement;
-      }
-      frame.y = selectedFrame.y;
+    frames.forEach(function(frames) {
     });
-
     return frames;
   }
 
   function intermediateLayoutHorizontal(frames, selectedCanvas, viewport) {
     var selectedFrame = frames.filter(function(frame) {
       return frame.canvas.selected;
-    })[0];
+    })[0],
+        facingCanvas = getFacingCanvas(selectedFrame.canvas, frames);
 
     var canvasPosition = selectedFrame.canvas.sequencePosition;
-    var previousFrame = frames[canvasPosition - 1];
-    var nextFrame = frames[canvasPosition + 1];
 
-    selectedFrame.vantage = getVantageForCanvas(selectedFrame.canvas, previousFrame, nextFrame, viewport);
+    selectedFrame.vantage = getVantageForCanvas(selectedFrame.canvas, facingCanvas, viewport);
 
-    frames.forEach(function(frame, index, allFrames) {
-      if (frame.y === selectedFrame.y && frame.canvas.id !== selectedFrame.canvas.id) {
-        if (index < canvasPosition) {
-          frame.x = frame.x - selectedFrame.vantage.horizontalMargin;
-        } else {
-          frame.x = frame.x + selectedFrame.vantage.horizontalMargin;
+    if (viewingMode !== 'continuous') {
+      frames.forEach(function(frame, index, allFrames) {
+        if (frame.y === selectedFrame.y && frame.canvas.id !== selectedFrame.canvas.id) {
+          if (viewingMode === 'paged' && frame.canvas.id === facingCanvas.id) {
+            return;
+          }
+          // These are the canvases within the same line of the overview layout.
+          if (index < canvasPosition) {
+            // Those to the left. Push them to the left, out of frame.
+            frame.x = frame.x - (selectedFrame.vantage.horizontalMargin + framePadding.right*2);
+          } else {
+            // Those to the right. Push them to the right, out of frame.
+            frame.x = frame.x + (selectedFrame.vantage.horizontalMargin + framePadding.left*2);
+          }
+        } else if (frame.y > selectedFrame.y) {
+          // These are all the canvases below the selected canvas
+          // in the overview layout. Push then down out of frame.
+          frame.y = frame.y + (selectedFrame.vantage.verticalMargin + framePadding.bottom*2);
+        } else if (frame.y < selectedFrame.y) {
+          // These are all the canvases above the selected canvas
+          // in the overview layout. Push them up out of frame.
+          frame.y = frame.y - (selectedFrame.vantage.verticalMargin + framePadding.top*2);
         }
-      } else if (frame.y > selectedFrame.y) {
-        frame.y = frame.y + selectedFrame.vantage.verticalMargin;
-      } else if (frame.y < selectedFrame.y) {
-        frame.y = frame.y - selectedFrame.vantage.verticalMargin;
-      }
 
-      frame.canvas.x = frame.x + frame.canvas.localX;
-      frame.canvas.y = frame.y + frame.canvas.localY;
-    });
-
-    // Now that I have the select frame, I need to determine the three groups
-    // of objects to transform. Those of the same line, those above, and those below.
-
+        frame.canvas.x = frame.x + frame.canvas.localX;
+        frame.canvas.y = frame.y + frame.canvas.localY;
+      });
+    }
     return frames;
   }
 
-  /**
-   * Calculates whether or not an aspectRatio is portrait
-   * @param {Number} aspectRatio (w/h)
-   * @returns {Boolean}
-   */
-  function isPortrait(aspectRatio) {
-    return aspectRatio <= 1 ? true : false;
-  }
+  function getFacingCanvas(canvas, frames) {
+    var selectedIndex;
 
+    frames.forEach(function(frame, index) {
+      if (frame.canvas.id === canvas.id) {
+        selectedIndex = index;
+      }
+    });
+
+    if (selectedIndex === 0) {
+      return canvas.id;
+    } else if ((selectedIndex + 1) % 2 === 0) {
+      return frames[selectedIndex+1].canvas;
+    } else {
+      return frames[selectedIndex-1].canvas;
+    }
+  }
 
   function detailLayoutVertical(frames, selected, viewport) {
     return frames.map();
