@@ -113,8 +113,13 @@
   }
 
   ul.#{$namespace}-download-list {
-    list-style: none;
-    padding-left: 8px;
+    @include panel-list-style;
+  }
+
+  ul.#{$namespace}-download-list-full {
+    @include panel-list-style;
+    padding-bottom: 8px;
+    padding-top: 8px;
   }
 
   .#{$namespace}-license-by {

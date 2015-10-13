@@ -57,9 +57,50 @@ module Embed
                 end
               end
               doc.ul(class: 'sul-embed-download-list') {}
+              @purl_object.contents.each do |resource|
+                if resource.type == 'object'
+                  doc.ul(class: 'sul-embed-download-list-full') do
+                    resource.files.each do |file|
+                      unless embargoed_to_world?(file)
+                        doc.li do
+                          doc.div(class: "#{'sul-embed-stanford-only' if file.stanford_only?}") do
+                            doc.a(href: file_url(file.title), download: nil) do
+                              if file.size.blank?
+                                doc.text full_download_title(file)
+                              else
+                                doc.text full_download_title(file) +
+                                  " #{pretty_filesize(file.size)}"
+                              end
+                            end
+                          end
+                        end
+                      end
+                    end
+                  end
+                end
+              end
             end
           end
         end.to_html
+      end
+
+      ##
+      # Title to display for the full download
+      def full_download_title(file)
+        "Download \"#{truncate(@purl_object.title).tr('"', '\'')}\" " +
+          "(as #{pretty_mime(file.mimetype)})"
+      end
+
+      ##
+      # Truncate a string
+      # @param [String] str
+      # @param [Integer] length
+      def truncate(str, length = 20)
+        if str && str.length > length
+          str.slice(0, length - 1) + ' ...'
+        else
+          str
+        end
       end
     end
   end
