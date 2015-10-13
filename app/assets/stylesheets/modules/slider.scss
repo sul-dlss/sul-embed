@@ -1,8 +1,9 @@
 @import 'sul_variables';
+@import 'mixins';
 
 // The common style for SLY slider in the embed viewer
 $thumb-slider-scroll-background-color: $sul-background;
-$thumb-slider-scroll-selected-color: $color-pantone-2925;
+$thumb-slider-scroll-selected-color: rgba(0, 0, 0, 0.4);
 
 .#{$namespace}-thumb-slider-scroll {
   background: $thumb-slider-scroll-background-color;
@@ -10,6 +11,7 @@ $thumb-slider-scroll-selected-color: $color-pantone-2925;
 }
 
 .#{$namespace}-thumb-slider-handle {
+  @include rounded(0.1em);
   background: $thumb-slider-scroll-selected-color;
   cursor: pointer;
   height: 100%;

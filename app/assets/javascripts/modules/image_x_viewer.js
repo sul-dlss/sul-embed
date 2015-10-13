@@ -218,22 +218,22 @@
 
     var _closeThumbSlider = function() {
       PubSub.publish('thumbSliderToggle');
-      $thumbOpenClose.addClass('sul-i-rotate-180');
+      $thumbOpenClose.removeClass('open');
       $thumbSlider.slideUp();
     };
 
     var _openThumbSlider = function() {
       PubSub.publish('thumbSliderToggle');
-      $thumbOpenClose.removeClass('sul-i-rotate-180');
+      $thumbOpenClose.addClass('open');
       $thumbSlider.slideDown();
     };
 
     var _thumbSliderActions = function() {
       $thumbOpenClose.on('click', function() {
-        if ($thumbOpenClose.hasClass('sul-i-rotate-180')) {
-          _openThumbSlider();
-        } else {
+        if ($thumbOpenClose.hasClass('open')) {
           _closeThumbSlider();
+        } else {
+          _openThumbSlider();
         }
       });
     };
@@ -321,7 +321,7 @@
       $thumbSlider = $(document.createElement('div'));
       $thumbSlider.addClass('sul-embed-image-x-thumb-slider');
       $thumbOpenClose = $(document.createElement('div'));
-      $thumbOpenClose.addClass('sul-i-arrow-down-8 ' +
+      $thumbOpenClose.addClass('sul-i-navigation-show-more-1 open ' +
         'sul-embed-image-x-thumb-slider-open-close');
       _thumbSliderActions();//$openClose, $thumbSlider);
       var $thumbSliderScroll = $(document.createElement('div'));
@@ -373,6 +373,7 @@
         touchDragging: 1,
         releaseSwing: 1,
         scrollBar: $thumbSliderScroll,
+        syncSpeed: 0,
         dragHandle: 1,
         dynamicHandle: 1,
         startAt: 0,
