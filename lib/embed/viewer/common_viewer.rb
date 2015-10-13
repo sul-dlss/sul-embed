@@ -1,6 +1,11 @@
+require 'embed/mimetypes'
+require 'embed/pretty_filesize'
+
 module Embed
   class Viewer
     class CommonViewer
+      include Embed::Mimetypes
+      include Embed::PrettyFilesize
       def initialize(request)
         @request = request
         @purl_object = request.purl_object
@@ -200,6 +205,14 @@ module Embed
       # @return [String]
       def file_url(title)
         "#{stacks_url}/#{title}"
+      end
+
+      ##
+      # Checks to see if an item is embargoed to the world
+      # @param [Embed::PURL::Resource::ResourceFile]
+      # @return [Boolean]
+      def embargoed_to_world?(file)
+        @purl_object.embargoed? && !file.stanford_only?
       end
 
       ##

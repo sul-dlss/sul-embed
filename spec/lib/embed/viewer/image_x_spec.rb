@@ -29,5 +29,20 @@ describe Embed::Viewer::ImageX do
       expect(html).to have_css('.sul-embed-image-x-buttons button', count: 4, visible: false)
       expect(html).to have_css('#sul-embed-image-x[data-world-restriction=false]', visible: false)
     end
+    it 'full download should be present' do
+      expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
+      stub_purl_response_and_request(image_with_pdf_purl, request)
+      expect(image_x_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
+      html = Capybara.string(image_x_viewer.to_html)
+      expect(html).to have_css '.sul-embed-download-list-full', visible: false
+      expect(html).to have_css 'ul li div a', visible: false, text: 'Download "Writings - \'How to  ..." (as pdf) 4.76 MB'
+    end
+    it 'full download restricted' do
+      expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
+      stub_purl_response_and_request(image_with_pdf_restricted_purl, request)
+      expect(image_x_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
+      html = Capybara.string(image_x_viewer.to_html)
+      expect(html).to have_css 'ul li div.sul-embed-stanford-only a', visible: false, text: 'Download "Yolo" (as pdf)'
+    end
   end
 end

@@ -20,3 +20,8 @@
 @mixin license-image($license) {
   background: url('#{$asset_base}#{$license}') no-repeat left;
 }
+
+@mixin panel-list-style {
+  list-style: none;
+  padding-left: 8px;
+}

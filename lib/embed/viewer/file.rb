@@ -65,14 +65,6 @@ module Embed
         end
       end
 
-      def pretty_filesize(size)
-        Filesize.from("#{to_kilobyte(size)} KB").pretty
-      end
-
-      def to_kilobyte(size)
-        size.to_f / 1000
-      end
-
       def default_body_height
         400 - (header_height + footer_height)
       end
@@ -174,14 +166,6 @@ module Embed
             end
           end
         end
-      end
-
-      ##
-      # Checks to see if an item is embargoed to the world
-      # @param [Embed::PURL::Resource::ResourceFile]
-      # @return [Boolean]
-      def embargoed_to_world?(file)
-        @purl_object.embargoed? && !file.stanford_only?
       end
 
       def file_search_logic

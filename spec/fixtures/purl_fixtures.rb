@@ -461,4 +461,128 @@ module PURLFixtures
       </publicObject>
     XML
   end
+  def image_with_pdf_purl
+    <<-XML
+      <publicObject id="druid:bb112fp0199" published="2014-04-10T16:06:21-07:00">
+        <identityMetadata>
+          <sourceId source="sul">M1711_Series3_Box104_Folder19</sourceId>
+          <objectId>druid:bb112fp0199</objectId>
+          <objectCreator>DOR</objectCreator>
+          <objectLabel>Writings - "How to Test a Good Trumpet," The Instrumentalist 31(8):57-58 (reprint, 2 pp.)</objectLabel>
+          <objectType>item</objectType>
+          <adminPolicy>druid:wg541jt7173</adminPolicy>
+          <otherId name="uuid">b655a82e-fc3d-11e1-b443-0016034322e2</otherId>
+          <tag>Project : Musical Acoustics Research Library</tag>
+          <tag>Process : Content Type : Book (flipbook, ltr)</tag>
+          <tag>Project : Musical Acoustics Research Library</tag>
+        </identityMetadata>
+        <contentMetadata type="book" objectId="bb112fp0199">
+          <resource type="page" sequence="1" id="bb112fp0199_1">
+            <label>Page 1</label>
+            <file id="bb112fp0199_06_0001.pdf" mimetype="application/pdf" size="2365677">
+          </file>
+            <file id="bb112fp0199_00_0001.jp2" mimetype="image/jp2" size="3117394">
+              <imageData width="3629" height="4556"/>
+            </file>
+          </resource>
+          <resource type="page" sequence="2" id="bb112fp0199_2">
+            <label>Page 2</label>
+            <file id="bb112fp0199_06_0002.pdf" mimetype="application/pdf" size="2398016">
+          </file>
+            <file id="bb112fp0199_00_0002.jp2" mimetype="image/jp2" size="3117384">
+              <imageData width="3629" height="4556"/>
+            </file>
+          </resource>
+          <resource type="object" sequence="3" id="bb112fp0199_3">
+            <label>Object 1</label>
+            <file id="bb112fp0199_31_0000.pdf" mimetype="application/pdf" size="4761613">
+          </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="discover">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+          <access type="read">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+          <use>
+            <human type="useAndReproduction">Property rights reside with the repository. Literary rights reside with the creators of the documents or their heirs. To obtain permission to publish or reproduce, please contact the Special Collections Public Services Librarian at speccollref@stanford.edu.</human>
+            <human type="creativeCommons"/>
+            <machine type="creativeCommons"/>
+          </use>
+        </rightsMetadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:title>Writings - "How to Test a Good Trumpet," The Instrumentalist 31(8):57-58 (reprint, 2 pp.)</dc:title>
+          <dc:relation type="collection">Musical Acoustics Research Library collection, 1956-2007</dc:relation>
+        </oai_dc:dc>
+      </publicObject>
+    XML
+  end
+  def image_with_pdf_restricted_purl
+    <<-XML
+      <publicObject id="druid:bb112fp0199" published="2014-04-10T16:06:21-07:00">
+        <identityMetadata>
+          <sourceId source="sul">M1711_Series3_Box104_Folder19</sourceId>
+          <objectId>druid:bb112fp0199</objectId>
+          <objectCreator>DOR</objectCreator>
+          <objectLabel>Writings - "How to Test a Good Trumpet," The Instrumentalist 31(8):57-58 (reprint, 2 pp.)</objectLabel>
+          <objectType>item</objectType>
+          <adminPolicy>druid:wg541jt7173</adminPolicy>
+          <otherId name="uuid">b655a82e-fc3d-11e1-b443-0016034322e2</otherId>
+          <tag>Project : Musical Acoustics Research Library</tag>
+          <tag>Process : Content Type : Book (flipbook, ltr)</tag>
+          <tag>Project : Musical Acoustics Research Library</tag>
+        </identityMetadata>
+        <contentMetadata type="book" objectId="bb112fp0199">
+          <resource type="page" sequence="1" id="bb112fp0199_1">
+            <label>Page 1</label>
+            <file id="bb112fp0199_06_0001.pdf" mimetype="application/pdf" size="2365677">
+          </file>
+            <file id="bb112fp0199_00_0001.jp2" mimetype="image/jp2" size="3117394">
+              <imageData width="3629" height="4556"/>
+            </file>
+          </resource>
+          <resource type="page" sequence="2" id="bb112fp0199_2">
+            <label>Page 2</label>
+            <file id="bb112fp0199_06_0002.pdf" mimetype="application/pdf" size="2398016">
+          </file>
+            <file id="bb112fp0199_00_0002.jp2" mimetype="image/jp2" size="3117384">
+              <imageData width="3629" height="4556"/>
+            </file>
+          </resource>
+          <resource type="object" sequence="3" id="bb112fp0199_3">
+            <label>Object 1</label>
+            <file id="bb112fp0199_31_0000.pdf" mimetype="application/pdf">
+          </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="discover">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+          <access type="read">
+            <machine>
+              <group>Stanford</group>
+            </machine>
+          </access>
+          <use>
+            <human type="useAndReproduction">Property rights reside with the repository. Literary rights reside with the creators of the documents or their heirs. To obtain permission to publish or reproduce, please contact the Special Collections Public Services Librarian at speccollref@stanford.edu.</human>
+            <human type="creativeCommons"/>
+            <machine type="creativeCommons"/>
+          </use>
+        </rightsMetadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:title>Yolo</dc:title>
+          <dc:relation type="collection">Musical Acoustics Research Library collection, 1956-2007</dc:relation>
+        </oai_dc:dc>
+      </publicObject>
+    XML
+  end
 end
