@@ -46,6 +46,10 @@ module Embed
         @purl_object.ng_xml.xpath('//dc:identifier','dc'=>'http://purl.org/dc/elements/1.1/').try(:text)
       end
 
+      def external_url_text
+        'View this in the Stanford Web Archive Portal'
+      end
+
       def default_body_height
         260
       end

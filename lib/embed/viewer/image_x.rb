@@ -32,10 +32,30 @@ module Embed
 
       def image_button_html(doc)
         doc.div(class: 'sul-embed-image-x-buttons') do
-          doc.button(class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-layout-none sul-embed-hidden', 'data-sul-view-mode' => 'individuals')
-          doc.button(class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-layout-4 sul-embed-hidden', 'data-sul-view-mode' => 'paged')
-          doc.button(class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-view-module-1 sul-embed-hidden', 'data-sul-view-perspective' => 'overview')
-          doc.button(class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-expand-1', 'data-sul-view-fullscreen' => 'fullscreen')
+          doc.button(
+            class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar' +
+              ' sul-i-layout-none sul-embed-hidden',
+            'data-sul-view-mode' => 'individuals',
+            'aria-label' => 'switch to individuals mode'
+          )
+          doc.button(
+            class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar' +
+              ' sul-i-layout-4 sul-embed-hidden',
+            'data-sul-view-mode' => 'paged',
+            'aria-label' => 'switch to paged mode'
+          )
+          doc.button(
+            class: 'sul-embed-btn sul-embed-btn-default sul-embed-bt' +
+              'n-toolbar sul-i-view-module-1 sul-embed-hidden',
+            'data-sul-view-perspective' => 'overview',
+            'aria-label' => 'switch to overview perspective'
+          )
+          doc.button(
+            class: 'sul-embed-btn sul-embed-btn-default sul-embed-bt' +
+              'n-toolbar sul-i-expand-1',
+            'data-sul-view-fullscreen' => 'fullscreen',
+            'aria-label' => 'switch to fullscreen'
+          )
         end
       end
 
