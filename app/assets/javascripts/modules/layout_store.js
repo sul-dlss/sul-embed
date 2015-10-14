@@ -20,8 +20,6 @@
         bottomPanelEnabled: true,
         bottomPanelOpen: true,
         fullscreen: true,
-        modeIndividualsAvailable: false,
-        modePagedAvailable: false,
         overviewPerspectiveAvailable: false,
         keyboardNavMode: null
         // currentFocus: null,

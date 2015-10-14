@@ -1,4 +1,4 @@
-/*global Sly, LayoutStore, ManifestStore, PubSub, CanvasStore, key, sulEmbedDownloadPanel */
+/*global Sly, LayoutStore, ManifestStore, PubSub, CanvasStore, key, sulEmbedDownloadPanel, ImageControls */
 
 (function( global ) {
   'use strict';
@@ -14,6 +14,7 @@
     var $thumbSliderContainer;
     var thumbSliderSly;
     var $embedHeader;
+    var imageControls;
 
     var _listenForActions = function() {
       PubSub.subscribe('manifestStateUpdated', function() {
@@ -50,28 +51,19 @@
         }
       });
       PubSub.subscribe('disableFullscreen', function() {
-        $embedHeader.find('[data-sul-view-fullscreen]')
-          .attr('disabled', '');
+        imageControls.render(layoutStore.getState(), canvasStore.getState());
       });
       PubSub.subscribe('enableFullscreen', function() {
-        $embedHeader.find('[data-sul-view-fullscreen]')
-          .removeAttr('disabled');
+        imageControls.render(layoutStore.getState(), canvasStore.getState());
       });
-      PubSub.subscribe('disableMode', function(_, mode) {
-        $embedHeader.find('[data-sul-view-mode="' + mode + '"]')
-          .addClass('sul-embed-hidden');
+      PubSub.subscribe('disableMode', function() {
+        imageControls.render(layoutStore.getState(), canvasStore.getState());
       });
-      PubSub.subscribe('disableOverviewPerspective', function() {
-        $embedHeader.find('[data-sul-view-perspective]')
-          .addClass('sub-embed-hidden');
-      });
-      PubSub.subscribe('enableMode', function(_, mode) {
-        $embedHeader.find('[data-sul-view-mode="' + mode + '"]')
-          .removeClass('sul-embed-hidden');
+      PubSub.subscribe('enableMode', function() {
+        imageControls.render(layoutStore.getState(), canvasStore.getState());
       });
       PubSub.subscribe('enableOverviewPerspective', function() {
-        $embedHeader.find('[data-sul-view-perspective]')
-          .removeClass('sul-embed-hidden');
+        imageControls.render(layoutStore.getState(), canvasStore.getState());
       });
       /**
        * Enable the bottomPanel in detail perspective and update Sly thumb
@@ -165,14 +157,6 @@
     };
 
     var _setupButtonListeners = function() {
-      $embedHeader.find('[data-sul-view-mode]').on('click', function() {
-        var mode = $(this).data().sulViewMode;
-        PubSub.publish('updateMode', mode);
-      });
-      $embedHeader.find('[data-sul-view-perspective]').on('click', function() {
-        var perspective = $(this).data().sulViewPerspective;
-        PubSub.publish('updatePerspective', perspective);
-      });
       $embedHeader.find('[data-sul-view-fullscreen="fullscreen"]')
         .on('click', function() {
           canvasStore.osd.setFullScreen(true);
@@ -406,8 +390,8 @@
         // Access data attributes
         dataAttributes = $el.data();
         $embedHeader = $el.parent().parent();
-
         _setupButtonListeners();
+        imageControls = ImageControls.init($embedHeader);
         _listenForActions();
 
         _extractDruid();
