@@ -196,4 +196,7 @@ Teaspoon.configure do |config|
   config.suite :layout_store do |suite|
     suite.matcher = '{spec/javascripts/layout_store}/**/*_spec.{js,js.coffee,coffee}'
   end
+  config.suite :image_controls do |suite|
+    suite.matcher = '{spec/javascripts/image_controls}/**/*_spec.{js,js.coffee,coffee}'
+  end
 end
