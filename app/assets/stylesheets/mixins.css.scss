@@ -25,3 +25,9 @@
   list-style: none;
   padding-left: 8px;
 }
+
+@mixin rounded($radius: 0.5em) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
