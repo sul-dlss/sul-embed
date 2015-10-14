@@ -75,6 +75,7 @@ describe Embed::Viewer::CommonViewer do
       stub_request(request)
       html = Capybara.string(file_viewer.footer_html)
       expect(html).to have_css 'div.sul-embed-footer'
+      expect(html).to have_css '[aria-label]', count: 2
     end
   end
   describe 'to_html' do

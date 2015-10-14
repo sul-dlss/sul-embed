@@ -134,11 +134,11 @@
       if (manifest.sequences[0].canvases.length < 2) { return; }
 
       var $leftControl = $('<div class="sul-embed-image-x-side-control sul-em' +
-        'bed-image-x-side-control-left"><div class=sul-i-arrow-left-8></div><' +
-        '/div>');
+        'bed-image-x-side-control-left" aria-label="next image"><div class=su' +
+        'l-i-arrow-left-8></div></div>');
       var $rightControl = $('<div class="sul-embed-image-x-side-control sul-e' +
-        'mbed-image-x-side-control-right"><div class=sul-i-arrow-right-8></di' +
-        'v></div>');
+        'mbed-image-x-side-control-right" aria-label="previous image"><div cl' +
+        'ass=sul-i-arrow-right-8></div></div>');
       $el.append($leftControl, $rightControl);
       $leftControl.on('click', function() {
         canvasStore.previous();
@@ -219,12 +219,15 @@
     var _closeThumbSlider = function() {
       PubSub.publish('thumbSliderToggle');
       $thumbOpenClose.removeClass('open');
+      $thumbOpenClose.attr('aria-expanded', false);
       $thumbSlider.slideUp();
     };
 
     var _openThumbSlider = function() {
       PubSub.publish('thumbSliderToggle');
+
       $thumbOpenClose.addClass('open');
+      $thumbOpenClose.attr('aria-expanded', true);
       $thumbSlider.slideDown();
     };
 
@@ -323,6 +326,8 @@
       $thumbOpenClose = $(document.createElement('div'));
       $thumbOpenClose.addClass('sul-i-navigation-show-more-1 open ' +
         'sul-embed-image-x-thumb-slider-open-close');
+      $thumbOpenClose.attr('aria-label', 'toggle thumbnail viewer');
+      $thumbOpenClose.attr('aria-expanded', true);
       _thumbSliderActions();//$openClose, $thumbSlider);
       var $thumbSliderScroll = $(document.createElement('div'));
       $thumbSliderScroll.addClass('sul-embed-thumb-slider-scroll');
@@ -350,6 +355,7 @@
         $image.attr('data-src', id + '/full/' +
           Math.ceil(thumbHeight * aspectRatio * 2) + ',/0/default.jpg');
         $image.height(thumbDisplayHeight);
+        $image.attr('alt', '');
         var $label = $(document.createElement('div'));
         $label.text(val.label);
         $label.addClass('sul-embed-image-x-label');

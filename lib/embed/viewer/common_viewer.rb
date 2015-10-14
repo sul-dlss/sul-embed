@@ -52,17 +52,40 @@ module Embed
           doc.div(class: 'sul-embed-footer') do
             doc.div(class: 'sul-embed-footer-toolbar') do
               unless @request.hide_metadata?
-                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-infomation-circle', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-metadata-panel')
+                doc.button(
+                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' +
+                    'oolbar sul-embed-btn-default sul-i-infomation-circle',
+                  'aria-expanded' => 'false',
+                  'aria-label' => 'open metadata panel',
+                  'data-sul-embed-toggle' => 'sul-embed-metadata-panel'
+                )
               end
               unless @request.hide_embed_this?
-                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-share', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-embed-this-panel')
+                doc.button(
+                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' +
+                    'oolbar sul-embed-btn-default sul-i-share',
+                  'aria-expanded' => 'false',
+                  'aria-label' => 'open embed this panel',
+                  'data-sul-embed-toggle' => 'sul-embed-embed-this-panel'
+                )
               end
               if show_download?
-                doc.button(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-download-3', 'aria-expanded' => 'false', 'data-sul-embed-toggle' => 'sul-embed-download-panel')
+                doc.button(
+                  class: 'sul-embed-footer-tool sul-embed-btn sul-em' +
+                    'bed-btn-toolbar sul-embed-btn-default sul-i-download-3',
+                  'aria-expanded' => 'false',
+                  'aria-label' => 'open download panel',
+                  'data-sul-embed-toggle' => 'sul-embed-download-panel'
+                )
               end
               if external_url.present?
-               doc.a(class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-navigation-next-4', 
-                     href: "#{external_url}")
+                doc.a(
+                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' +
+                    'oolbar sul-embed-btn-default sul-i-navigation-next-4', 
+                  href: "#{external_url}"
+                ) do
+                  doc.span(class: 'sul-embed-sr-only') { doc.text external_url_text }
+                end
               end
             end
           end

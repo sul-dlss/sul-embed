@@ -77,6 +77,10 @@ module Embed
       def external_url
         "#{Settings.geo_external_url}#{@request.object_druid}"
       end
+
+      def external_url_text
+        'View this in EarthWorks'
+      end
     end
   end
 end
