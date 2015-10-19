@@ -1,5 +1,5 @@
 module URLSchemes
   def url_schemes
-    [Regexp.new(/https?:\/\/purl\.stanford\.edu\/*/)]
+    [Regexp.new(Settings.valid_purl_url)]
   end
 end
