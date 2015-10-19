@@ -14,6 +14,12 @@
           frameClass: 'sul-embed-image-x-frame',
           canvasClass: 'sul-embed-image-x-canvas',
           labelClass: 'sul-embed-image-x-frame-label',
+          viewportPadding: {
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 8
+          },
           stateUpdateCallback: function() {
             PubSub.publish('canvasStateUpdated');
           }
