@@ -34,11 +34,11 @@ module Embed
               end
               doc.div(class: 'sul-embed-panel-body') do
                 @purl_object.contents.each do |resource|
-                  doc.ul() do
+                  doc.ul(class: 'sul-embed-download-list') do
                     resource.files.each do |file|
-                      doc.li(class: "sul-embed-panel-item-label #{'sul-embed-stanford-only' if file.stanford_only?}") do
+                      doc.li(class: "#{'sul-embed-stanford-only' if file.stanford_only?}") do
                         doc.a(href: file_url(file.title), title: file.title) do
-                          doc.text file.title
+                          doc.text "Download #{file.title}"
                         end
                       end
                     end
