@@ -18,10 +18,6 @@ describe Embed::Viewer::Geo do
     end
   end
 
-  describe '.body_height' do
-    pending
-  end
-
   describe '.body_html' do
     it 'should return geo html body for public resources' do
       stub_purl_response_and_request(geo_purl_public, request)
