@@ -239,10 +239,31 @@
         .done(function(data) {
           PubSub.publish('manifestDone', data);
         })
-        .fail(function() {
+        .fail(function(e) {
+          if (e.status === 404) {
+            _noImagesAvailable();
+          }
           throw new Error('Could not access manifest.json');
         });
     };
+
+    var _noImagesAvailable = function() {
+      // Append the no image to view message
+      $el.append($('<div class="sul-embed-image-x-well"><div class="sul-embed' +
+        '-image-x-well-content">There are no images to view</div><div>'));
+      // Animate the height down to something reasonable
+      $el.parent().animate({
+        height: '100%'
+      });
+      _hideDownloadButton();
+    };
+
+    var _hideDownloadButton = function() {
+      // Hide the download panel button
+      $($el.parent().parent().find('[data-sul-embed-toggle="sul-embed-downloa' +
+        'd-panel"]')).hide();
+    };
+    
 
     // http://upshots.org/javascript/jquery-test-if-element-is-in-viewport
     // -visible-on-screen

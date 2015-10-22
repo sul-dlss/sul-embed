@@ -133,3 +133,12 @@ $image-thumb-slider-background-color: $sul-background;
     top: 50%;
   }
 }
+
+.#{$namespace}-image-x-well {
+  @include well-container;
+}
+
+.#{$namespace}-image-x-well-content {
+  @include well-content;
+  text-align: center;
+}
