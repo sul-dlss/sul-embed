@@ -10,7 +10,7 @@ gem 'nokogiri'
 
 gem 'dor-rights-auth'
 
-gem 'rails_config'
+gem 'config'
 
 gem 'therubyracer'
 
@@ -42,7 +42,7 @@ group :deployment do
   gem 'capistrano-rvm'
   gem 'capistrano-bundler'
   gem 'capistrano-rails'
-  gem 'lyberteam-capistrano-devel'
+  gem 'dlss-capistrano'
 end
 
 gem 'squash_ruby', require: 'squash/ruby'
