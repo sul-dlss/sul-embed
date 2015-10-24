@@ -1,4 +1,4 @@
-purl_url: 'http://purl.stanford.edu'
+purl_url: 'https://purl.stanford.edu'
 valid_purl_url: <%= /https?:\/\/purl\.stanford\.edu\/*/ %>
 stacks_url: 'https://stacks.stanford.edu'
 iiif_stacks_url: 'https://stacks.stanford.edu'

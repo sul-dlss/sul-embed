@@ -250,7 +250,7 @@ module Embed
       # Should the download toolbar be shown?
       # @return [Boolean]
       def show_download?
-        self.is_a?(Embed::Viewer::ImageX) || self.is_a?(Embed::Viewer::Geo) && !@request.hide_download?
+        (self.is_a?(Embed::Viewer::ImageX) || self.is_a?(Embed::Viewer::Geo)) && !@request.hide_download?
       end
 
       private
