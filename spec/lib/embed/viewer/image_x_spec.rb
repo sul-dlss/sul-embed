@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Embed::Viewer::ImageX do
   include PURLFixtures
-  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
+  let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/abc123') }
   let(:image_x_viewer) { Embed::Viewer::ImageX.new(request) }
 
   describe 'initialize' do
@@ -25,7 +25,7 @@ describe Embed::Viewer::ImageX do
       
       # visible false because we display:none the container until we've loaded the CSS.
       expect(html).to have_css '.sul-embed-image-x', visible: false
-      expect(html).to have_css('#sul-embed-image-x[data-manifest-url=\'http://purl.stanford.edu/12345/iiif/manifest.json\']', visible: false)
+      expect(html).to have_css('#sul-embed-image-x[data-manifest-url=\'https://purl.stanford.edu/12345/iiif/manifest.json\']', visible: false)
       expect(html).to have_css('.sul-embed-image-x-buttons button[aria-label]', count: 4, visible: false)
       expect(html).to have_css('#sul-embed-image-x[data-world-restriction=false]', visible: false)
     end
