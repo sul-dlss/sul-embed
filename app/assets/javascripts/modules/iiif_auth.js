@@ -29,15 +29,13 @@
     this.checkStatus = function(callback) {
       $.ajax({
         url: _IiifAuthUrl,
-        dataType: 'jsonp',
-        // Because jsonp, we can't catch failed or unauthorized requests. We
-        // timeout at 300, because after 300ms we assume a failed request.
-        timeout: 300
+        dataType: 'jsonp'
       })
       .done(function(data) {
         if (data.accessToken) {
           _accessToken = data.accessToken;
           _authStatus = true;
+          return;
         }
       })
       .always(function(){

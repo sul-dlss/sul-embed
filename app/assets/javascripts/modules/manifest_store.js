@@ -43,6 +43,16 @@
     },
     getState: function() {
       return this.state();
+    },
+    authService: function() {
+      var firstImage = this.getState().manifest.sequences[0].canvases[0]
+        .images[0].resource.service;
+      if (firstImage.service) {
+        return firstImage.service[0];
+      } else {
+        return false;
+      }
+      
     }
   };
 

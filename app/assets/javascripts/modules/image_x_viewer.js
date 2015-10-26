@@ -1,4 +1,4 @@
-/*global Sly, LayoutStore, ManifestStore, PubSub, CanvasStore, key, sulEmbedDownloadPanel, ImageControls */
+/*global Sly, LayoutStore, ManifestStore, PubSub, CanvasStore, key, sulEmbedDownloadPanel, ImageControls, IiifAuth */
 
 (function( global ) {
   'use strict';
@@ -15,17 +15,27 @@
     var thumbSliderSly;
     var $embedHeader;
     var imageControls;
+    var auth = null;
 
     var _listenForActions = function() {
-      PubSub.subscribe('manifestStateUpdated', function() {
-        _setupThumbSlider();
-        _setupKeyListeners();
+      PubSub.subscribe('manifestStateUpdated', function() {        
+        var authService = manifestStore.authService();
         _updateImageCount();
-        canvasStore = new CanvasStore({
-            manifest: manifestStore.getState().manifest
-          });
-        _updateDownloadPanel(canvasStore.getState().selectedCanvas);
-        _addLeftRightControls();
+        // If authorization is needed, instantiate IiifAuth and check the status
+        if (authService) {
+          auth = new IiifAuth(authService.service[0]['@id']);
+          _checkAuth();
+        } else {
+          PubSub.publish('updateAuth', true);
+        }
+      });
+      PubSub.subscribe('authorizationStateUpdated', function(_, status) {
+        if (status) {
+          _renderAuthorizedImages();
+          imageControls.render(layoutStore.getState(), canvasStore.getState());
+        } else {
+          _renderUnauthorizedImages();
+        }
       });
       PubSub.subscribe('layoutStateUpdated', function() {
         // add content area reactions here.
@@ -93,19 +103,103 @@
       });
     };
 
+    var _checkAuth = function() {
+      auth.checkStatus(function(status) {
+        PubSub.publish('updateAuth', status);
+      });
+    };
+
+    /**
+     * Render image viewer thumbs for an unauthorized viewer
+     */
+    var _renderUnauthorizedImages = function() {
+      var authService = manifestStore.authService();
+      var manifest = manifestStore.getState().manifest;
+      var $container = $(document.createElement('div'));
+      $container.addClass('sul-embed-image-x-restricted-thumb-container');
+      var $image = $(document.createElement('img'));
+      $image.attr('src', manifest.thumbnail['@id']);
+      $image.attr('alt', '');
+      $image.addClass('sul-embed-image-x-restricted-thumb');
+      var $authLink = $(document.createElement('div'));
+      $authLink.addClass('sul-embed-image-x-auth-link');
+      var $link = $(document.createElement('a'));
+      $link.attr('href', '#');
+      $link.text(authService.label);
+      $link.attr('target', '_blank');
+      $link.on('click', function(e) {
+        e.preventDefault();
+        var windowObjectReference = window
+          .open(authService['@id']);
+        var start = Date.now();
+        var checkWindow = setInterval(function() {
+          // Check if user authed if timedout, or Auth window closed 
+          if (!_timedOut(start, 30000) &&
+            (!windowObjectReference || !windowObjectReference.closed)) return;
+          clearInterval(checkWindow);
+          _checkAuth();
+          return;
+        }, 500);
+      });
+      $authLink.append($link);
+      $container.append([$image, $authLink]);
+      $el.append($container);
+    };
+
+    /**
+     * Helper function to determine if a timer has expired
+     * @param {Date} start
+     * @param {Number} time - time which to expire in ms
+     * @return {Boolean}
+     */
+    var _timedOut = function(start, time) {
+      if ((Date.now() - start) < time) {
+        return false;
+      } else {
+        return true;
+      }
+    };
+
+    /**
+     * Render image viewer for an authorized user
+     */
+    var _renderAuthorizedImages = function() {
+      // If coming from an unauthorized view, remove that view
+      $el.find('.sul-embed-image-x-restricted-thumb-container').remove();
+      _setupThumbSlider();
+      _setupKeyListeners();
+      canvasStore = new CanvasStore({
+        manifest: manifestStore.getState().manifest
+      });
+      _updateDownloadPanel(canvasStore.getState().selectedCanvas);
+      _addLeftRightControls();
+    };
+
     /**
      * Requests the selectedCanvas's info.json and updates the download panel
      * @param {String} selectedCanvas
      */
     var _updateDownloadPanel = function(selectedCanvas) {
       var manifest = manifestStore.getState().manifest;
+
+      var authHeader = {};
+      if (auth && auth.authenticated()) {
+        authHeader = {
+          'Authorization': 'Bearer ' + auth.accessToken()
+        };
+      }
+
       manifest.sequences[0].canvases.forEach(function(canvas) {
         if (selectedCanvas === canvas['@id']) {
-          $.getJSON(canvas.images[0].resource.service['@id'] + '/info.json',
-            function(data) {
-              sulEmbedDownloadPanel.update(
-                data, canvas.label, dataAttributes.worldRestriction
-              );
+          $.ajax({
+            url: canvas.images[0].resource.service['@id'] + '/info.json',
+            dataType: 'json',
+            headers: authHeader
+          })
+          .done(function(data) {
+            sulEmbedDownloadPanel.update(
+              data, canvas.label, dataAttributes.worldRestriction
+            );
           });
           return;
         }

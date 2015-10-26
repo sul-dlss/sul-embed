@@ -17,6 +17,9 @@
         canvas = typeof canvas !== 'undefined' ?  canvas : {};
 
         // Fullscreen
+        if (layout.authorized) {
+          $fullscreen.removeClass('sul-embed-hidden');
+        }
         if (layout.fullscreen) {
           $fullscreen.removeAttr('disabled');
         } else {

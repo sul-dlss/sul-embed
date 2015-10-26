@@ -85,9 +85,8 @@
 }
 
 .#{$namespace}-stanford-only a{
-    padding-right: 20px;
-    background: url('#{$asset_base}<%= asset_url("stanford_s.png") %>') no-repeat right;
-    background: url('#{$asset_base}<%= asset_url("stanford_s.svg") %>') no-repeat right, none;
+  @include stanford-only;
+  padding-right: 20px;
 }
 
 .#{$namespace}-header {
