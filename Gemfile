@@ -61,6 +61,8 @@ gem 'leaflet-rails'
 
 gem 'sul_styles', '~>0.5.0'
 
+gem 'is_it_working'
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.1.2'
 
