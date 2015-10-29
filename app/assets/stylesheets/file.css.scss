@@ -68,12 +68,9 @@
 }
 
 .#{$namespace}-file-list {
-  background-color: $sul-background;
-  padding: 10px;
+  @include well-container;
 }
 
 .#{$namespace}-media-list {
-  @include shadow(2);
-  background-color: $white-color;
-  padding: 10px;
+  @include well-content;
 }
