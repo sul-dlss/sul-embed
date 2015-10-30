@@ -32,12 +32,15 @@ describe 'image viewer authentication and authorization', js: true do
       fill_in_default_sandbox_form('bb112zx3193')
       click_button 'Embed'
     end
-    it 'displays zoom but not SU restricted downloads until authed' do
+    pending 'displays zoom and SU restricted downloads' do
       has_zoomable_image
       page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
       within '.sul-embed-download-panel' do
         has_thumb_download
-        expect(page).to have_css 'li a', count: 1
+        expect(page).to have_css 'li a', count: 6
+        # Because of the Auth roundtrip to get what should be stanford-only,
+        # poltergeist doesn't seem to be able to handle it
+        expect(page).to have_css 'li.sul-embed-stanford-only a', count: 4
       end
     end
   end
