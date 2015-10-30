@@ -37,7 +37,7 @@ describe 'image viewer authentication and authorization', js: true do
       page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
       within '.sul-embed-download-panel' do
         has_thumb_download
-        expect(page).to have_css 'li a', count: 1
+        expect(page).to have_css 'li a', count: 6
       end
     end
   end
