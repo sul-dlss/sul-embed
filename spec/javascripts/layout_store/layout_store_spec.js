@@ -26,6 +26,7 @@ describe('LayoutStore', function() {
     });
     it('sets state without publishing layoutStateUpdated', function(done) {
       expect(layoutStore.layoutState).toEqual({
+        authorized: false,
         bottomPanelEnabled: true,
         bottomPanelOpen: true,
         fullscreen: true,

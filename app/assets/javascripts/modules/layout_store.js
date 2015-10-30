@@ -17,6 +17,7 @@
     init: function() {
       var _this = this;
       _this.state({
+        authorized: false,
         bottomPanelEnabled: true,
         bottomPanelOpen: true,
         fullscreen: true,
@@ -30,7 +31,12 @@
     },
     listenForActions: function() {
       var _this = this;
-
+      PubSub.subscribe('updateAuth', function(_, status) {
+        _this.state({
+          authorized: status
+        });
+        PubSub.publish('authorizationStateUpdated', status);
+      });
       PubSub.subscribe('thumbSliderToggle', function() {
         _this.state({
           bottomPanelOpen: !_this.getState().bottomPanelOpen

@@ -59,7 +59,7 @@ gem 'bower-rails'
 
 gem 'leaflet-rails'
 
-gem 'sul_styles', '~>0.5.0'
+gem 'sul_styles', '~>0.5.1'
 
 gem 'is_it_working'
 

@@ -52,7 +52,7 @@ module Embed
           )
           doc.button(
             class: 'sul-embed-btn sul-embed-btn-default sul-embed-bt' +
-              'n-toolbar sul-i-expand-1',
+              'n-toolbar sul-i-expand-1 sul-embed-hidden',
             'data-sul-view-fullscreen' => 'fullscreen',
             'aria-label' => 'switch to fullscreen'
           )
