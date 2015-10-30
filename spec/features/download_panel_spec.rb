@@ -43,7 +43,9 @@ describe 'download panel', js: true do
       fill_in_default_sandbox_form('bb112zx3193')
       click_button 'Embed'
     end
-    pending 'should show stanford only icon' do
+    it 'should show stanford only icon' do
+      pending('manifest not returning sizes')
+      fail
       # Wait for the manifest to come back
       expect(page).to have_css '.sul-embed-image-x-thumb-slider-container'
       page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
