@@ -18,15 +18,30 @@
     var auth = null;
 
     var _listenForActions = function() {
-      PubSub.subscribe('manifestStateUpdated', function() {        
-        var authService = manifestStore.authService();
-        _updateImageCount();
+      PubSub.subscribe('manifestStateUpdated', function() {
+        var authService;
+        var unauthorized;
+        try {
+          authService = manifestStore.authService();
+        } catch(e) {
+          if (e.message === 'Sequence does not have a canvas') {
+            PubSub.publish('updateAuth', false);
+            unauthorized = true;
+          }          
+        }
+
+        if (!unauthorized) {
+          _updateImageCount();
+        }
+
         // If authorization is needed, instantiate IiifAuth and check the status
         if (authService) {
           auth = new IiifAuth(authService.service[0]['@id']);
           _checkAuth();
         } else {
-          PubSub.publish('updateAuth', true);
+          if (!unauthorized) {
+            PubSub.publish('updateAuth', true);
+          }
         }
       });
       PubSub.subscribe('authorizationStateUpdated', function(_, status) {
@@ -113,7 +128,13 @@
      * Render image viewer thumbs for an unauthorized viewer
      */
     var _renderUnauthorizedImages = function() {
-      var authService = manifestStore.authService();
+      var authService;
+      try {
+        authService = manifestStore.authService();
+      } catch(e) {
+        authService = false;
+      }
+
       var manifest = manifestStore.getState().manifest;
       var $container = $(document.createElement('div'));
       $container.addClass('sul-embed-image-x-restricted-thumb-container');
@@ -123,25 +144,28 @@
       $image.addClass('sul-embed-image-x-restricted-thumb');
       var $authLink = $(document.createElement('div'));
       $authLink.addClass('sul-embed-image-x-auth-link');
-      var $link = $(document.createElement('a'));
-      $link.attr('href', '#');
-      $link.text(authService.label);
-      $link.attr('target', '_blank');
-      $link.on('click', function(e) {
-        e.preventDefault();
-        var windowObjectReference = window
-          .open(authService['@id']);
-        var start = Date.now();
-        var checkWindow = setInterval(function() {
-          // Check if user authed if timedout, or Auth window closed 
-          if (!_timedOut(start, 30000) &&
-            (!windowObjectReference || !windowObjectReference.closed)) return;
-          clearInterval(checkWindow);
-          _checkAuth();
-          return;
-        }, 500);
-      });
-      $authLink.append($link);
+      if (authService) {
+        var $link = $(document.createElement('a'));
+        $link.attr('href', '#');
+        $link.text(authService.label);
+        $link.attr('target', '_blank');
+        $link.on('click', function(e) {
+          e.preventDefault();
+          var windowObjectReference = window
+            .open(authService['@id']);
+          var start = Date.now();
+          var checkWindow = setInterval(function() {
+            // Check if user authed if timedout, or Auth window closed
+            if (!_timedOut(start, 30000) &&
+              (!windowObjectReference || !windowObjectReference.closed)) return;
+            clearInterval(checkWindow);
+            _checkAuth();
+            return;
+          }, 500);
+        });
+        $authLink.append($link);
+      }
+
       $container.append([$image, $authLink]);
       $el.append($container);
     };

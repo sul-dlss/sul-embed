@@ -45,7 +45,13 @@
       return this.state();
     },
     authService: function() {
-      var firstImage = this.getState().manifest.sequences[0].canvases[0]
+      var firstSequence = this.getState().manifest.sequences[0];
+
+      if (firstSequence.canvases === undefined) {
+        throw new Error('Sequence does not have a canvas');
+      }
+
+      var firstImage = firstSequence.canvases[0]
         .images[0].resource.service;
       if (firstImage.service) {
         return firstImage.service[0];

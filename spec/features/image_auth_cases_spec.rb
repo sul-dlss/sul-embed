@@ -56,10 +56,26 @@ describe 'image viewer authentication and authorization', js: true do
       fail
     end
   end
+  describe 'with read <none>' do
+    before do
+      stub_purl_response_with_fixture(image_purl)
+      visit_sandbox
+      fill_in_default_sandbox_form('bb402bm5087')
+      click_button 'Embed'
+    end
+    it 'displays thumb but no login link' do
+      has_thumb_as_image
+      does_not_have_authenticate_link
+    end
+  end
 end
 
 def has_authenticate_link
   expect(page).to have_css '.sul-embed-image-x-auth-link', text: 'Stanford-affiliated? Login to view'
+end
+
+def does_not_have_authenticate_link
+  expect(page).to_not have_css '.sul-embed-image-x-auth-link', text: 'Stanford-affiliated? Login to view'
 end
 
 def has_thumb_as_image
