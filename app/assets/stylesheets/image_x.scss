@@ -158,6 +158,13 @@ $image-thumb-slider-background-color: $sul-background;
   }
 }
 
+.#{$namespace}-image-x-iiif-drag-and-drop-link {
+    img {
+        height:20px;
+        margin: 0 5px 0 0 !important;
+    }
+}
+
 .#{$namespace}-image-x-restricted-thumb {
   @include center-block;
 }

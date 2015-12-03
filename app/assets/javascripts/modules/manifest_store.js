@@ -8,11 +8,10 @@
 
     $.extend(true, _this, {
     }, options);
-    
     _this.init();
     _this.listenForActions();
   };
-  
+
   ManifestStore.prototype = {
     init: function() {
       var _this = this;
@@ -36,10 +35,10 @@
       this.manifestState = state;
 
       if (!initial) {
-        PubSub.publish('manifestStateUpdated');  
+        PubSub.publish('manifestStateUpdated');
       }
 
-      return this.manifestState;      
+      return this.manifestState;
     },
     getState: function() {
       return this.state();
@@ -52,7 +51,6 @@
       } else {
         return false;
       }
-      
     }
   };
 
