@@ -28,6 +28,7 @@
         } else {
           PubSub.publish('updateAuth', true);
         }
+        _addDnDLink();
       });
       PubSub.subscribe('authorizationStateUpdated', function(_, status) {
         if (status) {
@@ -93,6 +94,7 @@
           .find('li[data-canvasid="' + canvasState.selectedCanvas + '"]');
         thumbSliderSly.activate(thumbItem[0]);
         _updateDownloadPanel(canvasState.selectedCanvas);
+        _updateDnDLink(canvasState.selectedCanvas);
       });
       PubSub.subscribe('updateBottomPanel', function(_, status) {
         if (status) {
@@ -212,6 +214,28 @@
         .length;
       var text = numImages === 1 ? ' image' : ' images';
       $itemCount.text(numImages + text);
+    };
+
+    var _addDnDLink = function() {
+      var dndLinkWrapper = $('<dd>');
+      var dndLink = $('<a>');
+      dndLink
+        .attr('href', dataAttributes.manifestUrl + '?manifest=' + dataAttributes.manifestUrl)
+        .addClass('sul-embed-image-x-iiif-drag-and-drop-link')
+        .text("(Drag this icon into another viewer)")
+        .attr('alt', 'IIIF Drag and Drop Icon');
+
+      var linkImg = $('<img>');
+      linkImg
+        .attr('src', 'http://sul-reader-test.stanford.edu/drag_source/icon.png')
+        .attr('alt', 'IIIF Drag and Drop Icon');
+
+      dndLink.prepend(linkImg);
+
+      dndLink.insertAfter($('.sul-embed-metadata-panel').find('dd').first()).wrap(dndLinkWrapper);
+    };
+
+    var _updateDnDLink = function() {
     };
 
     var _addLeftRightControls = function() {
