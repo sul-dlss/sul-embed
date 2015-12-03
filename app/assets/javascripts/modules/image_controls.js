@@ -60,19 +60,19 @@
         $pagedMode = $el.find('[data-sul-view-mode="paged"]');
         $individualsMode = $el.find('[data-sul-view-mode="individuals"]');
         $overviewPerspective = $el.find('[data-sul-view-perspective]');
-        
+
         // Handle control events here, but unfortunately we cannot handle the 
         // fullscreen through PubSub because of browser security restrictions
         $pagedMode.on('click', function() {
           var mode = $(this).data().sulViewMode;
           PubSub.publish('updateMode', mode);
         });
-        
+
         $individualsMode.on('click', function() {
           var mode = $(this).data().sulViewMode;
           PubSub.publish('updateMode', mode);
         });
-        
+
         $overviewPerspective.on('click', function() {
           PubSub.publish('updatePerspective', 'overview');
         });
@@ -93,7 +93,7 @@
       }
     };
   })();
-  
+
 
   global.ImageControls = ImageControls;
 })(this);
