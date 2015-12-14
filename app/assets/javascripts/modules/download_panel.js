@@ -29,7 +29,7 @@
           return;
         }
         var downloadUrl = imageData['@id'] + '/full/' + size.width + ',' +
-          size.height + '/0/default.jpg?action=download';
+          size.height + '/0/default.jpg?download=true';
         var list = $listMarkup.clone();
         var link = $('<a class="download-link" href="' + downloadUrl +
           '">Download (' + size.width + ' x ' + size.height + ')</a>');
