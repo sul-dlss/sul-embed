@@ -82,6 +82,9 @@ $image-thumb-slider-background-color: $sul-background;
   height:35px;
   position:absolute;
   bottom:0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .#{$namespace}-image-x-frame {
