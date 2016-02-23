@@ -34,6 +34,9 @@ group :development, :test do
 
   # Needed for deploying to dev/test
   gem 'coffee-rails'
+
+  # Linting/Styleguide Enforcement
+  gem 'rubocop'
 end
 
 

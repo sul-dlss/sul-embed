@@ -1,12 +1,14 @@
 inherit_from:
-  - .rubocop_hound.yml
   - .rubocop_todo.yml
 
 AllCops:
   Exclude:
     - 'spec/fixtures/**/*'
     - 'vendor/**/*'
-  RunRailsCops: true
+  TargetRubyVersion: 2.2
+
+Rails:
+  Enabled: true
 
 Style/StringLiterals:
   Enabled: true
