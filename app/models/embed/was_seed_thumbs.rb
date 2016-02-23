@@ -5,8 +5,8 @@ module Embed
   # into hash list
   class WasSeedThumbs
     attr_reader :druid
-    
-    # initializes a new object 
+
+    # initializes a new object
     # @param druid [String] the druid object in the format "aa111aa1111"
     def initialize(druid)
       @druid = druid
@@ -21,13 +21,13 @@ module Embed
     #     {'memento_uri'=> '','memento_datetime'=> '','thumbnail_uri'=> 'http...default.jpg'}]
     def get_thumbs_list
       raise ResourceNotAvailable if response.nil?
-      
-      @thumbs_list ||= begin 
+
+      @thumbs_list ||= begin
         result = JSON.parse(response)
         result['thumbnails']
       end
     end
-    
+
     # reads the response from the thumbnail service
     # @return [String] response of the request, nil if there is error
     # @raise [ResourceNotAvailable] if there response returns not success
@@ -37,7 +37,7 @@ module Embed
         response = conn.get do |request|
           request.options.timeout = 2
           request.options.open_timeout = 2
-          request.params['format']='json'
+          request.params['format'] = 'json'
         end
         raise ResourceNotAvailable unless response.success?
         response.body

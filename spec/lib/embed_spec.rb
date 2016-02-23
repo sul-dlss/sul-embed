@@ -18,7 +18,7 @@ describe Embed do
       expect(Embed.registered_viewers).to include TestViewerClass
     end
     it 'should raise an error if a viewer registers itself w/ a supported type that is already registered' do
-      expect( ->{ Embed.register_viewer(Embed.registered_viewers.first) } ).to raise_error(Embed::DuplicateViewerRegistration)
+      expect(-> { Embed.register_viewer(Embed.registered_viewers.first) }).to raise_error(Embed::DuplicateViewerRegistration)
     end
   end
 end

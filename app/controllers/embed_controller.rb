@@ -1,7 +1,7 @@
 class EmbedController < ApplicationController
   before_action :validate_request
-  before_filter :set_cache
-  before_filter :allow_iframe, only: :iframe
+  before_action :set_cache
+  before_action :allow_iframe, only: :iframe
 
   def get
     if @embed_request.format.to_sym == :xml
@@ -63,5 +63,4 @@ class EmbedController < ApplicationController
   def allow_iframe
     response.headers.delete('X-Frame-Options')
   end
-
 end

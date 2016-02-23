@@ -11,8 +11,8 @@ describe Embed::Envelope do
   end
   describe '#to_bounding_box' do
     let(:envelope) do
-      Embed::Envelope.new(Nokogiri::XML(geo_purl_public).
-        at_xpath('//gml:Envelope','gml'=>'http://www.opengis.net/gml/3.2/'))
+      Embed::Envelope.new(Nokogiri::XML(geo_purl_public)
+        .at_xpath('//gml:Envelope', 'gml' => 'http://www.opengis.net/gml/3.2/'))
     end
     let(:no_envelope) { Embed::Envelope.new(nil) }
     it 'returns nil if @envelope is falsy' do

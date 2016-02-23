@@ -7,31 +7,31 @@ module Embed
     end
 
     ##
-    # Creates a bounding box as a 2D Array if an envelope is present (eg. 
+    # Creates a bounding box as a 2D Array if an envelope is present (eg.
     # [[min_lng, min_lat], [max_lng, max_lat]])
     # @return [Array]
     def to_bounding_box
       [[west, south], [east, north]] if @envelope.present?
     end
 
-    private 
+    private
 
     def lower_corner
-      @envelope.xpath('//gml:lowerCorner', 'gml'=>'http://www.opengis.net/gml/3.2/').text.split(' ')
+      @envelope.xpath('//gml:lowerCorner', 'gml' => 'http://www.opengis.net/gml/3.2/').text.split(' ')
     end
-    
+
     def upper_corner
-      @envelope.xpath('//gml:upperCorner', 'gml'=>'http://www.opengis.net/gml/3.2/').text.split(' ')
+      @envelope.xpath('//gml:upperCorner', 'gml' => 'http://www.opengis.net/gml/3.2/').text.split(' ')
     end
 
     def south
       lower_corner[0]
     end
-    
+
     def west
       lower_corner[1]
     end
-    
+
     def north
       upper_corner[0]
     end
@@ -39,6 +39,5 @@ module Embed
     def east
       upper_corner[1]
     end
-
   end
 end

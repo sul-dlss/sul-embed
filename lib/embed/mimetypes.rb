@@ -28,8 +28,9 @@ module Embed
           lookup.to_s.delete(':')
         end
       end
-      
+
       private
+
       def lookup
         @lookup ||= Mime::Type.lookup(mimetype).to_sym
       end

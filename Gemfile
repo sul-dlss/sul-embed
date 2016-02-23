@@ -39,7 +39,6 @@ group :development, :test do
   gem 'rubocop'
 end
 
-
 group :deployment do
   gem 'capistrano', '~> 3.0'
   gem 'capistrano-rvm'
@@ -50,7 +49,6 @@ end
 
 gem 'squash_ruby', require: 'squash/ruby'
 gem 'squash_rails', require: 'squash/rails'
-
 
 gem 'uglifier'
 

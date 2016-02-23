@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'download panel', js: true do
   include PURLFixtures
-  let(:request) { Embed::Request.new( {url: 'https://purl.stanford.edu/ab123cd4567'}) }
+  let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/ab123cd4567') }
   describe 'toggle button' do
     before do
       stub_purl_response_with_fixture(image_purl)

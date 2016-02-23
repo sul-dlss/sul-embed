@@ -8,7 +8,7 @@ module Embed
     end
 
     def title
-      @title ||= ng_xml.xpath('//dc:title','dc'=>'http://purl.org/dc/elements/1.1/').try(:text)
+      @title ||= ng_xml.xpath('//dc:title', 'dc' => 'http://purl.org/dc/elements/1.1/').try(:text)
     end
 
     def type
@@ -59,23 +59,23 @@ module Embed
     def purl_url
       "#{Settings.purl_url}/#{@druid}"
     end
-    
-    def bounding_box 
+
+    def bounding_box
       Embed::Envelope.new(envelope).to_bounding_box
     end
 
     def envelope
-      ng_xml.at_xpath('//gml:Envelope', 'gml'=>'http://www.opengis.net/gml/3.2/')
+      ng_xml.at_xpath('//gml:Envelope', 'gml' => 'http://www.opengis.net/gml/3.2/')
     end
 
     ##
     # Returns true if the object is publicly accessible based on the
     #  rights_metadata
-    # @return [Boolean] true if the object is public, otherwise false  
+    # @return [Boolean] true if the object is public, otherwise false
     def public?
       rights.world_unrestricted?
     end
-    
+
     private
 
     def cc_license
@@ -140,12 +140,15 @@ module Embed
         @resource = resource
         @rights = rights
       end
+
       def sequence
         @resource.attributes['sequence'].try(:value)
       end
+
       def type
         @resource.attributes['type'].try(:value)
       end
+
       def description
         @description ||= if (label_element = @resource.xpath('./label').try(:text)).present?
                            label_element
@@ -153,6 +156,7 @@ module Embed
                            @resource.xpath('./attr[@name="label"]').try(:text)
                          end
       end
+
       def files
         @files ||= @resource.xpath('./file').map do |file|
           ResourceFile.new(file, @rights)
@@ -163,40 +167,53 @@ module Embed
           @file = file
           @rights = rights
         end
+
         def title
           @file.attributes['id'].try(:value)
         end
+
         def mimetype
           @file.attributes['mimetype'].try(:value)
         end
+
         def previewable?
           preview_types.include?(mimetype)
         end
+
         def is_image?
           mimetype =~ /image\/jp2/i
         end
+
         def size
           @file.attributes['size'].try(:value)
         end
+
         def image_height
           @file.xpath('./imageData').first.attributes['height'].try(:text) if has_image_data?
         end
+
         def image_width
           @file.xpath('./imageData').first.attributes['width'].try(:text) if has_image_data?
         end
+
         def location
           @file.xpath('./location[@type="url"]').first.try(:text) if has_location_data?
         end
+
         def stanford_only?
           @rights.stanford_only_unrestricted_file?(title)
         end
+
         private
+
         def has_image_data?
           @file.xpath('./imageData').present?
         end
+
         def has_location_data?
           @file.xpath('./location[@type="url"]').present?
         end
+
         def preview_types
           ['image/jp2']
         end

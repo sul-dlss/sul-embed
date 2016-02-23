@@ -2,8 +2,8 @@ require 'rails_helper'
 
 describe 'image viewer authentication and authorization', js: true do
   include PURLFixtures
-  let(:request) { Embed::Request.new( {url: 'https://purl.stanford.edu/ab123cd4567'}) }
-  
+  let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/ab123cd4567') }
+
   describe 'when public (world)' do
     before do
       stub_purl_response_with_fixture(image_with_pdf_purl)
@@ -56,7 +56,7 @@ describe 'image viewer authentication and authorization', js: true do
     end
     it 'download button should be hidden' do
       pending('implement show download button based on authorization')
-      fail
+      raise
     end
   end
 end

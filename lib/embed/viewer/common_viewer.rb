@@ -53,7 +53,7 @@ module Embed
             doc.div(class: 'sul-embed-footer-toolbar') do
               unless @request.hide_metadata?
                 doc.button(
-                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' +
+                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' \
                     'oolbar sul-embed-btn-default sul-i-infomation-circle',
                   'aria-expanded' => 'false',
                   'aria-label' => 'open metadata panel',
@@ -62,7 +62,7 @@ module Embed
               end
               unless @request.hide_embed_this?
                 doc.button(
-                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' +
+                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' \
                     'oolbar sul-embed-btn-default sul-i-share',
                   'aria-expanded' => 'false',
                   'aria-label' => 'open embed this panel',
@@ -71,7 +71,7 @@ module Embed
               end
               if show_download?
                 doc.button(
-                  class: 'sul-embed-footer-tool sul-embed-btn sul-em' +
+                  class: 'sul-embed-footer-tool sul-embed-btn sul-em' \
                     'bed-btn-toolbar sul-embed-btn-default sul-i-download-3',
                   'aria-expanded' => 'false',
                   'aria-label' => 'open download panel',
@@ -80,9 +80,9 @@ module Embed
               end
               if external_url.present?
                 doc.a(
-                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' +
-                    'oolbar sul-embed-btn-default sul-i-navigation-next-4', 
-                  href: "#{external_url}"
+                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' \
+                    'oolbar sul-embed-btn-default sul-i-navigation-next-4',
+                  href: external_url.to_s
                 ) do
                   doc.span(class: 'sul-embed-sr-only') { doc.text external_url_text }
                 end
@@ -96,7 +96,7 @@ module Embed
         unless @request.hide_metadata?
           Nokogiri::HTML::Builder.new do |doc|
             doc.div(class: 'sul-embed-panel-container') do
-              doc.div(class: 'sul-embed-panel sul-embed-metadata-panel', style: 'display:none;', :'aria-hidden' => 'true') do
+              doc.div(class: 'sul-embed-panel sul-embed-metadata-panel', style: 'display:none;', 'aria-hidden': 'true') do
                 doc.div(class: 'sul-embed-panel-header') do
                   doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-metadata-panel') do
                     doc.span('aria-hidden' => true) do
@@ -145,7 +145,7 @@ module Embed
         unless @request.hide_embed_this?
           Nokogiri::HTML::Builder.new do |doc|
             doc.div(class: 'sul-embed-panel-container') do
-              doc.div(class: 'sul-embed-panel sul-embed-embed-this-panel', style: 'display:none;', :'aria-hidden' => 'true') do
+              doc.div(class: 'sul-embed-panel sul-embed-embed-this-panel', style: 'display:none;', 'aria-hidden': 'true') do
                 doc.div(class: 'sul-embed-panel-header') do
                   doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-embed-this-panel') do
                     doc.span('aria-hidden' => true) do
@@ -163,7 +163,7 @@ module Embed
                       doc.text 'Select options:'
                     end
                     doc.div(class: 'sul-embed-section sul-embed-embed-title-section') do
-                      doc.input(type: 'checkbox', id: 'sul-embed-embed-title', :'data-embed-attr' => 'hide_title', checked: true)
+                      doc.input(type: 'checkbox', id: 'sul-embed-embed-title', 'data-embed-attr': 'hide_title', checked: true)
                       doc.label(for: 'sul-embed-embed-title') do
                         doc.text('title')
                         if @purl_object.title.present?
@@ -173,25 +173,25 @@ module Embed
                         end
                       end
                     end
-                    if self.is_a?(Embed::Viewer::File)
+                    if is_a?(Embed::Viewer::File)
                       doc.div(class: 'sul-embed-section') do
-                        doc.input(type: 'checkbox', id: 'sul-embed-embed-search', :'data-embed-attr' => 'hide_search', checked: true)
+                        doc.input(type: 'checkbox', id: 'sul-embed-embed-search', 'data-embed-attr': 'hide_search', checked: true)
                         doc.label(for: 'sul-embed-embed-search') { doc.text('add search box') }
                         doc.label(for: 'sul-embed-min_files_to_search') do
                           doc.text(' for')
-                          doc.input(type: 'text', id: 'sul-embed-min_files_to_search', :'data-embed-attr' => 'min_files_to_search', value: '10')
+                          doc.input(type: 'text', id: 'sul-embed-min_files_to_search', 'data-embed-attr': 'min_files_to_search', value: '10')
                           doc.text('or more files')
                         end
                       end
                     end
-                    if self.is_a?(Embed::Viewer::ImageX)
+                    if is_a?(Embed::Viewer::ImageX)
                       doc.div(class: 'sul-embed-section') do
-                        doc.input(type: 'checkbox', id: 'sul-embed-embed-download', :'data-embed-attr' => 'hide_download', checked: true)
+                        doc.input(type: 'checkbox', id: 'sul-embed-embed-download', 'data-embed-attr': 'hide_download', checked: true)
                         doc.label(for: 'sul-embed-embed-download') { doc.text('download') }
                       end
                     end
                     doc.div(class: 'sul-embed-section') do
-                      doc.input(type: 'checkbox', id: 'sul-embed-embed', :'data-embed-attr' => 'hide_embed', checked: true)
+                      doc.input(type: 'checkbox', id: 'sul-embed-embed', 'data-embed-attr': 'hide_embed', checked: true)
                       doc.label(for: 'sul-embed-embed') { doc.text('embed') }
                     end
                     doc.div do
@@ -250,7 +250,7 @@ module Embed
       # Should the download toolbar be shown?
       # @return [Boolean]
       def show_download?
-        (self.is_a?(Embed::Viewer::ImageX) || self.is_a?(Embed::Viewer::Geo)) && !@request.hide_download?
+        (is_a?(Embed::Viewer::ImageX) || is_a?(Embed::Viewer::Geo)) && !@request.hide_download?
       end
 
       private
@@ -258,8 +258,8 @@ module Embed
       def tooltip_text(file)
         if file.stanford_only?
           ['Available only to Stanford-affiliated patrons',
-           sul_pretty_date(@purl_object.embargo_release_date)].
-            compact.join(' until ')
+           sul_pretty_date(@purl_object.embargo_release_date)]
+            .compact.join(' until ')
         end
       end
 
@@ -300,15 +300,18 @@ module Embed
 
       def container_styles
         if height_style.present? || width_style.present?
-          "#{[height_style, width_style].compact.join(' ')}"
+          [height_style, width_style].compact.join(' ').to_s
         end
       end
+
       def height_style
         "max-height:#{height}px;" if height
       end
+
       def width_style
         "max-width:#{width}px;" if width
       end
+
       def header_height
         return 0 unless display_header?
         if !header_tools_logic.include?(:header_title_logic)
@@ -317,6 +320,7 @@ module Embed
           63
         end
       end
+
       # Set a specific height for the body. We need to subtract
       # the header and footer heights from the consumer
       # requested maxheight, otherwise we set a default
@@ -328,16 +332,20 @@ module Embed
           default_body_height
         end
       end
+
       def footer_height
         30
       end
+
       def calculate_height
         return nil unless body_height
         body_height + header_height + footer_height
       end
+
       def default_width
         nil
       end
+
       def default_body_height
         nil
       end
