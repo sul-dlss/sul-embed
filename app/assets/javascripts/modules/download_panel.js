@@ -22,14 +22,14 @@
         .append('<a class="download-link" href="' + imageData['@id'] +
         '/full/!' + disableDownloadWidthCutoff + ',' +
         disableDownloadWidthCutoff +
-        '/0/default.jpg" download>Download Thumbnail</a>'));
+        '/0/default.jpg?download=true" download>Download Thumbnail</a>'));
       // Create download list from sizes
       $.each(imageData.sizes, function(index, size) {
         if (size.width === 400 && size.height === 400) {
           return;
         }
         var downloadUrl = imageData['@id'] + '/full/' + size.width + ',' +
-          size.height + '/0/default.jpg?action=download';
+          size.height + '/0/default.jpg?download=true';
         var list = $listMarkup.clone();
         var link = $('<a class="download-link" href="' + downloadUrl +
           '">Download (' + size.width + ' x ' + size.height + ')</a>');
