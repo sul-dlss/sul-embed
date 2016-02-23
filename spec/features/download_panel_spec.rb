@@ -15,8 +15,16 @@ describe 'download panel', js: true do
       page.find('button[data-sul-embed-toggle="sul-embed-download-panel"]', visible: true)
       page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
       expect(page).to have_css('.sul-embed-download-panel', visible: true)
-      expect(page).to have_css('.sul-embed-panel-item-label', text: '') 
+      expect(page).to have_css('.sul-embed-panel-item-label', text: '')
       expect(page).to have_css('.sul-embed-download-list-item', visible: true, count: 6)
+    end
+
+    it 'includes the url param that tells stacks to return the object for download' do
+      # Wait for the manifest to come back
+      expect(page).to have_css '.sul-embed-image-x-thumb-slider-container'
+      page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
+      link = page.find('.sul-embed-download-list a.download-link', match: :first)
+      expect(link['href']).to match(/\?download=true$/)
     end
   end
   describe 'restricted download to world' do

@@ -22,7 +22,7 @@
         .append('<a class="download-link" href="' + imageData['@id'] +
         '/full/!' + disableDownloadWidthCutoff + ',' +
         disableDownloadWidthCutoff +
-        '/0/default.jpg" download>Download Thumbnail</a>'));
+        '/0/default.jpg?download=true" download>Download Thumbnail</a>'));
       // Create download list from sizes
       $.each(imageData.sizes, function(index, size) {
         if (size.width === 400 && size.height === 400) {
