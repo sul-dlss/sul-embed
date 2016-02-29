@@ -34,8 +34,10 @@ group :development, :test do
 
   # Needed for deploying to dev/test
   gem 'coffee-rails'
-end
 
+  # Linting/Styleguide Enforcement
+  gem 'rubocop'
+end
 
 group :deployment do
   gem 'capistrano', '~> 3.0'
@@ -47,7 +49,6 @@ end
 
 gem 'squash_ruby', require: 'squash/ruby'
 gem 'squash_rails', require: 'squash/rails'
-
 
 gem 'uglifier'
 

@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Embed::Viewer::CommonViewer do
   include PURLFixtures
   let(:rails_request) { double('rails_request') }
-  let(:request) { Embed::Request.new({url: 'http://purl.stanford.edu/abc123'}) }
+  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:file_viewer) { Embed::Viewer::File.new(request) }
   let(:image_x_viewer) { Embed::Viewer::ImageX.new(request) }
   let(:geo_viewer) { Embed::Viewer::Geo.new(request) }
@@ -133,7 +133,7 @@ describe Embed::Viewer::CommonViewer do
 
   describe '#sul_pretty_date' do
     it 'parses a date into a standardized format' do
-      expect(file_viewer.sul_pretty_date((Time.now).to_s)).to match /^\d{2}-\w{3}-\d{4}$/
+      expect(file_viewer.sul_pretty_date(Time.now.to_s)).to match /^\d{2}-\w{3}-\d{4}$/
     end
     it 'checks for a blank string' do
       expect(file_viewer.sul_pretty_date(nil)).to be_nil
@@ -149,8 +149,8 @@ describe Embed::Viewer::CommonViewer do
       expect(geo_viewer.show_download?).to be_truthy
     end
     it 'not shown when hide_download is specified' do
-      hide_request = Embed::Request.new({url: 'http://purl.stanford.edu/abc123',
-                                         hide_download: 'true'})
+      hide_request = Embed::Request.new(url: 'http://purl.stanford.edu/abc123',
+                                        hide_download: 'true')
       geo_hide_viewer = Embed::Viewer::Geo.new(hide_request)
       expect(geo_hide_viewer.show_download?).to be_falsey
     end

@@ -1,7 +1,6 @@
 module Embed
   class Viewer
     class File < CommonViewer
-
       def initialize(*args)
         super
         header_tools_logic << :file_count_logic << :file_search_logic
@@ -14,7 +13,7 @@ module Embed
       def body_html
         file_count = 0
         Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-body sul-embed-file', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => "#{asset_url('file.css')}") do
+          doc.div(class: 'sul-embed-body sul-embed-file', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => asset_url('file.css').to_s) do
             doc.div(class: 'sul-embed-file-list') do
               if @purl_object.embargoed?
                 doc.div(class: 'sul-embed-embargo-message') do
@@ -30,7 +29,7 @@ module Embed
                       end
                       doc.div(class: 'sul-embed-media-object sul-embed-pull-left') do
                         if file.previewable?
-                          doc.img(class: 'sul-embed-square-image',src: "#{image_url(file)}_square", alt: '')
+                          doc.img(class: 'sul-embed-square-image', src: "#{image_url(file)}_square", alt: '')
                         else
                           doc.i(class: "sul-i-2x #{file_type_icon(file.mimetype)}")
                         end
@@ -84,6 +83,7 @@ module Embed
           end
         end
       end
+
       def preview_file_window(file, doc)
         if file.previewable?
           doc.div(style: 'display: none;', class: 'sul-embed-preview', 'data-sul-embed-file-preview-window' => 'true', 'aria-hidden' => true) do
@@ -91,15 +91,18 @@ module Embed
           end
         end
       end
+
       def image_url(file)
         "#{Settings.stacks_url}/image/#{@purl_object.druid}/#{file.title.gsub(/\.\w+$/, '')}"
       end
+
       def self.supported_types
         [:file]
       end
 
       private
-      ## 
+
+      ##
       # Creates an embargo message to be displayed, customized for stanford
       # only embargoed items
       # @return [String]
@@ -190,7 +193,6 @@ module Embed
           doc.input(class: 'sul-embed-search-input', id: 'sul-embed-search-input', placeholder: 'Search this list')
         end
       end
-
     end
   end
 end

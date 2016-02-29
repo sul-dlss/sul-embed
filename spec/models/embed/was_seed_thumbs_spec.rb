@@ -17,16 +17,12 @@ describe Embed::WasSeedThumbs do
       seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
       thumbs_list = seed_thumbs.get_thumbs_list
       expect(thumbs_list.length).to eq(4)
-      expect(thumbs_list[0]).to eq({
-        'memento_uri' => 'https://swap.stanford.edu/20121129060351/http://naca.central.cranfield.ac.uk/',
-        'memento_datetime' => '20121129060351',
-        'thumbnail_uri' => 'https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20121129060351/full/200,/0/default.jpg'
-      })
-      expect(thumbs_list[1]).to eq({
-        'memento_uri' => 'https://swap.stanford.edu/20130412231301/http://naca.central.cranfield.ac.uk/',
-        'memento_datetime' => '20130412231301',
-        'thumbnail_uri' => 'https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20130412231301/full/200,/0/default.jpg'
-      })
+      expect(thumbs_list[0]).to eq('memento_uri' => 'https://swap.stanford.edu/20121129060351/http://naca.central.cranfield.ac.uk/',
+                                   'memento_datetime' => '20121129060351',
+                                   'thumbnail_uri' => 'https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20121129060351/full/200,/0/default.jpg')
+      expect(thumbs_list[1]).to eq('memento_uri' => 'https://swap.stanford.edu/20130412231301/http://naca.central.cranfield.ac.uk/',
+                                   'memento_datetime' => '20130412231301',
+                                   'thumbnail_uri' => 'https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20130412231301/full/200,/0/default.jpg')
     end
     it 'returns an emtpy list for seed uris without thumbs' do
       allow_any_instance_of(Embed::WasSeedThumbs).to receive(:response).and_return(empty_thumbs_list)
@@ -37,10 +33,10 @@ describe Embed::WasSeedThumbs do
     it 'raises an error response with nil where there is a problem in retrieving the list' do
       allow_any_instance_of(Embed::WasSeedThumbs).to receive(:response).and_return(nil)
       seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
-      expect{seed_thumbs.get_thumbs_list}.to raise_error(Embed::WasSeedThumbs::ResourceNotAvailable)
+      expect { seed_thumbs.get_thumbs_list }.to raise_error(Embed::WasSeedThumbs::ResourceNotAvailable)
     end
   end
-  
+
   describe 'response' do
     let(:response) { double('response') }
     let(:connection) { double('connection') }
@@ -58,9 +54,9 @@ describe Embed::WasSeedThumbs do
       expect(Faraday).to receive(:new).with(url: 'https://thumbnail-service-example/ab123cd4567').and_return(connection)
       expect(connection).to receive(:get).and_return(response)
       expect(response).to receive(:success?).and_return(false)
-      
+
       seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
-      expect{seed_thumbs.response}.to raise_error(Embed::WasSeedThumbs::ResourceNotAvailable)
+      expect { seed_thumbs.response }.to raise_error(Embed::WasSeedThumbs::ResourceNotAvailable)
     end
   end
 

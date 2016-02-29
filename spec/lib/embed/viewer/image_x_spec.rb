@@ -22,7 +22,7 @@ describe Embed::Viewer::ImageX do
       stub_purl_response_and_request(image_purl, request)
       expect(image_x_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
       html = Capybara.string(image_x_viewer.to_html)
-      
+
       # visible false because we display:none the container until we've loaded the CSS.
       expect(html).to have_css '.sul-embed-image-x', visible: false
       expect(html).to have_css('#sul-embed-image-x[data-manifest-url=\'https://purl.stanford.edu/12345/iiif/manifest.json\']', visible: false)

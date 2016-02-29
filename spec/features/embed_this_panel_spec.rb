@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'embed this panel', js: true do
   include PURLFixtures
-  let(:request) { Embed::Request.new( {url: 'http://purl.stanford.edu/abc123'}) }
+  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   before do
     stub_purl_response_with_fixture(spec_fixture)
     send_embed_response

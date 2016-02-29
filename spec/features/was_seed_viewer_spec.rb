@@ -24,7 +24,7 @@ describe 'was seed viewer public', js: true do
         expect(page.find('.sul-embed-was-thumb-list')['style']).to match(/webkit-transform: translateZ/)
       end
     end
-    it 'selects the one before the last to be active' do         
+    it 'selects the one before the last to be active' do
       expect(page).to have_css('.active', count: 1, visible: true)
       expect(page.find('.active').text).to eq('12-Oct-2013')
     end

@@ -9,8 +9,7 @@ ask :user, proc { `whoami`.chomp }.call
 # Default branch is :master
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-server "#{fetch(:deploy_host)}.stanford.edu", user: fetch(:user), roles: %w{web db app}
-
+server "#{fetch(:deploy_host)}.stanford.edu", user: fetch(:user), roles: %w(web db app)
 
 Capistrano::OneTimeKey.generate_one_time_key!
 
@@ -30,7 +29,7 @@ set :log_level, :info
 # set :linked_files, %w{config/database.yml}
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w{bin config/settings log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w(bin config/settings log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system)
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -39,7 +38,6 @@ set :linked_dirs, %w{bin config/settings log tmp/pids tmp/cache tmp/sockets vend
 # set :keep_releases, 5
 
 namespace :deploy do
-
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
@@ -58,7 +56,6 @@ namespace :deploy do
       # end
     end
   end
-
 end
 
 before 'deploy:publishing', 'squash:write_revision'

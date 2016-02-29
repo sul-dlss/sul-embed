@@ -43,7 +43,7 @@ describe Embed::Viewer::Geo do
     it 'returns an empty string when hide_download' do
       geo_viewer = Embed::Viewer::Geo.new(
         Embed::Request.new(
-          {url: 'http://purl.stanford.edu/abc123', hide_download: 'true'}
+          url: 'http://purl.stanford.edu/abc123', hide_download: 'true'
         )
       )
       expect(geo_viewer.download_html).to eq ''

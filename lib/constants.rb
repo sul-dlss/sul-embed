@@ -22,8 +22,7 @@ module Constants
     'video/msvideo' => 'sul-i-file-video-3',
     'video/quicktime' => 'sul-i-file-video-3',
     'video/x-msvideo' => 'sul-i-file-video-3'
-  }
-  IMAGE_DOWNLOAD_SIZES = [
-    'default', 'small', 'medium', 'large', 'xlarge', 'full'
-  ]
+  }.freeze
+  IMAGE_DOWNLOAD_SIZES = %w(
+    default small medium large xlarge full).freeze
 end

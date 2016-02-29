@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Embed::Viewer::File do
   include PURLFixtures
   let(:purl_object) { double('purl_object') }
-  let(:request) { Embed::Request.new({url: 'http://purl.stanford.edu/abc123'}) }
+  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:file_viewer) { Embed::Viewer::File.new(request) }
   describe 'initialize' do
     it 'should be an Embed::Viewer::File' do
@@ -27,7 +27,7 @@ describe Embed::Viewer::File do
       expect(file_viewer.send(:body_height)).to eq 307
     end
     it 'consumer requested maxheight minus the header/footer height' do
-      height_request = Embed::Request.new({url: 'http://purl.stanford.edu/abc123', maxheight: '500'})
+      height_request = Embed::Request.new(url: 'http://purl.stanford.edu/abc123', maxheight: '500')
       stub_request(height_request)
       viewer = Embed::Viewer::File.new(height_request)
       expect(viewer.send(:body_height)).to eq 407
