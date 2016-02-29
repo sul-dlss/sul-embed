@@ -6,7 +6,7 @@ module Embed
 
   @@registered_viewers = []
   def self.register_viewer(viewer)
-    raise DuplicateViewerRegistration if viewer_suppoted_type_already_registered?(viewer)
+    raise DuplicateViewerRegistration if viewer_supported_type_already_registered?(viewer)
     @@registered_viewers << viewer
   end
 
@@ -16,7 +16,7 @@ module Embed
 
   private
 
-  def self.viewer_suppoted_type_already_registered?(viewer)
+  def self.viewer_supported_type_already_registered?(viewer)
     viewer.supported_types.any? do |supported_type|
       @@registered_viewers.any? do |registered_viewer|
         registered_viewer.supported_types.include?(supported_type)
