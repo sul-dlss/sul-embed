@@ -256,11 +256,10 @@ module Embed
       private
 
       def tooltip_text(file)
-        if file.stanford_only?
-          ['Available only to Stanford-affiliated patrons',
-           sul_pretty_date(@purl_object.embargo_release_date)]
-            .compact.join(' until ')
-        end
+        return unless file.stanford_only?
+        ['Available only to Stanford-affiliated patrons',
+         sul_pretty_date(@purl_object.embargo_release_date)]
+          .compact.join(' until ')
       end
 
       # Loops through all of the header tools logic methods
@@ -299,9 +298,8 @@ module Embed
       end
 
       def container_styles
-        if height_style.present? || width_style.present?
-          [height_style, width_style].compact.join(' ').to_s
-        end
+        return unless height_style.present? || width_style.present?
+        [height_style, width_style].compact.join(' ').to_s
       end
 
       def height_style
