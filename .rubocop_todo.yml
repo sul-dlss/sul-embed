@@ -26,19 +26,9 @@ Lint/HandleExceptions:
     - 'bin/rake'
 
 # Offense count: 1
-Lint/IneffectiveAccessModifier:
-  Exclude:
-    - 'lib/embed.rb'
-
-# Offense count: 1
 Lint/ParenthesesAsGroupedExpression:
   Exclude:
     - 'spec/lib/embed/response_spec.rb'
-
-# Offense count: 1
-Lint/UselessAccessModifier:
-  Exclude:
-    - 'lib/embed.rb'
 
 # Offense count: 8
 Metrics/AbcSize:
