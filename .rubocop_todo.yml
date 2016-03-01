@@ -40,12 +40,6 @@ Lint/UselessAccessModifier:
   Exclude:
     - 'lib/embed.rb'
 
-# Offense count: 3
-Lint/UselessAssignment:
-  Exclude:
-    - 'app/models/embed/purl.rb'
-    - 'app/models/embed/was_seed_thumbs.rb'
-
 # Offense count: 8
 Metrics/AbcSize:
   Max: 58
