@@ -13,8 +13,8 @@ module Embed
 
     def type
       @type ||= begin
-        contentMetadata = ng_xml.xpath('//contentMetadata').first
-        contentMetadata.attributes['type'].try(:value) if contentMetadata.present?
+        content_metadata = ng_xml.xpath('//contentMetadata').first
+        content_metadata.attributes['type'].try(:value) if content_metadata.present?
       end
     end
 

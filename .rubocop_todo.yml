@@ -115,9 +115,3 @@ Style/RegexpLiteral:
 Style/UnlessElse:
   Exclude:
     - 'lib/embed/viewer/common_viewer.rb'
-
-# Offense count: 1
-# Configuration parameters: EnforcedStyle, SupportedStyles.
-# SupportedStyles: snake_case, camelCase
-Style/VariableName:
-  Enabled: false
