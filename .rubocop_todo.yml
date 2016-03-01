@@ -110,8 +110,3 @@ Style/RegexpLiteral:
     - 'lib/embed/request.rb'
     - 'lib/embed/viewer/common_viewer.rb'
     - 'spec/features/embed_this_panel_spec.rb'
-
-# Offense count: 2
-Style/UnlessElse:
-  Exclude:
-    - 'lib/embed/viewer/common_viewer.rb'
