@@ -25,11 +25,6 @@ Lint/HandleExceptions:
     - 'bin/rails'
     - 'bin/rake'
 
-# Offense count: 1
-Lint/ParenthesesAsGroupedExpression:
-  Exclude:
-    - 'spec/lib/embed/response_spec.rb'
-
 # Offense count: 8
 Metrics/AbcSize:
   Max: 58
