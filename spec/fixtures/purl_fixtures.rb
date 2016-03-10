@@ -133,6 +133,33 @@ module PURLFixtures
       </publicObject>
     XML
   end
+  def file_purl_empty_size
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Book as Images</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="image">
+          <resource sequence="1" type="image">
+            <attr name="label">Resource Label</attr>
+            <file size="" mimetype="application/png" id="Page1.png" />
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="discover">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+          <access type="read">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
   def multi_resource_multi_file_purl
     <<-XML
       <publicObject>

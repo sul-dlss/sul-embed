@@ -56,6 +56,14 @@ describe Embed::Viewer::File do
         expect(html).to have_css 'a[download]', visible: false, text: /Download$/
       end
     end
+    context 'with empty file size' do
+      it 'displays Download as the link text' do
+        stub_purl_response_and_request(file_purl_empty_size, request)
+        expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
+        html = Capybara.string(file_viewer.to_html)
+        expect(html).to have_css 'a[download]', visible: false, text: /Download$/
+      end
+    end
   end
   describe 'file_type_icon' do
     it 'should return default file icon if mimetype is not recognized' do

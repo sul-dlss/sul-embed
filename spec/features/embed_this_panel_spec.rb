@@ -11,11 +11,11 @@ describe 'embed this panel', js: true do
     let(:spec_fixture) { file_purl }
     it 'should include the allowfullscreen no-scrolling, no-border, and no margin/padding attributes' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match /<iframe.*frameborder='0'.*><\/iframe>/
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match /<iframe.*marginwidth='0'.*><\/iframe>/
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match /<iframe.*marginheight='0'.*><\/iframe>/
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match /<iframe.*scrolling='no'.*><\/iframe>/
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match /<iframe.*allowfullscreen.*><\/iframe>/
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*frameborder='0'.*><\/iframe>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*marginwidth='0'.*><\/iframe>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*marginheight='0'.*><\/iframe>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*scrolling='no'.*><\/iframe>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*allowfullscreen.*><\/iframe>/)
     end
   end
   describe 'file objects' do
@@ -37,11 +37,11 @@ describe 'embed this panel', js: true do
     end
     it 'should update the textarea when the checkboxes are selected' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match /src='\S+\/iframe\?url=https:\/\/purl\.stanford\.edu\/ab123cd4567'/
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/src='\S+\/iframe\?url=https:\/\/purl\.stanford\.edu\/ab123cd4567'/)
       page.find("input#sul-embed-embed-search[type='checkbox']").trigger('click')
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match /src='\S+\/iframe\?url=https:\/\/purl\.stanford\.edu\/ab123cd4567&hide_search=true'/
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/src='\S+\/iframe\?url=https:\/\/purl\.stanford\.edu\/ab123cd4567&hide_search=true'/)
       page.find("input#sul-embed-embed-search[type='checkbox']").trigger('click')
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match /src='\S+\/iframe\?url=https:\/\/purl\.stanford\.edu\/ab123cd4567'/
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/src='\S+\/iframe\?url=https:\/\/purl\.stanford\.edu\/ab123cd4567'/)
     end
   end
   describe 'image objects' do
