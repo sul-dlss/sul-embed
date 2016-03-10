@@ -85,10 +85,9 @@ module Embed
       end
 
       def preview_file_window(file, doc)
-        if file.previewable?
-          doc.div(style: 'display: none;', class: 'sul-embed-preview', 'data-sul-embed-file-preview-window' => 'true', 'aria-hidden' => true) do
-            doc.img(src: "#{image_url(file)}_thumb", alt: '')
-          end
+        return unless file.previewable?
+        doc.div(style: 'display: none;', class: 'sul-embed-preview', 'data-sul-embed-file-preview-window' => 'true', 'aria-hidden' => true) do
+          doc.img(src: "#{image_url(file)}_thumb", alt: '')
         end
       end
 

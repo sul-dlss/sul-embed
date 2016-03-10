@@ -93,125 +93,119 @@ module Embed
       end
 
       def metadata_html
-        unless @request.hide_metadata?
-          Nokogiri::HTML::Builder.new do |doc|
-            doc.div(class: 'sul-embed-panel-container') do
-              doc.div(class: 'sul-embed-panel sul-embed-metadata-panel', style: 'display:none;', 'aria-hidden': 'true') do
-                doc.div(class: 'sul-embed-panel-header') do
-                  doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-metadata-panel') do
-                    doc.span('aria-hidden' => true) do
-                      doc.cdata '&times;'
-                    end
-                    doc.span(class: 'sul-embed-sr-only') { doc.text 'Close' }
+        return '' if @request.hide_metadata?
+        Nokogiri::HTML::Builder.new do |doc|
+          doc.div(class: 'sul-embed-panel-container') do
+            doc.div(class: 'sul-embed-panel sul-embed-metadata-panel', style: 'display:none;', 'aria-hidden': 'true') do
+              doc.div(class: 'sul-embed-panel-header') do
+                doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-metadata-panel') do
+                  doc.span('aria-hidden' => true) do
+                    doc.cdata '&times;'
                   end
-                  doc.div(class: 'sul-embed-panel-title') do
-                    doc.text @purl_object.title
-                  end
+                  doc.span(class: 'sul-embed-sr-only') { doc.text 'Close' }
                 end
-                doc.div(class: 'sul-embed-panel-body') do
-                  doc.dl do
-                    doc.dt { doc.text 'Available online' }
+                doc.div(class: 'sul-embed-panel-title') do
+                  doc.text @purl_object.title
+                end
+              end
+              doc.div(class: 'sul-embed-panel-body') do
+                doc.dl do
+                  doc.dt { doc.text 'Available online' }
+                  doc.dd do
+                    doc.a(href: @purl_object.purl_url, target: '_top') do
+                      doc.text @purl_object.purl_url.gsub(/^http:\/\//, '')
+                    end
+                  end
+                  if @purl_object.use_and_reproduction.present?
+                    doc.dt { doc.text('Use and reproduction') }
+                    doc.dd { doc.text(@purl_object.use_and_reproduction) }
+                  end
+                  if @purl_object.copyright.present?
+                    doc.dt { doc.text('Copyright') }
+                    doc.dd { doc.text(@purl_object.copyright) }
+                  end
+                  if @purl_object.license.present?
+                    doc.dt { doc.text('License') }
                     doc.dd do
-                      doc.a(href: @purl_object.purl_url, target: '_top') do
-                        doc.text @purl_object.purl_url.gsub(/^http:\/\//, '')
-                      end
-                    end
-                    if @purl_object.use_and_reproduction.present?
-                      doc.dt { doc.text('Use and reproduction') }
-                      doc.dd { doc.text(@purl_object.use_and_reproduction) }
-                    end
-                    if @purl_object.copyright.present?
-                      doc.dt { doc.text('Copyright') }
-                      doc.dd { doc.text(@purl_object.copyright) }
-                    end
-                    if @purl_object.license.present?
-                      doc.dt { doc.text('License') }
-                      doc.dd do
-                        doc.span(class: "sul-embed-license-#{@purl_object.license[:machine]}")
-                        doc.text(@purl_object.license[:human])
-                      end
+                      doc.span(class: "sul-embed-license-#{@purl_object.license[:machine]}")
+                      doc.text(@purl_object.license[:human])
                     end
                   end
                 end
               end
             end
-          end.to_html
-        else
-          ''
-        end
+          end
+        end.to_html
       end
 
       def embed_this_html
-        unless @request.hide_embed_this?
-          Nokogiri::HTML::Builder.new do |doc|
-            doc.div(class: 'sul-embed-panel-container') do
-              doc.div(class: 'sul-embed-panel sul-embed-embed-this-panel', style: 'display:none;', 'aria-hidden': 'true') do
-                doc.div(class: 'sul-embed-panel-header') do
-                  doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-embed-this-panel') do
-                    doc.span('aria-hidden' => true) do
-                      doc.cdata '&times;'
-                    end
-                    doc.span(class: 'sul-embed-sr-only') { doc.text 'Close' }
+        return '' if @request.hide_embed_this?
+        Nokogiri::HTML::Builder.new do |doc|
+          doc.div(class: 'sul-embed-panel-container') do
+            doc.div(class: 'sul-embed-panel sul-embed-embed-this-panel', style: 'display:none;', 'aria-hidden': 'true') do
+              doc.div(class: 'sul-embed-panel-header') do
+                doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-embed-this-panel') do
+                  doc.span('aria-hidden' => true) do
+                    doc.cdata '&times;'
                   end
-                  doc.div(class: 'sul-embed-panel-title') do
-                    doc.text 'Embed'
-                  end
+                  doc.span(class: 'sul-embed-sr-only') { doc.text 'Close' }
                 end
-                doc.div(class: 'sul-embed-panel-body') do
-                  doc.div(class: 'sul-embed-embed-this-form') do
-                    doc.span(class: 'sul-embed-options-label') do
-                      doc.text 'Select options:'
-                    end
-                    doc.div(class: 'sul-embed-section sul-embed-embed-title-section') do
-                      doc.input(type: 'checkbox', id: 'sul-embed-embed-title', 'data-embed-attr': 'hide_title', checked: true)
-                      doc.label(for: 'sul-embed-embed-title') do
-                        doc.text('title')
-                        if @purl_object.title.present?
-                          doc.span(class: 'sul-embed-embed-title') do
-                            doc.text(" (#{@purl_object.title})")
-                          end
+                doc.div(class: 'sul-embed-panel-title') do
+                  doc.text 'Embed'
+                end
+              end
+              doc.div(class: 'sul-embed-panel-body') do
+                doc.div(class: 'sul-embed-embed-this-form') do
+                  doc.span(class: 'sul-embed-options-label') do
+                    doc.text 'Select options:'
+                  end
+                  doc.div(class: 'sul-embed-section sul-embed-embed-title-section') do
+                    doc.input(type: 'checkbox', id: 'sul-embed-embed-title', 'data-embed-attr': 'hide_title', checked: true)
+                    doc.label(for: 'sul-embed-embed-title') do
+                      doc.text('title')
+                      if @purl_object.title.present?
+                        doc.span(class: 'sul-embed-embed-title') do
+                          doc.text(" (#{@purl_object.title})")
                         end
                       end
                     end
-                    if is_a?(Embed::Viewer::File)
-                      doc.div(class: 'sul-embed-section') do
-                        doc.input(type: 'checkbox', id: 'sul-embed-embed-search', 'data-embed-attr': 'hide_search', checked: true)
-                        doc.label(for: 'sul-embed-embed-search') { doc.text('add search box') }
-                        doc.label(for: 'sul-embed-min_files_to_search') do
-                          doc.text(' for')
-                          doc.input(type: 'text', id: 'sul-embed-min_files_to_search', 'data-embed-attr': 'min_files_to_search', value: '10')
-                          doc.text('or more files')
-                        end
+                  end
+                  if is_a?(Embed::Viewer::File)
+                    doc.div(class: 'sul-embed-section') do
+                      doc.input(type: 'checkbox', id: 'sul-embed-embed-search', 'data-embed-attr': 'hide_search', checked: true)
+                      doc.label(for: 'sul-embed-embed-search') { doc.text('add search box') }
+                      doc.label(for: 'sul-embed-min_files_to_search') do
+                        doc.text(' for')
+                        doc.input(type: 'text', id: 'sul-embed-min_files_to_search', 'data-embed-attr': 'min_files_to_search', value: '10')
+                        doc.text('or more files')
                       end
                     end
-                    if is_a?(Embed::Viewer::ImageX)
-                      doc.div(class: 'sul-embed-section') do
-                        doc.input(type: 'checkbox', id: 'sul-embed-embed-download', 'data-embed-attr': 'hide_download', checked: true)
-                        doc.label(for: 'sul-embed-embed-download') { doc.text('download') }
-                      end
+                  end
+                  if is_a?(Embed::Viewer::ImageX)
+                    doc.div(class: 'sul-embed-section') do
+                      doc.input(type: 'checkbox', id: 'sul-embed-embed-download', 'data-embed-attr': 'hide_download', checked: true)
+                      doc.label(for: 'sul-embed-embed-download') { doc.text('download') }
+                    end
+                  end
+                  doc.div(class: 'sul-embed-section') do
+                    doc.input(type: 'checkbox', id: 'sul-embed-embed', 'data-embed-attr': 'hide_embed', checked: true)
+                    doc.label(for: 'sul-embed-embed') { doc.text('embed') }
+                  end
+                  doc.div do
+                    doc.div(class: 'sul-embed-options-label') do
+                      doc.label(for: 'sul-embed-iframe-code') { doc.text('Embed code:') }
                     end
                     doc.div(class: 'sul-embed-section') do
-                      doc.input(type: 'checkbox', id: 'sul-embed-embed', 'data-embed-attr': 'hide_embed', checked: true)
-                      doc.label(for: 'sul-embed-embed') { doc.text('embed') }
-                    end
-                    doc.div do
-                      doc.div(class: 'sul-embed-options-label') do
-                        doc.label(for: 'sul-embed-iframe-code') { doc.text('Embed code:') }
-                      end
-                      doc.div(class: 'sul-embed-section') do
-                        doc.textarea(id: 'sul-embed-iframe-code', 'data-behavior' => 'iframe-code', rows: 4) do
-                          doc.text("<iframe src='#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{@purl_object.druid}' height='#{height}px' width='#{width || height}px' frameborder='0' marginwidth='0' marginheight='0' scrolling='no' allowfullscreen></iframe>")
-                        end
+                      doc.textarea(id: 'sul-embed-iframe-code', 'data-behavior' => 'iframe-code', rows: 4) do
+                        doc.text("<iframe src='#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{@purl_object.druid}' height='#{height}px' width='#{width || height}px' frameborder='0' marginwidth='0' marginheight='0' scrolling='no' allowfullscreen></iframe>")
                       end
                     end
                   end
                 end
               end
             end
-          end.to_html
-        else
-          ''
-        end
+          end
+        end.to_html
       end
 
       def download_html
@@ -256,11 +250,10 @@ module Embed
       private
 
       def tooltip_text(file)
-        if file.stanford_only?
-          ['Available only to Stanford-affiliated patrons',
-           sul_pretty_date(@purl_object.embargo_release_date)]
-            .compact.join(' until ')
-        end
+        return unless file.stanford_only?
+        ['Available only to Stanford-affiliated patrons',
+         sul_pretty_date(@purl_object.embargo_release_date)]
+          .compact.join(' until ')
       end
 
       # Loops through all of the header tools logic methods
@@ -299,9 +292,8 @@ module Embed
       end
 
       def container_styles
-        if height_style.present? || width_style.present?
-          [height_style, width_style].compact.join(' ').to_s
-        end
+        return unless height_style.present? || width_style.present?
+        [height_style, width_style].compact.join(' ').to_s
       end
 
       def height_style

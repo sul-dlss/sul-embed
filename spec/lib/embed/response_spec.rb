@@ -44,7 +44,7 @@ describe Embed::Response do
       expect(viewer).to receive(:width).and_return('100')
     end
     it 'should provide a hash that conforms to the oEmbed SPEC' do
-      expect(response.embed_hash).to eq ({
+      expect(response.embed_hash).to eq(
         type: 'rich',
         version: '1.0',
         provider_name: 'SUL Embed Service',
@@ -52,7 +52,7 @@ describe Embed::Response do
         height: '100',
         width: '100',
         html: 'the html'
-      })
+      )
     end
   end
 end

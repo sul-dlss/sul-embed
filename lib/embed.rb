@@ -14,15 +14,18 @@ module Embed
     @@registered_viewers
   end
 
-  private
+  class << self
+    private
 
-  def self.viewer_supported_type_already_registered?(viewer)
-    viewer.supported_types.any? do |supported_type|
-      @@registered_viewers.any? do |registered_viewer|
-        registered_viewer.supported_types.include?(supported_type)
+    def viewer_supported_type_already_registered?(viewer)
+      viewer.supported_types.any? do |supported_type|
+        @@registered_viewers.any? do |registered_viewer|
+          registered_viewer.supported_types.include?(supported_type)
+        end
       end
     end
   end
+
   class DuplicateViewerRegistration < StandardError
     def initialize(msg = 'A viewer has registered a supported type that another viewer has already registered.')
       super
