@@ -37,7 +37,7 @@ describe Embed::PURL do
   describe 'embargo_release_date' do
     before { stub_purl_response_with_fixture(embargoed_purl) }
     it 'should return the date in the embargo field' do
-      expect(Embed::PURL.new('12345').embargo_release_date).to match /\d{4}-\d{2}-\d{2}/
+      expect(Embed::PURL.new('12345').embargo_release_date).to match(/\d{4}-\d{2}-\d{2}/)
     end
   end
   describe 'contents' do

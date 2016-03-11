@@ -161,13 +161,14 @@ module Embed
             doc.span(class: 'sul-embed-sr-only') do
               doc.text "Download item #{file_count}"
             end
-            if file.size.blank?
-              doc.text 'Download'
-            else
-              doc.text pretty_filesize(file.size)
-            end
+            doc.text file_size_text(file.size)
           end
         end
+      end
+
+      def file_size_text(file_size)
+        return pretty_filesize(file_size) unless file_size.blank?
+        'Download'
       end
 
       def file_search_logic
