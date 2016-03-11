@@ -1,4 +1,5 @@
-[![Build Status](https://travis-ci.org/sul-dlss/sul-embed.svg?branch=master)](https://travis-ci.org/sul-dlss/sul-embed) | [![Coverage Status](https://coveralls.io/repos/sul-dlss/sul-embed/badge.svg)](https://coveralls.io/r/sul-dlss/sul-embed)
+[![Build Status](https://travis-ci.org/sul-dlss/sul-embed.svg?branch=master)](https://travis-ci.org/sul-dlss/sul-embed) | [![Coverage Status](https://coveralls.io/repos/sul-dlss/sul-embed/badge.svg)](https://coveralls.io/r/sul-dlss/sul-embed) |
+[![Dependency Status](https://gemnasium.com/sul-dlss/sul-embed.svg)](https://gemnasium.com/sul-dlss/sul-embed)
 
 # SUL-Embed
 
@@ -17,23 +18,23 @@ API endpoint: `TBD`
 Example: `TBD?url=http://purl.stanford.edu/zw200wd8767&format=json`
 
 ## Adding vendor assets with bower
-  
+
 Requires [bower](http://bower.io/) and uses [bower-rails](https://github.com/42dev/bower-rails) gem
 
     npm install -g bower
-    
+
 Assets can be installed using bower commands
 
     bower install listjs --save
-    
+
 Make sure to run the clean rake task to remove all of the extra stuff from bower packages (leaves the specified main file)
 
     rake bower:clean
-    
+
 Assets can now be referenced in the assset pipeline
 
     //= require listjs/dist/list
-    
+
 Assets used for production should be checked in so that dev and prod servers do not need to depend on nodejs and bower.
 
 ## Creating Viewers
@@ -45,7 +46,7 @@ The viewer class will be instantiated with an Embed::Request object. The `initia
     module Embed
       class DemoViewer
         include Embed::Viewer::CommonViewer
-        
+
       end
     end
 
@@ -54,7 +55,7 @@ The class must implement a `#body_html` method which will be called on the insta
     module Embed
       class DemoViewer
         include Embed::Viewer::CommonViewer
-        
+
         def body_html
           "<p>#{@purl_object.type}</p>"
         end
@@ -83,7 +84,7 @@ The file that the class is defined in (or your preferred method) should register
     module Embed
       class DemoViewer
         include Embed::Viewer::CommonViewer
-        
+
         def body_html
           "<p>#{@purl_object.type}</p>"
         end
