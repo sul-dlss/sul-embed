@@ -37,6 +37,9 @@ group :development, :test do
 
   # Linting/Styleguide Enforcement
   gem 'rubocop'
+
+  # guard-rspec for auto-running tests when relevant files are changed
+  gem 'guard-rspec', require: false
 end
 
 group :deployment do
