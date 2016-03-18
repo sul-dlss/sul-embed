@@ -3,15 +3,10 @@ lock '3.4.0'
 
 set :application, 'embed'
 set :repo_url, 'https://github.com/sul-dlss/sul-embed.git'
-set :deploy_host, ask('Server', 'e.g. hostname with no ".stanford.edu" or server node designator')
-ask :user, proc { `whoami`.chomp }.call
+set :user, 'embed'
 
 # Default branch is :master
 ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
-
-server "#{fetch(:deploy_host)}.stanford.edu", user: fetch(:user), roles: %w(web db app)
-
-Capistrano::OneTimeKey.generate_one_time_key!
 
 # Default value for :scm is :git
 # set :scm, :git
