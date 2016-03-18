@@ -254,6 +254,7 @@
       $embedHeader.find('[data-sul-view-fullscreen="fullscreen"]')
         .on('click', function() {
           canvasStore.osd.setFullScreen(true);
+          _disableClicks();
       });
     };
 
@@ -392,11 +393,20 @@
       });
     };
 
+    var _defaultViewerOrFullpageViewer = function() {
+      if ($('.osd-container.fullpage').length > 0) {
+        return $('.osd-container.fullpage');
+      } else {
+        return $el;
+      }
+    };
+
     var _disableClicks = function() {
       if (dataAttributes.worldRestriction) {
-        $el.on('contextmenu', '.openseadragon-canvas', function(e) {
-          e.preventDefault();
-        });
+        _defaultViewerOrFullpageViewer()
+          .on('contextmenu', '.openseadragon-canvas', function(e) {
+            e.preventDefault();
+          });
       }
     };
 
