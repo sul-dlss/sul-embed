@@ -42,9 +42,7 @@ module Embed
 
     def embargo_release_date
       @embargo_release_date ||= begin
-        if embargoed?
-          ng_xml.xpath('//rightsMetadata/access[@type="read"]/machine/embargoReleaseDate').try(:text)
-        end
+        ng_xml.xpath('//rightsMetadata/access[@type="read"]/machine/embargoReleaseDate').try(:text) if embargoed?
       end
     end
 
@@ -78,144 +76,144 @@ module Embed
 
     private
 
-    def cc_license
-      { human: cc_license_human, machine: cc_license_machine } if cc_license_human.present? && cc_license_machine.present?
-    end
-
-    def cc_license_machine
-      ng_xml.xpath('//rightsMetadata/use/machine[@type="creativeCommons"]').first.try(:content)
-    end
-
-    def cc_license_human
-      ng_xml.xpath('//rightsMetadata/use/human[@type="creativeCommons"]').first.try(:content)
-    end
-
-    def odc_licence
-      { human: odc_licence_human, machine: odc_licence_machine } if odc_licence_human.present? && odc_licence_machine.present?
-    end
-
-    def odc_licence_human
-      ng_xml.xpath('//rightsMetadata/use/human[@type="openDataCommons"]').first.try(:content)
-    end
-
-    def odc_licence_machine
-      ng_xml.xpath('//rightsMetadata/use/machine[@type="openDataCommons"]').first.try(:content)
-    end
-
-    def rights_xml
-      @rights_xml ||= ng_xml.xpath('//rightsMetadata').to_s
-    end
-
-    def purl_xml_url
-      "#{Settings.purl_url}/#{@druid}.xml"
-    end
-
-    def response
-      @response ||= begin
-        conn = Faraday.new(url: purl_xml_url)
-        response = conn.get do |request|
-          request.options.timeout = 2
-          request.options.open_timeout = 2
-        end
-        raise ResourceNotAvailable unless response.success?
-        response.body
-      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
-        nil
-      end
-    end
-    class ResourceNotAvailable < StandardError
-      def initialize(msg = 'The requested PURL resource was not available')
-        super
-      end
-    end
-    class ResourceNotEmbeddable < StandardError
-      def initialize(msg = 'The requested PURL resource was not embeddable.')
-        super
-      end
-    end
-    class Resource
-      def initialize(resource, rights)
-        @resource = resource
-        @rights = rights
+      def cc_license
+        { human: cc_license_human, machine: cc_license_machine } if cc_license_human.present? && cc_license_machine.present?
       end
 
-      def sequence
-        @resource.attributes['sequence'].try(:value)
+      def cc_license_machine
+        ng_xml.xpath('//rightsMetadata/use/machine[@type="creativeCommons"]').first.try(:content)
       end
 
-      def type
-        @resource.attributes['type'].try(:value)
+      def cc_license_human
+        ng_xml.xpath('//rightsMetadata/use/human[@type="creativeCommons"]').first.try(:content)
       end
 
-      def description
-        @description ||= if (label_element = @resource.xpath('./label').try(:text)).present?
-                           label_element
-                         else
-                           @resource.xpath('./attr[@name="label"]').try(:text)
-                         end
+      def odc_licence
+        { human: odc_licence_human, machine: odc_licence_machine } if odc_licence_human.present? && odc_licence_machine.present?
       end
 
-      def files
-        @files ||= @resource.xpath('./file').map do |file|
-          ResourceFile.new(file, @rights)
+      def odc_licence_human
+        ng_xml.xpath('//rightsMetadata/use/human[@type="openDataCommons"]').first.try(:content)
+      end
+
+      def odc_licence_machine
+        ng_xml.xpath('//rightsMetadata/use/machine[@type="openDataCommons"]').first.try(:content)
+      end
+
+      def rights_xml
+        @rights_xml ||= ng_xml.xpath('//rightsMetadata').to_s
+      end
+
+      def purl_xml_url
+        "#{Settings.purl_url}/#{@druid}.xml"
+      end
+
+      def response
+        @response ||= begin
+          conn = Faraday.new(url: purl_xml_url)
+          response = conn.get do |request|
+            request.options.timeout = 2
+            request.options.open_timeout = 2
+          end
+          raise ResourceNotAvailable unless response.success?
+          response.body
+        rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
+          nil
         end
       end
-      class ResourceFile
-        def initialize(file, rights)
-          @file = file
+      class ResourceNotAvailable < StandardError
+        def initialize(msg = 'The requested PURL resource was not available')
+          super
+        end
+      end
+      class ResourceNotEmbeddable < StandardError
+        def initialize(msg = 'The requested PURL resource was not embeddable.')
+          super
+        end
+      end
+      class Resource
+        def initialize(resource, rights)
+          @resource = resource
           @rights = rights
         end
 
-        def title
-          @file.attributes['id'].try(:value)
+        def sequence
+          @resource.attributes['sequence'].try(:value)
         end
 
-        def mimetype
-          @file.attributes['mimetype'].try(:value)
+        def type
+          @resource.attributes['type'].try(:value)
         end
 
-        def previewable?
-          preview_types.include?(mimetype)
+        def description
+          @description ||= if (label_element = @resource.xpath('./label').try(:text)).present?
+                             label_element
+                           else
+                             @resource.xpath('./attr[@name="label"]').try(:text)
+                           end
         end
 
-        def is_image?
-          mimetype =~ /image\/jp2/i
+        def files
+          @files ||= @resource.xpath('./file').map do |file|
+            ResourceFile.new(file, @rights)
+          end
         end
+        class ResourceFile
+          def initialize(file, rights)
+            @file = file
+            @rights = rights
+          end
 
-        def size
-          @file.attributes['size'].try(:value)
-        end
+          def title
+            @file.attributes['id'].try(:value)
+          end
 
-        def image_height
-          @file.xpath('./imageData').first.attributes['height'].try(:text) if has_image_data?
-        end
+          def mimetype
+            @file.attributes['mimetype'].try(:value)
+          end
 
-        def image_width
-          @file.xpath('./imageData').first.attributes['width'].try(:text) if has_image_data?
-        end
+          def previewable?
+            preview_types.include?(mimetype)
+          end
 
-        def location
-          @file.xpath('./location[@type="url"]').first.try(:text) if has_location_data?
-        end
+          def is_image?
+            mimetype =~ /image\/jp2/i
+          end
 
-        def stanford_only?
-          @rights.stanford_only_unrestricted_file?(title)
-        end
+          def size
+            @file.attributes['size'].try(:value)
+          end
 
-        private
+          def image_height
+            @file.xpath('./imageData').first.attributes['height'].try(:text) if has_image_data?
+          end
 
-        def has_image_data?
-          @file.xpath('./imageData').present?
-        end
+          def image_width
+            @file.xpath('./imageData').first.attributes['width'].try(:text) if has_image_data?
+          end
 
-        def has_location_data?
-          @file.xpath('./location[@type="url"]').present?
-        end
+          def location
+            @file.xpath('./location[@type="url"]').first.try(:text) if has_location_data?
+          end
 
-        def preview_types
-          ['image/jp2']
+          def stanford_only?
+            @rights.stanford_only_unrestricted_file?(title)
+          end
+
+          private
+
+            def has_image_data?
+              @file.xpath('./imageData').present?
+            end
+
+            def has_location_data?
+              @file.xpath('./location[@type="url"]').present?
+            end
+
+            def preview_types
+              ['image/jp2']
+            end
         end
       end
-    end
   end
 end

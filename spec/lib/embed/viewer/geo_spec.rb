@@ -3,11 +3,11 @@ require 'rails_helper'
 describe Embed::Viewer::Geo do
   include PURLFixtures
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
-  let(:geo_viewer) { Embed::Viewer::Geo.new(request) }
+  let(:geo_viewer) { described_class.new(request) }
 
   describe 'self.supported_types' do
-    it 'should return an array of supported types' do
-      expect(Embed::Viewer::Geo.supported_types).to eq [:geo]
+    it 'returns an array of supported types' do
+      expect(described_class.supported_types).to eq [:geo]
     end
   end
 
@@ -19,7 +19,7 @@ describe Embed::Viewer::Geo do
   end
 
   describe '.body_html' do
-    it 'should return geo html body for public resources' do
+    it 'returns geo html body for public resources' do
       stub_purl_response_and_request(geo_purl_public, request)
       expect(geo_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
 
@@ -34,14 +34,14 @@ describe Embed::Viewer::Geo do
     end
   end
   describe '.external_url' do
-    it 'should build the external url based on settings and druid value' do
+    it 'builds the external url based on settings and druid value' do
       stub_request(request)
       expect(geo_viewer.external_url).to eq('https://earthworks.stanford.edu/catalog/stanford-abc123')
     end
   end
   describe '#download_html' do
     it 'returns an empty string when hide_download' do
-      geo_viewer = Embed::Viewer::Geo.new(
+      geo_viewer = described_class.new(
         Embed::Request.new(
           url: 'http://purl.stanford.edu/abc123', hide_download: 'true'
         )

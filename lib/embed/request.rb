@@ -50,49 +50,49 @@ module Embed
 
     private
 
-    def validate
-      require_url_parameter
-      validate_url_scheme
-      validate_format
-    end
-
-    def require_url_parameter
-      raise NoURLProvided unless url.present?
-    end
-
-    def validate_url_scheme
-      raise InvalidURLScheme unless url_scheme_is_valid?
-    end
-
-    def url_scheme_is_valid?
-      url_schemes.any? do |scheme|
-        url =~ scheme
-      end && url =~ /\/\w+$/
-    end
-
-    def validate_format
-      raise InvalidFormat unless format_is_valid?
-    end
-
-    def format_is_valid?
-      [/^json$/, /^xml$/].any? do |supported_format|
-        format =~ supported_format
+      def validate
+        require_url_parameter
+        validate_url_scheme
+        validate_format
       end
-    end
-    class NoURLProvided < StandardError
-      def initialize(msg = 'You must provide a URL parameter')
-        super
+
+      def require_url_parameter
+        raise NoURLProvided unless url.present?
       end
-    end
-    class InvalidURLScheme < StandardError
-      def initialize(msg = 'The provided URL is not a supported scheme for this embed service')
-        super
+
+      def validate_url_scheme
+        raise InvalidURLScheme unless url_scheme_is_valid?
       end
-    end
-    class InvalidFormat < StandardError
-      def initialize(msg = 'The provided format is not supported for this embed service')
-        super
+
+      def url_scheme_is_valid?
+        url_schemes.any? do |scheme|
+          url =~ scheme
+        end && url =~ /\/\w+$/
       end
-    end
+
+      def validate_format
+        raise InvalidFormat unless format_is_valid?
+      end
+
+      def format_is_valid?
+        [/^json$/, /^xml$/].any? do |supported_format|
+          format =~ supported_format
+        end
+      end
+      class NoURLProvided < StandardError
+        def initialize(msg = 'You must provide a URL parameter')
+          super
+        end
+      end
+      class InvalidURLScheme < StandardError
+        def initialize(msg = 'The provided URL is not a supported scheme for this embed service')
+          super
+        end
+      end
+      class InvalidFormat < StandardError
+        def initialize(msg = 'The provided format is not supported for this embed service')
+          super
+        end
+      end
   end
 end

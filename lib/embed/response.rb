@@ -38,8 +38,8 @@ module Embed
 
     private
 
-    def viewer
-      @viewer ||= Embed::Viewer.new(@request).viewer
-    end
+      def viewer
+        @viewer ||= Embed::Viewer.new(@request).viewer
+      end
   end
 end

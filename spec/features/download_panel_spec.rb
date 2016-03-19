@@ -10,7 +10,7 @@ describe 'download panel', js: true do
       fill_in_default_sandbox_form('fw090jw3474')
       click_button 'Embed'
     end
-    it 'should be present after a user clicks the button' do
+    it 'is present after a user clicks the button' do
       expect(page).to have_css('.sul-embed-download-panel', visible: false)
       page.find('button[data-sul-embed-toggle="sul-embed-download-panel"]', visible: true)
       page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
@@ -34,7 +34,7 @@ describe 'download panel', js: true do
       fill_in_default_sandbox_form('bb537hc4022')
       click_button 'Embed'
     end
-    it 'should show stanford only icon' do
+    it 'shows stanford only icon' do
       # Wait for the manifest to come back
       expect(page).to have_css '.sul-embed-image-x-thumb-slider-container'
       page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
@@ -51,7 +51,7 @@ describe 'download panel', js: true do
       fill_in_default_sandbox_form('bb112zx3193')
       click_button 'Embed'
     end
-    it 'should show stanford only icon' do
+    it 'shows stanford only icon' do
       # Wait for the manifest to come back
       expect(page).to have_css '.sul-embed-image-x-thumb-slider-container'
       page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click

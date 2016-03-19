@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'file preview', js: true do
   include PURLFixtures
-  it 'should display a toggle-able section image preview' do
+  it 'displays a toggle-able section image preview' do
     stub_purl_response_with_fixture(hybrid_object_purl)
     send_embed_response
     expect(page).to_not have_css('.sul-embed-preview', visible: true)

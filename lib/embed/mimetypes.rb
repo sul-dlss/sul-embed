@@ -31,9 +31,9 @@ module Embed
 
       private
 
-      def lookup
-        @lookup ||= Mime::Type.lookup(mimetype).to_sym
-      end
+        def lookup
+          @lookup ||= Mime::Type.lookup(mimetype).to_sym
+        end
     end
   end
 end
