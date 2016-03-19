@@ -6,6 +6,7 @@ describe Embed::Viewer::WasSeed do
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:was_seed_viewer) { described_class.new(request) }
   let(:purl) { "#{Settings.purl_url}/abc123" }
+  let(:thumbs_list_fixture) { JSON.parse(thumbs_list)['thumbnails'] }
 
   describe 'initialize' do
     it 'is an Embed::Viewer::WasSeed' do
@@ -26,7 +27,7 @@ describe Embed::Viewer::WasSeed do
 
       stub_purl_response_and_request(was_seed_purl, request)
       allow(was_seed_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
-      allow(was_seed_viewer).to receive(:thumbs_list).and_return(get_thumbs_list_fixtures)
+      allow(was_seed_viewer).to receive(:thumbs_list).and_return(thumbs_list_fixture)
 
       html = Capybara.string(was_seed_viewer.to_html)
       # visible false because we display:none the container until we've loaded the CSS.
@@ -59,10 +60,10 @@ describe Embed::Viewer::WasSeed do
     end
     it 'calls the Embed::WasSeedThumbs with the same druid id' do
       stub_request(request)
-      allow_any_instance_of(Embed::WasSeedThumbs).to receive(:get_thumbs_list).and_return(get_thumbs_list_fixtures)
+      allow_any_instance_of(Embed::WasSeedThumbs).to receive(:get_thumbs_list).and_return(thumbs_list_fixture)
 
       expect(Embed::WasSeedThumbs).to receive(:new).with('12345').and_return(Embed::WasSeedThumbs.new('12345'))
-      expect(was_seed_viewer.thumbs_list).to eq(get_thumbs_list_fixtures)
+      expect(was_seed_viewer.thumbs_list).to eq(thumbs_list_fixture)
     end
   end
 
@@ -97,9 +98,5 @@ describe Embed::Viewer::WasSeed do
       allow(was_seed_viewer).to receive(:item_size).and_return([100, 100])
       expect(was_seed_viewer.image_height).to eq(76)
     end
-  end
-
-  def get_thumbs_list_fixtures
-    JSON.parse(thumbs_list)['thumbnails']
   end
 end

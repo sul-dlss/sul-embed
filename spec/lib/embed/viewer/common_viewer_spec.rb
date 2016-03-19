@@ -21,8 +21,8 @@ describe Embed::Viewer::CommonViewer do
       expect(request).to receive(:hide_title?).at_least(:once).and_return(true)
       stub_purl_response_and_request(file_purl, request)
       html = Capybara.string(file_viewer.header_html)
-      expect(html).to_not have_css '.sul-embed-header-title'
-      expect(html).to_not have_css '.sul-embed-metadata-title'
+      expect(html).not_to have_css '.sul-embed-header-title'
+      expect(html).not_to have_css '.sul-embed-metadata-title'
     end
   end
   describe 'metadata_html' do
@@ -40,7 +40,7 @@ describe Embed::Viewer::CommonViewer do
     it 'does not return use and reproduction' do
       stub_purl_response_and_request(image_purl, request)
       html = Capybara.string(file_viewer.metadata_html)
-      expect(html).to_not have_content 'Use and reproduction'
+      expect(html).not_to have_content 'Use and reproduction'
     end
     it 'returns copyright' do
       stub_purl_response_and_request(image_purl, request)
@@ -50,7 +50,7 @@ describe Embed::Viewer::CommonViewer do
     it 'does not return copyright' do
       stub_purl_response_and_request(file_purl, request)
       html = Capybara.string(file_viewer.metadata_html)
-      expect(html).to_not have_content 'Copyright'
+      expect(html).not_to have_content 'Copyright'
     end
     it 'returns license' do
       stub_purl_response_and_request(file_purl, request)
@@ -60,14 +60,14 @@ describe Embed::Viewer::CommonViewer do
     it 'does not return license' do
       stub_purl_response_and_request(image_purl, request)
       html = Capybara.string(file_viewer.metadata_html)
-      expect(html).to_not have_content 'License'
+      expect(html).not_to have_content 'License'
     end
     it 'does not return the metadata panel at all' do
       expect(request).to receive(:hide_metadata?).at_least(:once).and_return(true)
       stub_request(request)
       html = Capybara.string(file_viewer.metadata_html)
-      expect(html).to_not have_css '.sul-embed-metadata-container'
-      expect(html).to_not have_css '[data-sul-embed-toggle="sul-embed-metadata-panel"]'
+      expect(html).not_to have_css '.sul-embed-metadata-container'
+      expect(html).not_to have_css '[data-sul-embed-toggle="sul-embed-metadata-panel"]'
     end
   end
   describe 'footer_html' do

@@ -40,7 +40,7 @@ describe 'download panel', js: true do
       page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
       within '.sul-embed-download-list' do
         expect(page).to have_css '.sul-embed-download-list-item a.download-link', text: 'Download Thumbnail'
-        expect(page).to_not have_css '.sul-embed-download-list-item.sul-embed-stanford-only a', count: 4
+        expect(page).not_to have_css '.sul-embed-download-list-item.sul-embed-stanford-only a', count: 4
       end
     end
   end
@@ -70,7 +70,7 @@ describe 'download panel', js: true do
     it 'when selected should hide the button' do
       check('Hide download?')
       click_button 'Embed'
-      expect(page).to_not have_css('button[data-sul-embed-toggle="sul-embed-download-panel"]')
+      expect(page).not_to have_css('button[data-sul-embed-toggle="sul-embed-download-panel"]')
     end
     it 'when not selected should display the button' do
       click_button 'Embed'

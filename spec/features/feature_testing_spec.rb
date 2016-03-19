@@ -17,7 +17,7 @@ describe 'feature testing of viewers', js: true do
       visit_sandbox
       check('Hide title?')
       click_button 'Embed'
-      expect(page).to_not have_css('.sul-embed-header-title')
+      expect(page).not_to have_css('.sul-embed-header-title')
     end
   end
   describe 'file viewer' do

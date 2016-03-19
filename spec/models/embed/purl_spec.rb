@@ -21,7 +21,7 @@ describe Embed::PURL do
     end
     it 'returns false when an item is not embargoed' do
       stub_purl_response_with_fixture(file_purl)
-      expect(described_class.new('12345')).to_not be_embargoed
+      expect(described_class.new('12345')).not_to be_embargoed
     end
   end
   describe '#world_unrestricted?' do
@@ -31,7 +31,7 @@ describe Embed::PURL do
     end
     it 'when it has a world restriction' do
       stub_purl_response_with_fixture(stanford_restricted_image_purl)
-      expect(described_class.new('12345')).to_not be_world_unrestricted
+      expect(described_class.new('12345')).not_to be_world_unrestricted
     end
   end
   describe 'embargo_release_date' do
@@ -145,7 +145,7 @@ describe Embed::PURL do
         end
         it 'returns false if the mimetype of the file is not previewable' do
           stub_purl_response_with_fixture(file_purl)
-          expect(described_class.new('12345').contents.first.files.first).to_not be_previewable
+          expect(described_class.new('12345').contents.first.files.first).not_to be_previewable
         end
       end
       describe 'is_image?' do
@@ -155,7 +155,7 @@ describe Embed::PURL do
         end
         it 'returns false if the mimetype of the file is not an image' do
           stub_purl_response_with_fixture(file_purl)
-          expect(described_class.new('12345').contents.first.files.first).to_not be_is_image
+          expect(described_class.new('12345').contents.first.files.first).not_to be_is_image
         end
       end
       describe 'rights' do
@@ -174,7 +174,7 @@ describe Embed::PURL do
             first_file = contents.first.files.first
             last_file = contents.last.files.first
             expect(first_file).to be_stanford_only
-            expect(last_file).to_not be_stanford_only
+            expect(last_file).not_to be_stanford_only
           end
         end
       end
