@@ -1,3 +1,6 @@
+inherit_gem:
+  dlss_cops: config/dlss_baseline.yml
+
 inherit_from:
   - .rubocop_todo.yml
 

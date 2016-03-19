@@ -96,6 +96,9 @@ GEM
       capistrano-bundle_audit (>= 0.0.3)
       capistrano-one_time_key
       capistrano-releaseboard
+    dlss_cops (0.0.3)
+      rubocop (~> 0.37.0)
+      rubocop-rspec (~> 1.4.0)
     docile (1.1.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
@@ -239,6 +242,7 @@ GEM
       rainbow (>= 1.99.1, < 3.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 0.3)
+    rubocop-rspec (1.4.0)
     ruby-progressbar (1.7.5)
     sass (3.4.19)
     sass-rails (5.0.4)
@@ -312,6 +316,7 @@ DEPENDENCIES
   config
   coveralls
   dlss-capistrano
+  dlss_cops
   dor-rights-auth
   faraday
   filesize
