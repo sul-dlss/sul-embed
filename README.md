@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/sul-dlss/sul-embed.svg?branch=master)](https://travis-ci.org/sul-dlss/sul-embed) | [![Coverage Status](https://coveralls.io/repos/sul-dlss/sul-embed/badge.svg)](https://coveralls.io/r/sul-dlss/sul-embed) |
-[![Dependency Status](https://gemnasium.com/sul-dlss/sul-embed.svg)](https://gemnasium.com/sul-dlss/sul-embed) | [![Code Climate](https://codeclimate.com/github/sul-dlss/sul-embed/badges/gpa.svg)](https://codeclimate.com/github/sul-dlss/sul-embed)
+[![Dependency Status](https://gemnasium.com/sul-dlss/sul-embed.svg)](https://gemnasium.com/sul-dlss/sul-embed) | [![Code Climate](https://codeclimate.com/github/sul-dlss/sul-embed/badges/gpa.svg)](https://codeclimate.com/github/sul-dlss/sul-embed) | [![codebeat badge](https://codebeat.co/badges/19d8eb69-455b-4b53-aaee-a385793a81f8)](https://codebeat.co/projects/github-com-sul-dlss-sul-embed)
 
 # SUL-Embed
 
