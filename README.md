@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/sul-dlss/sul-embed.svg?branch=master)](https://travis-ci.org/sul-dlss/sul-embed) | [![Coverage Status](https://coveralls.io/repos/sul-dlss/sul-embed/badge.svg)](https://coveralls.io/r/sul-dlss/sul-embed) |
-[![Dependency Status](https://gemnasium.com/sul-dlss/sul-embed.svg)](https://gemnasium.com/sul-dlss/sul-embed)
+[![Dependency Status](https://gemnasium.com/sul-dlss/sul-embed.svg)](https://gemnasium.com/sul-dlss/sul-embed) | [![Code Climate](https://codeclimate.com/github/sul-dlss/sul-embed/badges/gpa.svg)](https://codeclimate.com/github/sul-dlss/sul-embed)
 
 # SUL-Embed
 
