@@ -99,7 +99,7 @@ GEM
     docile (1.1.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
-    dor-rights-auth (1.0.1)
+    dor-rights-auth (1.0.2)
       nokogiri
     erubis (2.7.0)
     execjs (2.6.0)
