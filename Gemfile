@@ -1,6 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.2.5.2'
+# Pinning to < 3.0 due to issue with teaspoon
+# https://github.com/modeset/teaspoon/issues/443
+gem 'sprockets-rails', '< 3.0'
+
+gem 'rails', '< 5.0'
 
 gem 'rails-api'
 
