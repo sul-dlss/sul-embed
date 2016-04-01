@@ -1,4 +1,5 @@
 inherit_from:
+  - https://raw.githubusercontent.com/sul-dlss/dlss_cops/v0.0.3/config/dlss_baseline.yml
   - .rubocop_todo.yml
 
 AllCops:
@@ -14,3 +15,59 @@ Rails:
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: single_quotes
+
+# Enabled rules to override DLSS Cops Baseline
+Style/AccessModifierIndentation:
+  Enabled: true
+
+Style/ClassAndModuleChildren:
+  Enabled: true
+
+# The auto-generated todo.yml only disables this rule
+# entirely, so we have a line-by-line exclusion here so
+# new code requires top-level module/class documentation.
+Style/Documentation:
+  Enabled: true
+  Exclude:
+    - 'app/controllers/application_controller.rb'
+    - 'app/controllers/embed_controller.rb'
+    - 'app/controllers/pages_controller.rb'
+    - 'app/models/embed/envelope.rb'
+    - 'app/models/embed/purl.rb'
+    - 'app/models/embed/was_seed_thumbs.rb'
+    - 'config/application.rb'
+    - 'lib/embed/mimetypes.rb'
+    - 'lib/embed/request.rb'
+    - 'lib/embed/response.rb'
+    - 'lib/embed/url_schemes.rb'
+    - 'lib/embed/viewer/common_viewer.rb'
+    - 'lib/embed/viewer/file.rb'
+    - 'lib/embed/viewer/geo.rb'
+    - 'lib/embed/viewer/image_x.rb'
+    - 'lib/embed/viewer/was_seed.rb'
+    - 'lib/embed/viewer.rb'
+    - 'lib/embed.rb'
+    - 'spec/lib/embed_spec.rb'
+
+Style/LeadingCommentSpace:
+  Enabled: true
+
+Style/NegatedIf:
+  Enabled: true
+
+Style/NegatedWhile:
+  Enabled: true
+
+Style/SpaceAfterNot:
+  Enabled: true
+
+Style/SpaceAroundEqualsInParameterDefault:
+  Enabled: true
+  EnforcedStyle: space
+
+Style/TrailingBlankLines:
+  Enabled: true
+
+Style/TrailingCommaInLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: no_comma

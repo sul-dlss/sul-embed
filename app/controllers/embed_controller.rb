@@ -53,13 +53,13 @@ class EmbedController < ApplicationController
 
   private
 
-  def set_cache
-    return unless Rails.env.production?
-    request.session_options[:skip] = true
-    response.headers['Cache-Control'] = "public, max-age=#{Settings.cache_life}"
-  end
+    def set_cache
+      return unless Rails.env.production?
+      request.session_options[:skip] = true
+      response.headers['Cache-Control'] = "public, max-age=#{Settings.cache_life}"
+    end
 
-  def allow_iframe
-    response.headers.delete('X-Frame-Options')
-  end
+    def allow_iframe
+      response.headers.delete('X-Frame-Options')
+    end
 end

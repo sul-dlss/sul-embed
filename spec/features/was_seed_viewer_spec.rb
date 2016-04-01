@@ -3,9 +3,10 @@ require 'rails_helper'
 describe 'was seed viewer public', js: true do
   include PURLFixtures
   include WasSeedThumbsFixtures
+  let(:thumbs_list_fixture) { JSON.parse(thumbs_list)['thumbnails'] }
 
   before do
-    allow_any_instance_of(Embed::Viewer::WasSeed).to receive(:thumbs_list).and_return(get_thumbs_list_fixtures)
+    allow_any_instance_of(Embed::Viewer::WasSeed).to receive(:thumbs_list).and_return(thumbs_list_fixture)
     stub_purl_response_with_fixture(was_seed_purl)
     visit_sandbox
     fill_in_default_sandbox_form
@@ -33,9 +34,5 @@ describe 'was seed viewer public', js: true do
       page.first('.sul-embed-was-thumb-item').click
       expect(page.find('.active').text).to eq('29-Nov-2012')
     end
-  end
-
-  def get_thumbs_list_fixtures
-    JSON.parse(thumbs_list)['thumbnails']
   end
 end

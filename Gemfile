@@ -42,6 +42,9 @@ group :development, :test do
   # Linting/Styleguide Enforcement
   gem 'rubocop'
 
+  # DLSS Baseline Styleguide
+  gem 'dlss_cops'
+
   # guard-rspec for auto-running tests when relevant files are changed
   gem 'guard-rspec', require: false
 end

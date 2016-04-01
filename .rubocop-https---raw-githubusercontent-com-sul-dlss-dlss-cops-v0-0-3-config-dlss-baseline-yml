@@ -1,0 +1,136 @@
+# Turn on RSpec cops
+require: rubocop-rspec
+
+AllCops:
+  DisplayCopNames: true
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'Gemfile'
+    - 'Gemfile.lock'
+    - '*.gemspec'
+    - '**/*.md'
+    - 'bin/*'
+    - 'config/**/*.yml'
+    - 'db/**/*'
+    - 'script/**/*'
+    - '.internal_test_app/**/*'
+    - 'spec/fixtures/**/*'
+    - 'spec/internal/**/*'
+    - 'spec/test_app_templates/**/*'
+    - 'vendor/**/*'
+
+# Turn on Rails cops
+Rails:
+  Enabled: true
+
+# DLSS configuration changes for these cops enabled by default in Rubocop
+
+Metrics/AbcSize:
+  Max: 20
+
+Metrics/BlockNesting:
+  Max: 4
+
+Metrics/ClassLength:
+  Max: 200
+
+Metrics/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 25
+
+Metrics/ModuleLength:
+  Max: 200
+
+Style/IfUnlessModifier:
+  MaxLineLength: 120
+
+Style/IndentationConsistency:
+  EnforcedStyle: rails
+
+Style/WhileUntilModifier:
+  MaxLineLength: 120
+
+RSpec/ExampleWording:
+  CustomTransform:
+    be: is
+    have: has
+    not: does not
+    NOT: does NOT
+  IgnoredWords:
+    - only
+
+# DLSS explicitly disabling these cops enabled by default in Rubocop
+# (DLSS agrees they should be disabled, or we disagree about whether they should be enabled)
+
+Style/AccessModifierIndentation:
+  Enabled: false
+
+Style/AlignHash:
+  Enabled: false
+
+Style/AlignParameters:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/BlockComments:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+Style/LeadingCommentSpace:
+  Enabled: false
+
+Style/NegatedIf:
+  Enabled: false
+
+Style/NegatedWhile:
+  Enabled: false
+
+Style/RegexpLiteral:
+  Enabled: false
+
+Style/SingleLineBlockParams:
+  Enabled: false
+
+Style/SpaceAfterNot:
+  Enabled: false
+
+Style/SpaceAroundEqualsInParameterDefault:
+  Enabled: false
+
+Style/SpaceInsideBrackets:
+  Enabled: false
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/TrailingBlankLines:
+  Enabled: false
+
+Style/TrailingCommaInLiteral:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Enabled: false
+
+RSpec/FilePath:
+  Enabled: false

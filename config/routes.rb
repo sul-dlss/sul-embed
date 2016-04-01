@@ -3,9 +3,7 @@ Rails.application.routes.draw do
 
   get 'iframe' => 'embed#iframe'
 
-  unless Rails.env.production?
-    get '/pages/*id' => 'pages#show', as: :page, format: false
-  end
+  get '/pages/*id' => 'pages#show', as: :page, format: false unless Rails.env.production?
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

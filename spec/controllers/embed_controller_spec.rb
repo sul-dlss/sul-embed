@@ -52,11 +52,11 @@ describe EmbedController do
       get :iframe, url: 'http://purl.stanford.edu/abc123', format: 'yml'
       expect(response.status).to eq(501)
     end
-    it 'should not have an X-Frame-Options in the headers (so embedding in an iframe is allowed)' do
+    it 'does not have an X-Frame-Options in the headers (so embedding in an iframe is allowed)' do
       get :iframe, url: 'http://purl.stanford.edu/fn662rv4961'
       expect(response.headers['X-Frame-Options']).to be_nil
     end
-    it 'should return HTML' do
+    it 'returns HTML' do
       get :iframe, url: 'http://purl.stanford.edu/fn662rv4961'
       expect(response.status).to eq(200)
       body = Capybara.string(response.body)

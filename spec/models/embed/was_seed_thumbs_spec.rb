@@ -5,16 +5,16 @@ describe Embed::WasSeedThumbs do
 
   describe 'initialize' do
     it 'initializes the WasSeedThumbs with the druid' do
-      seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
+      seed_thumbs = described_class.new('ab123cd4567')
       expect(seed_thumbs.druid).to eq('ab123cd4567')
     end
   end
 
   describe 'get_thumbs_list' do
     it 'returns a list of thumbs' do
-      allow_any_instance_of(Embed::WasSeedThumbs).to receive(:response).and_return(thumbs_list)
+      allow_any_instance_of(described_class).to receive(:response).and_return(thumbs_list)
 
-      seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
+      seed_thumbs = described_class.new('ab123cd4567')
       thumbs_list = seed_thumbs.get_thumbs_list
       expect(thumbs_list.length).to eq(4)
       expect(thumbs_list[0]).to eq('memento_uri' => 'https://swap.stanford.edu/20121129060351/http://naca.central.cranfield.ac.uk/',
@@ -25,14 +25,14 @@ describe Embed::WasSeedThumbs do
                                    'thumbnail_uri' => 'https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20130412231301/full/200,/0/default.jpg')
     end
     it 'returns an emtpy list for seed uris without thumbs' do
-      allow_any_instance_of(Embed::WasSeedThumbs).to receive(:response).and_return(empty_thumbs_list)
-      seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
+      allow_any_instance_of(described_class).to receive(:response).and_return(empty_thumbs_list)
+      seed_thumbs = described_class.new('ab123cd4567')
       thumbs_list = seed_thumbs.get_thumbs_list
       expect(thumbs_list).to eq([])
     end
     it 'raises an error response with nil where there is a problem in retrieving the list' do
-      allow_any_instance_of(Embed::WasSeedThumbs).to receive(:response).and_return(nil)
-      seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
+      allow_any_instance_of(described_class).to receive(:response).and_return(nil)
+      seed_thumbs = described_class.new('ab123cd4567')
       expect { seed_thumbs.get_thumbs_list }.to raise_error(Embed::WasSeedThumbs::ResourceNotAvailable)
     end
   end
@@ -47,7 +47,7 @@ describe Embed::WasSeedThumbs do
       expect(response).to receive(:success?).and_return(true)
       expect(response).to receive(:body).and_return('body')
 
-      seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
+      seed_thumbs = described_class.new('ab123cd4567')
       expect(seed_thumbs.response).to eq('body')
     end
     it 'raises Embed::WasSeedThumbs::ResourceNotAvailable with a connection failure' do
@@ -55,14 +55,14 @@ describe Embed::WasSeedThumbs do
       expect(connection).to receive(:get).and_return(response)
       expect(response).to receive(:success?).and_return(false)
 
-      seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
+      seed_thumbs = described_class.new('ab123cd4567')
       expect { seed_thumbs.response }.to raise_error(Embed::WasSeedThumbs::ResourceNotAvailable)
     end
   end
 
   describe 'was_thumbs_url' do
     it 'builds the was_thumbs url based on the configuratino and druid' do
-      seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
+      seed_thumbs = described_class.new('ab123cd4567')
       expect(seed_thumbs.was_thumbs_url).to eq('https://thumbnail-service-example/ab123cd4567')
     end
   end

@@ -16,28 +16,28 @@ module Embed
 
     private
 
-    def lower_corner
-      @envelope.xpath('//gml:lowerCorner', 'gml' => 'http://www.opengis.net/gml/3.2/').text.split(' ')
-    end
+      def lower_corner
+        @envelope.xpath('//gml:lowerCorner', 'gml' => 'http://www.opengis.net/gml/3.2/').text.split(' ')
+      end
 
-    def upper_corner
-      @envelope.xpath('//gml:upperCorner', 'gml' => 'http://www.opengis.net/gml/3.2/').text.split(' ')
-    end
+      def upper_corner
+        @envelope.xpath('//gml:upperCorner', 'gml' => 'http://www.opengis.net/gml/3.2/').text.split(' ')
+      end
 
-    def south
-      lower_corner[0]
-    end
+      def south
+        lower_corner[0]
+      end
 
-    def west
-      lower_corner[1]
-    end
+      def west
+        lower_corner[1]
+      end
 
-    def north
-      upper_corner[0]
-    end
+      def north
+        upper_corner[0]
+      end
 
-    def east
-      upper_corner[1]
-    end
+      def east
+        upper_corner[1]
+      end
   end
 end
