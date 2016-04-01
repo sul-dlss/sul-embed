@@ -1,5 +1,5 @@
 @import 'common';
-@import 'modules/media';
+@import 'modules/bootstrap_media';
 @import 'vendor/tooltip';
 
 .#{$namespace}-container {
@@ -9,7 +9,7 @@
     label {
       display: none;
     }
-    
+
     .#{$namespace}-search-input {
       @include container-padding;
       border: 1px solid $sul-input-border;
@@ -21,11 +21,11 @@
   .#{$namespace}-body {
     overflow-y: auto;
   }
-  
+
   .#{$namespace}-description {
     color: $sul-description-font-color;
   }
-  
+
   .#{$namespace}-count {
     color: $sul-count-font-color;
   }
@@ -56,7 +56,7 @@
     cursor: pointer;
     font-size: .9em;
     margin-left: 5px;
-    
+
     .#{$namespace}-preview-text {
       margin-left: 3px;
     }
