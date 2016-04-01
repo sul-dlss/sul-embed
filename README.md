@@ -41,23 +41,24 @@ Assets used for production should be checked in so that dev and prod servers do 
 
 You can create a viewer by implementing a class with a pretty simple API.
 
-The viewer class will be instantiated with an Embed::Request object. The `initialize` method is included in the `CommonViewer` mixin but can be overridden
+The viewer class will be instantiated with an Embed::Request object. The `initialize` method is included in the `CommonViewer` parent class but can be overridden.
 
     module Embed
-      class DemoViewer
-        include Embed::Viewer::CommonViewer
-
+      class Viewer
+        class DemoViewer < CommonViewer
+        end
       end
     end
 
 The class must implement a `#body_html` method which will be called on the instance of the viewer class. The results of this method combined with `header_html` and `body_html` from `CommonViewer` and will be returned as the HTML of the oEmbed response object.
 
     module Embed
-      class DemoViewer
-        include Embed::Viewer::CommonViewer
+      class Viewer
+        class DemoViewer < CommonViewer
 
-        def body_html
-          "<p>#{@purl_object.type}</p>"
+          def body_html
+            "<p>#{@purl_object.type}</p>"
+          end
         end
       end
     end
@@ -66,14 +67,16 @@ The class must implement a `#body_html` method which will be called on the insta
 The class must define a class method returning an array of which types it will support.  These types are derived from the type attribute from the contentMetadata.
 
     module Embed
-      class DemoViewer
-        include Embed::Viewer::CommonViewer
+      class Viewer
+        class DemoViewer < CommonViewer
 
-        def body_html
-          "<p>#{@purl_object.type}</p>"
-        end
-        def self.supported_types
-          [:demo_type]
+          def body_html
+            "<p>#{@purl_object.type}</p>"
+          end
+
+          def self.supported_types
+            [:demo_type]
+          end
         end
       end
     end
@@ -82,19 +85,20 @@ The class must define a class method returning an array of which types it will s
 The file that the class is defined in (or your preferred method) should register itself as a view with the Embed module.
 
     module Embed
-      class DemoViewer
-        include Embed::Viewer::CommonViewer
+      class Viewer
+        class DemoViewer < CommonViewer
+          def body_html
+            "<p>#{@purl_object.type}</p>"
+          end
 
-        def body_html
-          "<p>#{@purl_object.type}</p>"
-        end
-        def self.supported_types
-          [:demo_type]
+          def self.supported_types
+            [:demo_type]
+          end
         end
       end
     end
 
-    Embed.register_viewer(Embed::DemoViewer) if Embed.respond_to?(:register_viewer)
+    Embed.register_viewer(Embed::Viewer::DemoViewer) if Embed.respond_to?(:register_viewer)
 
 
 ### Console Example
