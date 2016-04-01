@@ -3,18 +3,18 @@ require 'rails_helper'
 describe Embed::Envelope do
   include PURLFixtures
   describe '#initialize' do
-    let(:envelope_object) { Embed::Envelope.new('test') }
+    let(:envelope_object) { described_class.new('test') }
     it 'creates an Envelope object' do
-      expect(envelope_object).to be_an Embed::Envelope
+      expect(envelope_object).to be_an described_class
       expect(envelope_object.instance_variable_get(:@envelope)).to eq 'test'
     end
   end
   describe '#to_bounding_box' do
     let(:envelope) do
-      Embed::Envelope.new(Nokogiri::XML(geo_purl_public)
+      described_class.new(Nokogiri::XML(geo_purl_public)
         .at_xpath('//gml:Envelope', 'gml' => 'http://www.opengis.net/gml/3.2/'))
     end
-    let(:no_envelope) { Embed::Envelope.new(nil) }
+    let(:no_envelope) { described_class.new(nil) }
     it 'returns nil if @envelope is falsy' do
       expect(no_envelope.to_bounding_box).to be_nil
     end

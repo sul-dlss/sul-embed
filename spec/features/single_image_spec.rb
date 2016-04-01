@@ -13,12 +13,12 @@ describe 'image x viewer', js: true do
     end
     it 'removes functionality' do
       within '.sul-embed-header' do
-        expect(page).to_not have_css '[data-sul-view-mode]'
-        expect(page).to_not have_css '[data-sul-view-perspective]'
+        expect(page).not_to have_css '[data-sul-view-mode]'
+        expect(page).not_to have_css '[data-sul-view-perspective]'
       end
-      expect(page).to_not have_css '.sul-embed-image-x-thumb-slider-container'
-      expect(page).to_not have_css '.sul-i-arrow-right-8'
-      expect(page).to_not have_css '.sul-i-arrow-left-8'
+      expect(page).not_to have_css '.sul-embed-image-x-thumb-slider-container'
+      expect(page).not_to have_css '.sul-i-arrow-right-8'
+      expect(page).not_to have_css '.sul-i-arrow-left-8'
     end
   end
   describe 'multi image viewer (not paged)' do
@@ -30,7 +30,7 @@ describe 'image x viewer', js: true do
       within '.sul-embed-header' do
         expect(page).to have_css '[data-sul-view-perspective]'
         expect(page).to have_css '[data-sul-view-mode="individuals"]'
-        expect(page).to_not have_css '[data-sul-view-mode="paged"]'
+        expect(page).not_to have_css '[data-sul-view-mode="paged"]'
       end
       expect(page).to have_css '.sul-i-arrow-right-8'
       expect(page).to have_css '.sul-i-arrow-left-8'

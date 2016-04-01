@@ -249,106 +249,106 @@ module Embed
 
       private
 
-      def tooltip_text(file)
-        return unless file.stanford_only?
-        ['Available only to Stanford-affiliated patrons',
-         sul_pretty_date(@purl_object.embargo_release_date)]
-          .compact.join(' until ')
-      end
+        def tooltip_text(file)
+          return unless file.stanford_only?
+          ['Available only to Stanford-affiliated patrons',
+           sul_pretty_date(@purl_object.embargo_release_date)]
+            .compact.join(' until ')
+        end
 
-      # Loops through all of the header tools logic methods
-      # and calls the corresponding method that is the return value
-      def render_header_tools(doc)
-        header_tools_logic.each do |logic_method|
-          if (tool = send(logic_method))
-            send(tool, doc)
+        # Loops through all of the header tools logic methods
+        # and calls the corresponding method that is the return value
+        def render_header_tools(doc)
+          header_tools_logic.each do |logic_method|
+            if (tool = send(logic_method))
+              send(tool, doc)
+            end
           end
         end
-      end
 
-      # Array of method containing symbols representing method names.
-      # These methods should return false if the particular tool should not display,
-      # otherwise it should return the method name that will return the HTML for the tool (given the Nokogiri document context).
-      # See #header_title_logic and #header_title_html as examples.
-      def header_tools_logic
-        @header_tools_logic ||= [:header_title_logic]
-      end
-
-      def header_title_logic
-        return false if @request.hide_title?
-        :header_title_html
-      end
-
-      def header_title_html(doc)
-        doc.span(class: 'sul-embed-header-title') do
-          doc.text @purl_object.title
+        # Array of method containing symbols representing method names.
+        # These methods should return false if the particular tool should not display,
+        # otherwise it should return the method name that will return the HTML for the tool (given the Nokogiri document context).
+        # See #header_title_logic and #header_title_html as examples.
+        def header_tools_logic
+          @header_tools_logic ||= [:header_title_logic]
         end
-      end
 
-      def display_header?
-        header_tools_logic.any? do |logic_method|
-          send(logic_method)
+        def header_title_logic
+          return false if @request.hide_title?
+          :header_title_html
         end
-      end
 
-      def container_styles
-        return unless height_style.present? || width_style.present?
-        [height_style, width_style].compact.join(' ').to_s
-      end
-
-      def height_style
-        "max-height:#{height}px;" if height
-      end
-
-      def width_style
-        "max-width:#{width}px;" if width
-      end
-
-      def header_height
-        return 0 unless display_header?
-        if !header_tools_logic.include?(:header_title_logic)
-          40
-        else
-          63
+        def header_title_html(doc)
+          doc.span(class: 'sul-embed-header-title') do
+            doc.text @purl_object.title
+          end
         end
-      end
 
-      # Set a specific height for the body. We need to subtract
-      # the header and footer heights from the consumer
-      # requested maxheight, otherwise we set a default
-      # which can be set by the specific viewers.
-      def body_height
-        if @request.maxheight
-          @request.maxheight.to_i - (header_height + footer_height)
-        else
-          default_body_height
+        def display_header?
+          header_tools_logic.any? do |logic_method|
+            send(logic_method)
+          end
         end
-      end
 
-      def footer_height
-        30
-      end
+        def container_styles
+          return unless height_style.present? || width_style.present?
+          [height_style, width_style].compact.join(' ').to_s
+        end
 
-      def calculate_height
-        return nil unless body_height
-        body_height + header_height + footer_height
-      end
+        def height_style
+          "max-height:#{height}px;" if height
+        end
 
-      def default_width
-        nil
-      end
+        def width_style
+          "max-width:#{width}px;" if width
+        end
 
-      def default_body_height
-        nil
-      end
+        def header_height
+          return 0 unless display_header?
+          if !header_tools_logic.include?(:header_title_logic)
+            40
+          else
+            63
+          end
+        end
 
-      def file_count_logic
-        :file_count_html
-      end
+        # Set a specific height for the body. We need to subtract
+        # the header and footer heights from the consumer
+        # requested maxheight, otherwise we set a default
+        # which can be set by the specific viewers.
+        def body_height
+          if @request.maxheight
+            @request.maxheight.to_i - (header_height + footer_height)
+          else
+            default_body_height
+          end
+        end
 
-      def file_count_html(doc)
-        doc.div(class: 'sul-embed-item-count', 'aria-live' => 'polite') {}
-      end
+        def footer_height
+          30
+        end
+
+        def calculate_height
+          return nil unless body_height
+          body_height + header_height + footer_height
+        end
+
+        def default_width
+          nil
+        end
+
+        def default_body_height
+          nil
+        end
+
+        def file_count_logic
+          :file_count_html
+        end
+
+        def file_count_html(doc)
+          doc.div(class: 'sul-embed-item-count', 'aria-live' => 'polite') {}
+        end
     end
   end
 end

@@ -101,98 +101,96 @@ module Embed
 
       private
 
-      ##
-      # Creates an embargo message to be displayed, customized for stanford
-      # only embargoed items
-      # @return [String]
-      def embargo_message
-        message = ['Access is restricted', pretty_embargo_date]
-        if @purl_object.stanford_only_unrestricted?
-          message[0] << ' to Stanford-affiliated patrons'
+        ##
+        # Creates an embargo message to be displayed, customized for stanford
+        # only embargoed items
+        # @return [String]
+        def embargo_message
+          message = ['Access is restricted', pretty_embargo_date]
+          message[0] << ' to Stanford-affiliated patrons' if @purl_object.stanford_only_unrestricted?
+          message.compact.join(' until ')
         end
-        message.compact.join(' until ')
-      end
 
-      ##
-      # Creates a pretty date for display
-      # @return [String] date in dd-mon-year format
-      def pretty_embargo_date
-        sul_pretty_date(@purl_object.embargo_release_date)
-      end
+        ##
+        # Creates a pretty date for display
+        # @return [String] date in dd-mon-year format
+        def pretty_embargo_date
+          sul_pretty_date(@purl_object.embargo_release_date)
+        end
 
-      ##
-      # Creates a download link for a file header area, based off of
-      # availability/embargo of a file
-      # @param [Nokogiri::HTML::Builder] doc
-      # @param [Embed::PURL::Resource::ResourceFile] file
-      # @return [Nokogiri::HTML::Builder]
-      def file_heading(doc, file)
-        if embargoed_to_world?(file)
-          doc.span(class: 'sul-embed-disabled') do
-            doc.text file.title
-          end
-        else
-          doc.div(
-            class: 'sul-embed-media-heading '\
-              "#{'sul-embed-stanford-only' if file.stanford_only?}") do
-            doc.a(
-              href: file_url(file.title),
-              title: tooltip_text(file)
-            ) do
+        ##
+        # Creates a download link for a file header area, based off of
+        # availability/embargo of a file
+        # @param [Nokogiri::HTML::Builder] doc
+        # @param [Embed::PURL::Resource::ResourceFile] file
+        # @return [Nokogiri::HTML::Builder]
+        def file_heading(doc, file)
+          if embargoed_to_world?(file)
+            doc.span(class: 'sul-embed-disabled') do
               doc.text file.title
             end
-          end
-        end
-      end
-
-      ##
-      # Creates a download link based on a file's availability/embargo
-      # @param [Nokogiri::HTML::Builder] doc
-      # @param [Embed::PURL::Resource::ResourceFile] file
-      # @param [FixNum] file_count
-      # @return [Nokogiri::HTML::Builder]
-      def file_download_link(doc, file, file_count)
-        if embargoed_to_world?(file)
-          doc.span(class: 'sul-embed-disabled') do
-            doc.text pretty_filesize(file.size)
-          end
-        else
-          doc.a(href: file_url(file.title), download: nil) do
-            doc.span(class: 'sul-embed-sr-only') do
-              doc.text "Download item #{file_count}"
+          else
+            doc.div(
+              class: 'sul-embed-media-heading '\
+                "#{'sul-embed-stanford-only' if file.stanford_only?}") do
+              doc.a(
+                href: file_url(file.title),
+                title: tooltip_text(file)
+              ) do
+                doc.text file.title
+              end
             end
-            doc.text file_size_text(file.size)
           end
         end
-      end
 
-      def file_size_text(file_size)
-        return pretty_filesize(file_size) unless file_size.blank?
-        'Download'
-      end
-
-      def file_search_logic
-        return false unless display_file_search?
-        :file_search_html
-      end
-
-      def display_file_search?
-        @display_file_search ||= begin
-          @request.params[:hide_search] != 'true' &&
-          @purl_object.contents.map(&:files).flatten.length >= min_files_to_search
+        ##
+        # Creates a download link based on a file's availability/embargo
+        # @param [Nokogiri::HTML::Builder] doc
+        # @param [Embed::PURL::Resource::ResourceFile] file
+        # @param [FixNum] file_count
+        # @return [Nokogiri::HTML::Builder]
+        def file_download_link(doc, file, file_count)
+          if embargoed_to_world?(file)
+            doc.span(class: 'sul-embed-disabled') do
+              doc.text pretty_filesize(file.size)
+            end
+          else
+            doc.a(href: file_url(file.title), download: nil) do
+              doc.span(class: 'sul-embed-sr-only') do
+                doc.text "Download item #{file_count}"
+              end
+              doc.text file_size_text(file.size)
+            end
+          end
         end
-      end
 
-      def min_files_to_search
-        (@request.params[:min_files_to_search] || 10).to_i
-      end
-
-      def file_search_html(doc)
-        doc.div(class: 'sul-embed-search') do
-          doc.label(for: 'sul-embed-search-input', class: 'sul-embed-sr-only') { doc.text 'Search this list' }
-          doc.input(class: 'sul-embed-search-input', id: 'sul-embed-search-input', placeholder: 'Search this list')
+        def file_size_text(file_size)
+          return pretty_filesize(file_size) unless file_size.blank?
+          'Download'
         end
-      end
+
+        def file_search_logic
+          return false unless display_file_search?
+          :file_search_html
+        end
+
+        def display_file_search?
+          @display_file_search ||= begin
+            @request.params[:hide_search] != 'true' &&
+            @purl_object.contents.map(&:files).flatten.length >= min_files_to_search
+          end
+        end
+
+        def min_files_to_search
+          (@request.params[:min_files_to_search] || 10).to_i
+        end
+
+        def file_search_html(doc)
+          doc.div(class: 'sul-embed-search') do
+            doc.label(for: 'sul-embed-search-input', class: 'sul-embed-sr-only') { doc.text 'Search this list' }
+            doc.input(class: 'sul-embed-search-input', id: 'sul-embed-search-input', placeholder: 'Search this list')
+          end
+        end
     end
   end
 end

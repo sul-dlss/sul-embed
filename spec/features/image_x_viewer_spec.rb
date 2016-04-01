@@ -10,7 +10,7 @@ describe 'imageX viewer', js: true do
   end
   describe 'fullscreen' do
     it 'is enabled in detail perspective and disabled in overview' do
-      expect(page).to_not have_css '[data-sul-view-fullscreen][disabled]'
+      expect(page).not_to have_css '[data-sul-view-fullscreen][disabled]'
       find('[data-sul-view-perspective="overview"]').click
       expect(page).to have_css '[data-sul-view-fullscreen][disabled]'
     end

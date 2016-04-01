@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe 'file list accessibility', js: true do
   include PURLFixtures
-  it 'should relevant sr-only classes' do
+  it 'relevants sr-only classes' do
     stub_purl_response_with_fixture(hybrid_object_purl)
     send_embed_response
     expect(page).to have_css 'img.sul-embed-square-image[alt]'
