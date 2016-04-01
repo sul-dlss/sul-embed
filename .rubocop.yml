@@ -1,7 +1,5 @@
-inherit_gem:
-  dlss_cops: config/dlss_baseline.yml
-
 inherit_from:
+  - https://raw.githubusercontent.com/sul-dlss/dlss_cops/v0.0.3/config/dlss_baseline.yml
   - .rubocop_todo.yml
 
 AllCops:
