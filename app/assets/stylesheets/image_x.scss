@@ -1,5 +1,5 @@
 @import 'common';
-@import 'modules/media';
+@import 'modules/bootstrap_media';
 @import 'modules/slider';
 @import 'vendor/tooltip';
 
@@ -89,7 +89,7 @@ $image-thumb-slider-background-color: $sul-background;
 
 .#{$namespace}-image-x-frame {
   display: block;
-  position: absolute;  
+  position: absolute;
 }
 
 .#{$namespace}-image-x-canvas {

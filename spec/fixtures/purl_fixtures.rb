@@ -612,4 +612,18 @@ module PURLFixtures
       </publicObject>
     XML
   end
+  def video_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the video</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="media">
+        </contentMetadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+          <dc:title>stupid dc title of video</dc:title>
+        </oai_dc>
+      </publicObject>
+    XML
+  end
 end

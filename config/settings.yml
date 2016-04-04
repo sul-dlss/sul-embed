@@ -2,6 +2,7 @@ purl_url: 'https://purl.stanford.edu'
 valid_purl_url: <%= /https?:\/\/purl\.stanford\.edu\/*/ %>
 stacks_url: 'https://stacks.stanford.edu'
 iiif_stacks_url: 'https://stacks.stanford.edu'
+enable_media_viewer?: <%= false %>
 embed_iframe_url: '//embed.stanford.edu/iframe'
 squash_api_host: 'http://squash-host.example.com'
 squash_api_key: 'abc123'
