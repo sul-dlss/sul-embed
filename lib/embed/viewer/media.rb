@@ -1,3 +1,4 @@
+require 'embed/media_tag'
 module Embed
   class Viewer
     class Media < CommonViewer
@@ -8,7 +9,7 @@ module Embed
             'style' => "max-height: #{body_height}px",
             'data-sul-embed-theme' => asset_url('media.css').to_s
           ) do
-            doc.video
+            Embed::MediaTag.new(doc, self)
             doc.script { doc.text ";jQuery.getScript(\"#{asset_url('media.js')}\");" }
           end
         end.to_html

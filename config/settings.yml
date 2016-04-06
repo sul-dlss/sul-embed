@@ -10,3 +10,7 @@ squash_disable: <%= (Rails.env.development? || Rails.env.test?) %>
 geo_external_url: 'https://earthworks.stanford.edu/catalog/stanford-'
 geo_wms_url: 'https://geowebservices.stanford.edu/geoserver/wms/'
 was_thumbs_url: 'https://thumbnail-service-example'
+streaming_service:
+  host: 'streaming-server.stanford.edu'
+  port: '1935'
+  application: 'media_infrastructure'

@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 describe Embed::Viewer::Media do
+  include PURLFixtures
+
   let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/ignored') }
   let(:media_viewer) { Embed::Viewer::Media.new(request) }
 
@@ -17,7 +19,8 @@ describe Embed::Viewer::Media do
   end
 
   describe '#body_html' do
-    it 'includes some dummy content' do
+    before { stub_purl_response_with_fixture(video_purl) }
+    it 'implements the MediaTag class appropriately and gets a video tag' do
       allow(request).to receive(:rails_request).and_return(double(host_with_port: ''))
       stub_request(request)
       body_html = Capybara.string(media_viewer.body_html)

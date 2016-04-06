@@ -619,9 +619,30 @@ module PURLFixtures
           <objectLabel>Title of the video</objectLabel>
         </identityMetadata>
         <contentMetadata type="media">
+          <resource sequence="1" id="abc123_1" type="video">
+            <file id="abc_123.mp4" mimetype="video/mp4"></file>
+          </resource>
         </contentMetadata>
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
           <dc:title>stupid dc title of video</dc:title>
+        </oai_dc>
+      </publicObject>
+    XML
+  end
+
+  def audio_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the video</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="media">
+          <resource sequence="1" id="abc123_1" type="audio">
+            <file id="abc_123.mp3" mimetype="audio/mpeg"></file>
+          </resource>
+        </contentMetadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+          <dc:title>DC title of audio</dc:title>
         </oai_dc>
       </publicObject>
     XML
