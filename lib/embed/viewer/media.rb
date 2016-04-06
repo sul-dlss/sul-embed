@@ -18,6 +18,12 @@ module Embed
         return [] unless ::Settings.enable_media_viewer?
         [:media]
       end
+
+      private
+
+      def default_body_height
+        400 - (header_height + footer_height)
+      end
     end
   end
 end
