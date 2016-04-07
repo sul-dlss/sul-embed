@@ -6,6 +6,8 @@ module Embed
     class CommonViewer
       include Embed::Mimetypes
       include Embed::PrettyFilesize
+
+      attr_reader :purl_object
       def initialize(request)
         @request = request
         @purl_object = request.purl_object
