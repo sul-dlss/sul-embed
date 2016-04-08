@@ -155,4 +155,16 @@ describe Embed::Viewer::CommonViewer do
       expect(geo_hide_viewer.show_download?).to be_falsey
     end
   end
+
+  describe '#body_height' do
+    it 'is the default_body_height when no maxheight is provided' do
+      expect(file_viewer).to receive(:default_body_height).and_return(200)
+      expect(file_viewer.body_height).to eq 200
+    end
+
+    it 'subtracts the header and footer height' do
+      expect(request).to receive(:maxheight).at_least(:once).and_return(200)
+      expect(file_viewer.body_height).to be < 200
+    end
+  end
 end

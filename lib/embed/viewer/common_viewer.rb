@@ -6,6 +6,8 @@ module Embed
     class CommonViewer
       include Embed::Mimetypes
       include Embed::PrettyFilesize
+
+      attr_reader :purl_object
       def initialize(request)
         @request = request
         @purl_object = request.purl_object
@@ -247,6 +249,18 @@ module Embed
         (is_a?(Embed::Viewer::ImageX) || is_a?(Embed::Viewer::Geo)) && !@request.hide_download?
       end
 
+      # Set a specific height for the body. We need to subtract
+      # the header and footer heights from the consumer
+      # requested maxheight, otherwise we set a default
+      # which can be set by the specific viewers.
+      def body_height
+        if @request.maxheight
+          @request.maxheight.to_i - (header_height + footer_height)
+        else
+          default_body_height
+        end
+      end
+
       private
 
       def tooltip_text(file)
@@ -310,18 +324,6 @@ module Embed
           40
         else
           63
-        end
-      end
-
-      # Set a specific height for the body. We need to subtract
-      # the header and footer heights from the consumer
-      # requested maxheight, otherwise we set a default
-      # which can be set by the specific viewers.
-      def body_height
-        if @request.maxheight
-          @request.maxheight.to_i - (header_height + footer_height)
-        else
-          default_body_height
         end
       end
 
