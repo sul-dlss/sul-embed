@@ -1,3 +1,4 @@
+require 'embed/download_panel'
 require 'embed/mimetypes'
 require 'embed/pretty_filesize'
 

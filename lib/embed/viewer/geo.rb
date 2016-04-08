@@ -16,36 +16,22 @@ module Embed
 
       def download_html
         return '' if @request.hide_download?
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-panel-container') do
-            doc.div(class: 'sul-embed-panel sul-embed-download-panel', style: 'display:none;', 'aria-hidden': 'true') do
-              doc.div(class: 'sul-embed-panel-header') do
-                doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-download-panel') do
-                  doc.span('aria-hidden' => true) do
-                    doc.cdata '&times;'
-                  end
-                  doc.span(class: 'sul-embed-sr-only') { doc.text 'Close' }
-                end
-                doc.div(class: 'sul-embed-panel-title') do
-                  doc.text 'Download item'
-                  doc.span(class: 'sul-embed-panel-item-label')
-                end
-              end
-              doc.div(class: 'sul-embed-panel-body') do
-                @purl_object.contents.each do |resource|
-                  doc.ul(class: 'sul-embed-download-list') do
-                    resource.files.each do |file|
-                      doc.li(class: ('sul-embed-stanford-only' if file.stanford_only?).to_s) do
-                        doc.a(href: file_url(file.title), title: file.title) do
-                          doc.text "Download #{file.title}"
-                        end
+        Embed::DownloadPanel.new do
+          Nokogiri::HTML::Builder.new do |doc|
+            doc.div(class: 'sul-embed-panel-body') do
+              @purl_object.contents.each do |resource|
+                doc.ul(class: 'sul-embed-download-list') do
+                  resource.files.each do |file|
+                    doc.li(class: ('sul-embed-stanford-only' if file.stanford_only?).to_s) do
+                      doc.a(href: file_url(file.title), title: file.title) do
+                        doc.text "Download #{file.title}"
                       end
                     end
                   end
                 end
               end
             end
-          end
+          end.to_html
         end.to_html
       end
 
