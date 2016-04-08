@@ -73,6 +73,10 @@ module Embed
         [:geo]
       end
 
+      def self.show_download?
+        true
+      end
+
       def external_url
         "#{Settings.geo_external_url}#{@request.object_druid}"
       end

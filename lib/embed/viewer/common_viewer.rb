@@ -246,7 +246,7 @@ module Embed
       # Should the download toolbar be shown?
       # @return [Boolean]
       def show_download?
-        (is_a?(Embed::Viewer::ImageX) || is_a?(Embed::Viewer::Geo)) && !@request.hide_download?
+        self.class.show_download? && !@request.hide_download?
       end
 
       # Set a specific height for the body. We need to subtract
@@ -259,6 +259,10 @@ module Embed
         else
           default_body_height
         end
+      end
+
+      def self.show_download?
+        false
       end
 
       private

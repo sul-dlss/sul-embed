@@ -19,6 +19,10 @@ module Embed
         [:image, :manuscript, :map, :book]
       end
 
+      def self.show_download?
+        true
+      end
+
       def manifest_json_url
         "#{Settings.purl_url}/#{@purl_object.druid}/iiif/manifest.json"
       end
