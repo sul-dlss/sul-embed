@@ -11,10 +11,7 @@ describe 'download panel', js: true do
       click_button 'Embed'
     end
     it 'should be present after a user clicks the button' do
-      expect(page).to have_css('.sul-embed-download-panel', visible: false)
-      page.find('button[data-sul-embed-toggle="sul-embed-download-panel"]', visible: true)
-      page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
-      expect(page).to have_css('.sul-embed-download-panel', visible: true)
+      toggle_download_panel
       expect(page).to have_css('.sul-embed-panel-item-label', text: '')
       expect(page).to have_css('.sul-embed-download-list-item', visible: true, count: 6)
     end
@@ -37,7 +34,7 @@ describe 'download panel', js: true do
     it 'should show stanford only icon' do
       # Wait for the manifest to come back
       expect(page).to have_css '.sul-embed-image-x-thumb-slider-container'
-      page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
+      toggle_download_panel
       within '.sul-embed-download-list' do
         expect(page).to have_css '.sul-embed-download-list-item a.download-link', text: 'Download Thumbnail'
         expect(page).to_not have_css '.sul-embed-download-list-item.sul-embed-stanford-only a', count: 4
@@ -54,7 +51,7 @@ describe 'download panel', js: true do
     it 'should show stanford only icon' do
       # Wait for the manifest to come back
       expect(page).to have_css '.sul-embed-image-x-thumb-slider-container'
-      page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
+      toggle_download_panel
       within '.sul-embed-download-list' do
         expect(page).to have_css '.sul-embed-download-list-item a.download-link', text: 'Download Thumbnail'
         expect(page).to have_css '.sul-embed-download-list-item.sul-embed-stanford-only a', count: 4
