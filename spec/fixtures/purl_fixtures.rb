@@ -622,6 +622,10 @@ module PURLFixtures
           <resource sequence="1" id="abc123_1" type="video">
             <file id="abc_123.mp4" mimetype="video/mp4"></file>
           </resource>
+          <resource sequence="2" id="bb051hp9404_2" type="file">
+            <label>Transcript</label>
+            <file id="abc_123_script.pdf" mimetype="application/pdf"></file>
+          </resource>
         </contentMetadata>
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
           <dc:title>stupid dc title of video</dc:title>
