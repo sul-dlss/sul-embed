@@ -46,10 +46,15 @@ module Embed
       def download_list_items
         @purl_object.contents.map do |resource|
           resource.files.map do |file|
+            link_text = if resource.description.present?
+                          resource.description
+                        else
+                          file.title
+                        end
             <<-HTML.strip_heredoc
               <li class='#{('sul-embed-stanford-only' if file.stanford_only?)}'>
                 <a href='#{file_url(file.title)}' title='#{file.title}'>
-                  Download #{file.title}
+                  Download #{link_text}
                 </a>
               </li>
             HTML

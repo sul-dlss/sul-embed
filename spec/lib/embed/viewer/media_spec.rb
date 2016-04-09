@@ -27,4 +27,18 @@ describe Embed::Viewer::Media do
       expect(body_html).to have_css('video')
     end
   end
+
+  describe '#download_html' do
+    before { stub_purl_response_with_fixture(video_purl) }
+    let(:download_html) { Capybara.string(media_viewer.download_html.to_str) }
+
+    it 'uses the label as the link text when present' do
+      expect(download_html).to have_css('li a', text: 'Download Transcript', visible: false)
+      expect(download_html).not_to have_css('li a', text: 'Download abc_123_script.pdf', visible: false)
+    end
+
+    it 'uses the file id as the link text when no label present' do
+      expect(download_html).to have_css('li a', text: 'Download abc_123.mp4', visible: false)
+    end
+  end
 end
