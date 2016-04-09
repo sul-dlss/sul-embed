@@ -18,21 +18,13 @@ module Embed
       def download_html
         return '' if @request.hide_download?
         Embed::DownloadPanel.new do
-          Nokogiri::HTML::Builder.new do |doc|
-            doc.div(class: 'sul-embed-panel-body') do
-              @purl_object.contents.each do |resource|
-                doc.ul(class: 'sul-embed-download-list') do
-                  resource.files.each do |file|
-                    doc.li(class: ('sul-embed-stanford-only' if file.stanford_only?).to_s) do
-                      doc.a(href: file_url(file.title), title: file.title) do
-                        doc.text "Download #{file.title}"
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end.to_html
+          <<-HTML.strip_heredoc
+            <div class='sul-embed-panel-body'>
+              <ul class='sul-embed-download-list'>
+                #{download_list_items}
+              </ul>
+            </div>
+          HTML
         end.to_html
       end
 
@@ -49,6 +41,20 @@ module Embed
 
       def default_body_height
         400 - (header_height + footer_height)
+      end
+
+      def download_list_items
+        @purl_object.contents.map do |resource|
+          resource.files.map do |file|
+            <<-HTML.strip_heredoc
+              <li class='#{('sul-embed-stanford-only' if file.stanford_only?)}'>
+                <a href='#{file_url(file.title)}' title='#{file.title}'>
+                  Download #{file.title}
+                </a>
+              </li>
+            HTML
+          end
+        end.flatten.join
       end
     end
   end

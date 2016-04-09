@@ -24,6 +24,7 @@ describe 'media viewer', js: true do
     it 'renders a download panel' do
       toggle_download_panel
 
+      expect(page).to have_css('ul.sul-embed-download-list', count: 1)
       expect(page).to have_css('.sul-embed-download-list li a', visible: true, count: 2, text: /^Download/)
     end
   end
