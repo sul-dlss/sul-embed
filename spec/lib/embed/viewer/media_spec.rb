@@ -40,5 +40,10 @@ describe Embed::Viewer::Media do
     it 'uses the file id as the link text when no label present' do
       expect(download_html).to have_css('li a', text: 'Download abc_123.mp4', visible: false)
     end
+
+    it 'includes the file sizes when present' do
+      expect(download_html).to have_css('li', text: /\(\d+\.\d+ MB\)/, visible: false)
+      expect(download_html).to have_css('li', text: /\(\d+\.\d+ kB\)/, visible: false)
+    end
   end
 end

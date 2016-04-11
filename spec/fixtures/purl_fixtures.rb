@@ -620,11 +620,11 @@ module PURLFixtures
         </identityMetadata>
         <contentMetadata type="media">
           <resource sequence="1" id="abc123_1" type="video">
-            <file id="abc_123.mp4" mimetype="video/mp4"></file>
+            <file id="abc_123.mp4" mimetype="video/mp4" size="152000000"></file>
           </resource>
           <resource sequence="2" id="bb051hp9404_2" type="file">
             <label>Transcript</label>
-            <file id="abc_123_script.pdf" mimetype="application/pdf"></file>
+            <file id="abc_123_script.pdf" mimetype="application/pdf" size="557708"></file>
           </resource>
         </contentMetadata>
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
@@ -642,7 +642,7 @@ module PURLFixtures
         </identityMetadata>
         <contentMetadata type="media">
           <resource sequence="1" id="abc123_1" type="audio">
-            <file id="abc_123.mp3" mimetype="audio/mpeg"></file>
+            <file id="abc_123.mp3" mimetype="audio/mpeg" size="770433"></file>
           </resource>
         </contentMetadata>
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
