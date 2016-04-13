@@ -13,10 +13,19 @@ describe 'media viewer', js: true do
     expect(page).to have_css('video')
   end
 
-  it 'renders toggle-able panels' do
-    find('button.sul-embed-footer-tool.sul-i-infomation-circle').click
-    within '.sul-embed-metadata-panel' do
-      expect(page).to have_css '.sul-embed-panel-title', text: 'stupid dc title of video'
+  describe 'footer panels' do
+    it 'renders a toggle-able metadata panel' do
+      find('button.sul-embed-footer-tool.sul-i-infomation-circle').click
+      within '.sul-embed-metadata-panel' do
+        expect(page).to have_css '.sul-embed-panel-title', text: 'stupid dc title of video'
+      end
+    end
+
+    it 'renders a download panel' do
+      toggle_download_panel
+
+      expect(page).to have_css('ul.sul-embed-download-list', count: 1)
+      expect(page).to have_css('.sul-embed-download-list li a', visible: true, count: 2, text: /^Download/)
     end
   end
 end

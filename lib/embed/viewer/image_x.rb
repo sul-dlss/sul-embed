@@ -19,6 +19,10 @@ module Embed
         [:image, :manuscript, :map, :book]
       end
 
+      def self.show_download?
+        true
+      end
+
       def manifest_json_url
         "#{Settings.purl_url}/#{@purl_object.druid}/iiif/manifest.json"
       end
@@ -60,21 +64,9 @@ module Embed
 
       def download_html
         return '' if @request.hide_download?
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-panel-container') do
-            doc.div(class: 'sul-embed-panel sul-embed-download-panel', style: 'display:none;', 'aria-hidden': 'true') do
-              doc.div(class: 'sul-embed-panel-header') do
-                doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-download-panel') do
-                  doc.span('aria-hidden' => true) do
-                    doc.cdata '&times;'
-                  end
-                  doc.span(class: 'sul-embed-sr-only') { doc.text 'Close' }
-                end
-                doc.div(class: 'sul-embed-panel-title') do
-                  doc.text 'Download image'
-                  doc.span(class: 'sul-embed-panel-item-label')
-                end
-              end
+        Embed::DownloadPanel.new(title: 'Download image') do
+          Nokogiri::HTML::Builder.new do |doc|
+            doc.div(class: 'sul-embed-panel-body') do
               doc.ul(class: 'sul-embed-download-list') {}
               @purl_object.contents.each do |resource|
                 next unless resource.type == 'object'
@@ -97,7 +89,7 @@ module Embed
                 end
               end
             end
-          end
+          end.to_html
         end.to_html
       end
 

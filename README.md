@@ -130,3 +130,19 @@ The method added to the `header_tools_logic` array should return false if the to
         document.text("ToolText")
       end
     end
+
+### Adding a Download Panel
+
+Viewers can add their own download panels.  In order to enable the download panel you need to provide two methods in your viewer class.  The first method lets the footer logic know that the viewer will provide a download panel and it should render the Download button.
+
+    def self.show_download?
+      true
+    end
+
+Once the download option is set to true, the viewer should provide HTML to comprise the download panel. There is a DownloadPanel class available that gives you all the necessary wrapping elements with the appropriate header.
+
+    def download_html
+      Embed::DownloadPanel.new do
+        "Panel Content Goes Here"
+      end
+    end

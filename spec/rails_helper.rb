@@ -48,6 +48,11 @@ def visit_sandbox
   visit page_path(id: 'sandbox')
 end
 
+def toggle_download_panel
+  page.find('button[data-sul-embed-toggle="sul-embed-download-panel"]', visible: true)
+  page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
+end
+
 def fill_in_default_sandbox_form(druid = 'ab123cd4567')
   fill_in 'api-endpoint', with: embed_path
   fill_in 'url-scheme', with: "http://purl.stanford.edu/#{druid}"

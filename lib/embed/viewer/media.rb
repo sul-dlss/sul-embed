@@ -15,15 +15,51 @@ module Embed
         end.to_html
       end
 
+      def download_html
+        return '' if @request.hide_download?
+        Embed::DownloadPanel.new do
+          <<-HTML.strip_heredoc
+            <div class='sul-embed-panel-body'>
+              <ul class='sul-embed-download-list'>
+                #{download_list_items}
+              </ul>
+            </div>
+          HTML
+        end.to_html
+      end
+
       def self.supported_types
         return [] unless ::Settings.enable_media_viewer?
         [:media]
+      end
+
+      def self.show_download?
+        true
       end
 
       private
 
       def default_body_height
         400 - (header_height + footer_height)
+      end
+
+      def download_list_items
+        @purl_object.contents.map do |resource|
+          resource.files.map do |file|
+            link_text = if resource.description.present?
+                          resource.description
+                        else
+                          file.title
+                        end
+            file_size = "(#{pretty_filesize(file.size)})" if file.size
+            <<-HTML.strip_heredoc
+              <li class='#{('sul-embed-stanford-only' if file.stanford_only?)}'>
+                <a href='#{file_url(file.title)}' title='#{file.title}'>Download #{link_text}</a>
+                #{file_size}
+              </li>
+            HTML
+          end
+        end.flatten.join
       end
     end
   end
