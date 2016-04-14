@@ -178,7 +178,7 @@ module Embed
           preview_types.include?(mimetype)
         end
 
-        def is_image?
+        def image?
           mimetype =~ /image\/jp2/i
         end
 
@@ -187,15 +187,15 @@ module Embed
         end
 
         def image_height
-          @file.xpath('./imageData').first.attributes['height'].try(:text) if has_image_data?
+          @file.xpath('./imageData').first.attributes['height'].try(:text) if image_data?
         end
 
         def image_width
-          @file.xpath('./imageData').first.attributes['width'].try(:text) if has_image_data?
+          @file.xpath('./imageData').first.attributes['width'].try(:text) if image_data?
         end
 
         def location
-          @file.xpath('./location[@type="url"]').first.try(:text) if has_location_data?
+          @file.xpath('./location[@type="url"]').first.try(:text) if location_data?
         end
 
         def stanford_only?
@@ -204,11 +204,11 @@ module Embed
 
         private
 
-        def has_image_data?
+        def image_data?
           @file.xpath('./imageData').present?
         end
 
-        def has_location_data?
+        def location_data?
           @file.xpath('./location[@type="url"]').present?
         end
 

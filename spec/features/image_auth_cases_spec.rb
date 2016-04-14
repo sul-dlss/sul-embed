@@ -12,11 +12,11 @@ describe 'image viewer authentication and authorization', js: true do
       click_button 'Embed'
     end
     it 'displays full zoom and download of all pages' do
-      has_zoomable_image
+      expect_zoomable_image
       expect(page).to have_css 'button[data-sul-view-fullscreen="fullscreen"]', visible: true
       page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
       within '.sul-embed-download-panel' do
-        has_thumb_download
+        expect_thumb_download
         expect(page).to have_css 'a', text: 'Download (207 x 289)'
         expect(page).to have_css 'a', text: 'Download (414 x 577)'
         expect(page).to have_css 'a', text: 'Download (828 x 1153)'
@@ -33,10 +33,10 @@ describe 'image viewer authentication and authorization', js: true do
       click_button 'Embed'
     end
     pending 'displays zoom and SU restricted downloads' do
-      has_zoomable_image
+      expect_zoomable_image
       page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
       within '.sul-embed-download-panel' do
-        has_thumb_download
+        expect_thumb_download
         expect(page).to have_css 'li a', count: 6
         # Because of the Auth roundtrip to get what should be stanford-only,
         # poltergeist doesn't seem to be able to handle it
@@ -52,7 +52,7 @@ describe 'image viewer authentication and authorization', js: true do
       click_button 'Embed'
     end
     it 'displays login prompt and thumb' do
-      has_thumb_as_image
+      expect_thumb_as_image
     end
     it 'download button should be hidden' do
       pending('implement show download button based on authorization')
@@ -61,18 +61,18 @@ describe 'image viewer authentication and authorization', js: true do
   end
 end
 
-def has_authenticate_link
+def expect_authenticate_link
   expect(page).to have_css '.sul-embed-image-x-auth-link', text: 'Stanford-affiliated? Login to view'
 end
 
-def has_thumb_as_image
+def expect_thumb_as_image
   expect(page).to have_css '.sul-embed-image-x-restricted-thumb-container'
 end
 
-def has_zoomable_image
+def expect_zoomable_image
   expect(page).to have_css '#sul-embed-image-x .osd-container'
 end
 
-def has_thumb_download
+def expect_thumb_download
   expect(page).to have_css 'li a', text: 'Download Thumbnail'
 end
