@@ -10,12 +10,12 @@ describe Embed::WasSeedThumbs do
     end
   end
 
-  describe 'get_thumbs_list' do
+  describe '#thumbs_list' do
     it 'returns a list of thumbs' do
       allow_any_instance_of(Embed::WasSeedThumbs).to receive(:response).and_return(thumbs_list)
 
       seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
-      thumbs_list = seed_thumbs.get_thumbs_list
+      thumbs_list = seed_thumbs.thumbs_list
       expect(thumbs_list.length).to eq(4)
       expect(thumbs_list[0]).to eq('memento_uri' => 'https://swap.stanford.edu/20121129060351/http://naca.central.cranfield.ac.uk/',
                                    'memento_datetime' => '20121129060351',
@@ -27,13 +27,13 @@ describe Embed::WasSeedThumbs do
     it 'returns an emtpy list for seed uris without thumbs' do
       allow_any_instance_of(Embed::WasSeedThumbs).to receive(:response).and_return(empty_thumbs_list)
       seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
-      thumbs_list = seed_thumbs.get_thumbs_list
+      thumbs_list = seed_thumbs.thumbs_list
       expect(thumbs_list).to eq([])
     end
     it 'raises an error response with nil where there is a problem in retrieving the list' do
       allow_any_instance_of(Embed::WasSeedThumbs).to receive(:response).and_return(nil)
       seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
-      expect { seed_thumbs.get_thumbs_list }.to raise_error(Embed::WasSeedThumbs::ResourceNotAvailable)
+      expect { seed_thumbs.thumbs_list }.to raise_error(Embed::WasSeedThumbs::ResourceNotAvailable)
     end
   end
 
