@@ -34,7 +34,7 @@ module Embed
       end
 
       def thumbs_list
-        Embed::WasSeedThumbs.new(@purl_object.druid).get_thumbs_list
+        Embed::WasSeedThumbs.new(@purl_object.druid).thumbs_list
       end
 
       def format_memento_datetime(memento_datetime)

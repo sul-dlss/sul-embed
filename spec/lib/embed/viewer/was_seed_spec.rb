@@ -52,14 +52,14 @@ describe Embed::Viewer::WasSeed do
   describe 'thumbs_list' do
     it 'calls the Embed::WasSeedThumbs with the same druid id' do
       stub_request(request)
-      allow_any_instance_of(Embed::WasSeedThumbs).to receive(:get_thumbs_list)
+      allow_any_instance_of(Embed::WasSeedThumbs).to receive(:thumbs_list)
 
       expect(Embed::WasSeedThumbs).to receive(:new).with('12345').and_return(Embed::WasSeedThumbs.new('12345'))
       was_seed_viewer.thumbs_list
     end
     it 'calls the Embed::WasSeedThumbs with the same druid id' do
       stub_request(request)
-      allow_any_instance_of(Embed::WasSeedThumbs).to receive(:get_thumbs_list).and_return(get_thumbs_list_fixtures)
+      allow_any_instance_of(Embed::WasSeedThumbs).to receive(:thumbs_list).and_return(get_thumbs_list_fixtures)
 
       expect(Embed::WasSeedThumbs).to receive(:new).with('12345').and_return(Embed::WasSeedThumbs.new('12345'))
       expect(was_seed_viewer.thumbs_list).to eq(get_thumbs_list_fixtures)
