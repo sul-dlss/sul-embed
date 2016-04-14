@@ -5,7 +5,7 @@ describe 'was seed viewer public', js: true do
   include WasSeedThumbsFixtures
 
   before do
-    allow_any_instance_of(Embed::Viewer::WasSeed).to receive(:thumbs_list).and_return(get_thumbs_list_fixtures)
+    allow_any_instance_of(Embed::Viewer::WasSeed).to receive(:thumbs_list).and_return(thumbs_list_fixtures)
     stub_purl_response_with_fixture(was_seed_purl)
     visit_sandbox
     fill_in_default_sandbox_form
@@ -35,7 +35,7 @@ describe 'was seed viewer public', js: true do
     end
   end
 
-  def get_thumbs_list_fixtures
+  def thumbs_list_fixtures
     JSON.parse(thumbs_list)['thumbnails']
   end
 end
