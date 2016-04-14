@@ -178,7 +178,7 @@ module Embed
           preview_types.include?(mimetype)
         end
 
-        def is_image?
+        def image?
           mimetype =~ /image\/jp2/i
         end
 
