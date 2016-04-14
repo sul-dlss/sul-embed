@@ -80,7 +80,7 @@ describe Embed::Viewer::File do
       stub_purl_response_and_request(embargoed_stanford_purl, request)
       expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com')
       html = Capybara.string(file_viewer.body_html)
-      expect(html).to have_css('.sul-embed-embargo-message', text: "Access is restricted to Stanford-affiliated patrons until #{(Time.now + 1.month).strftime('%d-%b-%Y')}")
+      expect(html).to have_css('.sul-embed-embargo-message', text: "Access is restricted to Stanford-affiliated patrons until #{(Time.current + 1.month).strftime('%d-%b-%Y')}")
       expect(html).to have_css('.sul-embed-media-heading.sul-embed-stanford-only a[href="https://stacks.stanford.edu/file/druid:12345/Title%20of%20the%20PDF.pdf"]')
     end
   end
@@ -89,14 +89,14 @@ describe Embed::Viewer::File do
       stub_purl_response_and_request(embargoed_purl, request)
       expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com')
       html = Capybara.string(file_viewer.body_html)
-      expect(html).to have_css('.sul-embed-embargo-message', text: "Access is restricted until #{(Time.now + 1.month).strftime('%d-%b-%Y')}")
+      expect(html).to have_css('.sul-embed-embargo-message', text: "Access is restricted until #{(Time.current + 1.month).strftime('%d-%b-%Y')}")
       expect(html).not_to have_css('a')
     end
     it 'adds a generalized embargo message and no links are present for an edge case ordering issue' do
       stub_purl_response_and_request(embargoed_edge_purl, request)
       expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com')
       html = Capybara.string(file_viewer.body_html)
-      expect(html).to have_css('.sul-embed-embargo-message', text: "Access is restricted until #{(Time.now + 1.month).strftime('%d-%b-%Y')}")
+      expect(html).to have_css('.sul-embed-embargo-message', text: "Access is restricted until #{(Time.current + 1.month).strftime('%d-%b-%Y')}")
       expect(html).not_to have_css('a')
     end
   end
