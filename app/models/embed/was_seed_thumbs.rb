@@ -16,10 +16,10 @@ module Embed
     # defined by the druid
     # @return [Array] represents the thumnail list
     # @example
-    #   Embed::WasSeedThumbs.new('aa111aa1111').get_thumbs_list
+    #   Embed::WasSeedThumbs.new('aa111aa1111').thumbs_list
     #    [{'memento_uri'=>'','memento_datetime'=> '','thumbnail_uri'=> 'http...default.jpg'},
     #     {'memento_uri'=> '','memento_datetime'=> '','thumbnail_uri'=> 'http...default.jpg'}]
-    def get_thumbs_list
+    def thumbs_list
       raise ResourceNotAvailable if response.nil?
 
       @thumbs_list ||= begin

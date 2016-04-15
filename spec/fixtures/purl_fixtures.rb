@@ -284,7 +284,7 @@ module PURLFixtures
         <rightsMetadata>
           <access type="read">
             <machine>
-              <embargoReleaseDate>#{(Time.now + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
+              <embargoReleaseDate>#{(Time.current + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
               <group>stanford</group>
             </machine>
           </access>
@@ -307,7 +307,7 @@ module PURLFixtures
         <rightsMetadata>
           <access type="read">
             <machine>
-              <embargoReleaseDate>#{(Time.now + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
+              <embargoReleaseDate>#{(Time.current + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
               <none/>
             </machine>
           </access>
@@ -331,7 +331,7 @@ module PURLFixtures
           <access type="read">
             <machine>
               <none/>
-              <embargoReleaseDate>#{(Time.now + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
+              <embargoReleaseDate>#{(Time.current + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
             </machine>
           </access>
         </rightsMetadata>
