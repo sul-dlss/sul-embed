@@ -19,12 +19,22 @@ module Embed
     attr_reader :ng_document, :purl_document, :request, :viewer
 
     def build_markup
+      file_index = 0
       purl_document.contents.each do |resource|
+        label = resource.description
         next unless SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
         resource.files.each do |file|
-          ng_document.send(resource.type.to_sym, controls: 'controls', height: "#{viewer.body_height}px") do
+          label = file.title if label.blank?
+          ng_document.send(
+            resource.type.to_sym,
+            'data-file-label': label,
+            'data-slider-object': file_index,
+            controls: 'controls',
+            height: "#{viewer.body_height.to_i - 24}px"
+          ) do
             enabled_streaming_sources(file)
           end
+          file_index += 1
         end
       end
     end
