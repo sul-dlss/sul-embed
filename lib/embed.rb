@@ -4,14 +4,13 @@ module Embed
   require 'embed/request'
   require 'embed/response'
 
-  @@registered_viewers = []
-  def self.register_viewer(viewer)
-    raise DuplicateViewerRegistration if viewer_supported_type_already_registered?(viewer)
-    @@registered_viewers << viewer
+  mattr_accessor :registered_viewers do
+    []
   end
 
-  def self.registered_viewers
-    @@registered_viewers
+  def self.register_viewer(viewer)
+    raise DuplicateViewerRegistration if viewer_supported_type_already_registered?(viewer)
+    registered_viewers << viewer
   end
 
   class << self
@@ -19,7 +18,7 @@ module Embed
 
     def viewer_supported_type_already_registered?(viewer)
       viewer.supported_types.any? do |supported_type|
-        @@registered_viewers.any? do |registered_viewer|
+        registered_viewers.any? do |registered_viewer|
           registered_viewer.supported_types.include?(supported_type)
         end
       end
