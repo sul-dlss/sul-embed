@@ -1,4 +1,5 @@
 require 'embed/download_panel'
+require 'embed/embed_this_panel'
 require 'embed/mimetypes'
 require 'embed/pretty_filesize'
 
@@ -141,74 +142,11 @@ module Embed
         end.to_html
       end
 
+      # subclasses that require special behaviors (e.g. file, image_x, media) should
+      #  override this method, passing a block to EmbedThisPanel
       def embed_this_html
         return '' if @request.hide_embed_this?
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-panel-container') do
-            doc.div(class: 'sul-embed-panel sul-embed-embed-this-panel', style: 'display:none;', 'aria-hidden': 'true') do
-              doc.div(class: 'sul-embed-panel-header') do
-                doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-embed-this-panel') do
-                  doc.span('aria-hidden' => true) do
-                    doc.cdata '&times;'
-                  end
-                  doc.span(class: 'sul-embed-sr-only') { doc.text 'Close' }
-                end
-                doc.div(class: 'sul-embed-panel-title') do
-                  doc.text 'Embed'
-                end
-              end
-              doc.div(class: 'sul-embed-panel-body') do
-                doc.div(class: 'sul-embed-embed-this-form') do
-                  doc.span(class: 'sul-embed-options-label') do
-                    doc.text 'Select options:'
-                  end
-                  doc.div(class: 'sul-embed-section sul-embed-embed-title-section') do
-                    doc.input(type: 'checkbox', id: 'sul-embed-embed-title', 'data-embed-attr': 'hide_title', checked: true)
-                    doc.label(for: 'sul-embed-embed-title') do
-                      doc.text('title')
-                      if @purl_object.title.present?
-                        doc.span(class: 'sul-embed-embed-title') do
-                          doc.text(" (#{@purl_object.title})")
-                        end
-                      end
-                    end
-                  end
-                  if is_a?(Embed::Viewer::File)
-                    doc.div(class: 'sul-embed-section') do
-                      doc.input(type: 'checkbox', id: 'sul-embed-embed-search', 'data-embed-attr': 'hide_search', checked: true)
-                      doc.label(for: 'sul-embed-embed-search') { doc.text('add search box') }
-                      doc.label(for: 'sul-embed-min_files_to_search') do
-                        doc.text(' for')
-                        doc.input(type: 'text', id: 'sul-embed-min_files_to_search', 'data-embed-attr': 'min_files_to_search', value: '10')
-                        doc.text('or more files')
-                      end
-                    end
-                  end
-                  if is_a?(Embed::Viewer::ImageX)
-                    doc.div(class: 'sul-embed-section') do
-                      doc.input(type: 'checkbox', id: 'sul-embed-embed-download', 'data-embed-attr': 'hide_download', checked: true)
-                      doc.label(for: 'sul-embed-embed-download') { doc.text('download') }
-                    end
-                  end
-                  doc.div(class: 'sul-embed-section') do
-                    doc.input(type: 'checkbox', id: 'sul-embed-embed', 'data-embed-attr': 'hide_embed', checked: true)
-                    doc.label(for: 'sul-embed-embed') { doc.text('embed') }
-                  end
-                  doc.div do
-                    doc.div(class: 'sul-embed-options-label') do
-                      doc.label(for: 'sul-embed-iframe-code') { doc.text('Embed code:') }
-                    end
-                    doc.div(class: 'sul-embed-section') do
-                      doc.textarea(id: 'sul-embed-iframe-code', 'data-behavior' => 'iframe-code', rows: 4) do
-                        doc.text("<iframe src='#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{@purl_object.druid}' height='#{height}px' width='#{width || height}px' frameborder='0' marginwidth='0' marginheight='0' scrolling='no' allowfullscreen></iframe>")
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end.to_html
+        Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, purl_object_title: @purl_object.title).to_html
       end
 
       def download_html
