@@ -1,6 +1,11 @@
+@import 'sul_variables';
 @import 'common';
+@import 'modules/thumb_slider';
 
-.sul-embed-media {
+.#{$namespace}-media {
+  min-height: 175px;
+  padding-bottom: 24px;
+  position: relative;
   text-align: center;
 
   audio { width: 100%; }
