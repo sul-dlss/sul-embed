@@ -171,6 +171,23 @@ module Embed
         'Download'
       end
 
+      def embed_this_html
+        return '' if @request.hide_embed_this?
+        Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, purl_object_title: @purl_object.title) do
+          Nokogiri::HTML::Builder.new do |doc|
+            doc.div(class: 'sul-embed-section') do
+              doc.input(type: 'checkbox', id: 'sul-embed-embed-search', 'data-embed-attr': 'hide_search', checked: true)
+              doc.label(for: 'sul-embed-embed-search') { doc.text('add search box') }
+              doc.label(for: 'sul-embed-min_files_to_search') do
+                doc.text(' for')
+                doc.input(type: 'text', id: 'sul-embed-min_files_to_search', 'data-embed-attr': 'min_files_to_search', value: '10')
+                doc.text('or more files')
+              end
+            end
+          end.to_html
+        end.to_html
+      end
+
       def file_search_logic
         return false unless display_file_search?
         :file_search_html

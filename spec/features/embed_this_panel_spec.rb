@@ -9,7 +9,7 @@ describe 'embed this panel', js: true do
   end
   describe 'embed code' do
     let(:spec_fixture) { file_purl }
-    it 'should include the allowfullscreen no-scrolling, no-border, and no margin/padding attributes' do
+    it 'includes the allowfullscreen no-scrolling, no-border, and no margin/padding attributes' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
       expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*frameborder='0'.*><\/iframe>/)
       expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*marginwidth='0'.*><\/iframe>/)
@@ -17,17 +17,22 @@ describe 'embed this panel', js: true do
       expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*scrolling='no'.*><\/iframe>/)
       expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*allowfullscreen.*><\/iframe>/)
     end
+    it 'includes height and width attributes' do
+      page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*height='400px'.*><\/iframe>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*width='400px'.*><\/iframe>/)
+    end
   end
   describe 'file objects' do
     let(:spec_fixture) { file_purl }
-    it 'should be present after a user clicks the button' do
+    it 'are present after a user clicks the button' do
       expect(page).to have_css('.sul-embed-embed-this-panel', visible: false)
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
       expect(page).to have_css('.sul-embed-embed-this-panel', visible: true)
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
       expect(page).to have_css('.sul-embed-embed-this-panel', visible: false)
     end
-    it 'should have the form elements for updating the embed code' do
+    it 'have the form elements for updating the embed code' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
       expect(page).to have_css('.sul-embed-options-label', text: 'SELECT OPTIONS:')
       expect(page).to have_css('input#sul-embed-embed-title[type="checkbox"]')
@@ -35,7 +40,7 @@ describe 'embed this panel', js: true do
       expect(page).to have_css('input#sul-embed-embed[type="checkbox"]')
       expect(page).to have_css('textarea#sul-embed-iframe-code')
     end
-    it 'should update the textarea when the checkboxes are selected' do
+    it 'update the textarea when the checkboxes are selected' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
       expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/src='\S+\/iframe\?url=https:\/\/purl\.stanford\.edu\/ab123cd4567'/)
       page.find("input#sul-embed-embed-search[type='checkbox']").trigger('click')
@@ -46,7 +51,7 @@ describe 'embed this panel', js: true do
   end
   describe 'image objects' do
     let(:spec_fixture) { image_purl }
-    it 'should include the form elements for downloading an image' do
+    it 'include the form elements for downloading an image' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
       expect(page).to have_css('input#sul-embed-embed-download[type="checkbox"]')
     end
