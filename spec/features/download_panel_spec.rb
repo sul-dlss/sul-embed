@@ -11,7 +11,9 @@ describe 'download panel', js: true do
       click_button 'Embed'
     end
     it 'should be present after a user clicks the button' do
+      expect(page).to have_css('.sul-embed-download-panel', visible: false)
       toggle_download_panel
+      expect(page).to have_css('.sul-embed-download-panel', visible: true)
       expect(page).to have_css('.sul-embed-panel-item-label', text: '')
       expect(page).to have_css('.sul-embed-download-list-item', visible: true, count: 6)
     end
