@@ -46,6 +46,8 @@ group :development, :test do
   gem 'guard-rspec', require: false
 end
 
+gem 'codeclimate-test-reporter', group: :test, require: false
+
 group :deployment do
   gem 'capistrano', '~> 3.0'
   gem 'capistrano-rvm'
