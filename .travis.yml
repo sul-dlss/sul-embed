@@ -9,3 +9,7 @@ rvm:
 env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
+
+addons:
+  code_climate:
+    repo_token: 1a66a2142bf161d88c72d21a8339df0a74bd3ac244b681ed7f536e2e08295205
