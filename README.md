@@ -131,6 +131,19 @@ The method added to the `header_tools_logic` array should return false if the to
       end
     end
 
+### Customizing the Embed Panel
+
+Viewers can customize the embed panel.  To do this, the viewer should override #embed_this_html, which, oddly enough, provides HTML for the embed panel. There is a EmbedThisPanel class available that gives you all the necessary wrapping elements with the appropriate header.
+
+    def embed_this_html
+      return '' if @request.hide_embed_this?
+      Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, purl_object_title: @purl_object.title) do
+        "Panel Content Goes Here"
+      end.to_html
+    end
+
+See ImageX and File viewers for examples.
+
 ### Adding a Download Panel
 
 Viewers can add their own download panels.  In order to enable the download panel you need to provide two methods in your viewer class.  The first method lets the footer logic know that the viewer will provide a download panel and it should render the Download button.
