@@ -7,7 +7,7 @@ describe Embed::MediaTag do
   let(:viewer) do
     double(
       'MediaViewer',
-      purl_object: Embed::PURL.new('ignored'),
+      purl_object: Embed::PURL.new('druid'),
       body_height: '300'
     )
   end
@@ -45,15 +45,13 @@ describe Embed::MediaTag do
     end
 
     describe '#streaming_url_for' do
-      it 'wraps the generated stream URL with the protocol and suffix' do
-        expect(subject.send(:streaming_url_for, file, :hls)).to match(%r{http://.*/playlist.m3u8})
-        expect(subject.send(:streaming_url_for, file, :mdash)).to match(%r{http://.*/manifest.mpd})
+      it 'appends the generated stream URL with the appropriate suffix' do
+        expect(subject.send(:streaming_url_for, file, :hls)).to match(%r{.*/playlist.m3u8$})
+        expect(subject.send(:streaming_url_for, file, :dash)).to match(%r{.*/manifest.mpd$})
       end
-    end
 
-    describe '#streaming_url_file_segment' do
-      it 'is the filename with the extension appended with a ":"' do
-        expect(subject.send(:streaming_url_file_segment, file)).to eq 'mp4:abc123.mp4'
+      it 'has the appropriate Media Stacks URL with druid and filename' do
+        expect(subject.send(:streaming_url_for, file, :hls)).to match(%r{stacks\.stanford\.edu/media/druid/abc123\.mp4/playlist.m3u8})
       end
     end
   end
