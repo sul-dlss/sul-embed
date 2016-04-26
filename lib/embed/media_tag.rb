@@ -40,7 +40,7 @@ module Embed
 
     def streaming_url_for(file, type)
       suffix = Settings.streaming_url_suffixes[type]
-      "#{Settings.stacks_url}/media/#{purl_document.druid}/#{file.title}/#{suffix}"
+      "#{Settings.stacks_url}/media/#{purl_document.druid}/#{file.title}/stream#{suffix}"
     end
   end
 end

@@ -46,12 +46,12 @@ describe Embed::MediaTag do
 
     describe '#streaming_url_for' do
       it 'appends the generated stream URL with the appropriate suffix' do
-        expect(subject.send(:streaming_url_for, file, :hls)).to match(%r{.*/playlist.m3u8$})
-        expect(subject.send(:streaming_url_for, file, :dash)).to match(%r{.*/manifest.mpd$})
+        expect(subject.send(:streaming_url_for, file, :hls)).to match(%r{.*/stream.m3u8$})
+        expect(subject.send(:streaming_url_for, file, :dash)).to match(%r{.*/stream.mpd$})
       end
 
       it 'has the appropriate Media Stacks URL with druid and filename' do
-        expect(subject.send(:streaming_url_for, file, :hls)).to match(%r{stacks\.stanford\.edu/media/druid/abc123\.mp4/playlist.m3u8})
+        expect(subject.send(:streaming_url_for, file, :hls)).to match(%r{stacks\.stanford\.edu/media/druid/abc123\.mp4/stream.m3u8})
       end
     end
   end
