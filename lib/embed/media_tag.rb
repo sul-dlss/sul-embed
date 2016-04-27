@@ -29,6 +29,7 @@ module Embed
             resource.type.to_sym,
             'data-file-label': label,
             'data-slider-object': file_index,
+            'data-src': streaming_url_for(file, :dash),
             controls: 'controls',
             height: "#{viewer.body_height.to_i - 24}px"
           ) do

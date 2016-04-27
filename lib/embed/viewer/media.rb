@@ -7,7 +7,8 @@ module Embed
           doc.div(
             class: 'sul-embed-body sul-embed-media',
             'style' => "max-height: #{body_height}px",
-            'data-sul-embed-theme' => asset_url('media.css').to_s
+            'data-sul-embed-theme' => asset_url('media.css').to_s,
+            'data-sul-embed-dash-player' => asset_url('vendor/dash.js').to_s
           ) do
             Embed::MediaTag.new(doc, self)
             doc.script { doc.text ";jQuery.getScript(\"#{asset_url('media.js')}\");" }

@@ -1,5 +1,6 @@
 //= require modules/thumb_slider
 /*global ThumbSlider */
+/*global dashjs */
 
 (function( global ) {
   'use strict';
@@ -46,9 +47,55 @@
         .addThumbnailsToSlider(thumbsForSlider());
     }
 
+    function loadDashPlayerJavascript(callback) {
+      var playerJS = jQuery('[data-sul-embed-dash-player]')
+                       .data('sul-embed-dash-player');
+
+      jQuery.getScript(playerJS).done(callback);
+    }
+
+    // canPlayType() returns 'probably', 'maybe', or ''
+    function canPlayHLS() {
+      var hlsMimeType = 'application/vnd.apple.mpegURL';
+      var tempVideo = document.createElement('video');
+      var canPlayTypsHLS = tempVideo.canPlayType(hlsMimeType);
+      return canPlayTypsHLS !== '';
+    }
+
+    function removeAllMediaDataSrc() {
+      jQuery('.sul-embed-media audio, .sul-embed-media video').each(function() {
+        jQuery(this).removeAttr('data-src');
+      });
+    }
+
+    function preloadVideoUrls() {
+      jQuery('.sul-embed-media video').each(function() {
+        $(this).data('src');
+      });
+    }
+
+    function initialzeDashPlayerForAllVideos() {
+      preloadVideoUrls();
+      loadDashPlayerJavascript(function() {
+        jQuery('.sul-embed-media video').each(function() {
+          var url = jQuery(this).data('src');
+          var player = dashjs.MediaPlayer().create();
+          player.initialize(this, url, false);
+        });
+      });
+    }
+
     return {
       init: function() {
         setupThumbSlider();
+        this.initialzeDashPlayer();
+      },
+
+      initialzeDashPlayer: function() {
+        if ( !canPlayHLS() ) {
+          initialzeDashPlayerForAllVideos();
+        }
+        removeAllMediaDataSrc();
       }
     };
   })();

@@ -26,6 +26,15 @@ describe Embed::Viewer::Media do
       body_html = Capybara.string(media_viewer.body_html)
       expect(body_html).to have_css('video')
     end
+
+    it 'includes the dash player loaction in a data attribute' do
+      attribute = 'data-sul-embed-dash-player'
+      allow(request).to receive(:rails_request).and_return(double(host_with_port: ''))
+      stub_request(request)
+      body_html = Capybara.string(media_viewer.body_html)
+      player_url = body_html.find("[#{attribute}]")[attribute]
+      expect(player_url).to match(%r{assets/vendor/dash\.js})
+    end
   end
 
   describe '#download_html' do

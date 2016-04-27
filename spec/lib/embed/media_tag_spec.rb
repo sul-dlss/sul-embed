@@ -29,6 +29,11 @@ describe Embed::MediaTag do
       subject
     end
 
+    it 'includes a data-src attribute for the dash player' do
+      expect(document).to receive(:video).twice.with(hash_including(:'data-src'))
+      subject
+    end
+
     it 'includes a height attribute equal to the body height minus some px to make way for the thumb slider' do
       expect(document).to receive(:video).twice.with(hash_including('height': '276px'))
       subject
