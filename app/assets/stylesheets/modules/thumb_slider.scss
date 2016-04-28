@@ -1,0 +1,66 @@
+@import 'sul_variables';
+@import 'mixins';
+
+$thumb-background-color: #fff;
+$thumb-slider-border-color: $sul-border-color;
+$thumb-slider-background-color: $sul-background;
+
+.#{$namespace}-thumb-slider-container {
+  @include top-shadow;
+  background: $thumb-slider-background-color;
+  border-top: 1px solid $thumb-slider-border-color;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.#{$namespace}-thumb-slider-open-close {
+  color: $thumb-slider-border-color;
+  cursor: pointer;
+  font-size: 1.7em;
+  line-height: 1em;
+  text-align: center;
+  width: 100%;
+}
+
+
+.#{$namespace}-thumb-slider {
+  height: 100px;
+  margin: 0;
+  overflow: hidden;
+  overflow-x: scroll;
+  padding: 0;
+  width: 100%;
+
+
+  ul {
+    height: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    width: auto;
+  }
+}
+
+.#{$namespace}-slider-thumb {
+  @include shadow(2);
+  background: $thumb-background-color;
+  border: 1px solid transparent;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0 5px 0 0;
+  padding: 0;
+
+  &.active {
+    border: 1px solid $thumb-slider-border-color;
+  }
+
+  i {
+    font-size: 50px;
+  }
+
+  img {
+    width: 100%;
+  }
+}

@@ -17,9 +17,26 @@ describe Embed::MediaTag do
   before { stub_purl_response_with_fixture(purl) }
 
   describe 'media tags' do
+    it 'includes the file label as a data attribute' do
+      expect(document).to receive(:video).with(hash_including('data-file-label': 'abc_123.mp4'))
+      expect(document).to receive(:video).with(hash_including('data-file-label': 'Second Video'))
+      subject
+    end
+
+    it 'includes a data attribute for the thumb-slider bar' do
+      expect(document).to receive(:video).with(hash_including('data-slider-object': 0))
+      expect(document).to receive(:video).with(hash_including('data-slider-object': 1))
+      subject
+    end
+
+    it 'includes a height attribute equal to the body height minus some px to make way for the thumb slider' do
+      expect(document).to receive(:video).twice.with(hash_including('height': '276px'))
+      subject
+    end
+
     context 'video' do
       it 'renders a video tag in the provided document' do
-        expect(document).to receive(:video)
+        expect(document).to receive(:video).at_least(:once)
         subject
       end
     end
@@ -35,7 +52,7 @@ describe Embed::MediaTag do
   end
 
   describe 'private methods' do
-    before { expect(document).to receive(:video) }
+    before { expect(document).to receive(:video).at_least(:once) }
     let(:file) { double('File', title: 'abc123.mp4', mimetype: 'video/mp4') }
     describe '#enabled_streaming_sources' do
       it 'adds a source element for every enabled type' do
