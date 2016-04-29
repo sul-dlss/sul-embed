@@ -17,10 +17,9 @@ module Embed
     attr_reader :ng_document, :purl_document, :request, :viewer
 
     def build_markup
-      file_index = 0
       purl_document.contents.each do |resource|
-        label = resource.description
         next unless SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
+        label = resource.description
         resource.files.each do |file|
           label = file.title if label.blank?
           ng_document.send(
@@ -30,10 +29,8 @@ module Embed
             'data-src': streaming_url_for(file, :dash),
             controls: 'controls',
             height: "#{viewer.body_height.to_i - 24}px"
-          ) do
-            enabled_streaming_sources(file)
-          end
-          file_index += 1
+          ) { enabled_streaming_sources(file) }
+          @file_index += 1
         end
       end
     end
@@ -53,6 +50,10 @@ module Embed
 
     def enabled_streaming_types
       Settings.streaming[:source_types]
+    end
+
+    def file_index
+      @file_index ||= 0
     end
 
     def streaming_url_for(file, type)
