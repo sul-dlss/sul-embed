@@ -1,11 +1,9 @@
 module Embed
-  # Utility class to handle generating HTML media tags
+  # Utility class to handle generating HTML <video> and <audio> tags
+  # Currently, MPEG-DASH is used at the <video> element level (in a data attribute to be picked up by javascript)
+  # and HLS is used as a <source> within the <video> or <audio> tag.
   class MediaTag
     SUPPORTED_MEDIA_TYPES = [:audio, :video].freeze
-    # ENABLED_STREAMING_TYPES may go away once we implement dash,
-    # and we may just handle contructing the URLs directly in the markup
-    # where necessary.
-    ENABLED_STREAMING_TYPES = [:hls].freeze
 
     def initialize(ng_doc, viewer)
       @ng_document = ng_doc
@@ -41,16 +39,24 @@ module Embed
     end
 
     def enabled_streaming_sources(file)
-      ENABLED_STREAMING_TYPES.each do |streaming_type|
+      enabled_streaming_types.each do |streaming_type|
         ng_document.source(
           src: streaming_url_for(file, streaming_type),
-          type: file.mimetype
+          type: streaming_settings_for(streaming_type)[:mimetype]
         )
       end
     end
 
+    def streaming_settings_for(type)
+      Settings.streaming[type] || {}
+    end
+
+    def enabled_streaming_types
+      Settings.streaming[:source_types]
+    end
+
     def streaming_url_for(file, type)
-      suffix = Settings.streaming_url_suffixes[type]
+      suffix = streaming_settings_for(type)[:suffix]
       "#{Settings.stacks_url}/media/#{purl_document.druid}/#{file.title}/stream#{suffix}"
     end
   end

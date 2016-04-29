@@ -58,10 +58,10 @@ describe Embed::MediaTag do
 
   describe 'private methods' do
     before { expect(document).to receive(:video).at_least(:once) }
-    let(:file) { double('File', title: 'abc123.mp4', mimetype: 'video/mp4') }
+    let(:file) { double('File', title: 'abc123.mp4') }
     describe '#enabled_streaming_sources' do
       it 'adds a source element for every enabled type' do
-        expect(document).to receive(:source).with(hash_including(:src, type: 'video/mp4'))
+        expect(document).to receive(:source).with(hash_including(:src, type: 'application/x-mpegURL'))
         subject.send(:enabled_streaming_sources, file)
       end
     end
