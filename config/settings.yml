@@ -10,6 +10,12 @@ squash_disable: <%= (Rails.env.development? || Rails.env.test?) %>
 geo_external_url: 'https://earthworks.stanford.edu/catalog/stanford-'
 geo_wms_url: 'https://geowebservices.stanford.edu/geoserver/wms/'
 was_thumbs_url: 'https://thumbnail-service-example'
-streaming_url_suffixes:
-  hls: '.m3u8'
-  dash: '.mpd'
+streaming:
+  source_types:
+    - hls
+  hls:
+    suffix: '.m3u8'
+    mimetype: 'application/x-mpegURL'
+  dash:
+    suffix: '.mpd'
+    mimetype: 'application/dash+xml'

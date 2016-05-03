@@ -29,6 +29,11 @@ describe Embed::MediaTag do
       subject
     end
 
+    it 'includes a data-src attribute for the dash player' do
+      expect(document).to receive(:video).twice.with(hash_including(:'data-src'))
+      subject
+    end
+
     it 'includes a height attribute equal to the body height minus some px to make way for the thumb slider' do
       expect(document).to receive(:video).twice.with(hash_including('height': '276px'))
       subject
@@ -53,10 +58,10 @@ describe Embed::MediaTag do
 
   describe 'private methods' do
     before { expect(document).to receive(:video).at_least(:once) }
-    let(:file) { double('File', title: 'abc123.mp4', mimetype: 'video/mp4') }
+    let(:file) { double('File', title: 'abc123.mp4') }
     describe '#enabled_streaming_sources' do
       it 'adds a source element for every enabled type' do
-        expect(document).to receive(:source).with(hash_including(:src, type: 'video/mp4'))
+        expect(document).to receive(:source).with(hash_including(:src, type: 'application/x-mpegURL'))
         subject.send(:enabled_streaming_sources, file)
       end
     end
