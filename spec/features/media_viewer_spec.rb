@@ -45,8 +45,8 @@ describe 'media viewer', js: true do
       expect(page).not_to have_css('.sul-embed-thumb-slider', visible: true)
       page.find('.sul-embed-thumb-slider-open-close').click
       expect(page).to have_css('.sul-embed-thumb-slider', visible: true)
-      expect(page).to have_css('video[data-slider-object="0"]', visible: true)
-      expect(page).to have_css('video[data-slider-object="1"]', visible: false)
+      expect(page).to have_css('[data-slider-object="0"] video', visible: true)
+      expect(page).to have_css('[data-slider-object="1"] video', visible: false)
 
       within('.sul-embed-thumb-slider') do
         expect(page).to have_css('.sul-embed-slider-thumb', count: 2)

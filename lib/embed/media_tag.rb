@@ -5,43 +5,57 @@ module Embed
   class MediaTag
     SUPPORTED_MEDIA_TYPES = [:audio, :video].freeze
 
-    def initialize(ng_doc, viewer)
-      @ng_document = ng_doc
+    def initialize(viewer)
       @viewer = viewer
       @purl_document = viewer.purl_object
-      build_markup
     end
 
-    private
-
-    attr_reader :ng_document, :purl_document, :request, :viewer
-
-    def build_markup
+    def to_html
+      output = ''
       purl_document.contents.each do |resource|
         next unless SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
         label = resource.description
         resource.files.each do |file|
           label = file.title if label.blank?
-          ng_document.send(
-            resource.type.to_sym,
-            'data-file-label': label,
-            'data-slider-object': file_index,
-            'data-src': streaming_url_for(file, :dash),
-            controls: 'controls',
-            height: "#{viewer.body_height.to_i - 24}px"
-          ) { enabled_streaming_sources(file) }
+          output << media_element(label, file, resource.type)
           @file_index += 1
         end
       end
+      output
+    end
+
+    private
+
+    attr_reader :purl_document, :request, :viewer
+
+    def media_element(label, file, type)
+      media_wrapper(label) do
+        <<-HTML.strip_heredoc
+          <#{type}
+            data-src="#{streaming_url_for(file, :dash)}"
+            controls='controls'
+            height="#{viewer.body_height.to_i - 24}px">
+            #{enabled_streaming_sources(file)}
+          </#{type}>
+        HTML
+      end
+    end
+
+    def media_wrapper(label, &block)
+      <<-HTML.strip_heredoc
+        <div data-file-label="#{label}" data-slider-object="#{file_index}">
+          #{yield(block)}
+        </div>
+      HTML
     end
 
     def enabled_streaming_sources(file)
-      enabled_streaming_types.each do |streaming_type|
-        ng_document.source(
-          src: streaming_url_for(file, streaming_type),
-          type: streaming_settings_for(streaming_type)[:mimetype]
-        )
-      end
+      enabled_streaming_types.map do |streaming_type|
+        "<source
+           src='#{streaming_url_for(file, streaming_type)}'
+           type='#{streaming_settings_for(streaming_type)[:mimetype]}'>
+        </source>"
+      end.join
     end
 
     def streaming_settings_for(type)
