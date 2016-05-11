@@ -7,8 +7,9 @@
   var Module = (function() {
     function thumbsForSlider() {
       var thumbs = [];
-      $('.sul-embed-media video, .sul-embed-media audio').each(function(index, mediaObject) {
-        mediaObject = $(mediaObject);
+      var sliderSelector = '.sul-embed-media [data-slider-object]';
+      jQuery(sliderSelector).each(function(index, mediaDiv) {
+        var mediaObject = $(mediaDiv).find('audio, video');
         var cssClass;
         if(mediaObject.prop('tagName') === 'AUDIO') {
           cssClass = 'sul-i-file-music-1';
@@ -25,7 +26,7 @@
           '<li class="sul-embed-slider-thumb ' + activeClass + '">' +
             '<i class="' + cssClass + '"></i>' +
             '<div class="sul-embed-thumb-label">' +
-              mediaObject.data('file-label') +
+              $(mediaDiv).data('file-label') +
             '</div>' +
           '</li>'
         );
@@ -45,6 +46,54 @@
       ThumbSlider
         .init('.sul-embed-media', { thumbClickCallback: pauseAllMedia })
         .addThumbnailsToSlider(thumbsForSlider());
+    }
+
+    function _timedOut(start, time) {
+      if ((Date.now() - start) < time) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+
+    function authLink(loginService, mediaObject) {
+      return jQuery('<a data-auth-link="true"></a>')
+        .prop('href', loginService['@id'])
+        .prop('target', '_blank')
+        .text(loginService.label)
+        .on('click', function(e) {
+          e.preventDefault();
+          var windowReference = window.open(jQuery(this).prop('href'));
+
+          var start = Date.now();
+          var checkWindow = setInterval(function() {
+            if (!_timedOut(start, 30000) &&
+              (!windowReference || !windowReference.closed)) return;
+            clearInterval(checkWindow);
+            mediaObject[0].load();
+            mediaObject
+              .parent('[data-slider-object]')
+              .find('[data-auth-link]')
+              .hide();
+            return;
+          }, 500);
+        });
+    }
+
+
+    function setupAuthLinks() {
+      jQuery('.sul-embed-media [data-auth-url]').each(function(){
+        var mediaObject = jQuery(this);
+        var authUrl = mediaObject.data('auth-url');
+        jQuery.ajax({url: authUrl, dataType: 'jsonp'}).done(function(data) {
+          if(data.status === 'must_authenticate') {
+            var wrapper = jQuery('<div></div>');
+            mediaObject.after(
+              wrapper.append(authLink(data.service, mediaObject))
+            );
+          }
+        });
+      });
     }
 
     function loadDashPlayerJavascript(callback) {
@@ -88,6 +137,7 @@
     return {
       init: function() {
         setupThumbSlider();
+        setupAuthLinks();
         this.initialzeDashPlayer();
       },
 

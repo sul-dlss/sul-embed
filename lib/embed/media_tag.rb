@@ -33,6 +33,7 @@ module Embed
         <<-HTML.strip_heredoc
           <#{type}
             data-src="#{streaming_url_for(file, :dash)}"
+            data-auth-url="#{authentication_url(file)}"
             controls='controls'
             height="#{viewer.body_height.to_i - 24}px">
             #{enabled_streaming_sources(file)}
@@ -72,7 +73,15 @@ module Embed
 
     def streaming_url_for(file, type)
       suffix = streaming_settings_for(type)[:suffix]
-      "#{Settings.stacks_url}/media/#{purl_document.druid}/#{file.title}/stream#{suffix}"
+      "#{stacks_base_url(file)}/stream#{suffix}"
+    end
+
+    def authentication_url(file)
+      "#{stacks_base_url(file)}/auth_check"
+    end
+
+    def stacks_base_url(file)
+      "#{Settings.stacks_url}/media/#{purl_document.druid}/#{file.title}"
     end
   end
 end

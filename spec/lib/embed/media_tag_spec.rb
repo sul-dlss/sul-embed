@@ -33,6 +33,12 @@ describe Embed::MediaTag do
       expect(subject).to have_css('[data-src]', count: 2)
     end
 
+    it 'includes a data attribute that includes the url to check the users auth status' do
+      expect(subject).to have_css('video[data-auth-url]', count: 2)
+      auth_url = subject.all('video[data-auth-url]').first['data-auth-url']
+      expect(auth_url).to match(%r{https?://stacks\.stanford\.edu.*/auth_check})
+    end
+
     it 'includes a height attribute equal to the body height minus some px to make way for the thumb slider' do
       expect(subject).to have_css('video[height="276px"]')
     end
