@@ -10,7 +10,7 @@ module Embed
             'data-sul-embed-theme' => asset_url('media.css').to_s,
             'data-sul-embed-dash-player' => asset_url('vendor/dash.js').to_s
           ) do
-            Embed::MediaTag.new(doc, self)
+            doc << Embed::MediaTag.new(self).to_html
             doc.script { doc.text ";jQuery.getScript(\"#{asset_url('media.js')}\");" }
           end
         end.to_html
