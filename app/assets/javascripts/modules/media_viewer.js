@@ -123,7 +123,7 @@
       });
     }
 
-    function initialzeDashPlayerForAllVideos() {
+    function initializeDashPlayerForAllVideos() {
       preloadVideoUrls();
       loadDashPlayerJavascript(function() {
         jQuery('.sul-embed-media video').each(function() {
@@ -138,12 +138,12 @@
       init: function() {
         setupThumbSlider();
         setupAuthLinks();
-        this.initialzeDashPlayer();
+        this.initializeDashPlayer();
       },
 
-      initialzeDashPlayer: function() {
+      initializeDashPlayer: function() {
         if ( !canPlayHLS() ) {
-          initialzeDashPlayerForAllVideos();
+          initializeDashPlayerForAllVideos();
         }
         removeAllMediaDataSrc();
       }
