@@ -82,6 +82,13 @@ module Embed
                   'data-sul-embed-toggle' => 'sul-embed-download-panel'
                 )
               end
+
+              file_count = @purl_object.all_resource_files.length
+              if file_count > 0
+                doc.span(class: 'sul-embed-footer-tool sul-embed-download-count',\
+                         'aria-label' => 'number of downloadable files') { doc.text file_count }
+              end
+
               if external_url.present?
                 doc.a(
                   class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' \
