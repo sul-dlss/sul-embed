@@ -4,6 +4,7 @@ module Embed
   # and HLS is used as a <source> within the <video> or <audio> tag.
   class MediaTag
     SUPPORTED_MEDIA_TYPES = [:audio, :video].freeze
+    MEDIA_INDEX_CONTROL_HEIGHT = 24
 
     def initialize(viewer)
       @viewer = viewer
@@ -35,7 +36,8 @@ module Embed
             data-src="#{streaming_url_for(file, :dash)}"
             data-auth-url="#{authentication_url(file)}"
             controls='controls'
-            height="#{viewer.body_height.to_i - 24}px">
+            class="#{'sul-embed-many-media' if many_media?}"
+            height="#{media_element_height}">
             #{enabled_streaming_sources(file)}
           </#{type}>
         HTML
@@ -57,6 +59,21 @@ module Embed
            type='#{streaming_settings_for(streaming_type)[:mimetype]}'>
         </source>"
       end.join
+    end
+
+    def media_element_height
+      return "#{viewer.body_height}px" unless many_media?
+      "#{viewer.body_height.to_i - MEDIA_INDEX_CONTROL_HEIGHT}px"
+    end
+
+    def many_media?
+      media_files_count > 1
+    end
+
+    def media_files_count
+      purl_document.contents.count do |resource|
+        SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
+      end
     end
 
     def streaming_settings_for(type)
