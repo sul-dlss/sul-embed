@@ -22,8 +22,9 @@
           activeClass = 'active';
         }
 
+        var thumbClass = 'sul-embed-slider-thumb sul-embed-media-slider-thumb ';
         thumbs.push(
-          '<li class="sul-embed-slider-thumb ' + activeClass + '">' +
+          '<li class="' + thumbClass + activeClass + '">' +
             '<i class="' + cssClass + '"></i>' +
             '<div class="sul-embed-thumb-label">' +
               $(mediaDiv).data('file-label') +

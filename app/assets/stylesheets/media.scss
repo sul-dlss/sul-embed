@@ -9,7 +9,35 @@
 
   audio { width: 100%; }
 
-  .sul-embed-many-media {
+  .#{$namespace}-many-media {
     margin-bottom: 24px;
+  }
+}
+
+.#{$namespace}-media-slider-thumb {
+  height: 75px;
+  text-align: left;
+
+  &.active {
+    border: 1px solid $color-cardinal-red;
+  }
+
+  i {
+    color: $color-pantone-401;
+    float: left;
+    font-size: 75px;
+    margin-left: -6px;
+  }
+
+  .#{$namespace}-thumb-label {
+    float: right;
+    height: 75px;
+    overflow: hidden;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    width: 100px;
+    word-wrap: break-word;
   }
 }
