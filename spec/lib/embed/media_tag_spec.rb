@@ -39,8 +39,17 @@ describe Embed::MediaTag do
       expect(auth_url).to match(%r{https?://stacks\.stanford\.edu.*/auth_check})
     end
 
-    it 'includes a height attribute equal to the body height minus some px to make way for the thumb slider' do
-      expect(subject).to have_css('video[height="276px"]')
+    context 'single video' do
+      let(:purl) { single_video_purl }
+      it 'includes a height attribute equal to the body height' do
+        expect(subject).to have_css("video[height='#{viewer.body_height}px']")
+      end
+    end
+
+    context 'multiple videos' do
+      it 'includes a height attribute equal to the body height minus some px to make way for the thumb slider' do
+        expect(subject).to have_css('video[height="276px"]')
+      end
     end
 
     context 'video' do

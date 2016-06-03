@@ -4,9 +4,12 @@
 
 .#{$namespace}-media {
   min-height: 175px;
-  padding-bottom: 24px;
   position: relative;
   text-align: center;
 
   audio { width: 100%; }
+
+  .sul-embed-many-media {
+    margin-bottom: 24px;
+  }
 }
