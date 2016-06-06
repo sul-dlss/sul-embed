@@ -44,102 +44,113 @@ module Embed
       end
 
       def header_html
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-header') do
-            render_header_tools(doc)
-          end if display_header?
-        end.to_html
+        return unless display_header?
+        <<-HTML.strip_heredoc
+          <div class="sul-embed-header">#{render_header_tools}</div>
+        HTML
       end
 
       def footer_html
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-footer') do
-            doc.div(class: 'sul-embed-footer-toolbar') do
-              unless @request.hide_metadata?
-                doc.button(
-                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' \
-                    'oolbar sul-embed-btn-default sul-i-infomation-circle',
-                  'aria-expanded' => 'false',
-                  'aria-label' => 'open metadata panel',
-                  'data-sul-embed-toggle' => 'sul-embed-metadata-panel'
-                )
-              end
-              unless @request.hide_embed_this?
-                doc.button(
-                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' \
-                    'oolbar sul-embed-btn-default sul-i-share',
-                  'aria-expanded' => 'false',
-                  'aria-label' => 'open embed this panel',
-                  'data-sul-embed-toggle' => 'sul-embed-embed-this-panel'
-                )
-              end
-              if show_download?
-                doc.button(
-                  class: 'sul-embed-footer-tool sul-embed-btn sul-em' \
-                    'bed-btn-toolbar sul-embed-btn-default sul-i-download-3',
-                  'aria-expanded' => 'false',
-                  'aria-label' => 'open download panel',
-                  'data-sul-embed-toggle' => 'sul-embed-download-panel'
-                )
-              end
-              if external_url.present?
-                doc.a(
-                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' \
-                    'oolbar sul-embed-btn-default sul-i-navigation-next-4',
-                  href: external_url.to_s
-                ) do
-                  doc.span(class: 'sul-embed-sr-only') { doc.text external_url_text }
-                end
-              end
-            end
-          end
-        end.to_html
+        <<-HTML.strip_heredoc
+          <div class="sul-embed-footer">
+            <div class="sul-embed-footer-toolbar">
+              #{open_metadata_panel_button}
+              #{open_embed_panel}
+              #{open_download_panel}
+              #{link_external_url}
+            </div>
+          </div>
+        HTML
+      end
+
+      def open_metadata_panel_button
+        return if @request.hide_metadata?
+        <<-HTML.strip_heredoc
+          <button class="sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default \
+                         sul-i-infomation-circle, aria-expanded='false', aria-label='open metadata panel', \
+                         data-sul-embed-toggle='sul-embed-metadata-panel'">
+          </button>
+        HTML
+      end
+
+      def open_embed_panel
+        return if @request.hide_embed_this
+        <<-HTML.strip_heredoc
+          <button class="sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default \
+                         sul-i-share', aria-expanded='false' aria-label= 'open embed this panel', \
+                         data-sul-embed-toggle='sul-embed-embed-this-panel'">
+          </button>
+        HTML
+      end
+
+      def open_download_panel
+        return unless show_download?
+        <<-HTML.strip_heredoc
+          <button class="sul-embed-footer-tool sul-embed-btn sul-em 'bed-btn-toolbar sul-embed-btn-default \
+                         sul-i-download-3, aria-expanded='false', aria-label='open download panel', \
+                         data-sul-embed-toggle='sul-embed-download-panel'">
+          </button>
+          #{download_counter}
+        HTML
+      end
+
+      def download_counter
+        file_count = @purl_object.all_resource_files.length
+        return if file_count <= 0
+        <<-HTML.strip_heredoc
+          <span class="sul-embed-footer-tool sul-embed-download-count aria-label='number of downloadable files'">
+            #{file_count}
+          </span>
+        HTML
       end
 
       def metadata_html
-        return '' if @request.hide_metadata?
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-panel-container') do
-            doc.div(class: 'sul-embed-panel sul-embed-metadata-panel', style: 'display:none;', 'aria-hidden': 'true') do
-              doc.div(class: 'sul-embed-panel-header') do
-                doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-metadata-panel') do
-                  doc.span('aria-hidden' => true) do
-                    doc.cdata '&times;'
-                  end
-                  doc.span(class: 'sul-embed-sr-only') { doc.text 'Close' }
-                end
-                doc.div(class: 'sul-embed-panel-title') do
-                  doc.text @purl_object.title
-                end
-              end
-              doc.div(class: 'sul-embed-panel-body') do
-                doc.dl do
-                  doc.dt { doc.text 'Available online' }
-                  doc.dd do
-                    doc.a(href: @purl_object.purl_url, target: '_top') do
-                      doc.text @purl_object.purl_url.gsub(/^http:\/\//, '')
-                    end
-                  end
-                  if @purl_object.use_and_reproduction.present?
-                    doc.dt { doc.text('Use and reproduction') }
-                    doc.dd { doc.text(@purl_object.use_and_reproduction) }
-                  end
-                  if @purl_object.copyright.present?
-                    doc.dt { doc.text('Copyright') }
-                    doc.dd { doc.text(@purl_object.copyright) }
-                  end
-                  if @purl_object.license.present?
-                    doc.dt { doc.text('License') }
-                    doc.dd do
-                      doc.span(class: "sul-embed-license-#{@purl_object.license[:machine]}")
-                      doc.text(@purl_object.license[:human])
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end.to_html
+        return if @request.hide_metadata
+        <<-HTML.strip_heredoc
+          <div class="sul-embed-panel-container">
+            <div class="sul-embed-panel sul-embed-metadata-panel", style="display:none", aria-hidden="true">
+              <div class="sul-embed-panel-header">
+                <button class="sul-embed-close data-sul-embed-toggle=sul-embed-metadata-panel">
+                  <span aria-hidden="true"><![CDATA[&times;]]></span>
+                  <span class="sul-embed-sr-only">Close</span>
+                </button>
+                <div class="sul-embed-panel-title">#{@purl_object.title}</div>
+              </div>
+              <div class="sul-embed-panel-body">
+                <dl>
+                  <dt>Available online</dt>
+                  <dd><a href="#{@purl_object.purl_url}" target="_top">#{@purl_object.purl_url.gsub(/^http:\/\//, '')}</a></dd>
+                  #{use_and_reproduction}
+                  #{copyright}
+                  #{license}
+                </dl>
+              </div>
+            </div>
+          </div>
+        HTML
+      end
+
+      def use_and_reproduction
+        return unless @purl_object.use_and_reproduction.present?
+        <<-HTML.strip_heredoc
+          <dt>Use and reproduction</dt>
+          <dd>#{@purl_object.use_and_reproduction}</dd>
+        HTML
+      end
+
+      def copyright
+        return unless @purl_object.copyright_present?
+        <<-HTML.strip_heredoc
+          <dt>Copyright</dt>
+          <dd>#{@purl_object.copyright}</dd>
+        HTML
+      end
+
+      def license
+        <<-HTML.strip_heredoc
+          <dt>License</dt>
+          <dd><span class="sul-embed-license-#{@purl_object.license[:machine]}"</span>#{@purl_object.license[:human]}</dd>
+        HTML
       end
 
       # subclasses that require special behaviors (e.g. file, image_x, media) should
@@ -215,10 +226,10 @@ module Embed
 
       # Loops through all of the header tools logic methods
       # and calls the corresponding method that is the return value
-      def render_header_tools(doc)
+      def render_header_tools
         header_tools_logic.each do |logic_method|
           if (tool = send(logic_method))
-            send(tool, doc)
+            send(tool)
           end
         end
       end
@@ -236,10 +247,10 @@ module Embed
         :header_title_html
       end
 
-      def header_title_html(doc)
-        doc.span(class: 'sul-embed-header-title') do
-          doc.text @purl_object.title
-        end
+      def header_title_html
+        <<-HTML.strip_heredoc
+          <span class="sul-embed-header-title">#{@purl_object.title}</span>
+        HTML
       end
 
       def display_header?
@@ -291,8 +302,8 @@ module Embed
         :file_count_html
       end
 
-      def file_count_html(doc)
-        doc.div(class: 'sul-embed-item-count', 'aria-live' => 'polite') {}
+      def file_count_html
+        "<div class='sul-embed-item-count', aria-live='polite'></div>"
       end
     end
   end
