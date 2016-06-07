@@ -1,0 +1,22 @@
+@import 'sul_variables';
+@import 'mixins';
+
+.#{$namespace}-auth-link {
+  @include stanford-only-red;
+  background-color: $sul-auth-link-background-color;
+  bottom: 15px;
+  padding: 5px;
+  position: absolute;
+
+  a {
+    border-bottom: 1px dotted transparent;
+    color: $sul-auth-link-color;
+    margin-left: 20px;
+
+    &:focus,
+    &:hover {
+      border-color: $sul-auth-link-color;
+      color: $sul-auth-link-color;
+    }
+  }
+}

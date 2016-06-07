@@ -48,3 +48,9 @@
   background: url('#{$asset_base}<%= asset_url("stanford_s.svg") %>') no-repeat right, none;
   padding-right: 20px;
 }
+
+@mixin stanford-only-red {
+  background: url('#{$asset_base}<%= asset_url("stanford_red_s.png") %>') no-repeat 5px;
+// TODO: need svg version
+//  background: url('#{$asset_base}<%= asset_url("stanford_red_s.svg") %>') no-repeat 5px, none;
+}
