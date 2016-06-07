@@ -7,12 +7,12 @@ module Embed
       end
 
       def body_html
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-body sul-embed-image-x', 'data-sul-embed-theme' => asset_url('image_x.css').to_s) do
-            doc.div(id: 'sul-embed-image-x', 'data-manifest-url' => manifest_json_url, 'data-world-restriction' => !@purl_object.world_unrestricted?) {}
-            doc.script { doc.text ";jQuery.getScript(\"#{asset_url('image_x.js')}\");" }
-          end
-        end.to_html
+        <<-HTML.strip_heredoc
+          <div class="sul-embed-body sul-embed-image-x" data-sul-embed-theme="#{asset_url('image_x.css').to_s}">
+            <div id="sul-embed-image-x" data-manifest-url="#{manifest_json_url}" data-world-restriction="#{!@purl_object.world_unrestricted?}"></div>
+            <script>";jQuery.getScript(\"#{asset_url('image_x.js')}\");"</script>
+          </div>
+        HTML
       end
 
       def self.supported_types
@@ -34,74 +34,86 @@ module Embed
       end
 
       def image_button_html(doc)
-        doc.div(class: 'sul-embed-image-x-buttons') do
-          doc.button(
-            class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar' \
-              ' sul-i-layout-none sul-embed-hidden',
-            'data-sul-view-mode' => 'individuals',
-            'aria-label' => 'switch to individuals mode'
-          )
-          doc.button(
-            class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar' \
-              ' sul-i-layout-4 sul-embed-hidden',
-            'data-sul-view-mode' => 'paged',
-            'aria-label' => 'switch to paged mode'
-          )
-          doc.button(
-            class: 'sul-embed-btn sul-embed-btn-default sul-embed-bt' \
-              'n-toolbar sul-i-view-module-1 sul-embed-hidden',
-            'data-sul-view-perspective' => 'overview',
-            'aria-label' => 'switch to overview perspective'
-          )
-          doc.button(
-            class: 'sul-embed-btn sul-embed-btn-default sul-embed-bt' \
-              'n-toolbar sul-i-expand-1 sul-embed-hidden',
-            'data-sul-view-fullscreen' => 'fullscreen',
-            'aria-label' => 'switch to fullscreen'
-          )
-        end
+        <<-HTML.strip_heredoc
+          <div class="sul-embed-image-x-buttons">
+            <button class="sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-layout-none sul-embed-hidden"
+                    data-sul-view-mode="individuals"
+                    aria-label="switch to individuals mode"></button>
+            <button class="sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-layout-4 sul-embed-hidden"
+                            data-sul-view-mode="paged"
+                            aria-label="switch to paged mode"></button>
+            <button class="sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-view-module-1 sul-embed-hidden"
+                    data-sul-view-perspective="overview"
+                    aria-label="switch to overview perspective"></button>
+            <button class="sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar sul-i-expand-1 sul-embed-hidden"
+                    data-sul-view-fullscreen="fullscreen"
+                    aria-label="switch to fullscreen"></button>
+          </div>
+        HTML
       end
 
       def embed_this_html
         return '' if @request.hide_embed_this?
         Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, purl_object_title: @purl_object.title) do
-          Nokogiri::HTML::Builder.new do |doc|
-            doc.div(class: 'sul-embed-section') do
-              doc.input(type: 'checkbox', id: 'sul-embed-embed-download', 'data-embed-attr': 'hide_download', checked: true)
-              doc.label(for: 'sul-embed-embed-download') { doc.text('download') }
-            end
-          end.to_html
+          <<-HTML.strip_heredoc
+            <div class="sul-embed-section">
+              <input type="checkbox" id="sul-embed-embed-download" data-embed-attr="hide_download" checked="true"></input>
+              <label for="sul-embed-embed-download">download</label>
+            </div>
+          HTML
         end.to_html
+      end
+
+      def embed_stanford_only(file)
+        if file.stanford_only?
+          "sul-embed-stanford-only"
+        end
+        ""
+      end
+
+      def show_download_title(file)
+        if file.size.blank?
+          full_download_title(file)
+        else
+          full_download_title(file) + " #{pretty_filesize(file.size)}"
+        end
+      end
+
+      def download_list_item(file)
+        <<-HTML.strip_heredoc
+          <li>
+            <div class="#{embed_stanford_only(file)}">
+              <a href="#{file_url(file.title)}", download="nil">
+                show_download_title(file)
+              </a>
+            </div>
+          </li>
+        HTML
+      end
+
+      def generate_download_list
+        html_result = String.new
+        @purl_object.contents.each do |resource|
+          next unless resource.type == 'object'
+          html_result << "<ul class='sul-embed-download-list-full'>"
+          resource.files.each do |file|
+            next if embargoed_to_world?(file)
+            html_result << download_list_item(file)
+          end
+        end
+        html_result
       end
 
       def download_html
         return '' if @request.hide_download?
         Embed::DownloadPanel.new(title: 'Download image') do
-          Nokogiri::HTML::Builder.new do |doc|
-            doc.div(class: 'sul-embed-panel-body') do
-              doc.ul(class: 'sul-embed-download-list') {}
-              @purl_object.contents.each do |resource|
-                next unless resource.type == 'object'
-                doc.ul(class: 'sul-embed-download-list-full') do
-                  resource.files.each do |file|
-                    next if embargoed_to_world?(file)
-                    doc.li do
-                      doc.div(class: ('sul-embed-stanford-only' if file.stanford_only?).to_s) do
-                        doc.a(href: file_url(file.title), download: nil) do
-                          if file.size.blank?
-                            doc.text full_download_title(file)
-                          else
-                            doc.text full_download_title(file) +
-                                     " #{pretty_filesize(file.size)}"
-                          end
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-          end.to_html
+          <<-HTML.strip_heredoc
+            <div class="sul-embed-panel-body">
+              <ul class="sul-embed-download-list">
+                #{generate_download_list}
+              </ul>
+            </div>
+          HTML
         end.to_html
       end
 
