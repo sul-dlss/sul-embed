@@ -9,14 +9,14 @@ describe Embed::Viewer::CommonViewer do
   let(:geo_viewer) { Embed::Viewer::Geo.new(request) }
 
   describe 'header_html' do
-    it 'should return the objects title' do
+    it "returns the object's title" do
       expect(request).to receive(:params).at_least(:once).and_return({})
       expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
       stub_purl_response_and_request(file_purl, request)
       html = Capybara.string(file_viewer.header_html)
       expect(html).to have_css '.sul-embed-header-title', text: 'File Title'
     end
-    it 'should not return the object title if the consumer requested to hide it' do
+    it 'does not return the object title if the consumer requested to hide it' do
       expect(request).to receive(:params).at_least(:once).and_return({})
       expect(request).to receive(:hide_title?).at_least(:once).and_return(true)
       stub_purl_response_and_request(file_purl, request)
@@ -26,43 +26,43 @@ describe Embed::Viewer::CommonViewer do
     end
   end
   describe 'metadata_html' do
-    it 'should return the metadata panel html' do
+    it 'has metadata panel html' do
       stub_purl_response_and_request(file_purl, request)
       html = Capybara.string(file_viewer.metadata_html)
       expect(html).to have_css 'div.sul-embed-panel-container'
       expect(html).to have_css 'div.sul-embed-metadata-panel', visible: false
     end
-    it 'should return use and reproduction' do
+    it 'has use and reproduction statement' do
       stub_purl_response_and_request(file_purl, request)
       html = Capybara.string(file_viewer.metadata_html)
       expect(html).to have_content 'Use and reproduction'
     end
-    it 'should not return use and reproduction' do
+    it 'does not have use and reproduction when not in object' do
       stub_purl_response_and_request(image_purl, request)
-      html = Capybara.string(file_viewer.metadata_html)
+      html = Capybara.string(image_x_viewer.metadata_html)
       expect(html).to_not have_content 'Use and reproduction'
     end
-    it 'should return copyright' do
+    it 'has copyright' do
       stub_purl_response_and_request(image_purl, request)
-      html = Capybara.string(file_viewer.metadata_html)
+      html = Capybara.string(image_x_viewer.metadata_html)
       expect(html).to have_content 'Copyright'
     end
-    it 'should not return copyright' do
+    it 'does not have copyright when not in object' do
       stub_purl_response_and_request(file_purl, request)
       html = Capybara.string(file_viewer.metadata_html)
       expect(html).to_not have_content 'Copyright'
     end
-    it 'should return license' do
+    it 'has license' do
       stub_purl_response_and_request(file_purl, request)
       html = Capybara.string(file_viewer.metadata_html)
       expect(html).to have_content 'License'
     end
-    it 'should not return license' do
+    it 'does not have license when not in object' do
       stub_purl_response_and_request(image_purl, request)
-      html = Capybara.string(file_viewer.metadata_html)
+      html = Capybara.string(image_x_viewer.metadata_html)
       expect(html).to_not have_content 'License'
     end
-    it 'should not return the metadata panel at all' do
+    it 'does not return the metadata panel at all if hidden' do
       expect(request).to receive(:hide_metadata?).at_least(:once).and_return(true)
       stub_request(request)
       html = Capybara.string(file_viewer.metadata_html)
@@ -71,15 +71,27 @@ describe Embed::Viewer::CommonViewer do
     end
   end
   describe 'footer_html' do
-    it 'should return the objects footer' do
-      stub_request(request)
-      html = Capybara.string(file_viewer.footer_html)
+    it "returns the object's footer" do
+      stub_purl_response_and_request(image_purl, request)
+      html = Capybara.string(image_x_viewer.footer_html)
       expect(html).to have_css 'div.sul-embed-footer'
-      expect(html).to have_css '[aria-label]', count: 2
+      expect(html).to have_css '[aria-label="open embed this panel"]'
+      expect(html).to have_css '[aria-label="open download panel"]'
+      expect(html).to have_css '[aria-label="number of downloadable files"]'
+    end
+    it 'has the file count for multiple files in the download panel' do
+      stub_purl_response_and_request(multi_file_purl, request)
+      html = Capybara.string(file_viewer.footer_html)
+      expect(html).to have_css '[aria-label="number of downloadable files"]', text: 2
+    end
+    it 'has the file count for files all object resources in the download panel' do
+      stub_purl_response_and_request(multi_resource_multi_file_purl, request)
+      html = Capybara.string(file_viewer.footer_html)
+      expect(html).to have_css '[aria-label="number of downloadable files"]', text: 4
     end
   end
   describe 'to_html' do
-    it 'should return html that has header, body, and footer wrapped in a container' do
+    it 'returns html that has header, body, and footer wrapped in a container' do
       stub_purl_response_and_request(file_purl, request)
       expect(file_viewer).to receive(:body_html).and_return('<div class="sul-embed-body"></div>')
       expect(file_viewer).to receive(:header_html).and_return('<div class="sul-embed-header"></div>')
@@ -93,7 +105,7 @@ describe Embed::Viewer::CommonViewer do
       expect(html).to have_css 'div.sul-embed-panel-container', visible: false
       expect(html).to have_css 'div.sul-embed-footer', visible: false
     end
-    it 'should include the height/width style in the container if maxheight/width is passed' do
+    it 'includes the height/width style in the container if maxheight/width is passed' do
       expect(request).to receive(:maxheight).at_least(:once).and_return(200)
       expect(request).to receive(:maxwidth).at_least(:once).and_return(200)
       stub_purl_response_and_request(file_purl, request)
@@ -106,11 +118,11 @@ describe Embed::Viewer::CommonViewer do
     end
   end
   describe 'height/width' do
-    it 'should set a default height and default width to nil (which can be overridden at the viewer level)' do
+    it 'sets a default height and default width to nil (which can be overridden at the viewer level)' do
       stub_request(request)
       expect(file_viewer.send(:default_width)).to be_nil
     end
-    it 'should use the incoming maxheight/maxwidth parameters from the request' do
+    it 'uses the incoming maxheight/maxwidth parameters from the request' do
       expect(request).to receive(:maxheight).at_least(:once).and_return(100)
       expect(request).to receive(:maxwidth).at_least(:once).and_return(200)
       stub_request(request)
@@ -119,7 +131,7 @@ describe Embed::Viewer::CommonViewer do
     end
   end
   describe 'external_url' do
-    it 'should return nil' do
+    it 'returns nil' do
       expect(request).to receive(:purl_object).and_return(nil)
       common_viewer = Embed::Viewer::CommonViewer.new(request)
       expect(common_viewer.external_url).to be_nil
