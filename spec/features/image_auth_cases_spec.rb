@@ -25,6 +25,7 @@ describe 'image viewer authentication and authorization', js: true do
       end
     end
   end
+
   describe '400px and zoom available to world, larger download restricted to SU' do
     before do
       stub_purl_response_with_fixture(image_purl)
@@ -32,7 +33,8 @@ describe 'image viewer authentication and authorization', js: true do
       fill_in_default_sandbox_form('bb112zx3193')
       click_button 'Embed'
     end
-    pending 'displays zoom and SU restricted downloads' do
+    it 'displays zoom and SU restricted downloads' do
+      pending 'poltergeist unhapy with auth roundtrip'
       expect_zoomable_image
       page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
       within '.sul-embed-download-panel' do
@@ -44,6 +46,7 @@ describe 'image viewer authentication and authorization', js: true do
       end
     end
   end
+
   describe '400px available to world, download and larger available to SU' do
     before do
       stub_purl_response_with_fixture(image_purl)
@@ -52,21 +55,13 @@ describe 'image viewer authentication and authorization', js: true do
       click_button 'Embed'
     end
     it 'displays login prompt and thumb' do
-      expect_thumb_as_image
+      expect(page).to have_css '.sul-embed-image-x-restricted-thumb-container'
+      expect(page).to have_css 'a', text: /Login/i
     end
     it 'download button should be hidden' do
-      pending('implement show download button based on authorization')
-      raise
+      skip 'TODO: implement show download button based on authorization'
     end
   end
-end
-
-def expect_authenticate_link
-  expect(page).to have_css '.sul-embed-image-x-auth-link', text: 'Stanford-affiliated? Login to view'
-end
-
-def expect_thumb_as_image
-  expect(page).to have_css '.sul-embed-image-x-restricted-thumb-container'
 end
 
 def expect_zoomable_image
