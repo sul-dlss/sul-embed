@@ -1,5 +1,5 @@
-@import 'sul_variables';
 @import 'common';
+@import 'modules/auth_link';
 @import 'modules/thumb_slider';
 
 .#{$namespace}-media {

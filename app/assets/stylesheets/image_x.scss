@@ -1,4 +1,5 @@
 @import 'common';
+@import 'modules/auth_link';
 @import 'modules/bootstrap_media';
 @import 'modules/slider';
 @import 'vendor/tooltip';
@@ -144,21 +145,6 @@ $image-thumb-slider-background-color: $sul-background;
 .#{$namespace}-image-x-well-content {
   @include well-content;
   text-align: center;
-}
-
-.#{$namespace}-image-x-restricted-thumb-container {
-  .#{$namespace}-image-x-auth-link {
-    @include rounded();
-    background: rgba($sul-background, 0.65);
-    bottom: 10px;
-    left: 10px;
-    padding: 5px;
-    position: absolute;
-  }
-
-  a {
-    @include stanford-only;
-  }
 }
 
 .#{$namespace}-image-x-restricted-thumb {

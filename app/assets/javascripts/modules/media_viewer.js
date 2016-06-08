@@ -58,7 +58,7 @@
     }
 
     function authLink(loginService, mediaObject) {
-      return jQuery('<a data-auth-link="true"></a>')
+      return jQuery('<a></a>')
         .prop('href', loginService['@id'])
         .prop('target', '_blank')
         .text(loginService.label)
@@ -88,7 +88,7 @@
         var authUrl = mediaObject.data('auth-url');
         jQuery.ajax({url: authUrl, dataType: 'jsonp'}).done(function(data) {
           if(data.status === 'must_authenticate') {
-            var wrapper = jQuery('<div></div>');
+            var wrapper = jQuery('<div data-auth-link="true" class="sul-embed-auth-link"></div>');
             mediaObject.after(
               wrapper.append(authLink(data.service, mediaObject))
             );

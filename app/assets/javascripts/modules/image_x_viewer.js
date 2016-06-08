@@ -18,7 +18,7 @@
     var auth = null;
 
     var _listenForActions = function() {
-      PubSub.subscribe('manifestStateUpdated', function() {        
+      PubSub.subscribe('manifestStateUpdated', function() {
         var authService = manifestStore.authService();
         _updateImageCount();
         // If authorization is needed, instantiate IiifAuth and check the status
@@ -122,7 +122,7 @@
       $image.attr('alt', '');
       $image.addClass('sul-embed-image-x-restricted-thumb');
       var $authLink = $(document.createElement('div'));
-      $authLink.addClass('sul-embed-image-x-auth-link');
+      $authLink.addClass('sul-embed-auth-link');
       var $link = $(document.createElement('a'));
       $link.attr('href', '#');
       $link.text(authService.label);
@@ -133,7 +133,7 @@
           .open(authService['@id']);
         var start = Date.now();
         var checkWindow = setInterval(function() {
-          // Check if user authed if timedout, or Auth window closed 
+          // Check if user authed if timedout, or Auth window closed
           if (!_timedOut(start, 30000) &&
             (!windowObjectReference || !windowObjectReference.closed)) return;
           clearInterval(checkWindow);
@@ -358,7 +358,7 @@
       $($el.parent().parent().find('[data-sul-embed-toggle="sul-embed-downloa' +
         'd-panel"]')).hide();
     };
-    
+
 
     // http://upshots.org/javascript/jquery-test-if-element-is-in-viewport
     // -visible-on-screen
@@ -411,7 +411,7 @@
     };
 
     var _setupThumbSlider = function() {
-      
+
       var thumbHeight = 100;
       var thumbDisplayHeight = 75;
       var manifest = manifestStore.getState().manifest;
