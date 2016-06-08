@@ -27,7 +27,7 @@ describe Embed::Viewer::Media do
       expect(body_html).to have_css('video')
     end
 
-    it 'includes the dash player loaction in a data attribute' do
+    it 'includes the dash player location in a data attribute' do
       attribute = 'data-sul-embed-dash-player'
       allow(request).to receive(:rails_request).and_return(double(host_with_port: ''))
       stub_request(request)
