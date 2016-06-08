@@ -71,11 +71,23 @@ describe Embed::Viewer::CommonViewer do
     end
   end
   describe 'footer_html' do
-    it 'should return the objects footer' do
-      stub_purl_response_and_request(file_purl, request)
-      html = Capybara.string(file_viewer.footer_html)
+    it "returns the object's footer" do
+      stub_purl_response_and_request(image_purl, request)
+      html = Capybara.string(image_x_viewer.footer_html)
       expect(html).to have_css 'div.sul-embed-footer'
-      expect(html).to have_css '[aria-label]', count: 3
+      expect(html).to have_css '[aria-label="open embed this panel"]'
+      expect(html).to have_css '[aria-label="open download panel"]'
+      expect(html).to have_css '[aria-label="number of downloadable files"]'
+    end
+    it 'has the file count for multiple files in the download panel' do
+      stub_purl_response_and_request(multi_file_purl, request)
+      html = Capybara.string(file_viewer.footer_html)
+      expect(html).to have_css '[aria-label="number of downloadable files"]', text: 2
+    end
+    it 'has the file count for files all object resources in the download panel' do
+      stub_purl_response_and_request(multi_resource_multi_file_purl, request)
+      html = Capybara.string(file_viewer.footer_html)
+      expect(html).to have_css '[aria-label="number of downloadable files"]', text: 4
     end
   end
   describe 'to_html' do
