@@ -30,7 +30,7 @@ module Embed
     attr_reader :purl_document, :request, :viewer
 
     def media_element(label, file, type)
-      media_wrapper(label) do
+      media_wrapper(label: label, stanford_only: file.stanford_only?) do
         <<-HTML.strip_heredoc
           <#{type}
             data-src="#{streaming_url_for(file, :dash)}"
@@ -44,10 +44,10 @@ module Embed
       end
     end
 
-    def media_wrapper(label, &block)
+    def media_wrapper(label:, stanford_only:, &block)
       <<-HTML.strip_heredoc
-        <div data-file-label="#{label}" data-slider-object="#{file_index}">
-          #{yield(block)}
+        <div data-stanford-only="#{stanford_only}" data-file-label="#{label}" data-slider-object="#{file_index}">
+          #{yield(block) if block_given?}
         </div>
       HTML
     end
