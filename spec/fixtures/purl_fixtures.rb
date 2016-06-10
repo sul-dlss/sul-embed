@@ -624,6 +624,13 @@ module PURLFixtures
             <file id="abc_123.mp4" mimetype="video/mp4" size="152000000"></file>
           </resource>
         </contentMetadata>
+        <rightsMetadata>
+          <access type="read">
+            <machine>
+              <location>spec</location>
+            </machine>
+          </access>
+        </rightsMetadata>
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
           <dc:title>stupid dc title of video</dc:title>
         </oai_dc>
@@ -654,6 +661,12 @@ module PURLFixtures
           <access type="read">
             <machine>
               <world/>
+            </machine>
+          </access>
+          <access type="read">
+            <file>abc_123.mp4</file>
+            <machine>
+              <location>spec</location>
             </machine>
           </access>
           <access type="read">

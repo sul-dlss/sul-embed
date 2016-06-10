@@ -202,6 +202,10 @@ module Embed
           @rights.stanford_only_unrestricted_file?(title)
         end
 
+        def location_restricted?
+          @rights.restricted_by_location?(title)
+        end
+
         private
 
         def image_data?
