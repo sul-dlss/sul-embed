@@ -67,6 +67,20 @@ describe Embed::MediaTag do
     end
   end
 
+  describe '#media_wrapper' do
+    describe 'data-stanford-only attribute' do
+      it 'true for Stanford only files' do
+        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, label: 'ignored', stanford_only: true))
+        expect(media_wrapper).to have_css('[data-stanford-only="true"]')
+      end
+
+      it 'false for public files' do
+        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, label: 'ignored', stanford_only: false))
+        expect(media_wrapper).to have_css('[data-stanford-only="false"]')
+      end
+    end
+  end
+
   describe 'private methods' do
     let(:file) { double('File', title: 'abc123.mp4') }
     describe '#enabled_streaming_sources' do

@@ -23,10 +23,16 @@
         }
 
         var thumbClass = 'sul-embed-slider-thumb sul-embed-media-slider-thumb ';
+        var labelClass = 'sul-embed-thumb-label';
+
+        if ($(mediaDiv).data('stanford-only')) {
+          labelClass += ' sul-embed-thumb-stanford-only';
+        }
+
         thumbs.push(
           '<li class="' + thumbClass + activeClass + '">' +
             '<i class="' + cssClass + '"></i>' +
-            '<div class="sul-embed-thumb-label">' +
+            '<div class="' + labelClass + '">' +
               $(mediaDiv).data('file-label') +
             '</div>' +
           '</li>'

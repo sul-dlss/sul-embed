@@ -650,6 +650,19 @@ module PURLFixtures
             <file id="abc_123_script.pdf" mimetype="application/pdf" size="557708"></file>
           </resource>
         </contentMetadata>
+        <rightsMetadata>
+          <access type="read">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+          <access type="read">
+            <file>abc_321.mp4</file>
+            <machine>
+              <group>Stanford</group>
+            </machine>
+          </access>
+        </rightsMetadata>
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
           <dc:title>stupid dc title of video</dc:title>
         </oai_dc>

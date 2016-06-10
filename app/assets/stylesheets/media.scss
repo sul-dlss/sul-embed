@@ -41,4 +41,11 @@
     width: 100px;
     word-wrap: break-word;
   }
+
+  .#{$namespace}-thumb-stanford-only {
+    @include stanford-only;
+    background-position: left 4px;
+    padding-right: 0;
+    text-indent: 17px;
+  }
 }

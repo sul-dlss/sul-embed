@@ -52,5 +52,15 @@ describe 'media viewer', js: true do
         expect(page).to have_css('.sul-embed-slider-thumb', count: 2)
       end
     end
+
+    it 'has the class indicating Stanford only for stanford restricted files' do
+      expect(page).not_to have_css('.sul-embed-thumb-slider', visible: true)
+      page.find('.sul-embed-thumb-slider-open-close').click
+      expect(page).to have_css('.sul-embed-thumb-slider', visible: true)
+
+      expect(page).to have_css('.sul-embed-thumb-stanford-only', count: 1)
+      expect(page).to have_css('.sul-embed-thumb-stanford-only', text: 'Second Video')
+      expect(page).not_to have_css('.sul-embed-thumb-stanford-only', text: 'abc_123.mp4')
+    end
   end
 end
