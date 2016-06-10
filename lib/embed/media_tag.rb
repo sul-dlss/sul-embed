@@ -47,7 +47,10 @@ module Embed
     def media_wrapper(label:, stanford_only:, location_restricted:, &block)
       <<-HTML.strip_heredoc
         <div data-stanford-only="#{stanford_only}" data-location-restricted="#{location_restricted}" data-file-label="#{label}" data-slider-object="#{file_index}">
-          #{yield(block) if block_given?}
+          <div class='sul-embed-media-wrapper'>
+            #{location_restricted_message(location_restricted)}
+            #{yield(block) if block_given?}
+          </div>
         </div>
       HTML
     end
@@ -74,6 +77,16 @@ module Embed
       purl_document.contents.count do |resource|
         SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
       end
+    end
+
+    def location_restricted_message(location_restricted)
+      return unless location_restricted
+      <<-HTML.strip_heredoc
+        <div class='sul-embed-media-location-restricted'>
+          <h3>Limited access for all guests until we fix jsonp</h3>
+          <p>See Access conditions for more information.</p>
+        </div>
+      HTML
     end
 
     def streaming_settings_for(type)

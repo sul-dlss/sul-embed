@@ -14,6 +14,19 @@
   }
 }
 
+.#{$namespace}-media-wrapper {
+  display: inline-block;
+}
+
+.#{$namespace}-media-location-restricted {
+  @include rounded($border-radius-base);
+  position: absolute;
+  top: 50px;
+  font-size: 25px;
+  padding: 4px;
+  background-color: $gray-54-percent;
+}
+
 .#{$namespace}-media-slider-thumb {
   height: 75px;
   text-align: left;
@@ -48,4 +61,5 @@
     padding-right: 0;
     text-indent: 17px;
   }
+
 }
