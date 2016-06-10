@@ -1,5 +1,6 @@
 require 'embed/download_panel'
 require 'embed/embed_this_panel'
+require 'embed/metadata_panel'
 require 'embed/mimetypes'
 require 'embed/pretty_filesize'
 
@@ -105,48 +106,8 @@ module Embed
 
       def metadata_html
         return '' if @request.hide_metadata?
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-panel-container') do
-            doc.div(class: 'sul-embed-panel sul-embed-metadata-panel', style: 'display:none;', 'aria-hidden': 'true') do
-              doc.div(class: 'sul-embed-panel-header') do
-                doc.button(class: 'sul-embed-close', 'data-sul-embed-toggle' => 'sul-embed-metadata-panel') do
-                  doc.span('aria-hidden' => true) do
-                    doc.cdata '&times;'
-                  end
-                  doc.span(class: 'sul-embed-sr-only') { doc.text 'Close' }
-                end
-                doc.div(class: 'sul-embed-panel-title') do
-                  doc.text @purl_object.title
-                end
-              end
-              doc.div(class: 'sul-embed-panel-body') do
-                doc.dl do
-                  doc.dt { doc.text 'Available online' }
-                  doc.dd do
-                    doc.a(href: @purl_object.purl_url, target: '_top') do
-                      doc.text @purl_object.purl_url.gsub(/^http:\/\//, '')
-                    end
-                  end
-                  if @purl_object.use_and_reproduction.present?
-                    doc.dt { doc.text('Use and reproduction') }
-                    doc.dd { doc.text(@purl_object.use_and_reproduction) }
-                  end
-                  if @purl_object.copyright.present?
-                    doc.dt { doc.text('Copyright') }
-                    doc.dd { doc.text(@purl_object.copyright) }
-                  end
-                  if @purl_object.license.present?
-                    doc.dt { doc.text('License') }
-                    doc.dd do
-                      doc.span(class: "sul-embed-license-#{@purl_object.license[:machine]}")
-                      doc.text(@purl_object.license[:human])
-                    end
-                  end
-                end
-              end
-            end
-          end
-        end.to_html
+
+        Embed::MetadataPanel.new(@purl_object).to_html
       end
 
       # subclasses that require special behaviors (e.g. file, image_x, media) should
