@@ -16,15 +16,44 @@
 
 .#{$namespace}-media-wrapper {
   display: inline-block;
+  position: relative;
+  text-align: center;
 }
 
-.#{$namespace}-media-location-restricted {
-  @include rounded($border-radius-base);
+.#{$namespace}-media-access-restricted-container {
+  left: 0;
   position: absolute;
-  top: 50px;
-  font-size: 25px;
-  padding: 4px;
-  background-color: $gray-54-percent;
+  top: 15%;
+  width: 100%;
+}
+
+.#{$namespace}-media-access-restricted {
+  @include rounded($border-radius-base);
+  background-color: $white-color;
+  margin: 0 auto;
+  opacity: 0.9;
+  padding: 20px 25px;
+  width: 80%;
+
+  .line1 {
+    display: block;
+    font-size: 35px;
+    font-weight: 100;
+  }
+
+  .line2 {
+    display: block;
+    font-size: 24px;
+    font-weight: 100;
+  }
+}
+
+.#{$namespace}-media-location-only-restricted-overlay {
+  color: $color-beige-30;
+  font-size: 20em;
+  position: absolute;
+  top: -10%;
+  width: 100%;
 }
 
 .#{$namespace}-media-slider-thumb {
