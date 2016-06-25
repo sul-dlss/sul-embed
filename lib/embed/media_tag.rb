@@ -86,7 +86,7 @@ module Embed
       # TODO: line1 and line1 spans should be populated by values returned from stacks
       <<-HTML.strip_heredoc
         #{location_only_overlay(stanford_only, location_restricted)}
-        <div class='sul-embed-media-access-restricted-container'>
+        <div class='sul-embed-media-access-restricted-container' data-access-restricted-message>
           <div class='sul-embed-media-access-restricted'>
             <span class='line1'>Limited access for non-Stanford guests</span>
             <span class='line2'>See Access conditions for more information.</span>
@@ -98,7 +98,7 @@ module Embed
     def location_only_overlay(stanford_only, location_restricted)
       return unless location_restricted && !stanford_only
       <<-HTML.strip_heredoc
-        <i class="sul-i-file-video-3 sul-embed-media-location-only-restricted-overlay"></i>
+        <i class="sul-i-file-video-3 sul-embed-media-location-only-restricted-overlay" data-location-restricted-overlay></i>
       HTML
     end
 

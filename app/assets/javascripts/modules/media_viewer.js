@@ -88,16 +88,26 @@
     }
 
 
-    function setupAuthLinks() {
+    function authCheck() {
       jQuery('.sul-embed-media [data-auth-url]').each(function(){
         var mediaObject = jQuery(this);
         var authUrl = mediaObject.data('auth-url');
         jQuery.ajax({url: authUrl, dataType: 'jsonp'}).done(function(data) {
-          if(data.status === 'must_authenticate') {
+          // present the auth link if it's stanford restricted and the user isn't logged in
+          if(jQuery.inArray('stanford_restricted', data.status) > -1) {
             var wrapper = jQuery('<div data-auth-link="true" class="sul-embed-auth-link"></div>');
             mediaObject.after(
               wrapper.append(authLink(data.service, mediaObject))
             );
+          }
+
+          // if the user authed successfully for the file, hide the restriction overlays
+          var sliderSelector = '.sul-embed-media [data-slider-object]';
+          var parentDiv = mediaObject.closest(sliderSelector);
+          var isRestricted = parentDiv.data('stanford-only') || parentDiv.data('location-restricted');
+          if(isRestricted && data.status === 'success') {
+            parentDiv.find('[data-location-restricted-overlay]').hide();
+            parentDiv.find('[data-access-restricted-message]').hide();
           }
         });
       });
@@ -144,7 +154,7 @@
     return {
       init: function() {
         setupThumbSlider();
-        setupAuthLinks();
+        authCheck();
         this.initializeDashPlayer();
       },
 
