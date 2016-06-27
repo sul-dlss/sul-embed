@@ -82,7 +82,7 @@ describe Embed::MediaTag do
     describe 'location restriction message' do
       it 'displayed when not in location' do
         media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, label: 'ignored', stanford_only: false, location_restricted: true))
-        expect(media_wrapper).to have_css('.sul-embed-media-access-restricted .line1', text: 'Limited access for non-Stanford guests')
+        expect(media_wrapper).to have_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')
         expect(media_wrapper).to have_css('.sul-embed-media-access-restricted .line2', text: 'See Access conditions for more information')
       end
       it 'not displayed when in location' do

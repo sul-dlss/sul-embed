@@ -48,7 +48,7 @@ module Embed
       <<-HTML.strip_heredoc
         <div data-stanford-only="#{stanford_only}" data-location-restricted="#{location_restricted}" data-file-label="#{label}" data-slider-object="#{file_index}">
           <div class='sul-embed-media-wrapper'>
-            #{access_restricted_message(stanford_only, location_restricted)}
+            #{access_restricted_overlay(stanford_only, location_restricted)}
             #{yield(block) if block_given?}
           </div>
         </div>
@@ -80,6 +80,20 @@ module Embed
     end
 
     def access_restricted_message(stanford_only, location_restricted)
+      if location_restricted && !stanford_only
+        <<-HTML.strip_heredoc
+          <span class='line1'>Restricted media cannot be played in your location.</span>
+          <span class='line2'>See Access conditions for more information.</span>
+        HTML
+      else
+        <<-HTML.strip_heredoc
+          <span class='line1'>Limited access for<br>non-Stanford guests.</span>
+          <span class='line2'>See Access conditions for more information.</span>
+        HTML
+      end
+    end
+
+    def access_restricted_overlay(stanford_only, location_restricted)
       return unless stanford_only || location_restricted
       # jvine says the -container div is necessary to style the elements so that
       # sul-embed-media-access-restricted positions correctly
@@ -88,8 +102,7 @@ module Embed
         #{location_only_overlay(stanford_only, location_restricted)}
         <div class='sul-embed-media-access-restricted-container' data-access-restricted-message>
           <div class='sul-embed-media-access-restricted'>
-            <span class='line1'>Limited access for non-Stanford guests</span>
-            <span class='line2'>See Access conditions for more information.</span>
+            #{access_restricted_message(stanford_only, location_restricted)}
           </div>
         </div>
       HTML
