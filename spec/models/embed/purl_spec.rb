@@ -177,6 +177,24 @@ describe Embed::PURL do
             expect(last_file).to_not be_stanford_only
           end
         end
+        describe 'location_restricted?' do
+          it 'should identify location restricted objects' do
+            stub_purl_response_with_fixture(single_video_purl)
+            expect(Embed::PURL.new('12345').contents.first.files.all?(&:location_restricted?)).to be true
+          end
+          it 'should identify world accessible objects as not stanford only' do
+            stub_purl_response_with_fixture(file_purl)
+            expect(Embed::PURL.new('12345').contents.first.files.all?(&:location_restricted?)).to be false
+          end
+          it 'should identify file-level location_restricted rights' do
+            stub_purl_response_with_fixture(video_purl)
+            contents = Embed::PURL.new('12345').contents
+            first_file = contents.first.files.first
+            last_file = contents.last.files.first
+            expect(first_file).to be_location_restricted
+            expect(last_file).to_not be_location_restricted
+          end
+        end
       end
       describe 'image data' do
         before { stub_purl_response_with_fixture(image_purl) }

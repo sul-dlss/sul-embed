@@ -30,7 +30,7 @@ module Embed
     attr_reader :purl_document, :request, :viewer
 
     def media_element(label, file, type)
-      media_wrapper(label: label, stanford_only: file.stanford_only?) do
+      media_wrapper(label: label, stanford_only: file.stanford_only?, location_restricted: file.location_restricted?) do
         <<-HTML.strip_heredoc
           <#{type}
             data-src="#{streaming_url_for(file, :dash)}"
@@ -44,10 +44,13 @@ module Embed
       end
     end
 
-    def media_wrapper(label:, stanford_only:, &block)
+    def media_wrapper(label:, stanford_only:, location_restricted:, &block)
       <<-HTML.strip_heredoc
-        <div data-stanford-only="#{stanford_only}" data-file-label="#{label}" data-slider-object="#{file_index}">
-          #{yield(block) if block_given?}
+        <div data-stanford-only="#{stanford_only}" data-location-restricted="#{location_restricted}" data-file-label="#{label}" data-slider-object="#{file_index}">
+          <div class='sul-embed-media-wrapper'>
+            #{access_restricted_overlay(stanford_only, location_restricted)}
+            #{yield(block) if block_given?}
+          </div>
         </div>
       HTML
     end
@@ -74,6 +77,42 @@ module Embed
       purl_document.contents.count do |resource|
         SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
       end
+    end
+
+    def access_restricted_message(stanford_only, location_restricted)
+      if location_restricted && !stanford_only
+        <<-HTML.strip_heredoc
+          <span class='line1'>Restricted media cannot be played in your location.</span>
+          <span class='line2'>See Access conditions for more information.</span>
+        HTML
+      else
+        <<-HTML.strip_heredoc
+          <span class='line1'>Limited access for<br>non-Stanford guests.</span>
+          <span class='line2'>See Access conditions for more information.</span>
+        HTML
+      end
+    end
+
+    def access_restricted_overlay(stanford_only, location_restricted)
+      return unless stanford_only || location_restricted
+      # jvine says the -container div is necessary to style the elements so that
+      # sul-embed-media-access-restricted positions correctly
+      # TODO: line1 and line1 spans should be populated by values returned from stacks
+      <<-HTML.strip_heredoc
+        #{location_only_overlay(stanford_only, location_restricted)}
+        <div class='sul-embed-media-access-restricted-container' data-access-restricted-message>
+          <div class='sul-embed-media-access-restricted'>
+            #{access_restricted_message(stanford_only, location_restricted)}
+          </div>
+        </div>
+      HTML
+    end
+
+    def location_only_overlay(stanford_only, location_restricted)
+      return unless location_restricted && !stanford_only
+      <<-HTML.strip_heredoc
+        <i class="sul-i-file-video-3 sul-embed-media-location-only-restricted-overlay" data-location-restricted-overlay></i>
+      HTML
     end
 
     def streaming_settings_for(type)

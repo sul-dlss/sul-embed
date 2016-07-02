@@ -5,9 +5,13 @@
 (function( global ) {
   'use strict';
   var Module = (function() {
+    var restrictedOverlaySelector = '[data-location-restricted-overlay]';
+    var restrictedMessageSelector = '[data-access-restricted-message]';
+    var sliderObjectSelector = '[data-slider-object]';
+
     function thumbsForSlider() {
       var thumbs = [];
-      var sliderSelector = '.sul-embed-media [data-slider-object]';
+      var sliderSelector = '.sul-embed-media ' + sliderObjectSelector;
       jQuery(sliderSelector).each(function(index, mediaDiv) {
         var mediaObject = $(mediaDiv).find('audio, video');
         var cssClass;
@@ -77,27 +81,39 @@
             if (!_timedOut(start, 30000) &&
               (!windowReference || !windowReference.closed)) return;
             clearInterval(checkWindow);
-            mediaObject[0].load();
             mediaObject
-              .parent('[data-slider-object]')
-              .find('[data-auth-link]')
+              .parents(sliderObjectSelector)
+              .find('[data-auth-link], ' + restrictedOverlaySelector + ', ' + restrictedMessageSelector)
               .hide();
+            // As best I can tell, .touch() does nothing (and does not exist in jQuery),
+            // but without calling some function after .load() the media fails to load.
+            mediaObject[0].load().touch();
             return;
           }, 500);
         });
     }
 
 
-    function setupAuthLinks() {
+    function authCheck() {
       jQuery('.sul-embed-media [data-auth-url]').each(function(){
         var mediaObject = jQuery(this);
         var authUrl = mediaObject.data('auth-url');
         jQuery.ajax({url: authUrl, dataType: 'jsonp'}).done(function(data) {
-          if(data.status === 'must_authenticate') {
+          // present the auth link if it's stanford restricted and the user isn't logged in
+          if(jQuery.inArray('stanford_restricted', data.status) > -1) {
             var wrapper = jQuery('<div data-auth-link="true" class="sul-embed-auth-link"></div>');
-            mediaObject.after(
+            mediaObject.parents(sliderObjectSelector).append(
               wrapper.append(authLink(data.service, mediaObject))
             );
+          }
+
+          // if the user authed successfully for the file, hide the restriction overlays
+          var sliderSelector = '.sul-embed-media ' + sliderObjectSelector;
+          var parentDiv = mediaObject.closest(sliderSelector);
+          var isRestricted = parentDiv.data('stanford-only') || parentDiv.data('location-restricted');
+          if(isRestricted && data.status === 'success') {
+            parentDiv.find(restrictedOverlaySelector).hide();
+            parentDiv.find(restrictedMessageSelector).hide();
           }
         });
       });
@@ -144,7 +160,7 @@
     return {
       init: function() {
         setupThumbSlider();
-        setupAuthLinks();
+        authCheck();
         this.initializeDashPlayer();
       },
 
