@@ -29,7 +29,7 @@ module Embed
                       end
                       doc.div(class: 'sul-embed-media-object sul-embed-pull-left') do
                         if file.previewable?
-                          doc.img(class: 'sul-embed-square-image', src: "#{image_url(file)}/square/100,100/0/default.jpg", alt: '')
+                          doc.img(class: 'sul-embed-square-image', src: stacks_square_url(@purl_object.druid, file.title), alt: '')
                         else
                           doc.i(class: "sul-i-2x #{file_type_icon(file.mimetype)}")
                         end
@@ -87,12 +87,8 @@ module Embed
       def preview_file_window(file, doc)
         return unless file.previewable?
         doc.div(style: 'display: none;', class: 'sul-embed-preview', 'data-sul-embed-file-preview-window' => 'true', 'aria-hidden' => true) do
-          doc.img(src: "#{image_url(file)}/full/!400,400/0/default.jpg", alt: '')
+          doc.img(src: stacks_thumb_url(@purl_object.druid, file.title), alt: '')
         end
-      end
-
-      def image_url(file)
-        "#{Settings.stacks_url}/image/iiif/#{@purl_object.druid}%2F#{file.title.gsub(/\.\w+$/, '')}"
       end
 
       def self.supported_types
