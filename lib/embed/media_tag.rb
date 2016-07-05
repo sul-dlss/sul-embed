@@ -6,6 +6,8 @@ module Embed
     SUPPORTED_MEDIA_TYPES = [:audio, :video].freeze
     MEDIA_INDEX_CONTROL_HEIGHT = 24
 
+    include Embed::StacksImage
+
     def initialize(viewer)
       @viewer = viewer
       @purl_document = viewer.purl_object
@@ -14,11 +16,15 @@ module Embed
     def to_html
       output = ''
       purl_document.contents.each do |resource|
-        next unless SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
+        next unless primary_file?(resource)
         label = resource.description
         resource.files.each do |file|
           label = file.title if label.blank?
-          output << media_element(label, file, resource.type)
+          output << if SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
+                      media_element(label, file, resource.type)
+                    else
+                      previewable_element(label, file)
+                    end
           @file_index += 1
         end
       end
@@ -36,7 +42,7 @@ module Embed
             data-src="#{streaming_url_for(file, :dash)}"
             data-auth-url="#{authentication_url(file)}"
             controls='controls'
-            class="#{'sul-embed-many-media' if many_media?}"
+            class="#{'sul-embed-many-media' if many_primary_files?}"
             height="#{media_element_height}">
             #{enabled_streaming_sources(file)}
           </#{type}>
@@ -44,9 +50,19 @@ module Embed
       end
     end
 
-    def media_wrapper(label:, stanford_only:, location_restricted:, &block)
+    def previewable_element(label, file)
+      media_wrapper(label: label, thumbnail: stacks_square_url(@purl_document.druid, file.title, size: '75')) do
+        "<img src='#{stacks_thumb_url(@purl_document.druid, file.title)}' class='sul-embed-media-thumb' />"
+      end
+    end
+
+    def media_wrapper(label:, thumbnail: '', stanford_only: nil, location_restricted: nil, &block)
       <<-HTML.strip_heredoc
-        <div data-stanford-only="#{stanford_only}" data-location-restricted="#{location_restricted}" data-file-label="#{label}" data-slider-object="#{file_index}">
+        <div data-stanford-only="#{stanford_only}"
+             data-location-restricted="#{location_restricted}"
+             data-file-label="#{label}"
+             data-slider-object="#{file_index}"
+             data-thumbnail-url="#{thumbnail}">
           <div class='sul-embed-media-wrapper'>
             #{access_restricted_overlay(stanford_only, location_restricted)}
             #{yield(block) if block_given?}
@@ -65,18 +81,22 @@ module Embed
     end
 
     def media_element_height
-      return "#{viewer.body_height}px" unless many_media?
+      return "#{viewer.body_height}px" unless many_primary_files?
       "#{viewer.body_height.to_i - MEDIA_INDEX_CONTROL_HEIGHT}px"
     end
 
-    def many_media?
-      media_files_count > 1
+    def many_primary_files?
+      primary_files_count > 1
     end
 
-    def media_files_count
+    def primary_files_count
       purl_document.contents.count do |resource|
-        SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
+        primary_file?(resource)
       end
+    end
+
+    def primary_file?(resource)
+      SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym) || resource.files.any?(&:previewable?)
     end
 
     def access_restricted_message(stanford_only, location_restricted)

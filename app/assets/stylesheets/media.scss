@@ -72,6 +72,11 @@
     margin-left: -6px;
   }
 
+  .#{$namespace}-media-square-icon {
+    margin-right: 5px;
+    width: auto;
+  }
+
   .#{$namespace}-thumb-label {
     float: right;
     height: 75px;

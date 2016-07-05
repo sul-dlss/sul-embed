@@ -63,4 +63,21 @@ describe 'media viewer', js: true do
       expect(page).not_to have_css('.sul-embed-thumb-stanford-only', text: 'abc_123.mp4')
     end
   end
+
+  context 'a previewable file within a media object' do
+    let(:purl) { video_purl_with_image }
+
+    it 'includes a previewable image as a top level object' do
+      expect(page).to have_css('div img.sul-embed-media-thumb', visible: false)
+    end
+
+    it 'includes a thumb for the previewable image in the thumb slider' do
+      expect(page).to have_css('.sul-embed-thumb-slider', visible: false)
+      page.find('.sul-embed-thumb-slider-open-close').click
+      expect(page).to have_css('.sul-embed-thumb-slider', visible: true)
+
+      expect(page).to have_css('.sul-embed-media-square-icon')
+      expect(page).to have_css('.sul-embed-thumb-label', text: 'Image of media (1 of 1)')
+    end
+  end
 end

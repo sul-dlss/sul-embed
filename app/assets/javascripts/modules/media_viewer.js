@@ -33,9 +33,17 @@
           labelClass += ' sul-embed-thumb-stanford-only';
         }
 
+        var thumbnailIcon = '';
+        var thumbnailUrl = $(mediaDiv).data('thumbnail-url');
+        if (thumbnailUrl !== '') {
+          thumbnailIcon = '<img class="sul-embed-media-square-icon" src="' + thumbnailUrl + '" />';
+        } else {
+          thumbnailIcon = '<i class="' + cssClass + '"></i>';
+        }
+
         thumbs.push(
           '<li class="' + thumbClass + activeClass + '">' +
-            '<i class="' + cssClass + '"></i>' +
+            thumbnailIcon +
             '<div class="' + labelClass + '">' +
               $(mediaDiv).data('file-label') +
             '</div>' +
