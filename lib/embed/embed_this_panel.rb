@@ -49,12 +49,22 @@ module Embed
       HTML
     end
 
+    def self.iframe_html(druid:, height:, width:)
+      width_style = if width
+                      "#{width}px"
+                    else
+                      '100%'
+                    end
+      src = "#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{druid}&maxheight=#{height}&maxwidth=#{width}"
+      "<iframe src='#{src}' height='#{height}px' width='#{width_style}' frameborder='0' marginwidth='0' marginheight='0' scrolling='no' allowfullscreen />"
+    end
+
     private
 
     attr_reader :druid, :height, :width, :purl_object_title, :panel_content
 
     def iframe_html
-      "<iframe src='#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{druid}' height='#{height}px' width='#{width || height}px' frameborder='0' marginwidth='0' marginheight='0' scrolling='no' allowfullscreen />"
+      self.class.iframe_html(druid: druid, height: height, width: width)
     end
   end
 end

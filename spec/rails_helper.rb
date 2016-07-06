@@ -62,5 +62,4 @@ def send_embed_response
   visit_sandbox
   fill_in_default_sandbox_form
   click_button 'Embed'
-  expect(page).to have_css('.sul-embed-container')
 end
