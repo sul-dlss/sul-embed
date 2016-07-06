@@ -3,12 +3,14 @@ require 'embed/embed_this_panel'
 require 'embed/metadata_panel'
 require 'embed/mimetypes'
 require 'embed/pretty_filesize'
+require 'embed/stacks_image'
 
 module Embed
   class Viewer
     class CommonViewer
       include Embed::Mimetypes
       include Embed::PrettyFilesize
+      include Embed::StacksImage
 
       attr_reader :purl_object
       def initialize(request)

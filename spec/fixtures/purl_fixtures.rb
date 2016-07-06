@@ -683,6 +683,37 @@ module PURLFixtures
     XML
   end
 
+  def video_purl_with_image
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the video (with an image)</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="media">
+          <resource sequence="1" id="abc123_1" type="video">
+            <file id="abc_123.mp4" mimetype="video/mp4" size="152000000"></file>
+          </resource>
+          <resource sequence="2" id="bb051hp9404_2" type="file">
+            <label>Image of media (1 of 1)</label>
+            <file id="bd786fy6312_img.jp2" mimetype="image/jp2" size="213147">
+              <imageData height="384" width="2896"/>
+            </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="read">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+        </rightsMetadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+          <dc:title>stupid dc title of video</dc:title>
+        </oai_dc>
+      </publicObject>
+    XML
+  end
+
   def audio_purl
     <<-XML
       <publicObject>

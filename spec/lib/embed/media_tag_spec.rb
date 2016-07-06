@@ -52,6 +52,13 @@ describe Embed::MediaTag do
       end
     end
 
+    context 'previewable files withing media objects' do
+      let(:purl) { video_purl_with_image }
+      it 'are included as top level objects' do
+        expect(subject).to have_css('div img.sul-embed-media-thumb')
+      end
+    end
+
     context 'video' do
       it 'renders a video tag in the provided document' do
         expect(subject).to have_css('video')
@@ -136,6 +143,21 @@ describe Embed::MediaTag do
 
       it 'has the appropriate Media Stacks URL with druid and filename' do
         expect(subject_klass.send(:streaming_url_for, file, :hls)).to match(%r{stacks\.stanford\.edu/media/druid/abc123\.mp4/stream.m3u8})
+      end
+    end
+
+    describe '#previewable_element' do
+      let(:previewable_element) { subject_klass.send(:previewable_element, 'Some Label', file) }
+      it 'passes the square thumb url as a data attribute' do
+        expect(previewable_element).to match(
+          %r{data-thumbnail-url="https://stacks.*/iiif/.*abc123/square/75,75.*"}
+        )
+      end
+
+      it 'includes an image element which points to a stacks 400px thumb' do
+        expect(previewable_element).to match(
+          %r{<img src='https://stacks.*/iiif/.*abc123/full/\!400,400.*' .*/>}
+        )
       end
     end
   end
