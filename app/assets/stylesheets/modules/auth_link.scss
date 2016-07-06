@@ -4,7 +4,7 @@
 .#{$namespace}-auth-link {
   @include stanford-only-red;
   background-color: $sul-auth-link-background-color;
-  bottom: 15px;
+  bottom: $sul-media-index-height;
   padding: 5px;
   position: absolute;
 
