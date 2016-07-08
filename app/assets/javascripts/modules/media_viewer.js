@@ -160,6 +160,7 @@
         jQuery('.sul-embed-media video').each(function() {
           var url = jQuery(this).data('src');
           var player = dashjs.MediaPlayer().create();
+          player.setXHRWithCredentials(true);
           player.initialize(this, url, false);
         });
       });
