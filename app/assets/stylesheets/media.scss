@@ -10,7 +10,7 @@
   audio { width: 100%; }
 
   .#{$namespace}-many-media {
-    margin-bottom: 24px;
+    margin-bottom: $sul-media-index-height;
   }
 }
 
