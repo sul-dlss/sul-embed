@@ -80,4 +80,15 @@ describe 'media viewer', js: true do
       expect(page).to have_css('.sul-embed-thumb-label', text: 'Image of media (1 of 1)')
     end
   end
+
+  context 'a location restricted file within a media object' do
+    it 'displays the restricted text with the appropriate styling' do
+      expect(page).not_to have_css('.sul-embed-thumb-slider', visible: true)
+      page.find('.sul-embed-thumb-slider-open-close').click
+      expect(page).to have_css('.sul-embed-thumb-slider', visible: true)
+
+      expect(page).to have_css('.sul-embed-thumb-restricted-text', text: '(Restricted)', count: 1)
+      expect(page).to have_css('.sul-embed-media-slider-thumb', text: '(Restricted) abc_123.mp4')
+    end
+  end
 end
