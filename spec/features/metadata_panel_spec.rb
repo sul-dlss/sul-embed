@@ -5,7 +5,7 @@ describe 'metadata panel', js: true do
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   it 'should be present after a user clicks the button' do
     stub_purl_response_with_fixture(file_purl)
-    send_embed_response
+    visit_iframe_response
     expect(page).to have_css('.sul-embed-metadata-panel', visible: false)
     page.find('[data-sul-embed-toggle="sul-embed-metadata-panel"]', match: :first).click
     expect(page).to have_css('.sul-embed-metadata-panel', visible: true)
@@ -14,7 +14,7 @@ describe 'metadata panel', js: true do
   end
   it 'should have purl link, use and reproduction, and license text' do
     stub_purl_response_with_fixture(file_purl)
-    send_embed_response
+    visit_iframe_response
     page.find('[data-sul-embed-toggle="sul-embed-metadata-panel"]', match: :first).click
     expect(page).to have_css('dt', text: 'AVAILABLE ONLINE')
     expect(page).to have_css('dt', text: 'USE AND REPRODUCTION')

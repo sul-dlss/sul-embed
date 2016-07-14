@@ -4,7 +4,7 @@ describe 'file list accessibility', js: true do
   include PURLFixtures
   it 'page has relevant sr-only classes' do
     stub_purl_response_with_fixture(hybrid_object_purl)
-    send_embed_response
+    visit_iframe_response
     expect(page).to have_css 'img.sul-embed-square-image[alt]'
     expect(page).to have_content 'Download item 1'
     expect(page).to have_content 'Preview item 1'

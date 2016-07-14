@@ -4,9 +4,7 @@ include PURLFixtures
 describe 'geo viewer public', js: true do
   before do
     stub_purl_response_with_fixture(geo_purl_public)
-    visit_sandbox
-    fill_in_default_sandbox_form
-    click_button 'Embed'
+    visit_iframe_response
   end
 
   describe 'loading geo viewer' do
@@ -45,9 +43,7 @@ end
 describe 'geo viewer restricted', js: true do
   before do
     stub_purl_response_with_fixture(geo_purl_restricted)
-    visit_sandbox
-    fill_in_default_sandbox_form
-    click_button 'Embed'
+    visit_iframe_response
   end
   describe 'loads viewer' do
     it 'shows the bounding box' do

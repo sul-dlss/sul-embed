@@ -4,12 +4,10 @@ describe 'image x viewer', js: true do
   include PURLFixtures
   before do
     stub_purl_response_with_fixture(image_purl)
-    visit_sandbox
   end
   describe 'single image' do
     before do
-      fill_in_default_sandbox_form('sg052hd9120')
-      click_button 'Embed'
+      visit_iframe_response('sg052hd9120')
     end
     it 'removes functionality' do
       within '.sul-embed-header' do
@@ -23,8 +21,7 @@ describe 'image x viewer', js: true do
   end
   describe 'multi image viewer (not paged)' do
     before do
-      fill_in_default_sandbox_form('fw090jw3474')
-      click_button 'Embed'
+      visit_iframe_response('fw090jw3474')
     end
     it 'adds overview perspective, individuals mode, and left/right controls' do
       within '.sul-embed-header' do
@@ -38,8 +35,7 @@ describe 'image x viewer', js: true do
   end
   describe 'multimage viewer (paged)' do
     before do
-      fill_in_default_sandbox_form('cy496ky1984')
-      click_button 'Embed'
+      visit_iframe_response('cy496ky1984')
     end
     it 'adds overview perspective, paged mode, individuals mode, and left/right controls' do
       within '.sul-embed-header' do
