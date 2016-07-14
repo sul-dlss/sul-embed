@@ -15,17 +15,13 @@
 
         map = L.map('sul-embed-geo-map').fitBounds(dataAttributes.boundingBox);
 
-        L.tileLayer(
-            'https://otile{s}-s.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
-              attribution: '&copy; <a href="http://openstreetmap.org">OpenStr' +
-                'eetMap</a> contributors, Tiles Courtesy of <a href="http://w' +
-                'ww.mapquest.com/" target="_blank">MapQuest</a> <img src="//d' +
-                'eveloper.mapquest.com/content/osm/mq_logo.png" alt="">',
-              maxZoom: 18,
-              worldCopyJump: true,
-              subdomains: '1234'
-            }
-        ).addTo(map);
+        L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; <a href="http://www.openstreetmap.org/copyrigh' +
+            't">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.open' +
+            'streetmap.org/" target="_blank">Humanitarian OpenStreetMap Team<' +
+            '/a>',
+        }).addTo(map);
         
         Module.addVisualizationLayer();
         map.invalidateSize();
