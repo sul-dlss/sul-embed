@@ -8,6 +8,15 @@
     var restrictedOverlaySelector = '[data-location-restricted-overlay]';
     var restrictedMessageSelector = '[data-access-restricted-message]';
     var sliderObjectSelector = '[data-slider-object]';
+    var restrictedText = '(Restricted)'
+
+    function restrictedTextMarkup(isLocationRestricted) {
+      if(isLocationRestricted) {
+        return '<span class="sul-embed-thumb-restricted-text">' + restrictedText + '</span> ';
+      } else {
+        return '';
+      }
+    }
 
     function thumbsForSlider() {
       var thumbs = [];
@@ -45,6 +54,7 @@
           '<li class="' + thumbClass + activeClass + '">' +
             thumbnailIcon +
             '<div class="' + labelClass + '">' +
+              restrictedTextMarkup($(mediaDiv).data('location-restricted')) +
               $(mediaDiv).data('file-label') +
             '</div>' +
           '</li>'
