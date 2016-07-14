@@ -19,12 +19,12 @@ describe 'geo viewer public', js: true do
       expect(page).to have_css('.leaflet-control-zoom-out', count: 1, visible: true)
 
       within '.leaflet-control-attribution.leaflet-control' do
-        expect(page).to have_content(' contributors, Tiles Courtesy of ')
+        expect(page).to have_content(' OpenStreetMap, Tiles courtesy of ')
       end
     end
 
-    it 'shows the Mapquest Tile' do
-      expect(page).to have_css("img[src*='mqcdn.com']", minimum: 6)
+    it 'shows the OpenStreetMap tiles' do
+      expect(page).to have_css("img[src*='openstreetmap.fr']", minimum: 6)
     end
 
     it 'shows the wms tiles' do
