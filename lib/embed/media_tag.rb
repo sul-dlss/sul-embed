@@ -39,6 +39,7 @@ module Embed
       media_wrapper(label: label, stanford_only: file.stanford_only?, location_restricted: file.location_restricted?) do
         <<-HTML.strip_heredoc
           <#{type}
+            id="sul-embed-media-#{file_index}"
             data-src="#{streaming_url_for(file, :dash)}"
             data-auth-url="#{authentication_url(file)}"
             controls='controls'
@@ -152,8 +153,13 @@ module Embed
     end
 
     def streaming_url_for(file, type)
-      suffix = streaming_settings_for(type)[:suffix]
-      "#{stacks_base_url(file)}/stream#{suffix}"
+      stacks_media_stream = Embed::StacksMediaStream.new(druid: purl_document.druid, file_name: file.title)
+      case type.to_sym
+      when :hls
+        stacks_media_stream.to_playlist_url
+      when :dash
+        stacks_media_stream.to_manifest_url
+      end
     end
 
     def authentication_url(file)
