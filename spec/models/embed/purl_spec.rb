@@ -40,6 +40,25 @@ describe Embed::PURL do
       expect(Embed::PURL.new('12345').embargo_release_date).to match(/\d{4}-\d{2}-\d{2}/)
     end
   end
+
+  describe 'valid?' do
+    context 'with empty content metadata' do
+      before { stub_purl_response_with_fixture(empty_content_metadata_purl) }
+
+      it 'is false' do
+        expect(Embed::PURL.new('12345')).not_to be_valid
+      end
+    end
+
+    context 'with content metadata' do
+      before { stub_purl_response_with_fixture(file_purl) }
+
+      it 'is true' do
+        expect(Embed::PURL.new('12345')).to be_valid
+      end
+    end
+  end
+
   describe 'contents' do
     it 'should return an array of resources' do
       stub_purl_response_with_fixture(file_purl)

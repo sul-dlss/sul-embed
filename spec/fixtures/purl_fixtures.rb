@@ -744,4 +744,15 @@ module PURLFixtures
       </publicObject>
     XML
   end
+
+  def empty_content_metadata_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the blank content object</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="file"></contentMetadata>
+      </publicObject>
+    XML
+  end
 end
