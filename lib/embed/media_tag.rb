@@ -52,7 +52,11 @@ module Embed
 
     def previewable_element(label, file)
       media_wrapper(label: label, thumbnail: stacks_square_url(@purl_document.druid, file.title, size: '75')) do
-        "<img src='#{stacks_thumb_url(@purl_document.druid, file.title)}' class='sul-embed-media-thumb' />"
+        "<img
+          src='#{stacks_thumb_url(@purl_document.druid, file.title)}'
+          class='sul-embed-media-thumb #{'sul-embed-many-media' if many_primary_files?}'
+          style='max-height: #{media_element_height}'
+        />"
       end
     end
 

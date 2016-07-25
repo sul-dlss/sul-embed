@@ -147,6 +147,7 @@ describe Embed::MediaTag do
     end
 
     describe '#previewable_element' do
+      before { stub_purl_response_with_fixture(purl) }
       let(:previewable_element) { subject_klass.send(:previewable_element, 'Some Label', file) }
       it 'passes the square thumb url as a data attribute' do
         expect(previewable_element).to match(
@@ -155,9 +156,18 @@ describe Embed::MediaTag do
       end
 
       it 'includes an image element which points to a stacks 400px thumb' do
+        expect(previewable_element).to match(/<img/)
         expect(previewable_element).to match(
-          %r{<img src='https://stacks.*/iiif/.*abc123/full/\!400,400.*' .*/>}
+          %r{src='https://stacks.*/iiif/.*abc123/full/\!400,400.*'}
         )
+      end
+
+      it 'defines a max-height on the image that is equal to the viewer body height' do
+        expect(previewable_element).to match(/style='max-height: 276px'/)
+      end
+
+      it 'includes a class that indicates that there is are many media objects (to make room for the slider control)' do
+        expect(previewable_element).to match(/class='.* sul-embed-many-media/)
       end
     end
   end
