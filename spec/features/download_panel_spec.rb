@@ -69,8 +69,8 @@ describe 'download panel', js: true do
   end
 
   describe 'download file count shows within download button' do
-    it 'has the file count for multiple files in the download panel' do
-      stub_purl_response_with_fixture(multi_file_purl)
+    it 'has the file count for multiple media files in the download panel' do
+      stub_purl_response_with_fixture(multi_media_purl)
       visit_iframe_response
 
       within '.sul-i-download-3' do

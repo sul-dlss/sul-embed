@@ -82,13 +82,20 @@ module PURLFixtures
     <<-XML
       <publicObject>
         <identityMetadata>
-          <objectLabel>Book as Images</objectLabel>
+          <objectLabel>Files files files</objectLabel>
         </identityMetadata>
-        <contentMetadata type="image">
-          <resource sequence="1" type="image">
-            <attr name="label">Resource Label</attr>
-            <file size="12345" mimetype="application/png" id="Page1.png" />
-            <file size="12346" mimetype="application/png" id="Page2.png" />
+        <contentMetadata type="file">
+          <resource sequence="1" type="file">
+            <label>File1 Label</label>
+            <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf">
+              <location type="url">http://stacks.stanford.edu/file/druid:abc123/Title_of_the_PDF.pdf</location>
+            </file>
+          </resource>
+          <resource sequence="2" type="file">
+            <label>File2 Label</label>
+            <file size="12345" mimetype="application/pdf" id="Title of 2 PDF.pdf">
+              <location type="url">http://stacks.stanford.edu/file/druid:abc123/Title_of_2_PDF.pdf</location>
+            </file>
           </resource>
         </contentMetadata>
         <rightsMetadata>

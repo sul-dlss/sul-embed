@@ -114,7 +114,7 @@ describe Embed::PURL do
     end
     it 'should get the description from the attr[name="label"] element' do
       stub_purl_response_with_fixture(multi_file_purl)
-      expect(Embed::PURL.new('12345').contents.first.description).to eq 'Resource Label'
+      expect(Embed::PURL.new('12345').contents.first.description).to eq 'File1 Label'
     end
     describe 'files' do
       it 'should return an array of PURL::Resource::ResourceFile objects' do
