@@ -95,8 +95,8 @@ module Embed
 
               if external_url.present?
                 doc.a(
-                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' \
-                    'oolbar sul-embed-btn-default sul-i-navigation-next-4',
+                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar' \
+                    ' sul-embed-btn-default sul-i-navigation-next-4',
                   href: external_url.to_s
                 ) do
                   doc.span(class: 'sul-embed-sr-only') { doc.text external_url_text }
