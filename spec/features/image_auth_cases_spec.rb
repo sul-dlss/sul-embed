@@ -7,9 +7,7 @@ describe 'image viewer authentication and authorization', js: true do
   describe 'when public (world)' do
     before do
       stub_purl_response_with_fixture(image_with_pdf_purl)
-      visit_sandbox
-      fill_in_default_sandbox_form('bb023ts9016')
-      click_button 'Embed'
+      visit_iframe_response('bb023ts9016')
     end
     it 'displays full zoom and download of all pages' do
       expect_zoomable_image
@@ -29,9 +27,7 @@ describe 'image viewer authentication and authorization', js: true do
   describe '400px and zoom available to world, larger download restricted to SU' do
     before do
       stub_purl_response_with_fixture(image_purl)
-      visit_sandbox
-      fill_in_default_sandbox_form('bb112zx3193')
-      click_button 'Embed'
+      visit_iframe_response('bb112zx3193')
     end
     it 'displays zoom and SU restricted downloads' do
       pending 'poltergeist unhapy with auth roundtrip'
@@ -50,9 +46,7 @@ describe 'image viewer authentication and authorization', js: true do
   describe '400px available to world, download and larger available to SU' do
     before do
       stub_purl_response_with_fixture(image_purl)
-      visit_sandbox
-      fill_in_default_sandbox_form('py305sy7961')
-      click_button 'Embed'
+      visit_iframe_response('py305sy7961')
     end
     it 'displays login prompt and thumb' do
       expect(page).to have_css '.sul-embed-image-x-restricted-thumb-container'

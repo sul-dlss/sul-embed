@@ -4,9 +4,7 @@ describe 'imageX viewer', js: true do
   include PURLFixtures
   before do
     stub_purl_response_with_fixture(image_purl)
-    visit_sandbox
-    fill_in_default_sandbox_form('fw090jw3474')
-    click_button 'Embed'
+    visit_iframe_response('fw090jw3474')
   end
   describe 'fullscreen' do
     it 'is enabled in detail perspective and disabled in overview' do

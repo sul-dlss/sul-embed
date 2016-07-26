@@ -21,8 +21,16 @@ module Embed
       @request.purl_object.title
     end
 
+    def viewer_html
+      @viewer_html ||= viewer.to_html
+    end
+
     def html
-      @html ||= viewer.to_html
+      @html ||= Embed::EmbedThisPanel.iframe_html(
+        druid: @request.purl_object.druid,
+        height: viewer.height,
+        width: viewer.width
+      )
     end
 
     def embed_hash

@@ -5,22 +5,22 @@ describe 'embed this panel', js: true do
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   before do
     stub_purl_response_with_fixture(spec_fixture)
-    send_embed_response
+    visit_iframe_response('ab123cd4567')
   end
   describe 'embed code' do
     let(:spec_fixture) { file_purl }
     it 'includes the allowfullscreen no-scrolling, no-border, and no margin/padding attributes' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*frameborder='0'.*><\/iframe>/)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*marginwidth='0'.*><\/iframe>/)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*marginheight='0'.*><\/iframe>/)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*scrolling='no'.*><\/iframe>/)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*allowfullscreen.*><\/iframe>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*frameborder='0'.*\/>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*marginwidth='0'.*\/>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*marginheight='0'.*\/>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*scrolling='no'.*\/>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*allowfullscreen.*>/)
     end
     it 'includes height and width attributes' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*height='400px'.*><\/iframe>/)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*width='400px'.*><\/iframe>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*height='400px'.*\/>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*width='100%'.*\/>/)
     end
   end
   describe 'file objects' do
@@ -42,11 +42,11 @@ describe 'embed this panel', js: true do
     end
     it 'update the textarea when the checkboxes are selected' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/src='\S+\/iframe\?url=https:\/\/purl\.stanford\.edu\/ab123cd4567'/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).not_to match(/&hide_search=true/)
       page.find("input#sul-embed-embed-search[type='checkbox']").trigger('click')
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/src='\S+\/iframe\?url=https:\/\/purl\.stanford\.edu\/ab123cd4567&hide_search=true'/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/&hide_search=true/)
       page.find("input#sul-embed-embed-search[type='checkbox']").trigger('click')
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/src='\S+\/iframe\?url=https:\/\/purl\.stanford\.edu\/ab123cd4567'/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).not_to match(/&hide_search=true/)
     end
   end
   describe 'image objects' do

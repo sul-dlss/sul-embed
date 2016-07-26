@@ -5,9 +5,7 @@ describe 'media viewer', js: true do
   let(:purl) { video_purl }
   before do
     stub_purl_response_with_fixture(purl)
-    visit_sandbox
-    fill_in_default_sandbox_form('ignored')
-    click_button 'Embed'
+    visit_iframe_response
   end
 
   it 'renders player in html' do

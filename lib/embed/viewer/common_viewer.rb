@@ -229,7 +229,12 @@ module Embed
       end
 
       def width_style
-        "max-width:#{width}px;" if width
+        "max-width:#{width_style_attribute};"
+      end
+
+      def width_style_attribute
+        return '100%' unless width
+        "#{width}px"
       end
 
       def header_height

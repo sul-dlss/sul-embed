@@ -7,9 +7,7 @@ describe 'was seed viewer public', js: true do
   before do
     allow_any_instance_of(Embed::Viewer::WasSeed).to receive(:thumbs_list).and_return(thumbs_list_fixtures)
     stub_purl_response_with_fixture(was_seed_purl)
-    visit_sandbox
-    fill_in_default_sandbox_form
-    click_button 'Embed'
+    visit_iframe_response
   end
 
   describe 'loading was-seed-viewer' do
