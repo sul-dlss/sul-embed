@@ -77,7 +77,6 @@ module Embed
                 )
               end
 
-              file_count = @purl_object.all_resource_files.length
               if show_download?
                 doc.button(
                   class: 'sul-embed-footer-tool sul-embed-btn sul-em' \
@@ -86,7 +85,8 @@ module Embed
                   'aria-label' => 'open download panel',
                   'data-sul-embed-toggle' => 'sul-embed-download-panel'
                 ) do
-                  if file_count > 0
+                  file_count = @purl_object.all_resource_files.length if show_download_count?
+                  if show_download_count? && file_count > 0
                     doc.span(class: 'sul-embed-footer-tool sul-embed-download-count',\
                              'aria-label' => 'number of downloadable files') { doc.text file_count }
                   end
@@ -159,6 +159,11 @@ module Embed
         self.class.show_download? && !@request.hide_download?
       end
 
+      # Should the download file count be shown (when download toolbar is shown)?
+      def show_download_count?
+        self.class.show_download_count?
+      end
+
       # Set a specific height for the body. We need to subtract
       # the header and footer heights from the consumer
       # requested maxheight, otherwise we set a default
@@ -173,6 +178,11 @@ module Embed
 
       def self.show_download?
         false
+      end
+
+      # default is to show the download file count (when download toolbar is shown)
+      def self.show_download_count?
+        true
       end
 
       private

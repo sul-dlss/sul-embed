@@ -16,6 +16,11 @@ describe Embed::Viewer::ImageX do
       expect(Embed::Viewer::ImageX.supported_types).to eq [:image, :manuscript, :map, :book]
     end
   end
+  describe 'self.show_download_count?' do
+    it 'should return false' do
+      expect(Embed::Viewer::ImageX.show_download_count?).to be_falsey
+    end
+  end
   describe 'body_html' do
     it 'should return imageX viewer body' do
       expect(request).to receive(:hide_title?).at_least(:once).and_return(false)

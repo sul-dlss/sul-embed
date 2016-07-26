@@ -202,6 +202,79 @@ module PURLFixtures
       </publicObject>
     XML
   end
+  def multi_image_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Book as Images</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="image">
+          <resource id="image1" sequence="1" type="image">
+            <file id="bw662rg0319_00_0001.jp2" mimetype="image/jp2" size="3458791">
+              <imageData height="4442" width="3417"/>
+            </file>
+          </resource>
+          <resource id="image2" sequence="2" type="image">
+            <file id="bw662rg0319_00_0002.jp2" mimetype="image/jp2" size="2799535">
+              <imageData height="4442" width="3417"/>
+            </file>
+          </resource>
+          <resource id="image3" sequence="3" type="image">
+            <file id="bw662rg0319_00_0003.jp2" mimetype="image/jp2" size="2253773">
+              <imageData height="4442" width="3417"/>
+            </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="discover">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+          <access type="read">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
+  def multi_media_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Multiple Videos in same contentMetadata</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="media">
+          <resource id="media1" sequence="1" type="video">
+            <label>mp4-normal</label>
+            <file id="JessieSaysNo.mp4" mimetype="video/mp4" size="190916">
+              <videoData height="288" width="352"/>
+            </file>
+          </resource>
+          <resource id="media2" sequence="2" type="video">
+            <label>mp4-slow</label>
+            <file id="JessieSaysNo-Slow.mp4" mimetype="video/mp4" size="738559">
+              <videoData height="288" width="352"/>
+            </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="discover">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+          <access type="read">
+            <machine>
+              <world/>
+            </machine>
+          </access>
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
   def multi_resource_multi_media_purl
     <<-XML
       <publicObject>

@@ -7,6 +7,8 @@ describe Embed::Viewer::CommonViewer do
   let(:file_viewer) { Embed::Viewer::File.new(request) }
   let(:image_x_viewer) { Embed::Viewer::ImageX.new(request) }
   let(:geo_viewer) { Embed::Viewer::Geo.new(request) }
+  let(:media_viewer) { Embed::Viewer::Media.new(request) }
+  let(:was_seed_viewer) { Embed::Viewer::WasSeed.new(request) }
 
   describe 'header_html' do
     it "returns the object's title" do
@@ -72,12 +74,10 @@ describe Embed::Viewer::CommonViewer do
   end
   describe 'footer_html' do
     it "returns the object's footer" do
-      stub_purl_response_and_request(image_purl, request)
       html = Capybara.string(image_x_viewer.footer_html)
       expect(html).to have_css 'div.sul-embed-footer'
       expect(html).to have_css '[aria-label="open embed this panel"]'
       expect(html).to have_css '[aria-label="open download panel"]'
-      expect(html).to have_css '[aria-label="number of downloadable files"]'
     end
     # note: download panel is tested in features/download_panel_spec
   end
@@ -156,6 +156,17 @@ describe Embed::Viewer::CommonViewer do
                                         hide_download: 'true')
       geo_hide_viewer = Embed::Viewer::Geo.new(hide_request)
       expect(geo_hide_viewer.show_download?).to be_falsey
+    end
+  end
+  describe '#show_download_count?' do
+    it 'false for image_x viewer' do
+      expect(image_x_viewer.show_download_count?).to be_falsey
+    end
+    it 'true for non-image viewers' do
+      expect(file_viewer.show_download_count?).to be_truthy
+      expect(geo_viewer.show_download_count?).to be_truthy
+      expect(media_viewer.show_download_count?).to be_truthy
+      expect(was_seed_viewer.show_download_count?).to be_truthy
     end
   end
 
