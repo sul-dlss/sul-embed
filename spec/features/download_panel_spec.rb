@@ -64,7 +64,7 @@ describe 'download panel', js: true do
     before do
       stub_purl_response_with_fixture(image_purl)
       visit_sandbox
-      fill_in_default_sandbox_form('fw090jw3474')
+      fill_in_default_sandbox_form('oo000oo0000')
     end
     it 'when selected should hide the button' do
       check('Hide download?')
@@ -74,6 +74,27 @@ describe 'download panel', js: true do
     it 'when not selected should display the button' do
       click_button 'Embed'
       expect(page).to have_css('button[data-sul-embed-toggle="sul-embed-download-panel"]')
+    end
+  end
+
+  describe 'download file count shows within download button' do
+    it 'has the file count for multiple files in the download panel' do
+      stub_purl_response_with_fixture(multi_file_purl)
+      visit_sandbox
+      fill_in_default_sandbox_form('oo000oo0000')
+      click_button 'Embed'
+      within '.sul-i-download-3' do
+        expect(page).to have_css '.sul-embed-download-count[aria-label="number of downloadable files"]', text: 2
+      end
+    end
+    it 'has the file count for files all object resources in the download panel' do
+      stub_purl_response_with_fixture(multi_resource_multi_media_purl)
+      visit_sandbox
+      fill_in_default_sandbox_form('oo000oo0000')
+      click_button 'Embed'
+      within '.sul-i-download-3' do
+        expect(page).to have_css '.sul-embed-download-count[aria-label="number of downloadable files"]', text: 4
+      end
     end
   end
 end

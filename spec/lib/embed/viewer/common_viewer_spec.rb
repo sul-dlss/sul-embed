@@ -79,16 +79,7 @@ describe Embed::Viewer::CommonViewer do
       expect(html).to have_css '[aria-label="open download panel"]'
       expect(html).to have_css '[aria-label="number of downloadable files"]'
     end
-    it 'has the file count for multiple files in the download panel' do
-      stub_purl_response_and_request(multi_file_purl, request)
-      html = Capybara.string(file_viewer.footer_html)
-      expect(html).to have_css '[aria-label="number of downloadable files"]', text: 2
-    end
-    it 'has the file count for files all object resources in the download panel' do
-      stub_purl_response_and_request(multi_resource_multi_file_purl, request)
-      html = Capybara.string(file_viewer.footer_html)
-      expect(html).to have_css '[aria-label="number of downloadable files"]', text: 4
-    end
+    # note: download panel is tested in features/download_panel_spec
   end
   describe 'to_html' do
     it 'returns html that has header, body, and footer wrapped in a container' do

@@ -76,6 +76,8 @@ module Embed
                   'data-sul-embed-toggle' => 'sul-embed-embed-this-panel'
                 )
               end
+
+              file_count = @purl_object.all_resource_files.length
               if show_download?
                 doc.button(
                   class: 'sul-embed-footer-tool sul-embed-btn sul-em' \
@@ -83,13 +85,12 @@ module Embed
                   'aria-expanded' => 'false',
                   'aria-label' => 'open download panel',
                   'data-sul-embed-toggle' => 'sul-embed-download-panel'
-                )
-              end
-
-              file_count = @purl_object.all_resource_files.length
-              if file_count > 0
-                doc.span(class: 'sul-embed-footer-tool sul-embed-download-count',\
-                         'aria-label' => 'number of downloadable files') { doc.text file_count }
+                ) do
+                  if file_count > 0
+                    doc.span(class: 'sul-embed-footer-tool sul-embed-download-count',\
+                             'aria-label' => 'number of downloadable files') { doc.text file_count }
+                  end
+                end
               end
 
               if external_url.present?

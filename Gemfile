@@ -44,6 +44,9 @@ group :development, :test do
 
   # guard-rspec for auto-running tests when relevant files are changed
   gem 'guard-rspec', require: false
+
+  # for debugging
+  gem 'pry-byebug'
 end
 
 gem 'codeclimate-test-reporter', group: :test, require: false
