@@ -146,7 +146,7 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def multi_contentMd_multi_type_purl
+  def multi_resource_multi_type_purl
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -158,12 +158,16 @@ module PURLFixtures
             <file size="12345" mimetype="application/pdf" id="Page1.pdf" />
             <file size="12346" mimetype="application/pdf" id="Page2.pdf" />
           </resource>
-        </contentMetadata>
-        <contentMetadata type="media">
-          <resource sequence="2" type="filez">
-            <attr name="label">Resource Label</attr>
-            <file size="12345" mimetype="application/pdf" id="Page1.pdf" />
-            <file size="12346" mimetype="application/pdf" id="Page2.pdf" />
+          <resource id="media1" sequence="2" type="bar">
+            <label>mp4-normal</label>
+            <file id="JessieSaysNo.mp4" mimetype="video/mp4" size="190916">
+              <videoData height="288" width="352"/>
+            </file>
+          </resource>
+          <resource id="image2" sequence="3" type="foo">
+            <file id="bw662rg0319_00_0002.jp2" mimetype="image/jp2" size="2799535">
+              <imageData height="4442" width="3417"/>
+            </file>
           </resource>
         </contentMetadata>
         <rightsMetadata>
@@ -230,7 +234,7 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def multi_contentMd_multi_media_purl
+  def multi_resource_multi_media_purl
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -242,8 +246,6 @@ module PURLFixtures
             <file size="12345" mimetype="application/pdf" id="Page1.pdf" />
             <file size="12346" mimetype="application/pdf" id="Page2.pdf" />
           </resource>
-        </contentMetadata>
-        <contentMetadata type="media">
           <resource sequence="1" id="abc123_1" type="video">
             <file id="abc_123.mp4" mimetype="video/mp4" size="152000000"></file>
           </resource>

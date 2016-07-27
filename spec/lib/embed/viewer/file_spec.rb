@@ -40,8 +40,8 @@ describe Embed::Viewer::File do
     end
   end
   describe 'body_html' do
-    it 'should return a table of files' do
-      stub_purl_response_and_request(multi_contentMd_multi_type_purl, request)
+    it 'returns a table of files' do
+      stub_purl_response_and_request(multi_resource_multi_type_purl, request)
       expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
       html = Capybara.string(file_viewer.to_html)
       # visible false because we display:none the container until we've loaded the CSS.

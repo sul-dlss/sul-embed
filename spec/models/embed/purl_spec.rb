@@ -50,7 +50,7 @@ describe Embed::PURL do
   end
   describe 'all_resource_files' do
     it 'should return a flattened array of resource files' do
-      stub_purl_response_with_fixture(multi_contentMd_multi_type_purl)
+      stub_purl_response_with_fixture(multi_resource_multi_type_purl)
       expect(Embed::PURL.new('12345').all_resource_files.count).to eq 4
     end
   end
