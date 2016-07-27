@@ -35,8 +35,8 @@ module Embed
       @response ||= begin
         conn = Faraday.new(url: was_thumbs_url)
         response = conn.get do |request|
-          request.options.timeout = 2
-          request.options.open_timeout = 2
+          request.options.timeout = Settings.was_thumb_read_timeout
+          request.options.open_timeout = Settings.was_thumb_conn_timeout
           request.params['format'] = 'json'
         end
         raise ResourceNotAvailable unless response.success?
