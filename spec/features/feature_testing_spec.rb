@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'feature testing of viewers', js: true do
   include PURLFixtures
   describe 'basic functionality' do
-    it 'should make purl embed request and embed correctly' do
+    it 'makes purl embed request and embed' do
       stub_purl_response_with_fixture(file_purl)
       visit_iframe_response
       expect(page).to have_css('.sul-embed-container')
@@ -12,14 +12,14 @@ describe 'feature testing of viewers', js: true do
       expect(page).to have_css('.sul-embed-body')
       expect(page).to have_css('.sul-embed-footer')
     end
-    it 'should hide the title when requested' do
+    it 'hides the title when requested' do
       stub_purl_response_with_fixture(file_purl)
       visit_iframe_response('abc123', hide_title: true)
       expect(page).to_not have_css('.sul-embed-header-title')
     end
   end
   describe 'file viewer' do
-    it 'should contain the file list' do
+    it 'contains the file list' do
       stub_purl_response_with_fixture(file_purl)
       visit_iframe_response
       expect(page).to have_css('.sul-embed-file-list')
