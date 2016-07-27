@@ -114,8 +114,8 @@ module Embed
       @response ||= begin
         conn = Faraday.new(url: purl_xml_url)
         response = conn.get do |request|
-          request.options.timeout = 2
-          request.options.open_timeout = 2
+          request.options.timeout = Settings.purl_read_timeout
+          request.options.open_timeout = Settings.purl_conn_timeout
         end
         raise ResourceNotAvailable unless response.success?
         response.body
