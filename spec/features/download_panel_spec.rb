@@ -84,7 +84,7 @@ describe 'download panel', js: true do
       end
     end
     it 'has the file count for files all object resources in the download panel' do
-      stub_purl_response_with_fixture(multi_resource_multi_media_purl)
+      stub_purl_response_with_fixture(multi_contentMd_multi_media_purl)
       visit_iframe_response
       expect(page).to have_css '.sul-embed-body.sul-embed-media' # so shows download count
       within '.sul-i-download-3' do

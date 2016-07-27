@@ -108,11 +108,11 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def file_purl_no_size
+  def image_no_size_purl
     <<-XML
       <publicObject>
         <identityMetadata>
-          <objectLabel>Book as Images</objectLabel>
+          <objectLabel>image without size</objectLabel>
         </identityMetadata>
         <contentMetadata type="image">
           <resource sequence="1" type="image">
@@ -127,11 +127,11 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def file_purl_empty_size
+  def image_empty_size_purl
     <<-XML
       <publicObject>
         <identityMetadata>
-          <objectLabel>Book as Images</objectLabel>
+          <objectLabel>image empty size</objectLabel>
         </identityMetadata>
         <contentMetadata type="image">
           <resource sequence="1" type="image">
@@ -146,7 +146,7 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def multi_resource_multi_file_purl
+  def multi_contentMd_multi_type_purl
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -230,7 +230,7 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def multi_resource_multi_media_purl
+  def multi_contentMd_multi_media_purl
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -261,7 +261,7 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def stanford_restricted_purl
+  def stanford_restricted_file_purl
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -308,7 +308,7 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def stanford_restricted_file_purl
+  def stanford_restricted_multi_file_purl
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -335,7 +335,7 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def embargoed_stanford_purl
+  def embargoed_stanford_file_purl
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -358,17 +358,17 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def embargoed_purl
+  def embargoed_file_purl
     <<-XML
       <publicObject>
         <identityMetadata>
           <objectLabel>Title of the object</objectLabel>
         </identityMetadata>
         <contentMetadata type="file">
-        <resource sequence="1" type="file">
-          <label>Resource Label</label>
-          <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf" />
-        </resource>
+          <resource sequence="1" type="file">
+            <label>Resource Label</label>
+            <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf" />
+          </resource>
         </contentMetadata>
         <rightsMetadata>
           <access type="read">
@@ -388,10 +388,10 @@ module PURLFixtures
           <objectLabel>Title of the object</objectLabel>
         </identityMetadata>
         <contentMetadata type="file">
-        <resource sequence="1" type="file">
-          <label>Resource Label</label>
-          <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf" />
-        </resource>
+          <resource sequence="1" type="file">
+            <label>Resource Label</label>
+            <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf" />
+          </resource>
         </contentMetadata>
         <rightsMetadata>
           <access type="read">

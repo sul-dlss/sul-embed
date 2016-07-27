@@ -29,7 +29,7 @@ describe 'feature testing of viewers', js: true do
       expect(page).to have_css('.sul-embed-download', text: '12.35 kB')
     end
     it 'should contain 4 files in file list' do
-      stub_purl_response_with_fixture(multi_resource_multi_file_purl)
+      stub_purl_response_with_fixture(multi_contentMd_multi_type_purl)
       visit_iframe_response
       expect(page).to have_css('.sul-embed-count', count: 4)
     end

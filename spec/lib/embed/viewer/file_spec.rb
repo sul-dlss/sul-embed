@@ -41,7 +41,7 @@ describe Embed::Viewer::File do
   end
   describe 'body_html' do
     it 'should return a table of files' do
-      stub_purl_response_and_request(multi_resource_multi_file_purl, request)
+      stub_purl_response_and_request(multi_contentMd_multi_type_purl, request)
       expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
       html = Capybara.string(file_viewer.to_html)
       # visible false because we display:none the container until we've loaded the CSS.
@@ -50,7 +50,7 @@ describe Embed::Viewer::File do
     end
     context 'without file size' do
       it 'displays Download as the link text' do
-        stub_purl_response_and_request(file_purl_no_size, request)
+        stub_purl_response_and_request(image_no_size_purl, request)
         expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
         html = Capybara.string(file_viewer.to_html)
         expect(html).to have_css 'a[download]', visible: false, text: /Download$/
@@ -58,7 +58,7 @@ describe Embed::Viewer::File do
     end
     context 'with empty file size' do
       it 'displays Download as the link text' do
-        stub_purl_response_and_request(file_purl_empty_size, request)
+        stub_purl_response_and_request(image_empty_size_purl, request)
         expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
         html = Capybara.string(file_viewer.to_html)
         expect(html).to have_css 'a[download]', visible: false, text: /Download$/
@@ -77,7 +77,7 @@ describe Embed::Viewer::File do
   end
   describe 'embargo/Stanford only' do
     it 'adds a Stanford specific embargo message with links still present' do
-      stub_purl_response_and_request(embargoed_stanford_purl, request)
+      stub_purl_response_and_request(embargoed_stanford_file_purl, request)
       expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com')
       html = Capybara.string(file_viewer.body_html)
       expect(html).to have_css('.sul-embed-embargo-message', text: "Access is restricted to Stanford-affiliated patrons until #{(Time.current + 1.month).strftime('%d-%b-%Y')}")
@@ -86,7 +86,7 @@ describe Embed::Viewer::File do
   end
   describe 'embargoed to world' do
     it 'adds a generalized embargo message and no links are present' do
-      stub_purl_response_and_request(embargoed_purl, request)
+      stub_purl_response_and_request(embargoed_file_purl, request)
       expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com')
       html = Capybara.string(file_viewer.body_html)
       expect(html).to have_css('.sul-embed-embargo-message', text: "Access is restricted until #{(Time.current + 1.month).strftime('%d-%b-%Y')}")
