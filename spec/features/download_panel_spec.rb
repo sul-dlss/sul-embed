@@ -3,6 +3,12 @@ require 'rails_helper'
 describe 'download panel', js: true do
   include PURLFixtures
   let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/ab123cd4567') }
+  it 'not shown for file viewer' do
+    stub_purl_response_with_fixture(multi_file_purl)
+    visit_iframe_response
+    expect(page).to have_css '.sul-embed-body.sul-embed-file'
+    expect(page).not_to have_css '.sul-embed-download-panel'
+  end
   describe 'toggle button' do
     before do
       stub_purl_response_with_fixture(image_purl)
@@ -69,10 +75,10 @@ describe 'download panel', js: true do
   end
 
   describe 'download file count shows within download button' do
-    it 'has the file count for multiple files in the download panel' do
-      stub_purl_response_with_fixture(multi_file_purl)
+    it 'has the file count for multiple media files in the download panel' do
+      stub_purl_response_with_fixture(multi_media_purl)
       visit_iframe_response
-
+      expect(page).to have_css '.sul-embed-body.sul-embed-media' # so shows download count
       within '.sul-i-download-3' do
         expect(page).to have_css '.sul-embed-download-count[aria-label="number of downloadable files"]', text: 2
       end
@@ -80,9 +86,17 @@ describe 'download panel', js: true do
     it 'has the file count for files all object resources in the download panel' do
       stub_purl_response_with_fixture(multi_resource_multi_media_purl)
       visit_iframe_response
-
+      expect(page).to have_css '.sul-embed-body.sul-embed-media' # so shows download count
       within '.sul-i-download-3' do
         expect(page).to have_css '.sul-embed-download-count[aria-label="number of downloadable files"]', text: 4
+      end
+    end
+    it "doesn't show the file count for image_x viewer" do
+      stub_purl_response_with_fixture(multi_image_purl)
+      visit_iframe_response
+      expect(page).to have_css '.sul-embed-body.sul-embed-image-x'
+      within '.sul-i-download-3' do
+        expect(page).not_to have_css '.sul-embed-download-count'
       end
     end
   end

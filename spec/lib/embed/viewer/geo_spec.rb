@@ -55,7 +55,7 @@ describe Embed::Viewer::Geo do
       expect(html).to have_css 'a[href="https://stacks.stanford.edu/file/druid:12345/data.zip"]', visible: false
     end
     it 'stanford only resources have the stanford-only class' do
-      stub_purl_response_and_request(stanford_restricted_file_purl, request)
+      stub_purl_response_and_request(stanford_restricted_multi_file_purl, request)
       html = Capybara.string(geo_viewer.download_html)
       expect(html).to have_css 'li.sul-embed-stanford-only', visible: false
     end

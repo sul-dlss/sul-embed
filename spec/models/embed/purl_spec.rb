@@ -16,7 +16,7 @@ describe Embed::PURL do
   end
   describe 'embargoed?' do
     it 'should return true when an item is embargoed' do
-      stub_purl_response_with_fixture(embargoed_purl)
+      stub_purl_response_with_fixture(embargoed_file_purl)
       expect(Embed::PURL.new('12345')).to be_embargoed
     end
     it 'should return false when an item is not embargoed' do
@@ -35,7 +35,7 @@ describe Embed::PURL do
     end
   end
   describe 'embargo_release_date' do
-    before { stub_purl_response_with_fixture(embargoed_purl) }
+    before { stub_purl_response_with_fixture(embargoed_file_purl) }
     it 'should return the date in the embargo field' do
       expect(Embed::PURL.new('12345').embargo_release_date).to match(/\d{4}-\d{2}-\d{2}/)
     end
@@ -50,7 +50,7 @@ describe Embed::PURL do
   end
   describe 'all_resource_files' do
     it 'should return a flattened array of resource files' do
-      stub_purl_response_with_fixture(multi_resource_multi_file_purl)
+      stub_purl_response_with_fixture(multi_resource_multi_type_purl)
       expect(Embed::PURL.new('12345').all_resource_files.count).to eq 4
     end
   end
@@ -85,7 +85,7 @@ describe Embed::PURL do
       expect(purl.license[:machine]).to eq 'odc-by'
     end
     it 'should return nil if no license is present' do
-      stub_purl_response_with_fixture(embargoed_purl)
+      stub_purl_response_with_fixture(embargoed_file_purl)
       expect(Embed::PURL.new('12345').license).to eq nil
     end
   end
@@ -95,7 +95,7 @@ describe Embed::PURL do
       expect(Embed::PURL.new('12345').public?).to be_truthy
     end
     it 'should return false if the object is Stanford Only' do
-      stub_purl_response_with_fixture(stanford_restricted_purl)
+      stub_purl_response_with_fixture(stanford_restricted_file_purl)
       expect(Embed::PURL.new('12345').public?).to be_falsy
     end
   end
@@ -114,7 +114,7 @@ describe Embed::PURL do
     end
     it 'should get the description from the attr[name="label"] element' do
       stub_purl_response_with_fixture(multi_file_purl)
-      expect(Embed::PURL.new('12345').contents.first.description).to eq 'Resource Label'
+      expect(Embed::PURL.new('12345').contents.first.description).to eq 'File1 Label'
     end
     describe 'files' do
       it 'should return an array of PURL::Resource::ResourceFile objects' do
@@ -161,7 +161,7 @@ describe Embed::PURL do
       describe 'rights' do
         describe 'stanford_only?' do
           it 'should identify stanford_only objects' do
-            stub_purl_response_with_fixture(stanford_restricted_purl)
+            stub_purl_response_with_fixture(stanford_restricted_file_purl)
             expect(Embed::PURL.new('12345').contents.first.files.all?(&:stanford_only?)).to be true
           end
           it 'should identify world accessible objects as not stanford only' do
@@ -169,7 +169,7 @@ describe Embed::PURL do
             expect(Embed::PURL.new('12345').contents.first.files.all?(&:stanford_only?)).to be false
           end
           it 'should identify file-level stanford_only rights' do
-            stub_purl_response_with_fixture(stanford_restricted_file_purl)
+            stub_purl_response_with_fixture(stanford_restricted_multi_file_purl)
             contents = Embed::PURL.new('12345').contents
             first_file = contents.first.files.first
             last_file = contents.last.files.first

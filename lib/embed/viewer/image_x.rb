@@ -6,6 +6,11 @@ module Embed
         header_tools_logic << :image_button_logic << :file_count_logic
       end
 
+      # don't show the download file count for image viewer
+      def self.show_download_count?
+        false
+      end
+
       def body_html
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-body sul-embed-image-x', 'data-sul-embed-theme' => asset_url('image_x.css').to_s) do

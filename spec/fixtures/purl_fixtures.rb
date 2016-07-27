@@ -1,4 +1,23 @@
 module PURLFixtures
+  def access_discover_world
+    <<-XML
+      <access type="discover">
+        <machine>
+          <world/>
+        </machine>
+      </access>
+    XML
+  end
+  def access_read_world
+    <<-XML
+      <access type="read">
+        <machine>
+          <world/>
+        </machine>
+      </access>
+    XML
+  end
+
   def file_purl
     <<-XML
       <publicObject>
@@ -14,16 +33,8 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
           <use>
             <human type="useAndReproduction">
               You can use this.
@@ -59,16 +70,8 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
           <copyright>
             <human type="copyright">
               Copyright © 1976 The Board of Trustees of the Leland Stanford Junior University. All rights reserved.
@@ -82,35 +85,34 @@ module PURLFixtures
     <<-XML
       <publicObject>
         <identityMetadata>
-          <objectLabel>Book as Images</objectLabel>
+          <objectLabel>Files files files</objectLabel>
         </identityMetadata>
-        <contentMetadata type="image">
-          <resource sequence="1" type="image">
-            <attr name="label">Resource Label</attr>
-            <file size="12345" mimetype="application/png" id="Page1.png" />
-            <file size="12346" mimetype="application/png" id="Page2.png" />
+        <contentMetadata type="file">
+          <resource sequence="1" type="file">
+            <label>File1 Label</label>
+            <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf">
+              <location type="url">http://stacks.stanford.edu/file/druid:abc123/Title_of_the_PDF.pdf</location>
+            </file>
+          </resource>
+          <resource sequence="2" type="file">
+            <label>File2 Label</label>
+            <file size="12345" mimetype="application/pdf" id="Title of 2 PDF.pdf">
+              <location type="url">http://stacks.stanford.edu/file/druid:abc123/Title_of_2_PDF.pdf</location>
+            </file>
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
   end
-  def file_purl_no_size
+  def image_no_size_purl
     <<-XML
       <publicObject>
         <identityMetadata>
-          <objectLabel>Book as Images</objectLabel>
+          <objectLabel>image without size</objectLabel>
         </identityMetadata>
         <contentMetadata type="image">
           <resource sequence="1" type="image">
@@ -119,25 +121,17 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
   end
-  def file_purl_empty_size
+  def image_empty_size_purl
     <<-XML
       <publicObject>
         <identityMetadata>
-          <objectLabel>Book as Images</objectLabel>
+          <objectLabel>image empty size</objectLabel>
         </identityMetadata>
         <contentMetadata type="image">
           <resource sequence="1" type="image">
@@ -146,21 +140,13 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
   end
-  def multi_resource_multi_file_purl
+  def multi_resource_multi_type_purl
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -172,25 +158,78 @@ module PURLFixtures
             <file size="12345" mimetype="application/pdf" id="Page1.pdf" />
             <file size="12346" mimetype="application/pdf" id="Page2.pdf" />
           </resource>
-        </contentMetadata>
-        <contentMetadata type="media">
-          <resource sequence="2" type="filez">
-            <attr name="label">Resource Label</attr>
-            <file size="12345" mimetype="application/pdf" id="Page1.pdf" />
-            <file size="12346" mimetype="application/pdf" id="Page2.pdf" />
+          <resource id="media1" sequence="2" type="bar">
+            <label>mp4-normal</label>
+            <file id="JessieSaysNo.mp4" mimetype="video/mp4" size="190916">
+              <videoData height="288" width="352"/>
+            </file>
+          </resource>
+          <resource id="image2" sequence="3" type="foo">
+            <file id="bw662rg0319_00_0002.jp2" mimetype="image/jp2" size="2799535">
+              <imageData height="4442" width="3417"/>
+            </file>
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
+  def multi_image_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Book as Images</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="image">
+          <resource id="image1" sequence="1" type="image">
+            <file id="bw662rg0319_00_0001.jp2" mimetype="image/jp2" size="3458791">
+              <imageData height="4442" width="3417"/>
+            </file>
+          </resource>
+          <resource id="image2" sequence="2" type="image">
+            <file id="bw662rg0319_00_0002.jp2" mimetype="image/jp2" size="2799535">
+              <imageData height="4442" width="3417"/>
+            </file>
+          </resource>
+          <resource id="image3" sequence="3" type="image">
+            <file id="bw662rg0319_00_0003.jp2" mimetype="image/jp2" size="2253773">
+              <imageData height="4442" width="3417"/>
+            </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          #{access_discover_world}
+          #{access_read_world}
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
+  def multi_media_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Multiple Videos in same contentMetadata</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="media">
+          <resource id="media1" sequence="1" type="video">
+            <label>mp4-normal</label>
+            <file id="JessieSaysNo.mp4" mimetype="video/mp4" size="190916">
+              <videoData height="288" width="352"/>
+            </file>
+          </resource>
+          <resource id="media2" sequence="2" type="video">
+            <label>mp4-slow</label>
+            <file id="JessieSaysNo-Slow.mp4" mimetype="video/mp4" size="738559">
+              <videoData height="288" width="352"/>
+            </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          #{access_discover_world}
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
@@ -207,8 +246,6 @@ module PURLFixtures
             <file size="12345" mimetype="application/pdf" id="Page1.pdf" />
             <file size="12346" mimetype="application/pdf" id="Page2.pdf" />
           </resource>
-        </contentMetadata>
-        <contentMetadata type="media">
           <resource sequence="1" id="abc123_1" type="video">
             <file id="abc_123.mp4" mimetype="video/mp4" size="152000000"></file>
           </resource>
@@ -220,21 +257,13 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
   end
-  def stanford_restricted_purl
+  def stanford_restricted_file_purl
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -281,7 +310,7 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def stanford_restricted_file_purl
+  def stanford_restricted_multi_file_purl
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -308,7 +337,7 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def embargoed_stanford_purl
+  def embargoed_stanford_file_purl
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -331,46 +360,23 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def embargoed_purl
+  def embargoed_file_purl
     <<-XML
       <publicObject>
         <identityMetadata>
           <objectLabel>Title of the object</objectLabel>
         </identityMetadata>
         <contentMetadata type="file">
-        <resource sequence="1" type="file">
-          <label>Resource Label</label>
-          <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf" />
-        </resource>
+          <resource sequence="1" type="file">
+            <label>Resource Label</label>
+            <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf" />
+          </resource>
         </contentMetadata>
         <rightsMetadata>
           <access type="read">
             <machine>
               <embargoReleaseDate>#{(Time.current + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
               <none/>
-            </machine>
-          </access>
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
-  def embargoed_edge_purl
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Title of the object</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="file">
-        <resource sequence="1" type="file">
-          <label>Resource Label</label>
-          <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf" />
-        </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          <access type="read">
-            <machine>
-              <none/>
-              <embargoReleaseDate>#{(Time.current + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
             </machine>
           </access>
         </rightsMetadata>
@@ -394,11 +400,7 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_read_world}
           <use>
             <human type="openDataCommons">ODC-By Attribution License</human>
             <machine type="openDataCommons">odc-by</machine>
@@ -436,11 +438,7 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
@@ -472,11 +470,7 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
           <access type="read">
             <machine>
               <group>Stanford</group>
@@ -566,16 +560,8 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
           <use>
             <human type="useAndReproduction">Property rights reside with the repository. Literary rights reside with the creators of the documents or their heirs. To obtain permission to publish or reproduce, please contact the Special Collections Public Services Librarian at speccollref@stanford.edu.</human>
             <human type="creativeCommons"/>
@@ -628,11 +614,7 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
           <access type="read">
             <machine>
               <group>Stanford</group>
@@ -697,11 +679,7 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_read_world}
           <access type="read">
             <file>abc_123.mp4</file>
             <machine>
@@ -740,11 +718,7 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_read_world}
         </rightsMetadata>
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
           <dc:title>stupid dc title of video</dc:title>
