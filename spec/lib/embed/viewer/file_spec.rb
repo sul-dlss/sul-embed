@@ -92,12 +92,5 @@ describe Embed::Viewer::File do
       expect(html).to have_css('.sul-embed-embargo-message', text: "Access is restricted until #{(Time.current + 1.month).strftime('%d-%b-%Y')}")
       expect(html).not_to have_css('a')
     end
-    it 'adds a generalized embargo message and no links are present for an edge case ordering issue' do
-      stub_purl_response_and_request(embargoed_edge_purl, request)
-      expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com')
-      html = Capybara.string(file_viewer.body_html)
-      expect(html).to have_css('.sul-embed-embargo-message', text: "Access is restricted until #{(Time.current + 1.month).strftime('%d-%b-%Y')}")
-      expect(html).not_to have_css('a')
-    end
   end
 end

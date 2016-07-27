@@ -381,29 +381,6 @@ module PURLFixtures
       </publicObject>
     XML
   end
-  def embargoed_edge_purl
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Title of the object</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="file">
-          <resource sequence="1" type="file">
-            <label>Resource Label</label>
-            <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf" />
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          <access type="read">
-            <machine>
-              <none/>
-              <embargoReleaseDate>#{(Time.current + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
-            </machine>
-          </access>
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
   def hybrid_object_purl
     <<-XML
       <publicObject>
