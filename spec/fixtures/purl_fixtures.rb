@@ -1,4 +1,23 @@
 module PURLFixtures
+  def access_discover_world
+    <<-XML
+      <access type="discover">
+        <machine>
+          <world/>
+        </machine>
+      </access>
+    XML
+  end
+  def access_read_world
+    <<-XML
+      <access type="read">
+        <machine>
+          <world/>
+        </machine>
+      </access>
+    XML
+  end
+
   def file_purl
     <<-XML
       <publicObject>
@@ -14,16 +33,8 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
           <use>
             <human type="useAndReproduction">
               You can use this.
@@ -59,16 +70,8 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
           <copyright>
             <human type="copyright">
               Copyright © 1976 The Board of Trustees of the Leland Stanford Junior University. All rights reserved.
@@ -99,16 +102,8 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
@@ -126,16 +121,8 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
@@ -153,16 +140,8 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
@@ -188,16 +167,8 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
@@ -226,16 +197,8 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
@@ -261,16 +224,8 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
@@ -300,16 +255,8 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
@@ -474,11 +421,7 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_read_world}
           <use>
             <human type="openDataCommons">ODC-By Attribution License</human>
             <machine type="openDataCommons">odc-by</machine>
@@ -516,11 +459,7 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_read_world}
         </rightsMetadata>
       </publicObject>
     XML
@@ -552,11 +491,7 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
           <access type="read">
             <machine>
               <group>Stanford</group>
@@ -646,16 +581,8 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
+          #{access_read_world}
           <use>
             <human type="useAndReproduction">Property rights reside with the repository. Literary rights reside with the creators of the documents or their heirs. To obtain permission to publish or reproduce, please contact the Special Collections Public Services Librarian at speccollref@stanford.edu.</human>
             <human type="creativeCommons"/>
@@ -708,11 +635,7 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="discover">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_discover_world}
           <access type="read">
             <machine>
               <group>Stanford</group>
@@ -777,11 +700,7 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_read_world}
           <access type="read">
             <file>abc_123.mp4</file>
             <machine>
@@ -820,11 +739,7 @@ module PURLFixtures
           </resource>
         </contentMetadata>
         <rightsMetadata>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
+          #{access_read_world}
         </rightsMetadata>
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
           <dc:title>stupid dc title of video</dc:title>
