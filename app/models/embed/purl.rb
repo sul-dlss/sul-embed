@@ -18,6 +18,10 @@ module Embed
       end
     end
 
+    def valid?
+      contents.any?
+    end
+
     def contents
       @contents ||= ng_xml.xpath('//contentMetadata/resource').map do |resource|
         PURL::Resource.new(resource, rights)
