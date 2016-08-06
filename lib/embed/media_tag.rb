@@ -57,7 +57,7 @@ module Embed
         "<img
           src='#{stacks_thumb_url(@purl_document.druid, file.title)}'
           class='sul-embed-media-thumb #{'sul-embed-many-media' if many_primary_files?}'
-          style='max-height: #{media_element_height(file)}'
+          style='max-height: #{media_element_height(file)}px'
         />"
       end
     end
@@ -88,19 +88,19 @@ module Embed
 
     def media_element_height(file)
       elt_base_height = (file.video_height || viewer.body_height).to_i
-      many_primary_files? ? "#{elt_base_height - MEDIA_INDEX_CONTROL_HEIGHT}px" : "#{elt_base_height}px"
+      many_primary_files? ? elt_base_height - MEDIA_INDEX_CONTROL_HEIGHT : elt_base_height
     end
 
     def media_element_width(file)
-      "#{file.video_width.to_i}px" if file.video_width
+      file.video_width.to_i if file.video_width
     end
 
     def media_element_height_attr(file)
-      %(height="#{media_element_height(file)}") if media_element_height(file)
+      %(height="#{media_element_height(file)}px") if media_element_height(file)
     end
 
     def media_element_width_attr(file)
-      %(width="#{media_element_width(file)}") if media_element_width(file)
+      %(width="#{media_element_width(file)}px") if media_element_width(file)
     end
 
     def many_primary_files?
