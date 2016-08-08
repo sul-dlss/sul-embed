@@ -2,7 +2,6 @@
 //= require video.js/video.js
 //= require videojs-contrib-hls/videojs-contrib-hls.js
 /*global ThumbSlider */
-/*global dashjs */
 /*global videojs */
 
 (function( global ) {
@@ -174,59 +173,10 @@
       });
     }
 
-    function loadDashPlayerJavascript(callback) {
-      var playerJS = jQuery('[data-sul-embed-dash-player]')
-                       .data('sul-embed-dash-player');
-
-      jQuery.getScript(playerJS).done(callback);
-    }
-
-    // canPlayType() returns 'probably', 'maybe', or ''
-    function canPlayHLS() {
-      var hlsMimeType = 'application/vnd.apple.mpegURL';
-      var tempVideo = document.createElement('video');
-      var canPlayTypsHLS = tempVideo.canPlayType(hlsMimeType);
-      return canPlayTypsHLS !== '';
-    }
-
-    function removeAllMediaDataSrc() {
-      jQuery('.sul-embed-media audio, .sul-embed-media video').each(function() {
-        jQuery(this).removeAttr('data-src');
-      });
-    }
-
-    function preloadVideoUrls() {
-      jQuery('.sul-embed-media video').each(function() {
-        $(this).data('src');
-      });
-    }
-
-    function initializeDashPlayerForAllVideos() {
-      preloadVideoUrls();
-      loadDashPlayerJavascript(function() {
-        jQuery('.sul-embed-media video').each(function() {
-          var url = jQuery(this).data('src');
-          var player = dashjs.MediaPlayer().create();
-          player.setXHRWithCredentials(true);
-          player.initialize(this, url, false);
-        });
-      });
-    }
-
     return {
       init: function() {
         setupThumbSlider();
         authCheck();
-      },
-
-      // This is currently unused under video-js.
-      // We should remove it (as well as all related code)
-      // if we go w/ video-js as our media client
-      initializeDashPlayer: function() {
-        if ( !canPlayHLS() ) {
-          initializeDashPlayerForAllVideos();
-        }
-        removeAllMediaDataSrc();
       }
     };
   })();
