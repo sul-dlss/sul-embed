@@ -234,6 +234,33 @@ module PURLFixtures
       </publicObject>
     XML
   end
+  def multi_media_purl_large_format
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Multiple Videos in same contentMetadata</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="media">
+          <resource id="media1" sequence="1" type="video">
+            <label>mp4-normal</label>
+            <file id="JessieSaysNo.mp4" mimetype="video/mp4" size="190916">
+              <videoData height="1080" width="1920"/>
+            </file>
+          </resource>
+          <resource id="media2" sequence="2" type="video">
+            <label>mp4-slow</label>
+            <file id="JessieSaysNo-Slow.mp4" mimetype="video/mp4" size="738559">
+              <videoData height="1080" width="1920"/>
+            </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          #{access_discover_world}
+          #{access_read_world}
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
   def multi_resource_multi_media_purl
     <<-XML
       <publicObject>

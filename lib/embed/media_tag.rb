@@ -86,13 +86,22 @@ module Embed
       end.join
     end
 
+    def usable_body_height
+      many_primary_files? ? viewer.body_height.to_i - MEDIA_INDEX_CONTROL_HEIGHT : viewer.body_height.to_i
+    end
+
     def media_element_height(file)
-      elt_base_height = (file.video_height || viewer.body_height).to_i
-      many_primary_files? ? elt_base_height - MEDIA_INDEX_CONTROL_HEIGHT : elt_base_height
+      return usable_body_height unless file.video_height && (file.video_height.to_i < usable_body_height)
+      file.video_height.to_i
     end
 
     def media_element_width(file)
-      file.video_width.to_i if file.video_width
+      return unless file.video_width
+
+      # if there's a width specified, scale it by the same factor as the actual
+      # display height vs the specified height, so correct aspect ratio is maintained
+      height_scale_factor = media_element_height(file) / file.video_height.to_d
+      (file.video_width.to_i * height_scale_factor).to_i
     end
 
     def media_element_height_attr(file)

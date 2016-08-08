@@ -66,11 +66,21 @@ describe Embed::MediaTag do
       end
     end
 
-    context 'video dimensions' do
+    context 'with small video dimensions' do
       let(:purl) { multi_media_purl }
       it 'are taken from the purl if available, and height is adjusted for the thumb slider' do
-        expect(subject).to have_css('video[height="264px"]')
-        expect(subject).to have_css('video[width="352px"]')
+        expect(subject).to have_css('video[height="276px"]')
+        expect(subject).to have_css('video[width="337px"]')
+      end
+    end
+
+    context 'with large video dimensions' do
+      let(:purl) { multi_media_purl_large_format }
+      it 'are taken from the purl if available, and height is adjusted for the thumb slider' do
+        expected_height = viewer.body_height.to_i - Embed::MediaTag::MEDIA_INDEX_CONTROL_HEIGHT
+        expect(subject).to have_css("video[height='#{expected_height}px']")
+        expected_width = (1920 * (expected_height / 1080.to_d)).to_i
+        expect(subject).to have_css("video[width='#{expected_width}px']")
       end
     end
 
