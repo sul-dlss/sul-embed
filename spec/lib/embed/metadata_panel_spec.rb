@@ -21,7 +21,7 @@ describe Embed::MetadataPanel do
 
   describe 'Online link' do
     it 'renders a link to the PURL (dropping protocol for the link text)' do
-      expect(panel_html).to have_css('.sul-embed-panel-body dt', text: 'Available online', visible: false)
+      expect(panel_html).to have_css('.sul-embed-panel-body dt', text: 'Citation URL', visible: false)
       link = panel_html.find('dd a', visible: false)
       expect(link['href']).to eq 'https://purl.stanford.edu/abc123'
       expect(link.text).to eq 'purl.stanford.edu/abc123'
@@ -47,6 +47,20 @@ describe Embed::MetadataPanel do
         expect(panel_html).to have_css('dd span.sul-embed-license-the-license', visible: false)
         expect(panel_html).to have_css('dd', text: 'The license statement', visible: false)
       end
+    end
+  end
+
+  describe 'Passed in content' do
+    let(:panel_html) do
+      Capybara.string(
+        described_class.new(purl_object) do
+          '<div id="extra-content">Some Extra Content</div>'
+        end.to_html
+      )
+    end
+
+    it 'renders when passed in via a block' do
+      expect(panel_html).to have_css('#extra-content', text: 'Some Extra Content', visible: false)
     end
   end
 end

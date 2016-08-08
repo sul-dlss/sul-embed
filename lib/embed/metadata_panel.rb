@@ -3,8 +3,9 @@ module Embed
   # A class to render metadata panel content given a variable
   # title and content for different viewers to customize
   class MetadataPanel
-    def initialize(purl_object)
+    def initialize(purl_object, &block)
       @purl_object = purl_object
+      @panel_content = yield block if block_given?
     end
 
     def to_html
@@ -12,7 +13,7 @@ module Embed
         <div class='sul-embed-panel-container'>
           <div class='sul-embed-panel sul-embed-metadata-panel' style='display:none' aria-hidden='true'>
             <div class='sul-embed-panel-header'>
-              <button class='sul-embed-close' data-sul-embed-toggle='sul-embed-download-panel'>
+              <button class='sul-embed-close' data-sul-embed-toggle='sul-embed-metadata-panel'>
                 <span aria-hidden='true'>&times;</span>
                 <span class='sul-embed-sr-only'>Close</span>
               </button>
@@ -22,7 +23,9 @@ module Embed
             </div>
             <div class='sul-embed-panel-body'>
               <dl>
-                <dt>Available online</dt>
+                #{panel_content}
+
+                <dt>Citation URL</dt>
                 <dd>
                   <a href='#{purl_object.purl_url}' target='_top'>#{user_friendly_purl_url}</a>
                 </dd>
@@ -38,7 +41,7 @@ module Embed
 
     private
 
-    attr_reader :purl_object
+    attr_reader :panel_content, :purl_object
 
     def user_friendly_purl_url
       purl_object.purl_url.gsub(%r{^https?://}, '')
