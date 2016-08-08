@@ -13,8 +13,8 @@ module Embed
 
       def body_html
         Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-body sul-embed-image-x', 'data-sul-embed-theme' => "#{asset_url('image_x.css')}") do
-            doc.div(id: 'sul-embed-image-x', 'data-asset_base' => asset_url('iiif-drag-icon.png'), 'data-manifest-url' => manifest_json_url, 'data-world-restriction' => !@purl_object.world_unrestricted?) {}
+          doc.div(class: 'sul-embed-body sul-embed-image-x', 'data-sul-embed-theme' => asset_url('image_x.css')) do
+            doc.div(id: 'sul-embed-image-x', 'data-manifest-url' => manifest_json_url, 'data-world-restriction' => !@purl_object.world_unrestricted?) {}
             doc.script { doc.text ";jQuery.getScript(\"#{asset_url('image_x.js')}\");" }
           end
         end.to_html
@@ -32,7 +32,45 @@ module Embed
         "#{Settings.purl_url}/#{@purl_object.druid}/iiif/manifest.json"
       end
 
+      def metadata_html
+        return '' if @request.hide_metadata?
+
+        Embed::MetadataPanel.new(@purl_object) do
+          iiif_drag_and_drop_icon
+        end.to_html
+      end
+
       private
+
+      def iiif_drag_and_drop_icon
+        <<-HTML
+          <dt>International Image Interoperability Framework</dt>
+          <dd>
+            <a class='sul-embed-image-x-iiif-drag-and-drop-link' href='#{drag_and_drop_url}'>
+              <img src="#{asset_url('iiif-drag-icon.png')}" />
+            </a>
+            <span class='sul-embed-iiif-instruction'>
+              #{drag_and_drop_instruction_text} <a href='#{Settings.iiif_info_url}'>IIIF viewer</a>
+            </span>
+          </dd>
+        HTML
+      end
+
+      def drag_and_drop_url
+        purl_url = "#{Settings.purl_url}/#{@purl_object.druid}"
+        "#{purl_url}?manifest=#{purl_url}/iiif/manifest.json"
+      end
+
+      def drag_and_drop_instruction_text
+        return 'Drag icon to open these images in a' if many_images?
+        'Drag icon to open this image in a'
+      end
+
+      def many_images?
+        @purl_object.contents.many? do |resource|
+          resource.type == 'image'
+        end
+      end
 
       def image_button_logic
         :image_button_html

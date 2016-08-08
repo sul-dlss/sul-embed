@@ -2,13 +2,17 @@ require 'rails_helper'
 
 describe Embed::Viewer::CommonViewer do
   include PURLFixtures
-  let(:rails_request) { double('rails_request') }
+  let(:rails_request) { double('rails_request', host_with_port: '') }
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:file_viewer) { Embed::Viewer::File.new(request) }
   let(:image_x_viewer) { Embed::Viewer::ImageX.new(request) }
   let(:geo_viewer) { Embed::Viewer::Geo.new(request) }
   let(:media_viewer) { Embed::Viewer::Media.new(request) }
   let(:was_seed_viewer) { Embed::Viewer::WasSeed.new(request) }
+
+  before do
+    allow(request).to receive(:rails_request).and_return(rails_request)
+  end
 
   describe 'header_html' do
     it "returns the object's title" do

@@ -163,10 +163,22 @@ $image-thumb-slider-background-color: $sul-background;
 }
 
 .#{$namespace}-image-x-iiif-drag-and-drop-link {
-  img {
-    height: 20px;
-    margin: 0 5px 0 0 !important;
+  border-bottom: none !important;
+  cursor: move; // For non-webkit browsers
+  cursor: -webkit-grab;
+
+  &:active {
+    cursor: -webkit-grabbing;
   }
+
+  img {
+    margin: 0 5px 0 0 !important;
+    width: 25px;
+  }
+}
+
+.#{$namespace}-iiif-instruction {
+  color: $sul-iiif-instruction-color;
 }
 
 .#{$namespace}-image-x-restricted-thumb {
