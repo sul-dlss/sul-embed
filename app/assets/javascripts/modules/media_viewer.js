@@ -1,6 +1,8 @@
 //= require modules/thumb_slider
+//= require video.js/video.js
+//= require videojs-contrib-hls/videojs-contrib-hls.js
 /*global ThumbSlider */
-/*global dashjs */
+/*global videojs */
 
 (function( global ) {
   'use strict';
@@ -85,6 +87,63 @@
       }
     }
 
+    function updateMediaSrcWithToken(mediaObject, token) {
+      if(token === undefined) {
+        return;
+      }
+      var source = mediaObject.find('source[type="application/x-mpegURL"]');
+      var originalSrc = source.attr('src');
+      if(!originalSrc.includes('stacks_token')) {
+        source.prop('src', originalSrc + '?stacks_token=' + token);
+      }
+    }
+
+    function initializeVideoJSPlayer(mediaObject) {
+      mediaObject.addClass('video-js vjs-default-skin');
+      videojs(
+        mediaObject.attr('id'),
+        {
+          html5: {
+            hls: {
+              withCredentials: true
+            }
+          }
+        }
+      );
+    }
+
+    function authCheckForMediaObject(mediaObject, completeCallback) {
+      var authUrl = mediaObject.data('auth-url');
+      jQuery.ajax({url: authUrl, dataType: 'jsonp'}).done(function(data) {
+        // present the auth link if it's stanford restricted and the user isn't logged in
+        if(jQuery.inArray('stanford_restricted', data.status) > -1) {
+          var wrapper = jQuery('<div data-auth-link="true" class="sul-embed-auth-link"></div>');
+          mediaObject.parents(sliderObjectSelector).append(
+            wrapper.append(authLink(data.service, mediaObject))
+          );
+        }
+
+        // if the user authed successfully for the file, hide the restriction overlays
+        var sliderSelector = '.sul-embed-media ' + sliderObjectSelector;
+        var parentDiv = mediaObject.closest(sliderSelector);
+        var isRestricted = parentDiv.data('stanford-only') || parentDiv.data('location-restricted');
+        if(isRestricted && data.status === 'success') {
+          parentDiv.find(restrictedOverlaySelector).hide();
+          parentDiv.find(restrictedMessageSelector).hide();
+          parentDiv.find('[data-auth-link]').hide();
+        }
+
+        if(data.status === 'success') {
+          updateMediaSrcWithToken(mediaObject, data.token)
+          initializeVideoJSPlayer(mediaObject);
+        }
+
+        if(typeof(completeCallback) === 'function') {
+          completeCallback(mediaObject, data);
+        }
+      });
+    }
+
     function authLink(loginService, mediaObject) {
       return jQuery('<a></a>')
         .prop('href', loginService['@id'])
@@ -98,81 +157,19 @@
           var checkWindow = setInterval(function() {
             if (!_timedOut(start, 30000) &&
               (!windowReference || !windowReference.closed)) return;
-            clearInterval(checkWindow);
-            mediaObject
-              .parents(sliderObjectSelector)
-              .find('[data-auth-link], ' + restrictedOverlaySelector + ', ' + restrictedMessageSelector)
-              .hide();
-            // As best I can tell, .touch() does nothing (and does not exist in jQuery),
-            // but without calling some function after .load() the media fails to load.
-            mediaObject[0].load().touch();
+            authCheckForMediaObject(mediaObject, function(_, data) {
+              if(data.status === 'success') {
+                clearInterval(checkWindow);
+              }
+            });
             return;
           }, 500);
         });
     }
 
-
     function authCheck() {
       jQuery('.sul-embed-media [data-auth-url]').each(function(){
-        var mediaObject = jQuery(this);
-        var authUrl = mediaObject.data('auth-url');
-        jQuery.ajax({url: authUrl, dataType: 'jsonp'}).done(function(data) {
-          // present the auth link if it's stanford restricted and the user isn't logged in
-          if(jQuery.inArray('stanford_restricted', data.status) > -1) {
-            var wrapper = jQuery('<div data-auth-link="true" class="sul-embed-auth-link"></div>');
-            mediaObject.parents(sliderObjectSelector).append(
-              wrapper.append(authLink(data.service, mediaObject))
-            );
-          }
-
-          // if the user authed successfully for the file, hide the restriction overlays
-          var sliderSelector = '.sul-embed-media ' + sliderObjectSelector;
-          var parentDiv = mediaObject.closest(sliderSelector);
-          var isRestricted = parentDiv.data('stanford-only') || parentDiv.data('location-restricted');
-          if(isRestricted && data.status === 'success') {
-            parentDiv.find(restrictedOverlaySelector).hide();
-            parentDiv.find(restrictedMessageSelector).hide();
-          }
-        });
-      });
-    }
-
-    function loadDashPlayerJavascript(callback) {
-      var playerJS = jQuery('[data-sul-embed-dash-player]')
-                       .data('sul-embed-dash-player');
-
-      jQuery.getScript(playerJS).done(callback);
-    }
-
-    // canPlayType() returns 'probably', 'maybe', or ''
-    function canPlayHLS() {
-      var hlsMimeType = 'application/vnd.apple.mpegURL';
-      var tempVideo = document.createElement('video');
-      var canPlayTypsHLS = tempVideo.canPlayType(hlsMimeType);
-      return canPlayTypsHLS !== '';
-    }
-
-    function removeAllMediaDataSrc() {
-      jQuery('.sul-embed-media audio, .sul-embed-media video').each(function() {
-        jQuery(this).removeAttr('data-src');
-      });
-    }
-
-    function preloadVideoUrls() {
-      jQuery('.sul-embed-media video').each(function() {
-        $(this).data('src');
-      });
-    }
-
-    function initializeDashPlayerForAllVideos() {
-      preloadVideoUrls();
-      loadDashPlayerJavascript(function() {
-        jQuery('.sul-embed-media video').each(function() {
-          var url = jQuery(this).data('src');
-          var player = dashjs.MediaPlayer().create();
-          player.setXHRWithCredentials(true);
-          player.initialize(this, url, false);
-        });
+        authCheckForMediaObject(jQuery(this));
       });
     }
 
@@ -180,14 +177,6 @@
       init: function() {
         setupThumbSlider();
         authCheck();
-        this.initializeDashPlayer();
-      },
-
-      initializeDashPlayer: function() {
-        if ( !canPlayHLS() ) {
-          initializeDashPlayerForAllVideos();
-        }
-        removeAllMediaDataSrc();
       }
     };
   })();

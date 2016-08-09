@@ -25,3 +25,12 @@ streaming:
   dash:
     suffix: '.mpd'
     mimetype: 'application/dash+xml'
+stream:
+  url: http://streaming-server.com:1935/stuff
+  # streaming media file extensions we support
+  video:
+    - mov
+    - mp4
+    - mpeg
+  audio:
+    - mp3

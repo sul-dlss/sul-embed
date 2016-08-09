@@ -3,6 +3,7 @@ module Embed
   require 'embed/url_schemes'
   require 'embed/request'
   require 'embed/response'
+  require 'embed/stacks_media_stream'
 
   mattr_accessor :registered_viewers do
     []

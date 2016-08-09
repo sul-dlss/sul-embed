@@ -1,6 +1,7 @@
 @import 'common';
 @import 'modules/auth_link';
 @import 'modules/thumb_slider';
+@import 'video.js/video-js.css';
 
 .#{$namespace}-media {
   min-height: 175px;
