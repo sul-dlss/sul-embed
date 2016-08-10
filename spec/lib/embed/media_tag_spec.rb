@@ -159,6 +159,7 @@ describe Embed::MediaTag do
       it 'gets the correct URL based on the passed in type' do
         expect(subject_klass.send(:streaming_url_for, file, :hls)).to match(%r{.*/playlist.m3u8$})
         expect(subject_klass.send(:streaming_url_for, file, :dash)).to match(%r{.*/manifest.mpd$})
+        expect(subject_klass.send(:streaming_url_for, file, :flash)).to match(%r{^rtmp://.*})
       end
     end
 
