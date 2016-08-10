@@ -198,6 +198,14 @@ module Embed
           @file.xpath('./imageData').first.attributes['width'].try(:text) if image_data?
         end
 
+        def video_height
+          @file.xpath('./videoData').first.attributes['height'].try(:text) if video_data?
+        end
+
+        def video_width
+          @file.xpath('./videoData').first.attributes['width'].try(:text) if video_data?
+        end
+
         def location
           @file.xpath('./location[@type="url"]').first.try(:text) if location_data?
         end
@@ -214,6 +222,10 @@ module Embed
 
         def image_data?
           @file.xpath('./imageData').present?
+        end
+
+        def video_data?
+          @file.xpath('./videoData').present?
         end
 
         def location_data?
