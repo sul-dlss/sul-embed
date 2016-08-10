@@ -115,11 +115,14 @@
       if(token === undefined) {
         return;
       }
-      var source = mediaObject.find('source[type="application/x-mpegURL"]');
-      var originalSrc = source.attr('src');
-      if(!originalSrc.includes('stacks_token')) {
-        source.prop('src', originalSrc + '?stacks_token=' + token);
-      }
+      var sources = mediaObject.find('source');
+      jQuery.each(sources, function(){
+        var source = jQuery(this);
+        var originalSrc = source.attr('src');
+        if(!originalSrc.includes('stacks_token')) {
+          source.prop('src', originalSrc + '?stacks_token=' + token);
+        }
+      });
     }
 
     function initializeVideoJSPlayer(mediaObject) {
