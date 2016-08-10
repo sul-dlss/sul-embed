@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Embed::Response do
   let(:viewer) { double('viewer') }
-  let(:request) { double('request') }
+  let(:request) { double('request', as_url_params: {}) }
   let(:purl_object) { double('purl_object', druid: 'abc123') }
   let(:response) { Embed::Response.new(request) }
   describe 'static attributes' do

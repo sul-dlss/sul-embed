@@ -107,7 +107,7 @@ module Embed
 
       def embed_this_html
         return '' if @request.hide_embed_this?
-        Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, purl_object_title: @purl_object.title) do
+        Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, request: @request, purl_object_title: @purl_object.title) do
           Nokogiri::HTML::Builder.new do |doc|
             doc.div(class: 'sul-embed-section') do
               doc.input(type: 'checkbox', id: 'sul-embed-embed-download', 'data-embed-attr': 'hide_download', checked: true)

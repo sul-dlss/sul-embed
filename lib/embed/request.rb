@@ -40,12 +40,32 @@ module Embed
       params[:hide_download] && params[:hide_download] == 'true'
     end
 
+    def hide_search?
+      params[:hide_search] && params[:hide_search] == 'true'
+    end
+
+    def min_files_to_search
+      params[:min_files_to_search]
+    end
+
     def object_druid
       url[/\w*$/]
     end
 
     def purl_object
       @purl_object ||= PURL.new(object_druid)
+    end
+
+    def as_url_params
+      params.slice(
+        :maxheight,
+        :maxwidth,
+        :hide_title,
+        :hide_embed,
+        :hide_search,
+        :hide_download,
+        :min_files_to_search
+      )
     end
 
     private

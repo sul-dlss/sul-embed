@@ -1,9 +1,10 @@
 module Embed
   class EmbedThisPanel
-    def initialize(druid:, height:, width:, purl_object_title:)
+    def initialize(druid:, height:, width:, request:, purl_object_title:)
       @druid = druid
       @height = height
       @width = width
+      @request = request
       @purl_object_title = purl_object_title
       @panel_content = yield if block_given?
     end
@@ -49,22 +50,22 @@ module Embed
       HTML
     end
 
-    def self.iframe_html(druid:, height:, width:)
+    def self.iframe_html(druid:, height:, width:, request:)
       width_style = if width
                       "#{width}px"
                     else
                       '100%'
                     end
-      src = "#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{druid}&maxheight=#{height}&maxwidth=#{width}"
+      src = "#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{druid}&#{request.as_url_params.to_query}"
       "<iframe src='#{src}' height='#{height}px' width='#{width_style}' frameborder='0' marginwidth='0' marginheight='0' scrolling='no' allowfullscreen />"
     end
 
     private
 
-    attr_reader :druid, :height, :width, :purl_object_title, :panel_content
+    attr_reader :druid, :height, :width, :request, :purl_object_title, :panel_content
 
     def iframe_html
-      self.class.iframe_html(druid: druid, height: height, width: width)
+      self.class.iframe_html(druid: druid, height: height, width: width, request: request)
     end
   end
 end

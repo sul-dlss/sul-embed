@@ -1,9 +1,16 @@
 require 'rails_helper'
 require 'embed/embed_this_panel'
 describe Embed::EmbedThisPanel do
+  let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/abc123') }
   subject do
     Capybara.string(
-      described_class.new(druid: 'oo000oo0000', height: '555', width: '666', purl_object_title: 'The Object Title') do
+      described_class.new(
+        druid: 'oo000oo0000',
+        height: '555',
+        width: '666',
+        request: request,
+        purl_object_title: 'The Object Title'
+      ) do
         'Added Panel Content'
       end.to_html
     )
@@ -11,16 +18,16 @@ describe Embed::EmbedThisPanel do
 
   context 'block param' do
     it 'instantiates without passing a block' do
-      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', purl_object_title: 'a') }.not_to raise_error
+      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', request: request, purl_object_title: 'a') }.not_to raise_error
     end
     it 'instantiates with an empty block' do
-      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', purl_object_title: 'a') {} }.not_to raise_error
+      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', request: request, purl_object_title: 'a') {} }.not_to raise_error
     end
     it 'instantiates with a nil block' do
-      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', purl_object_title: 'a') { nil } }.not_to raise_error
+      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', request: request, purl_object_title: 'a') { nil } }.not_to raise_error
     end
     it 'instantiates with an empty string block' do
-      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', purl_object_title: 'a') { '' } }.not_to raise_error
+      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', request: request, purl_object_title: 'a') { '' } }.not_to raise_error
     end
   end
 
@@ -33,6 +40,7 @@ describe Embed::EmbedThisPanel do
       )
     end
   end
+
   context 'body' do
     context 'title' do
       it 'has the purl object title' do
@@ -58,6 +66,45 @@ describe Embed::EmbedThisPanel do
     it 'has iframe textarea' do
       # more specific tests in feature
       expect(subject).to have_css('textarea#sul-embed-iframe-code', visible: false)
+    end
+  end
+
+  describe 'iframe_html' do
+    let(:subject) do
+      Capybara.string(
+        described_class.iframe_html(
+          druid: 'oo000oo0000',
+          height: '555',
+          width: '666',
+          request: request
+        )
+      )
+    end
+
+    describe 'the src' do
+      let(:request) do
+        Embed::Request.new(
+          url: 'https://purl.stanford.edu/abc123',
+          maxheight: '555',
+          maxwidth: '666',
+          hide_title: 'true',
+          hide_embed: 'true',
+          hide_metadata: 'true'
+        )
+      end
+
+      it 'includes the relevant request parameters' do
+        src = subject.find('iframe')['src']
+        expect(src).to match(/&maxheight=555/)
+        expect(src).to match(/&maxwidth=666/)
+        expect(src).to match(/&hide_embed=true/)
+        expect(src).to match(/&hide_title=true/)
+      end
+
+      it 'does not include parameters that are not intended to be passed' do
+        src = subject.find('iframe')['src']
+        expect(src).not_to match(/hide_metadata/)
+      end
     end
   end
 end
