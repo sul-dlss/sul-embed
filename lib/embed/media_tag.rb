@@ -45,7 +45,11 @@ module Embed
             controls='controls'
             class="#{'sul-embed-many-media' if many_primary_files?}"
             #{media_element_height_attr(file)}
-            #{media_element_width_attr(file)}>
+            #{media_element_width_attr(file)}
+            data-height="#{media_element_height(file)}"
+            data-width="#{media_element_width(file)}"
+            data-viewer-body-height="#{viewer.body_height}"
+            data-usable-body-height="#{usable_body_height}">
             #{enabled_streaming_sources(file)}
           </#{type}>
         HTML
