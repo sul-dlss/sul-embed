@@ -230,6 +230,14 @@ describe Embed::PURL do
           expect(file.location).to eq 'http://stacks.stanford.edu/file/druid:abc123/Title_of_the_PDF.pdf'
         end
       end
+      describe 'video_data' do
+        before { stub_purl_response_with_fixture(multi_media_purl) }
+        let(:video) { Embed::PURL.new('12345').contents.first.files.first }
+        it 'should get the height and width for the video object' do
+          expect(video.video_height).to eq '288'
+          expect(video.video_width).to eq '352'
+        end
+      end
     end
   end
 end

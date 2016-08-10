@@ -44,7 +44,12 @@ module Embed
             data-auth-url="#{authentication_url(file)}"
             controls='controls'
             class="#{'sul-embed-many-media' if many_primary_files?}"
-            height="#{media_element_height}">
+            #{media_element_height_attr(file)}
+            #{media_element_width_attr(file)}
+            data-height="#{media_element_height(file)}"
+            data-width="#{media_element_width(file)}"
+            data-viewer-body-height="#{viewer.body_height}"
+            data-usable-body-height="#{usable_body_height}">
             #{enabled_streaming_sources(file)}
           </#{type}>
         HTML
@@ -56,7 +61,7 @@ module Embed
         "<img
           src='#{stacks_thumb_url(@purl_document.druid, file.title)}'
           class='sul-embed-media-thumb #{'sul-embed-many-media' if many_primary_files?}'
-          style='max-height: #{media_element_height}'
+          style='max-height: #{media_element_height(file)}px'
         />"
       end
     end
@@ -85,9 +90,30 @@ module Embed
       end.join
     end
 
-    def media_element_height
-      return "#{viewer.body_height}px" unless many_primary_files?
-      "#{viewer.body_height.to_i - MEDIA_INDEX_CONTROL_HEIGHT}px"
+    def usable_body_height
+      many_primary_files? ? viewer.body_height.to_i - MEDIA_INDEX_CONTROL_HEIGHT : viewer.body_height.to_i
+    end
+
+    def media_element_height(file)
+      return usable_body_height unless file.video_height && (file.video_height.to_i < usable_body_height)
+      file.video_height.to_i
+    end
+
+    def media_element_width(file)
+      return unless file.video_width
+
+      # if there's a width specified, scale it by the same factor as the actual
+      # display height vs the specified height, so correct aspect ratio is maintained
+      height_scale_factor = media_element_height(file) / file.video_height.to_d
+      (file.video_width.to_i * height_scale_factor).to_i
+    end
+
+    def media_element_height_attr(file)
+      %(height="#{media_element_height(file)}px") if media_element_height(file)
+    end
+
+    def media_element_width_attr(file)
+      %(width="#{media_element_width(file)}px") if media_element_width(file)
     end
 
     def many_primary_files?
