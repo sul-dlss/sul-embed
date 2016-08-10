@@ -50,4 +50,14 @@ describe Embed::Viewer::ImageX do
       expect(html).to have_css 'ul li div.sul-embed-stanford-only a', visible: false, text: 'Download "Yolo" (as pdf)'
     end
   end
+
+  describe 'private methods' do
+    describe '#drag_and_drop_url' do
+      it 'links to a PURL with a manifest parameter' do
+        url = image_x_viewer.send(:drag_and_drop_url)
+        purl = 'https://purl.stanford.edu/abc123'
+        expect(url).to match(%r{^#{purl}\?manifest=#{purl}/iiif/manifest\.json$})
+      end
+    end
+  end
 end

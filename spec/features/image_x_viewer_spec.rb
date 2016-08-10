@@ -2,10 +2,12 @@ require 'rails_helper'
 
 describe 'imageX viewer', js: true do
   include PURLFixtures
+  let(:purl) { image_purl }
   before do
-    stub_purl_response_with_fixture(image_purl)
+    stub_purl_response_with_fixture(purl)
     visit_iframe_response('fw090jw3474')
   end
+
   describe 'fullscreen' do
     it 'is enabled in detail perspective and disabled in overview' do
       expect(page).to_not have_css '[data-sul-view-fullscreen][disabled]'
@@ -65,6 +67,38 @@ describe 'imageX viewer', js: true do
         container = find('.sul-embed-container')
         container.native.send_key(:Right)
         expect(page).to have_css '.active[title="Image 2"]', visible: false
+      end
+    end
+  end
+
+  describe 'Metadata Panel' do
+    context 'with multiple images' do
+      it 'inlcudes IIIF drag-and-drop text that indicates there is only one image' do
+        toggle_metadata_panel
+
+        within('.sul-embed-metadata-panel') do
+          expect(page).to have_css('dd', text: /Drag icon to open these images in a/)
+        end
+      end
+
+      it 'includes an image that links to the PURL with a manifest parameter' do
+        toggle_metadata_panel
+        purl_url = 'https://purl.stanford.edu/fw090jw3474'
+
+        link = page.find('a.sul-embed-image-x-iiif-drag-and-drop-link')
+        expect(link['href']).to match(%r{^#{purl_url}\?manifest=#{purl_url}/iiif/manifest\.json$})
+      end
+    end
+
+    context 'with a single image' do
+      let(:purl) { image_no_size_purl }
+
+      it 'inlcudes IIIF drag-and-drop text that indicates there is more than one image' do
+        toggle_metadata_panel
+
+        within('.sul-embed-metadata-panel') do
+          expect(page).to have_css('dd', text: /Drag icon to open this image in a/)
+        end
       end
     end
   end
