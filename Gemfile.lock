@@ -132,6 +132,7 @@ GEM
       domain_name (~> 0.5)
     i18n (0.7.0)
     is_it_working (1.1.0)
+    iso8601 (0.9.1)
     jasmine-jquery-rails (2.0.3)
     jquery-rails (4.0.5)
       rails-dom-testing (~> 1.0)
@@ -327,6 +328,7 @@ DEPENDENCIES
   guard-rspec
   high_voltage
   is_it_working
+  iso8601
   jasmine-jquery-rails
   jquery-rails
   leaflet-rails
