@@ -127,6 +127,7 @@ module Embed
         nil
       end
     end
+
     class ResourceNotAvailable < StandardError
       def initialize(msg = 'The requested PURL resource was not available')
         super
@@ -137,6 +138,43 @@ module Embed
         super
       end
     end
+
+    class Duration < ISO8601::Duration
+      def to_s
+        return nil unless supported_duration?
+
+        # build up a list of the fields we want to use for output string
+        field_accumulator = []
+        [:years, :months, :days, :hours, :minutes, :seconds].each do |atom_type|
+          atom_val = atoms[atom_type]
+          # if we've already started accumulating fields, or this field is non-zero, add this field to the list.
+          # if we've hit the minutes field, start accumulating no matter what, since we always want to show minutes
+          # and seconds.
+          field_accumulator << atom_val if !field_accumulator.empty? || atom_val != 0 || atom_type == :minutes
+        end
+
+        # zero pad any field after the first, join with colons (e.g., returns '1:02:03' for 'P0DT1H2M3S',
+        # '2:03' for 'PT2M3S').
+        field_accumulator.map.with_index do |atom_val, idx|
+          (idx > 0) ? atom_val.to_i.to_s.rjust(2, '0') : atom_val.to_i.to_s
+        end.join ':'
+      end
+
+      private
+
+      # though they're valid ISO8601 durations, we don't support negative durations or durations specified in
+      # weeks, because those flavors of duration don't make much sense for the running time of a piece of media.
+      def supported_duration?
+        errors = []
+        errors << "#{self.class} does not support specifying durations in weeks" if atoms[:weeks] != 0
+        errors << "#{self.class} does not support specifying negative durations" if atoms.values.any? { |val| val < 0 }
+        return true if errors.empty?
+
+        errors.each { |e| Rails.logger.warn e }
+        false
+      end
+    end
+
     class Resource
       def initialize(resource, rights)
         @resource = resource
@@ -164,6 +202,7 @@ module Embed
           ResourceFile.new(file, @rights)
         end
       end
+
       class ResourceFile
         def initialize(file, rights)
           @file = file
@@ -206,6 +245,13 @@ module Embed
           @file.xpath('./videoData').first.attributes['width'].try(:text) if video_data?
         end
 
+        def video_duration
+          Duration.new(video_duration_attr_str) if video_duration_attr_str
+        rescue ISO8601::Errors::UnknownPattern
+          Rails.logger.warn "ResourceFile\#video_duration ISO8601::Errors::UnknownPattern: '#{video_duration_attr_str}'"
+          nil
+        end
+
         def location
           @file.xpath('./location[@type="url"]').first.try(:text) if location_data?
         end
@@ -226,6 +272,10 @@ module Embed
 
         def video_data?
           @file.xpath('./videoData').present?
+        end
+
+        def video_duration_attr_str
+          @file.xpath('./videoData').first.attributes['duration'].try(:text) if video_data?
         end
 
         def location_data?

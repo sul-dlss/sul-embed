@@ -217,13 +217,13 @@ module PURLFixtures
           <resource id="media1" sequence="1" type="video">
             <label>mp4-normal</label>
             <file id="JessieSaysNo.mp4" mimetype="video/mp4" size="190916">
-              <videoData height="288" width="352"/>
+              <videoData duration="P0DT1H2M3S" height="288" width="352"/>
             </file>
           </resource>
           <resource id="media2" sequence="2" type="video">
             <label>mp4-slow</label>
             <file id="JessieSaysNo-Slow.mp4" mimetype="video/mp4" size="738559">
-              <videoData height="288" width="352"/>
+              <videoData duration="P0DT1H2M3S" height="288" width="352"/>
             </file>
           </resource>
         </contentMetadata>
@@ -692,6 +692,34 @@ module PURLFixtures
               <group>Stanford</group>
             </machine>
           </access>
+        </rightsMetadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+          <dc:title>stupid dc title of video</dc:title>
+        </oai_dc>
+      </publicObject>
+    XML
+  end
+
+  def invalid_video_duration_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the video</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="media">
+          <resource sequence="1" id="abc123_1" type="video">
+            <file id="abc_123.mp4" mimetype="video/mp4" size="152000000">
+              <videoData duration="PDDTMMS"/>
+            </file>
+          </resource>
+          <resource sequence="2" id="abc321_1" type="video">
+            <file id="abc_321.mp4" mimetype="video/mp4" size="152000000">
+              <videoData duration="PDDTMMS"/>
+            </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          #{access_read_world}
         </rightsMetadata>
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
           <dc:title>stupid dc title of video</dc:title>
