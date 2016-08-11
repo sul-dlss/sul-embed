@@ -125,18 +125,56 @@
       });
     }
 
-    function initializeVideoJSPlayer(mediaObject) {
-      mediaObject.addClass('video-js vjs-default-skin');
-      videojs(
-        mediaObject.attr('id'),
-        {
+    // canPlayType() returns 'probably', 'maybe', or ''
+    function canPlayHLS() {
+      var hlsMimeType = 'application/vnd.apple.mpegURL';
+      var tempVideo = document.createElement('video');
+      var canPlayTypsHLS = tempVideo.canPlayType(hlsMimeType);
+      return canPlayTypsHLS !== '';
+    }
+
+    function mediaObjectIsMP3(mediaObject) {
+      var hlsSource = mediaObject.find('source').first();
+      return hlsSource.prop('src').includes('/mp3:');
+    }
+
+    // We must use flash for MP3s on browsers that do not support HLS natively.
+    // This is a simple boolean function that can easily tell us if the current
+    // browser does not support HLS and the media is an MP3
+    function mustUseFlash(mediaObject) {
+      return (!canPlayHLS() && mediaObjectIsMP3(mediaObject));
+    }
+
+    // Remove the HLS source for MP3 files if the browser
+    // does not natively support HLS. The VideoJS HLS plugin
+    // will attempt to play an HLS MP3 stream simply because
+    // it is HLS, even though it is not able to do so.
+    function removeUnusableSources(mediaObject) {
+      if(mustUseFlash(mediaObject)) {
+        mediaObject
+          .find('source[type="application/x-mpegURL"]')
+          .remove();
+      }
+    }
+
+    function videoJsOptions(mediaObject) {
+      if (mustUseFlash(mediaObject)) {
+        return { techOrder: ['flash'] };
+      } else {
+        return {
           html5: {
             hls: {
               withCredentials: true
             }
           }
-        }
-      );
+        };
+      }
+    }
+
+    function initializeVideoJSPlayer(mediaObject) {
+      removeUnusableSources(mediaObject);
+      mediaObject.addClass('video-js vjs-default-skin');
+      videojs(mediaObject.attr('id'), videoJsOptions(mediaObject));
     }
 
     function authCheckForMediaObject(mediaObject, completeCallback) {
