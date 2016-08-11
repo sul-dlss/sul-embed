@@ -20,6 +20,14 @@
       }
     }
 
+    function durationMarkup(duration) {
+      if(duration && duration.length > 0) {
+        return ' (' + duration + ')';
+      } else {
+        return '';
+      }
+    }
+
     function thumbsForSlider() {
       var thumbs = [];
       var sliderSelector = '.sul-embed-media ' + sliderObjectSelector;
@@ -58,6 +66,7 @@
             '<div class="' + labelClass + '">' +
               restrictedTextMarkup($(mediaDiv).data('location-restricted')) +
               $(mediaDiv).data('file-label') +
+              durationMarkup($(mediaDiv).data('duration')) +
             '</div>' +
           '</li>'
         );

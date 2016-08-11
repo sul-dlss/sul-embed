@@ -667,11 +667,15 @@ module PURLFixtures
         </identityMetadata>
         <contentMetadata type="media">
           <resource sequence="1" id="abc123_1" type="video">
-            <file id="abc_123.mp4" mimetype="video/mp4" size="152000000"></file>
+            <file id="abc_123.mp4" mimetype="video/mp4" size="152000000">
+              <videoData duration="P0DT1H2M3S" height="288" width="352"/>
+            </file>
           </resource>
           <resource sequence="2" id="abc321_1" type="video">
             <label>Second Video</label>
-            <file id="abc_321.mp4" mimetype="video/mp4" size="666000000"></file>
+            <file id="abc_321.mp4" mimetype="video/mp4" size="666000000">
+              <videoData duration="-P1W" height="288" width="352"/>
+            </file>
           </resource>
           <resource sequence="3" id="bb051hp9404_2" type="file">
             <label>Transcript</label>

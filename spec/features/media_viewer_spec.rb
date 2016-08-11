@@ -89,4 +89,22 @@ describe 'media viewer', js: true do
       expect(page).to have_css('.sul-embed-media-slider-thumb', text: '(Restricted) abc_123.mp4')
     end
   end
+
+  context 'duration related info' do
+    it 'displays available duration in parens after the title' do
+      page.find('.sul-embed-thumb-slider-open-close').click
+      expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'abc_123.mp4 (1:02:03)')
+    end
+    it 'displays no duration info after title when there is no duration we can interpret' do
+      page.find('.sul-embed-thumb-slider-open-close').click
+      expect(page).to have_css('.sul-embed-media-slider-thumb', text: /^Second Video$/)
+    end
+    context 'invalid duration format' do
+      let(:purl) { invalid_video_duration_purl }
+      it 'displays as if there were no duration in the purl xml' do
+        page.find('.sul-embed-thumb-slider-open-close').click
+        expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'abc_123.mp4')
+      end
+    end
+  end
 end
