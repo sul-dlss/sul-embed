@@ -24,7 +24,7 @@ module Embed
               <div class='sul-embed-embed-this-form'>
                 <span class='sul-embed-options-label'>Select options:</span>
                 <div class='sul-embed-section sul-embed-embed-title-section'>
-                  <input type='checkbox' id='sul-embed-embed-title' data-embed-attr='hide_title' checked=true />
+                  <input type='checkbox' id='sul-embed-embed-title' data-embed-attr='hide_title' #{'checked' unless request.hide_title?} />
                   <label for='sul-embed-embed-title'>
                     title
                     <span class='sul-embed-embed-title'> (#{purl_object_title})</span>
@@ -32,7 +32,7 @@ module Embed
                 </div>
                 #{panel_content}
                 <div class='sul-embed-section'>
-                  <input type='checkbox' id='sul-embed-embed' data-embed-attr='hide_embed' checked=true />
+                  <input type='checkbox' id='sul-embed-embed' data-embed-attr='hide_embed' #{'checked' unless request.hide_embed_this?} />
                   <label for='sul-embed-embed'>embed</label>
                 </div>
                 <div>

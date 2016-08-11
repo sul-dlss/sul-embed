@@ -2,11 +2,14 @@ require 'rails_helper'
 
 describe 'embed this panel', js: true do
   include PURLFixtures
-  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
+
+  let(:iframe_options) { {} }
+
   before do
     stub_purl_response_with_fixture(spec_fixture)
-    visit_iframe_response('ab123cd4567')
+    visit_iframe_response('ab123cd4567', iframe_options)
   end
+
   describe 'embed code' do
     let(:spec_fixture) { file_purl }
     it 'includes the allowfullscreen no-scrolling, no-border, and no margin/padding attributes' do
@@ -54,6 +57,26 @@ describe 'embed this panel', js: true do
     it 'include the form elements for downloading an image' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
       expect(page).to have_css('input#sul-embed-embed-download[type="checkbox"]')
+    end
+  end
+
+  describe 'Customization Options' do
+    let(:spec_fixture) { file_purl }
+
+    context 'with an uncustomized request' do
+      it 'defaults to having the option checked' do
+        page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
+        expect(page.find('#sul-embed-embed-title')).to be_checked
+      end
+    end
+
+    context 'with a customized request' do
+      let(:iframe_options) { { hide_title: true } }
+
+      it "defaults to the options from the current viewer's request" do
+        page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
+        expect(page.find('#sul-embed-embed-title')).not_to be_checked
+      end
     end
   end
 end
