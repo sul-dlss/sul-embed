@@ -36,7 +36,7 @@ module Embed
     attr_reader :purl_document, :request, :viewer
 
     def media_element(label, file, type)
-      media_wrapper(label: label, stanford_only: file.stanford_only?, location_restricted: file.location_restricted?) do
+      media_wrapper(label: label, file: file) do
         <<-HTML.strip_heredoc
           <#{type}
             id="sul-embed-media-#{file_index}"
@@ -61,15 +61,15 @@ module Embed
       end
     end
 
-    def media_wrapper(label:, thumbnail: '', stanford_only: nil, location_restricted: nil, &block)
+    def media_wrapper(label:, thumbnail: '', file: nil, &block)
       <<-HTML.strip_heredoc
-        <div data-stanford-only="#{stanford_only}"
-             data-location-restricted="#{location_restricted}"
+        <div data-stanford-only="#{file.try(:stanford_only?)}"
+             data-location-restricted="#{file.try(:location_restricted?)}"
              data-file-label="#{label}"
              data-slider-object="#{file_index}"
              data-thumbnail-url="#{thumbnail}">
           <div class='sul-embed-media-wrapper'>
-            #{access_restricted_overlay(stanford_only, location_restricted)}
+            #{access_restricted_overlay(file.try(:stanford_only?), file.try(:location_restricted?))}
             #{yield(block) if block_given?}
           </div>
         </div>
