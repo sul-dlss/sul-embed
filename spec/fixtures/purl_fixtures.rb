@@ -732,6 +732,44 @@ module PURLFixtures
     XML
   end
 
+  def long_label_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the video</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="media">
+          <resource sequence="1" id="abc123_1" type="video">
+            <label>The First Video Has An Overly Long Title, With More Words Than Can Practically Be Displayed</label>
+            <file id="abc_123.mp4" mimetype="video/mp4" size="152000000">
+              <videoData duration="P0DT1H2M3S" height="288" width="352"/>
+            </file>
+          </resource>
+          <resource sequence="2" id="abc321_1" type="video">
+            <label>2nd Video Has A Long Title, But Not Too Long</label>
+            <file id="abc_321.mp4" mimetype="video/mp4" size="666000000"></file>
+          </resource>
+          <resource sequence="3" id="bb051hp9404_2" type="file">
+            <label>Transcript</label>
+            <file id="abc_123_script.pdf" mimetype="application/pdf" size="557708"></file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          #{access_read_world}
+          <access type="read">
+            <file>abc_123.mp4</file>
+            <machine>
+              <location>spec</location>
+            </machine>
+          </access>
+        </rightsMetadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+          <dc:title>stupid dc title of video</dc:title>
+        </oai_dc>
+      </publicObject>
+    XML
+  end
+
   def video_purl_with_image
     <<-XML
       <publicObject>

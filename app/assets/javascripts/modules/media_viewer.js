@@ -11,6 +11,7 @@
     var restrictedMessageSelector = '[data-access-restricted-message]';
     var sliderObjectSelector = '[data-slider-object]';
     var restrictedText = '(Restricted)'
+    var MAX_FILE_LABEL_LENGTH = 45;
 
     function restrictedTextMarkup(isLocationRestricted) {
       if(isLocationRestricted) {
@@ -26,6 +27,17 @@
       } else {
         return '';
       }
+    }
+
+    function maxFileLabelLength(isLocationRestricted) {
+      if(isLocationRestricted)
+        return MAX_FILE_LABEL_LENGTH - restrictedText.length;
+      else
+        return MAX_FILE_LABEL_LENGTH;
+    }
+
+    function truncateWithEllipsis(text, maxLen) {
+      return text.substr(0, maxLen - 1) + (text.length > maxLen ? '&hellip;' : '');
     }
 
     function thumbsForSlider() {
@@ -60,13 +72,16 @@
           thumbnailIcon = '<i class="' + cssClass + '"></i>';
         }
 
+        var isLocationRestricted = $(mediaDiv).data('location-restricted');
+        var fileLabel = $(mediaDiv).data('file-label');
+        var duration = $(mediaDiv).data('duration');
         thumbs.push(
           '<li class="' + thumbClass + activeClass + '">' +
             thumbnailIcon +
             '<div class="' + labelClass + '">' +
-              restrictedTextMarkup($(mediaDiv).data('location-restricted')) +
-              $(mediaDiv).data('file-label') +
-              durationMarkup($(mediaDiv).data('duration')) +
+              restrictedTextMarkup(isLocationRestricted) +
+              truncateWithEllipsis(fileLabel, maxFileLabelLength(isLocationRestricted)) +
+              durationMarkup(duration) +
             '</div>' +
           '</li>'
         );

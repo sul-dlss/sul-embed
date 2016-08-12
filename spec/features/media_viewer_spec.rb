@@ -107,4 +107,16 @@ describe 'media viewer', js: true do
       end
     end
   end
+
+  context 'graceful display of long titles' do
+    let(:purl) { long_label_purl }
+    it 'truncates at 45 characters of combined restriction and title text' do
+      page.find('.sul-embed-thumb-slider-open-close').click
+      expect(page).to have_css('.sul-embed-media-slider-thumb', text: /^\(Restricted\) The First Video Has An Overly Lo… \(1:02:03\)$/)
+    end
+    it 'displays the whole title if it is under the length limit' do
+      page.find('.sul-embed-thumb-slider-open-close').click
+      expect(page).to have_css('.sul-embed-media-slider-thumb', text: /^2nd Video Has A Long Title, But Not Too Long$/)
+    end
+  end
 end
