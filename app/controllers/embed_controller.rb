@@ -12,7 +12,7 @@ class EmbedController < ApplicationController
   end
 
   def iframe
-    render html: "<html><head><script src='//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js'></script></head><body>#{Embed::Response.new(@embed_request).viewer_html}</body></html>".html_safe
+    render html: iframe_html.html_safe
   end
 
   def validate_request
@@ -61,5 +61,18 @@ class EmbedController < ApplicationController
 
   def allow_iframe
     response.headers.delete('X-Frame-Options')
+  end
+
+  def iframe_html
+    <<-HTML
+      <html>
+        <head>
+          <script src='//ajax.googleapis.com/ajax/libs/jquery/#{Settings.jquery_version}/jquery.min.js'></script>
+        </head>
+        <body>
+          #{Embed::Response.new(@embed_request).viewer_html}
+        </body>
+      </html>
+    HTML
   end
 end
