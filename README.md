@@ -140,7 +140,7 @@ Viewers can customize the embed panel.  To do this, the viewer should override #
 
     def embed_this_html
       return '' if @request.hide_embed_this?
-      Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, purl_object_title: @purl_object.title) do
+      Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, request: @request, purl_object_title: @purl_object.title) do
         "Panel Content Goes Here"
       end.to_html
     end

@@ -29,7 +29,8 @@ module Embed
       @html ||= Embed::EmbedThisPanel.iframe_html(
         druid: @request.purl_object.druid,
         height: viewer.height,
-        width: viewer.width
+        width: viewer.width,
+        request: @request
       )
     end
 

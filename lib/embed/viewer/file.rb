@@ -169,14 +169,16 @@ module Embed
 
       def embed_this_html
         return '' if @request.hide_embed_this?
-        Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, purl_object_title: @purl_object.title) do
+        Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, request: @request, purl_object_title: @purl_object.title) do
           Nokogiri::HTML::Builder.new do |doc|
             doc.div(class: 'sul-embed-section') do
-              doc.input(type: 'checkbox', id: 'sul-embed-embed-search', 'data-embed-attr': 'hide_search', checked: true)
+              checkbox_options = { type: 'checkbox', id: 'sul-embed-embed-search', 'data-embed-attr': 'hide_search' }
+              checkbox_options[:checked] = 'checked' unless @request.hide_search?
+              doc.input(checkbox_options)
               doc.label(for: 'sul-embed-embed-search') { doc.text('add search box') }
               doc.label(for: 'sul-embed-min_files_to_search') do
                 doc.text(' for')
-                doc.input(type: 'text', id: 'sul-embed-min_files_to_search', 'data-embed-attr': 'min_files_to_search', value: '10')
+                doc.input(type: 'text', id: 'sul-embed-min_files_to_search', 'data-embed-attr': 'min_files_to_search', value: min_files_to_search)
                 doc.text('or more files')
               end
             end
@@ -197,7 +199,7 @@ module Embed
       end
 
       def min_files_to_search
-        (@request.params[:min_files_to_search] || 10).to_i
+        (@request.min_files_to_search || 10).to_i
       end
 
       def file_search_html(doc)

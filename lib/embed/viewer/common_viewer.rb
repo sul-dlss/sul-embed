@@ -117,7 +117,7 @@ module Embed
       #  override this method, passing a block to EmbedThisPanel
       def embed_this_html
         return '' if @request.hide_embed_this?
-        Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, purl_object_title: @purl_object.title).to_html
+        Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, request: @request, purl_object_title: @purl_object.title).to_html
       end
 
       def download_html

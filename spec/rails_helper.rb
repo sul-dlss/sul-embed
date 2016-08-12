@@ -75,7 +75,6 @@ def visit_iframe_response(druid = 'ignored', min_files_to_search: nil, hide_sear
 end
 
 def send_embed_response
-  visit_sandbox
   fill_in_default_sandbox_form
   click_button 'Embed'
 end

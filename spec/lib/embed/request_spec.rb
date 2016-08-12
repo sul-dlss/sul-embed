@@ -26,6 +26,38 @@ describe Embed::Request do
       expect(Embed::Request.new(url: purl, hide_metadata: 'true').hide_metadata?).to be_truthy
     end
   end
+
+  describe 'min_files_to_search' do
+    it 'returns the value passed in via the request parameters' do
+      expect(Embed::Request.new(url: purl, min_files_to_search: '5').min_files_to_search).to eq '5'
+    end
+  end
+
+  describe 'hide_search?' do
+    it 'defaults to false' do
+      expect(Embed::Request.new(url: purl).hide_search?).to be_falsy
+    end
+
+    it 'is true when the incoming request asked to hide the search box' do
+      expect(Embed::Request.new(url: purl, hide_search: 'true').hide_search?).to be_truthy
+    end
+  end
+
+  describe 'as_url_params' do
+    let(:url_params) do
+      Embed::Request.new(url: purl, hide_title: 'true', hide_metadata: 'true').as_url_params
+    end
+
+    it 'is a hash of parameters to be turned into url optinos' do
+      expect(url_params).to be_a Hash
+      expect(url_params[:hide_title]).to eq('true')
+    end
+
+    it 'does not include parameters that should not be passed along in a url (such as hide_metadata)' do
+      expect(url_params).to_not have_key(:hide_metadata)
+    end
+  end
+
   describe 'object_druid' do
     it 'should parse the druid out of the incoming URL parameter' do
       expect(Embed::Request.new(url: purl).object_druid).to eq 'abc123'
