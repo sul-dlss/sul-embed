@@ -18,6 +18,8 @@ gem 'config'
 
 gem 'therubyracer'
 
+gem 'iso8601' # to parse durations, since ActiveSupport::Duration doesn't get a parse method till rails 5
+
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'
   gem 'capybara'
