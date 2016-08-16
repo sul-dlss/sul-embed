@@ -37,6 +37,15 @@ describe 'geo viewer public', js: true do
         end
       end
     end
+
+    it 'includes a "_blank" target on the download links' do
+      find('button.sul-embed-footer-tool.sul-i-download-3').click
+      within '.sul-embed-download-panel' do
+        within '.sul-embed-panel-body' do
+          expect(page).to have_css('li a[target="_blank"]', count: 1)
+        end
+      end
+    end
   end
 end
 

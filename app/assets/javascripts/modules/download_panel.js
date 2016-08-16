@@ -19,7 +19,7 @@
       var $listMarkup = $('<li class="sul-embed-download-list-item"></li>');
       // Append a thumb download link
       $downloadList.append($listMarkup.clone()
-        .append('<a class="download-link" href="' + imageData['@id'] +
+        .append('<a target="_blank" class="download-link" href="' + imageData['@id'] +
         '/full/!' + disableDownloadWidthCutoff + ',' +
         disableDownloadWidthCutoff +
         '/0/default.jpg?download=true" download>Download Thumbnail</a>'));
