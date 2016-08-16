@@ -28,10 +28,6 @@ module Embed
       params[:hide_title] && params[:hide_title] == 'true'
     end
 
-    def hide_metadata?
-      params[:hide_metadata] && params[:hide_metadata] == 'true'
-    end
-
     def hide_embed_this?
       params[:hide_embed] && params[:hide_embed] == 'true'
     end

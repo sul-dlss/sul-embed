@@ -33,8 +33,6 @@ module Embed
       end
 
       def metadata_html
-        return '' if @request.hide_metadata?
-
         Embed::MetadataPanel.new(@purl_object) do
           iiif_drag_and_drop_icon
         end.to_html

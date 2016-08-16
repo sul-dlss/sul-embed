@@ -96,7 +96,6 @@
     <label for="hide-title">Hide title?</label> <input type="checkbox" id="hide-title" class="hide-title" />
     <label for="hide-search">Hide search?</label> <input type="checkbox" id="hide-search" class="hide-search" />
     <label for="hide-search">Minimum files for search:</label> <input type="text" id="min-files" class="min-files" value="10" length="2" />
-    <label for="hide-metadata">Hide metadata?</label> <input type="checkbox" id="hide-metadata" class="hide-metadata" />
     <label for="hide-embed">Hide embed?</label> <input type="checkbox" id="hide-embed" class="hide-embed" />
     <label for="hide-download">Hide download?</label> <input type="checkbox" id="hide-download" class="hide-download" />
     <br>
@@ -239,7 +238,6 @@
             hideTitle = $('.hide-title').is(':checked'),
             hideSearch = $('.hide-search').is(':checked'),
             minFiles = $('.min-files').val(),
-            hideMetadata = $('.hide-metadata').is(':checked'),
             hideEmbed = $('.hide-embed').is(':checked'),
             hideDownload = $('.hide-download').is(':checked'),
             maxWidth = parseInt($('.max-width').val(), 10),
@@ -253,7 +251,6 @@
           if (hideTitle) url += "&hide_title=true";
           if (hideSearch) url += "&hide_search=true";
           if (minFiles) url += "&min_files_to_search=" + minFiles;
-          if (hideMetadata) url += "&hide_metadata=true";
           if (hideEmbed) url += "&hide_embed=true";
           if (hideDownload) url += "&hide_download=true";
           if (!isNaN(maxWidth)) url += "&maxwidth=" + maxWidth;
