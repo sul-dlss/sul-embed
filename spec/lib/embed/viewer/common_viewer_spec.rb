@@ -68,13 +68,6 @@ describe Embed::Viewer::CommonViewer do
       html = Capybara.string(image_x_viewer.metadata_html)
       expect(html).to_not have_content 'License'
     end
-    it 'does not return the metadata panel at all if hidden' do
-      expect(request).to receive(:hide_metadata?).at_least(:once).and_return(true)
-      stub_request(request)
-      html = Capybara.string(file_viewer.metadata_html)
-      expect(html).to_not have_css '.sul-embed-metadata-container'
-      expect(html).to_not have_css '[data-sul-embed-toggle="sul-embed-metadata-panel"]'
-    end
   end
   describe 'footer_html' do
     it "returns the object's footer" do

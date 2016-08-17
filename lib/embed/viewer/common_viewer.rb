@@ -58,15 +58,13 @@ module Embed
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-footer') do
             doc.div(class: 'sul-embed-footer-toolbar') do
-              unless @request.hide_metadata?
-                doc.button(
-                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' \
-                    'oolbar sul-embed-btn-default sul-i-infomation-circle',
-                  'aria-expanded' => 'false',
-                  'aria-label' => 'open metadata panel',
-                  'data-sul-embed-toggle' => 'sul-embed-metadata-panel'
-                )
-              end
+              doc.button(
+                class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' \
+                  'oolbar sul-embed-btn-default sul-i-infomation-circle',
+                'aria-expanded' => 'false',
+                'aria-label' => 'open metadata panel',
+                'data-sul-embed-toggle' => 'sul-embed-metadata-panel'
+              )
               unless @request.hide_embed_this?
                 doc.button(
                   class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' \
@@ -108,8 +106,6 @@ module Embed
       end
 
       def metadata_html
-        return '' if @request.hide_metadata?
-
         Embed::MetadataPanel.new(@purl_object).to_html
       end
 

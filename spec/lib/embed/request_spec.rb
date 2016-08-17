@@ -18,14 +18,6 @@ describe Embed::Request do
       expect(Embed::Request.new(url: purl, hide_title: 'true').hide_title?).to be_truthy
     end
   end
-  describe 'hide_metadata?' do
-    it 'should return false by default' do
-      expect(Embed::Request.new(url: purl).hide_metadata?).to be_falsy
-    end
-    it 'should return true if incoming request asked to hide metadata panel' do
-      expect(Embed::Request.new(url: purl, hide_metadata: 'true').hide_metadata?).to be_truthy
-    end
-  end
 
   describe 'min_files_to_search' do
     it 'returns the value passed in via the request parameters' do
@@ -45,7 +37,7 @@ describe Embed::Request do
 
   describe 'as_url_params' do
     let(:url_params) do
-      Embed::Request.new(url: purl, hide_title: 'true', hide_metadata: 'true').as_url_params
+      Embed::Request.new(url: purl, hide_title: 'true', arbitrary_param: 'something').as_url_params
     end
 
     it 'is a hash of parameters to be turned into url optinos' do
@@ -53,8 +45,8 @@ describe Embed::Request do
       expect(url_params[:hide_title]).to eq('true')
     end
 
-    it 'does not include parameters that should not be passed along in a url (such as hide_metadata)' do
-      expect(url_params).to_not have_key(:hide_metadata)
+    it 'does not include arbitrary params sent in' do
+      expect(url_params).not_to have_key(:arbitrary_param)
     end
   end
 

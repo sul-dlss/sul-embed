@@ -88,8 +88,7 @@ describe Embed::EmbedThisPanel do
           maxheight: '555',
           maxwidth: '666',
           hide_title: 'true',
-          hide_embed: 'true',
-          hide_metadata: 'true'
+          hide_embed: 'true'
         )
       end
 
@@ -99,11 +98,6 @@ describe Embed::EmbedThisPanel do
         expect(src).to match(/&maxwidth=666/)
         expect(src).to match(/&hide_embed=true/)
         expect(src).to match(/&hide_title=true/)
-      end
-
-      it 'does not include parameters that are not intended to be passed' do
-        src = subject.find('iframe')['src']
-        expect(src).not_to match(/hide_metadata/)
       end
     end
   end
