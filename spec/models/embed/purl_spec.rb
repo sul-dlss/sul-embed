@@ -246,7 +246,7 @@ describe Embed::PURL do
           before { stub_purl_response_with_fixture(invalid_video_duration_purl) }
           let(:video) { Embed::PURL.new('12345').contents.first.files.first }
           it 'should return nil and log an error' do
-            expect(Rails.logger).to receive(:warn).with("ResourceFile\#video_duration ISO8601::Errors::UnknownPattern: 'PDDTMMS'")
+            expect(Honeybadger).to receive(:notify).with("ResourceFile\#video_duration ISO8601::Errors::UnknownPattern: 'PDDTMMS'")
             expect(video.video_duration).to be_nil
           end
         end
@@ -261,8 +261,8 @@ describe Embed::PURL do
         expect(Embed::PURL::Duration.new('P9D').to_s).to        eq '9:00:00:00'
       end
       it '#to_s should return nil and log the appropriate error for an unsupported Duration specification' do
-        expect(Rails.logger).to receive(:warn).with('Embed::PURL::Duration does not support specifying durations in weeks')
-        expect(Rails.logger).to receive(:warn).with('Embed::PURL::Duration does not support specifying negative durations')
+        expect(Honeybadger).to receive(:notify).with('Embed::PURL::Duration does not support specifying durations in weeks')
+        expect(Honeybadger).to receive(:notify).with('Embed::PURL::Duration does not support specifying negative durations')
         expect(Embed::PURL::Duration.new('P10W').to_s).to be_nil
         expect(Embed::PURL::Duration.new('-PT10S').to_s).to be_nil
       end

@@ -61,8 +61,8 @@ group :deployment do
   gem 'dlss-capistrano'
 end
 
-gem 'squash_ruby', require: 'squash/ruby'
-gem 'squash_rails', require: 'squash/rails'
+# Use honeybadger for exception handling
+gem 'honeybadger'
 
 gem 'uglifier'
 

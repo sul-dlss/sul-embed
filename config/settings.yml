@@ -9,9 +9,6 @@ iiif_info_url: 'http://library.stanford.edu/projects/international-image-interop
 enable_media_viewer?: <%= false %>
 embed_iframe_url: '//embed.stanford.edu/iframe'
 jquery_version: '2.2.4'
-squash_api_host: 'http://squash-host.example.com'
-squash_api_key: 'abc123'
-squash_disable: <%= (Rails.env.development? || Rails.env.test?) %>
 geo_external_url: 'https://earthworks.stanford.edu/catalog/stanford-'
 geo_wms_url: 'https://geowebservices.stanford.edu/geoserver/wms/'
 was_thumbs_url: 'https://thumbnail-service-example'

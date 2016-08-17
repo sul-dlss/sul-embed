@@ -24,7 +24,7 @@ set :log_level, :info
 # set :linked_files, %w{config/database.yml}
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w(bin config/settings log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system)
+set :linked_dirs, %w(bin config/honeybadger.yml config/settings log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system)
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
@@ -53,4 +53,5 @@ namespace :deploy do
   end
 end
 
-before 'deploy:publishing', 'squash:write_revision'
+# honeybadger_env otherwise defaults to rails_env
+set :honeybadger_env, fetch(:stage)
