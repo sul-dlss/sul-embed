@@ -17,11 +17,13 @@ module Embed
     end
 
     def maxheight
-      params[:maxheight]
+      return if params[:maxheight].to_i.zero?
+      params[:maxheight].to_i
     end
 
     def maxwidth
-      params[:maxwidth]
+      return if params[:maxwidth].to_i.zero?
+      params[:maxwidth].to_i
     end
 
     def hide_title?

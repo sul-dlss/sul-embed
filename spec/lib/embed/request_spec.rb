@@ -10,6 +10,33 @@ describe Embed::Request do
       expect(Embed::Request.new(url: purl, format: 'xml').format).to eq 'xml'
     end
   end
+
+  describe 'sizes' do
+    context 'when potentially harmful strings are passed' do
+      let(:request) do
+        Embed::Request.new(
+          url: purl,
+          maxheight: '<script>alert("YouGotPwned!")</script>',
+          maxwidth: '<script>alert("YouGotPwnedAgain!")</script>'
+        )
+      end
+
+      it 'are nil' do
+        expect(request.maxheight).to be_nil
+        expect(request.maxwidth).to be_nil
+      end
+    end
+
+    context 'when a numbers are passed as strings' do
+      let(:request) { Embed::Request.new(url: purl, maxheight: '500', maxwidth: '300') }
+
+      it 'are cast to integers' do
+        expect(request.maxheight).to eq 500
+        expect(request.maxwidth).to eq 300
+      end
+    end
+  end
+
   describe 'hide_title?' do
     it 'should return false by default' do
       expect(Embed::Request.new(url: purl).hide_title?).to be_falsy
