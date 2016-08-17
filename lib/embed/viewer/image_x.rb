@@ -44,11 +44,11 @@ module Embed
         <<-HTML
           <dt>International Image Interoperability Framework</dt>
           <dd>
-            <a class='sul-embed-image-x-iiif-drag-and-drop-link' href='#{drag_and_drop_url}'>
+            <a class='sul-embed-image-x-iiif-drag-and-drop-link' href='#{drag_and_drop_url}' target='_blank'>
               <img src="#{asset_url('iiif-drag-icon.png')}" />
             </a>
             <span class='sul-embed-iiif-instruction'>
-              #{drag_and_drop_instruction_text} <a href='#{Settings.iiif_info_url}'>IIIF viewer</a>
+              #{drag_and_drop_instruction_text} <a href='#{Settings.iiif_info_url}' target='_blank'>IIIF viewer</a>
             </span>
           </dd>
         HTML
