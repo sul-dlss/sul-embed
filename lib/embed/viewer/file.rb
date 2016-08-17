@@ -133,7 +133,8 @@ module Embed
               "#{'sul-embed-stanford-only' if file.stanford_only?}") do
             doc.a(
               href: file_url(file.title),
-              title: tooltip_text(file)
+              title: tooltip_text(file),
+              target: '_blank'
             ) do
               doc.text file.title
             end
@@ -153,7 +154,7 @@ module Embed
             doc.text pretty_filesize(file.size)
           end
         else
-          doc.a(href: file_url(file.title), download: nil) do
+          doc.a(href: file_url(file.title), download: nil, target: '_blank') do
             doc.span(class: 'sul-embed-sr-only') do
               doc.text "Download item #{file_count}"
             end

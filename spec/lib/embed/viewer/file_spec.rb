@@ -64,6 +64,16 @@ describe Embed::Viewer::File do
         expect(html).to have_css 'a[download]', visible: false, text: /Download$/
       end
     end
+
+    context 'link targets' do
+      it 'is "_blank"' do
+        stub_purl_response_and_request(multi_resource_multi_type_purl, request)
+        expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
+        html = Capybara.string(file_viewer.to_html)
+        expect(html).to have_css('.sul-embed-media-heading a[target="_blank"]', visible: false)
+        expect(html).to have_css('.sul-embed-download a[target="_blank"]', visible: false)
+      end
+    end
   end
   describe 'file_type_icon' do
     it 'default file icon if mimetype is not recognized' do
