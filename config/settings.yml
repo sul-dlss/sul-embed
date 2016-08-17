@@ -21,14 +21,20 @@ was_thumb_conn_timeout: 5
 streaming:
   source_types:
     - hls
+    - flash
   hls:
     suffix: '.m3u8'
     mimetype: 'application/x-mpegURL'
+    protocol: 'https'
+  flash:
+    mimetype: 'audio/mpeg'
+    protocol: 'rtmp'
   dash:
     suffix: '.mpd'
     mimetype: 'application/dash+xml'
+    protocol: 'https'
 stream:
-  url: http://streaming-server.com:1935/stuff
+  url: streaming-server.com:1935/stuff
   # streaming media file extensions we support
   video:
     - mov

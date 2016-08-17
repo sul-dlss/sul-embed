@@ -158,6 +158,8 @@ module Embed
       case type.to_sym
       when :hls
         stacks_media_stream.to_playlist_url
+      when :flash
+        stacks_media_stream.to_rtmp_url
       when :dash
         stacks_media_stream.to_manifest_url
       end
