@@ -170,7 +170,7 @@ module Embed
         errors << "#{self.class} does not support specifying negative durations" if atoms.values.any? { |val| val < 0 }
         return true if errors.empty?
 
-        errors.each { |e| Rails.logger.warn e }
+        errors.each { |e| Honeybadger.notify(e) }
         false
       end
     end
@@ -248,7 +248,9 @@ module Embed
         def video_duration
           Duration.new(video_duration_attr_str) if video_duration_attr_str
         rescue ISO8601::Errors::UnknownPattern
-          Rails.logger.warn "ResourceFile\#video_duration ISO8601::Errors::UnknownPattern: '#{video_duration_attr_str}'"
+          Honeybadger.notify(
+            "ResourceFile\#video_duration ISO8601::Errors::UnknownPattern: '#{video_duration_attr_str}'"
+          )
           nil
         end
 
