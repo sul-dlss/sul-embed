@@ -203,6 +203,16 @@ module Embed
         end
       end
 
+      # get first file of appropriate mime type
+      def media_file
+        files.find { |file| file.mimetype.match "^#{type}\/" }
+      end
+
+      # get first image file (if any) for the resource
+      def media_thumb
+        files.find(&:image?)
+      end
+
       class ResourceFile
         def initialize(file, rights)
           @file = file

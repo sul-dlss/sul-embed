@@ -15,25 +15,30 @@ module Embed
 
     def to_html
       output = ''
-      purl_document.contents.each do |resource|
-        next unless primary_file?(resource)
-        label = resource.description
-        resource.files.each do |file|
-          label = file.title if label.blank?
-          output << if SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
-                      media_element(label, file, resource.type)
-                    else
-                      previewable_element(label, file)
-                    end
-          @file_index += 1
-        end
+      @file_index = 0 # TODO: this file index thing is set in a messy way
+      purl_document.contents.select { |resource| primary_file?(resource) }.each do |resource|
+        output << output_for_resource(resource)
+        @file_index += 1
       end
       output
     end
 
     private
 
-    attr_reader :purl_document, :request, :viewer
+    attr_reader :file_index, :purl_document, :request, :viewer
+
+    def output_for_resource(resource)
+      label = resource.description
+      if resource.media_file
+        label = resource.media_file.title if label.blank?
+        media_element(label, resource.media_file, resource.type)
+      elsif resource.media_thumb
+        label = resource.media_thumb.title if label.blank?
+        previewable_element(label, resource.media_thumb)
+      else
+        ''
+      end
+    end
 
     def media_element(label, file, type)
       media_wrapper(label: label, file: file) do
@@ -139,10 +144,6 @@ module Embed
 
     def enabled_streaming_types
       Settings.streaming[:source_types]
-    end
-
-    def file_index
-      @file_index ||= 0
     end
 
     def streaming_url_for(file, type)
