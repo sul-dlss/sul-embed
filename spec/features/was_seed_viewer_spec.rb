@@ -31,6 +31,10 @@ describe 'was seed viewer public', js: true do
       page.first('.sul-embed-was-thumb-item').click
       expect(page.find('.active').text).to eq('29-Nov-2012')
     end
+
+    it 'links to the memento URI with a blank target' do
+      expect(page).to have_css('.sul-embed-was-thumb-item-date a[target="_blank"]')
+    end
   end
 
   def thumbs_list_fixtures

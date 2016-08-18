@@ -88,6 +88,15 @@ describe 'imageX viewer', js: true do
         link = page.find('a.sul-embed-image-x-iiif-drag-and-drop-link')
         expect(link['href']).to match(%r{^#{purl_url}\?manifest=#{purl_url}/iiif/manifest\.json$})
       end
+
+      it 'has a links with blank targets' do
+        toggle_metadata_panel
+
+        within('.sul-embed-metadata-panel') do
+          expect(page).to have_css('a.sul-embed-image-x-iiif-drag-and-drop-link[target="_blank"]')
+          expect(page).to have_css('.sul-embed-iiif-instruction a[target="_blank"]')
+        end
+      end
     end
 
     context 'with a single image' do
