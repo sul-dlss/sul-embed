@@ -15,34 +15,34 @@ module Embed
 
     def to_html
       output = ''
-      @file_index = 0 # TODO: this file index thing is set in a messy way
+      file_index = 0
       purl_document.contents.select { |resource| primary_file?(resource) }.each do |resource|
-        output << output_for_resource(resource)
-        @file_index += 1
+        output << output_for_resource(resource, file_index)
+        file_index += 1
       end
       output
     end
 
     private
 
-    attr_reader :file_index, :purl_document, :request, :viewer
+    attr_reader :purl_document, :request, :viewer
 
-    def output_for_resource(resource)
+    def output_for_resource(resource, file_index)
       label = resource.description
       if resource.media_file
         label = resource.media_file.title if label.blank?
-        media_element(label, resource)
+        media_element(label, resource, file_index)
       elsif resource.media_thumb
         label = resource.media_thumb.title if label.blank?
-        previewable_element(label, resource.media_thumb)
+        previewable_element(label, resource.media_thumb, file_index)
       else
         ''
       end
     end
 
-    def media_element(label, resource)
+    def media_element(label, resource, file_index)
       thumbnail = stacks_square_url(purl_document.druid, resource.media_thumb.title, size: '75') if resource.media_thumb
-      media_wrapper(label: label, file: resource.media_file, thumbnail: thumbnail) do
+      media_wrapper(label: label, file: resource.media_file, thumbnail: thumbnail, file_index: file_index) do
         <<-HTML.strip_heredoc
           <#{resource.type}
             id="sul-embed-media-#{file_index}"
@@ -60,8 +60,8 @@ module Embed
       end
     end
 
-    def previewable_element(label, file)
-      media_wrapper(label: label, thumbnail: stacks_square_url(@purl_document.druid, file.title, size: '75')) do
+    def previewable_element(label, file, file_index)
+      media_wrapper(label: label, thumbnail: stacks_square_url(@purl_document.druid, file.title, size: '75'), file_index: file_index) do
         "<img
           src='#{stacks_thumb_url(@purl_document.druid, file.title)}'
           class='sul-embed-media-thumb #{'sul-embed-many-media' if many_primary_files?}'
@@ -70,7 +70,7 @@ module Embed
       end
     end
 
-    def media_wrapper(label:, thumbnail: '', file: nil, &block)
+    def media_wrapper(label:, thumbnail: '', file: nil, file_index: nil, &block)
       <<-HTML.strip_heredoc
         <div data-stanford-only="#{file.try(:stanford_only?)}"
              data-location-restricted="#{file.try(:location_restricted?)}"

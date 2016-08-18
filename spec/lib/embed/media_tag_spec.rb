@@ -170,7 +170,7 @@ describe Embed::MediaTag do
 
     describe '#previewable_element' do
       before { stub_purl_response_with_fixture(purl) }
-      let(:previewable_element) { subject_klass.send(:previewable_element, 'Some Label', file) }
+      let(:previewable_element) { subject_klass.send(:previewable_element, 'Some Label', file, 'ignored'.to_i) }
       it 'passes the square thumb url as a data attribute' do
         expect(previewable_element).to match(
           %r{data-thumbnail-url="https://stacks.*/iiif/.*abc123/square/75,75.*"}
