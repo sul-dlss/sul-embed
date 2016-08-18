@@ -41,7 +41,8 @@ module Embed
     end
 
     def media_element(label, resource)
-      media_wrapper(label: label, file: resource.media_file) do
+      thumbnail = stacks_square_url(purl_document.druid, resource.media_thumb.title, size: '75') if resource.media_thumb
+      media_wrapper(label: label, file: resource.media_file, thumbnail: thumbnail) do
         <<-HTML.strip_heredoc
           <#{resource.type}
             id="sul-embed-media-#{file_index}"
@@ -51,6 +52,7 @@ module Embed
             aria-labelledby="access-restricted-message-div-#{file_index}"
             class="#{'sul-embed-many-media' if many_primary_files?}"
             style="height: #{media_element_height}; display:none;"
+            #{poster_attr_html(resource.media_thumb)}
             height="#{media_element_height}">
             #{enabled_streaming_sources(resource.media_file)}
           </#{resource.type}>
@@ -91,6 +93,10 @@ module Embed
            type='#{streaming_settings_for(streaming_type)[:mimetype]}'>
         </source>"
       end.join
+    end
+
+    def poster_attr_html(file)
+      "poster='#{stacks_thumb_url(purl_document.druid, file.title)}'" if file
     end
 
     def media_element_height
