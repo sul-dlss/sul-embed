@@ -31,7 +31,7 @@ module Embed
       label = resource.description
       if resource.media_file
         label = resource.media_file.title if label.blank?
-        media_element(label, resource.media_file, resource.type)
+        media_element(label, resource)
       elsif resource.media_thumb
         label = resource.media_thumb.title if label.blank?
         previewable_element(label, resource.media_thumb)
@@ -40,20 +40,20 @@ module Embed
       end
     end
 
-    def media_element(label, file, type)
-      media_wrapper(label: label, file: file) do
+    def media_element(label, resource)
+      media_wrapper(label: label, file: resource.media_file) do
         <<-HTML.strip_heredoc
-          <#{type}
+          <#{resource.type}
             id="sul-embed-media-#{file_index}"
-            data-src="#{streaming_url_for(file, :dash)}"
-            data-auth-url="#{authentication_url(file)}"
+            data-src="#{streaming_url_for(resource.media_file, :dash)}"
+            data-auth-url="#{authentication_url(resource.media_file)}"
             controls='controls'
             aria-labelledby="access-restricted-message-div-#{file_index}"
             class="#{'sul-embed-many-media' if many_primary_files?}"
             style="height: #{media_element_height}; display:none;"
             height="#{media_element_height}">
-            #{enabled_streaming_sources(file)}
-          </#{type}>
+            #{enabled_streaming_sources(resource.media_file)}
+          </#{resource.type}>
         HTML
       end
     end
