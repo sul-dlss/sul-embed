@@ -28,6 +28,17 @@ describe Embed::Viewer::Media do
     end
   end
 
+  describe 'media tag' do
+    before { stub_purl_response_with_fixture(video_with_spaces_in_filename_purl) }
+    it 'does not do URL escaping on sources' do
+      allow(request).to receive(:rails_request).and_return(double(host_with_port: ''))
+      stub_request(request)
+      source = Capybara.string(media_viewer.body_html).all('video source').first
+      expect(source['src']).not_to include('%20')
+      expect(source['src']).not_to include('&amp;')
+    end
+  end
+
   describe '#download_html' do
     before { stub_purl_response_with_fixture(video_purl) }
     let(:download_html) { Capybara.string(media_viewer.download_html.to_str) }
