@@ -23,7 +23,7 @@ module Embed
                 doc.ul(class: 'sul-embed-download-list') do
                   resource.files.each do |file|
                     doc.li(class: ('sul-embed-stanford-only' if file.stanford_only?).to_s) do
-                      doc.a(href: file_url(file.title), title: file.title, target: '_blank') do
+                      doc.a(href: file_url(file.title), title: file.title, target: '_blank', rel: 'noopener noreferrer') do
                         doc.text "Download #{file.title}"
                       end
                     end

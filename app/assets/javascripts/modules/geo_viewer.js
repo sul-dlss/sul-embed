@@ -4,7 +4,7 @@
   var Module = (function() {
     var dataAttributes;
     var map;
-    
+
     var isDefined = function(object) {
        return typeof object !== 'undefined';
     };
@@ -19,10 +19,10 @@
           maxZoom: 19,
           attribution: '&copy; <a href="http://www.openstreetmap.org/copyrigh' +
             't">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.open' +
-            'streetmap.org/" target="_blank">Humanitarian OpenStreetMap Team<' +
+            'streetmap.org/" target="_blank" rel="noopener noreferrer">Humanitarian OpenStreetMap Team<' +
             '/a>',
         }).addTo(map);
-        
+
         Module.addVisualizationLayer();
         map.invalidateSize();
       },

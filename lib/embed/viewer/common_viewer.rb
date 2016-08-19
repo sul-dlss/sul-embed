@@ -95,7 +95,8 @@ module Embed
                 doc.a(
                   class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar' \
                     ' sul-embed-btn-default sul-i-navigation-next-4',
-                  href: external_url.to_s
+                  href: external_url.to_s,
+                  target: '_parent'
                 ) do
                   doc.span(class: 'sul-embed-sr-only') { doc.text external_url_text }
                 end

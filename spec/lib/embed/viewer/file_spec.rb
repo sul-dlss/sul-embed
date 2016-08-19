@@ -66,12 +66,12 @@ describe Embed::Viewer::File do
     end
 
     context 'link targets' do
-      it 'is "_blank"' do
+      it 'have the appropriate attributes for being _blank' do
         stub_purl_response_and_request(multi_resource_multi_type_purl, request)
         expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
         html = Capybara.string(file_viewer.to_html)
-        expect(html).to have_css('.sul-embed-media-heading a[target="_blank"]', visible: false)
-        expect(html).to have_css('.sul-embed-download a[target="_blank"]', visible: false)
+        expect(html).to have_css('.sul-embed-media-heading a[target="_blank"][rel="noopener noreferrer"]', visible: false)
+        expect(html).to have_css('.sul-embed-download a[target="_blank"][rel="noopener noreferrer"]', visible: false)
       end
     end
   end
