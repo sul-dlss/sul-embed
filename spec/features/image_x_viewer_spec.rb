@@ -113,11 +113,11 @@ describe 'imageX viewer', js: true do
   end
 
   describe 'Download panel' do
-    it 'includes target = "_blank" for download links' do
+    it 'includes proper attributes for _blank target download links' do
       toggle_download_panel
 
       within('.sul-embed-download-panel') do
-        expect(page).to have_css('a[target="_blank"]')
+        expect(page).to have_css('a[target="_blank"][rel="noopener noreferrer"]')
       end
     end
   end

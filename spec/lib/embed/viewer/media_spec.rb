@@ -57,8 +57,8 @@ describe Embed::Viewer::Media do
       expect(download_html).to have_css('li', text: /\(\d+\.\d+ kB\)/, visible: false)
     end
 
-    it 'includes a "_blank" target on the download links' do
-      expect(download_html).to have_css('li a[target="_blank"]', count: 3, visible: false)
+    it 'includes attributes appropriate for _blank target download links' do
+      expect(download_html).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 3, visible: false)
     end
   end
 end

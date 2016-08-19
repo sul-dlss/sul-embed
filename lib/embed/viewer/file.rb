@@ -134,7 +134,8 @@ module Embed
             doc.a(
               href: file_url(file.title),
               title: tooltip_text(file),
-              target: '_blank'
+              target: '_blank',
+              rel: 'noopener noreferrer'
             ) do
               doc.text file.title
             end
@@ -154,7 +155,7 @@ module Embed
             doc.text pretty_filesize(file.size)
           end
         else
-          doc.a(href: file_url(file.title), download: nil, target: '_blank') do
+          doc.a(href: file_url(file.title), download: nil, target: '_blank', rel: 'noopener noreferrer') do
             doc.span(class: 'sul-embed-sr-only') do
               doc.text "Download item #{file_count}"
             end
