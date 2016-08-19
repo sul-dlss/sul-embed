@@ -89,12 +89,12 @@ describe 'imageX viewer', js: true do
         expect(link['href']).to match(%r{^#{purl_url}\?manifest=#{purl_url}/iiif/manifest\.json$})
       end
 
-      it 'has a links with blank targets' do
+      it 'has a links with _parent targets' do
         toggle_metadata_panel
 
         within('.sul-embed-metadata-panel') do
-          expect(page).to have_css('a.sul-embed-image-x-iiif-drag-and-drop-link[target="_blank"]')
-          expect(page).to have_css('.sul-embed-iiif-instruction a[target="_blank"]')
+          expect(page).to have_css('a.sul-embed-image-x-iiif-drag-and-drop-link[target="_parent"]')
+          expect(page).to have_css('.sul-embed-iiif-instruction a[target="_parent"]')
         end
       end
     end

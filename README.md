@@ -104,6 +104,10 @@ The file that the class is defined in (or your preferred method) should register
     Embed.register_viewer(Embed::Viewer::DemoViewer) if Embed.respond_to?(:register_viewer)
 
 
+### Linking in viewers
+
+The rich HTML payload that is supplied via the oEmbed API is an iframe. This means that all consumers will be embedding an iframe into their page. Given this fact, generating links will require explicit targets if they are not intended to internally replace embed content.  Given this, there are two patterns that can be used.  For links intended to download files, a `target="_blank"` can be used (effectively opening a new tab for the download which is immediately closed). For links that are intended to navigate the users browser away from the current page (e.g. the links to Memento/GeoBlacklight/etc.) then `target="_parent"` should be used to give the link the default browser behavior. [More about link targets](http://www.w3schools.com/tags/att_a_target.asp).
+
 ### Console Example
 
     $ viewer = Embed.registered_viewers.first
