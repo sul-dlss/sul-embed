@@ -43,6 +43,7 @@ module Embed
             data-src="#{streaming_url_for(file, :dash)}"
             data-auth-url="#{authentication_url(file)}"
             controls='controls'
+            aria-labelledby="access-restricted-message-div-#{file_index}"
             class="#{'sul-embed-many-media' if many_primary_files?}"
             style="height: #{media_element_height}; display:none;"
             height="#{media_element_height}">
@@ -125,7 +126,7 @@ module Embed
       # TODO: line1 and line1 spans should be populated by values returned from stacks
       <<-HTML.strip_heredoc
         <div class='sul-embed-media-access-restricted-container' data-access-restricted-message>
-          <div class='sul-embed-media-access-restricted'>
+          <div class='sul-embed-media-access-restricted' id="access-restricted-message-div-#{file_index}">
             #{access_restricted_message(stanford_only, location_restricted)}
           </div>
         </div>
