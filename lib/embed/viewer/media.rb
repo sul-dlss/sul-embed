@@ -28,6 +28,12 @@ module Embed
         end.to_html
       end
 
+      def metadata_html
+        Embed::MetadataPanel.new(@purl_object) do
+          media_accessibility_note
+        end.to_html
+      end
+
       def self.supported_types
         return [] unless ::Settings.enable_media_viewer?
         [:media]
@@ -62,6 +68,18 @@ module Embed
             HTML
           end
         end.flatten.join
+      end
+
+      def media_accessibility_note
+        return unless Settings.purl_feedback_email.present?
+        <<-HTML.strip_heredoc
+          <dt>Media accessibility</dt>
+          <dd>
+            A transcript may be available in the Download panel.<br />
+            To request a transcript or other assistance with media in this viewer, please contact us at
+            <a href="mailto:#{Settings.purl_feedback_email}">#{Settings.purl_feedback_email}</a>.
+          </dd>
+        HTML
       end
     end
   end
