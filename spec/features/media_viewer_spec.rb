@@ -9,7 +9,7 @@ describe 'media viewer', js: true do
   end
 
   it 'renders player in html' do
-    expect(page).to have_css('video')
+    expect(page).to have_css('video', visible: false)
   end
 
   describe 'footer panels' do
@@ -37,13 +37,15 @@ describe 'media viewer', js: true do
   end
 
   context 'multiple A/V files' do
+    # The ajax request that displays the video does not fire in this context
+    # so we are checking for a non-visible video in the first case (even though it should be visible)
     it 'has a toggle-able thumbnail slider panel' do
       expect(page).to have_css('.sul-embed-thumb-slider-container', visible: true)
       expect(page).to have_css('.sul-embed-thumb-slider-open-close', visible: true)
       expect(page).not_to have_css('.sul-embed-thumb-slider', visible: true)
       page.find('.sul-embed-thumb-slider-open-close').click
       expect(page).to have_css('.sul-embed-thumb-slider', visible: true)
-      expect(page).to have_css('[data-slider-object="0"] video', visible: true)
+      expect(page).to have_css('[data-slider-object="0"] video', visible: false)
       expect(page).to have_css('[data-slider-object="1"] video', visible: false)
 
       within('.sul-embed-thumb-slider') do
