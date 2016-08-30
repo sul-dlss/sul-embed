@@ -22,7 +22,7 @@ describe 'embed this panel', js: true do
     end
     it 'includes height and width attributes' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*height='400px'.*\/>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*height='200px'.*\/>/)
       expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*width='100%'.*\/>/)
     end
   end

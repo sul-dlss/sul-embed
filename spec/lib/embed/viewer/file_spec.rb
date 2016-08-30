@@ -23,14 +23,25 @@ describe Embed::Viewer::File do
   end
   describe 'body_height' do
     it 'defaults to 400 minus the footer and header height' do
-      stub_request(request)
+      stub_purl_response_and_request(multi_resource_multi_type_purl, request)
       expect(file_viewer.send(:body_height)).to eq 307
     end
+
     it 'consumer requested maxheight minus the header/footer height' do
       height_request = Embed::Request.new(url: 'http://purl.stanford.edu/abc123', maxheight: '500')
       stub_request(height_request)
       viewer = Embed::Viewer::File.new(height_request)
       expect(viewer.send(:body_height)).to eq 407
+    end
+
+    it 'reduces the height based on the number of files in the object (1 file)' do
+      stub_purl_response_and_request(file_purl, request)
+      expect(file_viewer.send(:body_height)).to eq 107
+    end
+
+    it 'reduces the height based on the number of files in the object (2 files)' do
+      stub_purl_response_and_request(image_purl, request)
+      expect(file_viewer.send(:body_height)).to eq 182
     end
   end
   describe 'header tools' do
