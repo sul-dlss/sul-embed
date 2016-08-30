@@ -44,6 +44,7 @@ module Embed
             data-auth-url="#{authentication_url(file)}"
             controls='controls'
             class="#{'sul-embed-many-media' if many_primary_files?}"
+            style="display:none;"
             height="#{media_element_height}">
             #{enabled_streaming_sources(file)}
           </#{type}>
@@ -121,23 +122,13 @@ module Embed
 
     def access_restricted_overlay(stanford_only, location_restricted)
       return unless stanford_only || location_restricted
-      # jvine says the -container div is necessary to style the elements so that
-      # sul-embed-media-access-restricted positions correctly
       # TODO: line1 and line1 spans should be populated by values returned from stacks
       <<-HTML.strip_heredoc
-        #{location_only_overlay(stanford_only, location_restricted)}
         <div class='sul-embed-media-access-restricted-container' data-access-restricted-message>
           <div class='sul-embed-media-access-restricted'>
             #{access_restricted_message(stanford_only, location_restricted)}
           </div>
         </div>
-      HTML
-    end
-
-    def location_only_overlay(stanford_only, location_restricted)
-      return unless location_restricted && !stanford_only
-      <<-HTML.strip_heredoc
-        <i class="sul-i-file-video-3 sul-embed-media-location-only-restricted-overlay" data-location-restricted-overlay></i>
       HTML
     end
 

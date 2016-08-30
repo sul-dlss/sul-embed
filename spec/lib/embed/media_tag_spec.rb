@@ -30,25 +30,25 @@ describe Embed::MediaTag do
     end
 
     it 'includes a data-src attribute for the dash player' do
-      expect(subject).to have_css('[data-src]', count: 2)
+      expect(subject).to have_css('[data-src]', count: 2, visible: false)
     end
 
     it 'includes a data attribute that includes the url to check the users auth status' do
-      expect(subject).to have_css('video[data-auth-url]', count: 2)
-      auth_url = subject.all('video[data-auth-url]').first['data-auth-url']
+      expect(subject).to have_css('video[data-auth-url]', count: 2, visible: false)
+      auth_url = subject.all('video[data-auth-url]', visible: false).first['data-auth-url']
       expect(auth_url).to match(%r{https?://stacks\.stanford\.edu.*/auth_check})
     end
 
     context 'single video' do
       let(:purl) { single_video_purl }
       it 'includes a height attribute equal to the body height' do
-        expect(subject).to have_css("video[height='#{viewer.body_height}px']")
+        expect(subject).to have_css("video[height='#{viewer.body_height}px']", visible: false)
       end
     end
 
     context 'multiple videos' do
       it 'includes a height attribute equal to the body height minus some px to make way for the thumb slider' do
-        expect(subject).to have_css('video[height="276px"]')
+        expect(subject).to have_css('video[height="276px"]', visible: false)
       end
     end
 
@@ -61,7 +61,7 @@ describe Embed::MediaTag do
 
     context 'video' do
       it 'renders a video tag in the provided document' do
-        expect(subject).to have_css('video')
+        expect(subject).to have_css('video', visible: false)
       end
     end
 
@@ -69,7 +69,7 @@ describe Embed::MediaTag do
       let(:purl) { audio_purl }
 
       it 'renders an audo tag in the provided document' do
-        expect(subject).to have_css('audio')
+        expect(subject).to have_css('audio', visible: false)
       end
     end
   end
@@ -151,7 +151,7 @@ describe Embed::MediaTag do
     describe '#enabled_streaming_sources' do
       before { stub_purl_response_with_fixture(purl) }
       it 'adds a source element for every enabled type' do
-        expect(subject).to have_css('source[type="application/x-mpegURL"]')
+        expect(subject).to have_css('source[type="application/x-mpegURL"]', visible: false)
       end
     end
 

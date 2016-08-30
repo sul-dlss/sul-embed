@@ -24,7 +24,7 @@ describe Embed::Viewer::Media do
       allow(request).to receive(:rails_request).and_return(double(host_with_port: ''))
       stub_request(request)
       body_html = Capybara.string(media_viewer.body_html)
-      expect(body_html).to have_css('video')
+      expect(body_html).to have_css('video', visible: false)
     end
   end
 
@@ -33,7 +33,7 @@ describe Embed::Viewer::Media do
     it 'does not do URL escaping on sources' do
       allow(request).to receive(:rails_request).and_return(double(host_with_port: ''))
       stub_request(request)
-      source = Capybara.string(media_viewer.body_html).all('video source').first
+      source = Capybara.string(media_viewer.body_html).all('video source', visible: false).first
       expect(source['src']).not_to include('%20')
       expect(source['src']).not_to include('&amp;')
     end

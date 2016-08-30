@@ -7,7 +7,6 @@
 (function( global ) {
   'use strict';
   var Module = (function() {
-    var restrictedOverlaySelector = '[data-location-restricted-overlay]';
     var restrictedMessageSelector = '[data-access-restricted-message]';
     var sliderObjectSelector = '[data-slider-object]';
     var restrictedText = '(Restricted)'
@@ -174,6 +173,7 @@
     function initializeVideoJSPlayer(mediaObject) {
       removeUnusableSources(mediaObject);
       mediaObject.addClass('video-js vjs-default-skin');
+      mediaObject.show();
       videojs(mediaObject.attr('id'), videoJsOptions(mediaObject));
     }
 
@@ -193,7 +193,6 @@
         var parentDiv = mediaObject.closest(sliderSelector);
         var isRestricted = parentDiv.data('stanford-only') || parentDiv.data('location-restricted');
         if(isRestricted && data.status === 'success') {
-          parentDiv.find(restrictedOverlaySelector).hide();
           parentDiv.find(restrictedMessageSelector).hide();
           parentDiv.find('[data-auth-link]').hide();
         }
