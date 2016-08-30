@@ -17,6 +17,8 @@ $thumb-slider-background-color: $sul-background;
 }
 
 .#{$namespace}-thumb-slider-open-close {
+  background-color: transparent;
+  border: none;
   color: $thumb-slider-border-color;
   cursor: pointer;
   font-size: 1.7em;
