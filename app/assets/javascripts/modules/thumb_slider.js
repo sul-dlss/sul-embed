@@ -17,7 +17,8 @@
 
     var thumbList =
       jQuery(
-        '<div class="sul-embed-thumb-slider" style="display:none">' +
+        '<div class="sul-embed-thumb-slider" style="display:none"' +
+          ' aria-expanded="true">' +
           '<ul></ul>' +
         '</div>'
       );
