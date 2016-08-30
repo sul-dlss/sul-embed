@@ -10,9 +10,9 @@
 
     var toggleControl =
       jQuery(
-        '<div class="sul-i-navigation-show-more-1 sul-embed-thumb-slider-open-close"' +
+        '<button class="sul-i-navigation-show-more-1 sul-embed-thumb-slider-open-close"' +
           ' aria-expanded="true" aria-label="toggle thumbnail viewer">' +
-        '</div>'
+        '</button>'
       );
 
     var thumbList =
