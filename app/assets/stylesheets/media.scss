@@ -22,6 +22,7 @@
   display: inline-block;
   position: relative;
   text-align: center;
+  width: 100%;
 }
 
 .#{$namespace}-media-access-restricted {
@@ -82,4 +83,33 @@
     text-indent: 17px;
   }
 
+}
+
+// VideoJS CSS overrides for responsive layout
+// See http://andreassauer.name/experimente/video-js/demo.html
+.video-js {
+  width: 100% !important;
+
+  &::after {
+    content: '.';
+    display: block;
+    height: 0;
+    margin: 0 0 0 -100%;
+    padding: 0;
+    padding-top: 40.1%;
+    position: relative;
+    visibility: hidden;
+  }
+
+  &.vjs-fullscreen {
+    height: auto;
+  }
+
+  .vjs-poster {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
 }

@@ -44,7 +44,7 @@ module Embed
             data-auth-url="#{authentication_url(file)}"
             controls='controls'
             class="#{'sul-embed-many-media' if many_primary_files?}"
-            style="display:none;"
+            style="height: #{media_element_height}; display:none;"
             height="#{media_element_height}">
             #{enabled_streaming_sources(file)}
           </#{type}>

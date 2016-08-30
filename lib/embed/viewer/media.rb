@@ -6,7 +6,7 @@ module Embed
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(
             class: 'sul-embed-body sul-embed-media',
-            'style' => "max-height: #{body_height}px",
+            'style' => "height: #{body_height}px",
             'data-sul-embed-theme' => asset_url('media.css').to_s
           ) do
             doc.cdata Embed::MediaTag.new(self).to_html
