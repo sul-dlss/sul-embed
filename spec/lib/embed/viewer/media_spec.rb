@@ -61,4 +61,23 @@ describe Embed::Viewer::Media do
       expect(download_html).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 3, visible: false)
     end
   end
+
+  describe '#metadata_html' do
+    before { stub_purl_response_with_fixture(video_purl) }
+    let(:metadata_html) { Capybara.string(media_viewer.metadata_html.to_str) }
+
+    it 'includes a media accessibility note' do
+      expect(metadata_html).to have_css('dt', text: 'Media accessibility', visible: false)
+      expect(metadata_html).to have_css(
+        'dd',
+        text: /A transcript may be available in the Download panel/,
+        visible: false
+      )
+    end
+
+    it 'links to the feedback address' do
+      link = metadata_html.find('a', text: Settings.purl_feedback_email, visible: false)
+      expect(link['href']).to eq "mailto:#{Settings.purl_feedback_email}"
+    end
+  end
 end

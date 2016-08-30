@@ -2,6 +2,7 @@ purl_url: 'https://purl.stanford.edu'
 # timeouts specified in seconds
 purl_read_timeout: 2
 purl_conn_timeout: 2
+purl_feedback_email: ''
 valid_purl_url: <%= /https?:\/\/purl\.stanford\.edu\/*/ %>
 stacks_url: 'https://stacks.stanford.edu'
 iiif_stacks_url: 'https://stacks.stanford.edu'
