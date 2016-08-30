@@ -17,7 +17,8 @@
 
     var thumbList =
       jQuery(
-        '<div class="sul-embed-thumb-slider" style="display:none">' +
+        '<div class="sul-embed-thumb-slider" style="display:none"' +
+          ' aria-expanded="false">' +
           '<ul></ul>' +
         '</div>'
       );
@@ -84,6 +85,7 @@
           });
           thumbList.find('ul').append(thumbnail);
         });
+
       },
 
       scrollFrame: function() {
