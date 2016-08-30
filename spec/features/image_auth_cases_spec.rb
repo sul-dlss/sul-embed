@@ -46,7 +46,9 @@ describe 'image viewer authentication and authorization', js: true do
   describe '400px available to world, download and larger available to SU' do
     before do
       stub_purl_response_with_fixture(image_purl)
-      visit_iframe_response('py305sy7961')
+      # This needs to be an actual Stanford only object.
+      # If this test fails, check to see if the rights have changed.
+      visit_iframe_response('yh887qk5737')
     end
     it 'displays login prompt and thumb' do
       expect(page).to have_css '.sul-embed-image-x-restricted-thumb-container'
