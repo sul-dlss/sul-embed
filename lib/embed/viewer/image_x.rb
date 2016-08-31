@@ -130,7 +130,7 @@ module Embed
                     next if embargoed_to_world?(file)
                     doc.li do
                       doc.div(class: ('sul-embed-stanford-only' if file.stanford_only?).to_s) do
-                        doc.a(href: file_url(file.title), download: nil) do
+                        doc.a(target: '_blank', rel: 'noopener noreferrer', href: file_url(file.title), download: nil) do
                           if file.size.blank?
                             doc.text full_download_title(file)
                           else
