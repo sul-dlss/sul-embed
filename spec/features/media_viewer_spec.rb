@@ -89,7 +89,7 @@ describe 'media viewer', js: true do
       page.find('.sul-embed-thumb-slider-open-close').click
       expect(page).to have_css('.sul-embed-thumb-slider', visible: true)
 
-      expect(page).to have_css('.sul-embed-thumb-restricted-text', text: '(Restricted)', count: 1)
+      expect(page).to have_css('.sul-embed-location-restricted-text', text: '(Restricted)', count: 1)
       expect(page).to have_css('.sul-embed-media-slider-thumb', text: '(Restricted) abc_123.mp4')
     end
   end
