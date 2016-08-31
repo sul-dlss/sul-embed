@@ -10,14 +10,15 @@
 
     var toggleControl =
       jQuery(
-        '<div class="sul-i-navigation-show-more-1 sul-embed-thumb-slider-open-close"' +
+        '<button class="sul-i-navigation-show-more-1 sul-embed-thumb-slider-open-close"' +
           ' aria-expanded="true" aria-label="toggle thumbnail viewer">' +
-        '</div>'
+        '</button>'
       );
 
     var thumbList =
       jQuery(
-        '<div class="sul-embed-thumb-slider" style="display:none">' +
+        '<div class="sul-embed-thumb-slider" style="display:none"' +
+          ' aria-expanded="false">' +
           '<ul></ul>' +
         '</div>'
       );
@@ -84,6 +85,7 @@
           });
           thumbList.find('ul').append(thumbnail);
         });
+
       },
 
       scrollFrame: function() {
