@@ -59,15 +59,29 @@ module Embed
                         end
             file_size = "(#{pretty_filesize(file.size)})" if file.size
             <<-HTML.strip_heredoc
-              <li class='#{('sul-embed-stanford-only' if file.stanford_only?)}'>
-                <a href='#{file_url(file.title)}' title='#{file.title}' target='_blank' rel='noopener noreferrer'>
-                  Download #{link_text}
-                </a>
+              <li>
+                <a href='#{file_url(file.title)}' title='#{file.title}' target='_blank' rel='noopener noreferrer'>Download #{link_text}</a>
+                #{restrictd_text_for_file(file)}
                 #{file_size}
               </li>
             HTML
           end
         end.flatten.join
+      end
+
+      def restrictd_text_for_file(file)
+        return unless file.location_restricted?
+        <<-HTML.strip_heredoc
+          <span class='sul-embed-thumb-restricted-text #{('sul-embed-stanford-only-text' if file.stanford_only?)}'>
+            #{stanford_only_restricted_text(file)}
+            (Restricted)
+          </span>
+        HTML
+      end
+
+      def stanford_only_restricted_text(file)
+        return unless file.stanford_only?
+        '<span class="sul-embed-text-hide">Stanford only</span>'
       end
 
       def media_accessibility_note
