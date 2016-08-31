@@ -108,9 +108,16 @@
   }
 }
 
-.#{$namespace}-stanford-only a{
-  @include stanford-only;
-  padding-right: 20px;
+.#{$namespace}-stanford-only a {
+  @include stanford-only(right, 20px);
+}
+
+.#{$namespace}-stanford-only-text {
+  @include stanford-only(left, 15px);
+}
+
+.#{$namespace}-thumb-restricted-text {
+  color: $sul-restricted-text-color;
 }
 
 .#{$namespace}-header {

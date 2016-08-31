@@ -43,10 +43,10 @@
   padding: 10px;
 }
 
-@mixin stanford-only {
-  background: url('#{$asset_base}<%= asset_url("stanford_s.png") %>') no-repeat right;
-  background: url('#{$asset_base}<%= asset_url("stanford_s.svg") %>') no-repeat right, none;
-  padding-right: 20px;
+@mixin stanford-only($orientation: right, $icon-padding: 20px) {
+  background: url('#{$asset_base}<%= asset_url("stanford_s.png") %>') no-repeat $orientation;
+  background: url('#{$asset_base}<%= asset_url("stanford_s.svg") %>') no-repeat $orientation, none;
+  padding-#{$orientation}: $icon-padding;
 }
 
 @mixin stanford-only-red {
