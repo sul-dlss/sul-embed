@@ -77,11 +77,11 @@
         thumbs.push(
           '<li class="' + thumbClass + activeClass + '">' +
             thumbnailIcon +
-            '<div class="' + labelClass + '">' +
+            '<a class="' + labelClass + '" href="#">' +
               restrictedTextMarkup(isLocationRestricted) +
               truncateWithEllipsis(fileLabel, maxFileLabelLength(isLocationRestricted)) +
               durationMarkup(duration) +
-            '</div>' +
+            '</a>' +
           '</li>'
         );
       });
