@@ -11,7 +11,7 @@
     var toggleControl =
       jQuery(
         '<button class="sul-i-navigation-show-more-1 sul-embed-thumb-slider-open-close"' +
-          ' aria-expanded="true" aria-label="toggle thumbnail viewer">' +
+          ' aria-expanded="false" aria-label="toggle thumbnail viewer">' +
         '</button>'
       );
 
@@ -38,9 +38,20 @@
       }
     }
 
+    function toggleAriaAttributes() {
+      if(toggleControl.attr('aria-expanded') === 'true') {
+        toggleControl.attr('aria-expanded', 'false');
+        thumbList.attr('aria-expanded', 'false');
+      }else{
+        toggleControl.attr('aria-expanded', 'true');
+        thumbList.attr('aria-expanded', 'true');
+      }
+    }
+
     function addToggleControlBehavior() {
       toggleControl.on('click', function() {
         thumbList.slideToggle();
+        toggleAriaAttributes();
       });
     }
 
@@ -85,7 +96,6 @@
           });
           thumbList.find('ul').append(thumbnail);
         });
-
       },
 
       scrollFrame: function() {

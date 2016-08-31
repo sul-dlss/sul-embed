@@ -42,9 +42,11 @@ describe 'media viewer', js: true do
     it 'has a toggle-able thumbnail slider panel' do
       expect(page).to have_css('.sul-embed-thumb-slider-container', visible: true)
       expect(page).to have_css('.sul-embed-thumb-slider-open-close', visible: true)
-      expect(page).not_to have_css('.sul-embed-thumb-slider', visible: true)
+      expect(page).to have_css('.sul-embed-thumb-slider[aria-expanded="false"]', visible: false)
+      expect(page).to have_css('.sul-embed-thumb-slider-open-close[aria-expanded="false"]', visible: true)
       page.find('.sul-embed-thumb-slider-open-close').click
-      expect(page).to have_css('.sul-embed-thumb-slider', visible: true)
+      expect(page).to have_css('.sul-embed-thumb-slider[aria-expanded="true"]', visible: true)
+      expect(page).to have_css('.sul-embed-thumb-slider-open-close[aria-expanded="true"]', visible: true)
       expect(page).to have_css('[data-slider-object="0"] video', visible: false)
       expect(page).to have_css('[data-slider-object="1"] video', visible: false)
 
