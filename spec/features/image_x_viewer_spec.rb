@@ -117,7 +117,13 @@ describe 'imageX viewer', js: true do
       toggle_download_panel
 
       within('.sul-embed-download-panel') do
-        expect(page).to have_css('a[target="_blank"][rel="noopener noreferrer"]')
+        expect(page).to have_css('.download-link', visible: true, count: 6)
+        links = page.all('.download-link')
+
+        links.each do |link|
+          expect(link['target']).to eq '_blank'
+          expect(link['rel']).to eq 'noopener noreferrer'
+        end
       end
     end
   end

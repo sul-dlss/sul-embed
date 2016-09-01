@@ -49,6 +49,16 @@ describe Embed::Viewer::ImageX do
       html = Capybara.string(image_x_viewer.to_html)
       expect(html).to have_css 'ul li div.sul-embed-stanford-only a', visible: false, text: 'Download "Yolo" (as pdf)'
     end
+
+    it 'full download links should have proper target and rel attributes for download links' do
+      expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
+      stub_purl_response_and_request(image_with_pdf_restricted_purl, request)
+      expect(image_x_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
+      html = Capybara.string(image_x_viewer.to_html)
+      link = html.find('ul li div.sul-embed-stanford-only a', visible: false, text: 'Download "Yolo" (as pdf)')
+      expect(link['target']).to eq '_blank'
+      expect(link['rel']).to eq 'noopener noreferrer'
+    end
   end
 
   describe 'private methods' do
