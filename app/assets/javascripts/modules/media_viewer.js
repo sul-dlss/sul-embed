@@ -93,6 +93,7 @@
       var mediaObjects = $('.sul-embed-media audio, .sul-embed-media video');
       mediaObjects.each(function() {
         this.pause();
+        this.dispose();
       });
     }
 
