@@ -44,6 +44,11 @@ describe Embed::MediaTag do
       it 'includes a height attribute equal to the body height' do
         expect(subject).to have_css("video[height='#{viewer.body_height}px']", visible: false)
       end
+
+      it 'shows location restricted messages to the screen reader' do
+        expect(subject).to have_css('video[aria-labelledby="access-restricted-message-div-0"]', visible: false)
+        expect(subject).to have_css('div#access-restricted-message-div-0')
+      end
     end
 
     context 'multiple videos' do
