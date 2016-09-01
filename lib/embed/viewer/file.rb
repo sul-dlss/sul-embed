@@ -65,7 +65,23 @@ module Embed
       end
 
       def default_body_height
-        400 - (header_height + footer_height)
+        file_specific_body_height - (header_height + footer_height)
+      end
+
+      # This is neccessary because the file viewer's height is meant to be dynamic,
+      # however we need to specify the exact height of the containing iframe (which
+      # will give us extra whitespace below the embed viewer unless we do this)
+      def file_specific_body_height
+        case @purl_object.all_resource_files.count
+        when 1
+          200
+        when 2
+          275
+        when 3
+          375
+        else
+          400
+        end
       end
 
       def preview_file_toggle(file, doc, file_count)
