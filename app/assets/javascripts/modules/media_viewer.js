@@ -93,7 +93,6 @@
       var mediaObjects = $('.sul-embed-media audio, .sul-embed-media video');
       mediaObjects.each(function() {
         this.pause();
-        this.dispose();
       });
     }
 
@@ -175,6 +174,8 @@
       removeUnusableSources(mediaObject);
       mediaObject.addClass('video-js vjs-default-skin');
       mediaObject.show();
+      var result = $('.vjs-tech');
+      console.log('tommy: result = ' + result);
       videojs(mediaObject.attr('id'), videoJsOptions(mediaObject));
     }
 
