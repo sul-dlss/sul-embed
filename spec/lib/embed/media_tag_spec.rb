@@ -170,7 +170,7 @@ describe Embed::MediaTag do
 
     describe '#previewable_element' do
       before { stub_purl_response_with_fixture(purl) }
-      let(:previewable_element) { subject_klass.send(:previewable_element, 'Some Label', file, 'ignored'.to_i) }
+      let(:previewable_element) { subject_klass.send(:previewable_element, 'Some Label', file) }
       it 'passes the square thumb url as a data attribute' do
         expect(previewable_element).to match(
           %r{data-thumbnail-url="https://stacks.*/iiif/.*abc123/square/75,75.*"}
@@ -198,10 +198,10 @@ describe Embed::MediaTag do
       let(:media_file) { double('ResourceFile', title: 'media_file.mp4') }
       let(:media_thumb_file) { nil }
       let(:resource) { double('Resource', title: 'abc123.mp4', media_file: media_file, media_thumb: media_thumb_file, type: '_') }
-      let(:media_element) { subject_klass.send(:media_element, 'Some Label', resource, 0) }
+      let(:media_element) { subject_klass.send(:media_element, 'Some Label', resource) }
 
       it 'includes id indicating the position of the resource in the slider' do
-        expect(subject_klass).to receive(:media_wrapper).with(label: 'Some Label', file: media_file, thumbnail: nil, file_index: 0).and_call_original
+        expect(subject_klass).to receive(:media_wrapper).with(label: 'Some Label', file: media_file, thumbnail: nil).and_call_original
 
         expect(media_element).to match(/id="sul-embed-media-0"/)
       end
@@ -212,7 +212,7 @@ describe Embed::MediaTag do
         it 'includes resource level thumbs where available' do
           expect(subject_klass).to receive(:stacks_square_url).with('druid', media_thumb_file.title, size: '75').and_return('thumb_url.jp2')
           expect(subject_klass).to receive(:stacks_thumb_url).with('druid', media_thumb_file.title).and_return('thumb_url.jp2')
-          expect(subject_klass).to receive(:media_wrapper).with(label: 'Some Label', file: media_file, thumbnail: 'thumb_url.jp2', file_index: 0).and_call_original
+          expect(subject_klass).to receive(:media_wrapper).with(label: 'Some Label', file: media_file, thumbnail: 'thumb_url.jp2').and_call_original
 
           expect(media_element).to match(/poster='thumb_url.jp2'/)
           expect(media_element).to match(/data-thumbnail-url="thumb_url.jp2"/)

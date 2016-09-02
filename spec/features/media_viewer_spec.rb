@@ -94,7 +94,7 @@ describe 'media viewer', js: true do
 
     it 'uses the thumb for the video as the key frame (via the poster attribute)' do
       poster_url = 'https://stacks.stanford.edu/image/iiif/ignored%2Fabc_123_thumb/full/!400,400/0/default.jpg'
-      expect(page).to have_css("div.sul-embed-media-wrapper video[poster='#{poster_url}']")
+      expect(page).to have_css("div.sul-embed-media-wrapper video[poster='#{poster_url}']", visible: false)
     end
   end
 
