@@ -55,13 +55,14 @@ describe 'media viewer', js: true do
       end
     end
 
-    it 'has the class indicating Stanford only for stanford restricted files' do
+    it 'has the class indicating Stanford only for stanford restricted files (with screenreader text)' do
       expect(page).not_to have_css('.sul-embed-thumb-slider', visible: true)
       page.find('.sul-embed-thumb-slider-open-close').click
       expect(page).to have_css('.sul-embed-thumb-slider', visible: true)
 
       expect(page).to have_css('.sul-embed-thumb-stanford-only', count: 1)
       expect(page).to have_css('.sul-embed-thumb-stanford-only', text: 'Second Video')
+      expect(page).to have_css('.sul-embed-thumb-stanford-only .sul-embed-text-hide', text: 'Stanford only', count: 1)
       expect(page).not_to have_css('.sul-embed-thumb-stanford-only', text: 'abc_123.mp4')
     end
   end
@@ -101,7 +102,7 @@ describe 'media viewer', js: true do
     end
     it 'displays no duration info after title when there is no duration we can interpret' do
       page.find('.sul-embed-thumb-slider-open-close').click
-      expect(page).to have_css('.sul-embed-media-slider-thumb', text: /^Second Video$/)
+      expect(page).to have_css('.sul-embed-media-slider-thumb', text: /Second Video$/)
     end
     context 'invalid duration format' do
       let(:purl) { invalid_video_duration_purl }
