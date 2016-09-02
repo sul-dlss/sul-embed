@@ -3,6 +3,7 @@ require 'embed/embed_this_panel'
 require 'embed/metadata_panel'
 require 'embed/mimetypes'
 require 'embed/pretty_filesize'
+require 'embed/restricted_text'
 require 'embed/stacks_image'
 
 module Embed
@@ -10,6 +11,7 @@ module Embed
     class CommonViewer
       include Embed::Mimetypes
       include Embed::PrettyFilesize
+      include Embed::RestrictedText
       include Embed::StacksImage
 
       attr_reader :purl_object
