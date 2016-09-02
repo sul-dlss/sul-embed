@@ -92,8 +92,11 @@
     function pauseAllMedia() {
       var mediaObjects = $('.sul-embed-media audio, .sul-embed-media video');
       mediaObjects.each(function() {
-        console.log('tommy: ' + JSON.stringify(Object.keys(this)));
+
         this.pause();
+        var player = videojs(this);
+        player.dispose();
+        initializeVideoJSPlayer(this);
       });
     }
 
