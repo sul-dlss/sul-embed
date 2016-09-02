@@ -22,10 +22,11 @@ module Embed
               @purl_object.contents.each do |resource|
                 doc.ul(class: 'sul-embed-download-list') do
                   resource.files.each do |file|
-                    doc.li(class: ('sul-embed-stanford-only' if file.stanford_only?).to_s) do
+                    doc.li do
                       doc.a(href: file_url(file.title), title: file.title, target: '_blank', rel: 'noopener noreferrer') do
                         doc.text "Download #{file.title}"
                       end
+                      doc << " #{restrictions_text_for_file(file)}"
                     end
                   end
                 end
