@@ -176,6 +176,7 @@
       mediaObject.show();
       var result = $('.vjs-tech');
       console.log('tommy: result = ' + result);
+      console.log(JSON.stringify(Object.keys(result)));
       videojs(mediaObject.attr('id'), videoJsOptions(mediaObject));
     }
 
