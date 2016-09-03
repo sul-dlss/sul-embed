@@ -70,7 +70,7 @@ module Embed
              data-file-label="#{label}"
              data-slider-object="#{file_index}"
              data-thumbnail-url="#{thumbnail}"
-             data-duration="#{file.try(:video_duration).try(:to_s)}">
+             data-duration="#{file.try(:duration)}">
           <div class='sul-embed-media-wrapper'>
             #{access_restricted_overlay(file.try(:stanford_only?), file.try(:location_restricted?))}
             #{yield(block) if block_given?}
