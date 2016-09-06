@@ -144,17 +144,14 @@ module Embed
             doc.text file.title
           end
         else
-          doc.div(
-            class: 'sul-embed-media-heading '\
-              "#{'sul-embed-stanford-only' if file.stanford_only?}") do
+          doc.div(class: 'sul-embed-media-heading') do
             doc.a(
               href: file_url(file.title),
               title: tooltip_text(file),
               target: '_blank',
               rel: 'noopener noreferrer'
-            ) do
-              doc.text file.title
-            end
+            ) { doc.text file.title }
+            doc << " #{restrictions_text_for_file(file)}"
           end
         end
       end

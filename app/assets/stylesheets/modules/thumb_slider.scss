@@ -3,7 +3,6 @@
 
 $thumb-background-color: #fff;
 $thumb-slider-border-color: $sul-border-color;
-$restricted-text-color: $color-cardinal-red;
 $thumb-slider-background-color: $sul-background;
 
 .#{$namespace}-thumb-slider-container {
@@ -67,9 +66,5 @@ $thumb-slider-background-color: $sul-background;
 
   img {
     width: 100%;
-  }
-
-  .#{$namespace}-thumb-restricted-text {
-    color: $restricted-text-color;
   }
 }

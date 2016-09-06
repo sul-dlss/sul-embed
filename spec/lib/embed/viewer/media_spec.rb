@@ -40,7 +40,8 @@ describe Embed::Viewer::Media do
   end
 
   describe '#download_html' do
-    before { stub_purl_response_with_fixture(video_purl) }
+    let(:purl) { video_purl }
+    before { stub_purl_response_with_fixture(purl) }
     let(:download_html) { Capybara.string(media_viewer.download_html.to_str) }
 
     it 'uses the label as the link text when present' do
@@ -59,6 +60,23 @@ describe Embed::Viewer::Media do
 
     it 'includes attributes appropriate for _blank target download links' do
       expect(download_html).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 3, visible: false)
+    end
+
+    context 'Stanford only' do
+      let(:purl) { stanford_restricted_file_purl }
+
+      it 'has a span with a stanford-only s icon class (with screen-reader text)' do
+        expect(download_html).to have_css('.sul-embed-stanford-only-text', visible: false)
+        expect(download_html).to have_css('.sul-embed-text-hide', text: 'Stanford only', visible: false)
+      end
+    end
+
+    context 'Location restricted' do
+      let(:purl) { single_video_purl }
+
+      it 'has a span with the location restricted message' do
+        expect(download_html).to have_css('.sul-embed-location-restricted-text', text: '(Restricted)', visible: false)
+      end
     end
   end
 

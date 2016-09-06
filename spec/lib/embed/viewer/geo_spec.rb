@@ -54,10 +54,16 @@ describe Embed::Viewer::Geo do
       expect(html).to have_css 'li', visible: false, count: 1
       expect(html).to have_css 'a[href="https://stacks.stanford.edu/file/druid:12345/data.zip"]', visible: false
     end
-    it 'stanford only resources have the stanford-only class' do
+    it 'stanford only resources have the stanford-only class (with screen reader text)' do
       stub_purl_response_and_request(stanford_restricted_multi_file_purl, request)
       html = Capybara.string(geo_viewer.download_html)
-      expect(html).to have_css 'li.sul-embed-stanford-only', visible: false
+      expect(html).to have_css 'li .sul-embed-stanford-only-text .sul-embed-text-hide', text: 'Stanford only', visible: false
+    end
+
+    it 'location restricted files include text to indicate that they are restricted' do
+      stub_purl_response_and_request(single_video_purl, request)
+      html = Capybara.string(geo_viewer.download_html)
+      expect(html).to have_css 'li .sul-embed-location-restricted-text', text: '(Restricted)', visible: false
     end
   end
   describe '#map_element_options' do

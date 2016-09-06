@@ -9,13 +9,21 @@
   var Module = (function() {
     var restrictedMessageSelector = '[data-access-restricted-message]';
     var sliderObjectSelector = '[data-slider-object]';
-    var restrictedText = '(Restricted)'
+    var restrictedText = '(Restricted)';
     var MAX_FILE_LABEL_LENGTH = 45;
 
     function restrictedTextMarkup(isLocationRestricted) {
       if(isLocationRestricted) {
-        return '<span class="sul-embed-thumb-restricted-text">' + restrictedText + '</span> ';
+        return '<span class="sul-embed-location-restricted-text">' + restrictedText + '</span> ';
       } else {
+        return '';
+      }
+    }
+
+    function stanfordOnlyScreenreaderText(isStanfordRestricted) {
+      if(isStanfordRestricted) {
+        return '<span class="sul-embed-text-hide">Stanford only</span>';
+      }else{
         return '';
       }
     }
@@ -58,8 +66,8 @@
 
         var thumbClass = 'sul-embed-slider-thumb sul-embed-media-slider-thumb ';
         var labelClass = 'sul-embed-thumb-label';
-
-        if ($(mediaDiv).data('stanford-only')) {
+        var isStanfordRestricted = $(mediaDiv).data('stanford-only');
+        if (isStanfordRestricted) {
           labelClass += ' sul-embed-thumb-stanford-only';
         }
 
@@ -78,6 +86,7 @@
           '<li class="' + thumbClass + activeClass + '">' +
             thumbnailIcon +
             '<a class="' + labelClass + '" href="#">' +
+              stanfordOnlyScreenreaderText(isStanfordRestricted) +
               restrictedTextMarkup(isLocationRestricted) +
               truncateWithEllipsis(fileLabel, maxFileLabelLength(isLocationRestricted)) +
               durationMarkup(duration) +

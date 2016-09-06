@@ -59,10 +59,9 @@ module Embed
                         end
             file_size = "(#{pretty_filesize(file.size)})" if file.size
             <<-HTML.strip_heredoc
-              <li class='#{('sul-embed-stanford-only' if file.stanford_only?)}'>
-                <a href='#{file_url(file.title)}' title='#{file.title}' target='_blank' rel='noopener noreferrer'>
-                  Download #{link_text}
-                </a>
+              <li>
+                <a href='#{file_url(file.title)}' title='#{file.title}' target='_blank' rel='noopener noreferrer'>Download #{link_text}</a>
+                #{restrictions_text_for_file(file)}
                 #{file_size}
               </li>
             HTML

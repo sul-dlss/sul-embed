@@ -102,7 +102,17 @@ describe Embed::Viewer::File do
       expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com')
       html = Capybara.string(file_viewer.body_html)
       expect(html).to have_css('.sul-embed-embargo-message', text: "Access is restricted to Stanford-affiliated patrons until #{(Time.current + 1.month).strftime('%d-%b-%Y')}")
-      expect(html).to have_css('.sul-embed-media-heading.sul-embed-stanford-only a[href="https://stacks.stanford.edu/file/druid:12345/Title%20of%20the%20PDF.pdf"]')
+      expect(html).to have_css('.sul-embed-media-heading a[href="https://stacks.stanford.edu/file/druid:12345/Title%20of%20the%20PDF.pdf"]')
+    end
+
+    it 'includes an element with a stanford icon class (with screen reader text)' do
+      stub_purl_response_and_request(embargoed_stanford_file_purl, request)
+      expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com')
+      html = Capybara.string(file_viewer.body_html)
+      expect(html).to have_css(
+        '.sul-embed-media-heading .sul-embed-stanford-only-text .sul-embed-text-hide',
+        text: 'Stanford only'
+      )
     end
   end
   describe 'embargoed to world' do
@@ -112,6 +122,15 @@ describe Embed::Viewer::File do
       html = Capybara.string(file_viewer.body_html)
       expect(html).to have_css('.sul-embed-embargo-message', text: "Access is restricted until #{(Time.current + 1.month).strftime('%d-%b-%Y')}")
       expect(html).not_to have_css('a')
+    end
+  end
+
+  describe 'location restricted' do
+    it 'includes text indicating the file is location restricted' do
+      stub_purl_response_and_request(single_video_purl, request)
+      expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com')
+      html = Capybara.string(file_viewer.body_html)
+      expect(html).to have_css('.sul-embed-media-heading .sul-embed-location-restricted-text', text: '(Restricted)')
     end
   end
 end
