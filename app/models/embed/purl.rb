@@ -164,14 +164,20 @@ module Embed
 
       def files
         @files ||= @resource.xpath('./file').map do |file|
-          ResourceFile.new(file, @rights)
+          ResourceFile.new(self, file, @rights)
         end
       end
 
       class ResourceFile
-        def initialize(file, rights)
+        def initialize(resource, file, rights)
+          @resource = resource
           @file = file
           @rights = rights
+        end
+
+        def label
+          return resource.description if resource.description.present?
+          title
         end
 
         def title
@@ -228,6 +234,8 @@ module Embed
         end
 
         private
+
+        attr_reader :resource
 
         def image_data?
           @file.xpath('./imageData').present?

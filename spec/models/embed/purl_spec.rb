@@ -157,6 +157,22 @@ describe Embed::PURL do
           expect(resource_file.size).to eq '12345'
         end
       end
+
+      describe '#label' do
+        let(:resource) { double('PURL::Resource', description: nil) }
+        let(:resource_with_description) { double('PURL::Resource', description: 'The Resource Description') }
+        let(:resource_file) { double('file', attributes: { 'id' => double(value: 'The File ID') }) }
+        it 'is the resource description when available' do
+          file = Embed::PURL::Resource::ResourceFile.new(resource_with_description, resource_file, double('rights'))
+          expect(file.label).to eq 'The Resource Description'
+        end
+
+        it 'is the file id when no resource description is available' do
+          file = Embed::PURL::Resource::ResourceFile.new(resource, resource_file, double('rights'))
+          expect(file.label).to eq 'The File ID'
+        end
+      end
+
       describe 'previewable?' do
         it 'should return true if the mimetype of the file is previewable' do
           stub_purl_response_with_fixture(image_purl)
@@ -235,7 +251,7 @@ describe Embed::PURL do
           f = double('File')
           video_data_el = Nokogiri::XML("<videoData duration='P0DT1H2M3S'/>").root
           expect(f).to receive(:xpath).with('./*').and_return([video_data_el]).twice
-          rf = Embed::PURL::Resource::ResourceFile.new(f, double('Rights'))
+          rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Embed::MediaDuration).to receive(:new).and_call_original
           expect(rf.duration).to eq '1:02:03'
         end
@@ -243,14 +259,14 @@ describe Embed::PURL do
           f = double('File')
           audio_data_el = Nokogiri::XML("<audioData duration='PT43S'/>").root
           expect(f).to receive(:xpath).with('./*').and_return([audio_data_el]).twice
-          rf = Embed::PURL::Resource::ResourceFile.new(f, double('Rights'))
+          rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Embed::MediaDuration).to receive(:new).and_call_original
           expect(rf.duration).to eq '0:43'
         end
         it 'nil when missing media data element' do
           f = double('File')
           allow(f).to receive(:xpath)
-          rf = Embed::PURL::Resource::ResourceFile.new(f, double('Rights'))
+          rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Embed::MediaDuration).not_to receive(:new)
           expect(rf.duration).to eq nil
         end
@@ -258,7 +274,7 @@ describe Embed::PURL do
           f = double('File')
           audio_data_el = Nokogiri::XML("<audioData duration='invalid'/>").root
           expect(f).to receive(:xpath).with('./*').and_return([audio_data_el]).twice
-          rf = Embed::PURL::Resource::ResourceFile.new(f, double('Rights'))
+          rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Honeybadger).to receive(:notify).with("ResourceFile\#media duration ISO8601::Errors::UnknownPattern: 'invalid'")
           expect(Embed::MediaDuration).to receive(:new).and_call_original
           expect(rf.duration).to eq nil

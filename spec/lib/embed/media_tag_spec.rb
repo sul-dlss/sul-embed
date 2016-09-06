@@ -82,27 +82,27 @@ describe Embed::MediaTag do
   describe '#media_wrapper' do
     describe 'data-stanford-only attribute' do
       it 'true for Stanford only files' do
-        resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: true, location_restricted?: false, duration: nil)
-        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, label: 'ignored', file: resource_file))
+        resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: true, location_restricted?: false, label: 'ignored', duration: nil)
+        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
         expect(media_wrapper).to have_css('[data-stanford-only="true"]')
       end
 
       it 'false for public files' do
-        resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: false, location_restricted?: false, duration: nil)
-        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, label: 'ignored', file: resource_file))
+        resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: false, location_restricted?: false, label: 'ignored', duration: nil)
+        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
         expect(media_wrapper).to have_css('[data-stanford-only="false"]')
       end
     end
     describe 'location restriction message' do
       it 'displayed when not in location' do
-        resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: false, location_restricted?: true, duration: nil)
-        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, label: 'ignored', file: resource_file))
+        resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: false, location_restricted?: true, label: 'ignored', duration: nil)
+        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
         expect(media_wrapper).to have_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')
         expect(media_wrapper).to have_css('.sul-embed-media-access-restricted .line2', text: 'See Access conditions for more information')
       end
       it 'not displayed when in location' do
-        resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: false, location_restricted?: false, duration: nil)
-        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, label: 'ignored', file: resource_file))
+        resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: false, location_restricted?: false, label: 'ignored', duration: nil)
+        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
         expect(media_wrapper).not_to have_css('.sul-embed-media-access-restricted')
         expect(media_wrapper).not_to have_css('.sul-embed-media-access-restricted .line1', text: 'Limited access for non-Stanford guests')
         expect(media_wrapper).not_to have_css('.sul-embed-media-access-restricted .line2', text: 'See Access conditions for more information')
@@ -110,13 +110,13 @@ describe Embed::MediaTag do
     end
     describe 'duration' do
       it 'sets the duration when the resource file has duration' do
-        resource_file = double(Embed::PURL::Resource::ResourceFile, duration: '1:02')
-        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, label: 'ignored', file: resource_file))
+        resource_file = double(Embed::PURL::Resource::ResourceFile, label: 'ignored', duration: '1:02')
+        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
         expect(media_wrapper).to have_css('[data-duration="1:02"]')
       end
       it 'leaves the duration empty when the resource file is missing duration' do
-        resource_file = double(Embed::PURL::Resource::ResourceFile, duration: nil)
-        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, label: 'ignored', file: resource_file))
+        resource_file = double(Embed::PURL::Resource::ResourceFile, label: 'ignored', duration: nil)
+        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
         expect(media_wrapper).to have_css('[data-duration=""]')
       end
     end
@@ -124,27 +124,27 @@ describe Embed::MediaTag do
     describe 'data-location-restricted attribute' do
       context 'stanford_only' do
         it 'true for location restricted files' do
-          resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: true, location_restricted?: true, duration: nil)
-          media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, label: 'ignored', file: resource_file))
+          resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: true, location_restricted?: true, label: 'ignored', duration: nil)
+          media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
           expect(media_wrapper).to have_css('[data-location-restricted="true"]')
         end
 
         it 'false for public files' do
-          resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: true, location_restricted?: false, duration: nil)
-          media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, label: 'ignored', file: resource_file))
+          resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: true, location_restricted?: false, label: 'ignored', duration: nil)
+          media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
           expect(media_wrapper).to have_css('[data-location-restricted="false"]')
         end
       end
       context 'not stanford_only' do
         it 'true for location restricted files' do
-          resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: false, location_restricted?: true, duration: nil)
-          media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, label: 'ignored', file: resource_file))
+          resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: false, location_restricted?: true, label: 'ignored', duration: nil)
+          media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
           expect(media_wrapper).to have_css('[data-location-restricted="true"]')
         end
 
         it 'false for public files' do
-          resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: false, location_restricted?: false, duration: nil)
-          media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, label: 'ignored', file: resource_file))
+          resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: false, location_restricted?: false, label: 'ignored', duration: nil)
+          media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
           expect(media_wrapper).to have_css('[data-location-restricted="false"]')
         end
       end
@@ -170,7 +170,7 @@ describe Embed::MediaTag do
 
     describe '#previewable_element' do
       before { stub_purl_response_with_fixture(purl) }
-      let(:previewable_element) { subject_klass.send(:previewable_element, 'Some Label', file) }
+      let(:previewable_element) { subject_klass.send(:previewable_element, double('file', label: 'abc123', title: 'abc123')) }
       it 'passes the square thumb url as a data attribute' do
         expect(previewable_element).to match(
           %r{data-thumbnail-url="https://stacks.*/iiif/.*abc123/square/75,75.*"}
