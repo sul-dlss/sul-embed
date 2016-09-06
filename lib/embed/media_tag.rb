@@ -8,9 +8,12 @@ module Embed
 
     include Embed::StacksImage
 
+    attr_accessor :file_index
+
     def initialize(viewer)
       @viewer = viewer
       @purl_document = viewer.purl_object
+      @file_index = 0
     end
 
     def to_html
@@ -23,7 +26,7 @@ module Embed
                     else
                       previewable_element(file)
                     end
-          @file_index += 1
+          self.file_index += 1
         end
       end
       output
@@ -137,10 +140,6 @@ module Embed
 
     def enabled_streaming_types
       Settings.streaming[:source_types]
-    end
-
-    def file_index
-      @file_index ||= 0
     end
 
     def streaming_url_for(file, type)
