@@ -162,6 +162,10 @@ module Embed
                          end
       end
 
+      def object_thumbnail?
+        @resource.attributes['thumb'].try(:value) == 'yes' || type == 'thumb'
+      end
+
       def files
         @files ||= @resource.xpath('./file').map do |file|
           ResourceFile.new(self, file, @rights)
