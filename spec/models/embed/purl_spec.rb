@@ -135,6 +135,25 @@ describe Embed::PURL do
       stub_purl_response_with_fixture(multi_file_purl)
       expect(Embed::PURL.new('12345').contents.first.description).to eq 'File1 Label'
     end
+
+    describe '#object_thumbnail?' do
+      let(:purl_resource) { double('Resource') }
+      it 'is true when type="thumb"' do
+        allow(purl_resource).to receive(:attributes).and_return('type' => double(value: 'thumb'))
+        expect(Embed::PURL::Resource.new(purl_resource, double('Rights'))).to be_object_thumbnail
+      end
+
+      it 'is true when thumb="yes"' do
+        allow(purl_resource).to receive(:attributes).and_return('thumb' => double(value: 'yes'))
+        expect(Embed::PURL::Resource.new(purl_resource, double('Rights'))).to be_object_thumbnail
+      end
+
+      it 'is false otherwise' do
+        allow(purl_resource).to receive(:attributes).and_return('type' => double(value: 'image'))
+        expect(Embed::PURL::Resource.new(purl_resource, double('Rights'))).not_to be_object_thumbnail
+      end
+    end
+
     describe 'files' do
       it 'should return an array of PURL::Resource::ResourceFile objects' do
         stub_purl_response_with_fixture(file_purl)
