@@ -157,6 +157,22 @@ describe Embed::PURL do
           expect(resource_file.size).to eq '12345'
         end
       end
+
+      describe '#label' do
+        let(:resource) { double('PURL::Resource', description: nil) }
+        let(:resource_with_description) { double('PURL::Resource', description: 'The Resource Description') }
+        let(:resource_file) { double('file', attributes: { 'id' => double(value: 'The File ID') }) }
+        it 'is the resource description when available' do
+          file = Embed::PURL::Resource::ResourceFile.new(resource_with_description, resource_file, double('rights'))
+          expect(file.label).to eq 'The Resource Description'
+        end
+
+        it 'is the file id when no resource description is available' do
+          file = Embed::PURL::Resource::ResourceFile.new(resource, resource_file, double('rights'))
+          expect(file.label).to eq 'The File ID'
+        end
+      end
+
       describe 'previewable?' do
         it 'should return true if the mimetype of the file is previewable' do
           stub_purl_response_with_fixture(image_purl)

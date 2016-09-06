@@ -17,13 +17,11 @@ module Embed
       output = ''
       purl_document.contents.each do |resource|
         next unless primary_file?(resource)
-        label = resource.description
         resource.files.each do |file|
-          label = file.title if label.blank?
           output << if SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
-                      media_element(label, file, resource.type)
+                      media_element(file, resource.type)
                     else
-                      previewable_element(label, file)
+                      previewable_element(file)
                     end
           @file_index += 1
         end
@@ -35,8 +33,8 @@ module Embed
 
     attr_reader :purl_document, :request, :viewer
 
-    def media_element(label, file, type)
-      media_wrapper(label: label, file: file) do
+    def media_element(file, type)
+      media_wrapper(file: file) do
         <<-HTML.strip_heredoc
           <#{type}
             id="sul-embed-media-#{file_index}"
@@ -53,8 +51,8 @@ module Embed
       end
     end
 
-    def previewable_element(label, file)
-      media_wrapper(label: label, thumbnail: stacks_square_url(@purl_document.druid, file.title, size: '75')) do
+    def previewable_element(file)
+      media_wrapper(thumbnail: stacks_square_url(@purl_document.druid, file.title, size: '75'), file: file) do
         "<img
           src='#{stacks_thumb_url(@purl_document.druid, file.title)}'
           class='sul-embed-media-thumb #{'sul-embed-many-media' if many_primary_files?}'
@@ -63,11 +61,11 @@ module Embed
       end
     end
 
-    def media_wrapper(label:, thumbnail: '', file: nil, &block)
+    def media_wrapper(thumbnail: '', file: nil, &block)
       <<-HTML.strip_heredoc
         <div data-stanford-only="#{file.try(:stanford_only?)}"
              data-location-restricted="#{file.try(:location_restricted?)}"
-             data-file-label="#{label}"
+             data-file-label="#{file.label}"
              data-slider-object="#{file_index}"
              data-thumbnail-url="#{thumbnail}"
              data-duration="#{file.try(:video_duration).try(:to_s)}">
