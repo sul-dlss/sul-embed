@@ -162,6 +162,18 @@ describe Embed::PURL do
         end).to be true
       end
     end
+
+    describe '#non_thumbnail_files' do
+      it 'reduces the files to only those without thumbnails' do
+        resource = Embed::PURL::Resource.new(double('Resource'), double('Rights'))
+        allow(resource).to receive(:files).and_return(
+          [double(thumbnail?: true), double(thumbnail?: false), double(thumbnail?: true)]
+        )
+        expect(resource.non_thumbnail_files.count).to eq 1
+        expect(resource.non_thumbnail_files.first).not_to be_thumbnail
+      end
+    end
+
     describe 'PURL::Resource::ResourceFile' do
       describe 'attributes' do
         before { stub_purl_response_with_fixture(file_purl) }
@@ -189,6 +201,37 @@ describe Embed::PURL do
         it 'is the file id when no resource description is available' do
           file = Embed::PURL::Resource::ResourceFile.new(resource, resource_file, double('rights'))
           expect(file.label).to eq 'The File ID'
+        end
+      end
+
+      describe '#thumbnail?' do
+        let(:resource) { double('Resource') }
+        let(:file) { double('File') }
+        let(:resource_file) { Embed::PURL::Resource::ResourceFile.new(resource, file, double('Rights')) }
+
+        it 'is true when the parent resource is an object level thumbnail' do
+          allow(resource).to receive(:object_thumbnail?).and_return(true)
+          expect(resource_file).to be_thumbnail
+        end
+
+        it 'is false when the file is not an image' do
+          allow(resource).to receive(:object_thumbnail?).and_return(false)
+          allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'not-an-image'))
+          expect(resource_file).not_to be_thumbnail
+        end
+
+        it 'is true when the parent resource type is whitelisted as having file-level thumbnail behaviors (and it is an image)' do
+          allow(resource).to receive(:object_thumbnail?).and_return(false)
+          allow(resource).to receive(:type).and_return('video')
+          allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'image/jp2'))
+          expect(resource_file).to be_thumbnail
+        end
+
+        it 'is false when the parent resource type is not whitelisted as having file-level thumbnail behaviors (even if it is an image)' do
+          allow(resource).to receive(:object_thumbnail?).and_return(false)
+          allow(resource).to receive(:type).and_return('book')
+          allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'image/jp2'))
+          expect(resource_file).not_to be_thumbnail
         end
       end
 

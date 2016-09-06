@@ -207,6 +207,10 @@ module Embed
         end
       end
 
+      def non_thumbnail_files
+        files.reject(&:thumbnail?)
+      end
+
       class ResourceFile
         def initialize(resource, file, rights)
           @resource = resource
@@ -221,6 +225,12 @@ module Embed
 
         def title
           @file.attributes['id'].try(:value)
+        end
+
+        def thumbnail?
+          return true if resource.object_thumbnail?
+          return false unless image?
+          Settings.resource_types_that_contain_thumbnails.include?(resource.type)
         end
 
         def mimetype
