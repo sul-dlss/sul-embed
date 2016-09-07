@@ -92,6 +92,22 @@ describe Embed::MediaTag do
       end
     end
 
+    describe 'poster' do
+      context 'when a file level thumbnail is present' do
+        let(:purl) { file_and_object_level_thumb_purl }
+        it 'includes a poster attribute' do
+          expect(subject).to have_css('video[poster]', visible: false)
+          video = subject.find('video[poster]', visible: false)
+          expect(video['poster']).to match(%r{/druid%2Fvideo_1/full/})
+        end
+      end
+      context 'when a file level thumbnail is not present' do
+        it 'does not include a poster attribute' do
+          expect(subject).to_not have_css('video[poster]', visible: false)
+        end
+      end
+    end
+
     context 'audio' do
       let(:purl) { audio_purl }
 
@@ -130,6 +146,7 @@ describe Embed::MediaTag do
         expect(media_wrapper).not_to have_css('.sul-embed-media-access-restricted .line2', text: 'See Access conditions for more information')
       end
     end
+
     describe 'duration' do
       it 'sets the duration when the resource file has duration' do
         resource_file = double(Embed::PURL::Resource::ResourceFile, label: 'ignored', duration: '1:02')
