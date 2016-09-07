@@ -861,6 +861,32 @@ module PURLFixtures
     XML
   end
 
+  def file_and_object_level_thumb_purl
+    <<-XML
+      <publicObject>
+        <contentMetadata type="file">
+          <resource id="audio_1" type="audio">
+            <file id="audio.mp3" mimetype="audio/mpeg" size="77033"></file>
+            <file id="audio_1.jp2" mimetype="image/jp2" size="42"></file>
+          </resource>
+          <resource id="video_1" type="video">
+            <file id="video.mp4" mimetype="video/mp4" size="77023"></file>
+            <file id="video_1.jp2" mimetype="image/jp2" size="42"></file>
+          </resource>
+          <resource id="video_2" type="video">
+            <file id="video2.mp4" mimetype="video/mp4" size="77023"></file>
+          </resource>
+          <resource id="book_1" type="image">
+            <file id="book1.jp2" mimetype="image/jp2" size="77041"></file>
+          </resource>
+          <resource id="thumb_1" type="thumb" thumb="yes">
+            <file id="thumb.jp2" mimetype="image/jp2" size="7722"></file>
+          </resource>
+        </contentMetadata>
+      </publicObject>
+    XML
+  end
+
   def empty_content_metadata_purl
     <<-XML
       <publicObject>
