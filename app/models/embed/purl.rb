@@ -218,20 +218,14 @@ module Embed
           @file.attributes['size'].try(:value)
         end
 
-        def image_height
-          @file.xpath('./imageData').first.attributes['height'].try(:text) if image_data?
+        # unused (9/2016) - candidate for removal?
+        def height
+          @file.xpath('./*/@height').first.try(:text) if @file.xpath('./*/@height').present?
         end
 
-        def image_width
-          @file.xpath('./imageData').first.attributes['width'].try(:text) if image_data?
-        end
-
-        def video_height
-          @file.xpath('./videoData').first.attributes['height'].try(:text) if video_data?
-        end
-
-        def video_width
-          @file.xpath('./videoData').first.attributes['width'].try(:text) if video_data?
+        # unused (9/2016) - candidate for removal?
+        def width
+          @file.xpath('./*/@width').first.try(:text) if @file.xpath('./*/@width').present?
         end
 
         def duration
@@ -254,14 +248,6 @@ module Embed
         private
 
         attr_reader :resource
-
-        def image_data?
-          @file.xpath('./imageData').present?
-        end
-
-        def video_data?
-          @file.xpath('./videoData').present?
-        end
 
         def location_data?
           @file.xpath('./location[@type="url"]').present?

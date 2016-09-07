@@ -326,8 +326,8 @@ describe Embed::PURL do
         before { stub_purl_response_with_fixture(image_purl) }
         let(:image) { Embed::PURL.new('12345').contents.first.files.first }
         it 'should get the image height and width for image objects' do
-          expect(image.image_height).to eq '6123'
-          expect(image.image_width).to eq '5321'
+          expect(image.height).to eq '6123'
+          expect(image.width).to eq '5321'
         end
       end
       describe 'file data' do
@@ -375,9 +375,9 @@ describe Embed::PURL do
         context 'valid videoData' do
           before { stub_purl_response_with_fixture(multi_media_purl) }
           let(:video) { Embed::PURL.new('12345').contents.first.files.first }
-          it 'should get the height and width from videoData' do
-            expect(video.video_height).to eq '288'
-            expect(video.video_width).to eq '352'
+          it 'should get the height and width for the video object' do
+            expect(video.height).to eq '288'
+            expect(video.width).to eq '352'
           end
         end
       end
