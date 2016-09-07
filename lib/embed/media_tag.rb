@@ -44,6 +44,7 @@ module Embed
             id="sul-embed-media-#{file_index}"
             data-src="#{streaming_url_for(file, :dash)}"
             data-auth-url="#{authentication_url(file)}"
+            #{poster_attribute(file)}
             controls='controls'
             aria-labelledby="access-restricted-message-div-#{file_index}"
             class="#{'sul-embed-many-media' if many_primary_files?}"
@@ -107,6 +108,11 @@ module Embed
 
     def primary_file?(resource)
       SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym) || resource.files.any?(&:previewable?)
+    end
+
+    def poster_attribute(file)
+      return unless file.thumbnail
+      "poster='#{stacks_thumb_url(@purl_document.druid, file.thumbnail)}'"
     end
 
     def access_restricted_message(stanford_only, location_restricted)
