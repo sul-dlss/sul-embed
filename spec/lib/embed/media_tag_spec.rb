@@ -57,6 +57,23 @@ describe Embed::MediaTag do
       end
     end
 
+    context 'file and object level thumbnails' do
+      let(:purl) { file_and_object_level_thumb_purl }
+
+      it 'has the correct number of objects (4)' do
+        expect(subject).to have_css('[data-slider-object]', count: 4, visible: false)
+      end
+
+      it 'does not include object level thumbnails' do
+        expect(subject).to have_css('[data-file-label="audio.mp3"]', visible: false)
+        expect(subject).not_to have_css('[data-file-label="thumb.jp2"]', visible: false)
+      end
+
+      it 'does not include file level thumbnails' do
+        expect(subject).not_to have_css('[data-file-label="audio_1.jp2"]', visible: false)
+      end
+    end
+
     context 'previewable files withing media objects' do
       let(:purl) { video_purl_with_image }
       it 'are included as top level objects' do

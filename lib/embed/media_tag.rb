@@ -20,7 +20,7 @@ module Embed
       output = ''
       purl_document.contents.each do |resource|
         next unless primary_file?(resource)
-        resource.files.each do |file|
+        resource.non_thumbnail_files.each do |file|
           output << if SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
                       media_element(file, resource.type)
                     else
