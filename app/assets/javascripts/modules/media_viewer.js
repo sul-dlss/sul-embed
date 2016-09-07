@@ -180,6 +180,7 @@
     }
 
     function initializeVideoJSPlayer(mediaObject) {
+      debugger;
       removeUnusableSources(mediaObject);
       mediaObject.addClass('video-js vjs-default-skin');
       mediaObject.show();
