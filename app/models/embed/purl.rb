@@ -229,20 +229,12 @@ module Embed
           @file.attributes['size'].try(:value)
         end
 
-        def image_height
-          @file.xpath('./imageData').first.attributes['height'].try(:text) if image_data?
+        def height
+          @file.xpath('./*').first.attributes['height'].try(:text) if @file.xpath('./*')
         end
 
-        def image_width
-          @file.xpath('./imageData').first.attributes['width'].try(:text) if image_data?
-        end
-
-        def video_height
-          @file.xpath('./videoData').first.attributes['height'].try(:text) if video_data?
-        end
-
-        def video_width
-          @file.xpath('./videoData').first.attributes['width'].try(:text) if video_data?
+        def width
+          @file.xpath('./*').first.attributes['width'].try(:text) if @file.xpath('./*')
         end
 
         def video_duration
@@ -267,10 +259,6 @@ module Embed
         end
 
         private
-
-        def image_data?
-          @file.xpath('./imageData').present?
-        end
 
         def video_data?
           @file.xpath('./videoData').present?
