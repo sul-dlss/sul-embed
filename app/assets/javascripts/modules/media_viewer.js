@@ -127,7 +127,7 @@
       jQuery.each(sources, function(){
         var source = jQuery(this);
         var originalSrc = source.attr('src');
-        if(!originalSrc.includes('stacks_token')) {
+        if(originalSrc.indexOf('stacks_token') < 0) {
           source.prop('src', originalSrc + '?stacks_token=' + token);
         }
       });
@@ -143,7 +143,7 @@
 
     function mediaObjectIsMP3(mediaObject) {
       var hlsSource = mediaObject.find('source').first();
-      return hlsSource.prop('src').includes('/mp3:');
+      return hlsSource.prop('src').indexOf('/mp3:') >= 0;
     }
 
     // We must use flash for MP3s on browsers that do not support HLS natively.
