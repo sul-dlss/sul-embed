@@ -37,7 +37,8 @@ module Embed
     attr_reader :purl_document, :request, :viewer
 
     def media_element(file, type)
-      media_wrapper(file: file) do
+      file_thumb = stacks_square_url(@purl_document.druid, file.thumbnail, size: '75') if file.thumbnail
+      media_wrapper(thumbnail: file_thumb, file: file) do
         <<-HTML.strip_heredoc
           <#{type}
             id="sul-embed-media-#{file_index}"

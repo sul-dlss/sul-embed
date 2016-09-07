@@ -204,6 +204,35 @@ describe Embed::PURL do
         end
       end
 
+      describe '#thumbnail' do
+        let(:resource_with_thumb) do
+          double(
+            'PURL::Resource', files: [
+              double(thumbnail?: false, title: 'Non thumb'),
+              double(thumbnail?: true, title: 'The Thumb')
+            ]
+          )
+        end
+        let(:resource_without_thumb) do
+          double(
+            'PURL::Resource', files: [
+              double(thumbnail?: false, title: 'Non thumb'),
+              double(thumbnail?: false, title: 'Another Non Thumb')
+            ]
+          )
+        end
+
+        it 'is the file name of the thumbnail within the same resource' do
+          file = Embed::PURL::Resource::ResourceFile.new(resource_with_thumb, double('File'), double('Rights'))
+          expect(file.thumbnail).to eq 'The Thumb'
+        end
+
+        it 'is nil when the resource does not have a file specific thumb' do
+          file = Embed::PURL::Resource::ResourceFile.new(resource_without_thumb, double('File'), double('Rights'))
+          expect(file.thumbnail).to be_nil
+        end
+      end
+
       describe '#thumbnail?' do
         let(:resource) { double('Resource') }
         let(:file) { double('File') }

@@ -192,6 +192,10 @@ module Embed
           @file.attributes['id'].try(:value)
         end
 
+        def thumbnail
+          resource.files.find(&:thumbnail?).try(:title)
+        end
+
         def thumbnail?
           return true if resource.object_thumbnail?
           return false unless image?
