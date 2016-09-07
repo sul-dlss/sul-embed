@@ -72,6 +72,11 @@ describe Embed::MediaTag do
       it 'does not include file level thumbnails' do
         expect(subject).not_to have_css('[data-file-label="audio_1.jp2"]', visible: false)
       end
+
+      it 'includes the file level thumbnail data-attribute when present' do
+        object = subject.find('[data-slider-object="1"]')
+        expect(object['data-thumbnail-url']).to match(%r{%2Fvideo_1/square/75,75/})
+      end
     end
 
     context 'previewable files withing media objects' do

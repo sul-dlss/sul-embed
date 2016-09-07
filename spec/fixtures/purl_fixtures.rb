@@ -803,7 +803,7 @@ module PURLFixtures
           <resource sequence="1" id="abc123_1" type="video">
             <file id="abc_123.mp4" mimetype="video/mp4" size="152000000"></file>
           </resource>
-          <resource sequence="2" id="bb051hp9404_2" type="file">
+          <resource sequence="2" id="bb051hp9404_2" type="image">
             <label>Image of media (1 of 1)</label>
             <file id="bd786fy6312_img.jp2" mimetype="image/jp2" size="213147">
               <imageData height="384" width="2896"/>
