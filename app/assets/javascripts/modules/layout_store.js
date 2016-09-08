@@ -19,7 +19,7 @@
       _this.state({
         authorized: false,
         bottomPanelEnabled: true,
-        bottomPanelOpen: true,
+        bottomPanelOpen: false,
         fullscreen: true,
         overviewPerspectiveAvailable: false,
         keyboardNavMode: null

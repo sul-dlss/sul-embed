@@ -28,11 +28,11 @@ describe('LayoutStore', function() {
       expect(layoutStore.layoutState).toEqual({
         authorized: false,
         bottomPanelEnabled: true,
-        bottomPanelOpen: true,
+        bottomPanelOpen: false,
         fullscreen: true,
         overviewPerspectiveAvailable: false,
         keyboardNavMode: null
-      });      
+      });
       expect(storeSpy).not.toHaveBeenCalled();
       done();
     });
@@ -40,7 +40,7 @@ describe('LayoutStore', function() {
   describe('bottomPanelOpen', function() {
     it('reverses the state', function(done) {
       PubSub.publishSync('thumbSliderToggle');
-      expect(layoutStore.layoutState.bottomPanelOpen).toBe(false);
+      expect(layoutStore.layoutState.bottomPanelOpen).toBe(true);
       done();
     });
   });
