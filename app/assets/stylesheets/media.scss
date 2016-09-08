@@ -102,8 +102,13 @@
     visibility: hidden;
   }
 
+  // Ensure fullscreen media is as large as possible.
   &.vjs-fullscreen {
-    height: auto;
+    audio,
+    video {
+      height: 100% !important;
+      width: 100% !important;
+    }
   }
 
   .vjs-poster {
