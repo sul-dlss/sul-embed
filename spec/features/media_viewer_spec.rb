@@ -96,7 +96,7 @@ describe 'media viewer', js: true do
   end
 
   context 'duration related info' do
-    it 'displays available duration in parens after the title' do
+    it 'displays available duration in parens after the title (video)' do
       page.find('.sul-embed-thumb-slider-open-close').click
       expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'abc_123.mp4 (1:02:03)')
     end
@@ -109,6 +109,17 @@ describe 'media viewer', js: true do
       it 'displays as if there were no duration in the purl xml' do
         page.find('.sul-embed-thumb-slider-open-close').click
         expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'abc_123.mp4')
+      end
+    end
+    context 'audio' do
+      let(:purl) { audio_purl_multiple }
+      it 'displays available duration in parens after the title' do
+        page.find('.sul-embed-thumb-slider-open-close').click
+        expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'abc_123.mp3 (0:43)')
+      end
+      it 'displays no duration info after title when there is no duration we can interpret' do
+        page.find('.sul-embed-thumb-slider-open-close').click
+        expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'abc_456.mp3')
       end
     end
   end

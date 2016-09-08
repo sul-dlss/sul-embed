@@ -838,6 +838,29 @@ module PURLFixtures
     XML
   end
 
+  def audio_purl_multiple
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the video</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="media">
+          <resource sequence="1" id="abc123_1" type="audio">
+            <file id="abc_123.mp3" mimetype="audio/mpeg" size="770433">
+              <audioData duration="PT43S"/>
+            </file>
+          </resource>
+          <resource sequence="1" id="abc456_1" type="audio">
+            <file id="abc_456.mp3" mimetype="audio/mpeg" size="770433"></file>
+          </resource>
+        </contentMetadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+          <dc:title>DC title of audio</dc:title>
+        </oai_dc>
+      </publicObject>
+    XML
+  end
+
   def empty_content_metadata_purl
     <<-XML
       <publicObject>

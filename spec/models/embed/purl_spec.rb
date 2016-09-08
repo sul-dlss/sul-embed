@@ -230,41 +230,49 @@ describe Embed::PURL do
           expect(file.location).to eq 'http://stacks.stanford.edu/file/druid:abc123/Title_of_the_PDF.pdf'
         end
       end
+      describe 'duration' do
+        it 'gets duration string from videoData' do
+          f = double('File')
+          video_data_el = Nokogiri::XML("<videoData duration='P0DT1H2M3S'/>").root
+          expect(f).to receive(:xpath).with('./*').and_return([video_data_el]).twice
+          rf = Embed::PURL::Resource::ResourceFile.new(f, double('Rights'))
+          expect(Embed::MediaDuration).to receive(:new).and_call_original
+          expect(rf.duration).to eq '1:02:03'
+        end
+        it 'gets duration string from audioData' do
+          f = double('File')
+          audio_data_el = Nokogiri::XML("<audioData duration='PT43S'/>").root
+          expect(f).to receive(:xpath).with('./*').and_return([audio_data_el]).twice
+          rf = Embed::PURL::Resource::ResourceFile.new(f, double('Rights'))
+          expect(Embed::MediaDuration).to receive(:new).and_call_original
+          expect(rf.duration).to eq '0:43'
+        end
+        it 'nil when missing media data element' do
+          f = double('File')
+          allow(f).to receive(:xpath)
+          rf = Embed::PURL::Resource::ResourceFile.new(f, double('Rights'))
+          expect(Embed::MediaDuration).not_to receive(:new)
+          expect(rf.duration).to eq nil
+        end
+        it 'invalid format returns nil and logs an error' do
+          f = double('File')
+          audio_data_el = Nokogiri::XML("<audioData duration='invalid'/>").root
+          expect(f).to receive(:xpath).with('./*').and_return([audio_data_el]).twice
+          rf = Embed::PURL::Resource::ResourceFile.new(f, double('Rights'))
+          expect(Honeybadger).to receive(:notify).with("ResourceFile\#media duration ISO8601::Errors::UnknownPattern: 'invalid'")
+          expect(Embed::MediaDuration).to receive(:new).and_call_original
+          expect(rf.duration).to eq nil
+        end
+      end
       describe 'video_data' do
         context 'valid videoData' do
           before { stub_purl_response_with_fixture(multi_media_purl) }
           let(:video) { Embed::PURL.new('12345').contents.first.files.first }
-          it 'should get the height and width for the video object' do
+          it 'should get the height and width from videoData' do
             expect(video.video_height).to eq '288'
             expect(video.video_width).to eq '352'
           end
-          it 'should get the duration for the video object' do
-            expect(video.video_duration.to_s).to eq '1:02:03'
-          end
         end
-        context 'duration in an invalid format' do
-          before { stub_purl_response_with_fixture(invalid_video_duration_purl) }
-          let(:video) { Embed::PURL.new('12345').contents.first.files.first }
-          it 'should return nil and log an error' do
-            expect(Honeybadger).to receive(:notify).with("ResourceFile\#video_duration ISO8601::Errors::UnknownPattern: 'PDDTMMS'")
-            expect(video.video_duration).to be_nil
-          end
-        end
-      end
-    end
-    describe 'PURL::Duration' do
-      it '#to_s should return the appropriate human-readable string for the given iso8601 duration string' do
-        expect(Embed::PURL::Duration.new('P0DT1H2M3S').to_s).to eq '1:02:03'
-        expect(Embed::PURL::Duration.new('PT2M3S').to_s).to     eq '2:03'
-        expect(Embed::PURL::Duration.new('PT10S').to_s).to      eq '0:10'
-        expect(Embed::PURL::Duration.new('P5DT1H2M3S').to_s).to eq '5:01:02:03'
-        expect(Embed::PURL::Duration.new('P9D').to_s).to        eq '9:00:00:00'
-      end
-      it '#to_s should return nil and log the appropriate error for an unsupported Duration specification' do
-        expect(Honeybadger).to receive(:notify).with('Embed::PURL::Duration does not support specifying durations in weeks')
-        expect(Honeybadger).to receive(:notify).with('Embed::PURL::Duration does not support specifying negative durations')
-        expect(Embed::PURL::Duration.new('P10W').to_s).to be_nil
-        expect(Embed::PURL::Duration.new('-PT10S').to_s).to be_nil
       end
     end
   end
