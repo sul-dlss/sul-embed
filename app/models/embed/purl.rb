@@ -230,7 +230,7 @@ module Embed
         end
 
         def duration
-          md = Embed::MediaDuration.new(@file.xpath('./*').first) if @file.xpath('./*')
+          md = Embed::MediaDuration.new(@file.xpath('./*[@duration]').first) if @file.xpath('./*/@duration').present?
           md.to_s if md
         end
 

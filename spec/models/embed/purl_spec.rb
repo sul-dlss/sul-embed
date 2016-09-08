@@ -341,7 +341,8 @@ describe Embed::PURL do
         it 'gets duration string from videoData' do
           f = double('File')
           video_data_el = Nokogiri::XML("<videoData duration='P0DT1H2M3S'/>").root
-          expect(f).to receive(:xpath).with('./*').and_return([video_data_el]).twice
+          expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
+          expect(f).to receive(:xpath).with('./*[@duration]').and_return([video_data_el])
           rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Embed::MediaDuration).to receive(:new).and_call_original
           expect(rf.duration).to eq '1:02:03'
@@ -349,7 +350,8 @@ describe Embed::PURL do
         it 'gets duration string from audioData' do
           f = double('File')
           audio_data_el = Nokogiri::XML("<audioData duration='PT43S'/>").root
-          expect(f).to receive(:xpath).with('./*').and_return([audio_data_el]).twice
+          expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
+          expect(f).to receive(:xpath).with('./*[@duration]').and_return([audio_data_el])
           rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Embed::MediaDuration).to receive(:new).and_call_original
           expect(rf.duration).to eq '0:43'
@@ -364,7 +366,8 @@ describe Embed::PURL do
         it 'invalid format returns nil and logs an error' do
           f = double('File')
           audio_data_el = Nokogiri::XML("<audioData duration='invalid'/>").root
-          expect(f).to receive(:xpath).with('./*').and_return([audio_data_el]).twice
+          expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
+          expect(f).to receive(:xpath).with('./*[@duration]').and_return([audio_data_el])
           rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Honeybadger).to receive(:notify).with("ResourceFile\#media duration ISO8601::Errors::UnknownPattern: 'invalid'")
           expect(Embed::MediaDuration).to receive(:new).and_call_original
