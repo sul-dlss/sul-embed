@@ -150,7 +150,8 @@
     // This is a simple boolean function that can easily tell us if the current
     // browser does not support HLS and the media is an MP3
     function mustUseFlash(mediaObject) {
-      return (!canPlayHLS() && mediaObjectIsMP3(mediaObject));
+      return true;
+      //return (!canPlayHLS() && mediaObjectIsMP3(mediaObject));
     }
 
     // Remove the HLS source for MP3 files if the browser
