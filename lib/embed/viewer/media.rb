@@ -52,15 +52,10 @@ module Embed
       def download_list_items
         @purl_object.contents.map do |resource|
           resource.files.map do |file|
-            link_text = if resource.description.present?
-                          resource.description
-                        else
-                          file.title
-                        end
             file_size = "(#{pretty_filesize(file.size)})" if file.size
             <<-HTML.strip_heredoc
               <li>
-                <a href='#{file_url(file.title)}' title='#{file.title}' target='_blank' rel='noopener noreferrer'>Download #{link_text}</a>
+                <a href='#{file_url(file.title)}' title='#{file.title}' target='_blank' rel='noopener noreferrer'>Download #{file.label}</a>
                 #{restrictions_text_for_file(file)}
                 #{file_size}
               </li>

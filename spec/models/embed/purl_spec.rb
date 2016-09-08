@@ -135,6 +135,25 @@ describe Embed::PURL do
       stub_purl_response_with_fixture(multi_file_purl)
       expect(Embed::PURL.new('12345').contents.first.description).to eq 'File1 Label'
     end
+
+    describe '#object_thumbnail?' do
+      let(:purl_resource) { double('Resource') }
+      it 'is true when type="thumb"' do
+        allow(purl_resource).to receive(:attributes).and_return('type' => double(value: 'thumb'))
+        expect(Embed::PURL::Resource.new(purl_resource, double('Rights'))).to be_object_thumbnail
+      end
+
+      it 'is true when thumb="yes"' do
+        allow(purl_resource).to receive(:attributes).and_return('thumb' => double(value: 'yes'))
+        expect(Embed::PURL::Resource.new(purl_resource, double('Rights'))).to be_object_thumbnail
+      end
+
+      it 'is false otherwise' do
+        allow(purl_resource).to receive(:attributes).and_return('type' => double(value: 'image'))
+        expect(Embed::PURL::Resource.new(purl_resource, double('Rights'))).not_to be_object_thumbnail
+      end
+    end
+
     describe 'files' do
       it 'should return an array of PURL::Resource::ResourceFile objects' do
         stub_purl_response_with_fixture(file_purl)
@@ -143,6 +162,18 @@ describe Embed::PURL do
         end).to be true
       end
     end
+
+    describe '#non_thumbnail_files' do
+      it 'reduces the files to only those without thumbnails' do
+        resource = Embed::PURL::Resource.new(double('Resource'), double('Rights'))
+        allow(resource).to receive(:files).and_return(
+          [double(thumbnail?: true), double(thumbnail?: false), double(thumbnail?: true)]
+        )
+        expect(resource.non_thumbnail_files.count).to eq 1
+        expect(resource.non_thumbnail_files.first).not_to be_thumbnail
+      end
+    end
+
     describe 'PURL::Resource::ResourceFile' do
       describe 'attributes' do
         before { stub_purl_response_with_fixture(file_purl) }
@@ -157,6 +188,82 @@ describe Embed::PURL do
           expect(resource_file.size).to eq '12345'
         end
       end
+
+      describe '#label' do
+        let(:resource) { double('PURL::Resource', description: nil) }
+        let(:resource_with_description) { double('PURL::Resource', description: 'The Resource Description') }
+        let(:resource_file) { double('file', attributes: { 'id' => double(value: 'The File ID') }) }
+        it 'is the resource description when available' do
+          file = Embed::PURL::Resource::ResourceFile.new(resource_with_description, resource_file, double('rights'))
+          expect(file.label).to eq 'The Resource Description'
+        end
+
+        it 'is the file id when no resource description is available' do
+          file = Embed::PURL::Resource::ResourceFile.new(resource, resource_file, double('rights'))
+          expect(file.label).to eq 'The File ID'
+        end
+      end
+
+      describe '#thumbnail' do
+        let(:resource_with_thumb) do
+          double(
+            'PURL::Resource', files: [
+              double(thumbnail?: false, title: 'Non thumb'),
+              double(thumbnail?: true, title: 'The Thumb')
+            ]
+          )
+        end
+        let(:resource_without_thumb) do
+          double(
+            'PURL::Resource', files: [
+              double(thumbnail?: false, title: 'Non thumb'),
+              double(thumbnail?: false, title: 'Another Non Thumb')
+            ]
+          )
+        end
+
+        it 'is the file name of the thumbnail within the same resource' do
+          file = Embed::PURL::Resource::ResourceFile.new(resource_with_thumb, double('File'), double('Rights'))
+          expect(file.thumbnail).to eq 'The Thumb'
+        end
+
+        it 'is nil when the resource does not have a file specific thumb' do
+          file = Embed::PURL::Resource::ResourceFile.new(resource_without_thumb, double('File'), double('Rights'))
+          expect(file.thumbnail).to be_nil
+        end
+      end
+
+      describe '#thumbnail?' do
+        let(:resource) { double('Resource') }
+        let(:file) { double('File') }
+        let(:resource_file) { Embed::PURL::Resource::ResourceFile.new(resource, file, double('Rights')) }
+
+        it 'is true when the parent resource is an object level thumbnail' do
+          allow(resource).to receive(:object_thumbnail?).and_return(true)
+          expect(resource_file).to be_thumbnail
+        end
+
+        it 'is false when the file is not an image' do
+          allow(resource).to receive(:object_thumbnail?).and_return(false)
+          allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'not-an-image'))
+          expect(resource_file).not_to be_thumbnail
+        end
+
+        it 'is true when the parent resource type is whitelisted as having file-level thumbnail behaviors (and it is an image)' do
+          allow(resource).to receive(:object_thumbnail?).and_return(false)
+          allow(resource).to receive(:type).and_return('video')
+          allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'image/jp2'))
+          expect(resource_file).to be_thumbnail
+        end
+
+        it 'is false when the parent resource type is not whitelisted as having file-level thumbnail behaviors (even if it is an image)' do
+          allow(resource).to receive(:object_thumbnail?).and_return(false)
+          allow(resource).to receive(:type).and_return('book')
+          allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'image/jp2'))
+          expect(resource_file).not_to be_thumbnail
+        end
+      end
+
       describe 'previewable?' do
         it 'should return true if the mimetype of the file is previewable' do
           stub_purl_response_with_fixture(image_purl)
@@ -235,7 +342,7 @@ describe Embed::PURL do
           f = double('File')
           video_data_el = Nokogiri::XML("<videoData duration='P0DT1H2M3S'/>").root
           expect(f).to receive(:xpath).with('./*').and_return([video_data_el]).twice
-          rf = Embed::PURL::Resource::ResourceFile.new(f, double('Rights'))
+          rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Embed::MediaDuration).to receive(:new).and_call_original
           expect(rf.duration).to eq '1:02:03'
         end
@@ -243,14 +350,14 @@ describe Embed::PURL do
           f = double('File')
           audio_data_el = Nokogiri::XML("<audioData duration='PT43S'/>").root
           expect(f).to receive(:xpath).with('./*').and_return([audio_data_el]).twice
-          rf = Embed::PURL::Resource::ResourceFile.new(f, double('Rights'))
+          rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Embed::MediaDuration).to receive(:new).and_call_original
           expect(rf.duration).to eq '0:43'
         end
         it 'nil when missing media data element' do
           f = double('File')
           allow(f).to receive(:xpath)
-          rf = Embed::PURL::Resource::ResourceFile.new(f, double('Rights'))
+          rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Embed::MediaDuration).not_to receive(:new)
           expect(rf.duration).to eq nil
         end
@@ -258,7 +365,7 @@ describe Embed::PURL do
           f = double('File')
           audio_data_el = Nokogiri::XML("<audioData duration='invalid'/>").root
           expect(f).to receive(:xpath).with('./*').and_return([audio_data_el]).twice
-          rf = Embed::PURL::Resource::ResourceFile.new(f, double('Rights'))
+          rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Honeybadger).to receive(:notify).with("ResourceFile\#media duration ISO8601::Errors::UnknownPattern: 'invalid'")
           expect(Embed::MediaDuration).to receive(:new).and_call_original
           expect(rf.duration).to eq nil

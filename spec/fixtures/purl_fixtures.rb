@@ -803,7 +803,7 @@ module PURLFixtures
           <resource sequence="1" id="abc123_1" type="video">
             <file id="abc_123.mp4" mimetype="video/mp4" size="152000000"></file>
           </resource>
-          <resource sequence="2" id="bb051hp9404_2" type="file">
+          <resource sequence="2" id="bb051hp9404_2" type="image">
             <label>Image of media (1 of 1)</label>
             <file id="bd786fy6312_img.jp2" mimetype="image/jp2" size="213147">
               <imageData height="384" width="2896"/>
@@ -857,6 +857,32 @@ module PURLFixtures
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
           <dc:title>DC title of audio</dc:title>
         </oai_dc>
+      </publicObject>
+    XML
+  end
+
+  def file_and_object_level_thumb_purl
+    <<-XML
+      <publicObject>
+        <contentMetadata type="file">
+          <resource id="audio_1" type="audio">
+            <file id="audio.mp3" mimetype="audio/mpeg" size="77033"></file>
+            <file id="audio_1.jp2" mimetype="image/jp2" size="42"></file>
+          </resource>
+          <resource id="video_1" type="video">
+            <file id="video.mp4" mimetype="video/mp4" size="77023"></file>
+            <file id="video_1.jp2" mimetype="image/jp2" size="42"></file>
+          </resource>
+          <resource id="video_2" type="video">
+            <file id="video2.mp4" mimetype="video/mp4" size="77023"></file>
+          </resource>
+          <resource id="book_1" type="image">
+            <file id="book1.jp2" mimetype="image/jp2" size="77041"></file>
+          </resource>
+          <resource id="thumb_1" type="thumb" thumb="yes">
+            <file id="thumb.jp2" mimetype="image/jp2" size="7722"></file>
+          </resource>
+        </contentMetadata>
       </publicObject>
     XML
   end

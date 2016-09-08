@@ -162,20 +162,44 @@ module Embed
                          end
       end
 
+      def object_thumbnail?
+        @resource.attributes['thumb'].try(:value) == 'yes' || type == 'thumb'
+      end
+
       def files
         @files ||= @resource.xpath('./file').map do |file|
-          ResourceFile.new(file, @rights)
+          ResourceFile.new(self, file, @rights)
         end
       end
 
+      def non_thumbnail_files
+        files.reject(&:thumbnail?)
+      end
+
       class ResourceFile
-        def initialize(file, rights)
+        def initialize(resource, file, rights)
+          @resource = resource
           @file = file
           @rights = rights
         end
 
+        def label
+          return resource.description if resource.description.present?
+          title
+        end
+
         def title
           @file.attributes['id'].try(:value)
+        end
+
+        def thumbnail
+          resource.files.find(&:thumbnail?).try(:title)
+        end
+
+        def thumbnail?
+          return true if resource.object_thumbnail?
+          return false unless image?
+          Settings.resource_types_that_contain_thumbnails.include?(resource.type)
         end
 
         def mimetype
@@ -228,6 +252,8 @@ module Embed
         end
 
         private
+
+        attr_reader :resource
 
         def image_data?
           @file.xpath('./imageData').present?
