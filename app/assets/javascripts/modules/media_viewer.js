@@ -166,17 +166,18 @@
     }
 
     function videoJsOptions(mediaObject) {
-      if (mustUseFlash(mediaObject)) {
-        return { techOrder: ['flash'] };
-      } else {
-        return {
-          html5: {
-            hls: {
-              withCredentials: true
-            }
-          }
-        };
-      }
+      return true;
+      // if (mustUseFlash(mediaObject)) {
+      //   return { techOrder: ['flash'] };
+      // } else {
+      //   return {
+      //     html5: {
+      //       hls: {
+      //         withCredentials: true
+      //       }
+      //     }
+      //   };
+      // }
     }
 
     function initializeVideoJSPlayer(mediaObject) {
