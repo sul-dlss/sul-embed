@@ -234,8 +234,9 @@ module Embed
           md.to_s if md
         end
 
+        # unused (9/2016) - candidate for removal?
         def location
-          @file.xpath('./location[@type="url"]').first.try(:text) if location_data?
+          @file.xpath('./location[@type="url"]').first.try(:text) if @file.xpath('./location[@type="url"]').present?
         end
 
         def stanford_only?
@@ -249,10 +250,6 @@ module Embed
         private
 
         attr_reader :resource
-
-        def location_data?
-          @file.xpath('./location[@type="url"]').present?
-        end
 
         def preview_types
           ['image/jp2']
