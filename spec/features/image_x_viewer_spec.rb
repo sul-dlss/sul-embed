@@ -16,15 +16,15 @@ describe 'imageX viewer', js: true do
     end
   end
   describe 'thumbnail viewer' do
-    it 'is open by default' do
+    it 'is closed by default' do
       within '.sul-embed-image-x-thumb-slider-container' do
         expect(page).to have_css '.sul-embed-image-x-thumb-slider-open-close', visible: true
         expect(page).to have_css '.sul-embed-thumb-slider-scroll', visible: true
-        expect(page).to have_css '.sul-embed-image-x-thumb-slider', visible: true
-        expect(page).to have_css 'img', count: 36
+        expect(page).to have_css '.sul-embed-image-x-thumb-slider', visible: false
       end
       find('.sul-embed-image-x-thumb-slider-open-close').click
-      expect(page).to have_css '.sul-embed-image-x-thumb-slider', visible: false
+      expect(page).to have_css '.sul-embed-image-x-thumb-slider', visible: true
+      expect(page).to have_css 'img', count: 36
     end
     describe 'is hidden when in overview' do
       before do
@@ -43,6 +43,7 @@ describe 'imageX viewer', js: true do
     end
     describe 'keyboard controls' do
       it 'navigates left and right' do
+        find('.sul-embed-image-x-thumb-slider-open-close').click
         expect(page).to have_css '.active[title="Image 1"]'
         container = find('.sul-embed-container')
         container.native.send_key(:Right)
@@ -51,6 +52,7 @@ describe 'imageX viewer', js: true do
         expect(page).to have_css '.active[title="Image 1"]'
       end
       it 'in overview navigate left/right' do
+        find('.sul-embed-image-x-thumb-slider-open-close').click
         expect(page).to have_css '.active[title="Image 1"]'
         find('[data-sul-view-perspective="overview"]').click
         container = find('.sul-embed-container')
@@ -60,6 +62,7 @@ describe 'imageX viewer', js: true do
         expect(page).to have_css '.active[title="Image 1"]'
       end
       it 'with closed thumb slider' do
+        find('.sul-embed-image-x-thumb-slider-open-close').click
         expect(page).to have_css '.active[title="Image 1"]'
         find('.sul-embed-image-x-thumb-slider-open-close').click
         expect(page).to have_css '.sul-embed-image-x-thumb-slider-container',

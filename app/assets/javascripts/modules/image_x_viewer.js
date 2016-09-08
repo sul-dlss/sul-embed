@@ -433,7 +433,7 @@
       $thumbSlider = $(document.createElement('div'));
       $thumbSlider.addClass('sul-embed-image-x-thumb-slider');
       $thumbOpenClose = $(document.createElement('div'));
-      $thumbOpenClose.addClass('sul-i-navigation-show-more-1 open ' +
+      $thumbOpenClose.addClass('sul-i-navigation-show-more-1 ' +
         'sul-embed-image-x-thumb-slider-open-close');
       $thumbOpenClose.attr('aria-label', 'toggle thumbnail viewer');
       $thumbOpenClose.attr('aria-expanded', true);
@@ -497,6 +497,7 @@
       }).init();
 
       _loadImages($thumbSlider);
+      $thumbSlider.hide();
 
       thumbSliderSly.on('load move', function() {
         _loadImages($thumbSlider);
