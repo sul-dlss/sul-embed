@@ -210,6 +210,7 @@ module Embed
           preview_types.include?(mimetype)
         end
 
+        # unused (9/2016) - candidate for removal?
         def image?
           mimetype =~ /image\/jp2/i
         end
@@ -218,29 +219,24 @@ module Embed
           @file.attributes['size'].try(:value)
         end
 
-        def image_height
-          @file.xpath('./imageData').first.attributes['height'].try(:text) if image_data?
+        # unused (9/2016) - candidate for removal?
+        def height
+          @file.xpath('./*/@height').first.try(:text) if @file.xpath('./*/@height').present?
         end
 
-        def image_width
-          @file.xpath('./imageData').first.attributes['width'].try(:text) if image_data?
-        end
-
-        def video_height
-          @file.xpath('./videoData').first.attributes['height'].try(:text) if video_data?
-        end
-
-        def video_width
-          @file.xpath('./videoData').first.attributes['width'].try(:text) if video_data?
+        # unused (9/2016) - candidate for removal?
+        def width
+          @file.xpath('./*/@width').first.try(:text) if @file.xpath('./*/@width').present?
         end
 
         def duration
-          md = Embed::MediaDuration.new(@file.xpath('./*').first) if @file.xpath('./*')
+          md = Embed::MediaDuration.new(@file.xpath('./*[@duration]').first) if @file.xpath('./*/@duration').present?
           md.to_s if md
         end
 
+        # unused (9/2016) - candidate for removal?
         def location
-          @file.xpath('./location[@type="url"]').first.try(:text) if location_data?
+          @file.xpath('./location[@type="url"]').first.try(:text) if @file.xpath('./location[@type="url"]').present?
         end
 
         def stanford_only?
@@ -254,18 +250,6 @@ module Embed
         private
 
         attr_reader :resource
-
-        def image_data?
-          @file.xpath('./imageData').present?
-        end
-
-        def video_data?
-          @file.xpath('./videoData').present?
-        end
-
-        def location_data?
-          @file.xpath('./location[@type="url"]').present?
-        end
 
         def preview_types
           ['image/jp2']

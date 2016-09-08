@@ -326,8 +326,8 @@ describe Embed::PURL do
         before { stub_purl_response_with_fixture(image_purl) }
         let(:image) { Embed::PURL.new('12345').contents.first.files.first }
         it 'should get the image height and width for image objects' do
-          expect(image.image_height).to eq '6123'
-          expect(image.image_width).to eq '5321'
+          expect(image.height).to eq '6123'
+          expect(image.width).to eq '5321'
         end
       end
       describe 'file data' do
@@ -341,7 +341,8 @@ describe Embed::PURL do
         it 'gets duration string from videoData' do
           f = double('File')
           video_data_el = Nokogiri::XML("<videoData duration='P0DT1H2M3S'/>").root
-          expect(f).to receive(:xpath).with('./*').and_return([video_data_el]).twice
+          expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
+          expect(f).to receive(:xpath).with('./*[@duration]').and_return([video_data_el])
           rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Embed::MediaDuration).to receive(:new).and_call_original
           expect(rf.duration).to eq '1:02:03'
@@ -349,7 +350,8 @@ describe Embed::PURL do
         it 'gets duration string from audioData' do
           f = double('File')
           audio_data_el = Nokogiri::XML("<audioData duration='PT43S'/>").root
-          expect(f).to receive(:xpath).with('./*').and_return([audio_data_el]).twice
+          expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
+          expect(f).to receive(:xpath).with('./*[@duration]').and_return([audio_data_el])
           rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Embed::MediaDuration).to receive(:new).and_call_original
           expect(rf.duration).to eq '0:43'
@@ -364,7 +366,8 @@ describe Embed::PURL do
         it 'invalid format returns nil and logs an error' do
           f = double('File')
           audio_data_el = Nokogiri::XML("<audioData duration='invalid'/>").root
-          expect(f).to receive(:xpath).with('./*').and_return([audio_data_el]).twice
+          expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
+          expect(f).to receive(:xpath).with('./*[@duration]').and_return([audio_data_el])
           rf = Embed::PURL::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
           expect(Honeybadger).to receive(:notify).with("ResourceFile\#media duration ISO8601::Errors::UnknownPattern: 'invalid'")
           expect(Embed::MediaDuration).to receive(:new).and_call_original
@@ -375,9 +378,9 @@ describe Embed::PURL do
         context 'valid videoData' do
           before { stub_purl_response_with_fixture(multi_media_purl) }
           let(:video) { Embed::PURL.new('12345').contents.first.files.first }
-          it 'should get the height and width from videoData' do
-            expect(video.video_height).to eq '288'
-            expect(video.video_width).to eq '352'
+          it 'should get the height and width for the video object' do
+            expect(video.height).to eq '288'
+            expect(video.width).to eq '352'
           end
         end
       end
