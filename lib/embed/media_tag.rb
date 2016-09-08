@@ -8,25 +8,18 @@ module Embed
 
     include Embed::StacksImage
 
+    attr_accessor :file_index
     def initialize(viewer)
       @viewer = viewer
       @purl_document = viewer.purl_object
+      @file_index = 0
     end
 
     def to_html
       output = ''
-      purl_document.contents.each do |resource|
-        next unless primary_file?(resource)
-        label = resource.description
-        resource.files.each do |file|
-          label = file.title if label.blank?
-          output << if SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
-                      media_element(label, file, resource.type)
-                    else
-                      previewable_element(label, file)
-                    end
-          @file_index += 1
-        end
+      purl_document.contents.select { |resource| primary_file?(resource) }.each do |resource|
+        output << output_for_resource(resource)
+        self.file_index += 1
       end
       output
     end
@@ -35,28 +28,43 @@ module Embed
 
     attr_reader :purl_document, :request, :viewer
 
-    def media_element(label, file, type)
-      media_wrapper(label: label, file: file) do
+    def output_for_resource(resource)
+      label = resource.description
+      if resource.media_file
+        label = resource.media_file.title if label.blank?
+        media_element(label, resource)
+      elsif resource.media_thumb
+        label = resource.media_thumb.title if label.blank?
+        previewable_element(label, resource.media_thumb)
+      else
+        ''
+      end
+    end
+
+    def media_element(label, resource)
+      thumbnail = stacks_square_url(purl_document.druid, resource.media_thumb.title, size: '75') if resource.media_thumb
+      media_wrapper(label: label, file: resource.media_file, thumbnail: thumbnail) do
         <<-HTML.strip_heredoc
-          <#{type}
+          <#{resource.type}
             id="sul-embed-media-#{file_index}"
-            data-src="#{streaming_url_for(file, :dash)}"
-            data-auth-url="#{authentication_url(file)}"
+            data-src="#{streaming_url_for(resource.media_file, :dash)}"
+            data-auth-url="#{authentication_url(resource.media_file)}"
             controls='controls'
             aria-labelledby="access-restricted-message-div-#{file_index}"
             class="#{'sul-embed-many-media' if many_primary_files?}"
             style="height: #{media_element_height}; display:none;"
+            #{poster_attr_html(resource.media_thumb)}
             height="#{media_element_height}">
-            #{enabled_streaming_sources(file)}
-          </#{type}>
+            #{enabled_streaming_sources(resource.media_file)}
+          </#{resource.type}>
         HTML
       end
     end
 
     def previewable_element(label, file)
-      media_wrapper(label: label, thumbnail: stacks_square_url(@purl_document.druid, file.title, size: '75')) do
+      media_wrapper(label: label, thumbnail: stacks_square_url(purl_document.druid, file.title, size: '75')) do
         "<img
-          src='#{stacks_thumb_url(@purl_document.druid, file.title)}'
+          src='#{stacks_thumb_url(purl_document.druid, file.title)}'
           class='sul-embed-media-thumb #{'sul-embed-many-media' if many_primary_files?}'
           style='max-height: #{media_element_height}'
         />"
@@ -86,6 +94,10 @@ module Embed
            type='#{streaming_settings_for(streaming_type)[:mimetype]}'>
         </source>"
       end.join
+    end
+
+    def poster_attr_html(file)
+      "poster='#{stacks_thumb_url(purl_document.druid, file.title)}'" if file
     end
 
     def media_element_height
@@ -139,10 +151,6 @@ module Embed
 
     def enabled_streaming_types
       Settings.streaming[:source_types]
-    end
-
-    def file_index
-      @file_index ||= 0
     end
 
     def streaming_url_for(file, type)

@@ -84,6 +84,21 @@ describe 'media viewer', js: true do
     end
   end
 
+  context 'a media resource with its own thumbnail in a media object' do
+    let(:purl) { video_purl_with_image }
+
+    it 'includes a thumb for the video in the thumb slider' do
+      page.find('.sul-embed-thumb-slider-open-close').click
+      thumb_url = 'https://stacks.stanford.edu/image/iiif/ignored%2Fabc_123_thumb/square/75,75/0/default.jpg'
+      expect(page).to have_css("img.sul-embed-media-square-icon[src='#{thumb_url}']")
+    end
+
+    it 'uses the thumb for the video as the key frame (via the poster attribute)' do
+      poster_url = 'https://stacks.stanford.edu/image/iiif/ignored%2Fabc_123_thumb/full/!400,400/0/default.jpg'
+      expect(page).to have_css("div.sul-embed-media-wrapper video[poster='#{poster_url}']", visible: false)
+    end
+  end
+
   context 'a location restricted file within a media object' do
     it 'displays the restricted text with the appropriate styling' do
       expect(page).not_to have_css('.sul-embed-thumb-slider', visible: true)

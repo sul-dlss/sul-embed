@@ -801,6 +801,11 @@ module PURLFixtures
         </identityMetadata>
         <contentMetadata type="media">
           <resource sequence="1" id="abc123_1" type="video">
+            <!-- note that the resource-level thumb is listed before the media file for the resource;
+              the order of the two (if there is a resource-level thumb) shouldn't matter -->
+            <file id="abc_123_thumb.jp2" mimetype="image/jp2" size="274083">
+              <imageData height="1491" width="1719"/>
+            </file>
             <file id="abc_123.mp4" mimetype="video/mp4" size="152000000"></file>
           </resource>
           <resource sequence="2" id="bb051hp9404_2" type="file">
