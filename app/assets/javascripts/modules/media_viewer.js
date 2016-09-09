@@ -139,6 +139,8 @@
       var hlsMimeType = 'application/vnd.apple.mpegURL';
       var tempVideo = document.createElement('video');
       var canPlayTypsHLS = tempVideo.canPlayType(hlsMimeType);
+      var mb = ms10Browser();
+      console.log("mb = " + mb);
       return (canPlayTypsHLS !== '' && !ms10Browser());
     }
 
