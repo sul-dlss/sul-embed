@@ -26,7 +26,9 @@
     function hideInitialSliderObjects() {
       $('[data-slider-object]').each(function(index, object) {
         if(index !== 0) {
-          $(object).hide();
+          $(object)
+            .addClass('sul-embed-hidden-slider-object')
+            .attr('aria-hidden', 'true');
         }
       });
     }
@@ -88,8 +90,14 @@
             var sliderObject = _this.scrollFrame()
                                     .find('[data-slider-object="' + index + '"]');
 
-            sliderObjects.each(function() { $(this).hide(); });
-            sliderObject.slideDown();
+
+            sliderObjects
+              .addClass('sul-embed-hidden-slider-object')
+              .attr('aria-hidden', 'true');
+            sliderObject
+              .removeClass('sul-embed-hidden-slider-object')
+              .attr('aria-hidden', 'false');
+
             if(typeof _this.options.thumbClickCallback === 'function') {
               _this.options.thumbClickCallback();
             }
