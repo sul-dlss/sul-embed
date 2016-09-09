@@ -138,7 +138,7 @@
       var hlsMimeType = 'application/vnd.apple.mpegURL';
       var tempVideo = document.createElement('video');
       var canPlayTypsHLS = tempVideo.canPlayType(hlsMimeType);
-      return canPlayTypsHLS !== '';
+      return (canPlayTypsHLS !== '' && !ms10Browser());
     }
 
     function mediaObjectIsMP3(mediaObject) {
@@ -150,8 +150,8 @@
       var fingerprinter = new ClientJS();
       var browser = fingerprinter.getBrowser();
       return (((browser.toLowerCase() === 'edge') || (browser.toLowerCase() === 'ie')) &&
-              fingerprinter.getOS().toLowerCase() === 'windows' &&
-              fingerprinter.getOSVersion().toLowerCase() === '10');
+               fingerprinter.getOS().toLowerCase() === 'windows' &&
+               fingerprinter.getOSVersion().toLowerCase() === '10');
     }
 
     // We must use flash for MP3s on browsers that do not support HLS natively.
@@ -160,7 +160,7 @@
     // on Windows 10 Microsoft browsers (IE and Edge) because of a known issue
     // with the VidoeJS HLS plugin.
     function mustUseFlash(mediaObject) {
-      return (!canPlayHLS() && mediaObjectIsMP3(mediaObject) && !ms10Browser());
+      return (!canPlayHLS() && mediaObjectIsMP3(mediaObject));
     }
 
     // Remove the HLS source for MP3 files if the browser
