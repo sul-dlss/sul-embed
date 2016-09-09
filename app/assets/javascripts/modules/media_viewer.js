@@ -177,7 +177,6 @@
     }
 
     function videoJsOptions(mediaObject) {
-      return { techOrder: ['flash'] };
       if (mustUseFlash(mediaObject)) {
         return { techOrder: ['flash'] };
       } else {
