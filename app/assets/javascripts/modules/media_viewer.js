@@ -146,12 +146,21 @@
       return hlsSource.prop('src').indexOf('/mp3:') >= 0;
     }
 
+    function ms10Browser() {
+      var fingerprinter = new ClientJS();
+      var browser = fingerprinter.getBrowser();
+      return (((browser.toLowerCase() === 'edge') || (browser.toLowerCase() === 'ie')) &&
+              fingerprinter.getOS().toLowerCase() === 'windows' &&
+              fingerprinter.getOSVersion().toLowerCase() === '10');
+    }
+
     // We must use flash for MP3s on browsers that do not support HLS natively.
     // This is a simple boolean function that can easily tell us if the current
-    // browser does not support HLS and the media is an MP3
+    // browser does not support HLS and the media is an MP3. We also use flash
+    // on Windows 10 Microsoft browsers (IE and Edge) because of a known issue
+    // with the VidoeJS HLS plugin.
     function mustUseFlash(mediaObject) {
-      return true;
-      //return (!canPlayHLS() && mediaObjectIsMP3(mediaObject));
+      return (!canPlayHLS() && mediaObjectIsMP3(mediaObject) && !ms10Browser());
     }
 
     // Remove the HLS source for MP3 files if the browser
@@ -168,21 +177,20 @@
 
     function videoJsOptions(mediaObject) {
       return { techOrder: ['flash'] };
-      // if (mustUseFlash(mediaObject)) {
-      //   return { techOrder: ['flash'] };
-      // } else {
-      //   return {
-      //     html5: {
-      //       hls: {
-      //         withCredentials: true
-      //       }
-      //     }
-      //   };
-      // }
+      if (mustUseFlash(mediaObject)) {
+        return { techOrder: ['flash'] };
+      } else {
+        return {
+          html5: {
+            hls: {
+              withCredentials: true
+            }
+          }
+        };
+      }
     }
 
     function initializeVideoJSPlayer(mediaObject) {
-      debugger;
       removeUnusableSources(mediaObject);
       mediaObject.addClass('video-js vjs-default-skin');
       mediaObject.show();
