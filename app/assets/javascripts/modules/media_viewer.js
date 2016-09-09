@@ -139,11 +139,7 @@
       var hlsMimeType = 'application/vnd.apple.mpegURL';
       var tempVideo = document.createElement('video');
       var canPlayTypsHLS = tempVideo.canPlayType(hlsMimeType);
-      var mb = ms10Browser();
-      console.log("mb = " + mb);
-      var returnValue = (canPlayTypsHLS !== '' && !ms10Browser());
-      console.log("rv = " + returnValue);
-      return (canPlayTypsHLS !== '' && !ms10Browser());
+      return (canPlayTypsHLS !== '');
     }
 
     function mediaObjectIsMP3(mediaObject) {
@@ -165,7 +161,8 @@
     // on Windows 10 Microsoft browsers (IE and Edge) because of a known issue
     // with the VidoeJS HLS plugin.
     function mustUseFlash(mediaObject) {
-      return (!canPlayHLS() && mediaObjectIsMP3(mediaObject));
+      return (ms10Browser() ||
+              (!canPlayHLS() && mediaObjectIsMP3(mediaObject)));
     }
 
     // Remove the HLS source for MP3 files if the browser
@@ -173,8 +170,6 @@
     // will attempt to play an HLS MP3 stream simply because
     // it is HLS, even though it is not able to do so.
     function removeUnusableSources(mediaObject) {
-      var muf = mustUseFlash(mediaObject);
-      console.log("muf = " + muf);
       if(mustUseFlash(mediaObject)) {
         mediaObject
           .find('source[type="application/x-mpegURL"]')
