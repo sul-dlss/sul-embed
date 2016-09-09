@@ -1,6 +1,7 @@
 //= require modules/thumb_slider
 //= require video.js/video.js
 //= require videojs-contrib-hls/videojs-contrib-hls.js
+//= require client.js/client.min.js
 /*global ThumbSlider */
 /*global videojs */
 
