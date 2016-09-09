@@ -141,6 +141,8 @@
       var canPlayTypsHLS = tempVideo.canPlayType(hlsMimeType);
       var mb = ms10Browser();
       console.log("mb = " + mb);
+      var returnValue = (canPlayTypsHLS !== '' && !ms10Browser());
+      console.log("rv = " + returnValue);
       return (canPlayTypsHLS !== '' && !ms10Browser());
     }
 
@@ -171,6 +173,8 @@
     // will attempt to play an HLS MP3 stream simply because
     // it is HLS, even though it is not able to do so.
     function removeUnusableSources(mediaObject) {
+      var muf = mustUseFlash(mediaObject);
+      console.log("muf = " + muf);
       if(mustUseFlash(mediaObject)) {
         mediaObject
           .find('source[type="application/x-mpegURL"]')
