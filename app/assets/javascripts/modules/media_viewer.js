@@ -99,9 +99,9 @@
     }
 
     function pauseAllMedia() {
-      var mediaObjects = $('.sul-embed-media audio, .sul-embed-media video');
+      var mediaObjects = jQuery('.sul-embed-media').find('.video-js');
       mediaObjects.each(function() {
-        this.pause();
+        videojs(jQuery(this).attr('id')).pause();
       });
     }
 

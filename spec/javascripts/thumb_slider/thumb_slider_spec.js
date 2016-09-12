@@ -23,12 +23,21 @@ describe('ThumbSlider', function() {
       expect($(selector).length).toBe(1);
     });
 
-    it('hides all media objects except for the first', function() {
-      expect($('.sul-embed-media video').css('display')).toBe('inline');
-      expect($('.sul-embed-media audio').css('display')).toBe('inline');
+    it('hides all media objects except for the first (including aria attribute)', function() {
+      var videoObject = $('.sul-embed-media [data-slider-object="0"]');
+      var audioObject = $('.sul-embed-media [data-slider-object="1"]');
+
+      expect(videoObject).not.toHaveClass('sul-embed-hidden-slider-object');
+      expect(audioObject).not.toHaveClass('sul-embed-hidden-slider-object');
+      expect(videoObject).not.toHaveAttr('aria-hidden');
+      expect(audioObject).not.toHaveAttr('aria-hidden');
+
       ThumbSlider.init('.sul-embed-media');
-      expect($('.sul-embed-media video').css('display')).toBe('inline');
-      expect($('.sul-embed-media audio').css('display')).toBe('none');
+
+      expect(videoObject).not.toHaveClass('sul-embed-hidden-slider-object');
+      expect(audioObject).toHaveClass('sul-embed-hidden-slider-object');
+      expect(videoObject).not.toHaveAttr('aria-hidden');
+      expect(audioObject).toHaveAttr('aria-hidden', 'true');
     });
   });
 

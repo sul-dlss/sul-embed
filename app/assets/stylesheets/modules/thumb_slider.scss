@@ -15,6 +15,13 @@ $thumb-slider-background-color: $sul-background;
   z-index: 10;
 }
 
+.#{$namespace}-hidden-slider-object,
+.#{$namespace}-hidden-slider-object * {
+  height: 0;
+  visibility: hidden;
+  width: 0;
+}
+
 .#{$namespace}-thumb-slider-open-close {
   background-color: transparent;
   border: none;
