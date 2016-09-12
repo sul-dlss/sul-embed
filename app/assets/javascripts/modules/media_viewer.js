@@ -150,6 +150,13 @@
     function ms10Browser() {
       var fingerprinter = new ClientJS();
       var browser = fingerprinter.getBrowser();
+      var result = (((browser.toLowerCase() === 'edge') || (browser.toLowerCase() === 'ie')) &&
+                     fingerprinter.getOS().toLowerCase() === 'windows' &&
+                     fingerprinter.getOSVersion().toLowerCase() === '10');
+      console.log("tommy: browser = " + browser.toLowerCase());
+      console.log("tommy: os = " + fingerprinter.getOS().toLowerCase());
+      console.log("tommy: osversion = " + fingerprinter.getOSVersion().toLowerCase());
+      console.log("Tommy: the answer is: " + result);
       return (((browser.toLowerCase() === 'edge') || (browser.toLowerCase() === 'ie')) &&
                fingerprinter.getOS().toLowerCase() === 'windows' &&
                fingerprinter.getOSVersion().toLowerCase() === '10');
@@ -160,7 +167,7 @@
     // browser does not support HLS and the media is an MP3. We also use flash
     // on Windows 10 Microsoft browsers (IE and Edge) because of a known issue
     // with the VideoJS HLS plugin. See
-    // https://github.com/videojs/videojs-contrib-hls/issues/833  
+    // https://github.com/videojs/videojs-contrib-hls/issues/833
     function mustUseFlash(mediaObject) {
       return (ms10Browser() ||
               (!canPlayHLS() && mediaObjectIsMP3(mediaObject)));
