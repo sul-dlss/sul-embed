@@ -139,6 +139,9 @@
       var hlsMimeType = 'application/vnd.apple.mpegURL';
       var tempVideo = document.createElement('video');
       var canPlayTypsHLS = tempVideo.canPlayType(hlsMimeType);
+
+      var result = (canPlayTypsHLS !== '');
+      console.log("tommy: canPlayTypeHLS = " + result);
       return canPlayTypsHLS !== '';
     }
 
@@ -153,6 +156,7 @@
       var result = (((browser.toLowerCase() === 'edge') || (browser.toLowerCase() === 'ie')) &&
                      fingerprinter.getOS().toLowerCase() === 'windows' &&
                      fingerprinter.getOSVersion().toLowerCase() === '10');
+
       console.log("tommy: browser = " + browser.toLowerCase());
       console.log("tommy: os = " + fingerprinter.getOS().toLowerCase());
       console.log("tommy: osversion = " + fingerprinter.getOSVersion().toLowerCase());
