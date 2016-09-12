@@ -6,6 +6,8 @@ Rails.application.routes.draw do
   unless Rails.env.production?
     get '/pages/*id' => 'pages#show', as: :page, format: false
   end
+
+  mount(StubAuthEndpoint.new => :test_auth_endpoint) if Rails.env.test?
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
