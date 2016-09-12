@@ -21,6 +21,7 @@ resource_types_that_contain_thumbnails:
   - file
   - video
 streaming:
+  auth_url: "%{host}/media/%{druid}/%{title}/auth_check"
   source_types:
     - hls
     - flash

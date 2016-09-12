@@ -36,7 +36,7 @@ describe Embed::MediaTag do
     it 'includes a data attribute that includes the url to check the users auth status' do
       expect(subject).to have_css('video[data-auth-url]', count: 2, visible: false)
       auth_url = subject.all('video[data-auth-url]', visible: false).first['data-auth-url']
-      expect(auth_url).to match(%r{https?://stacks\.stanford\.edu.*/auth_check})
+      expect(auth_url).to eq(Settings.streaming.auth_url)
     end
 
     context 'single video' do
