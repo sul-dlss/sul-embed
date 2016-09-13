@@ -2,6 +2,8 @@ require 'embed/media_tag'
 module Embed
   class Viewer
     class Media < CommonViewer
+      include Embed::StacksAuth
+
       def body_html
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(
@@ -53,9 +55,10 @@ module Embed
         @purl_object.contents.map do |resource|
           resource.files.map do |file|
             file_size = "(#{pretty_filesize(file.size)})" if file.size
+            data = "data-auth-check-url='#{authentication_url(@purl_object.druid, file.title)}'" if file.location_restricted? && !file.stanford_only?
             <<-HTML.strip_heredoc
               <li>
-                <a href='#{file_url(file.title)}' title='#{file.title}' target='_blank' rel='noopener noreferrer'>Download #{file.label}</a>
+                <a href='#{file_url(file.title)}' #{data} title='#{file.title}' target='_blank' rel='noopener noreferrer'>Download #{file.label}</a>
                 #{restrictions_text_for_file(file)}
                 #{file_size}
               </li>

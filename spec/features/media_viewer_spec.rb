@@ -87,6 +87,37 @@ describe 'media viewer', js: true do
     end
   end
 
+  describe 'download links' do
+    let(:purl) { single_video_purl }
+    context 'when a user does not have permission' do
+      let(:stub_auth) { StubAuthEndpoint.set_location_restricted! }
+      it 'prevents the user from downloading location restricted files (with a message)' do
+        expect(page).to have_css('.sul-embed-download-panel', visible: false)
+        toggle_download_panel
+        expect(page).to have_css('.sul-embed-download-panel', visible: true)
+
+        expect(page).not_to have_css('.sul-embed-error-message-text', text: 'Restricted file cannot be downloaded in your location.')
+        expect(page).to have_link('abc_123.mp4', visible: true)
+        click_link('abc_123.mp4')
+        expect(page).to have_css('.sul-embed-error-message-text', text: 'Restricted file cannot be downloaded in your location.')
+      end
+    end
+
+    context 'when a user has permission' do
+      let(:stub_auth) { StubAuthEndpoint.set_success! }
+      it 'lets the user click through if they can access the location restricted content' do
+        expect(page).to have_css('.sul-embed-download-panel', visible: false)
+        toggle_download_panel
+        expect(page).to have_css('.sul-embed-download-panel', visible: true)
+
+        expect(page).not_to have_css('.sul-embed-error-message-text', text: 'Restricted file cannot be downloaded in your location.')
+        expect(page).to have_link('abc_123.mp4', visible: true)
+        click_link('abc_123.mp4')
+        expect(page).not_to have_css('.sul-embed-error-message-text', text: 'Restricted file cannot be downloaded in your location.')
+      end
+    end
+  end
+
   context 'a previewable file within a media object' do
     let(:purl) { video_purl_with_image }
 
