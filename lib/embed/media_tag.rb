@@ -6,6 +6,7 @@ module Embed
     SUPPORTED_MEDIA_TYPES = [:audio, :video].freeze
     MEDIA_INDEX_CONTROL_HEIGHT = 24
 
+    include Embed::StacksAuth
     include Embed::StacksImage
 
     attr_accessor :file_index
@@ -43,7 +44,7 @@ module Embed
           <#{type}
             id="sul-embed-media-#{file_index}"
             data-src="#{streaming_url_for(file, :dash)}"
-            data-auth-url="#{authentication_url(file)}"
+            data-auth-url="#{authentication_url(@purl_document.druid, file.title)}"
             #{poster_attribute(file)}
             controls='controls'
             aria-labelledby="access-restricted-message-div-#{file_index}"
@@ -159,11 +160,6 @@ module Embed
       when :dash
         stacks_media_stream.to_manifest_url
       end
-    end
-
-    def authentication_url(file)
-      attributes = { host: Settings.stacks_url, druid: purl_document.druid, title: file.title }
-      Settings.streaming.auth_url % attributes
     end
   end
 end
