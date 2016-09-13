@@ -162,11 +162,8 @@ module Embed
     end
 
     def authentication_url(file)
-      "#{stacks_base_url(file)}/auth_check"
-    end
-
-    def stacks_base_url(file)
-      "#{Settings.stacks_url}/media/#{purl_document.druid}/#{file.title}"
+      attributes = { host: Settings.stacks_url, druid: purl_document.druid, title: file.title }
+      Settings.streaming.auth_url % attributes
     end
   end
 end

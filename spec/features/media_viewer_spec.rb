@@ -3,7 +3,9 @@ require 'rails_helper'
 describe 'media viewer', js: true do
   include PURLFixtures
   let(:purl) { video_purl }
+  let(:stub_auth) {}
   before do
+    stub_auth
     stub_purl_response_with_fixture(purl)
     visit_iframe_response
   end
@@ -32,7 +34,25 @@ describe 'media viewer', js: true do
   context 'single A/V file' do
     let(:purl) { audio_purl }
     it 'does does not have the thumbnail slider panel' do
+      expect(page).to have_css('.sul-embed-container', visible: true) # to wait for the viewer to load
       expect(page).not_to have_css('.sul-embed-thumb-slider-container', visible: true)
+    end
+  end
+
+  describe 'Stanford link' do
+    context 'when the user can access the file' do
+      let(:stub_auth) { StubAuthEndpoint.set_success! }
+      it 'hides the link' do
+        expect(page).to have_css('.sul-embed-container', visible: true) # to wait for the viewer to load
+        expect(page).not_to have_css('.sul-embed-auth-link a', visible: true)
+      end
+    end
+
+    context 'when the user cannot access the file' do
+      let(:stub_auth) { StubAuthEndpoint.set_stanford! }
+      it 'shows the Stanford link' do
+        expect(page).to have_css('.sul-embed-auth-link a', visible: true)
+      end
     end
   end
 
