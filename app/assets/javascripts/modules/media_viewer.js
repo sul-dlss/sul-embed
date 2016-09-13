@@ -161,9 +161,12 @@
       console.log("tommy: os = " + fingerprinter.getOS().toLowerCase());
       console.log("tommy: osversion = " + fingerprinter.getOSVersion().toLowerCase());
       console.log("Tommy: the answer is: " + result);
+      // return (((browser.toLowerCase() === 'edge') || (browser.toLowerCase() === 'ie')) &&
+      //          fingerprinter.getOS().toLowerCase() === 'windows' &&
+      //          fingerprinter.getOSVersion().toLowerCase() === '10');
+
       return (((browser.toLowerCase() === 'edge') || (browser.toLowerCase() === 'ie')) &&
-               fingerprinter.getOS().toLowerCase() === 'windows' &&
-               fingerprinter.getOSVersion().toLowerCase() === '10');
+              fingerprinter.getOS().toLowerCase() === 'windows');
     }
 
     // We must use flash for MP3s on browsers that do not support HLS natively.
