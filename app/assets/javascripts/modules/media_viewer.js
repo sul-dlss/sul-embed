@@ -202,6 +202,7 @@
     function authCheckForMediaObject(mediaObject, completeCallback) {
       var authUrl = mediaObject.data('auth-url');
       jQuery.ajax({url: authUrl, dataType: 'jsonp'}).done(function(data) {
+        debugger;
         // present the auth link if it's stanford restricted and the user isn't logged in
         if(jQuery.inArray('stanford_restricted', data.status) > -1) {
           var wrapper = jQuery('<div data-auth-link="true" class="sul-embed-auth-link"></div>');
