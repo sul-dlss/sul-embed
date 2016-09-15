@@ -219,11 +219,14 @@
         if(isRestricted && data.status === 'success') {
           parentDiv.find(restrictedMessageSelector).hide();
           parentDiv.find('[data-auth-link]').hide();
-          var allRestrictions = $(restrictedTextSelector);
-          jQuery.each(allRestrictions, function(){
-            var currentMessage = jQuery(this);
-            currentMessage.hide();
-          });
+
+          $(restrictedTextSelector).hide();
+
+          // var allRestrictions = $(restrictedTextSelector);
+          // jQuery.each(allRestrictions, function(){
+          //   var currentMessage = jQuery(this);
+          //   currentMessage.hide();
+          // });
         }
 
         if(data.status === 'success') {
