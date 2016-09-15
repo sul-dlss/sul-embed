@@ -10,6 +10,7 @@
   'use strict';
   var Module = (function() {
     var restrictedMessageSelector = '[data-access-restricted-message]';
+    var restrictedTextSelector = '.sul-embed-media-access-restricted';
     var sliderObjectSelector = '[data-slider-object]';
     var restrictedText = '(Restricted)';
     var MAX_FILE_LABEL_LENGTH = 45;
@@ -218,6 +219,11 @@
         if(isRestricted && data.status === 'success') {
           parentDiv.find(restrictedMessageSelector).hide();
           parentDiv.find('[data-auth-link]').hide();
+          var allRestrictions = $(restrictedTextSelector);
+          jQuery.each(allRestrictions, function(){
+            var currentMessage = jQuery(this);
+            currentMessage.hide();
+          });
         }
 
         if(data.status === 'success') {
