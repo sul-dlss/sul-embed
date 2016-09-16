@@ -57,7 +57,7 @@ module Embed
     end
 
     def previewable_element(file)
-      media_wrapper(thumbnail: stacks_square_url(@purl_document.druid, file.title, size: '75'), file: file) do
+      media_wrapper(thumbnail: stacks_square_url(@purl_document.druid, file.title, size: '75'), file: file, previewable_only: true) do
         "<img
           src='#{stacks_thumb_url(@purl_document.druid, file.title)}'
           class='sul-embed-media-thumb #{'sul-embed-many-media' if many_primary_files?}'
@@ -66,7 +66,7 @@ module Embed
       end
     end
 
-    def media_wrapper(thumbnail: '', file: nil, &block)
+    def media_wrapper(thumbnail: '', file: nil, previewable_only: nil, &block)
       <<-HTML.strip_heredoc
         <div data-stanford-only="#{file.try(:stanford_only?)}"
              data-location-restricted="#{file.try(:location_restricted?)}"
@@ -75,7 +75,7 @@ module Embed
              data-thumbnail-url="#{thumbnail}"
              data-duration="#{file.try(:duration)}">
           <div class='sul-embed-media-wrapper'>
-            #{access_restricted_overlay(file.try(:stanford_only?), file.try(:location_restricted?))}
+            #{access_restricted_overlay(file.try(:stanford_only?), file.try(:location_restricted?)) if !previewable_only}
             #{yield(block) if block_given?}
           </div>
         </div>
