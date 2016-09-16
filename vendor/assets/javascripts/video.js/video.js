@@ -22354,8 +22354,6 @@ module.exports = exports['default'];
 },{"../../src/js/utils/merge-options.js":149,"./component":67,"./event-target":104,"./extend.js":105,"./player":113,"./plugins.js":114,"./setup":118,"./tech/flash.js":121,"./tech/html5.js":122,"./tech/tech.js":124,"./tracks/audio-track.js":126,"./tracks/text-track.js":134,"./tracks/video-track.js":139,"./utils/browser.js":140,"./utils/create-deprecation-proxy.js":142,"./utils/dom.js":143,"./utils/events.js":144,"./utils/fn.js":145,"./utils/format-time.js":146,"./utils/log.js":148,"./utils/stylesheet.js":150,"./utils/time-ranges.js":151,"./utils/url.js":153,"global/document":1,"global/window":2,"lodash-compat/object/merge":40,"object.assign":45,"xhr":56}]},{},[154])(154)
 });
 
-
-//# sourceMappingURL=video.js.map
 /* vtt.js - v0.12.1 (https://github.com/mozilla/vtt.js) built on 08-07-2015 */
 
 (function(root) {
