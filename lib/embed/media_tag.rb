@@ -75,7 +75,7 @@ module Embed
              data-thumbnail-url="#{thumbnail}"
              data-duration="#{file.try(:duration)}">
           <div class='sul-embed-media-wrapper'>
-            #{access_restricted_overlay(file.try(:stanford_only?), file.try(:location_restricted?))}
+            
             #{yield(block) if block_given?}
           </div>
         </div>
