@@ -40,6 +40,7 @@ module Embed
       file_thumb = stacks_square_url(@purl_document.druid, file.thumbnail, size: '75') if file.thumbnail
       media_wrapper(thumbnail: file_thumb, file: file) do
         <<-HTML.strip_heredoc
+          #{access_restricted_overlay(file.try(:stanford_only?), file.try(:location_restricted?))}
           <#{type}
             id="sul-embed-media-#{file_index}"
             data-src="#{streaming_url_for(file, :dash)}"
@@ -75,7 +76,6 @@ module Embed
              data-thumbnail-url="#{thumbnail}"
              data-duration="#{file.try(:duration)}">
           <div class='sul-embed-media-wrapper'>
-            #{access_restricted_overlay(file.try(:stanford_only?), file.try(:location_restricted?))}
             #{yield(block) if block_given?}
           </div>
         </div>
