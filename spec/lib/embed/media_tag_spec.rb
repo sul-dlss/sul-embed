@@ -49,6 +49,17 @@ describe Embed::MediaTag do
         expect(subject).to have_css('video[aria-labelledby="access-restricted-message-div-0"]', visible: false)
         expect(subject).to have_css('div#access-restricted-message-div-0')
       end
+
+      it 'shows a location restricted message in place of the video' do
+        expect(subject).to have_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')
+      end
+    end
+
+    context 'single video open to the world' do
+      let(:purl) { video_purl_unrestricted }
+      it 'does not show any location restricted messages' do
+        expect(subject).not_to have_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')
+      end
     end
 
     context 'multiple videos' do
@@ -79,7 +90,7 @@ describe Embed::MediaTag do
       end
     end
 
-    context 'previewable files withing media objects' do
+    context 'previewable files within media objects' do
       let(:purl) { video_purl_with_image }
       it 'are included as top level objects' do
         expect(subject).to have_css('div img.sul-embed-media-thumb')
@@ -129,21 +140,6 @@ describe Embed::MediaTag do
         resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: false, location_restricted?: false, label: 'ignored', duration: nil)
         media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
         expect(media_wrapper).to have_css('[data-stanford-only="false"]')
-      end
-    end
-    describe 'location restriction message' do
-      it 'displayed when not in location' do
-        resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: false, location_restricted?: true, label: 'ignored', duration: nil)
-        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
-        expect(media_wrapper).to have_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')
-        expect(media_wrapper).to have_css('.sul-embed-media-access-restricted .line2', text: 'See Access conditions for more information')
-      end
-      it 'not displayed when in location' do
-        resource_file = double(Embed::PURL::Resource::ResourceFile, stanford_only?: false, location_restricted?: false, label: 'ignored', duration: nil)
-        media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
-        expect(media_wrapper).not_to have_css('.sul-embed-media-access-restricted')
-        expect(media_wrapper).not_to have_css('.sul-embed-media-access-restricted .line1', text: 'Limited access for non-Stanford guests')
-        expect(media_wrapper).not_to have_css('.sul-embed-media-access-restricted .line2', text: 'See Access conditions for more information')
       end
     end
 
