@@ -167,6 +167,7 @@ GEM
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    okcomputer (1.11.1)
     parser (2.3.0.6)
       ast (~> 2.2)
     pkg-config (1.1.7)
@@ -331,6 +332,7 @@ DEPENDENCIES
   jquery-rails
   leaflet-rails
   nokogiri
+  okcomputer
   poltergeist
   pry-byebug
   rails (< 5.0)
