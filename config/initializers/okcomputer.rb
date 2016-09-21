@@ -23,7 +23,7 @@ OkComputer::Registry.register 'stacks_url', OkComputer::HttpCheck.new(Settings.s
 if Settings.enable_media_viewer?
   stream_url = Settings.stream.url
   unless stream_url.start_with?(Settings.streaming.hls.protocol, Settings.streaming.flash.protocol)
-    stream_url = Settings.streaming.hls.protocol + stream_url
+    stream_url = "#{Settings.streaming.hls.protocol}://#{stream_url}"
   end
   OkComputer::Registry.register 'streaming_url', OkComputer::HttpCheck.new(stream_url)
   OkComputer.make_optional ['streaming_url']
