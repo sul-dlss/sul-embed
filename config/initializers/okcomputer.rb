@@ -12,7 +12,9 @@ OkComputer::Registry.deregister 'database' # don't check (unused) ActiveRecord d
 OkComputer::Registry.register 'ruby_version', OkComputer::RubyVersionCheck.new
 # TODO: add app version check when okcomputer works with cap 3 (see http://github.com/sportngin/okcomputer#112)
 
-OkComputer::Registry.register 'purl_url', OkComputer::HttpCheck.new(Settings.purl_url)
+# note that purl home page is very resource heavy
+purl_url_to_check = Settings.purl_url + (Settings.purl_url.end_with?('/') ? '' : '/') + 'status'
+OkComputer::Registry.register 'purl_url', OkComputer::HttpCheck.new(purl_url_to_check)
 OkComputer::Registry.register 'stacks_url', OkComputer::HttpCheck.new(Settings.stacks_url)
 
 # ------------------------------------------------------------------------------
