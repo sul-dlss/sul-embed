@@ -39,6 +39,7 @@ describe Embed::Response do
     before do
       expect(response).to receive(:viewer).at_least(:once).and_return(viewer)
       expect(request).to receive(:purl_object).and_return(purl_object)
+      expect(request).to receive(:fullheight?).and_return(nil)
       allow(viewer).to receive(:height).and_return('100')
       allow(viewer).to receive(:width).and_return('100')
     end
@@ -49,6 +50,7 @@ describe Embed::Response do
   describe 'embed hash' do
     before do
       expect(request).to receive(:purl_object).at_least(:once).and_return(purl_object)
+      expect(request).to receive(:fullheight?).and_return(nil)
       expect(purl_object).to receive(:title).and_return('PURL Title')
       expect(response).to receive(:viewer).at_least(:once).and_return(viewer)
       allow(viewer).to receive(:height).and_return('100')

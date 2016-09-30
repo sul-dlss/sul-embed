@@ -62,6 +62,16 @@ describe Embed::Request do
     end
   end
 
+  describe 'fullheight?' do
+    it 'default to false' do
+      expect(Embed::Request.new(url: purl)).not_to be_fullheight
+    end
+
+    it 'is true when the incoming request asks to use fullheight mode' do
+      expect(Embed::Request.new(url: purl, fullheight: 'true')).to be_fullheight
+    end
+  end
+
   describe 'as_url_params' do
     let(:url_params) do
       Embed::Request.new(url: purl, hide_title: 'true', arbitrary_param: 'something').as_url_params

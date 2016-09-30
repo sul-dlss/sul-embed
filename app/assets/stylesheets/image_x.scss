@@ -14,6 +14,23 @@ $image-thumb-slider-background-color: $sul-background;
   position: relative;
 }
 
+// This is used for the fullheight option
+// This gives the image viewer enough
+// space given the header/footer
+.#{$namespace}-fullheight {
+  .#{$namespace}-image-x {
+    height: calc(100vh - 120px);
+  }
+
+  // When in the fullheight mode we
+  // want to hide the full-screen button
+  .#{$namespace}-image-x-buttons {
+    .sul-i-expand-1 {
+      display: none;
+    }
+  }
+}
+
 .#{$namespace}-image-x-buttons {
   float: right;
   padding-top: 8px;

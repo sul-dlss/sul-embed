@@ -45,7 +45,8 @@ module Embed
       end
 
       def to_html
-        "<div class='sul-embed-container' id='sul-embed-object' style='display:none; #{container_styles}'>" << header_html << body_html << metadata_html << embed_this_html << download_html << footer_html << '</div>'
+        css_class = "sul-embed-container #{'sul-embed-fullheight' if @request.fullheight?}"
+        "<div class='#{css_class}' id='sul-embed-object' style='display:none; #{container_styles}'>" << header_html << body_html << metadata_html << embed_this_html << download_html << footer_html << '</div>'
       end
 
       def header_html
@@ -234,6 +235,7 @@ module Embed
       end
 
       def height_style
+        return 'max-height:100%;' if @request.fullheight?
         "max-height:#{height}px;" if height
       end
 
