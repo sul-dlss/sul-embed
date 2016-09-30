@@ -81,6 +81,21 @@ describe Embed::EmbedThisPanel do
       )
     end
 
+    describe 'the height' do
+      it 'is the set height in px' do
+        iframe = subject.find('iframe')
+        expect(iframe['height']).to eq '555px'
+      end
+
+      context 'when the fullheight flag is set' do
+        before { expect(request).to receive(:fullheight?).and_return(true) }
+        it 'is 100%' do
+          iframe = subject.find('iframe')
+          expect(iframe['height']).to eq '100%'
+        end
+      end
+    end
+
     describe 'the src' do
       let(:request) do
         Embed::Request.new(
