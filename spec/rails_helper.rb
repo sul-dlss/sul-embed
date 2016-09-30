@@ -63,13 +63,14 @@ def fill_in_default_sandbox_form(druid = 'ab123cd4567')
   fill_in 'url-scheme', with: "http://purl.stanford.edu/#{druid}"
 end
 
-def visit_iframe_response(druid = 'ignored', min_files_to_search: nil, hide_search: nil, hide_title: nil, hide_download: nil)
+def visit_iframe_response(druid = 'ignored', min_files_to_search: nil, hide_search: nil, hide_title: nil, hide_download: nil, fullheight: nil)
   visit iframe_path(
     url: "#{Settings.purl_url}/#{druid}",
     min_files_to_search: min_files_to_search,
     hide_search: hide_search,
     hide_title: hide_title,
-    hide_download: hide_download
+    hide_download: hide_download,
+    fullheight: fullheight
   )
   expect(page).to have_css('.sul-embed-container')
 end

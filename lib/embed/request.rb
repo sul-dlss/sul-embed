@@ -26,6 +26,14 @@ module Embed
       params[:maxwidth].to_i
     end
 
+    # This is to support a legacy use
+    # case where a consumer was applying
+    # styles to the viewer output to
+    # achieve a full screen display
+    def fullheight?
+      params[:fullheight] == 'true'
+    end
+
     def hide_title?
       params[:hide_title] && params[:hide_title] == 'true'
     end
@@ -62,7 +70,8 @@ module Embed
         :hide_embed,
         :hide_search,
         :hide_download,
-        :min_files_to_search
+        :min_files_to_search,
+        :fullheight
       )
     end
 

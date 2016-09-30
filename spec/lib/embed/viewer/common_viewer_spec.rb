@@ -104,6 +104,22 @@ describe Embed::Viewer::CommonViewer do
       html = Capybara.string(file_viewer.to_html)
       expect(html).to have_css '.sul-embed-container[style="display:none; max-height:200px; max-width:200px;"]', visible: false
     end
+
+    context 'fullheight' do
+      it 'includes the sul-embed-fullheight class if the fullheight option is passed' do
+        stub_purl_response_and_request(file_purl, request)
+        expect(request).to receive(:fullheight?).at_least(:once).and_return(true)
+        html = Capybara.string(file_viewer.to_html)
+        expect(html).to have_css('.sul-embed-fullheight', visible: false)
+      end
+
+      it 'sets the inline max-height to 100%' do
+        stub_purl_response_and_request(file_purl, request)
+        expect(request).to receive(:fullheight?).at_least(:once).and_return(true)
+        html = Capybara.string(file_viewer.to_html)
+        expect(html).to have_css('.sul-embed-fullheight[style="display:none; max-height:100%; max-width:100%;"]', visible: false)
+      end
+    end
   end
   describe 'height/width' do
     it 'sets a default height and default width to nil (which can be overridden at the viewer level)' do
