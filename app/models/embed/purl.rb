@@ -210,9 +210,8 @@ module Embed
           preview_types.include?(mimetype)
         end
 
-        # unused (9/2016) - candidate for removal?
         def image?
-          mimetype =~ /image\/jp2/i
+          (mimetype =~ /image\/jp2/i) || (mimetype =~ /image\/jpe?g/i)
         end
 
         def size
