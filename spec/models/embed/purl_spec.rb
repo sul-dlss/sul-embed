@@ -163,17 +163,6 @@ describe Embed::PURL do
       end
     end
 
-    describe '#non_thumbnail_files' do
-      it 'reduces the files to only those without thumbnails' do
-        resource = Embed::PURL::Resource.new(double('Resource'), double('Rights'))
-        allow(resource).to receive(:files).and_return(
-          [double(thumbnail?: true), double(thumbnail?: false), double(thumbnail?: true)]
-        )
-        expect(resource.non_thumbnail_files.count).to eq 1
-        expect(resource.non_thumbnail_files.first).not_to be_thumbnail
-      end
-    end
-
     describe 'PURL::Resource::ResourceFile' do
       describe 'attributes' do
         before { stub_purl_response_with_fixture(file_purl) }

@@ -88,6 +88,11 @@ describe Embed::MediaTag do
         object = subject.find('[data-slider-object="1"]')
         expect(object['data-thumbnail-url']).to match(%r{%2Fvideo_1/square/75,75/})
       end
+
+      it 'does not mistakenly use secondary files like jpgs as thumbnails' do
+        object = subject.find('[data-slider-object="2"]')
+        expect(object['data-thumbnail-url']).to be_blank
+      end
     end
 
     context 'previewable files within media objects' do

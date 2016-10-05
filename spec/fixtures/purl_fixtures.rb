@@ -902,6 +902,7 @@ module PURLFixtures
           </resource>
           <resource id="video_2" type="video">
             <file id="video2.mp4" mimetype="video/mp4" size="77023"></file>
+            <file id="video2.jpg" mimetype="image/jpg" size="1234"></file>
           </resource>
           <resource id="book_1" type="image">
             <file id="book1.jp2" mimetype="image/jp2" size="77041"></file>

@@ -19,6 +19,17 @@ resource_types_that_contain_thumbnails:
   - audio
   - file
   - video
+# This indicates which mimetypes are the
+# primary file for a given resource type
+primary_mimetypes:
+  audio:
+    - audio/aac
+    - audio/mpeg
+  image:
+    - image/jp2
+  video:
+    - video/mp4
+    - video/quicktime
 streaming:
   auth_url: "%{host}/media/%{druid}/%{title}/auth_check"
   source_types:
