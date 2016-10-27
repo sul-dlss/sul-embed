@@ -310,6 +310,80 @@ module PURLFixtures
       </publicObject>
     XML
   end
+  def world_restricted_download_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the object</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="media">
+          <resource sequence="1" id="zr649jg5679_1" type="video">
+            <label>Tape 1</label>
+            <file id="zr649jg5679_em_sl.mp4" mimetype="video/mp4" size="1755489213" />
+            <file id="zr649jg5679_thumb.jp2" mimetype="image/jp2" size="253270">
+              <imageData width="640" height="480"/>
+            </file>
+          </resource>
+          <resource sequence="2" id="zr649jg5679_2" type="file">
+              <label>Transcript</label>
+              <file id="zr649jg5679_script.pdf" mimetype="application/pdf" size="248915" />
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          #{access_discover_world}
+          <access type="read">
+            <machine>
+              <world rule="no-download"/>
+            </machine>
+          </access>
+          <access type="read">
+            <file>zr649jg5679_script.pdf</file>
+            <machine>
+              <world/>
+            </machine>
+          </access>
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
+  def stanford_restricted_download_purl
+    <<-XML
+    <publicObject>
+      <identityMetadata>
+        <objectLabel>Title of the object</objectLabel>
+      </identityMetadata>
+      <contentMetadata type="media">
+        <resource sequence="1" id="zr649jg5679_1" type="video">
+          <label>Tape 1</label>
+          <file id="no-download.mp4" mimetype="video/mp4" size="1755489213" />
+          <file id="download-ok.jp2" mimetype="image/jp2" size="253270">
+            <imageData width="640" height="480"/>
+          </file>
+        </resource>
+        <resource sequence="2" id="zr649jg5679_2" type="file">
+            <label>Transcript</label>
+            <file id="download-ok.pdf" mimetype="application/pdf" size="248915" />
+        </resource>
+      </contentMetadata>
+      <rightsMetadata>
+        #{access_discover_world}
+        <access type="read">
+          <machine>
+            <group rule="no-download">stanford</group>
+          </machine>
+        </access>
+        <access type="read">
+          <file>download-ok.jp2</file>
+          <file>download-ok.pdf</file>
+          <machine>
+            <group >stanford</group>
+          </machine>
+        </access>
+      </rightsMetadata>
+    </publicObject>
+  </access>
+    XML
+  end
   def stanford_restricted_multi_file_purl
     <<-XML
       <publicObject>
@@ -671,7 +745,7 @@ module PURLFixtures
               <videoData duration="P0DT1H2M3S" height="288" width="352"/>
             </file>
           </resource>
-          <resource sequence="2" id="abc321_1" type="video">
+          <resource sequence="2" id="abc321_2" type="video">
             <label>Second Video</label>
             <file id="abc_321.mp4" mimetype="video/mp4" size="666000000">
               <videoData duration="-P1W" height="288" width="352"/>
@@ -680,6 +754,11 @@ module PURLFixtures
           <resource sequence="3" id="bb051hp9404_2" type="file">
             <label>Transcript</label>
             <file id="abc_123_script.pdf" mimetype="application/pdf" size="557708"></file>
+          </resource>
+          <resource sequence="4" id="abc333" type="video">
+            <file id="abc_333.mp4" mimetype="video/mp4" size="152000000">
+              <videoData duration="P0DT1H2M3S" height="288" width="352"/>
+            </file>
           </resource>
         </contentMetadata>
         <rightsMetadata>

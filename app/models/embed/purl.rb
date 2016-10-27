@@ -2,7 +2,8 @@ module Embed
   class PURL
     require 'embed/media_duration'
     require 'dor/rights_auth'
-    delegate :embargoed?, :stanford_only_unrestricted?, :world_unrestricted?, to: :rights
+    delegate :embargoed?, :stanford_only_unrestricted?, :world_unrestricted?,
+             :world_downloadable_file?, :stanford_only_downloadable_file?, to: :rights
     attr_reader :druid
     def initialize(druid)
       @druid = druid
@@ -59,6 +60,12 @@ module Embed
 
     def all_resource_files
       contents.map(&:files).flatten
+    end
+
+    def downloadable_files
+      all_resource_files.select do |rf|
+        world_downloadable_file?(rf.title) || stanford_only_downloadable_file?(rf.title)
+      end
     end
 
     def purl_url

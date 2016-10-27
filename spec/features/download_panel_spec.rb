@@ -83,12 +83,12 @@ describe 'download panel', js: true do
         expect(page).to have_css '.sul-embed-download-count[aria-label="number of downloadable files"]', text: 2
       end
     end
-    it 'has the file count for files all object resources in the download panel' do
-      stub_purl_response_with_fixture(multi_resource_multi_media_purl)
+    it 'only counts downloadable files' do
+      stub_purl_response_with_fixture(world_restricted_download_purl)
       visit_iframe_response
       expect(page).to have_css '.sul-embed-body.sul-embed-media' # so shows download count
       within '.sul-i-download-3' do
-        expect(page).to have_css '.sul-embed-download-count[aria-label="number of downloadable files"]', text: 4
+        expect(page).to have_css '.sul-embed-download-count[aria-label="number of downloadable files"]', text: 1
       end
     end
     it "doesn't show the file count for image_x viewer" do

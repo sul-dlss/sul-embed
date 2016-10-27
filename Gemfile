@@ -12,7 +12,7 @@ gem 'faraday'
 
 gem 'nokogiri'
 
-gem 'dor-rights-auth'
+gem 'dor-rights-auth', '>= 1.3.0' # need downloadable methods
 
 gem 'config'
 

@@ -71,7 +71,7 @@ describe 'media viewer', js: true do
       expect(page).to have_css('[data-slider-object="1"] video', visible: false)
 
       within('.sul-embed-thumb-slider') do
-        expect(page).to have_css('.sul-embed-slider-thumb', count: 2)
+        expect(page).to have_css('.sul-embed-slider-thumb', count: 3)
       end
     end
 

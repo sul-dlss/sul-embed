@@ -102,7 +102,7 @@ GEM
     docile (1.1.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
-    dor-rights-auth (1.1.0)
+    dor-rights-auth (1.3.0)
       nokogiri
     erubis (2.7.0)
     execjs (2.6.0)
@@ -160,16 +160,14 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (3.0.1)
     netrc (0.10.3)
-    nokogiri (1.6.8)
+    nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
-      pkg-config (~> 1.1.7)
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
     okcomputer (1.11.1)
     parser (2.3.0.6)
       ast (~> 2.2)
-    pkg-config (1.1.7)
     poltergeist (1.7.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
@@ -320,7 +318,7 @@ DEPENDENCIES
   config
   coveralls
   dlss-capistrano
-  dor-rights-auth
+  dor-rights-auth (>= 1.3.0)
   faraday
   filesize
   guard-rspec

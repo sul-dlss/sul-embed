@@ -157,14 +157,16 @@ describe Embed::Viewer::CommonViewer do
   end
 
   describe '#show_download?' do
-    it 'not shown for file viewers' do
+    it 'false for file viewers' do
       expect(file_viewer.show_download?).to be_falsey
     end
-    it 'shown for image and geo viewer' do
+    it 'true for image, geo and media viewer' do
       expect(image_x_viewer.show_download?).to be_truthy
       expect(geo_viewer.show_download?).to be_truthy
+      expect_any_instance_of(Embed::PURL).to receive(:downloadable_files).and_return(['a'])
+      expect(media_viewer.show_download?).to be_truthy
     end
-    it 'not shown when hide_download is specified' do
+    it 'false when hide_download is specified' do
       hide_request = Embed::Request.new(url: 'http://purl.stanford.edu/abc123',
                                         hide_download: 'true')
       geo_hide_viewer = Embed::Viewer::Geo.new(hide_request)
