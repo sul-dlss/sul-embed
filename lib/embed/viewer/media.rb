@@ -16,7 +16,7 @@ module Embed
       end
 
       def download_html
-        return '' if @request.hide_download?
+        return '' unless show_download?
         Embed::DownloadPanel.new do
           <<-HTML.strip_heredoc
             <div class='sul-embed-panel-body'>
@@ -39,6 +39,11 @@ module Embed
         [:media]
       end
 
+      # override CommonViewer instance method to ensure we do not show download panel when no downloadable files
+      def show_download?
+        super && @purl_object.downloadable_files.present?
+      end
+
       def self.show_download?
         true
       end
@@ -50,18 +55,16 @@ module Embed
       end
 
       def download_list_items
-        @purl_object.contents.map do |resource|
-          resource.files.map do |file|
-            file_size = "(#{pretty_filesize(file.size)})" if file.size
-            <<-HTML.strip_heredoc
-              <li>
-                <a href='#{file_url(file.title)}' title='#{file.title}' target='_blank' rel='noopener noreferrer'>Download #{file.label}</a>
-                #{restrictions_text_for_file(file)}
-                #{file_size}
-              </li>
-            HTML
-          end
-        end.flatten.join
+        @purl_object.downloadable_files.map do |file|
+          file_size = "(#{pretty_filesize(file.size)})" if file.size
+          <<-HTML.strip_heredoc
+            <li>
+              <a href='#{file_url(file.title)}' title='#{file.title}' target='_blank' rel='noopener noreferrer'>Download #{file.label}</a>
+              #{restrictions_text_for_file(file)}
+              #{file_size}
+            </li>
+          HTML
+        end.join
       end
 
       def media_accessibility_note

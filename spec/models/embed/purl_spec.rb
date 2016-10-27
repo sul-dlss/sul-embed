@@ -70,7 +70,31 @@ describe Embed::PURL do
   describe 'all_resource_files' do
     it 'should return a flattened array of resource files' do
       stub_purl_response_with_fixture(multi_resource_multi_type_purl)
-      expect(Embed::PURL.new('12345').all_resource_files.count).to eq 4
+      df = Embed::PURL.new('12345').all_resource_files
+      expect(df).to be_an_instance_of Array
+      expect(df.first).to be_an_instance_of Embed::PURL::Resource::ResourceFile
+      expect(df.count).to eq 4
+    end
+  end
+  describe '#downloadable_files' do
+    it 'returns a flattened array of downloadable resource files' do
+      stub_purl_response_with_fixture(multi_resource_multi_type_purl)
+      df = Embed::PURL.new('12345').downloadable_files
+      expect(df).to be_an_instance_of Array
+      expect(df.first).to be_an_instance_of Embed::PURL::Resource::ResourceFile
+      expect(df.count).to eq 4
+    end
+    it 'returns only downloadable files (world)' do
+      stub_purl_response_with_fixture(world_restricted_download_purl)
+      purl_obj = Embed::PURL.new('12345')
+      expect(purl_obj.all_resource_files.count).to eq 3
+      expect(purl_obj.downloadable_files.count).to eq 1
+    end
+    it 'returns only downloadable files (stanford)' do
+      stub_purl_response_with_fixture(stanford_restricted_download_purl)
+      purl_obj = Embed::PURL.new('5678')
+      expect(purl_obj.all_resource_files.count).to eq 3
+      expect(purl_obj.downloadable_files.count).to eq 2
     end
   end
   describe '#bounding_box' do

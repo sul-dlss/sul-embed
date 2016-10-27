@@ -86,7 +86,7 @@ module Embed
                   'aria-label' => 'open download panel',
                   'data-sul-embed-toggle' => 'sul-embed-download-panel'
                 ) do
-                  file_count = @purl_object.all_resource_files.length if show_download_count?
+                  file_count = @purl_object.downloadable_files.length if show_download_count?
                   if show_download_count? && file_count > 0
                     doc.span(class: 'sul-embed-footer-tool sul-embed-download-count',\
                              'aria-label' => 'number of downloadable files') { doc.text file_count }

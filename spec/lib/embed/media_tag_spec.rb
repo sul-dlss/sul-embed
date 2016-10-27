@@ -30,11 +30,11 @@ describe Embed::MediaTag do
     end
 
     it 'includes a data-src attribute for the dash player' do
-      expect(subject).to have_css('[data-src]', count: 2, visible: false)
+      expect(subject).to have_css('[data-src]', count: 3, visible: false)
     end
 
     it 'includes a data attribute that includes the url to check the users auth status' do
-      expect(subject).to have_css('video[data-auth-url]', count: 2, visible: false)
+      expect(subject).to have_css('video[data-auth-url]', count: 3, visible: false)
       auth_url = subject.all('video[data-auth-url]', visible: false).first['data-auth-url']
       expect(auth_url).to eq(Settings.streaming.auth_url)
     end
