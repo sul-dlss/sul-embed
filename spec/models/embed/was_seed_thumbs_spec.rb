@@ -42,7 +42,7 @@ describe Embed::WasSeedThumbs do
     let(:connection) { double('connection') }
 
     it 'requests the thumb list form thumbnail-service' do
-      expect(Faraday).to receive(:new).with(url: 'https://thumbnail-service-example/ab123cd4567').and_return(connection)
+      expect(Faraday).to receive(:new).with(url: 'https://thumbnail-service-example.edu/ab123cd4567').and_return(connection)
       expect(connection).to receive(:get).and_return(response)
       expect(response).to receive(:success?).and_return(true)
       expect(response).to receive(:body).and_return('body')
@@ -51,7 +51,7 @@ describe Embed::WasSeedThumbs do
       expect(seed_thumbs.response).to eq('body')
     end
     it 'raises Embed::WasSeedThumbs::ResourceNotAvailable with a connection failure' do
-      expect(Faraday).to receive(:new).with(url: 'https://thumbnail-service-example/ab123cd4567').and_return(connection)
+      expect(Faraday).to receive(:new).with(url: 'https://thumbnail-service-example.edu/ab123cd4567').and_return(connection)
       expect(connection).to receive(:get).and_return(response)
       expect(response).to receive(:success?).and_return(false)
 
@@ -63,7 +63,7 @@ describe Embed::WasSeedThumbs do
   describe 'was_thumbs_url' do
     it 'builds the was_thumbs url based on the configuratino and druid' do
       seed_thumbs = Embed::WasSeedThumbs.new('ab123cd4567')
-      expect(seed_thumbs.was_thumbs_url).to eq('https://thumbnail-service-example/ab123cd4567')
+      expect(seed_thumbs.was_thumbs_url).to eq('https://thumbnail-service-example.edu/ab123cd4567')
     end
   end
 end

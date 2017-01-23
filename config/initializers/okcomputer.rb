@@ -39,6 +39,7 @@ geo_ext_url_pieces = Settings.geo_external_url.split('/')
 url_to_check = geo_ext_url_pieces[0..-2].join('/')
 OkComputer::Registry.register 'geo_external_url', OkComputer::HttpCheck.new(url_to_check)
 
-OkComputer::Registry.register 'web_archive_seed_thumbnail_url', OkComputer::HttpCheck.new(Settings.was_thumbs_url)
+was_thumbs_status_url = "#{Settings.was_thumbs_url.split('.edu').first}.edu/status"
+OkComputer::Registry.register 'web_archive_seed_thumbnail_url', OkComputer::HttpCheck.new(was_thumbs_status_url)
 
 OkComputer.make_optional %w(geo_web_services_url geo_external_url web_archive_seed_thumbnail_url)
