@@ -11,7 +11,7 @@ embed_iframe_url: 'https://embed.stanford.edu/iframe'
 jquery_version: '2.2.4'
 geo_external_url: 'https://earthworks.stanford.edu/catalog/stanford-'
 geo_wms_url: 'https://geowebservices.stanford.edu/geoserver/wms/'
-was_thumbs_url: 'https://thumbnail-service-example'
+was_thumbs_url: 'https://thumbnail-service-example.edu'
 # timeouts specified in seconds
 was_thumb_read_timeout: 5
 was_thumb_conn_timeout: 5
