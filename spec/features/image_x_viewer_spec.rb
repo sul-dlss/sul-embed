@@ -34,7 +34,7 @@ describe 'imageX viewer', js: true do
           expect(page).to have_css '.sul-embed-image-x-thumb-slider-container', visible: false
         end
         it 'reappears when canvas clicked' do
-          find('[data-id="https://purl.stanford.edu/fw090jw3474/iiif/canvas-2"]').click
+          find('[data-id="https://purl.stanford.edu/fw090jw3474/iiif/canvas/fw090jw3474_2"]').click
           expect(page).to have_css '.sul-embed-image-x-thumb-slider-container', visible: true
         end
         it 'reappears when detail select' do
