@@ -25,6 +25,7 @@ primary_mimetypes:
   audio:
     - audio/aac
     - audio/mpeg
+    - audio/mp4
   image:
     - image/jp2
   video:
