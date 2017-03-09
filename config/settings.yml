@@ -56,3 +56,11 @@ stream:
     - mpeg
   audio:
     - mp3
+    - m4a
+# Mapping from file extensions to Wowza streaming prefixes
+streaming_prefix:
+  mov: 'mp4'
+  mp4: 'mp4'
+  mpeg: 'mp4'
+  m4a: 'mp4'
+  mp3: 'mp3'

@@ -39,6 +39,10 @@ describe Embed::StacksMediaStream do
       sms = described_class.new(druid: 'ab012cd3456', file_name: 'def.mp3')
       expect(sms.to_manifest_url).to eq "https://#{streaming_base_url}/ab/012/cd/3456/mp3:def.mp3/manifest.mpd"
     end
+    it 'audio - m4a' do
+      sms = described_class.new(druid: 'ab012cd3456', file_name: 'def.m4a')
+      expect(sms.to_manifest_url).to eq "https://#{streaming_base_url}/ab/012/cd/3456/mp4:def.m4a/manifest.mpd"
+    end
     it 'unknown' do
       sms = described_class.new(druid: 'ab012cd3456', file_name: 'def.xxx')
       expect(sms.to_manifest_url).to be_nil
