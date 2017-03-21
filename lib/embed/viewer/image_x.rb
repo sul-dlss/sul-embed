@@ -176,4 +176,4 @@ module Embed
   end
 end
 
-Embed.register_viewer(Embed::Viewer::ImageX) if Embed.respond_to?(:register_viewer)
+# Embed.register_viewer(Embed::Viewer::ImageX) if Embed.respond_to?(:register_viewer)
