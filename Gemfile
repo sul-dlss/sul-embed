@@ -75,3 +75,4 @@ gem 'sul_styles', '~>0.6'
 gem 'okcomputer'
 
 gem 'rake', '~>11'
+gem 'pul_uv_rails', git: 'https://github.com/pulibrary/pul_uv_rails.git'
