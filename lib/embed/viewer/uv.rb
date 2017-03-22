@@ -3,7 +3,12 @@ module Embed
     class UV < CommonViewer
 
       def body_html
-        "<p>#{@purl_object.type}</p>"
+          <<-HTML.strip_heredoc
+          <div class='sul-embed-body' style='height: #{body_height}px' data-sul-embed-theme='#{asset_url("uv.css")}'>
+            <div class='uv' data-uri=''></div>
+            <script id="embedUV" src='#{asset_url("uv.js")}'></script>
+          </div>
+          HTML
       end
 
       def self.supported_types
