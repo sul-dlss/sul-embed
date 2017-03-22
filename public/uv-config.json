@@ -4,6 +4,11 @@
         "limitLocales": true
     },
     "modules": {
+        "seadragonCenterPanel": {
+            "options": {
+                "titleEnabled": false
+            }
+        },
         "footerPanel": {
             "options": {
                 "bookmarkEnabled": false,
