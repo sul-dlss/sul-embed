@@ -44,11 +44,7 @@ module Embed
     end
 
     def streaming_file_prefix
-      if video?
-        'mp4'
-      elsif audio?
-        'mp3'
-      end
+      Settings.streaming_prefix[file_extension]
     end
 
     def video?
