@@ -10,7 +10,7 @@ gem 'rails-api'
 
 gem 'faraday'
 
-gem 'nokogiri'
+gem 'nokogiri', '>= 1.7.1'
 
 gem 'dor-rights-auth', '>= 1.3.0' # need downloadable methods
 
