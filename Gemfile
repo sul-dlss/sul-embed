@@ -79,3 +79,5 @@ gem 'sul_styles', '~>0.5.1'
 
 # Use okcomputer to monitor the application
 gem 'okcomputer'
+
+gem 'rake', '~>11.3'
