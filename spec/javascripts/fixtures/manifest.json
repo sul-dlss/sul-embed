@@ -1,6 +1,6 @@
 {
   "@context": "http://iiif.io/api/presentation/2/context.json",
-  "@id": "https://purl.stanford.edu/fw090jw3474/iiif/manifest.json",
+  "@id": "https://purl.stanford.edu/fw090jw3474/iiif/manifest",
   "@type": "sc:Manifest",
   "label": "1st Street Arcade San Francisco",
   "attribution": "Copyright (c) Stanford University. All Rights Reserved.",

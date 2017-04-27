@@ -90,7 +90,7 @@ describe 'imageX viewer', js: true do
           purl_url = 'https://purl.stanford.edu/fw090jw3474'
 
           link = page.find('a.sul-embed-image-x-iiif-drag-and-drop-link')
-          expect(link['href']).to match(%r{^#{purl_url}\?manifest=#{purl_url}/iiif/manifest\.json$})
+          expect(link['href']).to match(%r{^#{purl_url}\?manifest=#{purl_url}/iiif/manifest$})
         end
 
         it 'has a links with _parent targets' do
