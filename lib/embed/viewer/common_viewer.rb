@@ -133,7 +133,7 @@ module Embed
       # @param [String] title
       # @return [String]
       def file_url(title)
-        "#{stacks_url}/#{title}"
+        "#{stacks_url}/#{URI.escape(title)}"
       end
 
       ##
