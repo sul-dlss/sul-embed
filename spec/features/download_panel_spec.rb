@@ -3,11 +3,19 @@ require 'rails_helper'
 describe 'download panel', js: true do
   include PURLFixtures
   let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/ab123cd4567') }
-  it 'not shown for file viewer' do
+  it 'not shown for file viewer and leaves correctly formatted filenames alone' do
     stub_purl_response_with_fixture(multi_file_purl)
     visit_iframe_response
     expect(page).to have_css '.sul-embed-body.sul-embed-file'
     expect(page).not_to have_css '.sul-embed-download-panel'
+    link = page.find('.sul-embed-media-list a', match: :first)
+    expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:ignored/Title_of_the_PDF.pdf') # this file link was good, no encoding needed
+  end
+  it 'correctly encodes a wonky filename with spaces and a special character' do
+    stub_purl_response_with_fixture(wonky_filename_purl)
+    visit_iframe_response
+    link = page.find('.sul-embed-media-list a', match: :first)
+    expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:ignored/%23Title%20of%20the%20PDF.pdf') # this file link had a # and spaces, encoding is needed
   end
   describe 'toggle button' do
     before do
