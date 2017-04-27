@@ -29,7 +29,7 @@ module Embed
       end
 
       def manifest_json_url
-        "#{Settings.purl_url}/#{@purl_object.druid}/iiif/manifest.json"
+        "#{Settings.purl_url}/#{@purl_object.druid}/iiif/manifest"
       end
 
       def metadata_html
@@ -56,7 +56,7 @@ module Embed
 
       def drag_and_drop_url
         purl_url = "#{Settings.purl_url}/#{@purl_object.druid}"
-        "#{purl_url}?manifest=#{purl_url}/iiif/manifest.json"
+        "#{purl_url}?manifest=#{purl_url}/iiif/manifest"
       end
 
       def drag_and_drop_instruction_text

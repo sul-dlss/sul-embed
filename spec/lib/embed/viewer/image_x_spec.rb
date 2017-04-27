@@ -30,7 +30,7 @@ describe Embed::Viewer::ImageX do
 
       # visible false because we display:none the container until we've loaded the CSS.
       expect(html).to have_css '.sul-embed-image-x', visible: false
-      expect(html).to have_css('#sul-embed-image-x[data-manifest-url=\'https://purl.stanford.edu/12345/iiif/manifest.json\']', visible: false)
+      expect(html).to have_css('#sul-embed-image-x[data-manifest-url=\'https://purl.stanford.edu/12345/iiif/manifest\']', visible: false)
       expect(html).to have_css('.sul-embed-image-x-buttons button[aria-label]', count: 4, visible: false)
       expect(html).to have_css('#sul-embed-image-x[data-world-restriction=false]', visible: false)
     end
@@ -66,7 +66,7 @@ describe Embed::Viewer::ImageX do
       it 'links to a PURL with a manifest parameter' do
         url = image_x_viewer.send(:drag_and_drop_url)
         purl = 'https://purl.stanford.edu/abc123'
-        expect(url).to match(%r{^#{purl}\?manifest=#{purl}/iiif/manifest\.json$})
+        expect(url).to match(%r{^#{purl}\?manifest=#{purl}/iiif/manifest$})
       end
     end
   end
