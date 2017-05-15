@@ -5,7 +5,7 @@ notifications:
 
 rvm:
   - 2.2.2 # deployed version
-  - 2.3.1
+  - 2.3.4
 
 env:
   global:
