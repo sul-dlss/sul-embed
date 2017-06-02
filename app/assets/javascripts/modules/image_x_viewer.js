@@ -338,7 +338,8 @@
           if (e.status === 404) {
             _noImagesAvailable();
           }
-          throw new Error('Could not access manifest.json');
+          throw new Error('Could not access manifest.json at ' +
+            dataAttributes.manifestUrl);
         });
     };
 
