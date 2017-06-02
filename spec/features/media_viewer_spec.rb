@@ -97,6 +97,7 @@ describe 'media viewer', js: true do
     it 'includes a thumb for the previewable image in the thumb slider' do
       expect(page).to have_css('.sul-embed-thumb-slider', visible: false)
       page.find('.sul-embed-thumb-slider-open-close').click
+      expect(page).to have_css('.sul-embed-thumb-slider')
       expect(page).to have_css('.sul-embed-thumb-slider', visible: true)
 
       expect(page).to have_css('.sul-embed-media-square-icon')

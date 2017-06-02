@@ -26,7 +26,7 @@ describe 'geo viewer public', js: true do
     end
 
     it 'shows the wms tiles' do
-      expect(page).to have_css("img[src*='stanford.edu']", minimum: 4)
+      expect(page).to have_css("img[src*='stanford.edu']", minimum: 4, visible: false)
     end
 
     it 'download toolbar/panel is present with download links' do
