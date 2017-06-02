@@ -15,10 +15,6 @@ Bundler.require(*Rails.groups)
 
 module SulEmbed
   class Application < Rails::Application
-    # Tell config gem to load settings early,
-    # so we have access to settings before rails initializes
-    Config::Integration::Rails::Railtie.preload
-
     require 'embed'
     require 'embed/viewer'
     # Settings in config/environments/* take precedence over those specified here.
