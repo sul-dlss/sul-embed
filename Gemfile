@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 # https://github.com/modeset/teaspoon/issues/443
 gem 'sprockets-rails', '< 3.0'
 
-gem 'rails', '< 5.0'
+gem 'rails', '4.2.7.1'
 
 gem 'rails-api'
 
@@ -21,7 +21,7 @@ gem 'therubyracer'
 gem 'iso8601' # to parse durations, since ActiveSupport::Duration doesn't get a parse method till rails 5
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails', '~> 3.0'
   gem 'capybara'
   gem 'poltergeist'
   gem 'high_voltage'
