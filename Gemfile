@@ -1,8 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '< 5.0'
-
-gem 'rails-api'
+gem 'rails', '~> 5.1.0'
 
 gem 'faraday'
 
