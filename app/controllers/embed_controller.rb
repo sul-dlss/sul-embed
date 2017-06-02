@@ -56,6 +56,9 @@ class EmbedController < ApplicationController
       <html>
         <head>
           <script src='//ajax.googleapis.com/ajax/libs/jquery/#{Settings.jquery_version}/jquery.min.js'></script>
+          <script>
+            #{'if (window.jQuery) { jQuery.fx.off = true; }' if Rails.env.test?}
+          </script>
         </head>
         <body>
           #{Embed::Response.new(@embed_request).viewer_html}
