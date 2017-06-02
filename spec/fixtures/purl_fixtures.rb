@@ -1,3 +1,4 @@
+# coding: utf-8
 module PURLFixtures
   def access_discover_world
     <<-XML
@@ -66,6 +67,44 @@ module PURLFixtures
             <label>Image2</label>
             <file size="23456" mimetype="image/jp2" id="image_002.jp2">
               <imageData height="7246" width="6123" />
+            </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          #{access_discover_world}
+          #{access_read_world}
+          <copyright>
+            <human type="copyright">
+              Copyright © 1976 The Board of Trustees of the Leland Stanford Junior University. All rights reserved.
+            </human>
+          </copyright>
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
+  def multi_format_image_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the image</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="image">
+          <resource sequence="1" type="image">
+            <label>Resource 1</label>
+            <file size="34567" mimetype="image/JP2" id="image_001.JP2">
+              <imageData height="8313" width="2223" />
+            </file>
+            <file size="34567" mimetype="image/JPEG" id="image_002.JPEG">
+              <imageData height="8313" width="2223" />
+            </file>
+          </resource>
+          <resource sequence="2" type="image">
+            <label>Resource 2</label>
+            <file size="34567" mimetype="image/doc" id="image_003.doc">
+              <imageData height="8313" width="2223" />
+            </file>
+            <file size="34567" mimetype="image/jpg" id="image_004.jpg">
+              <imageData height="8313" width="2223" />
             </file>
           </resource>
         </contentMetadata>

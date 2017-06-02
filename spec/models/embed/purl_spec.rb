@@ -288,13 +288,21 @@ describe Embed::PURL do
         end
       end
       describe 'image?' do
-        it 'should return true if the mimetype of the file is an image' do
-          stub_purl_response_with_fixture(image_purl)
+        it 'should return true if the mimetype of the file is a JP2 image' do
+          stub_purl_response_with_fixture(multi_format_image_purl)
           expect(Embed::PURL.new('12345').contents.first.files.first).to be_image
         end
+        it 'should return true if the mimetype of the file is a JPEG image' do
+          stub_purl_response_with_fixture(multi_format_image_purl)
+          expect(Embed::PURL.new('12345').contents.first.files.last).to be_image
+        end
+        it 'should return true if the mimetype of the file is a JPG image' do
+          stub_purl_response_with_fixture(multi_format_image_purl)
+          expect(Embed::PURL.new('12345').contents.last.files.last).to be_image
+        end
         it 'should return false if the mimetype of the file is not an image' do
-          stub_purl_response_with_fixture(file_purl)
-          expect(Embed::PURL.new('12345').contents.first.files.first).to_not be_image
+          stub_purl_response_with_fixture(multi_format_image_purl)
+          expect(Embed::PURL.new('12345').contents.last.files.first).to_not be_image
         end
       end
       describe 'rights' do
