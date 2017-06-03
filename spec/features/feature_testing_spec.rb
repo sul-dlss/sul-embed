@@ -26,7 +26,7 @@ describe 'feature testing of viewers', js: true do
       expect(page).to have_css('.sul-embed-media-list')
       expect(page).to have_css('.sul-embed-media-heading a', text: 'Title of the PDF.pdf')
       expect(page).to have_css('.sul-embed-description', text: 'File1 Label')
-      expect(page).to have_css('.sul-embed-download', text: '12.35 kB')
+      expect(page).to have_css('.sul-embed-download', text: '12.34 kB')
     end
     it 'contains 4 files in file list' do
       stub_purl_response_with_fixture(multi_resource_multi_type_purl)
