@@ -1,6 +1,3 @@
-# config valid only for Capistrano 3.4.0
-lock '3.4.0'
-
 set :application, 'embed'
 set :repo_url, 'https://github.com/sul-dlss/sul-embed.git'
 set :user, 'embed'
