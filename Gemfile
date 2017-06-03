@@ -1,12 +1,6 @@
 source 'https://rubygems.org'
 
-# Pinning to < 3.0 due to issue with teaspoon
-# https://github.com/modeset/teaspoon/issues/443
-gem 'sprockets-rails', '< 3.0'
-
-gem 'rails', '< 5.0'
-
-gem 'rails-api'
+gem 'rails', '~> 5.1.0'
 
 gem 'faraday'
 
@@ -21,7 +15,7 @@ gem 'therubyracer'
 gem 'iso8601' # to parse durations, since ActiveSupport::Duration doesn't get a parse method till rails 5
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.0.0'
+  gem 'rspec-rails', '~> 3.0'
   gem 'capybara'
   gem 'poltergeist'
   gem 'high_voltage'
@@ -75,9 +69,9 @@ gem 'bower-rails'
 
 gem 'leaflet-rails'
 
-gem 'sul_styles', '~>0.5.1'
+gem 'sul_styles', '~>0.6'
 
 # Use okcomputer to monitor the application
 gem 'okcomputer'
 
-gem 'rake', '~>11.3'
+gem 'rake', '~>11'

@@ -1,9 +1,6 @@
-require 'codeclimate-test-reporter'
-CodeClimate::TestReporter.start
 require 'coveralls'
 Coveralls.wear!('rails')
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-  CodeClimate::TestReporter::Formatter,
   Coveralls::SimpleCov::Formatter
 ]
 

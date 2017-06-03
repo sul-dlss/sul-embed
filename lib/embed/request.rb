@@ -63,7 +63,7 @@ module Embed
     end
 
     def as_url_params
-      params.slice(
+      p = params.slice(
         :maxheight,
         :maxwidth,
         :hide_title,
@@ -73,6 +73,12 @@ module Embed
         :min_files_to_search,
         :fullheight
       )
+
+      if p.respond_to? :permit!
+        p.permit!
+      else
+        p
+      end
     end
 
     private

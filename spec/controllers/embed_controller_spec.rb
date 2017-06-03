@@ -7,27 +7,27 @@ describe EmbedController do
       expect(response.status).to eq(400)
     end
     it 'has a 400 status when a PURL that is not embeddable is requested' do
-      get :get, url: 'http://purl.stanford.edu/tz959sb6952'
+      get :get, params: { url: 'http://purl.stanford.edu/tz959sb6952' }
       expect(response.status).to eq(400)
     end
     it 'has a 404 status code without matched url scheme params' do
-      get :get, url: 'http://www.example.com'
+      get :get, params: { url: 'http://www.example.com' }
       expect(response.status).to eq(404)
     end
     it 'has a 404 status code without a druid in the URL' do
-      get :get, url: 'http://purl.stanford.edu/'
+      get :get, params: { url: 'http://purl.stanford.edu/' }
       expect(response.status).to eq(404)
     end
     it 'has a 404 status for a PURL object that does not exists' do
-      get :get, url: 'http://purl.stanford.edu/abc123notanobject'
+      get :get, params: { url: 'http://purl.stanford.edu/abc123notanobject' }
       expect(response.status).to eq(404)
     end
     it 'has a 501 status code for an invalid format' do
-      get :get, url: 'http://purl.stanford.edu/abc123', format: 'yml'
+      get :get, params: { url: 'http://purl.stanford.edu/abc123', format: 'yml' }
       expect(response.status).to eq(501)
     end
     it 'has a 200 status code for a matched url scheme param' do
-      get :get, url: 'http://purl.stanford.edu/fn662rv4961'
+      get :get, params: { url: 'http://purl.stanford.edu/fn662rv4961' }
       expect(response.status).to eq(200)
     end
   end
@@ -37,27 +37,27 @@ describe EmbedController do
       expect(response.status).to eq(400)
     end
     it 'has a 404 status code without matched url scheme params' do
-      get :iframe, url: 'http://www.example.com'
+      get :iframe, params: { url: 'http://www.example.com' }
       expect(response.status).to eq(404)
     end
     it 'has a 404 status code without a druid in the URL' do
-      get :iframe, url: 'http://purl.stanford.edu/'
+      get :iframe, params: { url: 'http://purl.stanford.edu/' }
       expect(response.status).to eq(404)
     end
     it 'has a 404 status for a PURL object that does not exists' do
-      get :iframe, url: 'http://purl.stanford.edu/abc123notanobject'
+      get :iframe, params: { url: 'http://purl.stanford.edu/abc123notanobject' }
       expect(response.status).to eq(404)
     end
     it 'has a 501 status code for an invalid format' do
-      get :iframe, url: 'http://purl.stanford.edu/abc123', format: 'yml'
+      get :iframe, params: { url: 'http://purl.stanford.edu/abc123', format: 'yml' }
       expect(response.status).to eq(501)
     end
     it 'should not have an X-Frame-Options in the headers (so embedding in an iframe is allowed)' do
-      get :iframe, url: 'http://purl.stanford.edu/fn662rv4961'
+      get :iframe, params: { url: 'http://purl.stanford.edu/fn662rv4961' }
       expect(response.headers['X-Frame-Options']).to be_nil
     end
     it 'should return HTML' do
-      get :iframe, url: 'http://purl.stanford.edu/fn662rv4961'
+      get :iframe, params: { url: 'http://purl.stanford.edu/fn662rv4961' }
       expect(response.status).to eq(200)
       body = Capybara.string(response.body)
       expect(body).to have_css('html')
