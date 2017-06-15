@@ -4,8 +4,9 @@ module Embed
 
       def body_html
           <<-HTML.strip_heredoc
+          <script type='text/javascript' src='/uv-3/helpers.js'></script>
           <div class='sul-embed-body' style='height: #{body_height}px' data-sul-embed-theme='#{asset_url("uv.css")}'>
-            <div class='uv' data-uri='#{manifest_json_url}' data-locale="en-GB:English" data-config='#{config_url}' style='height: #{body_height}px; width:100%'></div>
+            <div id='uv' class='uv' data-uri='#{manifest_json_url}' data-locale="en-GB:English" data-config='#{config_url}' style='height: #{body_height}px; width:100%'></div>
             <script>
               ;jQuery.getScript("#{asset_url('uv.js')}");
             </script>
@@ -26,7 +27,7 @@ module Embed
       end
 
       def embed_url
-        '/uv-2.0.1/lib/embed.js'
+        '/uv-3/uv.js'
       end
 
       def manifest_json_url
