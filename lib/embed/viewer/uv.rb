@@ -5,6 +5,7 @@ module Embed
       def body_html
           <<-HTML.strip_heredoc
           <script type='text/javascript' src='/uv-3/helpers.js'></script>
+          <script type='text/javascript' src='/uv-3/lib/offline.js'></script>
           <div class='sul-embed-body' style='height: #{body_height}px' data-sul-embed-theme='#{asset_url("uv.css")}'>
             <div id='uv' class='uv' data-uri='#{manifest_json_url}' data-locale="en-GB:English" data-config='#{config_url}' style='height: #{body_height}px; width:100%'></div>
             <script>
