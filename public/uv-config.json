@@ -1,7 +1,8 @@
 {
     "options": {
         "rightPanelEnabled": false,
-        "limitLocales": true
+        "limitLocales": true,
+        "shareFrameEnabled": false
     },
     "modules": {
         "seadragonCenterPanel": {
