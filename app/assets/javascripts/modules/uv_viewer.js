@@ -11,7 +11,8 @@
       var data = {
         iiifResourceUri: options.uvUri,
         configUri: options.uvConfig,
-        root: options.uvRoot
+        root: options.uvRoot,
+        deepLinkingEnabled: false
       };
 
       createUV(id, data, new UV.URLDataProvider());
