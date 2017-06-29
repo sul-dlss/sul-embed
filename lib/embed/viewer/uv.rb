@@ -8,10 +8,8 @@ module Embed
           <script type='text/javascript' src='/uv-3/lib/offline.js'></script>
           <div class='sul-embed-body' style='height: #{body_height}px' data-sul-embed-theme='#{asset_url("uv.css")}'>
             <div id='uv' class='uv' data-behavior='uv' data-uv-root='#{uv_root}' data-uv-uri='#{manifest_json_url}' data-uv-config='#{config_url}' style='height: #{body_height}px; width:100%'></div>
-            <script>
-              ;jQuery.getScript("#{asset_url('uv.js')}");
-            </script>
             <script id='embedUV' src='#{embed_url}'></script>
+            <script type='text/javascript' src='#{asset_url('uv.js')}'></script>
           </div>
           HTML
       end
