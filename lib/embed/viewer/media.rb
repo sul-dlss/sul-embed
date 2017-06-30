@@ -59,7 +59,7 @@ module Embed
           file_size = "(#{pretty_filesize(file.size)})" if file.size
           <<-HTML.strip_heredoc
             <li>
-              <a href='#{file_url(file.title)}' title='#{file.title}' target='_blank' rel='noopener noreferrer'>Download #{file.label}</a>
+              <a href='#{file_url(file.title)}' title='#{file.title}' target='_blank' rel='noopener noreferrer' download>Download #{file.label}</a>
               #{restrictions_text_for_file(file)}
               #{file_size}
             </li>

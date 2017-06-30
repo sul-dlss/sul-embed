@@ -52,7 +52,7 @@ describe Embed::Viewer::Geo do
       stub_purl_response_and_request(geo_purl_public, request)
       html = Capybara.string(geo_viewer.download_html)
       expect(html).to have_css 'li', visible: false, count: 1
-      expect(html).to have_css 'a[href="https://stacks.stanford.edu/file/druid:12345/data.zip"]', visible: false
+      expect(html).to have_css 'a[href="https://stacks.stanford.edu/file/druid:12345/data.zip"][download]', visible: false
     end
     it 'stanford only resources have the stanford-only class (with screen reader text)' do
       stub_purl_response_and_request(stanford_restricted_multi_file_purl, request)
