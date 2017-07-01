@@ -23,7 +23,7 @@ module Embed
                 doc.ul(class: 'sul-embed-download-list') do
                   resource.files.each do |file|
                     doc.li do
-                      doc.a(href: file_url(file.title), title: file.title, target: '_blank', rel: 'noopener noreferrer') do
+                      doc.a(href: file_url(file.title), title: file.title, target: '_blank', rel: 'noopener noreferrer', download: nil) do
                         doc.text "Download #{file.title}"
                       end
                       doc << " #{restrictions_text_for_file(file)}"
