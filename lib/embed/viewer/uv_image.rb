@@ -1,6 +1,6 @@
 module Embed
   class Viewer
-    class UV < CommonViewer
+    class UVImage < CommonViewer
 
       def body_html
           <<-HTML.strip_heredoc
@@ -45,4 +45,4 @@ module Embed
   end
 end
 
-Embed.register_viewer(Embed::Viewer::UV) if Embed.respond_to?(:register_viewer)
+Embed.register_viewer(Embed::Viewer::UVImage) if Embed.respond_to?(:register_viewer)
