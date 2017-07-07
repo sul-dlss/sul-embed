@@ -1,11 +1,13 @@
 module Embed
   module Viewer
     class WasSeed < CommonViewer
-      def initialize(*args)
-        super
+      def to_partial_path
+        'embed/template/was_seed'
       end
 
       def body_html
+        Deprecation.warn(self, 'body_html is deprecated')
+
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-body', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => asset_url('was_seed.css').to_s) do
             doc.div(class: 'sul-embed-was-seed', 'data-sul-thumbs-list-count' => thumbs_list.length) do

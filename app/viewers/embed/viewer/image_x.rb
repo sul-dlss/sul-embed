@@ -11,7 +11,13 @@ module Embed
         false
       end
 
+      def to_partial_path
+        'embed/template/image_x'
+      end
+
       def body_html
+        Deprecation.warn(self, 'body_html is deprecated')
+
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-body sul-embed-image-x', 'data-sul-embed-theme' => asset_url('image_x.css')) do
             doc.div(id: 'sul-embed-image-x', 'data-manifest-url' => manifest_json_url, 'data-world-restriction' => !@purl_object.world_unrestricted?) {}
@@ -38,9 +44,28 @@ module Embed
         end.to_html
       end
 
+      def drag_and_drop_instruction_text
+        return 'Drag icon to open these images in a' if many_images?
+        'Drag icon to open this image in a'
+      end
+
+      def drag_and_drop_url
+        purl_url = "#{Settings.purl_url}/#{@purl_object.druid}"
+        "#{purl_url}?manifest=#{purl_url}/iiif/manifest"
+      end
+
+      ##
+      # Title to display for the full download
+      def full_download_title(file)
+        "Download \"#{truncate(@purl_object.title).tr('"', '\'')}\" " \
+          "(as #{pretty_mime(file.mimetype)})"
+      end
+
       private
 
       def iiif_drag_and_drop_icon
+        Deprecation.warn(self, 'iiif_drag_and_drop_icon is deprecated')
+
         <<-HTML
           <dt>International Image Interoperability Framework</dt>
           <dd>
@@ -54,16 +79,6 @@ module Embed
         HTML
       end
 
-      def drag_and_drop_url
-        purl_url = "#{Settings.purl_url}/#{@purl_object.druid}"
-        "#{purl_url}?manifest=#{purl_url}/iiif/manifest"
-      end
-
-      def drag_and_drop_instruction_text
-        return 'Drag icon to open these images in a' if many_images?
-        'Drag icon to open this image in a'
-      end
-
       def many_images?
         @purl_object.contents.many? do |resource|
           resource.type == 'image'
@@ -75,6 +90,8 @@ module Embed
       end
 
       def image_button_html(doc)
+        Deprecation.warn(self, 'iiif_drag_and_drop_icon is deprecated')
+
         doc.div(class: 'sul-embed-image-x-buttons') do
           doc.button(
             class: 'sul-embed-btn sul-embed-btn-default sul-embed-btn-toolbar' \
@@ -104,6 +121,8 @@ module Embed
       end
 
       def embed_this_html
+        Deprecation.warn(self, 'embed_this_html is deprecated')
+
         return '' if @request.hide_embed_this?
         Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, request: @request, purl_object_title: @purl_object.title) do
           Nokogiri::HTML::Builder.new do |doc|
@@ -118,6 +137,8 @@ module Embed
       end
 
       def download_html
+        Deprecation.warn(self, 'download_html is deprecated')
+
         return '' if @request.hide_download?
         Embed::DownloadPanel.new(title: 'Download image') do
           Nokogiri::HTML::Builder.new do |doc|
@@ -146,13 +167,6 @@ module Embed
             end
           end.to_html
         end.to_html
-      end
-
-      ##
-      # Title to display for the full download
-      def full_download_title(file)
-        "Download \"#{truncate(@purl_object.title).tr('"', '\'')}\" " \
-          "(as #{pretty_mime(file.mimetype)})"
       end
 
       ##

@@ -1,0 +1,34 @@
+<div class='sul-embed-footer'>
+  <div class='sul-embed-footer-toolbar'>
+    <button class='sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-infomation-circle'
+      aria-expanded='false' aria-label='open metadata panel'
+      data-sul-embed-toggle='sul-embed-metadata-panel'></button>
+    <% unless viewer.request.hide_embed_this? %>
+      <button class='sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-share'
+        aria-expanded='false'
+        aria-label='open embed this panel'
+        data-sul-embed-toggle= 'sul-embed-embed-this-panel'></button>
+    <% end %>
+
+
+    <% if viewer.show_download? %>
+      <button
+        class='sul-embed-footer-tool sul-embed-btn sul-em bed-btn-toolbar sul-embed-btn-default sul-i-download-3'
+        aria-expanded='false' aria-label='open download panel'
+        data-sul-embed-toggle='sul-embed-download-panel'>
+        <% file_count = viewer.purl_object.downloadable_files.length if viewer.show_download_count? %>
+        <% if viewer.show_download_count? && file_count > 0 %>
+          <span class='sul-embed-footer-tool sul-embed-download-count'
+                   aria-label='number of downloadable files'><%= file_count %></span>
+        <% end %>
+      </button>
+    <% end %>
+
+    <% if viewer.external_url.present? %>
+      <a class='sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-navigation-next-4'
+        href="<%= viewer.external_url.to_s %>" target='_parent'>
+        <span class='sul-embed-sr-only'><%= viewer.external_url_text %></span>
+      </a>
+    <% end %>
+  </div>
+</div>

@@ -6,11 +6,17 @@ module Embed
         header_tools_logic << :file_count_logic << :file_search_logic
       end
 
+      def to_partial_path
+        'embed/template/file'
+      end
+
       def self.default_viewer?
         true
       end
 
       def body_html
+        Deprecation.warn(self, 'body_html is deprecated')
+
         file_count = 0
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-body sul-embed-file', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => asset_url('file.css').to_s) do
@@ -85,6 +91,8 @@ module Embed
       end
 
       def preview_file_toggle(file, doc, file_count)
+        Deprecation.warn(self, 'preview_file_toggle is deprecated')
+
         if file.previewable?
           doc.span(class: 'sul-embed-preview-toggle', 'data-sul-embed-file-preview-toggle' => 'true') do
             doc.i(class: 'sul-i-arrow-right-8')
@@ -101,6 +109,8 @@ module Embed
       end
 
       def preview_file_window(file, doc)
+        Deprecation.warn(self, 'preview_file_window is deprecated')
+
         return unless file.previewable?
         doc.div(style: 'display: none;', class: 'sul-embed-preview', 'data-sul-embed-file-preview-window' => 'true', 'aria-hidden' => true) do
           doc.img(src: stacks_thumb_url(@purl_object.druid, file.title), alt: '')
@@ -109,6 +119,22 @@ module Embed
 
       def self.supported_types
         [:file]
+      end
+
+      def file_size_text(file_size)
+        return pretty_filesize(file_size) unless file_size.blank?
+        'Download'
+      end
+
+      def min_files_to_search
+        (@request.min_files_to_search || 10).to_i
+      end
+
+      def display_file_search?
+        @display_file_search ||= begin
+          @request.params[:hide_search] != 'true' &&
+          @purl_object.contents.map(&:files).flatten.length >= min_files_to_search
+        end
       end
 
       private
@@ -139,6 +165,8 @@ module Embed
       # @param [Embed::PURL::Resource::ResourceFile] file
       # @return [Nokogiri::HTML::Builder]
       def file_heading(doc, file)
+        Deprecation.warn(self, 'file_heading is deprecated')
+
         if embargoed_to_world?(file)
           doc.span(class: 'sul-embed-disabled') do
             doc.text file.title
@@ -163,6 +191,8 @@ module Embed
       # @param [FixNum] file_count
       # @return [Nokogiri::HTML::Builder]
       def file_download_link(doc, file, file_count)
+        Deprecation.warn(self, 'file_download_link is deprecated')
+
         if embargoed_to_world?(file)
           doc.span(class: 'sul-embed-disabled') do
             doc.text pretty_filesize(file.size)
@@ -177,12 +207,8 @@ module Embed
         end
       end
 
-      def file_size_text(file_size)
-        return pretty_filesize(file_size) unless file_size.blank?
-        'Download'
-      end
-
       def embed_this_html
+        Deprecation.warn(self, 'embed_this_html is deprecated')
         return '' if @request.hide_embed_this?
         Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, request: @request, purl_object_title: @purl_object.title) do
           Nokogiri::HTML::Builder.new do |doc|
@@ -204,17 +230,6 @@ module Embed
       def file_search_logic
         return false unless display_file_search?
         :file_search_html
-      end
-
-      def display_file_search?
-        @display_file_search ||= begin
-          @request.params[:hide_search] != 'true' &&
-          @purl_object.contents.map(&:files).flatten.length >= min_files_to_search
-        end
-      end
-
-      def min_files_to_search
-        (@request.min_files_to_search || 10).to_i
       end
 
       def file_search_html(doc)

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'download panel', js: true do
+describe 'download panel', type: :feature, js: true do
   include PURLFixtures
   let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/ab123cd4567') }
   it 'not shown for file viewer and leaves correctly formatted filenames alone' do

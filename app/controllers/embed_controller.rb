@@ -1,4 +1,5 @@
 class EmbedController < ApplicationController
+  append_view_path Rails.root.join('app', 'views', 'embed')
   before_action :validate_request
   before_action :set_cache
   before_action :allow_iframe, only: :iframe
@@ -12,7 +13,10 @@ class EmbedController < ApplicationController
   end
 
   def iframe
-    render html: iframe_html.html_safe
+    # Trigger purl object validation (will raise Embed::PURL::ResourceNotAvailable)
+    @embed_request.purl_object.valid?
+    @embed_response = Embed::Response.new(@embed_request)
+    render 'iframe'
   end
 
   def validate_request
@@ -49,21 +53,5 @@ class EmbedController < ApplicationController
 
   def allow_iframe
     response.headers.delete('X-Frame-Options')
-  end
-
-  def iframe_html
-    <<-HTML
-      <html>
-        <head>
-          <script src='//ajax.googleapis.com/ajax/libs/jquery/#{Settings.jquery_version}/jquery.min.js'></script>
-          <script>
-            #{'if (window.jQuery) { jQuery.fx.off = true; }' if Rails.env.test?}
-          </script>
-        </head>
-        <body>
-          #{Embed::Response.new(@embed_request).viewer_html}
-        </body>
-      </html>
-    HTML
   end
 end

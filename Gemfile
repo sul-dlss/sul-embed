@@ -9,13 +9,14 @@ gem 'nokogiri', '>= 1.7.1'
 gem 'dor-rights-auth', '>= 1.3.0' # need downloadable methods
 
 gem 'config'
+gem 'deprecation'
 
 gem 'therubyracer'
 
 gem 'iso8601' # to parse durations, since ActiveSupport::Duration doesn't get a parse method till rails 5
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.0'
+  gem 'rspec-rails', '~> 3.5.2' # pinned for https://github.com/rspec/rspec-rails/issues/1800
   gem 'capybara'
   gem 'poltergeist'
   gem 'high_voltage'

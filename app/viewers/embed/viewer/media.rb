@@ -1,7 +1,13 @@
 module Embed
   module Viewer
     class Media < CommonViewer
+      def to_partial_path
+        'embed/template/media'
+      end
+
       def body_html
+        Deprecation.warn(self, 'body_html is deprecated')
+
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(
             class: 'sul-embed-body sul-embed-media',
@@ -15,6 +21,8 @@ module Embed
       end
 
       def download_html
+        Deprecation.warn(self, 'download_html is deprecated')
+
         return '' unless show_download?
         Embed::DownloadPanel.new do
           <<-HTML.strip_heredoc
@@ -28,6 +36,8 @@ module Embed
       end
 
       def metadata_html
+        Deprecation.warn(self, 'metadata_html is deprecated')
+
         Embed::MetadataPanel.new(@purl_object) do
           media_accessibility_note
         end.to_html
@@ -54,6 +64,8 @@ module Embed
       end
 
       def download_list_items
+        Deprecation.warn(self, 'download_list_items is deprecated')
+
         @purl_object.downloadable_files.map do |file|
           file_size = "(#{pretty_filesize(file.size)})" if file.size
           <<-HTML.strip_heredoc
@@ -67,6 +79,8 @@ module Embed
       end
 
       def media_accessibility_note
+        Deprecation.warn(self, 'media_accessibility_note is deprecated')
+
         return unless Settings.purl_feedback_email.present?
         <<-HTML.strip_heredoc
           <dt>Media accessibility</dt>

@@ -22,6 +22,7 @@ module Embed
     end
 
     def viewer_html
+      Deprecation.warn(self, 'viewer_html is deprecated')
       @viewer_html ||= viewer.to_html
     end
 
@@ -44,8 +45,6 @@ module Embed
         html: html
       }
     end
-
-    private
 
     def viewer
       @viewer ||= Embed::ViewerFactory.new(@request).viewer

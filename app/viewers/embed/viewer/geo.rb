@@ -1,11 +1,13 @@
 module Embed
   module Viewer
     class Geo < CommonViewer
-      def initialize(*args)
-        super
+      def to_partial_path
+        'embed/template/geo'
       end
 
       def body_html
+        Deprecation.warn(self, 'body_html is deprecated')
+
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-body sul-embed-geo', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => asset_url('geo.css').to_s) do
             doc.div(map_element_options) {}
@@ -15,6 +17,8 @@ module Embed
       end
 
       def download_html
+        Deprecation.warn(self, 'download_html is deprecated')
+
         return '' if @request.hide_download?
         Embed::DownloadPanel.new do
           Nokogiri::HTML::Builder.new do |doc|
@@ -43,7 +47,7 @@ module Embed
         options = {
           id: 'sul-embed-geo-map',
           style: "height: #{body_height}px",
-          'data-bounding-box' => @purl_object.bounding_box
+          'data-bounding-box' => @purl_object.bounding_box.to_s
         }
         if @purl_object.public?
           options['data-wms-url'] = Settings.geo_wms_url

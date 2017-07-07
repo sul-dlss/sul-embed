@@ -1,0 +1,38 @@
+<div class='sul-embed-panel-container'>
+  <div class='sul-embed-panel sul-embed-metadata-panel' style='display:none' aria-hidden='true'>
+    <div class='sul-embed-panel-header'>
+      <button class='sul-embed-close' data-sul-embed-toggle='sul-embed-metadata-panel'>
+        <span aria-hidden='true'>&times;</span>
+        <span class='sul-embed-sr-only'>Close</span>
+      </button>
+      <div class='sul-embed-panel-title'>
+        <%= viewer.purl_object.title %>
+      </div>
+    </div>
+    <div class='sul-embed-panel-body'>
+      <dl>
+        <%= yield %>
+
+        <dt>Citation URL</dt>
+        <dd>
+          <a href='<%= viewer.purl_object.purl_url %>' target='_top'><%= panel.user_friendly_purl_url %></a>
+        </dd>
+        <% if panel.purl_object.use_and_reproduction.present? %>
+          <dt>Use and reproduction</dt>
+          <dd><%= panel.purl_object.use_and_reproduction %></dd>
+        <% end %>
+        <% if panel.purl_object.copyright.present? %>
+          <dt>Copyright</dt>
+          <dd><%= panel.purl_object.copyright %></dd>
+        <% end %>
+        <% if panel.purl_object.license.present? %>
+          <dt>License</dt>
+          <dd>
+            <span class='sul-embed-license-<%= panel.purl_object.license[:machine] %>'></span>
+            <%= panel.purl_object.license[:human] %>
+          </dd>
+        <% end %>
+      </dl>
+    </div>
+  </div>
+</div>

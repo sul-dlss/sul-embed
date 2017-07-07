@@ -6,7 +6,7 @@ module Embed
       include Embed::RestrictedText
       include Embed::StacksImage
 
-      attr_reader :purl_object
+      attr_reader :purl_object, :request
       def initialize(request)
         @request = request
         @purl_object = request.purl_object
@@ -42,6 +42,8 @@ module Embed
       end
 
       def header_html
+        Deprecation.warn(self, 'header_html is deprecated')
+
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-header') do
             render_header_tools(doc)
@@ -177,7 +179,10 @@ module Embed
         true
       end
 
-      private
+      def container_styles
+        return unless height_style.present? || width_style.present?
+        [height_style, width_style].compact.join(' ').to_s
+      end
 
       def tooltip_text(file)
         return unless file.stanford_only?
@@ -186,9 +191,13 @@ module Embed
           .compact.join(' until ')
       end
 
+      private
+
       # Loops through all of the header tools logic methods
       # and calls the corresponding method that is the return value
       def render_header_tools(doc)
+        Deprecation.warn(self, 'render_header_tools is deprecated')
+
         header_tools_logic.each do |logic_method|
           if (tool = send(logic_method))
             send(tool, doc)
@@ -210,6 +219,8 @@ module Embed
       end
 
       def header_title_html(doc)
+        Deprecation.warn(self, 'header_title_html is deprecated')
+
         doc.span(class: 'sul-embed-header-title') do
           doc.text @purl_object.title
         end
@@ -219,11 +230,6 @@ module Embed
         header_tools_logic.any? do |logic_method|
           send(logic_method)
         end
-      end
-
-      def container_styles
-        return unless height_style.present? || width_style.present?
-        [height_style, width_style].compact.join(' ').to_s
       end
 
       def height_style

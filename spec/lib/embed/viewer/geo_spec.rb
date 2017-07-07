@@ -72,7 +72,7 @@ describe Embed::Viewer::Geo do
       expect(geo_viewer.map_element_options).to be_an Hash
       expect(geo_viewer.map_element_options).to include style: 'height: 400px'
       expect(geo_viewer.map_element_options).to include id: 'sul-embed-geo-map'
-      expect(geo_viewer.map_element_options).to include 'data-bounding-box' => [['38.298673', '-123.387626'], ['39.399103', '-122.528843']]
+      expect(geo_viewer.map_element_options).to include 'data-bounding-box' => '[["38.298673", "-123.387626"], ["39.399103", "-122.528843"]]'
       expect(geo_viewer.map_element_options).to include 'data-wms-url' => 'https://geowebservices.stanford.edu/geoserver/wms/'
       expect(geo_viewer.map_element_options).to include 'data-layers' => 'druid:12345'
     end
@@ -82,7 +82,7 @@ describe Embed::Viewer::Geo do
       expect(geo_viewer.map_element_options).to be_an Hash
       expect(geo_viewer.map_element_options).to include style: 'height: 400px'
       expect(geo_viewer.map_element_options).to include id: 'sul-embed-geo-map'
-      expect(geo_viewer.map_element_options).to include 'data-bounding-box' => [['38.298673', '-123.387626'], ['39.399103', '-122.528843']]
+      expect(geo_viewer.map_element_options).to include 'data-bounding-box' => '[["38.298673", "-123.387626"], ["39.399103", "-122.528843"]]'
       expect(geo_viewer.map_element_options).to_not include 'data-layers'
       expect(geo_viewer.map_element_options).to_not include 'data-wms-url'
     end

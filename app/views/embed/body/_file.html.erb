@@ -1,0 +1,83 @@
+<div class='sul-embed-body sul-embed-file'
+      data-sul-embed-theme="<%= viewer.asset_url('file.css') %>"
+      style="max-height: <%= viewer.body_height %>px">
+  <div class='sul-embed-file-list'>
+    <% if viewer.purl_object.embargoed? %>
+      <div class='sul-embed-embargo-message'>
+         <% viewer.embargo_message %>
+      </div>
+    <% end %>
+    <ul class='sul-embed-media-list'>
+      <% file_count = 0 %>
+      <% viewer.purl_object.contents.each do |resource| %>
+        <% resource.files.each do |file| %>
+          <li class='sul-embed-media'>
+            <div class='sul-embed-count sul-embed-pull-left'>
+              <%= file_count += 1 %>
+            </div>
+            <div class='sul-embed-media-object sul-embed-pull-left'>
+              <% if file.previewable? %>
+                <img class='sul-embed-square-image'  src="<%= viewer.stacks_square_url(viewer.purl_object.druid, file.title)%>"  alt=''>
+              <% else %>
+                <i class="sul-i-2x <%= viewer.file_type_icon(file.mimetype) %>"></i>
+              <% end %>
+            </div>
+            <div class='sul-embed-media-body'>
+              <% if viewer.embargoed_to_world?(file) %>
+                <span class='sul-embed-disabled'><%= file.title %></span>
+              <% else %>
+                <div class='sul-embed-media-heading'>
+                  <a href="<%= viewer.file_url(file.title) %>"
+                     title="<%= viewer.tooltip_text(file) %>"
+                     target='_blank'
+                     rel='noopener noreferrer'><%= file.title %></a>
+                  <%= render 'restrictions_text_for_file', file: file %>
+                </div>
+              <% end %>
+
+
+              <div class='sul-embed-description'>
+                <%= resource.description %>
+              </div>
+              <div class='sul-embed-download'>
+                <i class='sul-i-download-3'></i>
+                <% if viewer.embargoed_to_world?(file) %>
+                  <span class='sul-embed-disabled'>
+                    <%= viewer.pretty_filesize(file.size) %>
+                  </span>
+                <% else %>
+                  <a href="<%= viewer.file_url(file.title) %>" target='_blank' rel='noopener noreferrer'>
+                    <span class='sul-embed-sr-only'>
+                      Download item <%= file_count %>
+                    </span>
+                    <%= viewer.file_size_text(file.size) %>
+                  </a>
+                <% end %>
+              </div>
+
+              <% if file.previewable? %>
+                <span class='sul-embed-preview-toggle' data-sul-embed-file-preview-toggle='true'>
+                  <i class='sul-i-arrow-right-8'></i>
+                  <span class='sul-embed-preview-text'>
+                    <a href='#' data-sul-embed-file-preview-toggle-text='true' aria-expanded='false'>
+                      Preview
+                      <span class='sul-embed-sr-only'> item <%= file_count %>
+                      </span>
+                    </a>
+                  </span>
+                </span>
+              <% end %>
+
+            </div>
+            <% if file.previewable? %>
+              <div style='display: none;' class='sul-embed-preview' data-sul-embed-file-preview-window='true' aria-hidden='true'>
+                <img src="<%= viewer.stacks_thumb_url(viewer.purl_object.druid, file.title) %>" alt=''>
+              </div>
+            <% end %>
+          </li>
+        <% end %>
+      <% end %>
+    </ul>
+    <script>;jQuery.getScript("<%= asset_url('file.js') %>");</script>
+  </div>
+</div>

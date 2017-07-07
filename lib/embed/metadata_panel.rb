@@ -3,6 +3,7 @@ module Embed
   # A class to render metadata panel content given a variable
   # title and content for different viewers to customize
   class MetadataPanel
+    attr_reader :purl_object
     def initialize(purl_object, &block)
       @purl_object = purl_object
       @panel_content = yield block if block_given?
@@ -39,10 +40,6 @@ module Embed
       HTML
     end
 
-    private
-
-    attr_reader :panel_content, :purl_object
-
     def user_friendly_purl_url
       purl_object.purl_url.gsub(%r{^https?://}, '')
     end
@@ -76,5 +73,9 @@ module Embed
         </dd>
       HTML
     end
+
+    private
+
+    attr_reader :panel_content
   end
 end

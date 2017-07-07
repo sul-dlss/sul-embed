@@ -100,6 +100,7 @@ Rails/HttpPositionalArguments:
 Rails/OutputSafety:
   Exclude:
     - 'app/controllers/embed_controller.rb'
+    - 'app/helpers/embed_helper.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.

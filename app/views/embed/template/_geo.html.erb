@@ -1,0 +1,9 @@
+<div class="sul-embed-container <%= 'sul-embed-fullheight' if viewer.request.fullheight? %>"
+  id='sul-embed-object' style='display:none; <%= viewer.container_styles %>'>
+  <%= render 'header/geo', viewer: viewer %>
+  <%= render 'body/geo', viewer: viewer %>
+  <%= render 'metadata_panel', viewer: viewer, panel: Embed::MetadataPanel.new(viewer.purl_object) %>
+  <%= render 'embed_this/generic', viewer: viewer %>
+  <%= render 'download/geo', viewer: viewer %>
+  <%= render 'footer/generic', viewer: viewer %>
+ </div>
