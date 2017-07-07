@@ -4,14 +4,10 @@ module Embed
   module PrettyFilesize
     ##
     # Convert to a standardized pretty filesize
+    # @param [String] size the file size in bytes
+    # @return [String] a human readable representation in SI units
     def pretty_filesize(size)
-      Filesize.from("#{to_kilobyte(size)} KB").pretty
-    end
-
-    ##
-    # Covert Bytes to Kilobytes
-    def to_kilobyte(size)
-      size.to_f / 1000
+      Filesize.new("#{size} B", Filesize::SI).pretty
     end
   end
 end
