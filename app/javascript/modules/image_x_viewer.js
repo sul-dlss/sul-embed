@@ -1,4 +1,5 @@
 /*global Sly, LayoutStore, ManifestStore, PubSub, CanvasStore, key, sulEmbedDownloadPanel, ImageControls, IiifAuth */
+import 'modules/layout_store'
 
 (function( global ) {
   'use strict';

@@ -21,7 +21,7 @@
         $('head').append(fontIconsHtml);
       },
 
-      injectPluginStyles: function() {        
+      injectPluginStyles: function() {
         $.each(pluginStylesheets.split(','), function(index, stylesheet) {
           htmlSnippet = linkHtml.replace("{{stylesheetLink}}", stylesheet);
           $("head").append(htmlSnippet);

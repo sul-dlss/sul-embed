@@ -24,7 +24,7 @@ module Embed
                 end
               end
             end
-            doc.script { doc.text ";jQuery.getScript(\"#{asset_url('was_seed.js')}\");" }
+            doc.script { doc.text ";jQuery.getScript(\"#{asset_pack_path('was_seed.js')}\");" }
           end
         end.to_html
       end

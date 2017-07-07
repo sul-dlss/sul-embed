@@ -24,6 +24,10 @@ module Embed
         "#{asset_host}#{ActionController::Base.helpers.asset_url(file)}"
       end
 
+      def asset_pack_path(file)
+        ActionController::Base.helpers.asset_pack_path(file)
+      end
+
       def asset_host
         if Rails.env.production?
           Settings.static_assets_base

@@ -1,10 +1,10 @@
 /*global CssInjection */
 
-//= require modules/css_injection
-//= require modules/common_viewer_behavior
-//= require modules/popup_panels
-//= require modules/embed_this
-//= require modules/media_viewer
+import 'modules/css_injection'
+import 'modules/common_viewer_behavior'
+import 'modules/popup_panels'
+import 'modules/embed_this'
+import 'modules/media_viewer'
 
 CssInjection.injectFontIcons();
 CssInjection.appendToHead();

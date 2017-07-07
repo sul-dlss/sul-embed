@@ -65,8 +65,7 @@ gem 'sass-rails'
 
 gem 'filesize'
 
-gem 'bower-rails'
-
+gem 'webpacker', '~> 2.0'
 gem 'leaflet-rails'
 
 gem 'sul_styles', '~>0.6'

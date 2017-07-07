@@ -20,25 +20,16 @@ API endpoint: `TBD`
 
 Example: `TBD?url=http://purl.stanford.edu/zw200wd8767&format=json`
 
-## Adding vendor assets with bower
+## Managing assets with webpacker
 
-Requires [bower](http://bower.io/) and uses [bower-rails](https://github.com/42dev/bower-rails) gem
+See https://github.com/rails/webpacker
 
-    npm install -g bower
+Run `bin/webpack-dev-server` in a separate shell when developing
 
-Assets can be installed using bower commands
+Run `bin/webpack` to package assets
 
-    bower install listjs --save
-
-Make sure to run the clean rake task to remove all of the extra stuff from bower packages (leaves the specified main file)
-
-    rake bower:clean
-
-Assets can now be referenced in the assset pipeline
-
-    //= require listjs/dist/list
-
-Assets used for production should be checked in so that dev and prod servers do not need to depend on nodejs and bower.
+We may want to consider checking in the `public/packs` directory so that we
+don't have to compile in production
 
 ## Creating Viewers
 

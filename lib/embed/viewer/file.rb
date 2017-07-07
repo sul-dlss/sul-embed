@@ -51,7 +51,7 @@ module Embed
                 end
               end
             end
-            doc.script { doc.text ";jQuery.getScript(\"#{asset_url('file.js')}\");" }
+            doc.script { doc.text ";jQuery.getScript(\"#{asset_pack_path('file.js')}\");" }
           end
         end.to_html
       end

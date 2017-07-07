@@ -10,7 +10,7 @@ module Embed
             'data-sul-embed-theme' => asset_url('media.css').to_s
           ) do
             doc.cdata Embed::MediaTag.new(self).to_html
-            doc.script { doc.text ";jQuery.getScript(\"#{asset_url('media.js')}\");" }
+            doc.script { doc.text ";jQuery.getScript(\"#{asset_pack_path('media.js')}\");" }
           end
         end.to_html
       end

@@ -9,7 +9,7 @@ module Embed
         Nokogiri::HTML::Builder.new do |doc|
           doc.div(class: 'sul-embed-body sul-embed-geo', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => asset_url('geo.css').to_s) do
             doc.div(map_element_options) {}
-            doc.script { doc.text ";jQuery.getScript(\"#{asset_url('geo.js')}\");" }
+            doc.script { doc.text ";jQuery.getScript(\"#{asset_pack_path('geo.js')}\");" }
           end
         end.to_html
       end
