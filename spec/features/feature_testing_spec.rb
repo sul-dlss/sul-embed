@@ -26,7 +26,12 @@ describe 'feature testing of viewers', js: true do
       expect(page).to have_css('.sul-embed-media-list')
       expect(page).to have_css('.sul-embed-media-heading a', text: 'Title of the PDF.pdf')
       expect(page).to have_css('.sul-embed-description', text: 'File1 Label')
-      expect(page).to have_css('.sul-embed-download', text: '12.35 kB')
+      if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.4.0')
+        # Gaussian rounding: https://blog.heroku.com/ruby-2-4-features-hashes-integers-rounding#gaussian-rounding
+        expect(page).to have_css('.sul-embed-download', text: '12.34 kB')
+      else
+        expect(page).to have_css('.sul-embed-download', text: '12.35 kB')
+      end
     end
     it 'contains 4 files in file list' do
       stub_purl_response_with_fixture(multi_resource_multi_type_purl)
