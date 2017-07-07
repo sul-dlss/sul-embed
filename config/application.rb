@@ -19,6 +19,5 @@ module SulEmbed
     config.load_defaults 5.1
 
     require 'embed'
-    require 'embed/viewer'
   end
 end

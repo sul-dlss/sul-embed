@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Embed::Viewer do
+describe Embed::ViewerFactory do
   include PURLFixtures
 
   let(:request) { double('EmbedRequest', purl_object: Embed::PURL.new('ignored')) }

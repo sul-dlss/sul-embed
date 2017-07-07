@@ -48,7 +48,7 @@ module Embed
     private
 
     def viewer
-      @viewer ||= Embed::Viewer.new(@request).viewer
+      @viewer ||= Embed::ViewerFactory.new(@request).viewer
     end
   end
 end

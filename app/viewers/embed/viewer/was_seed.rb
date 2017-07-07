@@ -1,5 +1,5 @@
 module Embed
-  class Viewer
+  module Viewer
     class WasSeed < CommonViewer
       def initialize(*args)
         super
@@ -63,5 +63,3 @@ module Embed
     end
   end
 end
-
-Embed.register_viewer(Embed::Viewer::WasSeed) if Embed.respond_to?(:register_viewer)
