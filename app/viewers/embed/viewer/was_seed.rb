@@ -5,32 +5,6 @@ module Embed
         'embed/template/was_seed'
       end
 
-      def body_html
-        Deprecation.warn(self, 'body_html is deprecated')
-
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-body', 'style' => "max-height: #{body_height}px", 'data-sul-embed-theme' => asset_url('was_seed.css').to_s) do
-            doc.div(class: 'sul-embed-was-seed', 'data-sul-thumbs-list-count' => thumbs_list.length) do
-              doc.ul(class: 'sul-embed-was-thumb-list') do
-                thumbs_list.each do |thumb_record|
-                  doc.li(class: 'sul-embed-was-thumb-item') do
-                    doc.div(class: 'sul-embed-was-thumb-item-div', style: "height: #{item_size[0]}px; width: #{item_size[1]}px;") do
-                      doc.img(class: 'sul-embed-was-thumb-item-img', style: "height: #{image_height}px;", src: thumb_record['thumbnail_uri'])
-                      doc.div(class: 'sul-embed-was-thumb-item-date') do
-                        doc.a(href: thumb_record['memento_uri'], target: '_parent') do
-                          doc.text(format_memento_datetime(thumb_record['memento_datetime']))
-                        end
-                      end
-                    end
-                  end
-                end
-              end
-            end
-            doc.script { doc.text ";jQuery.getScript(\"#{asset_url('was_seed.js')}\");" }
-          end
-        end.to_html
-      end
-
       def self.supported_types
         [:"webarchive-seed"]
       end

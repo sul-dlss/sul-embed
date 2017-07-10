@@ -1,0 +1,31 @@
+require 'rails_helper'
+
+RSpec.describe 'embed/template/_geo.html.erb' do
+  include PURLFixtures
+
+  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
+  let(:object) { Embed::PURL.new('12345') }
+  let(:viewer) { Embed::Viewer::Geo.new(request) }
+
+  before do
+    view.lookup_context.view_paths.push 'app/views/embed'
+    allow(request).to receive(:purl_object).and_return(object)
+    allow(viewer).to receive(:asset_host).and_return('http://example.com/')
+    allow(view).to receive(:viewer).and_return(viewer)
+    allow(object).to receive(:response).and_return(geo_purl_public)
+    render
+  end
+
+  it 'draws geo html body for public resources' do
+    # expect(geo_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
+
+    # html = Capybara.string(geo_viewer.to_html)
+    # visible false because we display:none the container until we've loaded the CSS.
+    expect(rendered).to have_css '.sul-embed-geo', visible: false
+    expect(rendered).to have_css '#sul-embed-geo-map', visible: false
+    expect(rendered).to have_css('#sul-embed-geo-map[style="height: 400px"]', visible: false)
+    expect(rendered).to have_css('#sul-embed-geo-map[data-bounding-box=\'[["38.298673", "-123.387626"], ["39.399103", "-122.528843"]]\']', visible: false)
+    expect(rendered).to have_css('#sul-embed-geo-map[data-wms-url="https://geowebservices.stanford.edu/geoserver/wms/"]', visible: false)
+    expect(rendered).to have_css('#sul-embed-geo-map[data-layers="druid:12345"]', visible: false)
+  end
+end

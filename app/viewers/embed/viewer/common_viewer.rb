@@ -3,7 +3,6 @@ module Embed
     class CommonViewer
       include Embed::Mimetypes
       include Embed::PrettyFilesize
-      include Embed::RestrictedText
       include Embed::StacksImage
 
       attr_reader :purl_object, :request
@@ -34,88 +33,6 @@ module Embed
 
       def width
         @request.maxwidth || default_width
-      end
-
-      def to_html
-        css_class = "sul-embed-container #{'sul-embed-fullheight' if @request.fullheight?}"
-        "<div class='#{css_class}' id='sul-embed-object' style='display:none; #{container_styles}'>" << header_html << body_html << metadata_html << embed_this_html << download_html << footer_html << '</div>'
-      end
-
-      def header_html
-        Deprecation.warn(self, 'header_html is deprecated')
-
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-header') do
-            render_header_tools(doc)
-          end if display_header?
-        end.to_html
-      end
-
-      def footer_html
-        Nokogiri::HTML::Builder.new do |doc|
-          doc.div(class: 'sul-embed-footer') do
-            doc.div(class: 'sul-embed-footer-toolbar') do
-              doc.button(
-                class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' \
-                  'oolbar sul-embed-btn-default sul-i-infomation-circle',
-                'aria-expanded' => 'false',
-                'aria-label' => 'open metadata panel',
-                'data-sul-embed-toggle' => 'sul-embed-metadata-panel'
-              )
-              unless @request.hide_embed_this?
-                doc.button(
-                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-t' \
-                    'oolbar sul-embed-btn-default sul-i-share',
-                  'aria-expanded' => 'false',
-                  'aria-label' => 'open embed this panel',
-                  'data-sul-embed-toggle' => 'sul-embed-embed-this-panel'
-                )
-              end
-
-              if show_download?
-                doc.button(
-                  class: 'sul-embed-footer-tool sul-embed-btn sul-em' \
-                    'bed-btn-toolbar sul-embed-btn-default sul-i-download-3',
-                  'aria-expanded' => 'false',
-                  'aria-label' => 'open download panel',
-                  'data-sul-embed-toggle' => 'sul-embed-download-panel'
-                ) do
-                  file_count = @purl_object.downloadable_files.length if show_download_count?
-                  if show_download_count? && file_count > 0
-                    doc.span(class: 'sul-embed-footer-tool sul-embed-download-count',\
-                             'aria-label' => 'number of downloadable files') { doc.text file_count }
-                  end
-                end
-              end
-
-              if external_url.present?
-                doc.a(
-                  class: 'sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar' \
-                    ' sul-embed-btn-default sul-i-navigation-next-4',
-                  href: external_url.to_s,
-                  target: '_parent'
-                ) do
-                  doc.span(class: 'sul-embed-sr-only') { doc.text external_url_text }
-                end
-              end
-            end
-          end
-        end.to_html
-      end
-
-      def metadata_html
-        Embed::MetadataPanel.new(@purl_object).to_html
-      end
-
-      # subclasses that require special behaviors (e.g. file, image_x, media) should
-      #  override this method, passing a block to EmbedThisPanel
-      def embed_this_html
-        return '' if @request.hide_embed_this?
-        Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, request: @request, purl_object_title: @purl_object.title).to_html
-      end
-
-      def download_html
-        ''
       end
 
       def external_url
@@ -193,18 +110,6 @@ module Embed
 
       private
 
-      # Loops through all of the header tools logic methods
-      # and calls the corresponding method that is the return value
-      def render_header_tools(doc)
-        Deprecation.warn(self, 'render_header_tools is deprecated')
-
-        header_tools_logic.each do |logic_method|
-          if (tool = send(logic_method))
-            send(tool, doc)
-          end
-        end
-      end
-
       # Array of method containing symbols representing method names.
       # These methods should return false if the particular tool should not display,
       # otherwise it should return the method name that will return the HTML for the tool (given the Nokogiri document context).
@@ -216,14 +121,6 @@ module Embed
       def header_title_logic
         return false if @request.hide_title?
         :header_title_html
-      end
-
-      def header_title_html(doc)
-        Deprecation.warn(self, 'header_title_html is deprecated')
-
-        doc.span(class: 'sul-embed-header-title') do
-          doc.text @purl_object.title
-        end
       end
 
       def display_header?
@@ -274,10 +171,6 @@ module Embed
 
       def file_count_logic
         :file_count_html
-      end
-
-      def file_count_html(doc)
-        doc.div(class: 'sul-embed-item-count', 'aria-live' => 'polite') {}
       end
     end
   end

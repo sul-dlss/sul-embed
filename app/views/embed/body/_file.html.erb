@@ -4,7 +4,7 @@
   <div class='sul-embed-file-list'>
     <% if viewer.purl_object.embargoed? %>
       <div class='sul-embed-embargo-message'>
-         <% viewer.embargo_message %>
+         <%= viewer.embargo_message %>
       </div>
     <% end %>
     <ul class='sul-embed-media-list'>
@@ -46,7 +46,7 @@
                     <%= viewer.pretty_filesize(file.size) %>
                   </span>
                 <% else %>
-                  <a href="<%= viewer.file_url(file.title) %>" target='_blank' rel='noopener noreferrer'>
+                  <a href="<%= viewer.file_url(file.title) %>" target='_blank' rel='noopener noreferrer' download=''>
                     <span class='sul-embed-sr-only'>
                       Download item <%= file_count %>
                     </span>

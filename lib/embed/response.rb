@@ -21,11 +21,6 @@ module Embed
       @request.purl_object.title
     end
 
-    def viewer_html
-      Deprecation.warn(self, 'viewer_html is deprecated')
-      @viewer_html ||= viewer.to_html
-    end
-
     def html
       @html ||= Embed::EmbedThisPanel.iframe_html(
         druid: @request.purl_object.druid,
