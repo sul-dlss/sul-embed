@@ -1,11 +1,6 @@
 module Embed
   module Viewer
     class File < CommonViewer
-      def initialize(*args)
-        super
-        header_tools_logic << :file_count_logic << :file_search_logic
-      end
-
       def to_partial_path
         'embed/template/file'
       end
@@ -74,6 +69,10 @@ module Embed
         message.compact.join(' until ')
       end
 
+      def display_header?
+        super || display_file_search?
+      end
+
       private
 
       ##
@@ -81,11 +80,6 @@ module Embed
       # @return [String] date in dd-mon-year format
       def pretty_embargo_date
         sul_pretty_date(@purl_object.embargo_release_date)
-      end
-
-      def file_search_logic
-        return false unless display_file_search?
-        :file_search_html
       end
     end
   end

@@ -1,11 +1,6 @@
 module Embed
   module Viewer
     class ImageX < CommonViewer
-      def initialize(*args)
-        super
-        header_tools_logic << :image_button_logic << :file_count_logic
-      end
-
       # don't show the download file count for image viewer
       def self.show_download_count?
         false
@@ -50,10 +45,6 @@ module Embed
         @purl_object.contents.many? do |resource|
           resource.type == 'image'
         end
-      end
-
-      def image_button_logic
-        :image_button_html
       end
 
       ##

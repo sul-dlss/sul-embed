@@ -10,7 +10,6 @@ module Embed
   require 'embed/metadata_panel'
   require 'embed/mimetypes'
   require 'embed/pretty_filesize'
-  require 'embed/restricted_text'
   require 'embed/stacks_image'
   require 'embed/media_tag'
 

@@ -110,23 +110,8 @@ module Embed
 
       private
 
-      # Array of method containing symbols representing method names.
-      # These methods should return false if the particular tool should not display,
-      # otherwise it should return the method name that will return the HTML for the tool (given the Nokogiri document context).
-      # See #header_title_logic and #header_title_html as examples.
-      def header_tools_logic
-        @header_tools_logic ||= [:header_title_logic]
-      end
-
-      def header_title_logic
-        return false if @request.hide_title?
-        :header_title_html
-      end
-
       def display_header?
-        header_tools_logic.any? do |logic_method|
-          send(logic_method)
-        end
+        !@request.hide_title?
       end
 
       def height_style
@@ -145,11 +130,7 @@ module Embed
 
       def header_height
         return 0 unless display_header?
-        if !header_tools_logic.include?(:header_title_logic)
-          40
-        else
-          63
-        end
+        63
       end
 
       def footer_height
@@ -167,10 +148,6 @@ module Embed
 
       def default_body_height
         nil
-      end
-
-      def file_count_logic
-        :file_count_html
       end
     end
   end

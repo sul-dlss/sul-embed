@@ -44,12 +44,6 @@ describe Embed::Viewer::File do
       expect(file_viewer.send(:body_height)).to eq 182
     end
   end
-  describe 'header tools' do
-    it 'includes the search in the header tools' do
-      stub_request(request)
-      expect(file_viewer.send(:header_tools_logic)).to include(:file_search_logic)
-    end
-  end
 
   describe 'file_type_icon' do
     it 'default file icon if mimetype is not recognized' do
