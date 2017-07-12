@@ -1,6 +1,5 @@
-require 'embed/media_tag'
 module Embed
-  class Viewer
+  module Viewer
     class Media < CommonViewer
       def body_html
         Nokogiri::HTML::Builder.new do |doc|
@@ -81,5 +80,3 @@ module Embed
     end
   end
 end
-
-Embed.register_viewer(Embed::Viewer::Media) if Embed.respond_to?(:register_viewer)
