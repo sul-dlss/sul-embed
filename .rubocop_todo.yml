@@ -78,7 +78,6 @@ Metrics/ParameterLists:
 Rails/Blank:
   Exclude:
     - 'lib/embed/media_tag.rb'
-    - 'lib/embed/metadata_panel.rb'
     - 'lib/embed/request.rb'
     - 'app/viewers/embed/viewer/media.rb'
 

@@ -2,7 +2,7 @@
   id='sul-embed-object' style='display:none; <%= viewer.container_styles %>'>
   <%= render 'header/was_seed', viewer: viewer %>
   <%= render 'body/was_seed', viewer: viewer %>
-  <%= render 'metadata_panel', viewer: viewer, panel: Embed::MetadataPanel.new(viewer.purl_object) %>
+  <%= render 'metadata_panel', viewer: viewer %>
   <%= render 'embed_this/generic', viewer: viewer %>
   <%= render 'footer/generic', viewer: viewer %>
  </div>

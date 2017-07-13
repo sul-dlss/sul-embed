@@ -7,7 +7,6 @@ module Embed
 
   require 'embed/download_panel'
   require 'embed/embed_this_panel'
-  require 'embed/metadata_panel'
   require 'embed/mimetypes'
   require 'embed/pretty_filesize'
   require 'embed/stacks_image'

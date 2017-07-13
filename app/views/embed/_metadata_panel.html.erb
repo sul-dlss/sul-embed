@@ -15,21 +15,21 @@
 
         <dt>Citation URL</dt>
         <dd>
-          <a href='<%= viewer.purl_object.purl_url %>' target='_top'><%= panel.user_friendly_purl_url %></a>
+          <a href='<%= viewer.purl_object.purl_url %>' target='_top'><%= viewer.purl_object.purl_url.gsub(%r{^https?://}, '') %></a>
         </dd>
-        <% if panel.purl_object.use_and_reproduction.present? %>
+        <% if viewer.purl_object.use_and_reproduction.present? %>
           <dt>Use and reproduction</dt>
-          <dd><%= panel.purl_object.use_and_reproduction %></dd>
+          <dd><%= viewer.purl_object.use_and_reproduction %></dd>
         <% end %>
-        <% if panel.purl_object.copyright.present? %>
+        <% if viewer.purl_object.copyright.present? %>
           <dt>Copyright</dt>
-          <dd><%= panel.purl_object.copyright %></dd>
+          <dd><%= viewer.purl_object.copyright %></dd>
         <% end %>
-        <% if panel.purl_object.license.present? %>
+        <% if viewer.purl_object.license.present? %>
           <dt>License</dt>
           <dd>
-            <span class='sul-embed-license-<%= panel.purl_object.license[:machine] %>'></span>
-            <%= panel.purl_object.license[:human] %>
+            <span class='sul-embed-license-<%= viewer.purl_object.license[:machine] %>'></span>
+            <%= viewer.purl_object.license[:human] %>
           </dd>
         <% end %>
       </dl>
