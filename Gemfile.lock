@@ -142,7 +142,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (2.1.0)
-    leaflet-rails (1.0.3)
+    leaflet-rails (1.1.0)
       rails (>= 4.2.0)
     libv8 (3.16.14.19)
     listen (3.1.5)
