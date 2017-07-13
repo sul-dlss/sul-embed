@@ -1,0 +1,18 @@
+<% if viewer.show_download? %>
+  <%= download_panel do %>
+    <div class='sul-embed-panel-body'>
+      <ul class='sul-embed-download-list'>
+        <% viewer.purl_object.downloadable_files.each do |file| %>
+          <% file_size = "(#{viewer.pretty_filesize(file.size)})" if file.size %>
+          <li>
+            <a href='<%= viewer.file_url(file.title) %>' title='<%= file.title %>' target='_blank' rel='noopener noreferrer' download="">
+              Download <%= file.label %>
+            </a>
+            <%= render 'restrictions_text_for_file', file: file %>
+            <%= file_size %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% end %>

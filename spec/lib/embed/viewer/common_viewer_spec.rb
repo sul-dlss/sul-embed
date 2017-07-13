@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe Embed::Viewer::CommonViewer do
   include PURLFixtures
-  let(:rails_request) { double('rails_request', host_with_port: '') }
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:file_viewer) { Embed::Viewer::File.new(request) }
   let(:image_x_viewer) { Embed::Viewer::ImageX.new(request) }
@@ -10,117 +9,6 @@ describe Embed::Viewer::CommonViewer do
   let(:media_viewer) { Embed::Viewer::Media.new(request) }
   let(:was_seed_viewer) { Embed::Viewer::WasSeed.new(request) }
 
-  before do
-    allow(request).to receive(:rails_request).and_return(rails_request)
-  end
-
-  describe 'header_html' do
-    it "returns the object's title" do
-      expect(request).to receive(:params).at_least(:once).and_return({})
-      expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
-      stub_purl_response_and_request(file_purl, request)
-      html = Capybara.string(file_viewer.header_html)
-      expect(html).to have_css '.sul-embed-header-title', text: 'File Title'
-    end
-    it 'does not return the object title if the consumer requested to hide it' do
-      expect(request).to receive(:params).at_least(:once).and_return({})
-      expect(request).to receive(:hide_title?).at_least(:once).and_return(true)
-      stub_purl_response_and_request(file_purl, request)
-      html = Capybara.string(file_viewer.header_html)
-      expect(html).to_not have_css '.sul-embed-header-title'
-      expect(html).to_not have_css '.sul-embed-metadata-title'
-    end
-  end
-  describe 'metadata_html' do
-    it 'has metadata panel html' do
-      stub_purl_response_and_request(file_purl, request)
-      html = Capybara.string(file_viewer.metadata_html)
-      expect(html).to have_css 'div.sul-embed-panel-container'
-      expect(html).to have_css 'div.sul-embed-metadata-panel', visible: false
-    end
-    it 'has use and reproduction statement' do
-      stub_purl_response_and_request(file_purl, request)
-      html = Capybara.string(file_viewer.metadata_html)
-      expect(html).to have_content 'Use and reproduction'
-    end
-    it 'does not have use and reproduction when not in object' do
-      stub_purl_response_and_request(image_purl, request)
-      html = Capybara.string(image_x_viewer.metadata_html)
-      expect(html).to_not have_content 'Use and reproduction'
-    end
-    it 'has copyright' do
-      stub_purl_response_and_request(image_purl, request)
-      html = Capybara.string(image_x_viewer.metadata_html)
-      expect(html).to have_content 'Copyright'
-    end
-    it 'does not have copyright when not in object' do
-      stub_purl_response_and_request(file_purl, request)
-      html = Capybara.string(file_viewer.metadata_html)
-      expect(html).to_not have_content 'Copyright'
-    end
-    it 'has license' do
-      stub_purl_response_and_request(file_purl, request)
-      html = Capybara.string(file_viewer.metadata_html)
-      expect(html).to have_content 'License'
-    end
-    it 'does not have license when not in object' do
-      stub_purl_response_and_request(image_purl, request)
-      html = Capybara.string(image_x_viewer.metadata_html)
-      expect(html).to_not have_content 'License'
-    end
-  end
-  describe 'footer_html' do
-    it "returns the object's footer" do
-      html = Capybara.string(image_x_viewer.footer_html)
-      expect(html).to have_css 'div.sul-embed-footer'
-      expect(html).to have_css '[aria-label="open embed this panel"]'
-      expect(html).to have_css '[aria-label="open download panel"]'
-    end
-    # note: download panel is tested in features/download_panel_spec
-  end
-  describe 'to_html' do
-    it 'returns html that has header, body, and footer wrapped in a container' do
-      stub_purl_response_and_request(file_purl, request)
-      expect(file_viewer).to receive(:body_html).and_return('<div class="sul-embed-body"></div>')
-      expect(file_viewer).to receive(:header_html).and_return('<div class="sul-embed-header"></div>')
-      expect(file_viewer).to receive(:metadata_html).and_return('<div class="sul-embed-panel-container"></div>')
-      expect(file_viewer).to receive(:footer_html).and_return('<div class="sul-embed-footer"></div>')
-      html = Capybara.string(file_viewer.to_html)
-      # visible false because we display:none the container until we've loaded the CSS.
-      expect(html).to have_css 'div.sul-embed-container', visible: false
-      expect(html).to have_css 'div.sul-embed-body', visible: false
-      expect(html).to have_css 'div.sul-embed-header', visible: false
-      expect(html).to have_css 'div.sul-embed-panel-container', visible: false
-      expect(html).to have_css 'div.sul-embed-footer', visible: false
-    end
-    it 'includes the height/width style in the container if maxheight/width is passed' do
-      expect(request).to receive(:maxheight).at_least(:once).and_return(200)
-      expect(request).to receive(:maxwidth).at_least(:once).and_return(200)
-      stub_purl_response_and_request(file_purl, request)
-      expect(file_viewer).to receive(:body_html).and_return('<div class="sul-embed-body"></div>')
-      expect(file_viewer).to receive(:header_html).and_return('<div class="sul-embed-header"></div>')
-      expect(file_viewer).to receive(:metadata_html).and_return('<div class="sul-embed-metadata-panel"></div>')
-      expect(file_viewer).to receive(:footer_html).and_return('<div class="sul-embed-footer"></div>')
-      html = Capybara.string(file_viewer.to_html)
-      expect(html).to have_css '.sul-embed-container[style="display:none; max-height:200px; max-width:200px;"]', visible: false
-    end
-
-    context 'fullheight' do
-      it 'includes the sul-embed-fullheight class if the fullheight option is passed' do
-        stub_purl_response_and_request(file_purl, request)
-        expect(request).to receive(:fullheight?).at_least(:once).and_return(true)
-        html = Capybara.string(file_viewer.to_html)
-        expect(html).to have_css('.sul-embed-fullheight', visible: false)
-      end
-
-      it 'sets the inline max-height to 100%' do
-        stub_purl_response_and_request(file_purl, request)
-        expect(request).to receive(:fullheight?).at_least(:once).and_return(true)
-        html = Capybara.string(file_viewer.to_html)
-        expect(html).to have_css('.sul-embed-fullheight[style="display:none; max-height:100%; max-width:100%;"]', visible: false)
-      end
-    end
-  end
   describe 'height/width' do
     it 'sets a default height and default width to nil (which can be overridden at the viewer level)' do
       stub_request(request)

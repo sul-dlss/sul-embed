@@ -1,0 +1,18 @@
+<% unless viewer.request.hide_embed_this? %>
+  <%= embed_panel(druid: viewer.purl_object.druid,
+                                height: viewer.height, width: viewer.width,
+                                request: viewer.request,
+                                purl_object_title: viewer.purl_object.title) do %>
+    <div class='sul-embed-section'>
+      <% checkbox_options = { type: 'checkbox', id: 'sul-embed-embed-search', 'data-embed-attr': 'hide_search' } %>
+      <% checkbox_options[:checked] = 'checked' unless viewer.request.hide_search? %>
+      <%= tag :input, checkbox_options %>
+      <label for='sul-embed-embed-search'>add search box</label>
+      <label for='sul-embed-min_files_to_search'>
+        for
+        <%= tag :input, type: 'text', id: 'sul-embed-min_files_to_search', 'data-embed-attr': 'min_files_to_search', value: viewer.min_files_to_search %>
+        or more files
+      </label>
+    </div>
+  <% end %>
+<% end %>

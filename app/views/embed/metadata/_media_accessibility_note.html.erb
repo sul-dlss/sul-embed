@@ -1,0 +1,8 @@
+<% if Settings.purl_feedback_email.present? %>
+  <dt>Media accessibility</dt>
+  <dd>
+    A transcript may be available in the Download panel.<br />
+    To request a transcript or other assistance with media in this viewer, please contact us at
+    <a href="mailto:<%= Settings.purl_feedback_email %>"><%= Settings.purl_feedback_email %></a>.
+  </dd>
+<% end %>

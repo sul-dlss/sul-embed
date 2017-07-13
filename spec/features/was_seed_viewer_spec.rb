@@ -36,8 +36,4 @@ describe 'was seed viewer public', js: true do
       expect(page).to have_css('.sul-embed-was-thumb-item-date a[target="_parent"]')
     end
   end
-
-  def thumbs_list_fixtures
-    JSON.parse(thumbs_list)['thumbnails']
-  end
 end
