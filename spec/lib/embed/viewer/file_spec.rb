@@ -11,11 +11,7 @@ describe Embed::Viewer::File do
       expect(file_viewer).to be_an Embed::Viewer::File
     end
   end
-  describe 'self.default_viewer?' do
-    it 'returns true' do
-      expect(Embed::Viewer::File.default_viewer?).to be_truthy
-    end
-  end
+
   describe 'self.supported_types' do
     it 'returns an array of supported types' do
       expect(Embed::Viewer::File.supported_types).to eq [:file]

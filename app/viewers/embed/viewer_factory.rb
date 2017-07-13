@@ -17,9 +17,7 @@ module Embed
     end
 
     def default_viewer
-      @default_viewer ||= Embed.registered_viewers.detect do |viewer_class|
-        viewer_class.respond_to?(:default_viewer?) && viewer_class.default_viewer?
-      end
+      Embed::Viewer::File
     end
 
     def registered_viewer
