@@ -5,13 +5,13 @@ export default class CommonViewerBehavior {
     this.viewerShown = $.Deferred();
   }
 
-  initializeViewer (callback) {
+  initializeViewer (viewer) {
     const _this = this;
     _this.showViewer();
     $.when(_this.viewerShown).done(function() {
       _this.initializeTooltip();
-      if (typeof callback !== 'undefined') {
-        callback();
+      if (typeof viewer !== 'undefined') {
+        viewer.init();
       }
     });
   }
