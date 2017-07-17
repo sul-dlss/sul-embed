@@ -1,0 +1,5 @@
+<div class="sul-embed-container <%= 'sul-embed-fullheight' if viewer.request.fullheight? %>"
+  id='sul-embed-object' style='display:none; <%= viewer.container_styles %>'>
+  <%= render 'body/uv_image', viewer: viewer %>
+  <%= render 'footer/generic', viewer: viewer %>
+ </div>
