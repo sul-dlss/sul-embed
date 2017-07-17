@@ -1,7 +1,7 @@
 /*global CssInjection */
 
 import 'modules/css_injection'
-import 'list.js/dist/list'
+import 'list.js'
 import 'vendor/tooltip'
 import 'modules/file_search'
 import 'modules/common_viewer_behavior'
