@@ -1,0 +1,21 @@
+<div class='sul-embed-body'
+      data-sul-embed-theme="<%= viewer.asset_url('was_seed.css') %>"
+      style="max-height: <%= viewer.body_height %>px">
+  <div class='sul-embed-was-seed' data-sul-thumbs-list-count="<%= viewer.thumbs_list.length %>">
+    <ul class='sul-embed-was-thumb-list'>
+      <% viewer.thumbs_list.each do |thumb_record| %>
+        <li class='sul-embed-was-thumb-item'>
+          <div class='sul-embed-was-thumb-item-div' style="height: <%= viewer.item_size[0] %>px; width: <%= viewer.item_size[1] %>px;">
+            <img class='sul-embed-was-thumb-item-img' style="height: <%= viewer.image_height %>px;" src="<%= thumb_record['thumbnail_uri'] %>">
+            <div class='sul-embed-was-thumb-item-date'>
+              <a href="<%= thumb_record['memento_uri'] %>" target='_parent'>
+                <%= viewer.format_memento_datetime(thumb_record['memento_datetime']) %>
+              </a>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <script>;jQuery.getScript("<%= asset_url('was_seed.js') %>");</script>
+</div>

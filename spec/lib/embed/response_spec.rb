@@ -26,15 +26,6 @@ describe Embed::Response do
     end
   end
 
-  describe 'viewer_html' do
-    before do
-      expect(response).to receive(:viewer).at_least(:once).and_return(viewer)
-      expect(viewer).to receive(:to_html).and_return('The Viewers Stubbed HTML')
-    end
-    it "proxies the viewer's full HTML output (to be used in the /iframe response)" do
-      expect(response.viewer_html).to eq('The Viewers Stubbed HTML')
-    end
-  end
   describe 'html' do
     before do
       expect(response).to receive(:viewer).at_least(:once).and_return(viewer)

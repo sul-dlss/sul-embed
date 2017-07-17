@@ -21,10 +21,6 @@ module Embed
       @request.purl_object.title
     end
 
-    def viewer_html
-      @viewer_html ||= viewer.to_html
-    end
-
     def html
       @html ||= Embed::EmbedThisPanel.iframe_html(
         druid: @request.purl_object.druid,
@@ -45,10 +41,8 @@ module Embed
       }
     end
 
-    private
-
     def viewer
-      @viewer ||= Embed::Viewer.new(@request).viewer
+      @viewer ||= Embed::ViewerFactory.new(@request).viewer
     end
   end
 end

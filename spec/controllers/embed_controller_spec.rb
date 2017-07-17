@@ -59,10 +59,6 @@ describe EmbedController do
     it 'should return HTML' do
       get :iframe, params: { url: 'http://purl.stanford.edu/fn662rv4961' }
       expect(response.status).to eq(200)
-      body = Capybara.string(response.body)
-      expect(body).to have_css('html')
-      expect(body).to have_css('body')
-      expect(body).to have_css('.sul-embed-header', visible: false)
     end
   end
 end

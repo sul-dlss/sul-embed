@@ -1,0 +1,13 @@
+<% unless viewer.request.hide_embed_this? %>
+  <%= embed_panel(druid: viewer.purl_object.druid,
+                                height: viewer.height, width: viewer.width,
+                                request: viewer.request,
+                                purl_object_title: viewer.purl_object.title) do %>
+    <div class='sul-embed-section'>
+      <% checkbox_options = { type: 'checkbox', id: 'sul-embed-embed-download', 'data-embed-attr': 'hide_download' } %>
+      <% checkbox_options[:checked] = 'true' unless viewer.request.hide_download? %>
+      <%= tag :input, checkbox_options %>
+      <label for='sul-embed-embed-download'>download</label>
+    </div>
+  <% end %>
+<% end %>

@@ -53,29 +53,12 @@ The viewer class will be instantiated with an Embed::Request object. The `initia
       end
     end
 
-The class must implement a `#body_html` method which will be called on the instance of the viewer class. The results of this method combined with `header_html` and `body_html` from `CommonViewer` and will be returned as the HTML of the oEmbed response object.
-
-    module Embed
-      class Viewer
-        class DemoViewer < CommonViewer
-
-          def body_html
-            "<p>#{@purl_object.type}</p>"
-          end
-        end
-      end
-    end
-
 
 The class must define a class method returning an array of which types it will support.  These types are derived from the type attribute from the contentMetadata.
 
     module Embed
       class Viewer
         class DemoViewer < CommonViewer
-
-          def body_html
-            "<p>#{@purl_object.type}</p>"
-          end
 
           def self.supported_types
             [:demo_type]
@@ -90,10 +73,6 @@ The file that the class is defined in (or your preferred method) should register
     module Embed
       class Viewer
         class DemoViewer < CommonViewer
-          def body_html
-            "<p>#{@purl_object.type}</p>"
-          end
-
           def self.supported_types
             [:demo_type]
           end
@@ -116,55 +95,21 @@ For links that are intended to navigate the users browser away from the current 
     => Embed::DemoViewer
     $ request = Embed::Request.new({url: 'http://purl.stanford.edu/bb112fp0199'})
     => #<Embed::Request>
-    $ viewer.new(request).to_html
-    => # your body_html with header and footer html
-
-### Adding Header Tools
-
-Viewers can dynamically add their own elements to the header, change element order, or remove elements from the viewer.  In order to add your own tools to the header you need to append a method (represented by a symbol) to the `header_tools_logic` array.
-
-    def initialize(*args)
-      super
-      header_tools_logic << :render_demo_tool
-    end
-
-The method added to the `header_tools_logic` array should return false if the tool should not display or return a symbol representing a method that will return HTML given the `Nokigiri::HTML` document context.
-
-    def render_demo_tool
-      return false if should_render_demo_tool?
-      :demo_tool_html
-    end
-    def domo_tool_html(document)
-      document.div(class: 'sul-embed-demo-tool') do
-        document.text("ToolText")
-      end
-    end
+    $ viewer.new(request)
+    => # your viewer instance
 
 ### Customizing the Embed Panel
 
-Viewers can customize the embed panel.  To do this, the viewer should override #embed_this_html, which, oddly enough, provides HTML for the embed panel. There is a EmbedThisPanel class available that gives you all the necessary wrapping elements with the appropriate header.
-
-    def embed_this_html
-      return '' if @request.hide_embed_this?
-      Embed::EmbedThisPanel.new(druid: @purl_object.druid, height: height, width: width, request: @request, purl_object_title: @purl_object.title) do
-        "Panel Content Goes Here"
-      end.to_html
-    end
+Viewers can customize the embed panel.  To do this, create a template in `app/views/embed/embed-this`, to provide the HTML for the embed panel.
 
 See ImageX and File viewers for examples.
 
+
 ### Adding a Download Panel
+Viewers can add their own download panel.  To do this, create a template in `app/views/embed/download`, to provide the HTML for the download panel.
 
-Viewers can add their own download panels.  In order to enable the download panel you need to provide two methods in your viewer class.  The first method lets the footer logic know that the viewer will provide a download panel and it should render the Download button.
+In order to enable the download panel you need to provide a method in your viewer class.  This method lets the footer logic know that the viewer will provide a download panel and it should render the Download button.
 
-    def self.show_download?
+    def show_download?
       true
-    end
-
-Once the download option is set to true, the viewer should provide HTML to comprise the download panel. There is a DownloadPanel class available that gives you all the necessary wrapping elements with the appropriate header.
-
-    def download_html
-      Embed::DownloadPanel.new do
-        "Panel Content Goes Here"
-      end
     end

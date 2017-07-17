@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src='//ajax.googleapis.com/ajax/libs/jquery/<%= Settings.jquery_version %>/jquery.min.js'></script>
+    <script>
+      <%= 'if (window.jQuery) { jQuery.fx.off = true; }' if Rails.env.test? %>
+    </script>
+  </head>
+  <body>
+    <%= render 'embed_response', embed_response: @embed_response %>
+  </body>
+</html>

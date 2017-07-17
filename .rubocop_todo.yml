@@ -36,7 +36,7 @@ Layout/MultilineHashBraceLayout:
 # SupportedStyles: aligned, indented
 Layout/MultilineOperationIndentation:
   Exclude:
-    - 'lib/embed/viewer/file.rb'
+    - 'app/viewers/embed/viewer/file.rb'
 
 # Offense count: 10
 Metrics/AbcSize:
@@ -78,9 +78,8 @@ Metrics/ParameterLists:
 Rails/Blank:
   Exclude:
     - 'lib/embed/media_tag.rb'
-    - 'lib/embed/metadata_panel.rb'
     - 'lib/embed/request.rb'
-    - 'lib/embed/viewer/media.rb'
+    - 'app/viewers/embed/viewer/media.rb'
 
 # Offense count: 2
 Rails/FilePath:
@@ -100,15 +99,16 @@ Rails/HttpPositionalArguments:
 Rails/OutputSafety:
   Exclude:
     - 'app/controllers/embed_controller.rb'
+    - 'app/helpers/embed_helper.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: NotNilAndNotEmpty, NotBlank, UnlessBlank.
 Rails/Present:
   Exclude:
-    - 'lib/embed/viewer/common_viewer.rb'
-    - 'lib/embed/viewer/file.rb'
-    - 'lib/embed/viewer/was_seed.rb'
+    - 'app/viewers/embed/viewer/common_viewer.rb'
+    - 'app/viewers/embed/viewer/file.rb'
+    - 'app/viewers/embed/viewer/was_seed.rb'
 
 # Offense count: 31
 Style/Documentation:
@@ -118,7 +118,7 @@ Style/Documentation:
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
   Exclude:
-    - 'lib/embed/viewer/file.rb'
+    - 'app/viewers/embed/viewer/file.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
@@ -126,7 +126,7 @@ Style/MultilineIfModifier:
   Exclude:
     - 'app/controllers/pages_controller.rb'
     - 'config/initializers/high_voltage.rb'
-    - 'lib/embed/viewer/common_viewer.rb'
+    - 'app/viewers/embed/viewer/common_viewer.rb'
 
 # Offense count: 13
 # Cop supports --auto-correct.

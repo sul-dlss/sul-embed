@@ -1,8 +1,6 @@
 require 'coveralls'
 Coveralls.wear!('rails')
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-  Coveralls::SimpleCov::Formatter
-]
+SimpleCov.formatter = Coveralls::SimpleCov::Formatter
 
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|

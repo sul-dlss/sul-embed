@@ -1,0 +1,4 @@
+<div class='sul-embed-body sul-embed-geo' style="max-height: <%= viewer.body_height %>px" data-sul-embed-theme="<%= asset_url('geo.css') %>">
+  <%= content_tag :div, '', viewer.map_element_options %>
+  <script>;jQuery.getScript("<%= asset_url('geo.js') %>");</script>
+</div>
