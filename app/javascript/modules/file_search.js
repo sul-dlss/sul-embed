@@ -1,38 +1,35 @@
-// Module initializes file search functionality
+// Class initializes file search functionality
+import List from 'list.js'
 
-(function( global ) {
-  var Module = (function() {
-
-    var mediaObjectList,
-      itemCount = $(".sul-embed-item-count"),
-      options = {
+export default class FileSearch {
+  constructor() {
+    this.mediaObjectList = null;
+    this.itemCount = $(".sul-embed-item-count");
+    this.options = {
         listClass: "sul-embed-media-list",
         page: 99999,
         searchClass: "sul-embed-search-input",
         valueNames: [ "sul-embed-media-heading", "sul-embed-description" ]
-      };
-
-    return {
-      init: function() {
-        mediaObjectList = new List("sul-embed-object", options);
-        this.updateCount();
-        this.listenForUpdate();
-        return mediaObjectList;
-      },
-      listenForUpdate: function() {
-        var _this = this;
-        mediaObjectList.on("updated", function(e) {
-          _this.updateCount();
-        });
-      },
-      updateCount: function() {
-        var count = mediaObjectList.visibleItems.length,
-          itemText = count === 1 ? " item" : " items";
-        itemCount.html(count + itemText);
-      }
     };
-  })();
+  }
 
-  global.FileSearch = Module;
+  init() {
+    this.mediaObjectList = new List("sul-embed-object", this.options);
+    this.updateCount();
+    this.listenForUpdate();
+  }
 
-})( this );
+  listenForUpdate() {
+    const _this = this;
+    this.mediaObjectList.on("updated", function(e) {
+      _this.updateCount();
+    });
+  }
+
+  updateCount() {
+    const count = this.mediaObjectList.visibleItems.length;
+    const itemText = count === 1 ? " item" : " items";
+    
+    this.itemCount.html(count + itemText);
+  }
+}

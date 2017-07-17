@@ -1,18 +1,28 @@
 /*global CssInjection */
 
-import 'modules/css_injection'
-import 'list.js'
-import 'vendor/tooltip'
-import 'modules/file_search'
-import 'modules/common_viewer_behavior'
-import 'modules/file_preview'
-import 'modules/popup_panels'
-import 'modules/embed_this'
+import CssInjection from 'modules/css_injection';
+import 'vendor/tooltip';
+import CommonViewerBehavior from 'modules/common_viewer_behavior';
+import FileSearch from 'modules/file_search';
+import FilePreview from 'modules/file_preview';
+import PopupPanels from 'modules/popup_panels';
+import EmbedThis from 'modules/embed_this';
 
-CssInjection.injectFontIcons();
-CssInjection.appendToHead();
-CommonViewerBehavior.initializeViewer();
-FileSearch.init();
-FilePreview.init();
-PopupPanels.init();
-EmbedThis.init();
+const cssInjector = new CssInjection();
+cssInjector.injectFontIcons();
+cssInjector.appendToHead();
+
+const commonViewer = new CommonViewerBehavior();
+commonViewer.initializeViewer();
+
+const fileSearch = new FileSearch();
+fileSearch.init();
+
+const filePreview = new FilePreview();
+filePreview.init();
+
+const popupPanels = new PopupPanels();
+popupPanels.init();
+
+const embedThis = new EmbedThis();
+embedThis.init();

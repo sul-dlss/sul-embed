@@ -1,33 +1,31 @@
-// Module handles common viewer behaviors
+// Class handles common viewer behaviors
 
-(function( global ) {
-  var Module = (function() {
-    var viewerShown = $.Deferred();
+export default class CommonViewerBehavior {
+  constructor() {
+    this.viewerShown = $.Deferred();
+  }
 
-    return {
-      initializeViewer: function(callback) {
-        var _this = this;
-        this.showViewer();
-        $.when(viewerShown).done(function() {
-          _this.initializeTooltip();
-          if (typeof callback !== 'undefined') {
-            callback();
-          }
-        });
-      },
-      initializeTooltip: function() {
-        $("[data-sul-embed-tooltip='true']").each(function() {
-          $(this).tooltip();
-        });
-      },
-      showViewer: function() {
-        $("#sul-embed-object").show(function() {
-          viewerShown.resolve();
-        });
+  initializeViewer (callback) {
+    const _this = this;
+    _this.showViewer();
+    $.when(_this.viewerShown).done(function() {
+      _this.initializeTooltip();
+      if (typeof callback !== 'undefined') {
+        callback();
       }
-    };
-  })();
+    });
+  }
 
-  global.CommonViewerBehavior = Module;
+  initializeTooltip() {
+    $("[data-sul-embed-tooltip='true']").each(function() {
+      $(this).tooltip();
+    });
+  }
 
-})( this );
+  showViewer() {
+    const _this = this;
+    $("#sul-embed-object").show(function() {
+      _this.viewerShown.resolve();
+    });
+  }
+};
