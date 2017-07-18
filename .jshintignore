@@ -1,3 +1,4 @@
 vendor/*
 app/assets/javascripts/vendor/*
 spec/javascripts/support/*
+public/uv-3/*
