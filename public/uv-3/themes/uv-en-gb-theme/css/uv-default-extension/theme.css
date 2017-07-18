@@ -2431,6 +2431,16 @@ input[type=range]:focus::-ms-fill-upper {
 .uv.en-gb .headerPanel .options {
   background-color: #5f574f;
 }
+.uv.en-gb .headerPanel .options .centerOptions {
+  width: 390px;
+}
 .uv.en-gb .footerPanel .searchPager .controls .searchResultsInfo {
   width: 337px;
+}
+.uv.en-gb .footerPanel .options {
+  background-color: #5f574f;
+  margin-left: -8px;
+  margin-right: -8px;
+  padding-left: 8px;
+  padding-right: 8px;
 }

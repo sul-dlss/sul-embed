@@ -13,15 +13,15 @@
         "footerPanel": {
             "options": {
                 "bookmarkEnabled": false,
-                "downloadEnabled": false,
+                "downloadEnabled": true,
                 "embedEnabled": false,
                 "feedbackEnabled": false,
                 "fullscreenEnabled": true,
                 "minimiseButtons": true,
-                "moreInfoEnabled": false,
+                "moreInfoEnabled": true,
                 "openEnabled": false,
                 "printEnabled": false,
-                "shareEnabled": false
+                "shareEnabled": true
             }
         }
     }
