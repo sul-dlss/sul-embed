@@ -1,6 +1,6 @@
 {
     "options": {
-        "rightPanelEnabled": false,
+        "rightPanelEnabled": true,
         "limitLocales": true,
         "shareFrameEnabled": false
     },
@@ -18,7 +18,7 @@
                 "feedbackEnabled": false,
                 "fullscreenEnabled": true,
                 "minimiseButtons": true,
-                "moreInfoEnabled": true,
+                "moreInfoEnabled": false,
                 "openEnabled": false,
                 "printEnabled": false,
                 "shareEnabled": true
