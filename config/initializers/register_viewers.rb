@@ -4,7 +4,7 @@
 require 'embed/viewer/file'
 Embed.register_viewer(Embed::Viewer::File)
 Embed.register_viewer(Embed::Viewer::Geo)
-Embed.register_viewer(Embed::Viewer::UVImage)
+Embed.register_viewer(Settings.image_viewer.constantize)
 Embed.register_viewer(Embed::Viewer::UVFile)
 Embed.register_viewer(Embed::Viewer::Media)
 Embed.register_viewer(Embed::Viewer::WasSeed)
