@@ -10,7 +10,7 @@ OkComputer::Registry.deregister 'database' # don't check (unused) ActiveRecord d
 # REQUIRED checks, required to pass for /status/all
 #  individual checks also avail at /status/<name-of-check>
 OkComputer::Registry.register 'ruby_version', OkComputer::RubyVersionCheck.new
-# TODO: add app version check when okcomputer works with cap 3 (see http://github.com/sportngin/okcomputer#112)
+# TODO: add app version check when okcomputer works with cap 3 (see https://github.com/sportngin/okcomputer/pull/112)
 
 # note that purl home page is very resource heavy
 purl_url_to_check = Settings.purl_url + (Settings.purl_url.end_with?('/') ? '' : '/') + 'status'
