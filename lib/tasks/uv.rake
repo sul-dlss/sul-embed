@@ -11,7 +11,7 @@ namespace :uv do
     # I have no idea but see:
     # https://github.com/sul-dlss/sul-embed/commit/d1b31107a7f09ed296e3551cfc3bb02f6f94980b
     # We are renaming the files to drop the js extensions, but adding the js
-    # extensions that are referenced in the files. ¯\_(ツ)_/¯
+    # extensions that are referenced in the files. /shrug
     Dir.glob(File.join(dest, 'lib', '*-extension-dependencies.js')).each do |ext_dep|
       without = ext_dep.gsub('.js', '')
       FileUtils.mv(ext_dep, without)
