@@ -3276,6 +3276,9 @@ input[type=range]:focus::-ms-fill-upper {
 .uv.en-gb .headerPanel .options .centerOptions {
   width: 390px;
 }
+.uv.en-gb .headerPanel .options .centerOptions {
+  display: none;
+}
 .uv.en-gb .footerPanel .searchPager .controls .searchResultsInfo {
   width: 337px;
 }
