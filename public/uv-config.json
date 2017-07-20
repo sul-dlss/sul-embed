@@ -1,0 +1,28 @@
+{
+    "options": {
+        "rightPanelEnabled": true,
+        "limitLocales": true,
+        "shareFrameEnabled": false
+    },
+    "modules": {
+        "seadragonCenterPanel": {
+            "options": {
+                "titleEnabled": false
+            }
+        },
+        "footerPanel": {
+            "options": {
+                "bookmarkEnabled": false,
+                "downloadEnabled": true,
+                "embedEnabled": false,
+                "feedbackEnabled": false,
+                "fullscreenEnabled": true,
+                "minimiseButtons": true,
+                "moreInfoEnabled": false,
+                "openEnabled": false,
+                "printEnabled": false,
+                "shareEnabled": true
+            }
+        }
+    }
+}

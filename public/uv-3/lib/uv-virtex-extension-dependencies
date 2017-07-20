@@ -1,0 +1,6 @@
+define(function() {
+    return {
+        sync: ['three.min.js', 'draco_decoder.js'],
+        async: ['VRControls.js', 'VREffect.js', 'stats.min.js', 'DRACOLoader.js', 'GLTFLoader.js', 'Detector.js', 'WebVR.js', 'virtex.js', 'iiif-metadata-component.js']
+    };
+});

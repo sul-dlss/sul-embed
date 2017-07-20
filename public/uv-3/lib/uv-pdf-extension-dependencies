@@ -1,0 +1,6 @@
+define(function() {
+    return {
+        sync: ['pdfobject.js'],
+        async: ['iiif-metadata-component.js']
+    };
+});
