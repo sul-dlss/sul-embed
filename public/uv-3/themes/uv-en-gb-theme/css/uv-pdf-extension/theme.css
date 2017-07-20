@@ -1435,7 +1435,7 @@ input[type=range]:focus::-ms-fill-upper {
   position: absolute;
   width: 190px;
   padding: 10px 10px 10px 10px;
-  margin: 10px 0 15px 15px;
+  margin: 10px 0 10px 10px;
   font-size: 11px;
 }
 .uv .centerPanel .content .attribution .header {
@@ -1881,7 +1881,7 @@ input[type=range]:focus::-ms-fill-upper {
   color: #000;
   font-size: 18px;
   font-weight: bold;
-  margin: 15px 0px 0px 0px;
+  margin: 10px 0px 0px 0px;
   padding: 0 0 10px 0;
 }
 .uv .overlay .middle .content h2 {
@@ -2167,7 +2167,7 @@ input[type=range]:focus::-ms-fill-upper {
   padding: 0;
 }
 .iiif-tree-component ul.tree ul {
-  margin-left: 15px;
+  margin-left: 10px;
 }
 .iiif-tree-component ul.tree li {
   margin: 0;
@@ -2187,7 +2187,7 @@ input[type=range]:focus::-ms-fill-upper {
 .iiif-metadata-component .groups .group .items .header {
   color: #0098db;
   border-bottom: 1px solid #0098db;
-  margin: 15px 10px 0 0;
+  margin: 10px 10px 0 0;
 }
 .iiif-metadata-component .groups .group .items .item {
   padding: 0;
@@ -2196,7 +2196,7 @@ input[type=range]:focus::-ms-fill-upper {
 .iiif-metadata-component .groups .group .items .item .label {
   color: #9a9a9a;
   border-bottom: 1px solid #433e38;
-  margin: 15px 10px 0 0;
+  margin: 10px 10px 0 0;
 }
 .iiif-metadata-component .groups .group .items .item .label .copyText {
   position: relative;
@@ -2308,10 +2308,10 @@ input[type=range]:focus::-ms-fill-upper {
 }
 .uv .mainPanel {
   position: relative;
-  margin-top: 8px;
-  margin-right: 8px;
+  margin-top: 0px;
+  margin-right: 0px;
   margin-bottom: 0px;
-  margin-left: 8px;
+  margin-left: 0px;
 }
 .uv .leftPanel {
   position: absolute;
@@ -2329,9 +2329,9 @@ input[type=range]:focus::-ms-fill-upper {
 .uv .footerPanel {
   position: relative;
   margin-top: 0;
-  margin-right: 8px;
+  margin-right: 0px;
   margin-bottom: 0px;
-  margin-left: 8px;
+  margin-left: 0px;
 }
 .uv .footerPanel.mobile {
   display: none;
@@ -2407,8 +2407,5 @@ input[type=range]:focus::-ms-fill-upper {
 }
 .uv.en-gb .footerPanel .options {
   background-color: #5f574f;
-  margin-left: -8px;
-  margin-right: -8px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding: 0 8px;
 }
