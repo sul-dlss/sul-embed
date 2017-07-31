@@ -298,6 +298,10 @@
   .uv .overlay.moreInfo {
     padding: 0 0 45px 8px;
   }
+  .uv .overlay.auth {
+    width: 250px;
+    height: 250px;
+  }
 }
 .uv .rightPanel .top .title {
   text-transform: uppercase;
