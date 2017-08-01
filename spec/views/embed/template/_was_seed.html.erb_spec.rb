@@ -15,10 +15,10 @@ RSpec.describe 'embed/template/_was_seed.html.erb' do
     allow(viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
     allow(viewer).to receive(:thumbs_list).and_return(thumbs_list_fixtures)
     allow(view).to receive(:viewer).and_return(viewer)
-    render
   end
 
   it 'displays Was Seed viewer body' do
+    render
     # visible false because we display:none the container until we've loaded the CSS.
     expect(rendered).to have_css '.sul-embed-was-seed', visible: false
     expect(rendered).to have_css '.sul-embed-was-thumb-list', visible: false, count: 1
@@ -36,5 +36,13 @@ RSpec.describe 'embed/template/_was_seed.html.erb' do
     expect(rendered).to have_css '.sul-embed-was-thumb-item-div a[href="https://swap.stanford.edu/20130412231301/http://naca.central.cranfield.ac.uk/"]', visible: false
     expect(rendered).to have_css '.sul-embed-was-thumb-item-date', text: '12-Apr-2013', visible: false
     expect(rendered).to have_css '.sul-embed-was-thumb-item img[src="https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20130412231301/full/200,/0/default.jpg"]', visible: false
+  end
+
+  describe 'with hidden title' do
+    it do
+      allow(viewer).to receive(:display_header?).at_least(:once).and_return(false)
+      render
+      expect(rendered).to_not have_css '.sul-embed-header', visible: false
+    end
   end
 end

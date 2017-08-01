@@ -1,6 +1,6 @@
 <div class="sul-embed-container<%= ' sul-embed-fullheight' if viewer.request.fullheight? %>"
   id='sul-embed-object' style='display:none; <%= viewer.container_styles %>'>
-  <%= render 'header/media', viewer: viewer %>
+  <%= render 'header/media', viewer: viewer if viewer.display_header? %>
   <%= render 'body/media', viewer: viewer %>
   <%= render 'metadata/media', viewer: viewer %>
   <%= render 'embed_this/generic', viewer: viewer %>

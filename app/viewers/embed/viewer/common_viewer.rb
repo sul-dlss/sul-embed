@@ -108,11 +108,11 @@ module Embed
           .compact.join(' until ')
       end
 
-      private
-
       def display_header?
         !@request.hide_title?
       end
+
+      private
 
       def height_style
         return 'max-height:100%;' if @request.fullheight?
