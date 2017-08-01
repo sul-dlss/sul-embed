@@ -2603,7 +2603,7 @@ var __extends=this&&this.__extends||function(){var r=Object.setPrototypeOf||{__p
 
 define("lib/ex.es3.min.js", function(){});
 
-// base-component v1.0.9 https://github.com/viewdir/base-component#readme
+// base-component v1.1.0 https://github.com/viewdir/base-component#readme
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/base-component.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.baseComponent = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 ///<reference path="../node_modules/typescript/lib/lib.es6.d.ts"/> 
@@ -2859,7 +2859,7 @@ var KeyCodes;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[1])(1)
 });
-// extensions v0.1.11 https://github.com/edsilv/extensions
+// extensions v0.2.0 https://github.com/edsilv/extensions
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/extensions.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.extensions = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 ///<reference path="../node_modules/typescript/lib/lib.es6.d.ts"/> 
 
@@ -3062,7 +3062,7 @@ var HTTPStatusCode;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[1])(1)
 });
-// jquery-plugins v0.0.25 https://github.com/edsilv/jquery-plugins
+// jquery-plugins v0.1.0 https://github.com/edsilv/jquery-plugins
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/jquery-plugins.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.jqueryPlugins = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 ///<reference path="../node_modules/typescript/lib/lib.es6.d.ts"/> 
 // declare var Length: Length;
@@ -3518,7 +3518,7 @@ var HTTPStatusCode;
 }(jQuery));
 define("lib/ba-tiny-pubsub.js", function(){});
 
-// manifesto v2.1.0 https://github.com/viewdir/manifesto
+// manifesto v2.1.1 https://github.com/viewdir/manifesto
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/manifesto.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifesto = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 ///<reference path="../node_modules/typescript/lib/lib.es6.d.ts"/>   
@@ -5750,7 +5750,7 @@ var Manifesto;
         };
         Utils.doAuthChain = function (resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
             return __awaiter(this, void 0, void 0, function () {
-                var serviceToTry, lastAttempted, kioskInteraction, contentProviderInteraction, contentProviderInteraction;
+                var externalService, kioskService, clickThroughService, loginService, serviceToTry, lastAttempted, kioskInteraction, contentProviderInteraction, contentProviderInteraction;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
                         case 0:
@@ -5758,6 +5758,22 @@ var Manifesto;
                             // http://iiif.io/api/auth/1.0/#workflow-from-the-browser-client-perspective
                             if (!resource.isAccessControlled()) {
                                 return [2 /*return*/, resource]; // no services found
+                            }
+                            externalService = resource.externalService;
+                            if (externalService) {
+                                externalService.options = resource.options;
+                            }
+                            kioskService = resource.kioskService;
+                            if (kioskService) {
+                                kioskService.options = resource.options;
+                            }
+                            clickThroughService = resource.clickThroughService;
+                            if (clickThroughService) {
+                                clickThroughService.options = resource.options;
+                            }
+                            loginService = resource.loginService;
+                            if (loginService) {
+                                loginService.options = resource.options;
                             }
                             if (!(!resource.isResponseHandled && resource.status === HTTPStatusCode.MOVED_TEMPORARILY)) return [3 /*break*/, 2];
                             return [4 /*yield*/, handleMovedTemporarily(resource)];
@@ -5769,9 +5785,8 @@ var Manifesto;
                             lastAttempted = null;
                             // repetition of logic is left in these steps for clarity:
                             // Looking for external pattern
-                            serviceToTry = resource.externalService;
+                            serviceToTry = externalService;
                             if (!serviceToTry) return [3 /*break*/, 4];
-                            serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
                             return [4 /*yield*/, Utils.attemptResourceWithToken(resource, openTokenService, serviceToTry)];
                         case 3:
@@ -5779,9 +5794,8 @@ var Manifesto;
                             return [2 /*return*/, resource];
                         case 4:
                             // Looking for kiosk pattern
-                            serviceToTry = resource.kioskService;
+                            serviceToTry = kioskService;
                             if (!serviceToTry) return [3 /*break*/, 7];
-                            serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
                             kioskInteraction = openContentProviderInteraction(serviceToTry);
                             if (!kioskInteraction) return [3 /*break*/, 7];
@@ -5801,9 +5815,8 @@ var Manifesto;
                             // For clickthrough the opened window should close immediately having established
                             // a session, whereas for login the user might spend some time entering credentials etc.
                             // Looking for clickthrough pattern
-                            serviceToTry = resource.clickThroughService;
+                            serviceToTry = clickThroughService;
                             if (!serviceToTry) return [3 /*break*/, 11];
-                            serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
                             return [4 /*yield*/, getContentProviderInteraction(resource, serviceToTry)];
                         case 8:
@@ -5820,9 +5833,8 @@ var Manifesto;
                             return [2 /*return*/, resource];
                         case 11:
                             // Looking for login pattern
-                            serviceToTry = resource.loginService;
+                            serviceToTry = loginService;
                             if (!serviceToTry) return [3 /*break*/, 15];
-                            serviceToTry.options = resource.options;
                             lastAttempted = serviceToTry;
                             return [4 /*yield*/, getContentProviderInteraction(resource, serviceToTry)];
                         case 12:
@@ -14104,7 +14116,7 @@ function extend() {
 
 },{}]},{},[1])(1)
 });
-// manifold v1.1.12 https://github.com/viewdir/manifold#readme
+// manifold v1.2.1 https://github.com/viewdir/manifold#readme
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/manifold.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifold = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 ///<reference path="../node_modules/typescript/lib/lib.es6.d.ts"/> 
@@ -14150,10 +14162,10 @@ var Manifold;
         TreeSortType.prototype.none = function () {
             return new TreeSortType(TreeSortType.NONE.toString());
         };
+        TreeSortType.DATE = new TreeSortType("date");
+        TreeSortType.NONE = new TreeSortType("none");
         return TreeSortType;
     }(Manifold.StringValue));
-    TreeSortType.DATE = new TreeSortType("date");
-    TreeSortType.NONE = new TreeSortType("none");
     Manifold.TreeSortType = TreeSortType;
 })(Manifold || (Manifold = {}));
 
@@ -14324,9 +14336,10 @@ var Manifold;
 var Manifold;
 (function (Manifold) {
     var ExternalResource = (function () {
-        function ExternalResource(resource, dataUriFunc) {
-            this.authAPIVersion = 0.9;
+        function ExternalResource(resource, dataUriFunc, index, authApiVersion) {
+            if (authApiVersion === void 0) { authApiVersion = 0.9; }
             this.clickThroughService = null;
+            this.contentProviderInteractionEnabled = true;
             this.externalService = null;
             this.isResponseHandled = false;
             this.loginService = null;
@@ -14334,6 +14347,8 @@ var Manifold;
             this.tokenService = null;
             resource.externalResource = this;
             this.dataUri = dataUriFunc(resource);
+            this.index = index;
+            this.authAPIVersion = authApiVersion;
             this._parseAuthServices(resource);
         }
         ExternalResource.prototype._parseAuthServices = function (resource) {
@@ -15293,7 +15308,7 @@ var Manifold;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[1])(1)
 });
-// utils v0.0.38 https://github.com/edsilv/utils
+// utils v0.1.0 https://github.com/edsilv/utils
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/utils.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.utils = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 ///<reference path="../node_modules/typescript/lib/lib.es6.d.ts"/> 
@@ -15891,9 +15906,9 @@ var Utils;
             }
             return record;
         };
+        Storage._memoryStorage = {};
         return Storage;
     }());
-    Storage._memoryStorage = {};
     Utils.Storage = Storage;
 })(Utils || (Utils = {}));
 
@@ -15916,11 +15931,11 @@ var Utils;
         StorageType.prototype.toString = function () {
             return this.value;
         };
+        StorageType.memory = new StorageType("memory");
+        StorageType.session = new StorageType("session");
+        StorageType.local = new StorageType("local");
         return StorageType;
     }());
-    StorageType.memory = new StorageType("memory");
-    StorageType.session = new StorageType("session");
-    StorageType.local = new StorageType("local");
     Utils.StorageType = StorageType;
 })(Utils || (Utils = {}));
 
@@ -16539,19 +16554,25 @@ define('modules/uv-shared-module/Auth1',["require", "exports", "./BaseEvents", "
         };
         Auth1.getContentProviderInteraction = function (resource, service) {
             return new Promise(function (resolve) {
-                $.publish(BaseEvents_1.BaseEvents.SHOW_AUTH_DIALOGUE, [{
-                        service: service,
-                        closeCallback: function () {
-                            resolve(null);
-                        },
-                        confirmCallback: function () {
-                            var win = Auth1.openContentProviderInteraction(service);
-                            resolve(win);
-                        },
-                        cancelCallback: function () {
-                            resolve(null);
-                        }
-                    }]);
+                if (!resource.contentProviderInteractionEnabled) {
+                    var win = Auth1.openContentProviderInteraction(service);
+                    resolve(win);
+                }
+                else {
+                    $.publish(BaseEvents_1.BaseEvents.SHOW_AUTH_DIALOGUE, [{
+                            service: service,
+                            closeCallback: function () {
+                                resolve(null);
+                            },
+                            confirmCallback: function () {
+                                var win = Auth1.openContentProviderInteraction(service);
+                                resolve(win);
+                            },
+                            cancelCallback: function () {
+                                resolve(null);
+                            }
+                        }]);
+                }
             });
         };
         Auth1.openTokenService = function (tokenService) {
@@ -18154,8 +18175,7 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
                 var canvas = _this.helper.getCanvasByIndex(index);
                 var r;
                 if (!canvas.externalResource) {
-                    r = new Manifold.ExternalResource(canvas, _this.helper.getInfoUri);
-                    r.index = index;
+                    r = new Manifold.ExternalResource(canvas, _this.helper.getInfoUri, index, _this.data.config.options.authAPIVersion);
                 }
                 else {
                     r = canvas.externalResource;
@@ -18764,13 +18784,15 @@ define('modules/uv-shared-module/InformationFactory',["require", "exports", "./B
                 case (InformationType_1.InformationType.DEGRADED_RESOURCE):
                     var actions = [];
                     var loginAction = new InformationAction_1.InformationAction();
-                    loginAction.label = this.extension.data.config.content.degradedResourceLogin;
+                    loginAction.label = args.param.loginService.getConfirmLabel();
+                    var resource_1 = args.param;
+                    resource_1.contentProviderInteractionEnabled = false;
                     loginAction.action = function () {
                         $.publish(BaseEvents_1.BaseEvents.HIDE_INFORMATION);
-                        $.publish(BaseEvents_1.BaseEvents.OPEN_EXTERNAL_RESOURCE, [[args.param]]);
+                        $.publish(BaseEvents_1.BaseEvents.OPEN_EXTERNAL_RESOURCE, [[resource_1]]);
                     };
                     actions.push(loginAction);
-                    return new Information_1.Information(this.extension.data.config.content.degradedResourceMessage, actions);
+                    return new Information_1.Information(args.param.loginService.getServiceLabel(), actions);
             }
         };
         return InformationFactory;
