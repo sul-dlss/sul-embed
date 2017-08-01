@@ -123,4 +123,12 @@ RSpec.describe 'embed/template/_file.html.erb' do
       expect(rendered).to have_css('.sul-embed-media-heading .sul-embed-location-restricted-text', visible: false, text: '(Restricted)')
     end
   end
+
+  describe 'with hidden title' do
+    it do
+      allow(viewer).to receive(:display_header?).at_least(:once).and_return(false)
+      render
+      expect(rendered).to_not have_css '.sul-embed-header', visible: false
+    end
+  end
 end
