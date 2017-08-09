@@ -39,7 +39,11 @@ RSpec.describe 'embed/download/_media.html.erb' do
     end
 
     it 'includes attributes appropriate for _blank target download links' do
-      expect(rendered).to have_css('li a[target="_blank"][rel="noopener noreferrer"][download]', count: 3, visible: false)
+      expect(rendered).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 3, visible: false)
+    end
+
+    it 'includes download=true param' do
+      expect(rendered).to have_css 'li a[href*="?download=true"]', count: 3, visible: false
     end
 
     it 'includes downloadable files' do

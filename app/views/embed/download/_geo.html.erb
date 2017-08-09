@@ -5,7 +5,7 @@
         <ul class='sul-embed-download-list'>
           <% resource.files.each do |file| %>
             <li>
-              <a href="<%= viewer.file_url(file.title) %>" title="<%= file.title %>" target='_blank' rel='noopener noreferrer' download="">
+              <a href="<%= viewer.file_url(file.title, download: true) %>" title="<%= file.title %>" target='_blank' rel='noopener noreferrer'>
                 Download <%= file.title %>
               </a>
               <%= render 'restrictions_text_for_file', file: file %>

@@ -42,9 +42,12 @@ module Embed
       ##
       # Creates a file url for stacks
       # @param [String] title
+      # @param [Boolean] download
       # @return [String]
-      def file_url(title)
-        "#{stacks_url}/#{URI.escape(title)}"
+      def file_url(title, download: false)
+        uri = URI.parse("#{stacks_url}/#{URI.escape(title)}")
+        uri.query = URI.encode_www_form(download: true) if download
+        uri.to_s
       end
 
       ##

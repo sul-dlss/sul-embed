@@ -33,6 +33,9 @@ describe Embed::Viewer::CommonViewer do
     it 'creates a stacks file url' do
       expect(file_viewer.file_url('cool_file')).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file'
     end
+    it 'adds a download param' do
+      expect(file_viewer.file_url('cool_file', download: true)).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file?download=true'
+    end
   end
 
   describe '#sul_pretty_date' do
