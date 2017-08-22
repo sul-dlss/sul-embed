@@ -1,5 +1,0 @@
-define(function() {
-    return {
-        async: ['iiif-tree-component.js', 'iiif-gallery-component.js', 'iiif-metadata-component.js', 'openseadragon.min.js']
-    };
-});

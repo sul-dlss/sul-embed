@@ -11,7 +11,7 @@ module Embed
 
       # we want to change this
       def config_url
-        '/uv-config.json'
+        './uv-config.json'
       end
 
       def embed_url
@@ -19,7 +19,7 @@ module Embed
       end
 
       def uv_root
-        '/uv-3'
+        './uv-3'
       end
 
       def manifest_json_url
