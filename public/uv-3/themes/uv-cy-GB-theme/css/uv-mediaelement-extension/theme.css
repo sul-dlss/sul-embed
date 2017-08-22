@@ -2472,19 +2472,20 @@ input[type=range]:focus::-ms-fill-upper {
 .uv .overlay .middle {
   width: 100%;
   background: #fff;
+  overflow: hidden;
+}
+.uv .overlay .middle .buttons {
+  padding: 10px;
+  float: right;
+}
+.uv .overlay .middle .buttons .btn {
+  margin: 0 0 0 10px;
 }
 .uv .overlay .middle .content {
   padding-right: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
   overflow: auto;
-}
-.uv .overlay .middle .content .buttons {
-  padding: 10px 0 0 0;
-  float: right;
-}
-.uv .overlay .middle .content .buttons .btn {
-  margin: 0 0 0 10px;
 }
 .uv .overlay .middle .content h1 {
   color: #000;
