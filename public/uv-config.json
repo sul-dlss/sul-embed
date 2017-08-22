@@ -25,6 +25,11 @@
                 "printEnabled": false,
                 "shareEnabled": true
             }
+        },
+        "downloadDialogue": {
+          "content": {
+            "currentViewAsJpg": "Zoomed region {0} x {1}px (jpg)"
+          }
         }
     }
 }
