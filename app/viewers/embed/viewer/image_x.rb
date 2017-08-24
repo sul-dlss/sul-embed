@@ -64,6 +64,14 @@ module Embed
       def default_body_height
         420
       end
+
+      ##
+      # Overriding CommonViewer because the ImageX viewer also has other things
+      # in the header, we need a larger height calculation.
+      def header_height
+        return 40 unless display_header?
+        super
+      end
     end
   end
 end

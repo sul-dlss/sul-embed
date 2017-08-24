@@ -111,6 +111,9 @@ module Embed
           .compact.join(' until ')
       end
 
+      ##
+      # Not a great method name here as sometimes the header is still displayed,
+      # even if the title is hidden.
       def display_header?
         !@request.hide_title?
       end
