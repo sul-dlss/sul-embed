@@ -30,5 +30,17 @@ describe Embed::Viewer::ImageX do
         expect(url).to match(%r{^#{purl}\?manifest=#{purl}/iiif/manifest$})
       end
     end
+    describe '#header_height' do
+      it 'sets a height of 40 when display_header? is false' do
+        expect(image_x_viewer).to receive(:display_header?).and_return false
+        height = image_x_viewer.send(:header_height)
+        expect(height).to eq 40
+      end
+      it 'sets the default height when display_header? is true' do
+        expect(image_x_viewer).to receive(:display_header?).and_return(true).at_least :once
+        height = image_x_viewer.send(:header_height)
+        expect(height).to eq 63
+      end
+    end
   end
 end
