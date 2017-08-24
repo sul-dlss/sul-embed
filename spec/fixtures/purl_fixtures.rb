@@ -535,6 +535,20 @@ module PURLFixtures
         <rightsMetadata>
           #{access_read_world}
         </rightsMetadata>
+        <mods>
+          <extension displayLabel="geo">
+            <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://purl.stanford.edu/fp756wn9369">
+              <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">application/x-esri-shapefile; format=Shapefile</dc:format>
+              <dc:type xmlns:dc="http://purl.org/dc/elements/1.1/">Dataset#Polygon</dc:type>
+              <gml:boundedBy xmlns:gml="http://www.opengis.net/gml/3.2/">
+                <gml:Envelope gml:srsName="EPSG:4326">
+                  <gml:lowerCorner>-123.387626 38.298673</gml:lowerCorner>
+                  <gml:upperCorner>-122.528843 39.399103</gml:upperCorner>
+                </gml:Envelope>
+              </gml:boundedBy>
+            </rdf:Description>
+          </extension>
+        </mods>
       </publicObject>
     XML
   end
