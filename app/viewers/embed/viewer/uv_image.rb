@@ -23,7 +23,7 @@ module Embed
       end
 
       def manifest_json_url
-        "#{Settings.purl_url}/#{@purl_object.druid}/iiif/manifest.json"
+        "#{Settings.purl_url}/#{@purl_object.druid}/iiif/manifest"
       end
 
       ##
