@@ -20,6 +20,7 @@ engines:
 exclude_paths:
 - spec/**/*
 - "**/vendor/**/*"
+- "public/**/*"
 
 ratings:
    paths:
