@@ -3518,7 +3518,7 @@ var HTTPStatusCode;
 }(jQuery));
 define("lib/ba-tiny-pubsub.js", function(){});
 
-// manifesto v2.1.3 https://github.com/viewdir/manifesto
+// manifesto v2.1.4 https://github.com/viewdir/manifesto
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/manifesto.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifesto = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 ///<reference path="../node_modules/typescript/lib/lib.es6.d.ts"/>   
@@ -3844,10 +3844,18 @@ var Manifesto;
             return _super !== null && _super.apply(this, arguments) || this;
         }
         // todo: use getters when ES3 target is no longer required.
+        ResourceType.prototype.choice = function () {
+            return new ResourceType(ResourceType.CHOICE.toString());
+        };
         ResourceType.prototype.image = function () {
             return new ResourceType(ResourceType.IMAGE.toString());
         };
+        ResourceType.prototype.text = function () {
+            return new ResourceType(ResourceType.TEXT.toString());
+        };
+        ResourceType.CHOICE = new ResourceType("choice");
         ResourceType.IMAGE = new ResourceType("dctypes:image");
+        ResourceType.TEXT = new ResourceType("textualbody");
         return ResourceType;
     }(Manifesto.StringValue));
     Manifesto.ResourceType = ResourceType;
@@ -4366,6 +4374,9 @@ var Manifesto;
                 content.push(annotation);
             }
             return content;
+        };
+        Canvas.prototype.getDuration = function () {
+            return this.getProperty('duration');
         };
         Canvas.prototype.getImages = function () {
             var images = [];
@@ -5714,10 +5725,10 @@ var Manifesto;
                 request.end();
             });
         };
-        Utils.loadExternalResourcesAuth1 = function (resources, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
+        Utils.loadExternalResourcesAuth1 = function (resources, openContentProviderInteraction, openTokenService, getStoredAccessToken, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
             return new Promise(function (resolve, reject) {
                 var promises = resources.map(function (resource) {
-                    return Utils.loadExternalResourceAuth1(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages);
+                    return Utils.loadExternalResourceAuth1(resource, openContentProviderInteraction, openTokenService, getStoredAccessToken, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages);
                 });
                 Promise.all(promises)
                     .then(function () {
@@ -5727,19 +5738,41 @@ var Manifesto;
                 });
             });
         };
-        Utils.loadExternalResourceAuth1 = function (resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
+        Utils.loadExternalResourceAuth1 = function (resource, openContentProviderInteraction, openTokenService, getStoredAccessToken, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
             return __awaiter(this, void 0, void 0, function () {
+                var storedAccessToken;
                 return __generator(this, function (_a) {
                     switch (_a.label) {
-                        case 0: return [4 /*yield*/, resource.getData()];
+                        case 0: return [4 /*yield*/, getStoredAccessToken(resource)];
                         case 1:
-                            _a.sent();
-                            if (!(resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED)) return [3 /*break*/, 3];
-                            return [4 /*yield*/, Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages)];
+                            storedAccessToken = _a.sent();
+                            if (!storedAccessToken) return [3 /*break*/, 6];
+                            return [4 /*yield*/, resource.getData(storedAccessToken)];
                         case 2:
                             _a.sent();
-                            _a.label = 3;
-                        case 3:
+                            if (!(resource.status === HTTPStatusCode.OK)) return [3 /*break*/, 3];
+                            return [2 /*return*/, resource];
+                        case 3: 
+                        // the stored token is no good for this resource
+                        return [4 /*yield*/, Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages)];
+                        case 4:
+                            // the stored token is no good for this resource
+                            _a.sent();
+                            _a.label = 5;
+                        case 5:
+                            if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
+                                return [2 /*return*/, resource];
+                            }
+                            throw Utils.createAuthorizationFailedError();
+                        case 6: return [4 /*yield*/, resource.getData()];
+                        case 7:
+                            _a.sent();
+                            if (!(resource.status === HTTPStatusCode.MOVED_TEMPORARILY || resource.status === HTTPStatusCode.UNAUTHORIZED)) return [3 /*break*/, 9];
+                            return [4 /*yield*/, Utils.doAuthChain(resource, openContentProviderInteraction, openTokenService, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages)];
+                        case 8:
+                            _a.sent();
+                            _a.label = 9;
+                        case 9:
                             if (resource.status === HTTPStatusCode.OK || resource.status === HTTPStatusCode.MOVED_TEMPORARILY) {
                                 return [2 /*return*/, resource];
                             }
@@ -5868,7 +5901,7 @@ var Manifesto;
                         case 0:
                             tokenService = authService.getService(Manifesto.ServiceProfile.AUTH1TOKEN.toString());
                             if (!tokenService) return [3 /*break*/, 3];
-                            return [4 /*yield*/, openTokenService(tokenService)];
+                            return [4 /*yield*/, openTokenService(resource, tokenService)];
                         case 1:
                             tokenMessage = _a.sent();
                             if (!(tokenMessage && tokenMessage.accessToken)) return [3 /*break*/, 3];
@@ -16058,7 +16091,7 @@ global.Utils = module.exports = Utils;
 define('UVDataProvider',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var UVDataProvider = (function () {
+    var UVDataProvider = /** @class */ (function () {
         function UVDataProvider() {
         }
         UVDataProvider.prototype.get = function (key, defaultValue) {
@@ -16084,7 +16117,7 @@ var __extends = (this && this.__extends) || (function () {
 define('URLDataProvider',["require", "exports", "./UVDataProvider"], function (require, exports, UVDataProvider_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var URLDataProvider = (function (_super) {
+    var URLDataProvider = /** @class */ (function (_super) {
         __extends(URLDataProvider, _super);
         function URLDataProvider() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -16103,7 +16136,7 @@ define('URLDataProvider',["require", "exports", "./UVDataProvider"], function (r
 define('modules/uv-shared-module/BaseEvents',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var BaseEvents = (function () {
+    var BaseEvents = /** @class */ (function () {
         function BaseEvents() {
         }
         BaseEvents.ACCEPT_TERMS = 'acceptTerms';
@@ -16214,7 +16247,7 @@ define('modules/uv-shared-module/BaseEvents',["require", "exports"], function (r
 define('modules/uv-shared-module/InformationArgs',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var InformationArgs = (function () {
+    var InformationArgs = /** @class */ (function () {
         function InformationArgs(informationType, param) {
             this.informationType = informationType;
             this.param = param;
@@ -16237,7 +16270,7 @@ define('modules/uv-shared-module/InformationType',["require", "exports"], functi
 define('modules/uv-shared-module/LoginWarningMessages',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var LoginWarningMessages = (function () {
+    var LoginWarningMessages = /** @class */ (function () {
         function LoginWarningMessages() {
         }
         LoginWarningMessages.FORBIDDEN = "forbiddenResourceMessage";
@@ -16249,7 +16282,7 @@ define('modules/uv-shared-module/LoginWarningMessages',["require", "exports"], f
 define('modules/uv-shared-module/Auth09',["require", "exports", "./BaseEvents", "./InformationArgs", "./InformationType", "./LoginWarningMessages"], function (require, exports, BaseEvents_1, InformationArgs_1, InformationType_1, LoginWarningMessages_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Auth09 = (function () {
+    var Auth09 = /** @class */ (function () {
         function Auth09() {
         }
         Auth09.loadExternalResources = function (resourcesToLoad, storageStrategy) {
@@ -16461,7 +16494,7 @@ define('modules/uv-shared-module/Auth09',["require", "exports", "./BaseEvents", 
 define('modules/uv-shared-module/Utils',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var UVUtils = (function () {
+    var UVUtils = /** @class */ (function () {
         function UVUtils() {
         }
         UVUtils.sanitize = function (html) {
@@ -16489,18 +16522,19 @@ define('modules/uv-shared-module/Utils',["require", "exports"], function (requir
 define('modules/uv-shared-module/Auth1',["require", "exports", "./BaseEvents", "./Utils", "./InformationArgs", "./InformationType"], function (require, exports, BaseEvents_1, Utils_1, InformationArgs_1, InformationType_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Auth1 = (function () {
+    var Auth1 = /** @class */ (function () {
         function Auth1() {
         }
         Auth1.loadExternalResources = function (resourcesToLoad, storageStrategy, options) {
             return new Promise(function (resolve) {
+                Auth1.storageStrategy = storageStrategy;
                 // set all resources to Auth API V1
                 resourcesToLoad = resourcesToLoad.map(function (resource) {
                     resource.authAPIVersion = 1;
                     resource.options = options;
                     return resource;
                 });
-                manifesto.Utils.loadExternalResourcesAuth1(resourcesToLoad, Auth1.openContentProviderInteraction, Auth1.openTokenService, Auth1.userInteractedWithContentProvider, Auth1.getContentProviderInteraction, Auth1.handleMovedTemporarily, Auth1.showOutOfOptionsMessages).then(function (r) {
+                manifesto.Utils.loadExternalResourcesAuth1(resourcesToLoad, Auth1.openContentProviderInteraction, Auth1.openTokenService, Auth1.getStoredAccessToken, Auth1.userInteractedWithContentProvider, Auth1.getContentProviderInteraction, Auth1.handleMovedTemporarily, Auth1.showOutOfOptionsMessages).then(function (r) {
                     resolve(r);
                 })['catch'](function (error) {
                     switch (error.name) {
@@ -16556,6 +16590,50 @@ define('modules/uv-shared-module/Auth1',["require", "exports", "./BaseEvents", "
                 resolve();
             });
         };
+        Auth1.storeAccessToken = function (resource, token) {
+            return new Promise(function (resolve, reject) {
+                if (resource.tokenService) {
+                    Utils.Storage.set(resource.tokenService.id, token, token.expiresIn, new Utils.StorageType(Auth1.storageStrategy));
+                    resolve();
+                }
+                else {
+                    reject('Token service not found');
+                }
+            });
+        };
+        Auth1.getStoredAccessToken = function (resource) {
+            return new Promise(function (resolve, reject) {
+                var foundItems = [];
+                var item = null;
+                // try to match on the tokenService, if the resource has one:
+                if (resource.tokenService) {
+                    item = Utils.Storage.get(resource.tokenService.id, new Utils.StorageType(Auth1.storageStrategy));
+                }
+                if (item) {
+                    foundItems.push(item);
+                }
+                else {
+                    // find an access token for the domain
+                    var domain = Utils.Urls.getUrlParts(resource.dataUri).hostname;
+                    var items = Utils.Storage.getItems(new Utils.StorageType(Auth1.storageStrategy));
+                    for (var i = 0; i < items.length; i++) {
+                        item = items[i];
+                        if (item.key.includes(domain)) {
+                            foundItems.push(item);
+                        }
+                    }
+                }
+                // sort by expiresAt, earliest to most recent.
+                foundItems = foundItems.sort(function (a, b) {
+                    return a.expiresAt - b.expiresAt;
+                });
+                var foundToken = null;
+                if (foundItems.length) {
+                    foundToken = foundItems[foundItems.length - 1].value;
+                }
+                resolve(foundToken);
+            });
+        };
         Auth1.getContentProviderInteraction = function (resource, service) {
             return new Promise(function (resolve) {
                 if (resource.authHoldingPage) {
@@ -16580,7 +16658,7 @@ define('modules/uv-shared-module/Auth1',["require", "exports", "./BaseEvents", "
                 }
             });
         };
-        Auth1.openTokenService = function (tokenService) {
+        Auth1.openTokenService = function (resource, tokenService) {
             // use a Promise across a postMessage call. Discuss...
             return new Promise(function (resolve, reject) {
                 // if necessary, the client can decide not to trust this origin
@@ -16589,10 +16667,16 @@ define('modules/uv-shared-module/Auth1',["require", "exports", "./BaseEvents", "
                 Auth1.messages[messageId] = {
                     "resolve": resolve,
                     "reject": reject,
-                    "serviceOrigin": serviceOrigin
+                    "serviceOrigin": serviceOrigin,
+                    "resource": resource
                 };
-                window.addEventListener("message", Auth1.receiveMessage, false);
+                window.addEventListener("message", Auth1.receiveToken, false);
                 var tokenUrl = tokenService.id + "?messageId=" + messageId + "&origin=" + Auth1.getOrigin();
+                // load the access token service url in the #commsFrame iframe.
+                // when the message event listener (Auth1.receiveToken) receives a message from the iframe
+                // it looks in Auth1.messages to find a corresponding message id with the same origin.
+                // if found, it stores the returned access token, resolves and deletes the message.
+                // resolving the message resolves the openTokenService promise.
                 $('#commsFrame').prop('src', tokenUrl);
                 // reject any unhandled messages after a configurable timeout
                 var postMessageTimeout = 5000;
@@ -16604,6 +16688,19 @@ define('modules/uv-shared-module/Auth1',["require", "exports", "./BaseEvents", "
                 }, postMessageTimeout);
             });
         };
+        Auth1.receiveToken = function (event) {
+            if (event.data.hasOwnProperty("messageId")) {
+                var message_1 = Auth1.messages[event.data.messageId];
+                if (message_1 && event.origin == message_1.serviceOrigin) {
+                    // Any message with a messageId is a success
+                    Auth1.storeAccessToken(message_1.resource, event.data).then(function () {
+                        message_1.resolve(event.data); // resolves openTokenService with the token
+                        delete Auth1.messages[event.data.messageId];
+                        return;
+                    });
+                }
+            }
+        };
         Auth1.showOutOfOptionsMessages = function (service) {
             var errorMessage = "";
             if (service.getFailureHeader()) {
@@ -16614,17 +16711,6 @@ define('modules/uv-shared-module/Auth1',["require", "exports", "./BaseEvents", "
             }
             $.publish(BaseEvents_1.BaseEvents.SHOW_MESSAGE, [Utils_1.UVUtils.sanitize(errorMessage)]);
         };
-        Auth1.receiveMessage = function (event) {
-            if (event.data.hasOwnProperty("messageId")) {
-                var message = Auth1.messages[event.data.messageId];
-                if (message && event.origin == message.serviceOrigin) {
-                    // Any message with a messageId is a success
-                    message.resolve(event.data);
-                    delete Auth1.messages[event.data.messageId];
-                    return;
-                }
-            }
-        };
         Auth1.messages = {};
         return Auth1;
     }());
@@ -16634,7 +16720,7 @@ define('modules/uv-shared-module/Auth1',["require", "exports", "./BaseEvents", "
 define('modules/uv-shared-module/Panel',["require", "exports", "./BaseEvents"], function (require, exports, BaseEvents_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Panel = (function () {
+    var Panel = /** @class */ (function () {
         function Panel($element, fitToParentWidth, fitToParentHeight) {
             this.isResized = false;
             this.$element = $element;
@@ -16676,7 +16762,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-shared-module/BaseView',["require", "exports", "./Panel"], function (require, exports, Panel_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var BaseView = (function (_super) {
+    var BaseView = /** @class */ (function (_super) {
         __extends(BaseView, _super);
         function BaseView($element, fitToParentWidth, fitToParentHeight) {
             return _super.call(this, $element, fitToParentWidth, fitToParentHeight) || this;
@@ -16728,7 +16814,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-shared-module/Dialogue',["require", "exports", "./BaseView", "./BaseEvents"], function (require, exports, BaseView_1, BaseEvents_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Dialogue = (function (_super) {
+    var Dialogue = /** @class */ (function (_super) {
         __extends(Dialogue, _super);
         function Dialogue($element) {
             var _this = _super.call(this, $element, false, false) || this;
@@ -16883,7 +16969,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-dialogues-module/AuthDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue", "../uv-shared-module/Utils"], function (require, exports, BaseEvents_1, Dialogue_1, Utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var AuthDialogue = (function (_super) {
+    var AuthDialogue = /** @class */ (function (_super) {
         __extends(AuthDialogue, _super);
         function AuthDialogue($element) {
             return _super.call(this, $element) || this;
@@ -16982,7 +17068,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-dialogues-module/ClickThroughDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ClickThroughDialogue = (function (_super) {
+    var ClickThroughDialogue = /** @class */ (function (_super) {
         __extends(ClickThroughDialogue, _super);
         function ClickThroughDialogue($element) {
             return _super.call(this, $element) || this;
@@ -17057,7 +17143,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-dialogues-module/LoginDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var LoginDialogue = (function (_super) {
+    var LoginDialogue = /** @class */ (function (_super) {
         __extends(LoginDialogue, _super);
         function LoginDialogue($element) {
             return _super.call(this, $element) || this;
@@ -17159,7 +17245,7 @@ define('modules/uv-dialogues-module/LoginDialogue',["require", "exports", "../uv
 define('modules/uv-shared-module/StringValue',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var StringValue = (function () {
+    var StringValue = /** @class */ (function () {
         function StringValue(value) {
             this.value = "";
             if (value) {
@@ -17187,7 +17273,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-shared-module/MetricType',["require", "exports", "./StringValue"], function (require, exports, StringValue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var MetricType = (function (_super) {
+    var MetricType = /** @class */ (function (_super) {
         __extends(MetricType, _super);
         function MetricType() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -17212,7 +17298,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-dialogues-module/RestrictedDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var RestrictedDialogue = (function (_super) {
+    var RestrictedDialogue = /** @class */ (function (_super) {
         __extends(RestrictedDialogue, _super);
         function RestrictedDialogue($element) {
             return _super.call(this, $element) || this;
@@ -17298,7 +17384,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-shared-module/GenericDialogue',["require", "exports", "./BaseEvents", "./Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var GenericDialogue = (function (_super) {
+    var GenericDialogue = /** @class */ (function (_super) {
         __extends(GenericDialogue, _super);
         function GenericDialogue($element) {
             return _super.call(this, $element) || this;
@@ -17371,7 +17457,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-shared-module/Shell',["require", "exports", "./BaseEvents", "./BaseView", "./GenericDialogue"], function (require, exports, BaseEvents_1, BaseView_1, GenericDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Shell = (function (_super) {
+    var Shell = /** @class */ (function (_super) {
         __extends(Shell, _super);
         function Shell($element) {
             var _this = this;
@@ -17432,7 +17518,7 @@ define('modules/uv-shared-module/Shell',["require", "exports", "./BaseEvents", "
 define('SynchronousRequire',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var SynchronousRequire = (function () {
+    var SynchronousRequire = /** @class */ (function () {
         function SynchronousRequire() {
         }
         SynchronousRequire.load = function (deps, cb) {
@@ -17452,7 +17538,7 @@ define('SynchronousRequire',["require", "exports"], function (require, exports) 
         return SynchronousRequire;
     }());
     exports.SynchronousRequire = SynchronousRequire;
-    var DependencyLoader = (function () {
+    var DependencyLoader = /** @class */ (function () {
         function DependencyLoader(index, dep, cb) {
             this._dep = dep;
             this._cb = cb;
@@ -17474,7 +17560,7 @@ define('SynchronousRequire',["require", "exports"], function (require, exports) 
 define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09", "./Auth1", "../../modules/uv-dialogues-module/AuthDialogue", "./BaseEvents", "../../modules/uv-dialogues-module/ClickThroughDialogue", "../../modules/uv-dialogues-module/LoginDialogue", "../../modules/uv-shared-module/MetricType", "../../modules/uv-dialogues-module/RestrictedDialogue", "./Shell", "../../SynchronousRequire"], function (require, exports, Auth09_1, Auth1_1, AuthDialogue_1, BaseEvents_1, ClickThroughDialogue_1, LoginDialogue_1, MetricType_1, RestrictedDialogue_1, Shell_1, SynchronousRequire_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var BaseExtension = (function () {
+    var BaseExtension = /** @class */ (function () {
         function BaseExtension() {
             this.isCreated = false;
             this.isLoggedIn = false;
@@ -18391,7 +18477,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-shared-module/CenterPanel',["require", "exports", "./Shell", "./BaseView", "./Utils"], function (require, exports, Shell_1, BaseView_1, Utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var CenterPanel = (function (_super) {
+    var CenterPanel = /** @class */ (function (_super) {
         __extends(CenterPanel, _super);
         function CenterPanel($element) {
             return _super.call(this, $element, false, true) || this;
@@ -18403,17 +18489,7 @@ define('modules/uv-shared-module/CenterPanel',["require", "exports", "./Shell", 
             this.$element.append(this.$title);
             this.$content = $('<div id="content" class="content"></div>');
             this.$element.append(this.$content);
-            this.$attribution = $('<div class="attribution">\
-                                   <div class="header">\
-                                       <div class="title"></div>\
-                                       <div class="close"></div>\
-                                   </div>\
-                                   <div class="main">\
-                                       <div class="attribution-text"></div>\
-                                       <div class="license"></div>\
-                                       <div class="logo"></div>\
-                                   </div>\
-                              </div>');
+            this.$attribution = $("\n                                <div class=\"attribution\">\n                                  <div class=\"header\">\n                                    <div class=\"title\"></div>\n                                    <button type=\"button\" class=\"close\" aria-label=\"Close\">\n                                      <span aria-hidden=\"true\">&times;</span>\n                                    </button>\n                                  </div>\n                                  <div class=\"main\">\n                                    <div class=\"attribution-text\"></div>\n                                    <div class=\"license\"></div>\n                                    <div class=\"logo\"></div>\n                                  </div>\n                                </div>\n        ");
             this.$attribution.find('.header .title').text(this.content.attribution);
             this.$content.append(this.$attribution);
             this.$attribution.hide();
@@ -18502,7 +18578,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-filelinkcenterpanel-module/FileLinkCenterPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/CenterPanel", "../uv-shared-module/Utils"], function (require, exports, BaseEvents_1, CenterPanel_1, Utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var FileLinkCenterPanel = (function (_super) {
+    var FileLinkCenterPanel = /** @class */ (function (_super) {
         __extends(FileLinkCenterPanel, _super);
         function FileLinkCenterPanel($element) {
             return _super.call(this, $element) || this;
@@ -18586,7 +18662,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-shared-module/FooterPanel',["require", "exports", "./BaseEvents", "./BaseView"], function (require, exports, BaseEvents_1, BaseView_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var FooterPanel = (function (_super) {
+    var FooterPanel = /** @class */ (function (_super) {
         __extends(FooterPanel, _super);
         function FooterPanel($element) {
             return _super.call(this, $element) || this;
@@ -18767,7 +18843,7 @@ define('modules/uv-shared-module/FooterPanel',["require", "exports", "./BaseEven
 define('modules/uv-shared-module/Information',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Information = (function () {
+    var Information = /** @class */ (function () {
         function Information(message, actions) {
             this.message = message;
             this.actions = actions;
@@ -18780,7 +18856,7 @@ define('modules/uv-shared-module/Information',["require", "exports"], function (
 define('modules/uv-shared-module/InformationAction',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var InformationAction = (function () {
+    var InformationAction = /** @class */ (function () {
         function InformationAction() {
         }
         return InformationAction;
@@ -18791,7 +18867,7 @@ define('modules/uv-shared-module/InformationAction',["require", "exports"], func
 define('modules/uv-shared-module/InformationFactory',["require", "exports", "./BaseEvents", "./Information", "./InformationAction", "./InformationType"], function (require, exports, BaseEvents_1, Information_1, InformationAction_1, InformationType_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var InformationFactory = (function () {
+    var InformationFactory = /** @class */ (function () {
         function InformationFactory(extension) {
             this.extension = extension;
         }
@@ -18831,7 +18907,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-shared-module/HeaderPanel',["require", "exports", "./BaseEvents", "./BaseView", "../uv-shared-module/InformationFactory"], function (require, exports, BaseEvents_1, BaseView_1, InformationFactory_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var HeaderPanel = (function (_super) {
+    var HeaderPanel = /** @class */ (function (_super) {
         __extends(HeaderPanel, _super);
         function HeaderPanel($element) {
             return _super.call(this, $element, false, false) || this;
@@ -18983,7 +19059,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-dialogues-module/HelpDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var HelpDialogue = (function (_super) {
+    var HelpDialogue = /** @class */ (function (_super) {
         __extends(HelpDialogue, _super);
         function HelpDialogue($element) {
             return _super.call(this, $element) || this;
@@ -19034,7 +19110,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-shared-module/BaseExpandPanel',["require", "exports", "./BaseView"], function (require, exports, BaseView_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var BaseExpandPanel = (function (_super) {
+    var BaseExpandPanel = /** @class */ (function (_super) {
         __extends(BaseExpandPanel, _super);
         function BaseExpandPanel($element) {
             var _this = _super.call(this, $element, false, true) || this;
@@ -19246,7 +19322,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-shared-module/RightPanel',["require", "exports", "./BaseEvents", "./BaseExpandPanel"], function (require, exports, BaseEvents_1, BaseExpandPanel_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var RightPanel = (function (_super) {
+    var RightPanel = /** @class */ (function (_super) {
         __extends(RightPanel, _super);
         function RightPanel($element) {
             return _super.call(this, $element) || this;
@@ -19311,7 +19387,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-moreinforightpanel-module/MoreInfoRightPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/RightPanel", "../uv-shared-module/Utils"], function (require, exports, BaseEvents_1, RightPanel_1, Utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var MoreInfoRightPanel = (function (_super) {
+    var MoreInfoRightPanel = /** @class */ (function (_super) {
         __extends(MoreInfoRightPanel, _super);
         function MoreInfoRightPanel($element) {
             return _super.call(this, $element) || this;
@@ -19384,7 +19460,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-shared-module/LeftPanel',["require", "exports", "./BaseEvents", "./BaseExpandPanel"], function (require, exports, BaseEvents_1, BaseExpandPanel_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var LeftPanel = (function (_super) {
+    var LeftPanel = /** @class */ (function (_super) {
         __extends(LeftPanel, _super);
         function LeftPanel($element) {
             return _super.call(this, $element) || this;
@@ -19454,7 +19530,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-shared-module/ThumbsView',["require", "exports", "./BaseEvents", "./BaseView"], function (require, exports, BaseEvents_1, BaseView_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ThumbsView = (function (_super) {
+    var ThumbsView = /** @class */ (function (_super) {
         __extends(ThumbsView, _super);
         function ThumbsView($element) {
             var _this = _super.call(this, $element, true, true) || this;
@@ -19691,7 +19767,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-resourcesleftpanel-module/ThumbsView',["require", "exports", "../uv-shared-module/ThumbsView"], function (require, exports, ThumbsView_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ThumbsView = (function (_super) {
+    var ThumbsView = /** @class */ (function (_super) {
         __extends(ThumbsView, _super);
         function ThumbsView() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -19718,7 +19794,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-resourcesleftpanel-module/ResourcesLeftPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/LeftPanel", "./ThumbsView"], function (require, exports, BaseEvents_1, LeftPanel_1, ThumbsView_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ResourcesLeftPanel = (function (_super) {
+    var ResourcesLeftPanel = /** @class */ (function (_super) {
         __extends(ResourcesLeftPanel, _super);
         function ResourcesLeftPanel($element) {
             return _super.call(this, $element) || this;
@@ -19838,7 +19914,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-dialogues-module/SettingsDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var SettingsDialogue = (function (_super) {
+    var SettingsDialogue = /** @class */ (function (_super) {
         __extends(SettingsDialogue, _super);
         function SettingsDialogue($element) {
             return _super.call(this, $element) || this;
@@ -19928,7 +20004,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-default-extension/SettingsDialogue',["require", "exports", "../../modules/uv-dialogues-module/SettingsDialogue"], function (require, exports, SettingsDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var SettingsDialogue = (function (_super) {
+    var SettingsDialogue = /** @class */ (function (_super) {
         __extends(SettingsDialogue, _super);
         function SettingsDialogue($element) {
             return _super.call(this, $element) || this;
@@ -19955,7 +20031,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-dialogues-module/ShareDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ShareDialogue = (function (_super) {
+    var ShareDialogue = /** @class */ (function (_super) {
         __extends(ShareDialogue, _super);
         function ShareDialogue($element) {
             var _this = _super.call(this, $element) || this;
@@ -20253,7 +20329,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-default-extension/ShareDialogue',["require", "exports", "../../modules/uv-dialogues-module/ShareDialogue"], function (require, exports, ShareDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ShareDialogue = (function (_super) {
+    var ShareDialogue = /** @class */ (function (_super) {
         __extends(ShareDialogue, _super);
         function ShareDialogue($element) {
             return _super.call(this, $element) || this;
@@ -20288,7 +20364,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-default-extension/Extension',["require", "exports", "../../modules/uv-shared-module/BaseEvents", "../../modules/uv-shared-module/BaseExtension", "../../modules/uv-filelinkcenterpanel-module/FileLinkCenterPanel", "../../modules/uv-shared-module/FooterPanel", "../../modules/uv-shared-module/HeaderPanel", "../../modules/uv-dialogues-module/HelpDialogue", "../../modules/uv-moreinforightpanel-module/MoreInfoRightPanel", "../../modules/uv-resourcesleftpanel-module/ResourcesLeftPanel", "./SettingsDialogue", "./ShareDialogue", "../../modules/uv-shared-module/Shell"], function (require, exports, BaseEvents_1, BaseExtension_1, FileLinkCenterPanel_1, FooterPanel_1, HeaderPanel_1, HelpDialogue_1, MoreInfoRightPanel_1, ResourcesLeftPanel_1, SettingsDialogue_1, ShareDialogue_1, Shell_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Extension = (function (_super) {
+    var Extension = /** @class */ (function (_super) {
         __extends(Extension, _super);
         function Extension() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -20370,7 +20446,7 @@ define('extensions/uv-default-extension/Extension',["require", "exports", "../..
 define('modules/uv-shared-module/Bookmark',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Bookmark = (function () {
+    var Bookmark = /** @class */ (function () {
         function Bookmark() {
         }
         return Bookmark;
@@ -20381,7 +20457,7 @@ define('modules/uv-shared-module/Bookmark',["require", "exports"], function (req
 define('modules/uv-shared-module/DownloadOption',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var DownloadOption = (function () {
+    var DownloadOption = /** @class */ (function () {
         function DownloadOption(value) {
             this.value = value;
         }
@@ -20415,7 +20491,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-dialogues-module/DownloadDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue", "../uv-shared-module/DownloadOption"], function (require, exports, BaseEvents_1, Dialogue_1, DownloadOption_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var DownloadDialogue = (function (_super) {
+    var DownloadDialogue = /** @class */ (function (_super) {
         __extends(DownloadDialogue, _super);
         function DownloadDialogue($element) {
             return _super.call(this, $element) || this;
@@ -20564,7 +20640,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-mediaelement-extension/DownloadDialogue',["require", "exports", "../../modules/uv-dialogues-module/DownloadDialogue"], function (require, exports, DownloadDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var DownloadDialogue = (function (_super) {
+    var DownloadDialogue = /** @class */ (function (_super) {
         __extends(DownloadDialogue, _super);
         function DownloadDialogue($element) {
             return _super.call(this, $element) || this;
@@ -20590,7 +20666,7 @@ define('extensions/uv-mediaelement-extension/DownloadDialogue',["require", "expo
 define('extensions/uv-mediaelement-extension/Events',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Events = (function () {
+    var Events = /** @class */ (function () {
         function Events() {
         }
         Events.namespace = 'mediaelementExtension.';
@@ -20615,7 +20691,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-mediaelementcenterpanel-module/MediaElementCenterPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../../extensions/uv-mediaelement-extension/Events", "../uv-shared-module/CenterPanel"], function (require, exports, BaseEvents_1, Events_1, CenterPanel_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var MediaElementCenterPanel = (function (_super) {
+    var MediaElementCenterPanel = /** @class */ (function (_super) {
         __extends(MediaElementCenterPanel, _super);
         function MediaElementCenterPanel($element) {
             return _super.call(this, $element) || this;
@@ -20803,7 +20879,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-mediaelement-extension/SettingsDialogue',["require", "exports", "../../modules/uv-dialogues-module/SettingsDialogue"], function (require, exports, SettingsDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var SettingsDialogue = (function (_super) {
+    var SettingsDialogue = /** @class */ (function (_super) {
         __extends(SettingsDialogue, _super);
         function SettingsDialogue($element) {
             return _super.call(this, $element) || this;
@@ -20830,7 +20906,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-mediaelement-extension/ShareDialogue',["require", "exports", "../../modules/uv-dialogues-module/ShareDialogue"], function (require, exports, ShareDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ShareDialogue = (function (_super) {
+    var ShareDialogue = /** @class */ (function (_super) {
         __extends(ShareDialogue, _super);
         function ShareDialogue($element) {
             return _super.call(this, $element) || this;
@@ -20865,7 +20941,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-mediaelement-extension/Extension',["require", "exports", "../../modules/uv-shared-module/BaseEvents", "../../modules/uv-shared-module/BaseExtension", "../../modules/uv-shared-module/Bookmark", "./DownloadDialogue", "./Events", "../../modules/uv-shared-module/FooterPanel", "../../modules/uv-shared-module/HeaderPanel", "../../modules/uv-dialogues-module/HelpDialogue", "../../modules/uv-mediaelementcenterpanel-module/MediaElementCenterPanel", "../../modules/uv-moreinforightpanel-module/MoreInfoRightPanel", "../../modules/uv-resourcesleftpanel-module/ResourcesLeftPanel", "./SettingsDialogue", "./ShareDialogue", "../../modules/uv-shared-module/Shell"], function (require, exports, BaseEvents_1, BaseExtension_1, Bookmark_1, DownloadDialogue_1, Events_1, FooterPanel_1, HeaderPanel_1, HelpDialogue_1, MediaElementCenterPanel_1, MoreInfoRightPanel_1, ResourcesLeftPanel_1, SettingsDialogue_1, ShareDialogue_1, Shell_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Extension = (function (_super) {
+    var Extension = /** @class */ (function (_super) {
         __extends(Extension, _super);
         function Extension() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -21020,7 +21096,7 @@ define('extensions/uv-mediaelement-extension/Extension',["require", "exports", "
 define('modules/uv-shared-module/AnnotationResults',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var AnnotationResults = (function () {
+    var AnnotationResults = /** @class */ (function () {
         function AnnotationResults() {
         }
         return AnnotationResults;
@@ -21031,7 +21107,7 @@ define('modules/uv-shared-module/AnnotationResults',["require", "exports"], func
 define('extensions/uv-seadragon-extension/Events',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Events = (function () {
+    var Events = /** @class */ (function () {
         function Events() {
         }
         Events.namespace = 'openseadragonExtension.';
@@ -21092,7 +21168,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-contentleftpanel-module/GalleryView',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/BaseView", "../../extensions/uv-seadragon-extension/Events"], function (require, exports, BaseEvents_1, BaseView_1, Events_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var GalleryView = (function (_super) {
+    var GalleryView = /** @class */ (function (_super) {
         __extends(GalleryView, _super);
         function GalleryView($element) {
             var _this = _super.call(this, $element, true, true) || this;
@@ -21160,7 +21236,7 @@ define('modules/uv-contentleftpanel-module/GalleryView',["require", "exports", "
 define('extensions/uv-seadragon-extension/Mode',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Mode = (function () {
+    var Mode = /** @class */ (function () {
         function Mode(value) {
             this.value = value;
         }
@@ -21187,7 +21263,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-contentleftpanel-module/ThumbsView',["require", "exports", "../uv-shared-module/ThumbsView", "../../extensions/uv-seadragon-extension/Events", "../../extensions/uv-seadragon-extension/Mode"], function (require, exports, ThumbsView_1, Events_1, Mode_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ThumbsView = (function (_super) {
+    var ThumbsView = /** @class */ (function (_super) {
         __extends(ThumbsView, _super);
         function ThumbsView() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -21283,7 +21359,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-contentleftpanel-module/TreeView',["require", "exports", "../uv-shared-module/BaseView", "../../extensions/uv-seadragon-extension/Events"], function (require, exports, BaseView_1, Events_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var TreeView = (function (_super) {
+    var TreeView = /** @class */ (function (_super) {
         __extends(TreeView, _super);
         function TreeView($element) {
             var _this = _super.call(this, $element, true, true) || this;
@@ -21354,7 +21430,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-contentleftpanel-module/ContentLeftPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../../extensions/uv-seadragon-extension/Events", "./GalleryView", "../uv-shared-module/LeftPanel", "../../extensions/uv-seadragon-extension/Mode", "./ThumbsView", "./TreeView"], function (require, exports, BaseEvents_1, Events_1, GalleryView_1, LeftPanel_1, Mode_1, ThumbsView_1, TreeView_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ContentLeftPanel = (function (_super) {
+    var ContentLeftPanel = /** @class */ (function (_super) {
         __extends(ContentLeftPanel, _super);
         function ContentLeftPanel($element) {
             var _this = _super.call(this, $element) || this;
@@ -21842,7 +21918,7 @@ define('modules/uv-contentleftpanel-module/ContentLeftPanel',["require", "export
 define('modules/uv-shared-module/Point',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Point = (function () {
+    var Point = /** @class */ (function () {
         function Point(x, y) {
             this.x = x;
             this.y = y;
@@ -21856,7 +21932,7 @@ define('extensions/uv-seadragon-extension/CroppedImageDimensions',["require", "e
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Size = Utils.Measurements.Size;
-    var CroppedImageDimensions = (function () {
+    var CroppedImageDimensions = /** @class */ (function () {
         function CroppedImageDimensions() {
             this.region = new Size(0, 0);
             this.regionPos = new Point_1.Point(0, 0);
@@ -21870,7 +21946,7 @@ define('extensions/uv-seadragon-extension/CroppedImageDimensions',["require", "e
 define('extensions/uv-seadragon-extension/DownloadType',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var DownloadType = (function () {
+    var DownloadType = /** @class */ (function () {
         function DownloadType() {
         }
         DownloadType.CURRENTVIEW = "currentView";
@@ -21899,7 +21975,7 @@ define('extensions/uv-seadragon-extension/DownloadDialogue',["require", "exports
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var Size = Manifesto.Size;
-    var DownloadDialogue = (function (_super) {
+    var DownloadDialogue = /** @class */ (function (_super) {
         __extends(DownloadDialogue, _super);
         function DownloadDialogue($element) {
             return _super.call(this, $element) || this;
@@ -22394,7 +22470,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-dialogues-module/ExternalContentDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ExternalContentDialogue = (function (_super) {
+    var ExternalContentDialogue = /** @class */ (function (_super) {
         __extends(ExternalContentDialogue, _super);
         function ExternalContentDialogue($element) {
             return _super.call(this, $element) || this;
@@ -22439,7 +22515,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-osdmobilefooterpanel-module/MobileFooter',["require", "exports", "../uv-shared-module/FooterPanel", "../../extensions/uv-seadragon-extension/Events"], function (require, exports, FooterPanel_1, Events_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var FooterPanel = (function (_super) {
+    var FooterPanel = /** @class */ (function (_super) {
         __extends(FooterPanel, _super);
         function FooterPanel($element) {
             return _super.call(this, $element) || this;
@@ -22477,7 +22553,7 @@ define('modules/uv-osdmobilefooterpanel-module/MobileFooter',["require", "export
 define('modules/uv-shared-module/AutoComplete',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var AutoComplete = (function () {
+    var AutoComplete = /** @class */ (function () {
         function AutoComplete(element, autoCompleteFunc, parseResultsFunc, onSelect, delay, minChars, positionAbove) {
             if (delay === void 0) { delay = 300; }
             if (minChars === void 0) { minChars = 2; }
@@ -22710,7 +22786,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-searchfooterpanel-module/FooterPanel',["require", "exports", "../uv-shared-module/AutoComplete", "../uv-shared-module/BaseEvents", "../../extensions/uv-seadragon-extension/Events", "../uv-shared-module/FooterPanel", "../../extensions/uv-seadragon-extension/Mode", "../uv-shared-module/Utils"], function (require, exports, AutoComplete_1, BaseEvents_1, Events_1, FooterPanel_1, Mode_1, Utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var FooterPanel = (function (_super) {
+    var FooterPanel = /** @class */ (function (_super) {
         __extends(FooterPanel, _super);
         function FooterPanel($element) {
             var _this = _super.call(this, $element) || this;
@@ -23261,7 +23337,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-dialogues-module/MoreInfoDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue", "../uv-shared-module/Utils"], function (require, exports, BaseEvents_1, Dialogue_1, Utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var MoreInfoDialogue = (function (_super) {
+    var MoreInfoDialogue = /** @class */ (function (_super) {
         __extends(MoreInfoDialogue, _super);
         function MoreInfoDialogue($element) {
             return _super.call(this, $element) || this;
@@ -23343,7 +23419,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-multiselectdialogue-module/MultiSelectDialogue',["require", "exports", "../../extensions/uv-seadragon-extension/Events", "../../modules/uv-shared-module/Dialogue", "../../extensions/uv-seadragon-extension/Mode"], function (require, exports, Events_1, Dialogue_1, Mode_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var MultiSelectDialogue = (function (_super) {
+    var MultiSelectDialogue = /** @class */ (function (_super) {
         __extends(MultiSelectDialogue, _super);
         function MultiSelectDialogue($element) {
             return _super.call(this, $element) || this;
@@ -23423,7 +23499,7 @@ define('modules/uv-multiselectdialogue-module/MultiSelectDialogue',["require", "
 define('extensions/uv-seadragon-extension/MultiSelectionArgs',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var MultiSelectionArgs = (function () {
+    var MultiSelectionArgs = /** @class */ (function () {
         function MultiSelectionArgs() {
         }
         return MultiSelectionArgs;
@@ -23444,7 +23520,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-pagingheaderpanel-module/PagingHeaderPanel',["require", "exports", "../uv-shared-module/AutoComplete", "../uv-shared-module/BaseEvents", "../../extensions/uv-seadragon-extension/Events", "../uv-shared-module/HeaderPanel", "../../extensions/uv-seadragon-extension/Mode", "../uv-shared-module/Utils"], function (require, exports, AutoComplete_1, BaseEvents_1, Events_1, HeaderPanel_1, Mode_1, Utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var PagingHeaderPanel = (function (_super) {
+    var PagingHeaderPanel = /** @class */ (function (_super) {
         __extends(PagingHeaderPanel, _super);
         function PagingHeaderPanel($element) {
             var _this = _super.call(this, $element) || this;
@@ -23934,7 +24010,7 @@ define('modules/uv-pagingheaderpanel-module/PagingHeaderPanel',["require", "expo
 define('extensions/uv-seadragon-extension/Bounds',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Bounds = (function () {
+    var Bounds = /** @class */ (function () {
         function Bounds(x, y, w, h) {
             this.x = x;
             this.y = y;
@@ -23966,7 +24042,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-seadragoncenterpanel-module/SeadragonCenterPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../../extensions/uv-seadragon-extension/Bounds", "../uv-shared-module/CenterPanel", "../../extensions/uv-seadragon-extension/Events", "../uv-shared-module/Utils"], function (require, exports, BaseEvents_1, Bounds_1, CenterPanel_1, Events_1, Utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var SeadragonCenterPanel = (function (_super) {
+    var SeadragonCenterPanel = /** @class */ (function (_super) {
         __extends(SeadragonCenterPanel, _super);
         function SeadragonCenterPanel($element) {
             var _this = _super.call(this, $element) || this;
@@ -24782,7 +24858,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-seadragon-extension/SettingsDialogue',["require", "exports", "../../modules/uv-dialogues-module/SettingsDialogue"], function (require, exports, SettingsDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var SettingsDialogue = (function (_super) {
+    var SettingsDialogue = /** @class */ (function (_super) {
         __extends(SettingsDialogue, _super);
         function SettingsDialogue($element) {
             return _super.call(this, $element) || this;
@@ -24908,7 +24984,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-seadragon-extension/ShareDialogue',["require", "exports", "./Events", "../../modules/uv-dialogues-module/ShareDialogue"], function (require, exports, Events_1, ShareDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ShareDialogue = (function (_super) {
+    var ShareDialogue = /** @class */ (function (_super) {
         __extends(ShareDialogue, _super);
         function ShareDialogue($element) {
             var _this = _super.call(this, $element) || this;
@@ -24953,7 +25029,7 @@ define('extensions/uv-seadragon-extension/Extension',["require", "exports", "../
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var AnnotationGroup = Manifold.AnnotationGroup;
-    var Extension = (function (_super) {
+    var Extension = /** @class */ (function (_super) {
         __extends(Extension, _super);
         function Extension() {
             var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -25846,7 +25922,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-pdf-extension/DownloadDialogue',["require", "exports", "../../modules/uv-dialogues-module/DownloadDialogue"], function (require, exports, DownloadDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var DownloadDialogue = (function (_super) {
+    var DownloadDialogue = /** @class */ (function (_super) {
         __extends(DownloadDialogue, _super);
         function DownloadDialogue($element) {
             return _super.call(this, $element) || this;
@@ -25888,7 +25964,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-pdfcenterpanel-module/PDFCenterPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/CenterPanel"], function (require, exports, BaseEvents_1, CenterPanel_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var PDFCenterPanel = (function (_super) {
+    var PDFCenterPanel = /** @class */ (function (_super) {
         __extends(PDFCenterPanel, _super);
         function PDFCenterPanel($element) {
             return _super.call(this, $element) || this;
@@ -25937,7 +26013,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-pdf-extension/SettingsDialogue',["require", "exports", "../../modules/uv-dialogues-module/SettingsDialogue"], function (require, exports, SettingsDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var SettingsDialogue = (function (_super) {
+    var SettingsDialogue = /** @class */ (function (_super) {
         __extends(SettingsDialogue, _super);
         function SettingsDialogue($element) {
             return _super.call(this, $element) || this;
@@ -25964,7 +26040,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-pdf-extension/ShareDialogue',["require", "exports", "../../modules/uv-dialogues-module/ShareDialogue"], function (require, exports, ShareDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ShareDialogue = (function (_super) {
+    var ShareDialogue = /** @class */ (function (_super) {
         __extends(ShareDialogue, _super);
         function ShareDialogue($element) {
             return _super.call(this, $element) || this;
@@ -25999,7 +26075,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-pdf-extension/Extension',["require", "exports", "../../modules/uv-shared-module/BaseEvents", "../../modules/uv-shared-module/BaseExtension", "../../modules/uv-shared-module/Bookmark", "./DownloadDialogue", "../../modules/uv-shared-module/FooterPanel", "../../modules/uv-shared-module/HeaderPanel", "../../modules/uv-moreinforightpanel-module/MoreInfoRightPanel", "../../modules/uv-pdfcenterpanel-module/PDFCenterPanel", "../../modules/uv-resourcesleftpanel-module/ResourcesLeftPanel", "./SettingsDialogue", "./ShareDialogue", "../../modules/uv-shared-module/Shell"], function (require, exports, BaseEvents_1, BaseExtension_1, Bookmark_1, DownloadDialogue_1, FooterPanel_1, HeaderPanel_1, MoreInfoRightPanel_1, PDFCenterPanel_1, ResourcesLeftPanel_1, SettingsDialogue_1, ShareDialogue_1, Shell_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Extension = (function (_super) {
+    var Extension = /** @class */ (function (_super) {
         __extends(Extension, _super);
         function Extension() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -26123,7 +26199,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-virtex-extension/DownloadDialogue',["require", "exports", "../../modules/uv-dialogues-module/DownloadDialogue"], function (require, exports, DownloadDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var DownloadDialogue = (function (_super) {
+    var DownloadDialogue = /** @class */ (function (_super) {
         __extends(DownloadDialogue, _super);
         function DownloadDialogue($element) {
             return _super.call(this, $element) || this;
@@ -26159,7 +26235,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-virtex-extension/SettingsDialogue',["require", "exports", "../../modules/uv-dialogues-module/SettingsDialogue"], function (require, exports, SettingsDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var SettingsDialogue = (function (_super) {
+    var SettingsDialogue = /** @class */ (function (_super) {
         __extends(SettingsDialogue, _super);
         function SettingsDialogue($element) {
             return _super.call(this, $element) || this;
@@ -26186,7 +26262,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-virtex-extension/ShareDialogue',["require", "exports", "../../modules/uv-dialogues-module/ShareDialogue"], function (require, exports, ShareDialogue_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var ShareDialogue = (function (_super) {
+    var ShareDialogue = /** @class */ (function (_super) {
         __extends(ShareDialogue, _super);
         function ShareDialogue($element) {
             return _super.call(this, $element) || this;
@@ -26221,7 +26297,7 @@ var __extends = (this && this.__extends) || (function () {
 define('modules/uv-virtexcenterpanel-module/VirtexCenterPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/CenterPanel"], function (require, exports, BaseEvents_1, CenterPanel_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var VirtexCenterPanel = (function (_super) {
+    var VirtexCenterPanel = /** @class */ (function (_super) {
         __extends(VirtexCenterPanel, _super);
         function VirtexCenterPanel($element) {
             return _super.call(this, $element) || this;
@@ -26324,7 +26400,7 @@ var __extends = (this && this.__extends) || (function () {
 define('extensions/uv-virtex-extension/Extension',["require", "exports", "../../modules/uv-shared-module/BaseEvents", "../../modules/uv-shared-module/BaseExtension", "../../modules/uv-shared-module/Bookmark", "../../modules/uv-contentleftpanel-module/ContentLeftPanel", "./DownloadDialogue", "../../modules/uv-shared-module/FooterPanel", "../../modules/uv-shared-module/HeaderPanel", "../../modules/uv-moreinforightpanel-module/MoreInfoRightPanel", "./SettingsDialogue", "./ShareDialogue", "../../modules/uv-shared-module/Shell", "../../modules/uv-virtexcenterpanel-module/VirtexCenterPanel"], function (require, exports, BaseEvents_1, BaseExtension_1, Bookmark_1, ContentLeftPanel_1, DownloadDialogue_1, FooterPanel_1, HeaderPanel_1, MoreInfoRightPanel_1, SettingsDialogue_1, ShareDialogue_1, Shell_1, VirtexCenterPanel_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Extension = (function (_super) {
+    var Extension = /** @class */ (function (_super) {
         __extends(Extension, _super);
         function Extension() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -26432,7 +26508,7 @@ var __extends = (this && this.__extends) || (function () {
 define('UVComponent',["require", "exports", "./modules/uv-shared-module/BaseEvents", "./extensions/uv-default-extension/Extension", "./extensions/uv-mediaelement-extension/Extension", "./extensions/uv-seadragon-extension/Extension", "./extensions/uv-pdf-extension/Extension", "./extensions/uv-virtex-extension/Extension"], function (require, exports, BaseEvents_1, Extension_1, Extension_2, Extension_3, Extension_4, Extension_5) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var UVComponent = (function (_super) {
+    var UVComponent = /** @class */ (function (_super) {
         __extends(UVComponent, _super);
         function UVComponent(options) {
             var _this = _super.call(this, options) || this;
