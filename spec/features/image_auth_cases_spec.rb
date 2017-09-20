@@ -9,7 +9,7 @@ describe 'image viewer authentication and authorization', js: true do
       stub_purl_response_with_fixture(image_with_pdf_purl)
       visit_iframe_response('bb023ts9016')
     end
-    it 'displays full zoom and download of all pages' do
+    skip 'displays full zoom and download of all pages' do
       expect_zoomable_image
       expect(page).to have_css 'button[data-sul-view-fullscreen="fullscreen"]', visible: true
       page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
