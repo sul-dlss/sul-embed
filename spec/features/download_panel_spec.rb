@@ -22,7 +22,7 @@ describe 'download panel', type: :feature, js: true do
       stub_purl_response_with_fixture(image_purl)
       visit_iframe_response('fw090jw3474')
     end
-    it 'should be present after a user clicks the button' do
+    skip 'should be present after a user clicks the button' do
       expect(page).to have_css('.sul-embed-download-panel', visible: false)
       toggle_download_panel
       expect(page).to have_css('.sul-embed-download-panel', visible: true)
