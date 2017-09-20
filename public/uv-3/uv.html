@@ -31,6 +31,14 @@
         window.addEventListener('uvLoaded', function(e) { 
 
             urlDataProvider = new UV.URLDataProvider();
+            var locales = urlDataProvider.get("locales", '');
+            var names = locales.split(',');
+            var formattedLocales = [];
+
+            for (var i in names) {
+                var nameparts = String(names[i]).split(':');
+                formattedLocales[i] = {name: nameparts[0], label: nameparts[1]};
+            }
 
             uv = createUV('#uv', {
                 root: '.',
@@ -41,6 +49,7 @@
                 canvasIndex: Number(urlDataProvider.get('cv', 0)),
                 deepLinkingEnabled: false,
                 rotation: Number(urlDataProvider.get('r', 0)),
+                locales: formattedLocales,
                 xywh: urlDataProvider.get('xywh', '')
             }, urlDataProvider);
 
