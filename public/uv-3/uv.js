@@ -16564,11 +16564,14 @@ define('modules/uv-shared-module/Auth1',["require", "exports", "./BaseEvents", "
         };
         Auth1.handleMovedTemporarily = function (resource) {
             return new Promise(function (resolve) {
-                var informationArgs = new InformationArgs_1.InformationArgs(InformationType_1.InformationType.DEGRADED_RESOURCE, resource);
-                $.publish(BaseEvents_1.BaseEvents.SHOW_INFORMATION, [informationArgs]);
+                Auth1.showDegradedMessage(resource);
                 resource.isResponseHandled = true;
                 resolve();
             });
+        };
+        Auth1.showDegradedMessage = function (resource) {
+            var informationArgs = new InformationArgs_1.InformationArgs(InformationType_1.InformationType.DEGRADED_RESOURCE, resource);
+            $.publish(BaseEvents_1.BaseEvents.SHOW_INFORMATION, [informationArgs]);
         };
         Auth1.storeAccessToken = function (resource, token) {
             return new Promise(function (resolve, reject) {
@@ -16616,7 +16619,12 @@ define('modules/uv-shared-module/Auth1',["require", "exports", "./BaseEvents", "
         };
         Auth1.getContentProviderInteraction = function (resource, service) {
             return new Promise(function (resolve) {
-                if (resource.authHoldingPage) {
+                // if the info bar has already been shown for degraded logins
+                if (resource.isResponseHandled && !resource.authHoldingPage) {
+                    Auth1.showDegradedMessage(resource);
+                    resolve(null);
+                }
+                else if (resource.authHoldingPage) {
                     // redirect holding page
                     resource.authHoldingPage.location.href = Auth1.getCookieServiceUrl(service);
                     resolve(resource.authHoldingPage);
@@ -18866,7 +18874,11 @@ define('modules/uv-shared-module/InformationFactory',["require", "exports", "./B
                 case (InformationType_1.InformationType.DEGRADED_RESOURCE):
                     var actions = [];
                     var loginAction = new InformationAction_1.InformationAction();
-                    loginAction.label = args.param.loginService.getConfirmLabel();
+                    var label = args.param.loginService.getConfirmLabel();
+                    if (!label) {
+                        label = this.extension.data.config.content.fallbackDegradedLabel;
+                    }
+                    loginAction.label = label;
                     var resource_1 = args.param;
                     loginAction.action = function () {
                         resource_1.authHoldingPage = window.open("", "_blank");
@@ -18874,7 +18886,11 @@ define('modules/uv-shared-module/InformationFactory',["require", "exports", "./B
                         $.publish(BaseEvents_1.BaseEvents.OPEN_EXTERNAL_RESOURCE, [[resource_1]]);
                     };
                     actions.push(loginAction);
-                    return new Information_1.Information(args.param.loginService.getServiceLabel(), actions);
+                    var message = args.param.loginService.getServiceLabel();
+                    if (!message) {
+                        message = this.extension.data.config.content.fallbackDegradedMessage;
+                    }
+                    return new Information_1.Information(message, actions);
             }
         };
         return InformationFactory;
