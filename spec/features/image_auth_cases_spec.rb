@@ -52,7 +52,8 @@ describe 'image viewer authentication and authorization', js: true do
     end
     it 'displays login prompt and thumb' do
       expect(page).to have_css '.sul-embed-image-x-restricted-thumb-container'
-      expect(page).to have_css 'a', text: /Login/i
+      # This text comes from PURL's IIIF manifest:
+      expect(page).to have_css 'a', text: /Log in to access all available features/i
     end
     it 'download button should be hidden' do
       skip 'TODO: implement show download button based on authorization'
