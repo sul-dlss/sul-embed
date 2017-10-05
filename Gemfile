@@ -11,8 +11,6 @@ gem 'dor-rights-auth', '>= 1.3.0' # need downloadable methods
 gem 'config'
 gem 'deprecation'
 
-gem 'therubyracer'
-
 gem 'iso8601' # to parse durations, since ActiveSupport::Duration doesn't get a parse method till rails 5
 
 group :development, :test do
