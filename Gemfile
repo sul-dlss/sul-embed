@@ -35,7 +35,7 @@ group :development, :test do
   gem 'coffee-rails'
 
   # Linting/Styleguide Enforcement
-  gem 'rubocop'
+  gem 'rubocop', '~> 0.49.1'
 
   # guard-rspec for auto-running tests when relevant files are changed
   gem 'guard-rspec', require: false
