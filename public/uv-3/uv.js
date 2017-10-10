@@ -17699,6 +17699,8 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
             });
             $.subscribe(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, function (e, canvasIndex) {
                 _this.data.canvasIndex = canvasIndex;
+                _this.lastCanvasIndex = _this.helper.canvasIndex;
+                _this.helper.canvasIndex = canvasIndex;
                 _this.fire(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, _this.data.canvasIndex);
             });
             $.subscribe(BaseEvents_1.BaseEvents.CLICKTHROUGH, function () {
@@ -18112,15 +18114,18 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
             }
         };
         BaseExtension.prototype._updateMetric = function () {
-            for (var i = 0; i < this.metrics.length; i++) {
-                var metric = this.metrics[i];
-                if (this.width() > metric.minWidth && this.width() <= metric.maxWidth) {
-                    if (this.metric !== metric.type) {
-                        this.metric = metric.type;
-                        $.publish(BaseEvents_1.BaseEvents.METRIC_CHANGED);
+            var _this = this;
+            setTimeout(function () {
+                for (var i = 0; i < _this.metrics.length; i++) {
+                    var metric = _this.metrics[i];
+                    if (_this.width() > metric.minWidth && _this.width() <= metric.maxWidth) {
+                        if (_this.metric !== metric.type) {
+                            _this.metric = metric.type;
+                            $.publish(BaseEvents_1.BaseEvents.METRIC_CHANGED);
+                        }
                     }
                 }
-            }
+            }, 1);
         };
         BaseExtension.prototype.resize = function () {
             this._updateMetric();
@@ -18340,10 +18345,8 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
         BaseExtension.prototype.viewCanvas = function (canvasIndex) {
             if (this.helper.isCanvasIndexOutOfRange(canvasIndex)) {
                 this.showMessage(this.data.config.content.canvasIndexOutOfRange);
-                canvasIndex = 0;
+                return;
             }
-            this.lastCanvasIndex = this.helper.canvasIndex;
-            this.helper.canvasIndex = canvasIndex;
             $.publish(BaseEvents_1.BaseEvents.OPEN_EXTERNAL_RESOURCE);
         };
         BaseExtension.prototype.showMessage = function (message, acceptCallback, buttonText, allowClose) {
@@ -18679,21 +18682,21 @@ define('modules/uv-shared-module/FooterPanel',["require", "exports", "./BaseEven
             });
             this.$options = $('<div class="options"></div>');
             this.$element.append(this.$options);
-            this.$feedbackButton = $('<button class="feedback imageBtn" title="' + this.content.feedback + '" tabindex="0"><i></i></button>');
+            this.$feedbackButton = $("\n          <button class=\"feedback btn imageBtn\" title=\"" + this.content.feedback + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-feedback\" aria-hidden=\"true\"></i>" + this.content.feedback + "\n          </button>\n        ");
             this.$options.prepend(this.$feedbackButton);
-            this.$openButton = $('<button class="open imageBtn" title="' + this.content.open + '" tabindex="0"><i></i></button>');
+            this.$openButton = $("\n          <button class=\"open btn imageBtn\" title=\"" + this.content.open + "\" tabindex=\"0\">\n            <i class=\"uv-icon-open\" aria-hidden=\"true\"></i>" + this.content.open + "\n          </button>\n        ");
             this.$options.prepend(this.$openButton);
-            this.$bookmarkButton = $('<button class="bookmark imageBtn" title="' + this.content.bookmark + '" tabindex="0"><i></i></button>');
+            this.$bookmarkButton = $("\n          <button class=\"bookmark btn imageBtn\" title=\"" + this.content.bookmark + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-bookmark\" aria-hidden=\"true\"></i>" + this.content.bookmark + "\n          </button>\n        ");
             this.$options.prepend(this.$bookmarkButton);
-            this.$shareButton = $('<button class="share imageBtn" title="' + this.content.share + '" tabindex="0"><i></i></button>');
+            this.$shareButton = $("\n          <button class=\"share btn imageBtn\" title=\"" + this.content.share + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-share\" aria-hidden=\"true\"></i>" + this.content.share + "\n          </button>\n        ");
             this.$options.append(this.$shareButton);
-            this.$embedButton = $('<button class="embed imageBtn" title="' + this.content.embed + '" tabindex="0"><i></i></button>');
+            this.$embedButton = $("\n          <button class=\"embed btn imageBtn\" title=\"" + this.content.embed + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-embed\" aria-hidden=\"true\"></i>\n          </button>\n        ");
             this.$options.append(this.$embedButton);
-            this.$downloadButton = $('<button class="download imageBtn" title="' + this.content.download + '" tabindex="0"><i></i></button>');
+            this.$downloadButton = $("\n          <button class=\"download btn imageBtn\" title=\"" + this.content.download + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-download\" aria-hidden=\"true\"></i>" + this.content.download + "\n          </button>\n        ");
             this.$options.prepend(this.$downloadButton);
-            this.$moreInfoButton = $('<button class="moreInfo imageBtn" title="' + this.content.moreInfo + '" tabindex="0"><i></i></button>');
+            this.$moreInfoButton = $("\n          <button class=\"moreInfo btn imageBtn\" title=\"" + this.content.moreInfo + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-more-info\" aria-hidden=\"true\"></i>\n          </button>\n        ");
             this.$options.prepend(this.$moreInfoButton);
-            this.$fullScreenBtn = $('<button class="fullScreen imageBtn" title="' + this.content.fullScreen + '" tabindex="0"><i></i></button>');
+            this.$fullScreenBtn = $("\n          <button class=\"fullScreen btn imageBtn\" title=\"" + this.content.fullScreen + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-fullscreen\" aria-hidden=\"true\"></i>\n          </button>\n        ");
             this.$options.append(this.$fullScreenBtn);
             this.$openButton.onPressed(function () {
                 $.publish(BaseEvents_1.BaseEvents.OPEN);
@@ -18775,10 +18778,12 @@ define('modules/uv-shared-module/FooterPanel',["require", "exports", "./BaseEven
             }
             if (this.extension.isFullScreen()) {
                 this.$fullScreenBtn.swapClass('fullScreen', 'exitFullscreen');
+                this.$fullScreenBtn.find('i').swapClass('uv-icon-fullscreen', 'uv-icon-exit-fullscreen');
                 this.$fullScreenBtn.attr('title', this.content.exitFullScreen);
             }
             else {
                 this.$fullScreenBtn.swapClass('exitFullscreen', 'fullScreen');
+                this.$fullScreenBtn.find('i').swapClass('uv-icon-exit-fullscreen', 'uv-icon-fullscreen');
                 this.$fullScreenBtn.attr('title', this.content.fullScreen);
             }
         };
@@ -18936,7 +18941,7 @@ define('modules/uv-shared-module/HeaderPanel',["require", "exports", "./BaseEven
             //this.$rightOptions.append(this.$helpButton);
             this.$localeToggleButton = $('<a class="localeToggle" tabindex="0"></a>');
             this.$rightOptions.append(this.$localeToggleButton);
-            this.$settingsButton = $('<button class="imageBtn settings" tabindex="0"><i></i></button>');
+            this.$settingsButton = $("\n          <button class=\"btn imageBtn settings\" tabindex=\"0\">\n            <i class=\"uv-icon-settings\" aria-hidden=\"true\"></i>\n          </button>\n        ");
             this.$settingsButton.attr('title', this.content.settings);
             this.$rightOptions.append(this.$settingsButton);
             this.$informationBox = $('<div class="informationBox" aria-hidden="true"> \
@@ -22521,11 +22526,11 @@ define('modules/uv-osdmobilefooterpanel-module/MobileFooter',["require", "export
             _super.prototype.create.call(this);
             this.$spacer = $('<div class="spacer"></div>');
             this.$options.prepend(this.$spacer);
-            this.$rotateButton = $('<a class="rotate" title="' + this.content.rotateRight + '" tabindex="0">' + this.content.rotateRight + '</a>');
+            this.$rotateButton = $("\n            <button class=\"btn imageBtn rotate\" title=\"" + this.content.rotateRight + "\">\n                <i class=\"uv-icon-rotate\" aria-hidden=\"true\"></i>\n            </button>\n        ");
             this.$options.prepend(this.$rotateButton);
-            this.$zoomOutButton = $('<a class="zoomOut" title="' + this.content.zoomOut + '" tabindex="0">' + this.content.zoomOut + '</a>');
+            this.$zoomOutButton = $("\n            <button class=\"btn imageBtn zoomOut\" title=\"" + this.content.zoomOut + "\">\n                <i class=\"uv-icon-zoom-out\" aria-hidden=\"true\"></i>\n            </button>\n        ");
             this.$options.prepend(this.$zoomOutButton);
-            this.$zoomInButton = $('<a class="zoomIn" title="' + this.content.zoomIn + '" tabindex="0">' + this.content.zoomIn + '</a>');
+            this.$zoomInButton = $("\n            <button class=\"btn imageBtn zoomIn\" title=\"" + this.content.zoomOut + "\">\n                <i class=\"uv-icon-zoom-in\" aria-hidden=\"true\"></i>\n            </button>\n        ");
             this.$options.prepend(this.$zoomInButton);
             this.$zoomInButton.onPressed(function () {
                 $.publish(Events_1.Events.ZOOM_IN);
@@ -22820,7 +22825,7 @@ define('modules/uv-searchfooterpanel-module/FooterPanel',["require", "exports", 
                 _this.updatePrevButton();
                 _this.updateNextButton();
             });
-            this.$printButton = $('<button class="print imageBtn" title="' + this.content.print + '" tabindex="0"><i></i></button>');
+            this.$printButton = $("\n          <button class=\"print btn imageBtn\" title=\"" + this.content.print + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-print\" aria-hidden=\"true\"></i>" + this.content.print + "\n          </button>\n        ");
             this.$options.prepend(this.$printButton);
             // search input.
             this.$searchContainer = $('<div class="search"></div>');
@@ -23548,9 +23553,9 @@ define('modules/uv-pagingheaderpanel-module/PagingHeaderPanel',["require", "expo
             });
             this.$prevOptions = $('<div class="prevOptions"></div>');
             this.$centerOptions.append(this.$prevOptions);
-            this.$firstButton = $('<button class="imageBtn first" tabindex="0"><i></i></button>');
+            this.$firstButton = $("\n          <button class=\"btn imageBtn first\" tabindex=\"0\">\n            <i class=\"uv-icon-first\" aria-hidden=\"true\"></i>\n          </button>\n        ");
             this.$prevOptions.append(this.$firstButton);
-            this.$prevButton = $('<button class="imageBtn prev" tabindex="0"><i></i></button>');
+            this.$prevButton = $("\n          <button class=\"btn imageBtn prev\" tabindex=\"0\">\n            <i class=\"uv-icon-prev\" aria-hidden=\"true\"></i>\n          </button>\n        ");
             this.$prevOptions.append(this.$prevButton);
             this.$modeOptions = $('<div class="mode"></div>');
             this.$centerOptions.append(this.$modeOptions);
@@ -23620,9 +23625,9 @@ define('modules/uv-pagingheaderpanel-module/PagingHeaderPanel',["require", "expo
             this.$search.append(this.$searchButton);
             this.$nextOptions = $('<div class="nextOptions"></div>');
             this.$centerOptions.append(this.$nextOptions);
-            this.$nextButton = $('<button class="imageBtn next" tabindex="0"><i></i></button>');
+            this.$nextButton = $("\n          <button class=\"btn imageBtn next\" tabindex=\"0\">\n            <i class=\"uv-icon-next\" aria-hidden=\"true\"></i>\n          </button>\n        ");
             this.$nextOptions.append(this.$nextButton);
-            this.$lastButton = $('<button class="imageBtn last" tabindex="0"><i></i></button>');
+            this.$lastButton = $("\n          <button class=\"btn imageBtn last\" tabindex=\"0\">\n            <i class=\"uv-icon-last\" aria-hidden=\"true\"></i>\n          </button>\n        ");
             this.$nextOptions.append(this.$lastButton);
             if (this.isPageModeEnabled()) {
                 this.$pageModeOption.attr('checked', 'checked');
@@ -23641,13 +23646,13 @@ define('modules/uv-pagingheaderpanel-module/PagingHeaderPanel',["require", "expo
             else {
                 this.$pageModeLabel.text(this.content.page);
             }
-            this.$galleryButton = $('<button class="imageBtn gallery" title="' + this.content.gallery + '" tabindex="0"><i></i></button>');
+            this.$galleryButton = $("\n          <button class=\"btn imageBtn gallery\" title=\"" + this.content.gallery + "\" tabindex=\"0\">\n            <i class=\"uv-icon-gallery\" aria-hidden=\"true\"></i>\n          </button>\n        ");
             this.$rightOptions.prepend(this.$galleryButton);
             this.$pagingToggleButtons = $('<div class="pagingToggleButtons"></div>');
             this.$rightOptions.prepend(this.$pagingToggleButtons);
-            this.$oneUpButton = $('<button class="imageBtn one-up" title="' + this.content.oneUp + '" tabindex="0"><i></i></button>');
+            this.$oneUpButton = $("\n          <button class=\"btn imageBtn one-up\" title=\"" + this.content.oneUp + "\" tabindex=\"0\">\n            <i class=\"uv-icon-one-up\" aria-hidden=\"true\"></i>\n          </button>");
             this.$pagingToggleButtons.append(this.$oneUpButton);
-            this.$twoUpButton = $('<button class="imageBtn two-up" title="' + this.content.twoUp + '" tabindex="0"><i></i></button>');
+            this.$twoUpButton = $("\n          <button class=\"btn imageBtn two-up\" title=\"" + this.content.twoUp + "\" tabindex=\"0\">\n            <i class=\"uv-icon-two-up\" aria-hidden=\"true\"></i>\n          </button>\n        ");
             this.$pagingToggleButtons.append(this.$twoUpButton);
             this.updatePagingToggle();
             this.updateGalleryButton();
@@ -26306,11 +26311,11 @@ define('modules/uv-virtexcenterpanel-module/VirtexCenterPanel',["require", "expo
             });
             this.$navigation = $('<div class="navigation"></div>');
             this.$content.prepend(this.$navigation);
-            this.$zoomInButton = $('<button class="imageBtn zoomIn" title="' + this.content.zoomIn + '"><i></i></button>');
+            this.$zoomInButton = $("\n          <button class=\"btn imageBtn zoomIn\" title=\"" + this.content.zoomIn + "\">\n            <i class=\"uv-icon-zoom-in\" aria-hidden=\"true\"></i>\n          </button>\n        ");
             this.$navigation.append(this.$zoomInButton);
-            this.$zoomOutButton = $('<button class="imageBtn zoomOut" title="' + this.content.zoomOut + '"><i></i></button>');
+            this.$zoomOutButton = $("\n          <button class=\"btn imageBtn zoomOut\" title=\"" + this.content.zoomOut + "\">\n            <i class=\"uv-icon-zoom-out\" aria-hidden=\"true\"></i>\n          </button>\n        ");
             this.$navigation.append(this.$zoomOutButton);
-            this.$vrButton = $('<button class="imageBtn vr" title="' + this.content.vr + '"><i></i></button>');
+            this.$vrButton = $("\n          <button class=\"btn imageBtn vr\" title=\"" + this.content.vr + "\">\n            <i class=\"uv-icon-vr\" aria-hidden=\"true\"></i>\n          </button>\n        ");
             this.$navigation.append(this.$vrButton);
             this.$viewport = $('<div class="virtex"></div>');
             this.$content.prepend(this.$viewport);
