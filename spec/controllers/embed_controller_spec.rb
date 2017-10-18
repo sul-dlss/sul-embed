@@ -22,9 +22,9 @@ describe EmbedController do
       get :get, params: { url: 'http://purl.stanford.edu/abc123notanobject' }
       expect(response.status).to eq(404)
     end
-    it 'has a 501 status code for an invalid format' do
+    it 'has a 415 status code for an invalid format' do
       get :get, params: { url: 'http://purl.stanford.edu/abc123', format: 'yml' }
-      expect(response.status).to eq(501)
+      expect(response.status).to eq(415)
     end
     it 'has a 200 status code for a matched url scheme param' do
       get :get, params: { url: 'http://purl.stanford.edu/fn662rv4961' }
@@ -48,9 +48,9 @@ describe EmbedController do
       get :iframe, params: { url: 'http://purl.stanford.edu/abc123notanobject' }
       expect(response.status).to eq(404)
     end
-    it 'has a 501 status code for an invalid format' do
+    it 'has a 415 status code for an invalid format' do
       get :iframe, params: { url: 'http://purl.stanford.edu/abc123', format: 'yml' }
-      expect(response.status).to eq(501)
+      expect(response.status).to eq(415)
     end
     it 'should not have an X-Frame-Options in the headers (so embedding in an iframe is allowed)' do
       get :iframe, params: { url: 'http://purl.stanford.edu/fn662rv4961' }

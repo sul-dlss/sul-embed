@@ -40,7 +40,7 @@ class EmbedController < ApplicationController
   end
 
   rescue_from Embed::Request::InvalidFormat do |e|
-    render body: e.to_s, status: 501
+    render body: e.to_s, status: 415
   end
 
   private
