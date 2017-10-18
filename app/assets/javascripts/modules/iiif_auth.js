@@ -8,6 +8,7 @@
     var _IiifAuthUrl = authUrl;
     var _accessToken = null;
     var _authStatus = false;
+    var _messageId = 0;
 
     this.authenticated = function() {
       return _authStatus;
@@ -20,6 +21,10 @@
     this.accessToken = function() {
       return _accessToken;
     };
+    
+    this.nextMessageId = function() {
+      return ++_messageId;
+    };
 
     /**
      * Check IIIF authentication status
@@ -27,22 +32,40 @@
      * ajax completes (or fails)
      */
     this.checkStatus = function(callback) {
-      $.ajax({
-        url: _IiifAuthUrl,
-        dataType: 'jsonp'
-      })
-      .done(function(data) {
-        if (data.accessToken) {
-          _accessToken = data.accessToken;
-          _authStatus = true;
+      var messageId = this.nextMessageId();
+      
+      var messageHandler = function(event) {
+        var data = event.data;
+
+        if (!data.hasOwnProperty('messageId') || data.messageId != messageId) {
           return;
         }
-      })
-      .always(function(){
-        if ($.isFunction(callback)) {
-          callback(_authStatus);
+
+        if (data.hasOwnProperty('accessToken')) {
+          _accessToken = data.accessToken;
+          _authStatus = true;
+          if ($.isFunction(callback)) {
+            callback(_authStatus);
+          }
+        } else {
+          if ($.isFunction(callback)) {
+            callback(false);
+          }
         }
-      });
+      };
+
+      window.addEventListener("message", messageHandler);
+
+      var url = _IiifAuthUrl + "?messageId=" + messageId + "&origin=" + this.origin();
+      var iframe = $('<iframe></iframe>');
+      iframe.attr('src', url);
+      iframe.hide();
+      $('body').append(iframe);
+    };
+    
+    this.origin = function() {
+      var location = window.location;
+      return location.protocol + "//" + location.host + "/";
     };
   };
 
