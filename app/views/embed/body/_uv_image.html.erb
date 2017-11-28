@@ -1,7 +1,16 @@
 <script type='text/javascript' src='/uv-3/helpers.js'></script>
 <script type='text/javascript' src='/uv-3/lib/offline.js'></script>
 <div class='sul-embed-body' style='height: <%= viewer.body_height%>px' data-sul-embed-theme='<%= asset_url("uv.css") %>'>
-  <div id='uv' class='uv' data-behavior='uv' data-uv-root='<%= viewer.uv_root %>' data-uv-uri='<%= viewer.manifest_json_url %>' data-uv-config='<%= viewer.config_url %>' style='height: <%= viewer.body_height%>px; width:100%'></div>
+  <div
+    id='uv'
+    class='uv'
+    data-behavior='uv'
+    data-uv-root='<%= viewer.uv_root %>'
+    data-uv-uri='<%= viewer.manifest_json_url %>'
+    data-uv-config='<%= viewer.config_url %>'
+    data-canvas-index='<%= viewer.request.canvas_index %>'
+    style='height: <%= viewer.body_height%>px; width:100%'>
+  </div>
   <%= javascript_include_tag 'sul_uv.js', defer: true %>
   <script id='embedUV' src='<%= viewer.embed_url %>'></script>
 </div>

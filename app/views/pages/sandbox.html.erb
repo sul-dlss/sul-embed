@@ -98,6 +98,7 @@
     <label for="hide-search">Minimum files for search:</label> <input type="text" id="min-files" class="min-files" value="10" length="2" />
     <label for="hide-embed">Hide embed?</label> <input type="checkbox" id="hide-embed" class="hide-embed" />
     <label for="hide-download">Hide download?</label> <input type="checkbox" id="hide-download" class="hide-download" />
+    <label for="canvas-index">Canvas index</label> <input type="number" id="canvas-index" class="canvas-index" />
     <br>
     <input type="button" class="btn-render" value="Embed">
   </form>
@@ -245,6 +246,7 @@
             hideDownload = $('.hide-download').is(':checked'),
             maxWidth = parseInt($('.max-width').val(), 10),
             maxHeight = parseInt($('.max-height').val(), 10);
+            canvasIndex = parseInt($('.canvas-index').val(), 10);
 
         format = $('#select-format').val();
 
@@ -258,6 +260,7 @@
           if (hideDownload) url += "&hide_download=true";
           if (!isNaN(maxWidth)) url += "&maxwidth=" + maxWidth;
           if (!isNaN(maxHeight)) url += "&maxheight=" + maxHeight;
+          if (!isNaN(canvasIndex)) url += "&canvas_index=" + canvasIndex;
 
         } else {
           alert('Error:\nEmpty API endpoint and/or URL scheme')

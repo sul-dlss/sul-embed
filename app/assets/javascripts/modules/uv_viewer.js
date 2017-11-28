@@ -12,7 +12,8 @@
         iiifResourceUri: options.uvUri,
         configUri: options.uvConfig,
         root: options.uvRoot,
-        deepLinkingEnabled: false
+        deepLinkingEnabled: false,
+        canvasIndex: Number(options.canvasIndex)
       };
 
       createUV(id, data, new UV.URLDataProvider());
