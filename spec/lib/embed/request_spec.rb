@@ -87,6 +87,15 @@ describe Embed::Request do
     end
   end
 
+  describe 'canvas_index' do
+    it 'passes through the canvas_index param' do
+      expect(Embed::Request.new(url: purl, canvas_index: 3).canvas_index).to eq 3
+    end
+    it 'defaults to nil' do
+      expect(Embed::Request.new(url: purl).canvas_index).to eq nil
+    end
+  end
+
   describe 'object_druid' do
     it 'should parse the druid out of the incoming URL parameter' do
       expect(Embed::Request.new(url: purl).object_druid).to eq 'abc123'
