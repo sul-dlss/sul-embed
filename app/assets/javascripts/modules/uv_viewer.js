@@ -13,7 +13,8 @@
         configUri: options.uvConfig,
         root: options.uvRoot,
         embedded: true,
-        canvasIndex: Number(options.canvasIndex)
+        canvasIndex: Number(options.canvasIndex),
+        highlight: options.uvHighlight
       };
 
       createUV(id, data, new UV.URLDataProvider());

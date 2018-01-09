@@ -96,6 +96,12 @@ describe Embed::Request do
     end
   end
 
+  describe 'q' do
+    it 'passes through the q param' do
+      expect(Embed::Request.new(url: purl, q: 'abc').q).to eq 'abc'
+    end
+  end
+
   describe 'object_druid' do
     it 'should parse the druid out of the incoming URL parameter' do
       expect(Embed::Request.new(url: purl).object_druid).to eq 'abc123'

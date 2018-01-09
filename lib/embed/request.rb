@@ -72,7 +72,8 @@ module Embed
         :hide_download,
         :min_files_to_search,
         :fullheight,
-        :canvas_index
+        :canvas_index,
+        :q
       )
 
       if p.respond_to? :permit!
@@ -84,6 +85,10 @@ module Embed
 
     def canvas_index
       params[:canvas_index]
+    end
+
+    def q
+      params[:q]
     end
 
     private
