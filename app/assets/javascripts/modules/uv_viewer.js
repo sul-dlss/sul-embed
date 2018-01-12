@@ -12,14 +12,14 @@
         iiifResourceUri: options.uvUri,
         configUri: options.uvConfig,
         root: options.uvRoot,
-        deepLinkingEnabled: false,
+        embedded: true,
         canvasIndex: Number(options.canvasIndex)
       };
 
       createUV(id, data, new UV.URLDataProvider());
     }
 
-    /* 
+    /*
     / This is used to detect if the viewer should try and show itself fullheight
     / by looking for the .sul-embed-fullheight class which should be present.
     / If it is present go and dynamically set the height for each element that
