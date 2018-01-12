@@ -2598,19 +2598,18 @@ if ( typeof define === "function" ) {
 }
 define("lib/sanitize.js", function(){});
 
-var __extends=this&&this.__extends||function(){var r=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(r,e){r.__proto__=e}||function(r,e){for(var t in e)e.hasOwnProperty(t)&&(r[t]=e[t])};return function(e,t){function n(){this.constructor=e}r(e,t),e.prototype=null===t?Object.create(t):(n.prototype=t.prototype,new n)}}(),exjs;!function(r){r.version="0.5.0"}(exjs||(exjs={}));var exjs;!function(r){Array.isArray||(Array.isArray=function(r){return"[object Array]"===Object.prototype.toString.call(r)})}(exjs||(exjs={}));var exjs;!function(r){var e=function(){function r(){}return r.prototype.getEnumerator=function(){return{moveNext:function(){return!1},current:void 0}},r.prototype.aggregate=function(r,e){for(var t=r,n=this.getEnumerator();n.moveNext();)t=e(t,n.current);return t},r.prototype.all=function(r){if(r)for(var e=this.getEnumerator(),t=0;e.moveNext();){if(!r(e.current,t))return!1;t++}return!0},r.prototype.any=function(r){for(var e=this.getEnumerator(),t=0;e.moveNext();){if(!r)return!0;if(r(e.current,t))return!0;t++}return!1},r.prototype.append=function(){for(var r=[],e=0;e<arguments.length;e++)r[e]=arguments[e];throw new Error("Not implemented")},r.prototype.apply=function(r){throw new Error("Not implemented")},r.prototype.at=function(r){for(var e=this.getEnumerator(),t=0;e.moveNext();){if(t===r)return e.current;t++}},r.prototype.average=function(r){var e=0,t=0;r=r||function(r){if("number"!=typeof r)throw new Error("Object is not a number.");return r};for(var n=this.getEnumerator();n.moveNext();)t+=r(n.current),e++;return 0===e?0:t/e},r.prototype.concat=function(r){throw new Error("Not implemented")},r.prototype.count=function(r){for(var e=0,t=this.getEnumerator();t.moveNext();)r&&!r(t.current)||e++;return e},r.prototype.difference=function(r,e){return e=e||function(r,e){return r===e},r instanceof Array&&(r=r.en()),{intersection:this.intersect(r,e).toArray().en(),aNotB:this.except(r,e).toArray().en(),bNotA:r.except(this,e).toArray().en()}},r.prototype.distinct=function(r){throw new Error("Not implemented")},r.prototype.except=function(r,e){throw new Error("Not implemented")},r.prototype.first=function(r){for(var e=this.getEnumerator();e.moveNext();)if(!r||r(e.current))return e.current},r.prototype.firstIndex=function(r){for(var e=this.getEnumerator(),t=0;e.moveNext();t++)if(!r||r(e.current))return t;return-1},r.prototype.forEach=function(r){for(var e=this.getEnumerator();e.moveNext();)r(e.current)},r.prototype.groupBy=function(r,e){throw new Error("Not implemented")},r.prototype.intersect=function(r,e){throw new Error("Not implemented")},r.prototype.join=function(r,e,t,n,o){throw new Error("Not implemented")},r.prototype.last=function(r){for(var e,t=this.getEnumerator();t.moveNext();)r&&!r(t.current)||(e=t.current);return e},r.prototype.lastIndex=function(r){for(var e=-1,t=this.getEnumerator(),n=0;t.moveNext();n++)r&&!r(t.current)||(e=n);return e},r.prototype.max=function(r){var e=this.getEnumerator();if(!e.moveNext())return 0;r=r||function(r){if("number"!=typeof r)throw new Error("Object is not a number.");return r};for(var t=r(e.current);e.moveNext();)t=Math.max(t,r(e.current));return t},r.prototype.min=function(r){var e=this.getEnumerator();if(!e.moveNext())return 0;r=r||function(r){if("number"!=typeof r)throw new Error("Object is not a number.");return r};for(var t=r(e.current);e.moveNext();)t=Math.min(t,r(e.current));return t},r.prototype.orderBy=function(r,e){throw new Error("Not implemented")},r.prototype.orderByDescending=function(r,e){throw new Error("Not implemented")},r.prototype.prepend=function(){for(var r=[],e=0;e<arguments.length;e++)r[e]=arguments[e];throw new Error("Not implemented")},r.prototype.reverse=function(){throw new Error("Not implemented")},r.prototype.select=function(r){throw new Error("Not implemented")},r.prototype.selectMany=function(r){throw new Error("Not implemented")},r.prototype.skip=function(r){throw new Error("Not implemented")},r.prototype.skipWhile=function(r){throw new Error("Not implemented")},r.prototype.standardDeviation=function(r){var e=this.average(r),t=0,n=0;r=r||function(r){if("number"!=typeof r)throw new Error("Object is not a number.");return r};for(var o=this.getEnumerator();o.moveNext();){var u=r(o.current)-e;t+=u*u,n++}return Math.sqrt(t/n)},r.prototype.sum=function(r){var e=0;r=r||function(r){if("number"!=typeof r)throw new Error("Object is not a number.");return r};for(var t=this.getEnumerator();t.moveNext();)e+=r(t.current);return e},r.prototype.take=function(r){throw new Error("Not implemented")},r.prototype.takeWhile=function(r){throw new Error("Not implemented")},r.prototype.traverse=function(r){throw new Error("Not implemented")},r.prototype.traverseUnique=function(r,e){throw new Error("Not implemented")},r.prototype.toArray=function(){for(var r=[],e=this.getEnumerator();e.moveNext();)r.push(e.current);return r},r.prototype.toMap=function(r,e){throw new Error("Not implemented")},r.prototype.toList=function(){throw new Error("Not implemented")},r.prototype.union=function(r,e){throw new Error("Not implemented")},r.prototype.where=function(r){throw new Error("Not implemented")},r.prototype.zip=function(r,e){throw new Error("Not implemented")},r}();r.Enumerable=e}(exjs||(exjs={}));var exjs;!function(r){var e=function(){function e(r){this.size=0,this._keys=[],this._values=[];var e;if(r instanceof Array?e=r.en():r&&r.getEnumerator instanceof Function&&(e=r),e)for(var t=e.getEnumerator();t&&t.moveNext();)this.set(t.current[0],t.current[1])}return e.prototype.clear=function(){this._keys.length=0,this._values.length=0,this.size=0},e.prototype.delete=function(r){var e=this._keys.indexOf(r);return e>-1&&(this._keys.splice(e,1),this._values.splice(e,1),this.size--,!0)},e.prototype.entries=function(){var e=this;return r.range(0,this.size).select(function(r){return[e._keys[r],e._values[r]]})},e.prototype.forEach=function(r,e){null==e&&(e=this);for(var t=0,n=this._keys,o=this._values,u=n.length;t<u;t++)r.call(e,o[t],n[t],this)},e.prototype.get=function(r){var e=this._keys.indexOf(r);return this._values[e]},e.prototype.has=function(r){return this._keys.indexOf(r)>-1},e.prototype.keys=function(){return this._keys.en()},e.prototype.set=function(r,e){var t=this._keys.indexOf(r);t>-1?this._values[t]=e:(this._keys.push(r),this._values.push(e),this.size++)},e.prototype.values=function(){return this._values.en()},e}();r.Map3=e,r.Enumerable.prototype.toMap=function(r,t){for(var n=new e,o=this.getEnumerator();o.moveNext();)n.set(r(o.current),t(o.current));return n},r.List&&(r.List.prototype.toMap=r.Enumerable.prototype.toMap)}(exjs||(exjs={})),function(r){r.Map||(r.Map=exjs.Map3)}("undefined"==typeof window?global:window);var exjs;!function(r){function e(e){var t=new r.Enumerable;return t.getEnumerator=function(){var r={current:void 0,moveNext:function(){return e(r)}};return r},t}r.anonymous=e}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n,o=1,u={current:void 0,moveNext:function(){if(o<2){if(t=t||r.getEnumerator(),t.moveNext())return u.current=t.current,!0;o++}return n=n||e.en().getEnumerator(),n.moveNext()?(u.current=n.current,!0):(u.current=void 0,!1)}};return u}r.Enumerable.prototype.append=function(){for(var t=this,n=[],o=0;o<arguments.length;o++)n[o]=arguments[o];var u=new r.Enumerable;return u.getEnumerator=function(){return e(t,n)},u},r.List&&(r.List.prototype.append=r.Enumerable.prototype.append)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n=0,o={current:void 0,moveNext:function(){return t||(t=r.getEnumerator()),!!t.moveNext()&&(e(o.current=t.current,n),n++,!0)}};return o}r.Enumerable.prototype.apply=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.List&&(r.List.prototype.apply=r.Enumerable.prototype.apply)}(exjs||(exjs={}));var exjs;!function(r){function e(r){var e=r.length,t={moveNext:void 0,current:void 0},n=-1;return t.moveNext=function(){return n++,n>=e?(t.current=void 0,!1):(t.current=r[n],!0)},t}function t(){return this&&Array.isArray(this)?new n(this):new r.Enumerable}var n=function(r){function t(t){var n=r.call(this)||this;return n.getEnumerator=function(){return e(t)},n.toArray=function(){return t.slice(0)},n}return __extends(t,r),t}(r.Enumerable);try{Object.defineProperty(Array.prototype,"en",{value:t,enumerable:!1,writable:!1,configurable:!1})}catch(r){Array.prototype.en=t}}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n=!1,o={current:void 0,moveNext:function(){return t||(t=r.getEnumerator()),o.current=void 0,t.moveNext()?(o.current=t.current,!0):!n&&(n=!0,t=e.getEnumerator(),!!t.moveNext()&&(o.current=t.current,!0))}};return o}r.Enumerable.prototype.concat=function(t){var n=this,o=t instanceof Array?t.en():t,u=new r.Enumerable;return u.getEnumerator=function(){return e(n,o)},u},r.List&&(r.List.prototype.concat=r.Enumerable.prototype.concat)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n=[],o={current:void 0,moveNext:function(){if(t||(t=r.getEnumerator()),o.current=void 0,!e){for(;t.moveNext();)if(n.indexOf(t.current)<0)return n.push(o.current=t.current),!0;return!1}for(;t.moveNext();){for(var u=0,i=n.length,c=!1;u<i&&!c;u++)c=!!e(n[u],t.current);if(!c)return n.push(o.current=t.current),!0}return!1}};return o}r.Enumerable.prototype.distinct=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.List&&(r.List.prototype.distinct=r.Enumerable.prototype.distinct)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e,t){t=t||function(r,e){return r===e};var n,o={current:void 0,moveNext:function(){for(n||(n=r.getEnumerator()),o.current=void 0;n.moveNext();){for(var u=!1,i=e.getEnumerator();i.moveNext()&&!u;)u=t(n.current,i.current);if(!u)return o.current=n.current,!0}return!1}};return o}r.Enumerable.prototype.except=function(t,n){var o=this,u=t instanceof Array?t.en():t,i=new r.Enumerable;return i.getEnumerator=function(){return e(o,u,n)},i},r.List&&(r.List.prototype.except=r.Enumerable.prototype.except)}(exjs||(exjs={})),Function.prototype.fromJson=function(r,e){function t(r,e){if(null==r)return r;if(e instanceof Function)return e(r);if(e instanceof Array){if(e=e[0],!(e instanceof Function&&r instanceof Array))return;for(var t=[],n=0;n<r.length;n++)t.push(e(r[n]));return t}}var n=new this;if(null==r)return n;var o=[];for(var u in e){var i=t(r[u],e[u]);void 0!==i&&(n[u]=i,o.push(u))}for(var u in this.$jsonMappings)if(!(o.indexOf(u)>-1)){var i=t(r[u],this.$jsonMappings[u]);void 0!==i&&(n[u]=i,o.push(u))}for(var u in r)o.indexOf(u)>-1||(n[u]=r[u]);return n};var exjs;!function(r){function e(r,e,n){var o,u=0,i={current:void 0,moveNext:function(){return o||(o=t(r,e,n)),i.current=void 0,!(u>=o.length)&&(i.current=o[u],u++,!0)}};return i}function t(r,e,t){t=t||function(r,e){return r===e};for(var o,u=[],i=[],c=r.getEnumerator();c.moveNext();){o=e(c.current);for(var a=-1,p=0,f=i.length;p<f;p++)if(t(o,i[p])){a=p;break}var s;a<0?(i.push(o),u.push(s=new n(o))):s=u[a],s._add(c.current)}return u}var n=function(r){function e(e){var t=r.call(this)||this;return t.key=e,t._arr=[],t.getEnumerator=function(){return t._arr.en().getEnumerator()},t}return __extends(e,r),e.prototype._add=function(r){this._arr.push(r)},e}(r.Enumerable);r.Enumerable.prototype.groupBy=function(t,n){var o=this,u=new r.Enumerable;return u.getEnumerator=function(){return e(o,t,n)},u},r.List&&(r.List.prototype.groupBy=r.Enumerable.prototype.groupBy)}(exjs||(exjs={}));var exjs;!function(r){function e(e,t,n){n=n||function(r,e){return r===e};var o,u={current:void 0,moveNext:function(){for(o||(o=r.en(e).distinct().getEnumerator()),u.current=void 0;o.moveNext();){for(var i=!1,c=t.getEnumerator();c.moveNext()&&!i;)i=n(o.current,c.current);if(i)return u.current=o.current,!0}return!1}};return u}r.Enumerable.prototype.intersect=function(t,n){var o=this,u=t instanceof Array?t.en():t,i=new r.Enumerable;return i.getEnumerator=function(){return e(o,u,n)},i},r.List&&(r.List.prototype.intersect=r.Enumerable.prototype.intersect)}(exjs||(exjs={}));var exjs;!function(r){function e(e,t,n,o,u,i){i=i||function(r,e){return r===e};var c,a,p=0,f={current:void 0,moveNext:function(){if(f.current=void 0,!c){if(c=e.getEnumerator(),!c.moveNext())return!1;a=r.en(t).toArray()}var s;do{for(;p<a.length;p++)if(s=a[p],i(n(c.current),o(s)))return p++,f.current=u(c.current,s),!0;p=0}while(c.moveNext());return!1}};return f}r.Enumerable.prototype.join=function(t,n,o,u,i){var c=this,a=t instanceof Array?t.en():t,p=new r.Enumerable;return p.getEnumerator=function(){return e(c,a,n,o,u,i)},p},r.List&&(r.List.prototype.join=r.Enumerable.prototype.join)}(exjs||(exjs={}));var exjs;!function(r){function e(){this.constructor=t}r.Enumerable.prototype.toList=function(){for(var r=new t,e=this.getEnumerator();e.moveNext();)r.push(e.current);return r};var t=function(r){function e(){return null!==r&&r.apply(this,arguments)||this}return __extends(e,r),e.prototype.toString=function(){throw new Error("Not implemented")},e.prototype.toLocaleString=function(){throw new Error("Not implemented")},e.prototype.pop=function(){throw new Error("Not implemented")},e.prototype.push=function(){for(var r=[],e=0;e<arguments.length;e++)r[e]=arguments[e];throw new Error("Not implemented")},e.prototype.shift=function(){throw new Error("Not implemented")},e.prototype.slice=function(r,e){throw new Error("Not implemented")},e.prototype.sort=function(r){throw new Error("Not implemented")},e.prototype.splice=function(){throw new Error("Not implemented")},e.prototype.unshift=function(){for(var r=[],e=0;e<arguments.length;e++)r[e]=arguments[e];throw new Error("Not implemented")},e.prototype.indexOf=function(r,e){throw new Error("Not implemented")},e.prototype.lastIndexOf=function(r,e){throw new Error("Not implemented")},e.prototype.every=function(r,e){throw new Error("Not implemented")},e.prototype.some=function(r,e){throw new Error("Not implemented")},e.prototype.forEach=function(r,e){throw new Error("Not implemented")},e.prototype.map=function(r,e){throw new Error("Not implemented")},e.prototype.filter=function(r,e){throw new Error("Not implemented")},e.prototype.reduce=function(r,e){throw new Error("Not implemented")},e.prototype.reduceRight=function(r,e){throw new Error("Not implemented")},e.prototype.remove=function(r){throw new Error("Not implemented")},e.prototype.removeWhere=function(r){throw new Error("Not implemented")},e}(r.Enumerable);r.List=t;for(var n in Array)Array.hasOwnProperty(n)&&(t[n]=Array[n]);e.prototype=Array.prototype,t.prototype=new e;for(var o in r.Enumerable.prototype)"getEnumerator"!==o&&(t.prototype[o]=r.Enumerable.prototype[o]);t.prototype.getEnumerator=function(){var r=this,e=r.length,t={moveNext:void 0,current:void 0},n=-1;return t.moveNext=function(){return n++,n>=e?(t.current=void 0,!1):(t.current=r[n],!0)},t},t.prototype.remove=function(r){return this.removeWhere(function(e){return e===r}).any()},t.prototype.removeWhere=function(r){for(var e,t=[],n=this.length-1;n>=0;n--)e=this[n],r(e,n)===!0&&(this.splice(n,1),t.push(e));return t.en().reverse()}}(exjs||(exjs={}));var exjs;!function(r){function e(r,e,n,o){return new t(r,e,n,o)}var t=function(e){function t(r,t,n,o){var u=e.call(this)||this;u.Source=r,o=o||function(r,e){return r>e?1:r<e?-1:0};var i=n===!0?-1:1;return u.Sorter=function(r,e){return i*o(t(r),t(e))},u}return __extends(t,e),t.prototype.getEnumerator=function(){var e,t=this.Source,n=this.Sorter,o=0,u={current:void 0,moveNext:function(){return e||(e=r.en(t).toArray(),e.sort(n)),u.current=void 0,!(o>=e.length)&&(u.current=e[o],o++,!0)}};return u},t.prototype.thenBy=function(r,e){return new n(this,r,!1,e)},t.prototype.thenByDescending=function(r,e){return new n(this,r,!0,e)},t}(r.Enumerable),n=function(r){function e(e,t,n,o){var u=r.call(this,e,t,n,o)||this,i=e.Sorter,c=u.Sorter;return u.Sorter=function(r,e){return i(r,e)||c(r,e)},u}return __extends(e,r),e}(t),o=r.Enumerable.prototype;o.orderBy=function(r,t){return e(this,r,!1,t)},o.orderByDescending=function(r,t){return e(this,r,!0,t)},r.List&&(r.List.prototype.orderBy=r.Enumerable.prototype.orderBy,r.List.prototype.orderByDescending=r.Enumerable.prototype.orderByDescending)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n,o=1,u={current:void 0,moveNext:function(){if(o<2){if(t=t||e.en().getEnumerator(),t.moveNext())return u.current=t.current,!0;o++}return n=n||r.getEnumerator(),n.moveNext()?(u.current=n.current,!0):(u.current=void 0,!1)}};return u}r.Enumerable.prototype.prepend=function(){for(var t=this,n=[],o=0;o<arguments.length;o++)n[o]=arguments[o];var u=new r.Enumerable;return u.getEnumerator=function(){return e(t,n)},u},r.List&&(r.List.prototype.prepend=r.Enumerable.prototype.prepend)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e,t){var n=r-t,o={current:void 0,moveNext:function(){return n+=t,!(n>=e)&&(o.current=n,!0)}};return o}function t(t,n,o){if(t=t||0,n=n||0,t>n)throw new Error("Start cannot be greater than end.");null==o&&(o=1);var u=new r.Enumerable;return u.getEnumerator=function(){return e(t,n,o)},u}r.range=t}(exjs||(exjs={}));var exjs;!function(r){function e(e){var t,n=0,o={current:void 0,moveNext:function(){return t||(t=r.en(e).toArray(),n=t.length),n--,o.current=t[n],n>=0}};return o}r.Enumerable.prototype.reverse=function(){var t=this,n=new r.Enumerable;return n.getEnumerator=function(){return e(t)},n},r.List&&(r.List.prototype.reverse=r.Enumerable.prototype.reverse)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){if(e=e||0,0===e)return Math.round(r);var t=Math.pow(10,e);return Math.round(r*t)/t}r.round=e}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n=0,o={current:void 0,moveNext:function(){return t||(t=r.getEnumerator()),!!t.moveNext()&&(o.current=e(t.current,n),n++,!0)}};return o}function t(e,t){var n,o,u={current:void 0,moveNext:function(){for(u.current=void 0,n||(n=e.getEnumerator());!o||!o.moveNext();){if(!n.moveNext())return!1;o=r.selectorEnumerator(t(n.current))}return u.current=o.current,!0}};return u}r.Enumerable.prototype.select=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.Enumerable.prototype.selectMany=function(e){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return t(n,e)},o},r.List&&(r.List.prototype.select=r.Enumerable.prototype.select,r.List.prototype.selectMany=r.Enumerable.prototype.selectMany)}(exjs||(exjs={}));var exjs;!function(r){function e(r){return Array.isArray(r)?r.en().getEnumerator():null!=r&&"function"==typeof r.getEnumerator?r.getEnumerator():null}r.selectorEnumerator=e}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n={current:void 0,moveNext:function(){if(!t){t=r.getEnumerator();for(var o=0;o<e;o++)if(!t.moveNext())return!1}return t.moveNext()?(n.current=t.current,!0):(n.current=void 0,!1)}};return n}function t(r,e){var t,n={current:void 0,moveNext:function(){if(!t){t=r.getEnumerator();for(var o=0;t.moveNext();o++)if(!e(n.current=t.current,o))return!0;return n.current=void 0,!1}return t.moveNext()?(n.current=t.current,!0):(n.current=void 0,!1)}};return n}r.Enumerable.prototype.skip=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.Enumerable.prototype.skipWhile=function(e){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return t(n,e)},o},r.List&&(r.List.prototype.skip=r.Enumerable.prototype.skip,r.List.prototype.skipWhile=r.Enumerable.prototype.skipWhile)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n=0,o={current:void 0,moveNext:function(){return t||(t=r.getEnumerator()),n++,!(n>e)&&(o.current=void 0,!!t.moveNext()&&(o.current=t.current,!0))}};return o}function t(r,e){var t,n=0,o={current:void 0,moveNext:function(){return t||(t=r.getEnumerator()),t.moveNext()&&e(t.current,n)?(n++,o.current=t.current,!0):(o.current=void 0,!1)}};return o}r.Enumerable.prototype.take=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.Enumerable.prototype.takeWhile=function(e){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return t(n,e)},o},r.List&&(r.List.prototype.take=r.Enumerable.prototype.take,r.List.prototype.takeWhile=r.Enumerable.prototype.takeWhile)}(exjs||(exjs={}));var exjs;!function(r){function e(e,t){var n,o=!1,u=[],i={current:void 0,moveNext:function(){if(o){if(null==n)return!1;u.push(n),n=r.selectorEnumerator(t(i.current))}else n=e.getEnumerator(),o=!0;for(;!(n&&n.moveNext()||u.length<1);)n=u.pop();return i.current=null==n?void 0:n.current,void 0!==i.current}};return i}function t(e,t,n){var o,u=!1,i=[],c={current:void 0,moveNext:function(){if(u){if(null==o)return!1;i.push(o),o=r.selectorEnumerator(t(c.current))}else o=e.getEnumerator(),u=!0;do{for(;!(o&&o.moveNext()||i.length<1);)o=i.pop();c.current=null==o?void 0:o.current}while(n(c.current));return void 0!==c.current}};return c}r.Enumerable.prototype.traverse=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.Enumerable.prototype.traverseUnique=function(e,n){var o=this,u=[],i=new r.Enumerable;return n?i.getEnumerator=function(){return t(o,e,function(r){return!!u.some(function(e){return n(r,e)})||(u.push(r),!1)})}:i.getEnumerator=function(){return t(o,e,function(r){return u.indexOf(r)>-1||(u.push(r),!1)})},i},r.List&&(r.List.prototype.traverse=r.Enumerable.prototype.traverse,r.List.prototype.traverseUnique=r.Enumerable.prototype.traverseUnique)}(exjs||(exjs={}));var exjs;!function(r){function e(e,t,n){n=n||function(r,e){return r===e};var o,u,i=[],c={current:void 0,moveNext:function(){if(o||(o=r.en(e).distinct().getEnumerator()),c.current=void 0,!u&&o.moveNext())return i.push(c.current=o.current),!0;for(u=u||r.en(t).distinct().getEnumerator();u.moveNext();){for(var a=0,p=!1,f=i.length;a<f&&!p;a++)p=n(i[a],u.current);if(!p)return c.current=u.current,!0}return!1}};return c}r.Enumerable.prototype.union=function(t,n){var o=this,u=t instanceof Array?t.en():t,i=new r.Enumerable;return i.getEnumerator=function(){return e(o,u,n)},i},r.List&&(r.List.prototype.union=r.Enumerable.prototype.union)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n={current:void 0,moveNext:function(){t||(t=r.getEnumerator());for(var o;t.moveNext();)if(e(o=t.current))return n.current=o,!0;return!1}};return n}r.Enumerable.prototype.where=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.List&&(r.List.prototype.where=r.Enumerable.prototype.where)}(exjs||(exjs={}));var exjs;!function(r){function e(e){var n=new r.Enumerable;return n.getEnumerator=function(){return t(e)},n}function t(r){var e=r.getEnumerator(),t={current:void 0,moveNext:void 0};return t.moveNext=function(){return e.moveNext()?(t.current=e.current,!0):(t.current=void 0,!1)},t}r.en=e}(exjs||(exjs={}));var ex=exjs.en,exjs;!function(r){function e(r,e,t){var n,o,u={current:void 0,moveNext:function(){return n||(n=r.getEnumerator()),o||(o=e.getEnumerator()),u.current=void 0,!(!n.moveNext()||!o.moveNext())&&(u.current=t(n.current,o.current),!0)}};return u}r.Enumerable.prototype.zip=function(t,n){var o=this,u=t instanceof Array?t.en():t,i=new r.Enumerable;return i.getEnumerator=function(){return e(o,u,n)},i},r.List&&(r.List.prototype.zip=r.Enumerable.prototype.zip)}(exjs||(exjs={}));
+var __extends=this&&this.__extends||function(){var r=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(r,e){r.__proto__=e}||function(r,e){for(var t in e)e.hasOwnProperty(t)&&(r[t]=e[t])};return function(e,t){function n(){this.constructor=e}r(e,t),e.prototype=null===t?Object.create(t):(n.prototype=t.prototype,new n)}}(),exjs;!function(r){r.version="0.5.1"}(exjs||(exjs={}));var exjs;!function(r){Array.isArray||(Array.isArray=function(r){return"[object Array]"===Object.prototype.toString.call(r)})}(exjs||(exjs={}));var exjs;!function(r){var e=function(){function r(){}return r.prototype.getEnumerator=function(){return{moveNext:function(){return!1},current:void 0}},r.prototype.aggregate=function(r,e){for(var t=r,n=this.getEnumerator();n.moveNext();)t=e(t,n.current);return t},r.prototype.all=function(r){if(r)for(var e=this.getEnumerator(),t=0;e.moveNext();){if(!r(e.current,t))return!1;t++}return!0},r.prototype.any=function(r){for(var e=this.getEnumerator(),t=0;e.moveNext();){if(!r)return!0;if(r(e.current,t))return!0;t++}return!1},r.prototype.append=function(){for(var r=[],e=0;e<arguments.length;e++)r[e]=arguments[e];throw new Error("Not implemented")},r.prototype.apply=function(r){throw new Error("Not implemented")},r.prototype.at=function(r){for(var e=this.getEnumerator(),t=0;e.moveNext();){if(t===r)return e.current;t++}},r.prototype.average=function(r){var e=0,t=0;r=r||function(r){if("number"!=typeof r)throw new Error("Object is not a number.");return r};for(var n=this.getEnumerator();n.moveNext();)t+=r(n.current),e++;return 0===e?0:t/e},r.prototype.concat=function(r){throw new Error("Not implemented")},r.prototype.count=function(r){for(var e=0,t=this.getEnumerator();t.moveNext();)r&&!r(t.current)||e++;return e},r.prototype.difference=function(r,e){return e=e||function(r,e){return r===e},r instanceof Array&&(r=r.en()),{intersection:this.intersect(r,e).toArray().en(),aNotB:this.except(r,e).toArray().en(),bNotA:r.except(this,e).toArray().en()}},r.prototype.distinct=function(r){throw new Error("Not implemented")},r.prototype.except=function(r,e){throw new Error("Not implemented")},r.prototype.first=function(r){for(var e=this.getEnumerator();e.moveNext();)if(!r||r(e.current))return e.current},r.prototype.firstIndex=function(r){for(var e=this.getEnumerator(),t=0;e.moveNext();t++)if(!r||r(e.current))return t;return-1},r.prototype.forEach=function(r){for(var e=this.getEnumerator();e.moveNext();)r(e.current)},r.prototype.groupBy=function(r,e){throw new Error("Not implemented")},r.prototype.intersect=function(r,e){throw new Error("Not implemented")},r.prototype.join=function(r,e,t,n,o){throw new Error("Not implemented")},r.prototype.last=function(r){for(var e,t=this.getEnumerator();t.moveNext();)r&&!r(t.current)||(e=t.current);return e},r.prototype.lastIndex=function(r){for(var e=-1,t=this.getEnumerator(),n=0;t.moveNext();n++)r&&!r(t.current)||(e=n);return e},r.prototype.max=function(r){var e=this.getEnumerator();if(!e.moveNext())return 0;r=r||function(r){if("number"!=typeof r)throw new Error("Object is not a number.");return r};for(var t=r(e.current);e.moveNext();)t=Math.max(t,r(e.current));return t},r.prototype.min=function(r){var e=this.getEnumerator();if(!e.moveNext())return 0;r=r||function(r){if("number"!=typeof r)throw new Error("Object is not a number.");return r};for(var t=r(e.current);e.moveNext();)t=Math.min(t,r(e.current));return t},r.prototype.orderBy=function(r,e){throw new Error("Not implemented")},r.prototype.orderByDescending=function(r,e){throw new Error("Not implemented")},r.prototype.prepend=function(){for(var r=[],e=0;e<arguments.length;e++)r[e]=arguments[e];throw new Error("Not implemented")},r.prototype.reverse=function(){throw new Error("Not implemented")},r.prototype.select=function(r){throw new Error("Not implemented")},r.prototype.selectMany=function(r){throw new Error("Not implemented")},r.prototype.skip=function(r){throw new Error("Not implemented")},r.prototype.skipWhile=function(r){throw new Error("Not implemented")},r.prototype.standardDeviation=function(r){var e=this.average(r),t=0,n=0;r=r||function(r){if("number"!=typeof r)throw new Error("Object is not a number.");return r};for(var o=this.getEnumerator();o.moveNext();){var u=r(o.current)-e;t+=u*u,n++}return Math.sqrt(t/n)},r.prototype.sum=function(r){var e=0;r=r||function(r){if("number"!=typeof r)throw new Error("Object is not a number.");return r};for(var t=this.getEnumerator();t.moveNext();)e+=r(t.current);return e},r.prototype.take=function(r){throw new Error("Not implemented")},r.prototype.takeWhile=function(r){throw new Error("Not implemented")},r.prototype.traverse=function(r){throw new Error("Not implemented")},r.prototype.traverseUnique=function(r,e){throw new Error("Not implemented")},r.prototype.toArray=function(){for(var r=[],e=this.getEnumerator();e.moveNext();)r.push(e.current);return r},r.prototype.toMap=function(r,e){throw new Error("Not implemented")},r.prototype.toList=function(){throw new Error("Not implemented")},r.prototype.union=function(r,e){throw new Error("Not implemented")},r.prototype.where=function(r){throw new Error("Not implemented")},r.prototype.zip=function(r,e){throw new Error("Not implemented")},r}();r.Enumerable=e}(exjs||(exjs={}));var exjs;!function(r){var e=function(){function e(r){this.size=0,this._keys=[],this._values=[];var e;if(r instanceof Array?e=r.en():r&&r.getEnumerator instanceof Function&&(e=r),e)for(var t=e.getEnumerator();t&&t.moveNext();)this.set(t.current[0],t.current[1])}return e.prototype.clear=function(){this._keys.length=0,this._values.length=0,this.size=0},e.prototype.delete=function(r){var e=this._keys.indexOf(r);return e>-1&&(this._keys.splice(e,1),this._values.splice(e,1),this.size--,!0)},e.prototype.entries=function(){var e=this;return r.range(0,this.size).select(function(r){return[e._keys[r],e._values[r]]})},e.prototype.forEach=function(r,e){null==e&&(e=this);for(var t=0,n=this._keys,o=this._values,u=n.length;t<u;t++)r.call(e,o[t],n[t],this)},e.prototype.get=function(r){var e=this._keys.indexOf(r);return this._values[e]},e.prototype.has=function(r){return this._keys.indexOf(r)>-1},e.prototype.keys=function(){return this._keys.en()},e.prototype.set=function(r,e){var t=this._keys.indexOf(r);t>-1?this._values[t]=e:(this._keys.push(r),this._values.push(e),this.size++)},e.prototype.values=function(){return this._values.en()},e}();r.Map3=e,r.Enumerable.prototype.toMap=function(r,t){for(var n=new e,o=this.getEnumerator();o.moveNext();)n.set(r(o.current),t(o.current));return n},r.List&&(r.List.prototype.toMap=r.Enumerable.prototype.toMap)}(exjs||(exjs={})),function(r){r.Map||(r.Map=exjs.Map3)}("undefined"==typeof window?global:window);var exjs;!function(r){function e(e){var t=new r.Enumerable;return t.getEnumerator=function(){var r={current:void 0,moveNext:function(){return e(r)}};return r},t}r.anonymous=e}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n,o=1,u={current:void 0,moveNext:function(){if(o<2){if(t=t||r.getEnumerator(),t.moveNext())return u.current=t.current,!0;o++}return n=n||e.en().getEnumerator(),n.moveNext()?(u.current=n.current,!0):(u.current=void 0,!1)}};return u}r.Enumerable.prototype.append=function(){for(var t=this,n=[],o=0;o<arguments.length;o++)n[o]=arguments[o];var u=new r.Enumerable;return u.getEnumerator=function(){return e(t,n)},u},r.List&&(r.List.prototype.append=r.Enumerable.prototype.append)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n=0,o={current:void 0,moveNext:function(){return t||(t=r.getEnumerator()),!!t.moveNext()&&(e(o.current=t.current,n),n++,!0)}};return o}r.Enumerable.prototype.apply=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.List&&(r.List.prototype.apply=r.Enumerable.prototype.apply)}(exjs||(exjs={}));var exjs;!function(r){function e(r){var e=r.length,t={moveNext:void 0,current:void 0},n=-1;return t.moveNext=function(){return n++,n>=e?(t.current=void 0,!1):(t.current=r[n],!0)},t}function t(){return this&&Array.isArray(this)?new n(this):new r.Enumerable}var n=function(r){function t(t){var n=r.call(this)||this;return n.getEnumerator=function(){return e(t)},n.toArray=function(){return t.slice(0)},n}return __extends(t,r),t}(r.Enumerable);try{Object.defineProperty(Array.prototype,"en",{value:t,enumerable:!1,writable:!1,configurable:!1})}catch(r){Array.prototype.en=t}}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n=!1,o={current:void 0,moveNext:function(){return t||(t=r.getEnumerator()),o.current=void 0,t.moveNext()?(o.current=t.current,!0):!n&&(n=!0,t=e.getEnumerator(),!!t.moveNext()&&(o.current=t.current,!0))}};return o}r.Enumerable.prototype.concat=function(t){var n=this,o=t instanceof Array?t.en():t,u=new r.Enumerable;return u.getEnumerator=function(){return e(n,o)},u},r.List&&(r.List.prototype.concat=r.Enumerable.prototype.concat)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n=[],o={current:void 0,moveNext:function(){if(t||(t=r.getEnumerator()),o.current=void 0,!e){for(;t.moveNext();)if(n.indexOf(t.current)<0)return n.push(o.current=t.current),!0;return!1}for(;t.moveNext();){for(var u=0,i=n.length,c=!1;u<i&&!c;u++)c=!!e(n[u],t.current);if(!c)return n.push(o.current=t.current),!0}return!1}};return o}r.Enumerable.prototype.distinct=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.List&&(r.List.prototype.distinct=r.Enumerable.prototype.distinct)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e,t){t=t||function(r,e){return r===e};var n,o={current:void 0,moveNext:function(){for(n||(n=r.getEnumerator()),o.current=void 0;n.moveNext();){for(var u=!1,i=e.getEnumerator();i.moveNext()&&!u;)u=t(n.current,i.current);if(!u)return o.current=n.current,!0}return!1}};return o}r.Enumerable.prototype.except=function(t,n){var o=this,u=t instanceof Array?t.en():t,i=new r.Enumerable;return i.getEnumerator=function(){return e(o,u,n)},i},r.List&&(r.List.prototype.except=r.Enumerable.prototype.except)}(exjs||(exjs={})),Function.prototype.fromJson=function(r,e){function t(r,e){if(null==r)return r;if(e instanceof Function)return e(r);if(e instanceof Array){if(e=e[0],!(e instanceof Function&&r instanceof Array))return;for(var t=[],n=0;n<r.length;n++)t.push(e(r[n]));return t}}var n=new this;if(null==r)return n;var o=[];for(var u in e){var i=t(r[u],e[u]);void 0!==i&&(n[u]=i,o.push(u))}for(var u in this.$jsonMappings)if(!(o.indexOf(u)>-1)){var i=t(r[u],this.$jsonMappings[u]);void 0!==i&&(n[u]=i,o.push(u))}for(var u in r)o.indexOf(u)>-1||(n[u]=r[u]);return n};var exjs;!function(r){function e(r,e,n){var o,u=0,i={current:void 0,moveNext:function(){return o||(o=t(r,e,n)),i.current=void 0,!(u>=o.length)&&(i.current=o[u],u++,!0)}};return i}function t(r,e,t){t=t||function(r,e){return r===e};for(var o,u=[],i=[],c=r.getEnumerator();c.moveNext();){o=e(c.current);for(var a=-1,p=0,f=i.length;p<f;p++)if(t(o,i[p])){a=p;break}var s;a<0?(i.push(o),u.push(s=new n(o))):s=u[a],s._add(c.current)}return u}var n=function(r){function e(e){var t=r.call(this)||this;return t.key=e,t._arr=[],t.getEnumerator=function(){return t._arr.en().getEnumerator()},t}return __extends(e,r),e.prototype._add=function(r){this._arr.push(r)},e}(r.Enumerable);r.Enumerable.prototype.groupBy=function(t,n){var o=this,u=new r.Enumerable;return u.getEnumerator=function(){return e(o,t,n)},u},r.List&&(r.List.prototype.groupBy=r.Enumerable.prototype.groupBy)}(exjs||(exjs={}));var exjs;!function(r){function e(e,t,n){n=n||function(r,e){return r===e};var o,u={current:void 0,moveNext:function(){for(o||(o=r.en(e).distinct().getEnumerator()),u.current=void 0;o.moveNext();){for(var i=!1,c=t.getEnumerator();c.moveNext()&&!i;)i=n(o.current,c.current);if(i)return u.current=o.current,!0}return!1}};return u}r.Enumerable.prototype.intersect=function(t,n){var o=this,u=t instanceof Array?t.en():t,i=new r.Enumerable;return i.getEnumerator=function(){return e(o,u,n)},i},r.List&&(r.List.prototype.intersect=r.Enumerable.prototype.intersect)}(exjs||(exjs={}));var exjs;!function(r){function e(e,t,n,o,u,i){i=i||function(r,e){return r===e};var c,a,p=0,f={current:void 0,moveNext:function(){if(f.current=void 0,!c){if(c=e.getEnumerator(),!c.moveNext())return!1;a=r.en(t).toArray()}var s;do{for(;p<a.length;p++)if(s=a[p],i(n(c.current),o(s)))return p++,f.current=u(c.current,s),!0;p=0}while(c.moveNext());return!1}};return f}r.Enumerable.prototype.join=function(t,n,o,u,i){var c=this,a=t instanceof Array?t.en():t,p=new r.Enumerable;return p.getEnumerator=function(){return e(c,a,n,o,u,i)},p},r.List&&(r.List.prototype.join=r.Enumerable.prototype.join)}(exjs||(exjs={}));var exjs;!function(r){function e(){this.constructor=t}r.Enumerable.prototype.toList=function(){for(var r=new t,e=this.getEnumerator();e.moveNext();)r.push(e.current);return r};var t=function(r){function e(){return null!==r&&r.apply(this,arguments)||this}return __extends(e,r),e.prototype.toString=function(){throw new Error("Not implemented")},e.prototype.toLocaleString=function(){throw new Error("Not implemented")},e.prototype.pop=function(){throw new Error("Not implemented")},e.prototype.push=function(){for(var r=[],e=0;e<arguments.length;e++)r[e]=arguments[e];throw new Error("Not implemented")},e.prototype.shift=function(){throw new Error("Not implemented")},e.prototype.slice=function(r,e){throw new Error("Not implemented")},e.prototype.sort=function(r){throw new Error("Not implemented")},e.prototype.splice=function(){throw new Error("Not implemented")},e.prototype.unshift=function(){for(var r=[],e=0;e<arguments.length;e++)r[e]=arguments[e];throw new Error("Not implemented")},e.prototype.indexOf=function(r,e){throw new Error("Not implemented")},e.prototype.lastIndexOf=function(r,e){throw new Error("Not implemented")},e.prototype.every=function(r,e){throw new Error("Not implemented")},e.prototype.some=function(r,e){throw new Error("Not implemented")},e.prototype.forEach=function(r,e){throw new Error("Not implemented")},e.prototype.map=function(r,e){throw new Error("Not implemented")},e.prototype.filter=function(r,e){throw new Error("Not implemented")},e.prototype.reduce=function(r,e){throw new Error("Not implemented")},e.prototype.reduceRight=function(r,e){throw new Error("Not implemented")},e.prototype.remove=function(r){throw new Error("Not implemented")},e.prototype.removeWhere=function(r){throw new Error("Not implemented")},e}(r.Enumerable);r.List=t;for(var n in Array)Array.hasOwnProperty(n)&&(t[n]=Array[n]);e.prototype=Array.prototype,t.prototype=new e;for(var o in r.Enumerable.prototype)"getEnumerator"!==o&&(t.prototype[o]=r.Enumerable.prototype[o]);t.prototype.getEnumerator=function(){var r=this,e=r.length,t={moveNext:void 0,current:void 0},n=-1;return t.moveNext=function(){return n++,n>=e?(t.current=void 0,!1):(t.current=r[n],!0)},t},t.prototype.remove=function(r){return this.removeWhere(function(e){return e===r}).any()},t.prototype.removeWhere=function(r){for(var e,t=[],n=this.length-1;n>=0;n--)e=this[n],r(e,n)===!0&&(this.splice(n,1),t.push(e));return t.en().reverse()}}(exjs||(exjs={}));var exjs;!function(r){function e(r,e,n,o){return new t(r,e,n,o)}var t=function(e){function t(r,t,n,o){var u=e.call(this)||this;u.Source=r,o=o||function(r,e){return r>e?1:r<e?-1:0};var i=n===!0?-1:1;return u.Sorter=function(r,e){return i*o(t(r),t(e))},u}return __extends(t,e),t.prototype.getEnumerator=function(){var e,t=this.Source,n=this.Sorter,o=0,u={current:void 0,moveNext:function(){return e||(e=r.en(t).toArray(),e.sort(n)),u.current=void 0,!(o>=e.length)&&(u.current=e[o],o++,!0)}};return u},t.prototype.thenBy=function(r,e){return new n(this,r,!1,e)},t.prototype.thenByDescending=function(r,e){return new n(this,r,!0,e)},t}(r.Enumerable),n=function(r){function e(e,t,n,o){var u=r.call(this,e,t,n,o)||this,i=e.Sorter,c=u.Sorter;return u.Sorter=function(r,e){return i(r,e)||c(r,e)},u}return __extends(e,r),e}(t),o=r.Enumerable.prototype;o.orderBy=function(r,t){return e(this,r,!1,t)},o.orderByDescending=function(r,t){return e(this,r,!0,t)},r.List&&(r.List.prototype.orderBy=r.Enumerable.prototype.orderBy,r.List.prototype.orderByDescending=r.Enumerable.prototype.orderByDescending)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n,o=1,u={current:void 0,moveNext:function(){if(o<2){if(t=t||e.en().getEnumerator(),t.moveNext())return u.current=t.current,!0;o++}return n=n||r.getEnumerator(),n.moveNext()?(u.current=n.current,!0):(u.current=void 0,!1)}};return u}r.Enumerable.prototype.prepend=function(){for(var t=this,n=[],o=0;o<arguments.length;o++)n[o]=arguments[o];var u=new r.Enumerable;return u.getEnumerator=function(){return e(t,n)},u},r.List&&(r.List.prototype.prepend=r.Enumerable.prototype.prepend)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e,t){var n=r-t,o={current:void 0,moveNext:function(){return n+=t,!(n>=e)&&(o.current=n,!0)}};return o}function t(t,n,o){if(t=t||0,n=n||0,t>n)throw new Error("Start cannot be greater than end.");null==o&&(o=1);var u=new r.Enumerable;return u.getEnumerator=function(){return e(t,n,o)},u}r.range=t}(exjs||(exjs={}));var exjs;!function(r){function e(e){var t,n=0,o={current:void 0,moveNext:function(){return t||(t=r.en(e).toArray(),n=t.length),n--,o.current=t[n],n>=0}};return o}r.Enumerable.prototype.reverse=function(){var t=this,n=new r.Enumerable;return n.getEnumerator=function(){return e(t)},n},r.List&&(r.List.prototype.reverse=r.Enumerable.prototype.reverse)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){if(e=e||0,0===e)return Math.round(r);var t=Math.pow(10,e);return Math.round(r*t)/t}r.round=e}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n=0,o={current:void 0,moveNext:function(){return t||(t=r.getEnumerator()),!!t.moveNext()&&(o.current=e(t.current,n),n++,!0)}};return o}function t(e,t){var n,o,u={current:void 0,moveNext:function(){for(u.current=void 0,n||(n=e.getEnumerator());!o||!o.moveNext();){if(!n.moveNext())return!1;o=r.selectorEnumerator(t(n.current))}return u.current=o.current,!0}};return u}r.Enumerable.prototype.select=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.Enumerable.prototype.selectMany=function(e){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return t(n,e)},o},r.List&&(r.List.prototype.select=r.Enumerable.prototype.select,r.List.prototype.selectMany=r.Enumerable.prototype.selectMany)}(exjs||(exjs={}));var exjs;!function(r){function e(r){return Array.isArray(r)?r.en().getEnumerator():null!=r&&"function"==typeof r.getEnumerator?r.getEnumerator():null}r.selectorEnumerator=e}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n={current:void 0,moveNext:function(){if(!t){t=r.getEnumerator();for(var o=0;o<e;o++)if(!t.moveNext())return!1}return t.moveNext()?(n.current=t.current,!0):(n.current=void 0,!1)}};return n}function t(r,e){var t,n={current:void 0,moveNext:function(){if(!t){t=r.getEnumerator();for(var o=0;t.moveNext();o++)if(!e(n.current=t.current,o))return!0;return n.current=void 0,!1}return t.moveNext()?(n.current=t.current,!0):(n.current=void 0,!1)}};return n}r.Enumerable.prototype.skip=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.Enumerable.prototype.skipWhile=function(e){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return t(n,e)},o},r.List&&(r.List.prototype.skip=r.Enumerable.prototype.skip,r.List.prototype.skipWhile=r.Enumerable.prototype.skipWhile)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n=0,o={current:void 0,moveNext:function(){return t||(t=r.getEnumerator()),n++,!(n>e)&&(o.current=void 0,!!t.moveNext()&&(o.current=t.current,!0))}};return o}function t(r,e){var t,n=0,o={current:void 0,moveNext:function(){return t||(t=r.getEnumerator()),t.moveNext()&&e(t.current,n)?(n++,o.current=t.current,!0):(o.current=void 0,!1)}};return o}r.Enumerable.prototype.take=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.Enumerable.prototype.takeWhile=function(e){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return t(n,e)},o},r.List&&(r.List.prototype.take=r.Enumerable.prototype.take,r.List.prototype.takeWhile=r.Enumerable.prototype.takeWhile)}(exjs||(exjs={}));var exjs;!function(r){function e(e,t){var n,o=!1,u=[],i={current:void 0,moveNext:function(){if(o){if(null==n)return!1;u.push(n),n=r.selectorEnumerator(t(i.current))}else n=e.getEnumerator(),o=!0;for(;!(n&&n.moveNext()||u.length<1);)n=u.pop();return i.current=null==n?void 0:n.current,void 0!==i.current}};return i}function t(e,t,n){var o,u=!1,i=[],c={current:void 0,moveNext:function(){if(u){if(null==o)return!1;i.push(o),o=r.selectorEnumerator(t(c.current))}else o=e.getEnumerator(),u=!0;do{for(;!(o&&o.moveNext()||i.length<1);)o=i.pop();c.current=null==o?void 0:o.current}while(n(c.current));return void 0!==c.current}};return c}r.Enumerable.prototype.traverse=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.Enumerable.prototype.traverseUnique=function(e,n){var o=this,u=[],i=new r.Enumerable;return n?i.getEnumerator=function(){return t(o,e,function(r){return!!u.some(function(e){return n(r,e)})||(u.push(r),!1)})}:i.getEnumerator=function(){return t(o,e,function(r){return u.indexOf(r)>-1||(u.push(r),!1)})},i},r.List&&(r.List.prototype.traverse=r.Enumerable.prototype.traverse,r.List.prototype.traverseUnique=r.Enumerable.prototype.traverseUnique)}(exjs||(exjs={}));var exjs;!function(r){function e(e,t,n){n=n||function(r,e){return r===e};var o,u,i=[],c={current:void 0,moveNext:function(){if(o||(o=r.en(e).distinct().getEnumerator()),c.current=void 0,!u&&o.moveNext())return i.push(c.current=o.current),!0;for(u=u||r.en(t).distinct().getEnumerator();u.moveNext();){for(var a=0,p=!1,f=i.length;a<f&&!p;a++)p=n(i[a],u.current);if(!p)return c.current=u.current,!0}return!1}};return c}r.Enumerable.prototype.union=function(t,n){var o=this,u=t instanceof Array?t.en():t,i=new r.Enumerable;return i.getEnumerator=function(){return e(o,u,n)},i},r.List&&(r.List.prototype.union=r.Enumerable.prototype.union)}(exjs||(exjs={}));var exjs;!function(r){function e(r,e){var t,n={current:void 0,moveNext:function(){t||(t=r.getEnumerator());for(var o;t.moveNext();)if(e(o=t.current))return n.current=o,!0;return!1}};return n}r.Enumerable.prototype.where=function(t){var n=this,o=new r.Enumerable;return o.getEnumerator=function(){return e(n,t)},o},r.List&&(r.List.prototype.where=r.Enumerable.prototype.where)}(exjs||(exjs={}));var exjs;!function(r){function e(e){var n=new r.Enumerable;return n.getEnumerator=function(){return t(e)},n}function t(r){var e=r.getEnumerator(),t={current:void 0,moveNext:void 0};return t.moveNext=function(){return e.moveNext()?(t.current=e.current,!0):(t.current=void 0,!1)},t}r.en=e}(exjs||(exjs={}));var ex=exjs.en,exjs;!function(r){function e(r,e,t){var n,o,u={current:void 0,moveNext:function(){return n||(n=r.getEnumerator()),o||(o=e.getEnumerator()),u.current=void 0,!(!n.moveNext()||!o.moveNext())&&(u.current=t(n.current,o.current),!0)}};return u}r.Enumerable.prototype.zip=function(t,n){var o=this,u=t instanceof Array?t.en():t,i=new r.Enumerable;return i.getEnumerator=function(){return e(o,u,n)},i},r.List&&(r.List.prototype.zip=r.Enumerable.prototype.zip)}(exjs||(exjs={}));
 //# sourceMappingURL=ex.es3.min.js.map
 
 define("lib/ex.es3.min.js", function(){});
 
-// base-component v1.1.0 https://github.com/viewdir/base-component#readme
+// base-component v1.1.2 https://github.com/iiif-commons/base-component#readme
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/base-component.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.baseComponent = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
-///<reference path="../node_modules/typescript/lib/lib.es6.d.ts"/> 
 
 var _Components;
 (function (_Components) {
-    var BaseComponent = (function () {
+    var BaseComponent = /** @class */ (function () {
         function BaseComponent(options) {
             this.options = options;
             this.options.data = $.extend(this.data(), options.data);
@@ -2666,7 +2665,7 @@ var _Components;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[1])(1)
 });
-// key-codes v0.0.5 https://github.com/edsilv/key-codes
+// key-codes v0.0.7 https://github.com/edsilv/key-codes
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/key-codes.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.keyCodes = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 var KeyCodes;
@@ -2859,9 +2858,8 @@ var KeyCodes;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[1])(1)
 });
-// extensions v0.2.0 https://github.com/edsilv/extensions
+// extensions v0.2.1 https://github.com/edsilv/extensions
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/extensions.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.extensions = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-///<reference path="../node_modules/typescript/lib/lib.es6.d.ts"/> 
 
 Array.prototype.clone = function () {
     return this.slice(0);
@@ -2991,7 +2989,7 @@ String.prototype.utf8_to_b64 = function () {
 
 },{}]},{},[1])(1)
 });
-// http-status-codes v0.0.5 https://github.com/edsilv/http-status-codes
+// http-status-codes v0.0.7 https://github.com/edsilv/http-status-codes
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/http-status-codes.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.httpStatusCodes = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 var HTTPStatusCode;
@@ -3064,12 +3062,12 @@ var HTTPStatusCode;
 });
 // jquery-plugins v0.1.0 https://github.com/edsilv/jquery-plugins
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/jquery-plugins.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.jqueryPlugins = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-///<reference path="../node_modules/typescript/lib/lib.es6.d.ts"/> 
 // declare var Length: Length;
 // interface Length{
 //     toPx(elem, value, prop?, force?): number;
 // }
 
+/// <reference types="extensions" />
 (function ($) {
     $.fn.checkboxButton = function (onClick) {
         return this.each(function () {
@@ -3156,12 +3154,12 @@ var HTTPStatusCode;
                 if (expanded) {
                     $self.html(expandedText + " ");
                     $toggleButton.text("less");
-                    $toggleButton.toggleClass("less", "more");
+                    $toggleButton.switchClass("less", "more");
                 }
                 else {
                     $self.html(collapsedText + "&hellip; ");
                     $toggleButton.text("more");
-                    $toggleButton.toggleClass("more", "less");
+                    $toggleButton.switchClass("more", "less");
                 }
                 $toggleButton.one('click', function (e) {
                     e.preventDefault();
@@ -3345,7 +3343,7 @@ var HTTPStatusCode;
             $(this).find('a').prop('target', '_blank');
         });
     };
-    $.fn.toggleClass = function (class1, class2) {
+    $.fn.switchClass = function (class1, class2) {
         return this.each(function () {
             var $this = $(this);
             if ($this.hasClass(class1)) {
@@ -3371,12 +3369,12 @@ var HTTPStatusCode;
                 if (expanded) {
                     $self.html(expandedText + "&nbsp;");
                     $toggleButton.text(lessText);
-                    $toggleButton.toggleClass("less", "more");
+                    $toggleButton.switchClass("less", "more");
                 }
                 else {
                     $self.html(collapsedText + "&nbsp;");
                     $toggleButton.text(moreText);
-                    $toggleButton.toggleClass("more", "less");
+                    $toggleButton.switchClass("more", "less");
                 }
                 $toggleButton.one('click', function (e) {
                     e.preventDefault();
@@ -3424,12 +3422,12 @@ var HTTPStatusCode;
                 if (expanded) {
                     $self.html(expandedText + " ");
                     $toggleButton.text(lessText);
-                    $toggleButton.toggleClass("less", "more");
+                    $toggleButton.switchClass("less", "more");
                 }
                 else {
                     $self.html(collapsedText + "&hellip; ");
                     $toggleButton.text(moreText);
-                    $toggleButton.toggleClass("more", "less");
+                    $toggleButton.switchClass("more", "less");
                 }
                 $toggleButton.one('click', function (e) {
                     e.preventDefault();
@@ -3518,10 +3516,9 @@ var HTTPStatusCode;
 }(jQuery));
 define("lib/ba-tiny-pubsub.js", function(){});
 
-// manifesto v2.1.9 https://github.com/viewdir/manifesto
+// manifesto v2.2.10 https://github.com/iiif-commons/manifesto
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/manifesto.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifesto = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
-///<reference path="../node_modules/typescript/lib/lib.es6.d.ts"/>   
 
 var Manifesto;
 (function (Manifesto) {
@@ -4189,6 +4186,16 @@ var Manifesto;
         ManifestResource.prototype.getServices = function () {
             return Manifesto.Utils.getServices(this);
         };
+        ManifestResource.prototype.getThumbnail = function () {
+            var thumbnail = this.getProperty('thumbnail');
+            if (Array.isArray(thumbnail)) {
+                thumbnail = thumbnail[0];
+            }
+            if (thumbnail) {
+                return new Manifesto.Thumbnail(thumbnail, this.options);
+            }
+            return null;
+        };
         ManifestResource.prototype.isAnnotation = function () {
             return this.getIIIFResourceType().toString() === Manifesto.IIIFResourceType.ANNOTATION.toString();
         };
@@ -4331,14 +4338,32 @@ var Manifesto;
                         id = service.id;
                         quality = Manifesto.Utils.getImageQuality(service.getProfile());
                     }
+                    else if (width === resource.getWidth()) {
+                        // if the passed width is the same as the resource width
+                        // i.e. not looking for a thumbnail
+                        // return the full size image.
+                        // used for download options when loading static images.
+                        return resource.id;
+                    }
                 }
-                // todo: this is not compatible and should be moved to getThumbUri
+                // todo: should this be moved to getThumbUri?
                 if (!id) {
-                    return "undefined" == typeof this.__jsonld.thumbnail
-                        ? null : this.__jsonld.thumbnail;
+                    var thumbnail = this.getProperty('thumbnail');
+                    if (thumbnail) {
+                        if (typeof (thumbnail) === 'string') {
+                            return thumbnail;
+                        }
+                        else {
+                            return thumbnail['@id'];
+                        }
+                    }
                 }
             }
             size = width + ',';
+            // trim off trailing '/'
+            if (id && id.endsWith('/')) {
+                id = id.substr(0, id.length - 1);
+            }
             var uri = [id, region, size, rotation, quality + '.jpg'].join('/');
             return uri;
         };
@@ -4359,12 +4384,13 @@ var Manifesto;
         // Presentation API 3.0
         Canvas.prototype.getContent = function () {
             var content = [];
-            if (!this.__jsonld.content)
+            var items = this.__jsonld.items || this.__jsonld.content;
+            if (!items)
                 return content;
             // should be contained in an AnnotationPage
             var annotationPage = null;
-            if (this.__jsonld.content.length) {
-                annotationPage = new Manifesto.AnnotationPage(this.__jsonld.content[0], this.options);
+            if (items.length) {
+                annotationPage = new Manifesto.AnnotationPage(items[0], this.options);
             }
             if (!annotationPage) {
                 return content;
@@ -4394,6 +4420,23 @@ var Manifesto;
         Canvas.prototype.getIndex = function () {
             return this.getProperty('index');
         };
+        Canvas.prototype.getOtherContent = function () {
+            var _this = this;
+            var otherContent = Array.isArray(this.getProperty('otherContent')) ?
+                this.getProperty('otherContent') :
+                [this.getProperty('otherContent')];
+            var canonicalComparison = function (typeA, typeB) {
+                if (typeof typeA !== 'string' || typeof typeB !== 'string') {
+                    return false;
+                }
+                return typeA.toLowerCase() === typeA.toLowerCase();
+            };
+            var otherPromises = otherContent
+                .filter(function (otherContent) { return otherContent && canonicalComparison(otherContent['@type'], 'sc:AnnotationList'); })
+                .map(function (annotationList, i) { return ((new Manifesto.AnnotationList(annotationList['label'] || "Annotation list " + i, annotationList, _this.options))); })
+                .map(function (annotationList) { return annotationList.load(); });
+            return Promise.all(otherPromises);
+        };
         // Prefer thumbnail service to image service if supplied and if
         // the thumbnail service can provide a satisfactory size +/- x pixels.
         // this is used to get thumb URIs *before* the info.json has been requested
@@ -4415,7 +4458,7 @@ var Manifesto;
         //
         //            if (!_endsWith(id, '/')) {
         //                id += '/';
-        //            } 
+        //            }
         //
         //            uri = id + 'full/' + width + ',/0/' + Utils.getImageQuality(service.getProfile()) + '.jpg';
         //        }
@@ -4508,6 +4551,9 @@ var Manifesto;
             }
             return [];
         };
+        IIIFResource.prototype.getDefaultLabel = function () {
+            return Manifesto.TranslationCollection.getValue(this.getLabel());
+        };
         IIIFResource.prototype.getDefaultTree = function () {
             this.defaultTree = new Manifesto.TreeNode('root');
             this.defaultTree.data = this;
@@ -4571,7 +4617,7 @@ var Manifesto;
             var _this = _super.call(this, jsonld, options) || this;
             _this.index = 0;
             _this._allRanges = null;
-            _this._sequences = null;
+            _this.items = [];
             _this._topRanges = [];
             if (_this.__jsonld.structures && _this.__jsonld.structures.length) {
                 var topRanges = _this._getTopRanges();
@@ -4631,7 +4677,7 @@ var Manifesto;
         //private _parseRangeCanvas(json: any, range: IRange): void {
         // todo: currently this isn't needed
         //var canvas: IJSONLDResource = new JSONLDResource(json);
-        //range.members.push(<IManifestResource>canvas);
+        //range.items.push(<IManifestResource>canvas);
         //}
         Manifest.prototype._parseRanges = function (r, path, parentRange) {
             var range;
@@ -4651,21 +4697,22 @@ var Manifesto;
                 this._topRanges.push(range);
             }
             else {
-                parentRange.members.push(range);
+                parentRange.items.push(range);
             }
-            if (r.members) {
-                for (var i = 0; i < r.members.length; i++) {
-                    var child = r.members[i];
-                    // todo: use constants
-                    if (child['@type'] && child['@type'].toLowerCase() === 'sc:range' || child['type'] && child['type'].toLowerCase() === 'range') {
-                        this._parseRanges(child, path + '/' + i, range);
+            var items = r.items || r.members;
+            if (items) {
+                for (var i = 0; i < items.length; i++) {
+                    var item = items[i];
+                    // todo: use an ItemType constant?
+                    if (item['@type'] && item['@type'].toLowerCase() === 'sc:range' || item['type'] && item['type'].toLowerCase() === 'range') {
+                        this._parseRanges(item, path + '/' + i, range);
                     }
-                    else if (child['@type'] && child['@type'].toLowerCase() === 'sc:canvas' || child['type'] && child['type'].toLowerCase() === 'canvas') {
+                    else if (item['@type'] && item['@type'].toLowerCase() === 'sc:canvas' || item['type'] && item['type'].toLowerCase() === 'canvas') {
                         // store the ids on the __jsonld object to be used by Range.getCanvasIds()
                         if (!range.canvases) {
                             range.canvases = [];
                         }
-                        var id_1 = child['@id'] || child.id;
+                        var id_1 = item.id || item['@id'];
                         range.canvases.push(id_1);
                     }
                 }
@@ -4712,19 +4759,20 @@ var Manifesto;
             return null;
         };
         Manifest.prototype.getSequences = function () {
-            if (this._sequences !== null)
-                return this._sequences;
-            this._sequences = [];
-            // if IxIF mediaSequences is present, use that. Otherwise fall back to IIIF sequences.
-            var children = this.__jsonld.mediaSequences || this.__jsonld.sequences;
-            if (children) {
-                for (var i = 0; i < children.length; i++) {
-                    var s = children[i];
+            if (this.items.length) {
+                return this.items;
+            }
+            // IxIF mediaSequences overrode sequences, so need to be checked first.
+            // deprecate this when presentation 3 ships
+            var items = this.__jsonld.items || this.__jsonld.mediaSequences || this.__jsonld.sequences;
+            if (items) {
+                for (var i = 0; i < items.length; i++) {
+                    var s = items[i];
                     var sequence = new Manifesto.Sequence(s, this.options);
-                    this._sequences.push(sequence);
+                    this.items.push(sequence);
                 }
             }
-            return this._sequences;
+            return this.items;
         };
         Manifest.prototype.getSequenceByIndex = function (sequenceIndex) {
             return this.getSequences()[sequenceIndex];
@@ -4785,7 +4833,7 @@ var Manifesto;
         __extends(Collection, _super);
         function Collection(jsonld, options) {
             var _this = _super.call(this, jsonld, options) || this;
-            _this.members = [];
+            _this.items = [];
             _this._collections = null;
             _this._manifests = null;
             jsonld.__collection = _this;
@@ -4795,22 +4843,30 @@ var Manifesto;
             if (this._collections) {
                 return this._collections;
             }
-            return this._collections = this.members.en().where(function (m) { return m.isCollection(); }).toArray();
+            return this._collections = this.items.en().where(function (m) { return m.isCollection(); }).toArray();
         };
         Collection.prototype.getManifests = function () {
             if (this._manifests) {
                 return this._manifests;
             }
-            return this._manifests = this.members.en().where(function (m) { return m.isManifest(); }).toArray();
+            return this._manifests = this.items.en().where(function (m) { return m.isManifest(); }).toArray();
         };
         Collection.prototype.getCollectionByIndex = function (collectionIndex) {
-            var collection = this.getCollections()[collectionIndex];
+            var collections = this.getCollections();
+            if (!collections[collectionIndex]) {
+                throw new Error("Collection index is outside range of array");
+            }
+            var collection = collections[collectionIndex];
             collection.options.index = collectionIndex;
             // id for collection MUST be dereferenceable
             return collection.load();
         };
         Collection.prototype.getManifestByIndex = function (manifestIndex) {
-            var manifest = this.getManifests()[manifestIndex];
+            var manifests = this.getManifests();
+            if (!manifests[manifestIndex]) {
+                throw new Error("Manifest index is outside range of array");
+            }
+            var manifest = manifests[manifestIndex];
             manifest.options.index = manifestIndex;
             return manifest.load();
         };
@@ -4820,8 +4876,14 @@ var Manifesto;
         Collection.prototype.getTotalManifests = function () {
             return this.getManifests().length;
         };
-        Collection.prototype.getTotalMembers = function () {
-            return this.members.length;
+        Collection.prototype.getTotalItems = function () {
+            return this.items.length;
+        };
+        Collection.prototype.getViewingDirection = function () {
+            if (this.getProperty('viewingDirection')) {
+                return new Manifesto.ViewingDirection(this.getProperty('viewingDirection'));
+            }
+            return Manifesto.ViewingDirection.LEFTTORIGHT;
         };
         /**
          * Get a tree of sub collections and manifests, using each child manifest's first 'top' range.
@@ -4884,7 +4946,7 @@ var Manifesto;
             var _this = _super.call(this, jsonld, options) || this;
             _this._ranges = null;
             _this.canvases = null;
-            _this.members = [];
+            _this.items = [];
             return _this;
         }
         Range.prototype.getCanvasIds = function () {
@@ -4900,13 +4962,13 @@ var Manifesto;
         //     if (this._canvases) {
         //         return this._canvases;
         //     }
-        //     return this._canvases = <ICanvas[]>this.members.en().where(m => m.isCanvas()).toArray();
+        //     return this._canvases = <ICanvas[]>this.items.en().where(m => m.isCanvas()).toArray();
         // }
         Range.prototype.getRanges = function () {
             if (this._ranges) {
                 return this._ranges;
             }
-            return this._ranges = this.members.en().where(function (m) { return m.isRange(); }).toArray();
+            return this._ranges = this.items.en().where(function (m) { return m.isRange(); }).toArray();
         };
         Range.prototype.getViewingDirection = function () {
             if (this.getProperty('viewingDirection')) {
@@ -4996,24 +5058,24 @@ var Manifesto;
         __extends(Sequence, _super);
         function Sequence(jsonld, options) {
             var _this = _super.call(this, jsonld, options) || this;
-            _this.canvases = null;
+            _this.items = [];
+            _this._thumbnails = null;
             return _this;
         }
         Sequence.prototype.getCanvases = function () {
-            if (this.canvases != null)
-                return this.canvases;
-            this.canvases = [];
-            // if IxIF elements are present, use them. Otherwise fall back to IIIF canvases.
-            var children = this.__jsonld.elements || this.__jsonld.canvases;
-            if (children) {
-                for (var i = 0; i < children.length; i++) {
-                    var c = children[i];
+            if (this.items.length) {
+                return this.items;
+            }
+            var items = this.__jsonld.items || this.__jsonld.canvases || this.__jsonld.elements;
+            if (items) {
+                for (var i = 0; i < items.length; i++) {
+                    var c = items[i];
                     var canvas = new Manifesto.Canvas(c, this.options);
                     canvas.index = i;
-                    this.canvases.push(canvas);
+                    this.items.push(canvas);
                 }
             }
-            return this.canvases;
+            return this.items;
         };
         Sequence.prototype.getCanvasById = function (id) {
             for (var i = 0; i < this.getTotalCanvases(); i++) {
@@ -5157,14 +5219,30 @@ var Manifesto;
             // default to first canvas.
             return 0;
         };
+        // todo: deprecate
         Sequence.prototype.getThumbs = function (width, height) {
+            console.warn('getThumbs will be deprecated, use getThumbnails instead');
             var thumbs = [];
             var totalCanvases = this.getTotalCanvases();
             for (var i = 0; i < totalCanvases; i++) {
                 var canvas = this.getCanvasByIndex(i);
-                thumbs.push(new Manifesto.Thumb(width, canvas));
+                var thumb = new Manifesto.Thumb(width, canvas);
+                thumbs.push(thumb);
             }
             return thumbs;
+        };
+        Sequence.prototype.getThumbnails = function () {
+            if (this._thumbnails != null)
+                return this._thumbnails;
+            this._thumbnails = [];
+            var canvases = this.getCanvases();
+            for (var i = 0; i < canvases.length; i++) {
+                var thumbnail = canvases[i].getThumbnail();
+                if (thumbnail) {
+                    this._thumbnails.push(thumbnail);
+                }
+            }
+            return this._thumbnails;
         };
         Sequence.prototype.getStartCanvas = function () {
             return this.getProperty('startCanvas');
@@ -5270,20 +5348,26 @@ var Manifesto;
             }
             this.parseCollections(collection, options);
             this.parseManifests(collection, options);
-            this.parseMembers(collection, options);
+            this.parseItems(collection, options);
             return collection;
         };
         Deserialiser.parseCollections = function (collection, options) {
-            var children = collection.__jsonld.collections;
-            if (children) {
-                for (var i = 0; i < children.length; i++) {
+            var items;
+            if (collection.__jsonld.collections) {
+                items = collection.__jsonld.collections;
+            }
+            else if (collection.__jsonld.items) {
+                items = collection.__jsonld.items.en().where(function (m) { return m.type.toLowerCase() === 'collection'; }).toArray();
+            }
+            if (items) {
+                for (var i = 0; i < items.length; i++) {
                     if (options) {
                         options.index = i;
                     }
-                    var child = this.parseCollection(children[i], options);
-                    child.index = i;
-                    child.parentCollection = collection;
-                    collection.members.push(child);
+                    var item = this.parseCollection(items[i], options);
+                    item.index = i;
+                    item.parentCollection = collection;
+                    collection.items.push(item);
                 }
             }
         };
@@ -5292,17 +5376,23 @@ var Manifesto;
             return manifest;
         };
         Deserialiser.parseManifests = function (collection, options) {
-            var children = collection.__jsonld.manifests;
-            if (children) {
-                for (var i = 0; i < children.length; i++) {
-                    var child = this.parseManifest(children[i], options);
-                    child.index = i;
-                    child.parentCollection = collection;
-                    collection.members.push(child);
+            var items;
+            if (collection.__jsonld.manifests) {
+                items = collection.__jsonld.manifests;
+            }
+            else if (collection.__jsonld.items) {
+                items = collection.__jsonld.items.en().where(function (m) { return m.type.toLowerCase() === 'manifest'; }).toArray();
+            }
+            if (items) {
+                for (var i = 0; i < items.length; i++) {
+                    var item = this.parseManifest(items[i], options);
+                    item.index = i;
+                    item.parentCollection = collection;
+                    collection.items.push(item);
                 }
             }
         };
-        Deserialiser.parseMember = function (json, options) {
+        Deserialiser.parseItem = function (json, options) {
             if (json['@type']) {
                 if (json['@type'].toLowerCase() === 'sc:manifest') {
                     return this.parseManifest(json, options);
@@ -5321,23 +5411,29 @@ var Manifesto;
             }
             return null;
         };
-        Deserialiser.parseMembers = function (collection, options) {
-            var children = collection.__jsonld.members;
-            if (children) {
-                for (var i = 0; i < children.length; i++) {
+        Deserialiser.parseItems = function (collection, options) {
+            var items = collection.__jsonld.members || collection.__jsonld.items;
+            if (items) {
+                var _loop_1 = function (i) {
                     if (options) {
                         options.index = i;
                     }
-                    var child = this.parseMember(children[i], options);
-                    if (!child)
-                        return;
-                    // only add to members if not already parsed from backwards-compatible collections/manifests arrays
-                    if (collection.members.en().where(function (m) { return m.id === child.id; }).first()) {
-                        continue;
+                    var item = this_1.parseItem(items[i], options);
+                    if (!item)
+                        return { value: void 0 };
+                    // only add to items if not already parsed from backwards-compatible collections/manifests arrays
+                    if (collection.items.en().where(function (m) { return m.id === item.id; }).first()) {
+                        return "continue";
                     }
-                    child.index = i;
-                    child.parentCollection = collection;
-                    collection.members.push(child);
+                    item.index = i;
+                    item.parentCollection = collection;
+                    collection.items.push(item);
+                };
+                var this_1 = this;
+                for (var i = 0; i < items.length; i++) {
+                    var state_1 = _loop_1(i);
+                    if (typeof state_1 === "object")
+                        return state_1.value;
                 }
             }
         };
@@ -5417,6 +5513,8 @@ var Manifesto;
 
 var Manifesto;
 (function (Manifesto) {
+    // todo: deprecate
+    // this is used by Sequence.getThumbs
     var Thumb = /** @class */ (function () {
         function Thumb(width, canvas) {
             this.data = canvas;
@@ -6314,9 +6412,24 @@ var Manifesto;
             }
             else {
                 // it's an object
-                t = new Manifesto.Translation(translation['@value'], translation['@language'] || defaultLocale);
-                tc.push(t);
-                return tc;
+                if (translation['@value']) {
+                    // presentation 2
+                    t = new Manifesto.Translation(translation['@value'], translation['@language'] || defaultLocale);
+                    tc.push(t);
+                }
+                else {
+                    // presentation 3
+                    Object.keys(translation).forEach(function (key) {
+                        // todo: support multiple values in array
+                        if (translation[key].length) {
+                            t = new Manifesto.Translation(translation[key][0], key);
+                            tc.push(t);
+                        }
+                        else {
+                            throw new Error('Translation must have a value');
+                        }
+                    });
+                }
             }
             return tc;
         };
@@ -6328,7 +6441,7 @@ var Manifesto;
                         return translation.value;
                     }
                 }
-                // return the first value
+                // return the first valuel
                 return translationCollection[0].value;
             }
             return null;
@@ -6350,6 +6463,7 @@ var Manifesto;
     Manifesto.Size = Size;
 })(Manifesto || (Manifesto = {}));
 
+/// <reference types="http-status-codes" />
 global.manifesto = global.Manifesto = module.exports = {
     AnnotationMotivation: new Manifesto.AnnotationMotivation(),
     IIIFResourceType: new Manifesto.IIIFResourceType(),
@@ -6499,6 +6613,63 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifesto;
 (function (Manifesto) {
+    var AnnotationList = /** @class */ (function (_super) {
+        __extends(AnnotationList, _super);
+        function AnnotationList(label, jsonld, options) {
+            var _this = _super.call(this, jsonld) || this;
+            _this.label = label;
+            _this.options = options;
+            return _this;
+        }
+        AnnotationList.prototype.getIIIFResourceType = function () {
+            return new Manifesto.IIIFResourceType(Manifesto.Utils.normaliseType(this.getProperty('type')));
+        };
+        AnnotationList.prototype.getLabel = function () {
+            return this.label;
+        };
+        AnnotationList.prototype.getResources = function () {
+            var _this = this;
+            var resources = this.getProperty('resources');
+            return resources.map(function (resource) { return new Manifesto.Annotation(resource, _this.options); });
+        };
+        AnnotationList.prototype.load = function () {
+            var _this = this;
+            return new Promise(function (resolve, reject) {
+                if (_this.isLoaded) {
+                    resolve(_this);
+                }
+                else {
+                    var id = _this.__jsonld.id;
+                    if (!id) {
+                        id = _this.__jsonld['@id'];
+                    }
+                    Manifesto.Utils.loadResource(id).then(function (data) {
+                        _this.__jsonld = JSON.parse(data);
+                        _this.context = _this.getProperty('context');
+                        _this.id = _this.getProperty('id');
+                        _this.isLoaded = true;
+                        resolve(_this);
+                    }).catch(reject);
+                }
+            });
+        };
+        return AnnotationList;
+    }(Manifesto.JSONLDResource));
+    Manifesto.AnnotationList = AnnotationList;
+})(Manifesto || (Manifesto = {}));
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
     var AnnotationPage = /** @class */ (function (_super) {
         __extends(AnnotationPage, _super);
         function AnnotationPage(jsonld, options) {
@@ -6530,6 +6701,33 @@ var Manifesto;
 
 
 
+
+
+
+
+
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var Manifesto;
+(function (Manifesto) {
+    var Thumbnail = /** @class */ (function (_super) {
+        __extends(Thumbnail, _super);
+        function Thumbnail(jsonld, options) {
+            return _super.call(this, jsonld, options) || this;
+        }
+        return Thumbnail;
+    }(Manifesto.Resource));
+    Manifesto.Thumbnail = Thumbnail;
+})(Manifesto || (Manifesto = {}));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"http":30,"https":8,"url":35}],2:[function(require,module,exports){
@@ -14118,14 +14316,13 @@ function extend() {
 
 },{}]},{},[1])(1)
 });
-// manifold v1.2.8 https://github.com/viewdir/manifold#readme
+// manifold v1.2.16 https://github.com/iiif-commons/manifold#readme
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/manifold.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifold = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
-///<reference path="../node_modules/typescript/lib/lib.es6.d.ts"/> 
 
 var Manifold;
 (function (Manifold) {
-    var StringValue = (function () {
+    var StringValue = /** @class */ (function () {
         function StringValue(value) {
             this.value = "";
             if (value) {
@@ -14152,7 +14349,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var Manifold;
 (function (Manifold) {
-    var TreeSortType = (function (_super) {
+    var TreeSortType = /** @class */ (function (_super) {
         __extends(TreeSortType, _super);
         function TreeSortType() {
             return _super !== null && _super.apply(this, arguments) || this;
@@ -14173,7 +14370,7 @@ var Manifold;
 
 var Manifold;
 (function (Manifold) {
-    var AnnotationGroup = (function () {
+    var AnnotationGroup = /** @class */ (function () {
         function AnnotationGroup(resource, canvasIndex) {
             this.rects = [];
             this.canvasIndex = canvasIndex;
@@ -14196,7 +14393,7 @@ var Manifold;
 
 var Manifold;
 (function (Manifold) {
-    var AnnotationRect = (function () {
+    var AnnotationRect = /** @class */ (function () {
         function AnnotationRect(result) {
             this.isVisible = true;
             var xywh = result.on.match(/.*xywh=(\d*),(\d*),(\d*),(\d*)/);
@@ -14213,14 +14410,19 @@ var Manifold;
 
 var Manifold;
 (function (Manifold) {
-    var Bootstrapper = (function () {
+    var Bootstrapper = /** @class */ (function () {
         function Bootstrapper(options) {
             this._options = options;
             this._options.locale = this._options.locale || 'en-GB'; // default locale
         }
-        Bootstrapper.prototype.bootstrap = function () {
+        Bootstrapper.prototype.bootstrap = function (res, rej) {
             var that = this;
             return new Promise(function (resolve, reject) {
+                // if this is a recursive bootstrap we will have existing resolve & reject methods.
+                if (res && rej) {
+                    resolve = res;
+                    reject = rej;
+                }
                 var msie = that._detectIE();
                 if (msie === false) {
                     manifesto.loadManifest(that._options.iiifResourceUri).then(function (json) {
@@ -14277,13 +14479,15 @@ var Manifold;
                         if (collection.getTotalManifests() === 0 && bootstrapper._options.manifestIndex === 0 && collection.getTotalCollections() > 0) {
                             bootstrapper._options.collectionIndex = 0;
                             bootstrapper._options.iiifResourceUri = collection.id;
-                            bootstrapper.bootstrap();
+                            bootstrapper.bootstrap(resolve, reject);
                         }
-                        collection.getManifestByIndex(bootstrapper._options.manifestIndex).then(function (manifest) {
-                            bootstrapper._options.manifest = manifest;
-                            var helper = new Manifold.Helper(bootstrapper._options);
-                            resolve(helper);
-                        });
+                        else {
+                            collection.getManifestByIndex(bootstrapper._options.manifestIndex).then(function (manifest) {
+                                bootstrapper._options.manifest = manifest;
+                                var helper = new Manifold.Helper(bootstrapper._options);
+                                resolve(helper);
+                            });
+                        }
                     });
                 }
                 else {
@@ -14337,22 +14541,67 @@ var Manifold;
 
 var Manifold;
 (function (Manifold) {
-    var ExternalResource = (function () {
-        function ExternalResource(resource, dataUriFunc, index, authApiVersion) {
-            if (authApiVersion === void 0) { authApiVersion = 0.9; }
+    var ExternalResource = /** @class */ (function () {
+        function ExternalResource(canvas, options) {
             this.authHoldingPage = null;
             this.clickThroughService = null;
             this.externalService = null;
             this.isResponseHandled = false;
+            this.kioskService = null;
             this.loginService = null;
             this.logoutService = null;
+            this.restrictedService = null;
             this.tokenService = null;
-            resource.externalResource = this;
-            this.dataUri = dataUriFunc(resource);
-            this.index = index;
-            this.authAPIVersion = authApiVersion;
-            this._parseAuthServices(resource);
+            canvas.externalResource = this;
+            this.dataUri = this._getDataUri(canvas);
+            this.index = canvas.index;
+            this.authAPIVersion = options.authApiVersion;
+            this._parseAuthServices(canvas);
+            // get the height and width of the image resource if available
+            this._parseDimensions(canvas);
         }
+        ExternalResource.prototype._getDataUri = function (canvas) {
+            var content = canvas.getContent();
+            var images = canvas.getImages();
+            if (content && content.length) {
+                var annotation = content[0];
+                var annotationBody = annotation.getBody();
+                if (annotationBody.length) {
+                    return annotationBody[0].id;
+                }
+                return null;
+            }
+            else if (images && images.length) {
+                var infoUri = null;
+                var firstImage = images[0];
+                var resource = firstImage.getResource();
+                var services = resource.getServices();
+                if (services.length) {
+                    for (var i = 0; i < services.length; i++) {
+                        var service = services[i];
+                        var id = service.id;
+                        if (!id.endsWith('/')) {
+                            id += '/';
+                        }
+                        if (manifesto.Utils.isImageProfile(service.getProfile())) {
+                            infoUri = id + 'info.json';
+                        }
+                    }
+                    return infoUri;
+                }
+                // no image services. return the image id
+                return resource.id;
+            }
+            else {
+                // Legacy IxIF
+                var service = canvas.getService(manifesto.ServiceProfile.ixif());
+                if (service) {
+                    return service.getInfoUri();
+                }
+                // return the canvas id.
+                return canvas.id;
+            }
+        };
         ExternalResource.prototype._parseAuthServices = function (resource) {
             if (this.authAPIVersion === 0.9) {
                 this.clickThroughService = manifesto.Utils.getService(resource, manifesto.ServiceProfile.clickThrough().toString());
@@ -14394,6 +14643,15 @@ var Manifold;
                 }
             }
         };
+        ExternalResource.prototype._parseDimensions = function (canvas) {
+            var images = canvas.getImages();
+            if (images && images.length) {
+                var firstImage = images[0];
+                var resource = firstImage.getResource();
+                this.width = resource.getWidth();
+                this.height = resource.getHeight();
+            }
+        };
         ExternalResource.prototype.isAccessControlled = function () {
             if (this.clickThroughService || this.loginService || this.externalService || this.kioskService) {
                 return true;
@@ -14401,12 +14659,19 @@ var Manifold;
             return false;
         };
         ExternalResource.prototype.hasServiceDescriptor = function () {
-            return this.dataUri.endsWith('info.json');
+            if (this.dataUri) {
+                return this.dataUri.endsWith('info.json');
+            }
+            return false;
         };
         ExternalResource.prototype.getData = function (accessToken) {
+            var _this = this;
             var that = this;
             that.data = {};
             return new Promise(function (resolve, reject) {
+                if (!_this.dataUri) {
+                    reject('There is no dataUri to fetch');
+                }
                 // check if dataUri ends with info.json
                 // if not issue a HEAD request.
                 var type = 'GET';
@@ -14449,7 +14714,7 @@ var Manifold;
                             uri = uri.substr(0, uri.lastIndexOf('/'));
                         }
                         var dataUri = that.dataUri;
-                        if (dataUri.endsWith('/info.json')) {
+                        if (dataUri && dataUri.endsWith('/info.json')) {
                             dataUri = dataUri.substr(0, dataUri.lastIndexOf('/'));
                         }
                         // if the request was redirected to a degraded version and there's a login service to get the full quality version
@@ -14478,7 +14743,7 @@ var Manifold;
 
 var Manifold;
 (function (Manifold) {
-    var Helper = (function () {
+    var Helper = /** @class */ (function () {
         function Helper(options) {
             this.options = options;
             this.iiifResource = this.options.iiifResource;
@@ -14578,44 +14843,6 @@ var Manifold;
         };
         Helper.prototype.getFirstPageIndex = function () {
             return 0;
-        };
-        Helper.prototype.getInfoUri = function (canvas) {
-            var content = canvas.getContent();
-            var images = canvas.getImages();
-            if (content && content.length) {
-                var annotation = content[0];
-                var annotationBody = annotation.getBody();
-                if (annotationBody.length) {
-                    return annotationBody[0].id;
-                }
-                return null;
-            }
-            else if (images && images.length) {
-                var infoUri = null;
-                var firstImage = images[0];
-                var resource = firstImage.getResource();
-                var services = resource.getServices();
-                for (var i = 0; i < services.length; i++) {
-                    var service = services[i];
-                    var id = service.id;
-                    if (!id.endsWith('/')) {
-                        id += '/';
-                    }
-                    if (manifesto.Utils.isImageProfile(service.getProfile())) {
-                        infoUri = id + 'info.json';
-                    }
-                }
-                return infoUri;
-            }
-            else {
-                // IxIF
-                var service = canvas.getService(manifesto.ServiceProfile.ixif());
-                if (service) {
-                    return service.getInfoUri();
-                }
-                // return the canvas id.
-                return canvas.id;
-            }
         };
         Helper.prototype.getLabel = function () {
             var label = this.manifest.getLabel();
@@ -14761,6 +14988,9 @@ var Manifold;
         };
         Helper.prototype.getRangeByPath = function (path) {
             return this.manifest.getRangeByPath(path);
+        };
+        Helper.prototype.getRangeById = function (id) {
+            return this.manifest.getRangeById(id);
         };
         Helper.prototype.getRangeCanvases = function (range) {
             var ids = range.getCanvasIds();
@@ -15132,6 +15362,8 @@ var Manifold;
 
 
 
+/// <reference types="manifesto.js" />
+/// <reference types="http-status-codes" />
 var Manifold;
 (function (Manifold) {
     function loadManifest(options) {
@@ -15148,7 +15380,7 @@ var Manifold;
 
 var Manifold;
 (function (Manifold) {
-    var MetadataGroup = (function () {
+    var MetadataGroup = /** @class */ (function () {
         function MetadataGroup(resource, label) {
             this.items = [];
             this.resource = resource;
@@ -15172,7 +15404,7 @@ var Manifold;
 
 var Manifold;
 (function (Manifold) {
-    var MetadataOptions = (function () {
+    var MetadataOptions = /** @class */ (function () {
         function MetadataOptions() {
         }
         return MetadataOptions;
@@ -15182,7 +15414,7 @@ var Manifold;
 
 var Manifold;
 (function (Manifold) {
-    var MultiSelectState = (function () {
+    var MultiSelectState = /** @class */ (function () {
         function MultiSelectState() {
             this.isEnabled = false;
             this.ranges = [];
@@ -15273,7 +15505,7 @@ var Manifold;
 
 var Manifold;
 (function (Manifold) {
-    var Translation = (function () {
+    var Translation = /** @class */ (function () {
         function Translation(value, locale) {
             this.value = value;
             this.locale = locale;
@@ -15286,7 +15518,7 @@ var Manifold;
 var Manifold;
 (function (Manifold) {
     // This class formats URIs into HTML <a> links, applying labels when available
-    var UriLabeller = (function () {
+    var UriLabeller = /** @class */ (function () {
         function UriLabeller(labels) {
             this.labels = labels;
         }
@@ -15305,14 +15537,13 @@ var Manifold;
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}]},{},[1])(1)
 });
-// utils v0.1.0 https://github.com/edsilv/utils
+// utils v0.1.2 https://github.com/edsilv/utils
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/utils.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.utils = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
-///<reference path="../node_modules/typescript/lib/lib.es6.d.ts"/> 
 
 var Utils;
 (function (Utils) {
-    var Async = (function () {
+    var Async = /** @class */ (function () {
         function Async() {
         }
         Async.waitFor = function (test, successCallback, failureCallback, interval, maxTries, numTries) {
@@ -15343,7 +15574,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Bools = (function () {
+    var Bools = /** @class */ (function () {
         function Bools() {
         }
         Bools.getBool = function (val, defaultVal) {
@@ -15359,7 +15590,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Clipboard = (function () {
+    var Clipboard = /** @class */ (function () {
         function Clipboard() {
         }
         Clipboard.copy = function (text) {
@@ -15384,7 +15615,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Colors = (function () {
+    var Colors = /** @class */ (function () {
         function Colors() {
         }
         Colors.float32ColorToARGB = function (float32Color) {
@@ -15419,7 +15650,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Dates = (function () {
+    var Dates = /** @class */ (function () {
         function Dates() {
         }
         Dates.getTimeStamp = function () {
@@ -15432,7 +15663,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Device = (function () {
+    var Device = /** @class */ (function () {
         function Device() {
         }
         Device.getPixelRatio = function (ctx) {
@@ -15454,7 +15685,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Documents = (function () {
+    var Documents = /** @class */ (function () {
         function Documents() {
         }
         Documents.isInIFrame = function () {
@@ -15500,7 +15731,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Events = (function () {
+    var Events = /** @class */ (function () {
         function Events() {
         }
         Events.debounce = function (fn, debounceDuration) {
@@ -15533,7 +15764,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Files = (function () {
+    var Files = /** @class */ (function () {
         function Files() {
         }
         Files.simplifyMimeType = function (mime) {
@@ -15558,7 +15789,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Keyboard = (function () {
+    var Keyboard = /** @class */ (function () {
         function Keyboard() {
         }
         Keyboard.getCharCode = function (e) {
@@ -15574,7 +15805,7 @@ var Utils;
 (function (Utils) {
     var Maths;
     (function (Maths) {
-        var Vector = (function () {
+        var Vector = /** @class */ (function () {
             function Vector(x, y) {
                 this.X = x;
                 this.Y = y;
@@ -15663,7 +15894,7 @@ var Utils;
                 return -1 * angle;
             };
             Vector.random2D = function () {
-                return Vector.fromAngle((Math.random() * Math.TAU));
+                return Vector.fromAngle((Math.random() * (Math.PI * 2)));
             };
             Vector.fromAngle = function (angle) {
                 return new Vector(Math.cos(angle), Math.sin(angle));
@@ -15678,7 +15909,7 @@ var Utils;
 (function (Utils) {
     var Measurements;
     (function (Measurements) {
-        var Size = (function () {
+        var Size = /** @class */ (function () {
             function Size(width, height) {
                 this.width = width;
                 this.height = height;
@@ -15686,7 +15917,7 @@ var Utils;
             return Size;
         }());
         Measurements.Size = Size;
-        var Dimensions = (function () {
+        var Dimensions = /** @class */ (function () {
             function Dimensions() {
             }
             Dimensions.fitRect = function (width1, height1, width2, height2) {
@@ -15721,7 +15952,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Numbers = (function () {
+    var Numbers = /** @class */ (function () {
         function Numbers() {
         }
         Numbers.numericalInput = function (event) {
@@ -15750,7 +15981,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Objects = (function () {
+    var Objects = /** @class */ (function () {
         function Objects() {
         }
         Objects.toPlainObject = function (value) {
@@ -15768,7 +15999,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Storage = (function () {
+    var Storage = /** @class */ (function () {
         function Storage() {
         }
         Storage.clear = function (storageType) {
@@ -15911,7 +16142,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var StorageItem = (function () {
+    var StorageItem = /** @class */ (function () {
         function StorageItem() {
         }
         return StorageItem;
@@ -15921,7 +16152,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var StorageType = (function () {
+    var StorageType = /** @class */ (function () {
         function StorageType(value) {
             this.value = value;
         }
@@ -15938,7 +16169,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Strings = (function () {
+    var Strings = /** @class */ (function () {
         function Strings() {
         }
         Strings.ellipsis = function (text, chars) {
@@ -15963,7 +16194,7 @@ var Utils;
 
 var Utils;
 (function (Utils) {
-    var Urls = (function () {
+    var Urls = /** @class */ (function () {
         function Urls() {
         }
         Urls.getHashParameter = function (key, doc) {
@@ -16056,7 +16287,9 @@ define('UVDataProvider',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var UVDataProvider = /** @class */ (function () {
-        function UVDataProvider() {
+        function UVDataProvider(readonly) {
+            this.readonly = false;
+            this.readonly = readonly;
         }
         UVDataProvider.prototype.get = function (key, defaultValue) {
             return null;
@@ -16083,14 +16316,16 @@ define('URLDataProvider',["require", "exports", "./UVDataProvider"], function (r
     Object.defineProperty(exports, "__esModule", { value: true });
     var URLDataProvider = /** @class */ (function (_super) {
         __extends(URLDataProvider, _super);
-        function URLDataProvider() {
-            return _super !== null && _super.apply(this, arguments) || this;
+        function URLDataProvider(readonly) {
+            return _super.call(this, readonly) || this;
         }
         URLDataProvider.prototype.get = function (key, defaultValue) {
             return Utils.Urls.getHashParameter(key, document) || defaultValue;
         };
         URLDataProvider.prototype.set = function (key, value) {
-            Utils.Urls.setHashParameter(key, value.toString(), document);
+            if (!this.readonly) {
+                Utils.Urls.setHashParameter(key, value.toString(), document);
+            }
         };
         return URLDataProvider;
     }(UVDataProvider_1.UVDataProvider));
@@ -16177,6 +16412,7 @@ define('modules/uv-shared-module/BaseEvents',["require", "exports"], function (r
         BaseEvents.PAGE_UP = 'pageUp';
         BaseEvents.PLUS = 'plus';
         BaseEvents.PREV = 'prev';
+        BaseEvents.RANGE_CHANGED = 'rangeChanged';
         BaseEvents.REDIRECT = 'redirect';
         BaseEvents.REFRESH = 'refresh';
         BaseEvents.RELOAD = 'reload';
@@ -16294,7 +16530,7 @@ define('modules/uv-shared-module/Auth09',["require", "exports", "./BaseEvents", 
                             if (resource.clickThroughService) {
                                 var win_1 = window.open(resource.clickThroughService.id);
                                 var pollTimer_1 = window.setInterval(function () {
-                                    if (win_1.closed) {
+                                    if (win_1 && win_1.closed) {
                                         window.clearInterval(pollTimer_1);
                                         $.publish(BaseEvents_1.BaseEvents.CLICKTHROUGH);
                                         resolve();
@@ -16329,7 +16565,7 @@ define('modules/uv-shared-module/Auth09',["require", "exports", "./BaseEvents", 
                             if (resource.loginService) {
                                 var win_2 = window.open(resource.loginService.id + "?t=" + new Date().getTime());
                                 var pollTimer_2 = window.setInterval(function () {
-                                    if (win_2.closed) {
+                                    if (win_2 && win_2.closed) {
                                         window.clearInterval(pollTimer_2);
                                         $.publish(BaseEvents_1.BaseEvents.LOGIN);
                                         resolve();
@@ -16341,7 +16577,7 @@ define('modules/uv-shared-module/Auth09',["require", "exports", "./BaseEvents", 
                             if (resource.logoutService) {
                                 var win_3 = window.open(resource.logoutService.id + "?t=" + new Date().getTime());
                                 var pollTimer_3 = window.setInterval(function () {
-                                    if (win_3.closed) {
+                                    if (win_3 && win_3.closed) {
                                         window.clearInterval(pollTimer_3);
                                         $.publish(BaseEvents_1.BaseEvents.LOGOUT);
                                         resolve();
@@ -16493,6 +16729,11 @@ define('modules/uv-shared-module/Utils',["require", "exports"], function (requir
             });
             $elem.html(s.clean_node(elem));
             return $elem.html();
+        };
+        UVUtils.isValidUrl = function (value) {
+            var a = document.createElement('a');
+            a.href = value;
+            return (!!a.host && a.host !== window.location.host);
         };
         return UVUtils;
     }());
@@ -16868,7 +17109,7 @@ define('modules/uv-shared-module/Dialogue',["require", "exports", "./BaseView", 
             var normalisedPos = 0;
             if (this.$triggerButton) {
                 // get the normalised position of the button
-                if (this.extension.isMobileView()) {
+                if (!this.extension.isDesktopMetric()) {
                     normalisedPos = Math.normalise(this.$triggerButton.offset().left, 0, this.extension.width());
                 }
                 else {
@@ -17266,8 +17507,11 @@ define('modules/uv-shared-module/MetricType',["require", "exports", "./StringVal
         function MetricType() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
+        MetricType.DESKTOP = new MetricType("desktop");
         MetricType.MOBILELANDSCAPE = new MetricType("mobilelandscape");
-        MetricType.LAPTOP = new MetricType("laptop");
+        MetricType.MOBILEPORTRAIT = new MetricType("mobileportrait");
+        MetricType.NONE = new MetricType("none");
+        MetricType.WATCH = new MetricType("watch");
         return MetricType;
     }(StringValue_1.StringValue));
     exports.MetricType = MetricType;
@@ -17473,7 +17717,7 @@ define('modules/uv-shared-module/Shell',["require", "exports", "./BaseEvents", "
             Shell.$mainPanel.append(Shell.$rightPanel);
             Shell.$footerPanel = $('<div class="footerPanel"></div>');
             Shell.$element.append(Shell.$footerPanel);
-            Shell.$mobileFooterPanel = $('<div class="footerPanel mobile"></div>');
+            Shell.$mobileFooterPanel = $('<div class="mobileFooterPanel"></div>');
             Shell.$element.append(Shell.$mobileFooterPanel);
             Shell.$overlays = $('<div class="overlays"></div>');
             Shell.$element.append(Shell.$overlays);
@@ -17492,7 +17736,7 @@ define('modules/uv-shared-module/Shell',["require", "exports", "./BaseEvents", "
             _super.prototype.resize.call(this);
             Shell.$overlays.width(this.extension.width());
             Shell.$overlays.height(this.extension.height());
-            var mainHeight = this.$element.height() - parseInt(Shell.$mainPanel.css('marginTop'))
+            var mainHeight = this.$element.height() - parseInt(Shell.$mainPanel.css('paddingTop'))
                 - (Shell.$headerPanel.is(':visible') ? Shell.$headerPanel.height() : 0)
                 - (Shell.$footerPanel.is(':visible') ? Shell.$footerPanel.height() : 0)
                 - (Shell.$mobileFooterPanel.is(':visible') ? Shell.$mobileFooterPanel.height() : 0);
@@ -17545,14 +17789,14 @@ define('SynchronousRequire',["require", "exports"], function (require, exports) 
     }());
 });
 //# sourceMappingURL=SynchronousRequire.js.map
-define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09", "./Auth1", "../../modules/uv-dialogues-module/AuthDialogue", "./BaseEvents", "../../modules/uv-dialogues-module/ClickThroughDialogue", "../../modules/uv-dialogues-module/LoginDialogue", "../../modules/uv-shared-module/MetricType", "../../modules/uv-dialogues-module/RestrictedDialogue", "./Shell", "../../SynchronousRequire"], function (require, exports, Auth09_1, Auth1_1, AuthDialogue_1, BaseEvents_1, ClickThroughDialogue_1, LoginDialogue_1, MetricType_1, RestrictedDialogue_1, Shell_1, SynchronousRequire_1) {
+define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09", "./Auth1", "../../modules/uv-dialogues-module/AuthDialogue", "./BaseEvents", "../../modules/uv-dialogues-module/ClickThroughDialogue", "../../modules/uv-dialogues-module/LoginDialogue", "../../modules/uv-shared-module/MetricType", "../../modules/uv-dialogues-module/RestrictedDialogue", "./Shell", "../../SynchronousRequire", "./Utils"], function (require, exports, Auth09_1, Auth1_1, AuthDialogue_1, BaseEvents_1, ClickThroughDialogue_1, LoginDialogue_1, MetricType_1, RestrictedDialogue_1, Shell_1, SynchronousRequire_1, Utils_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var BaseExtension = /** @class */ (function () {
         function BaseExtension() {
             this.isCreated = false;
             this.isLoggedIn = false;
-            this.metric = MetricType_1.MetricType.LAPTOP;
+            this.metric = MetricType_1.MetricType.NONE;
             this.metrics = [];
             this.shifted = false;
             this.tabbing = false;
@@ -17675,6 +17919,7 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
             });
             this.$element.append('<a href="/" id="top"></a>');
             this.$element.append('<iframe id="commsFrame" style="display:none"></iframe>');
+            this.$element.append('<div id="debug"><span id="watch">Watch</span><span id="mobile-portrait">Mobile Portrait</span><span id="mobile-landscape">Mobile Landscape</span><span id="desktop">Desktop</span></div>');
             $.subscribe(BaseEvents_1.BaseEvents.ACCEPT_TERMS, function () {
                 _this.fire(BaseEvents_1.BaseEvents.ACCEPT_TERMS);
             });
@@ -17833,6 +18078,11 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
             $.subscribe(BaseEvents_1.BaseEvents.PAGE_UP, function () {
                 _this.fire(BaseEvents_1.BaseEvents.PAGE_UP);
             });
+            $.subscribe(BaseEvents_1.BaseEvents.RANGE_CHANGED, function (e, range) {
+                _this.data.rangeId = range.id;
+                _this.helper.rangeId = range.id;
+                _this.fire(BaseEvents_1.BaseEvents.RANGE_CHANGED, _this.data.rangeId);
+            });
             $.subscribe(BaseEvents_1.BaseEvents.RESOURCE_DEGRADED, function (e, resource) {
                 _this.fire(BaseEvents_1.BaseEvents.RESOURCE_DEGRADED);
                 Auth09_1.Auth09.handleDegraded(resource);
@@ -17900,8 +18150,10 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
             });
             $.subscribe(BaseEvents_1.BaseEvents.SHOW_TERMS_OF_USE, function () {
                 _this.fire(BaseEvents_1.BaseEvents.SHOW_TERMS_OF_USE);
-                // todo: Eventually this should be replaced with a suitable IIIF Presentation API field - until then, use attribution
-                var terms = _this.helper.getAttribution();
+                var terms = _this.helper.getLicense();
+                if (!terms) {
+                    terms = _this.helper.getAttribution();
+                }
                 if (terms) {
                     _this.showMessage(terms);
                 }
@@ -18041,6 +18293,14 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
             if (!this.isCreated || (this.data.canvasIndex !== this.helper.canvasIndex)) {
                 $.publish(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, [this.data.canvasIndex]);
             }
+            if (!this.isCreated || (this.data.rangeId !== this.helper.rangeId)) {
+                if (this.data.rangeId) {
+                    var range = this.helper.getRangeById(this.data.rangeId);
+                    if (range) {
+                        $.publish(BaseEvents_1.BaseEvents.RANGE_CHANGED, [range]);
+                    }
+                }
+            }
         };
         BaseExtension.prototype._setDefaultFocus = function () {
             var _this = this;
@@ -18116,14 +18376,22 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
         BaseExtension.prototype._updateMetric = function () {
             var _this = this;
             setTimeout(function () {
+                var metricChanged = false;
                 for (var i = 0; i < _this.metrics.length; i++) {
                     var metric = _this.metrics[i];
-                    if (_this.width() > metric.minWidth && _this.width() <= metric.maxWidth) {
+                    // if the width and height is within this metric's defined range
+                    if (_this.width() >= metric.minWidth && _this.width() <= metric.maxWidth &&
+                        _this.height() >= metric.minHeight && _this.height() <= metric.maxHeight) {
                         if (_this.metric !== metric.type) {
                             _this.metric = metric.type;
+                            metricChanged = true;
+                            //console.log("metric changed", metric.type.toString());
                             $.publish(BaseEvents_1.BaseEvents.METRIC_CHANGED);
                         }
                     }
+                }
+                if (!metricChanged) {
+                    _this.metric = MetricType_1.MetricType.NONE;
                 }
             }, 1);
         };
@@ -18139,8 +18407,8 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
             return this.data.config.options.seeAlsoEnabled !== false;
         };
         BaseExtension.prototype.getShareUrl = function () {
-            // If embedded on the home domain and it's the only instance of the UV on the page
-            if (this.isDeepLinkingEnabled()) {
+            // If not embedded on an external domain (this causes CORS errors when fetching parent url)
+            if (!this.data.embedded) {
                 // Use the current page URL with hash params
                 if (Utils.Documents.isInIFrame()) {
                     return parent.document.location.href;
@@ -18168,9 +18436,6 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
         BaseExtension.prototype.addTimestamp = function (uri) {
             return uri + "?t=" + Utils.Dates.getTimeStamp();
         };
-        BaseExtension.prototype.isDeepLinkingEnabled = function () {
-            return this.data.deepLinkingEnabled;
-        };
         BaseExtension.prototype.getDomain = function () {
             var parts = Utils.Urls.getUrlParts(this.helper.iiifResourceUri);
             return parts.host;
@@ -18190,12 +18455,15 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
                 if (root.startsWith('./')) {
                     root = root.substr(2);
                 }
-                if (!root.endsWith('/')) {
+                if (root && !root.endsWith('/')) {
                     root += '/';
                 }
             }
-            appUri += root + 'uv.html';
-            return appUri;
+            // if root is a URL, use that instead of appUri.
+            if (Utils_1.UVUtils.isValidUrl(root)) {
+                return root + 'uv.html';
+            }
+            return appUri + root + 'uv.html';
         };
         BaseExtension.prototype.getSettings = function () {
             if (Utils.Bools.getBool(this.data.config.options.saveUserSettings, false)) {
@@ -18216,6 +18484,9 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
                 Utils.Storage.set("uv.settings", settings, 315360000, Utils.StorageType.local);
             }
             this.data.config.options = $.extend(this.data.config.options, settings);
+        };
+        BaseExtension.prototype.getLocale = function () {
+            return this.helper.options.locale;
         };
         BaseExtension.prototype.getSharePreview = function () {
             var title = this.helper.getLabel();
@@ -18265,7 +18536,7 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
             var range = this.helper.getCanvasRange(this.helper.getCurrentCanvas());
             return range;
         };
-        // todo: move to manifold
+        // todo: move to manifold?
         BaseExtension.prototype.getExternalResources = function (resources) {
             var _this = this;
             var indices = this.getPagedIndices();
@@ -18274,7 +18545,9 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
                 var canvas = _this.helper.getCanvasByIndex(index);
                 var r;
                 if (!canvas.externalResource) {
-                    r = new Manifold.ExternalResource(canvas, _this.helper.getInfoUri, index, _this.data.config.options.authAPIVersion);
+                    r = new Manifold.ExternalResource(canvas, {
+                        authApiVersion: _this.data.config.options.authAPIVersion
+                    });
                 }
                 else {
                     r = canvas.externalResource;
@@ -18305,8 +18578,7 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
                     };
                     Auth1_1.Auth1.loadExternalResources(resourcesToLoad, storageStrategy, options).then(function (r) {
                         _this.resources = r.map(function (resource) {
-                            resource.data.index = resource.index;
-                            return Utils.Objects.toPlainObject(resource.data);
+                            return _this._prepareResourceData(resource);
                         });
                         resolve(_this.resources);
                     });
@@ -18316,13 +18588,25 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
                 return new Promise(function (resolve) {
                     Auth09_1.Auth09.loadExternalResources(resourcesToLoad, storageStrategy).then(function (r) {
                         _this.resources = r.map(function (resource) {
-                            resource.data.index = resource.index;
-                            return Utils.Objects.toPlainObject(resource.data);
+                            return _this._prepareResourceData(resource);
                         });
                         resolve(_this.resources);
                     });
                 });
             }
+        };
+        // copy useful properties over to the data object to be opened in center panel's openMedia method
+        // this is the info.json if there is one, which can be opened natively by openseadragon.
+        BaseExtension.prototype._prepareResourceData = function (resource) {
+            resource.data.hasServiceDescriptor = resource.hasServiceDescriptor();
+            // if the data isn't an info.json, give it the necessary viewing properties
+            if (!resource.hasServiceDescriptor()) {
+                resource.data.id = resource.dataUri;
+                resource.data.width = resource.width;
+                resource.data.height = resource.height;
+            }
+            resource.data.index = resource.index;
+            return Utils.Objects.toPlainObject(resource.data);
         };
         BaseExtension.prototype.getMediaFormats = function (canvas) {
             var annotations = canvas.getContent();
@@ -18366,8 +18650,8 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
         BaseExtension.prototype.isOverlayActive = function () {
             return Shell_1.Shell.$overlays.is(':visible');
         };
-        BaseExtension.prototype.isMobileView = function () {
-            return this.metric.toString() === MetricType_1.MetricType.MOBILELANDSCAPE.toString();
+        BaseExtension.prototype.isDesktopMetric = function () {
+            return this.metric.toString() === MetricType_1.MetricType.DESKTOP.toString();
         };
         BaseExtension.prototype.viewManifest = function (manifest) {
             var data = {};
@@ -18469,643 +18753,74 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define('modules/uv-shared-module/CenterPanel',["require", "exports", "./Shell", "./BaseView", "./Utils"], function (require, exports, Shell_1, BaseView_1, Utils_1) {
+define('modules/uv-contentleftpanel-module/GalleryView',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/BaseView"], function (require, exports, BaseEvents_1, BaseView_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var CenterPanel = /** @class */ (function (_super) {
-        __extends(CenterPanel, _super);
-        function CenterPanel($element) {
-            return _super.call(this, $element, false, true) || this;
+    var GalleryView = /** @class */ (function (_super) {
+        __extends(GalleryView, _super);
+        function GalleryView($element) {
+            var _this = _super.call(this, $element, true, true) || this;
+            _this.isOpen = false;
+            return _this;
         }
-        CenterPanel.prototype.create = function () {
-            var _this = this;
+        GalleryView.prototype.create = function () {
+            this.setConfig('contentLeftPanel');
             _super.prototype.create.call(this);
-            this.$title = $('<div class="title"></div>');
-            this.$element.append(this.$title);
-            this.$content = $('<div id="content" class="content"></div>');
-            this.$element.append(this.$content);
-            this.$attribution = $("\n                                <div class=\"attribution\">\n                                  <div class=\"header\">\n                                    <div class=\"title\"></div>\n                                    <button type=\"button\" class=\"close\" aria-label=\"Close\">\n                                      <span aria-hidden=\"true\">&times;</span>\n                                    </button>\n                                  </div>\n                                  <div class=\"main\">\n                                    <div class=\"attribution-text\"></div>\n                                    <div class=\"license\"></div>\n                                    <div class=\"logo\"></div>\n                                  </div>\n                                </div>\n        ");
-            this.$attribution.find('.header .title').text(this.content.attribution);
-            this.$content.append(this.$attribution);
-            this.$attribution.hide();
-            this.$closeAttributionButton = this.$attribution.find('.header .close');
-            this.$closeAttributionButton.on('click', function (e) {
-                e.preventDefault();
-                _this.$attribution.hide();
-            });
-            if (!Utils.Bools.getBool(this.options.titleEnabled, true)) {
-                this.$title.hide();
-            }
+            // search preview doesn't work well with the gallery because it loads thumbs in "chunks"
+            // $.subscribe(Events.SEARCH_PREVIEW_START, (e, canvasIndex) => {
+            //     this.galleryComponent.searchPreviewStart(canvasIndex);
+            // });
+            // $.subscribe(Events.SEARCH_PREVIEW_FINISH, () => {
+            //     this.galleryComponent.searchPreviewFinish();
+            // });
+            this.$gallery = $('<div class="iiif-gallery-component"></div>');
+            this.$element.append(this.$gallery);
         };
-        CenterPanel.prototype.updateAttribution = function () {
+        GalleryView.prototype.setup = function () {
+            this.galleryComponent = new IIIFComponents.GalleryComponent({
+                target: this.$gallery[0],
+                data: this.galleryData
+            });
+            this.galleryComponent.on('thumbSelected', function (thumb) {
+                $.publish(BaseEvents_1.BaseEvents.GALLERY_THUMB_SELECTED, [thumb]);
+                $.publish(BaseEvents_1.BaseEvents.THUMB_SELECTED, [thumb]);
+            }, false);
+            this.galleryComponent.on('decreaseSize', function () {
+                $.publish(BaseEvents_1.BaseEvents.GALLERY_DECREASE_SIZE);
+            }, false);
+            this.galleryComponent.on('increaseSize', function () {
+                $.publish(BaseEvents_1.BaseEvents.GALLERY_INCREASE_SIZE);
+            }, false);
+        };
+        GalleryView.prototype.databind = function () {
+            this.galleryComponent.options.data = this.galleryData;
+            this.galleryComponent.set(new Object()); // todo: should be passing options.data
+            this.resize();
+        };
+        GalleryView.prototype.show = function () {
             var _this = this;
-            var attribution = this.extension.helper.getAttribution();
-            //var license = this.provider.getLicense();
-            //var logo = this.provider.getLogo();
-            var enabled = Utils.Bools.getBool(this.options.attributionEnabled, true);
-            if (!attribution || !enabled) {
-                return;
-            }
-            this.$attribution.show();
-            var $attribution = this.$attribution.find('.attribution-text');
-            var $license = this.$attribution.find('.license');
-            var $logo = this.$attribution.find('.logo');
-            $attribution.html(Utils_1.UVUtils.sanitize(attribution));
-            $attribution.find('img').one("load", function () {
-                _this.resize();
-            }).each(function () {
-                if (this.complete)
-                    $(this).load();
-            });
-            $attribution.targetBlank();
-            $attribution.toggleExpandText(this.options.trimAttributionCount, function () {
-                _this.resize();
-            });
-            //if (license){
-            //    $license.append('<a href="' + license + '">' + license + '</a>');
-            //} else {
-            $license.hide();
-            //}
-            //
-            //if (logo){
-            //    $logo.append('<img src="' + logo + '"/>');
-            //} else {
-            $logo.hide();
-            //}
+            this.isOpen = true;
+            this.$element.show();
+            // todo: would be better to have no imperative methods on components and use a reactive pattern
+            setTimeout(function () {
+                _this.galleryComponent.selectIndex(_this.extension.helper.canvasIndex);
+            }, 10);
         };
-        CenterPanel.prototype.resize = function () {
-            _super.prototype.resize.call(this);
-            var leftPanelWidth = Shell_1.Shell.$leftPanel.is(':visible') ? Math.floor(Shell_1.Shell.$leftPanel.width()) : 0;
-            var rightPanelWidth = Shell_1.Shell.$rightPanel.is(':visible') ? Math.floor(Shell_1.Shell.$rightPanel.width()) : 0;
-            var width = Math.floor(this.$element.parent().width() - leftPanelWidth - rightPanelWidth);
-            this.$element.css({
-                'left': leftPanelWidth,
-                'width': width
-            });
-            var titleHeight;
-            if (this.options && this.options.titleEnabled === false) {
-                titleHeight = 0;
-            }
-            else {
-                titleHeight = this.$title.height();
-            }
-            this.$content.height(this.$element.height() - titleHeight);
-            this.$content.width(this.$element.width());
-            if (this.$attribution && this.$attribution.is(':visible')) {
-                this.$attribution.css('top', this.$content.height() - this.$attribution.outerHeight() - this.$attribution.verticalMargins());
-            }
-        };
-        return CenterPanel;
-    }(BaseView_1.BaseView));
-    exports.CenterPanel = CenterPanel;
-});
-//# sourceMappingURL=CenterPanel.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('modules/uv-filelinkcenterpanel-module/FileLinkCenterPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/CenterPanel", "../uv-shared-module/Utils"], function (require, exports, BaseEvents_1, CenterPanel_1, Utils_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var FileLinkCenterPanel = /** @class */ (function (_super) {
-        __extends(FileLinkCenterPanel, _super);
-        function FileLinkCenterPanel($element) {
-            return _super.call(this, $element) || this;
-        }
-        FileLinkCenterPanel.prototype.create = function () {
-            var _this = this;
-            this.setConfig('fileLinkCenterPanel');
-            _super.prototype.create.call(this);
-            $.subscribe(BaseEvents_1.BaseEvents.OPEN_EXTERNAL_RESOURCE, function (e, resources) {
-                _this.openMedia(resources);
-            });
-            this.$scroll = $('<div class="scroll"><div>');
-            this.$content.append(this.$scroll);
-            this.$downloadItems = $('<ol></ol>');
-            this.$scroll.append(this.$downloadItems);
-            this.$downloadItemTemplate = $('<li><img><div class="col2"><a class="filename" target="_blank" download></a><span class="label"></span><a class="description" target="_blank" download></a></div></li>');
-            this.title = this.extension.helper.getLabel();
-        };
-        FileLinkCenterPanel.prototype.openMedia = function (resources) {
-            var _this = this;
-            this.extension.getExternalResources(resources).then(function () {
-                var canvas = _this.extension.helper.getCurrentCanvas();
-                var annotations = canvas.getContent();
-                var $item;
-                for (var i = 0; i < annotations.length; i++) {
-                    var annotation = annotations[i];
-                    if (!annotation.getBody().length) {
-                        continue;
-                    }
-                    $item = _this.$downloadItemTemplate.clone();
-                    var $fileName = $item.find('.filename');
-                    var $label = $item.find('.label');
-                    var $thumb = $item.find('img');
-                    var $description = $item.find('.description');
-                    var annotationBody = annotation.getBody()[0];
-                    var id = annotationBody.getProperty('id');
-                    if (id) {
-                        $fileName.prop('href', id);
-                        $fileName.text(id.substr(id.lastIndexOf('/') + 1));
-                    }
-                    var label = Manifesto.TranslationCollection.getValue(annotationBody.getLabel());
-                    if (label) {
-                        $label.text(Utils_1.UVUtils.sanitize(label));
-                    }
-                    var thumbnail = annotation.getProperty('thumbnail');
-                    if (thumbnail) {
-                        $thumb.prop('src', thumbnail);
-                    }
-                    else {
-                        $thumb.hide();
-                    }
-                    var description = annotationBody.getProperty('description');
-                    if (description) {
-                        $description.text(Utils_1.UVUtils.sanitize(description));
-                        if (id) {
-                            $description.prop('href', id);
-                        }
-                    }
-                    _this.$downloadItems.append($item);
-                }
-            });
-        };
-        FileLinkCenterPanel.prototype.resize = function () {
-            _super.prototype.resize.call(this);
-            if (this.title) {
-                this.$title.ellipsisFill(this.title);
-            }
-            this.$scroll.height(this.$content.height() - this.$scroll.verticalMargins());
-        };
-        return FileLinkCenterPanel;
-    }(CenterPanel_1.CenterPanel));
-    exports.FileLinkCenterPanel = FileLinkCenterPanel;
-});
-//# sourceMappingURL=FileLinkCenterPanel.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('modules/uv-shared-module/FooterPanel',["require", "exports", "./BaseEvents", "./BaseView"], function (require, exports, BaseEvents_1, BaseView_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var FooterPanel = /** @class */ (function (_super) {
-        __extends(FooterPanel, _super);
-        function FooterPanel($element) {
-            return _super.call(this, $element) || this;
-        }
-        FooterPanel.prototype.create = function () {
-            var _this = this;
-            this.setConfig('footerPanel');
-            _super.prototype.create.call(this);
-            $.subscribe(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN, function () {
-                _this.updateFullScreenButton();
-            });
-            $.subscribe(BaseEvents_1.BaseEvents.METRIC_CHANGED, function () {
-                _this.updateMinimisedButtons();
-                _this.updateMoreInfoButton();
-            });
-            $.subscribe(BaseEvents_1.BaseEvents.SETTINGS_CHANGED, function () {
-                _this.updateDownloadButton();
-            });
-            this.$options = $('<div class="options"></div>');
-            this.$element.append(this.$options);
-            this.$feedbackButton = $("\n          <button class=\"feedback btn imageBtn\" title=\"" + this.content.feedback + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-feedback\" aria-hidden=\"true\"></i>" + this.content.feedback + "\n          </button>\n        ");
-            this.$options.prepend(this.$feedbackButton);
-            this.$openButton = $("\n          <button class=\"open btn imageBtn\" title=\"" + this.content.open + "\" tabindex=\"0\">\n            <i class=\"uv-icon-open\" aria-hidden=\"true\"></i>" + this.content.open + "\n          </button>\n        ");
-            this.$options.prepend(this.$openButton);
-            this.$bookmarkButton = $("\n          <button class=\"bookmark btn imageBtn\" title=\"" + this.content.bookmark + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-bookmark\" aria-hidden=\"true\"></i>" + this.content.bookmark + "\n          </button>\n        ");
-            this.$options.prepend(this.$bookmarkButton);
-            this.$shareButton = $("\n          <button class=\"share btn imageBtn\" title=\"" + this.content.share + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-share\" aria-hidden=\"true\"></i>" + this.content.share + "\n          </button>\n        ");
-            this.$options.append(this.$shareButton);
-            this.$embedButton = $("\n          <button class=\"embed btn imageBtn\" title=\"" + this.content.embed + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-embed\" aria-hidden=\"true\"></i>\n          </button>\n        ");
-            this.$options.append(this.$embedButton);
-            this.$downloadButton = $("\n          <button class=\"download btn imageBtn\" title=\"" + this.content.download + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-download\" aria-hidden=\"true\"></i>" + this.content.download + "\n          </button>\n        ");
-            this.$options.prepend(this.$downloadButton);
-            this.$moreInfoButton = $("\n          <button class=\"moreInfo btn imageBtn\" title=\"" + this.content.moreInfo + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-more-info\" aria-hidden=\"true\"></i>\n          </button>\n        ");
-            this.$options.prepend(this.$moreInfoButton);
-            this.$fullScreenBtn = $("\n          <button class=\"fullScreen btn imageBtn\" title=\"" + this.content.fullScreen + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-fullscreen\" aria-hidden=\"true\"></i>\n          </button>\n        ");
-            this.$options.append(this.$fullScreenBtn);
-            this.$openButton.onPressed(function () {
-                $.publish(BaseEvents_1.BaseEvents.OPEN);
-            });
-            this.$feedbackButton.onPressed(function () {
-                $.publish(BaseEvents_1.BaseEvents.FEEDBACK);
-            });
-            this.$bookmarkButton.onPressed(function () {
-                $.publish(BaseEvents_1.BaseEvents.BOOKMARK);
-            });
-            this.$shareButton.onPressed(function () {
-                $.publish(BaseEvents_1.BaseEvents.SHOW_SHARE_DIALOGUE, [_this.$shareButton]);
-            });
-            this.$embedButton.onPressed(function () {
-                $.publish(BaseEvents_1.BaseEvents.SHOW_EMBED_DIALOGUE, [_this.$embedButton]);
-            });
-            this.$downloadButton.onPressed(function () {
-                $.publish(BaseEvents_1.BaseEvents.SHOW_DOWNLOAD_DIALOGUE, [_this.$downloadButton]);
-            });
-            this.$moreInfoButton.onPressed(function () {
-                $.publish(BaseEvents_1.BaseEvents.SHOW_MOREINFO_DIALOGUE, [_this.$moreInfoButton]);
-            });
-            this.$fullScreenBtn.on('click', function (e) {
-                e.preventDefault();
-                $.publish(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN);
-            });
-            if (!Utils.Bools.getBool(this.options.embedEnabled, true)) {
-                this.$embedButton.hide();
-            }
-            this.updateMoreInfoButton();
-            this.updateOpenButton();
-            this.updateFeedbackButton();
-            this.updateBookmarkButton();
-            this.updateEmbedButton();
-            this.updateDownloadButton();
-            this.updateFullScreenButton();
-            this.updateShareButton();
-            this.updateMinimisedButtons();
-        };
-        FooterPanel.prototype.updateMinimisedButtons = function () {
-            // if configured to always minimise buttons
-            if (Utils.Bools.getBool(this.options.minimiseButtons, false)) {
-                this.$options.addClass('minimiseButtons');
-                return;
-            }
-            // otherwise, check metric
-            if (this.extension.isMobileView()) {
-                this.$options.addClass('minimiseButtons');
-            }
-            else {
-                this.$options.removeClass('minimiseButtons');
-            }
-        };
-        FooterPanel.prototype.updateMoreInfoButton = function () {
-            var configEnabled = Utils.Bools.getBool(this.options.moreInfoEnabled, false);
-            if (configEnabled && this.extension.isMobileView()) {
-                this.$moreInfoButton.show();
-            }
-            else {
-                this.$moreInfoButton.hide();
-            }
-        };
-        FooterPanel.prototype.updateOpenButton = function () {
-            var configEnabled = Utils.Bools.getBool(this.options.openEnabled, false);
-            if (configEnabled && Utils.Documents.isInIFrame()) {
-                this.$openButton.show();
-            }
-            else {
-                this.$openButton.hide();
-            }
-        };
-        FooterPanel.prototype.updateFullScreenButton = function () {
-            if (!Utils.Bools.getBool(this.options.fullscreenEnabled, true) || !Utils.Documents.supportsFullscreen()) {
-                this.$fullScreenBtn.hide();
-                return;
-            }
-            if (this.extension.data.isLightbox) {
-                this.$fullScreenBtn.addClass('lightbox');
-            }
-            if (this.extension.isFullScreen()) {
-                this.$fullScreenBtn.swapClass('fullScreen', 'exitFullscreen');
-                this.$fullScreenBtn.find('i').swapClass('uv-icon-fullscreen', 'uv-icon-exit-fullscreen');
-                this.$fullScreenBtn.attr('title', this.content.exitFullScreen);
-            }
-            else {
-                this.$fullScreenBtn.swapClass('exitFullscreen', 'fullScreen');
-                this.$fullScreenBtn.find('i').swapClass('uv-icon-exit-fullscreen', 'uv-icon-fullscreen');
-                this.$fullScreenBtn.attr('title', this.content.fullScreen);
-            }
-        };
-        FooterPanel.prototype.updateEmbedButton = function () {
-            if (this.extension.helper.isUIEnabled('embed') && Utils.Bools.getBool(this.options.embedEnabled, false)) {
-                // current jquery version sets display to 'inline' in mobile version, while this should remain hidden (see media query)
-                if (!$.browser.mobile) {
-                    this.$embedButton.show();
-                }
-            }
-            else {
-                this.$embedButton.hide();
-            }
-        };
-        FooterPanel.prototype.updateShareButton = function () {
-            if (this.extension.helper.isUIEnabled('share') && Utils.Bools.getBool(this.options.shareEnabled, true)) {
-                this.$shareButton.show();
-            }
-            else {
-                this.$shareButton.hide();
-            }
-        };
-        FooterPanel.prototype.updateDownloadButton = function () {
-            var configEnabled = Utils.Bools.getBool(this.options.downloadEnabled, true);
-            if (configEnabled) {
-                this.$downloadButton.show();
-            }
-            else {
-                this.$downloadButton.hide();
-            }
-        };
-        FooterPanel.prototype.updateFeedbackButton = function () {
-            var configEnabled = Utils.Bools.getBool(this.options.feedbackEnabled, false);
-            if (configEnabled) {
-                this.$feedbackButton.show();
-            }
-            else {
-                this.$feedbackButton.hide();
-            }
-        };
-        FooterPanel.prototype.updateBookmarkButton = function () {
-            var configEnabled = Utils.Bools.getBool(this.options.bookmarkEnabled, false);
-            if (configEnabled) {
-                this.$bookmarkButton.show();
-            }
-            else {
-                this.$bookmarkButton.hide();
-            }
-        };
-        FooterPanel.prototype.resize = function () {
-            _super.prototype.resize.call(this);
-        };
-        return FooterPanel;
-    }(BaseView_1.BaseView));
-    exports.FooterPanel = FooterPanel;
-});
-//# sourceMappingURL=FooterPanel.js.map
-define('modules/uv-shared-module/Information',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var Information = /** @class */ (function () {
-        function Information(message, actions) {
-            this.message = message;
-            this.actions = actions;
-        }
-        return Information;
-    }());
-    exports.Information = Information;
-});
-//# sourceMappingURL=Information.js.map
-define('modules/uv-shared-module/InformationAction',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var InformationAction = /** @class */ (function () {
-        function InformationAction() {
-        }
-        return InformationAction;
-    }());
-    exports.InformationAction = InformationAction;
-});
-//# sourceMappingURL=InformationAction.js.map
-define('modules/uv-shared-module/InformationFactory',["require", "exports", "./BaseEvents", "./Information", "./InformationAction", "./InformationType"], function (require, exports, BaseEvents_1, Information_1, InformationAction_1, InformationType_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var InformationFactory = /** @class */ (function () {
-        function InformationFactory(extension) {
-            this.extension = extension;
-        }
-        InformationFactory.prototype.Get = function (args) {
-            switch (args.informationType) {
-                case (InformationType_1.InformationType.AUTH_CORS_ERROR):
-                    return new Information_1.Information(this.extension.data.config.content.authCORSError, []);
-                case (InformationType_1.InformationType.DEGRADED_RESOURCE):
-                    var actions = [];
-                    var loginAction = new InformationAction_1.InformationAction();
-                    var label = args.param.loginService.getConfirmLabel();
-                    if (!label) {
-                        label = this.extension.data.config.content.fallbackDegradedLabel;
-                    }
-                    loginAction.label = label;
-                    var resource_1 = args.param;
-                    loginAction.action = function () {
-                        resource_1.authHoldingPage = window.open("", "_blank");
-                        $.publish(BaseEvents_1.BaseEvents.HIDE_INFORMATION);
-                        $.publish(BaseEvents_1.BaseEvents.OPEN_EXTERNAL_RESOURCE, [[resource_1]]);
-                    };
-                    actions.push(loginAction);
-                    var message = args.param.loginService.getServiceLabel();
-                    if (!message) {
-                        message = this.extension.data.config.content.fallbackDegradedMessage;
-                    }
-                    return new Information_1.Information(message, actions);
-            }
-        };
-        return InformationFactory;
-    }());
-    exports.InformationFactory = InformationFactory;
-});
-//# sourceMappingURL=InformationFactory.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('modules/uv-shared-module/HeaderPanel',["require", "exports", "./BaseEvents", "./BaseView", "../uv-shared-module/InformationFactory"], function (require, exports, BaseEvents_1, BaseView_1, InformationFactory_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var HeaderPanel = /** @class */ (function (_super) {
-        __extends(HeaderPanel, _super);
-        function HeaderPanel($element) {
-            return _super.call(this, $element, false, false) || this;
-        }
-        HeaderPanel.prototype.create = function () {
-            var _this = this;
-            this.setConfig('headerPanel');
-            _super.prototype.create.call(this);
-            $.subscribe(BaseEvents_1.BaseEvents.SHOW_INFORMATION, function (e, args) {
-                _this.showInformation(args);
-            });
-            $.subscribe(BaseEvents_1.BaseEvents.HIDE_INFORMATION, function () {
-                _this.hideInformation();
-            });
-            this.$options = $('<div class="options"></div>');
-            this.$element.append(this.$options);
-            this.$centerOptions = $('<div class="centerOptions"></div>');
-            this.$options.append(this.$centerOptions);
-            this.$rightOptions = $('<div class="rightOptions"></div>');
-            this.$options.append(this.$rightOptions);
-            //this.$helpButton = $('<a href="#" class="action help">' + this.content.help + '</a>');
-            //this.$rightOptions.append(this.$helpButton);
-            this.$localeToggleButton = $('<a class="localeToggle" tabindex="0"></a>');
-            this.$rightOptions.append(this.$localeToggleButton);
-            this.$settingsButton = $("\n          <button class=\"btn imageBtn settings\" tabindex=\"0\">\n            <i class=\"uv-icon-settings\" aria-hidden=\"true\"></i>\n          </button>\n        ");
-            this.$settingsButton.attr('title', this.content.settings);
-            this.$rightOptions.append(this.$settingsButton);
-            this.$informationBox = $('<div class="informationBox" aria-hidden="true"> \
-                                    <div class="message"></div> \
-                                    <div class="actions"></div> \
-                                    <button type="button" class="close" aria-label="Close"> \
-                                        <span aria-hidden="true">&times;</span>\
-                                    </button> \
-                                  </div>');
-            this.$element.append(this.$informationBox);
-            this.$informationBox.hide();
-            this.$informationBox.find('.close').attr('title', this.content.close);
-            this.$informationBox.find('.close').on('click', function (e) {
-                e.preventDefault();
-                $.publish(BaseEvents_1.BaseEvents.HIDE_INFORMATION);
-            });
-            this.$localeToggleButton.on('click', function () {
-                _this.extension.changeLocale(String(_this.$localeToggleButton.data('locale')));
-            });
-            this.$settingsButton.onPressed(function () {
-                $.publish(BaseEvents_1.BaseEvents.SHOW_SETTINGS_DIALOGUE);
-            });
-            this.updateLocaleToggle();
-            this.updateSettingsButton();
-        };
-        HeaderPanel.prototype.updateLocaleToggle = function () {
-            if (!this.localeToggleIsVisible()) {
-                this.$localeToggleButton.hide();
-                return;
-            }
-            var alternateLocale = this.extension.getAlternateLocale();
-            var text = alternateLocale.name.split('-')[0].toUpperCase();
-            this.$localeToggleButton.data('locale', alternateLocale.name);
-            this.$localeToggleButton.attr('title', alternateLocale.label);
-            this.$localeToggleButton.text(text);
-        };
-        HeaderPanel.prototype.updateSettingsButton = function () {
-            var settingsEnabled = Utils.Bools.getBool(this.options.settingsButtonEnabled, true);
-            if (!settingsEnabled) {
-                this.$settingsButton.hide();
-            }
-            else {
-                this.$settingsButton.show();
-            }
-        };
-        HeaderPanel.prototype.localeToggleIsVisible = function () {
-            var locales = this.extension.data.locales;
-            if (locales) {
-                return locales.length > 1 && Utils.Bools.getBool(this.options.localeToggleEnabled, false);
-            }
-            return false;
-        };
-        HeaderPanel.prototype.showInformation = function (args) {
-            var informationFactory = new InformationFactory_1.InformationFactory(this.extension);
-            this.information = informationFactory.Get(args);
-            var $message = this.$informationBox.find('.message');
-            $message.html(this.information.message).find('a').attr('target', '_top');
-            var $actions = this.$informationBox.find('.actions');
-            $actions.empty();
-            for (var i = 0; i < this.information.actions.length; i++) {
-                var action = this.information.actions[i];
-                var $action = $('<a href="#" class="btn btn-default">' + action.label + '</a>');
-                $action.on('click', action.action);
-                $actions.append($action);
-            }
-            this.$informationBox.attr('aria-hidden', 'false');
-            this.$informationBox.show();
-            this.$element.addClass('showInformation');
-            this.extension.resize();
-        };
-        HeaderPanel.prototype.hideInformation = function () {
-            this.$element.removeClass('showInformation');
-            this.$informationBox.attr('aria-hidden', 'true');
-            this.$informationBox.hide();
-            this.extension.resize();
-        };
-        HeaderPanel.prototype.getSettings = function () {
-            return this.extension.getSettings();
-        };
-        HeaderPanel.prototype.updateSettings = function (settings) {
-            this.extension.updateSettings(settings);
-            $.publish(BaseEvents_1.BaseEvents.UPDATE_SETTINGS, [settings]);
-        };
-        HeaderPanel.prototype.resize = function () {
-            _super.prototype.resize.call(this);
-            var headerWidth = this.$element.width();
-            var center = headerWidth / 2;
-            var containerWidth = this.$centerOptions.outerWidth();
-            var pos = center - (containerWidth / 2);
-            this.$centerOptions.css({
-                left: pos
-            });
-            if (this.$informationBox.is(':visible')) {
-                var $actions = this.$informationBox.find('.actions');
-                var $message = this.$informationBox.find('.message');
-                $message.width(Math.floor(this.$element.width()) - Math.ceil($message.horizontalMargins()) - Math.ceil($actions.outerWidth(true)) - Math.ceil(this.$informationBox.find('.close').outerWidth(true)) - 2);
-                $message.ellipsisFill(this.information.message);
-            }
-            // hide toggle buttons below minimum width
-            if (this.extension.width() < this.extension.data.config.options.minWidthBreakPoint) {
-                if (this.localeToggleIsVisible())
-                    this.$localeToggleButton.hide();
-            }
-            else {
-                if (this.localeToggleIsVisible())
-                    this.$localeToggleButton.show();
-            }
-        };
-        return HeaderPanel;
-    }(BaseView_1.BaseView));
-    exports.HeaderPanel = HeaderPanel;
-});
-//# sourceMappingURL=HeaderPanel.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('modules/uv-dialogues-module/HelpDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var HelpDialogue = /** @class */ (function (_super) {
-        __extends(HelpDialogue, _super);
-        function HelpDialogue($element) {
-            return _super.call(this, $element) || this;
-        }
-        HelpDialogue.prototype.create = function () {
-            var _this = this;
-            this.setConfig('helpDialogue');
-            _super.prototype.create.call(this);
-            this.openCommand = BaseEvents_1.BaseEvents.SHOW_HELP_DIALOGUE;
-            this.closeCommand = BaseEvents_1.BaseEvents.HIDE_HELP_DIALOGUE;
-            $.subscribe(this.openCommand, function () {
-                _this.open();
-            });
-            $.subscribe(this.closeCommand, function () {
-                _this.close();
-            });
-            this.$title = $('<h1></h1>');
-            this.$content.append(this.$title);
-            this.$scroll = $('<div class="scroll"></div>');
-            this.$content.append(this.$scroll);
-            this.$message = $('<p></p>');
-            this.$scroll.append(this.$message);
-            // initialise ui.
-            this.$title.text(this.content.title);
-            this.$message.html(this.content.text);
-            // ensure anchor tags link to _blank.
-            this.$message.targetBlank();
+        GalleryView.prototype.hide = function () {
+            this.isOpen = false;
             this.$element.hide();
         };
-        HelpDialogue.prototype.resize = function () {
+        GalleryView.prototype.resize = function () {
             _super.prototype.resize.call(this);
+            var $main = this.$gallery.find('.main');
+            var $header = this.$gallery.find('.header');
+            $main.height(this.$element.height() - $header.height());
         };
-        return HelpDialogue;
-    }(Dialogue_1.Dialogue));
-    exports.HelpDialogue = HelpDialogue;
+        return GalleryView;
+    }(BaseView_1.BaseView));
+    exports.GalleryView = GalleryView;
 });
-//# sourceMappingURL=HelpDialogue.js.map
+//# sourceMappingURL=GalleryView.js.map
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -19328,144 +19043,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define('modules/uv-shared-module/RightPanel',["require", "exports", "./BaseEvents", "./BaseExpandPanel"], function (require, exports, BaseEvents_1, BaseExpandPanel_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var RightPanel = /** @class */ (function (_super) {
-        __extends(RightPanel, _super);
-        function RightPanel($element) {
-            return _super.call(this, $element) || this;
-        }
-        RightPanel.prototype.create = function () {
-            _super.prototype.create.call(this);
-            this.$element.width(this.options.panelCollapsedWidth);
-        };
-        RightPanel.prototype.init = function () {
-            var _this = this;
-            _super.prototype.init.call(this);
-            var shouldOpenPanel = Utils.Bools.getBool(this.extension.getSettings().rightPanelOpen, this.options.panelOpen);
-            if (shouldOpenPanel) {
-                this.toggle(true);
-            }
-            $.subscribe(BaseEvents_1.BaseEvents.TOGGLE_EXPAND_RIGHT_PANEL, function () {
-                if (_this.isFullyExpanded) {
-                    _this.collapseFull();
-                }
-                else {
-                    _this.expandFull();
-                }
-            });
-        };
-        RightPanel.prototype.getTargetWidth = function () {
-            return this.isExpanded ? this.options.panelCollapsedWidth : this.options.panelExpandedWidth;
-        };
-        RightPanel.prototype.getTargetLeft = function () {
-            return this.isExpanded ? this.$element.parent().width() - this.options.panelCollapsedWidth : this.$element.parent().width() - this.options.panelExpandedWidth;
-        };
-        RightPanel.prototype.toggleFinish = function () {
-            _super.prototype.toggleFinish.call(this);
-            if (this.isExpanded) {
-                $.publish(BaseEvents_1.BaseEvents.OPEN_RIGHT_PANEL);
-            }
-            else {
-                $.publish(BaseEvents_1.BaseEvents.CLOSE_RIGHT_PANEL);
-            }
-            this.extension.updateSettings({ rightPanelOpen: this.isExpanded });
-        };
-        RightPanel.prototype.resize = function () {
-            _super.prototype.resize.call(this);
-            this.$element.css({
-                'left': Math.floor(this.$element.parent().width() - this.$element.outerWidth())
-            });
-        };
-        return RightPanel;
-    }(BaseExpandPanel_1.BaseExpandPanel));
-    exports.RightPanel = RightPanel;
-});
-//# sourceMappingURL=RightPanel.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('modules/uv-moreinforightpanel-module/MoreInfoRightPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/RightPanel", "../uv-shared-module/Utils"], function (require, exports, BaseEvents_1, RightPanel_1, Utils_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var MoreInfoRightPanel = /** @class */ (function (_super) {
-        __extends(MoreInfoRightPanel, _super);
-        function MoreInfoRightPanel($element) {
-            return _super.call(this, $element) || this;
-        }
-        MoreInfoRightPanel.prototype.create = function () {
-            var _this = this;
-            this.setConfig('moreInfoRightPanel');
-            _super.prototype.create.call(this);
-            $.subscribe(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, function () {
-                _this.databind();
-            });
-            this.setTitle(this.config.content.title);
-            this.$metadata = $('<div class="iiif-metadata-component"></div>');
-            this.$main.append(this.$metadata);
-            this.metadataComponent = new IIIFComponents.MetadataComponent({
-                target: this.$metadata[0],
-                data: this._getData()
-            });
-        };
-        MoreInfoRightPanel.prototype.toggleFinish = function () {
-            _super.prototype.toggleFinish.call(this);
-            this.databind();
-        };
-        MoreInfoRightPanel.prototype.databind = function () {
-            this.metadataComponent.options.data = this._getData();
-            this.metadataComponent.set(new Object()); // todo: should be passing data
-        };
-        MoreInfoRightPanel.prototype._getData = function () {
-            return {
-                canvasDisplayOrder: this.config.options.canvasDisplayOrder,
-                canvases: this.extension.getCurrentCanvases(),
-                canvasExclude: this.config.options.canvasExclude,
-                canvasLabels: this.extension.getCanvasLabels(this.content.page),
-                content: this.config.content,
-                copiedMessageDuration: 2000,
-                copyToClipboardEnabled: Utils.Bools.getBool(this.config.options.copyToClipboardEnabled, false),
-                helper: this.extension.helper,
-                licenseFormatter: null,
-                limit: this.config.options.textLimit || 4,
-                limitType: IIIFComponents.MetadataComponentOptions.LimitType.LINES,
-                manifestDisplayOrder: this.config.options.manifestDisplayOrder,
-                manifestExclude: this.config.options.manifestExclude,
-                range: this.extension.getCurrentCanvasRange(),
-                rtlLanguageCodes: this.config.options.rtlLanguageCodes,
-                sanitizer: function (html) {
-                    return Utils_1.UVUtils.sanitize(html);
-                },
-                showAllLanguages: this.config.options.showAllLanguages
-            };
-        };
-        MoreInfoRightPanel.prototype.resize = function () {
-            _super.prototype.resize.call(this);
-            this.$main.height(this.$element.height() - this.$top.height() - this.$main.verticalMargins());
-        };
-        return MoreInfoRightPanel;
-    }(RightPanel_1.RightPanel));
-    exports.MoreInfoRightPanel = MoreInfoRightPanel;
-});
-//# sourceMappingURL=MoreInfoRightPanel.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
 define('modules/uv-shared-module/LeftPanel',["require", "exports", "./BaseEvents", "./BaseExpandPanel"], function (require, exports, BaseEvents_1, BaseExpandPanel_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -19526,6 +19103,23 @@ define('modules/uv-shared-module/LeftPanel',["require", "exports", "./BaseEvents
     exports.LeftPanel = LeftPanel;
 });
 //# sourceMappingURL=LeftPanel.js.map
+define('extensions/uv-seadragon-extension/Mode',["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Mode = /** @class */ (function () {
+        function Mode(value) {
+            this.value = value;
+        }
+        Mode.prototype.toString = function () {
+            return this.value;
+        };
+        Mode.image = new Mode("image");
+        Mode.page = new Mode("page");
+        return Mode;
+    }());
+    exports.Mode = Mode;
+});
+//# sourceMappingURL=Mode.js.map
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -19767,1454 +19361,6 @@ define('modules/uv-shared-module/ThumbsView',["require", "exports", "./BaseEvent
     exports.ThumbsView = ThumbsView;
 });
 //# sourceMappingURL=ThumbsView.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('modules/uv-resourcesleftpanel-module/ThumbsView',["require", "exports", "../uv-shared-module/ThumbsView"], function (require, exports, ThumbsView_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var ThumbsView = /** @class */ (function (_super) {
-        __extends(ThumbsView, _super);
-        function ThumbsView() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        ThumbsView.prototype.create = function () {
-            this.setConfig('resourcesLeftPanel');
-            _super.prototype.create.call(this);
-        };
-        return ThumbsView;
-    }(ThumbsView_1.ThumbsView));
-    exports.ThumbsView = ThumbsView;
-});
-//# sourceMappingURL=ThumbsView.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('modules/uv-resourcesleftpanel-module/ResourcesLeftPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/LeftPanel", "./ThumbsView"], function (require, exports, BaseEvents_1, LeftPanel_1, ThumbsView_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var ResourcesLeftPanel = /** @class */ (function (_super) {
-        __extends(ResourcesLeftPanel, _super);
-        function ResourcesLeftPanel($element) {
-            return _super.call(this, $element) || this;
-        }
-        ResourcesLeftPanel.prototype.create = function () {
-            this.setConfig('resourcesLeftPanel');
-            _super.prototype.create.call(this);
-            this.setTitle(this.content.title);
-            /*
-             TODO: make tabs work
-            this.$tabs = $('<div class="tabs"></div>');
-            this.$main.append(this.$tabs);
-    
-            this.$thumbsButton = $('<a class="thumbs tab">' + this.content.thumbnails + '</a>');
-            this.$thumbsButton.prop('title', this.content.thumbnails);
-            this.$tabs.append(this.$thumbsButton);
-    
-            this.$resourcesButton = $('<a class="resources tab">' + this.content.resources+ '</a>');
-            this.$resourcesButton.prop('title', this.content.resources);
-            this.$tabs.append(this.$resourcesButton);
-             */
-            this.$tabsContent = $('<div class="tabsContent"></div>');
-            this.$main.append(this.$tabsContent);
-            this.$views = $('<div class="views"></div>');
-            this.$tabsContent.append(this.$views);
-            this.$thumbsView = $('<div class="thumbsView"></div>');
-            this.$views.append(this.$thumbsView);
-            this.$resourcesView = $('<div class="resourcesView"></div>');
-            this.$resources = $('<ul></ul>');
-            this.$resourcesView.append(this.$resources);
-            this.$views.append(this.$resourcesView);
-            this.thumbsView = new ThumbsView_1.ThumbsView(this.$thumbsView);
-            this.dataBind();
-        };
-        ResourcesLeftPanel.prototype.dataBind = function () {
-            this.dataBindThumbsView();
-            var annotations = this.extension.helper.getCurrentCanvas().getResources();
-            if (annotations.length === 0) {
-                this.$resourcesView.hide();
-            }
-            for (var i = 0; i < annotations.length; i++) {
-                var annotation = annotations[i];
-                var resource = annotation.getResource();
-                if (resource) {
-                    var label = Manifesto.TranslationCollection.getValue(resource.getLabel());
-                    if (label) {
-                        var mime = Utils.Files.simplifyMimeType(resource.getFormat().toString());
-                        var $listItem = $('<li><a href="' + resource.id + '" target="_blank">' + label + ' (' + mime + ')' + '</li>');
-                        this.$resources.append($listItem);
-                    }
-                }
-            }
-        };
-        ResourcesLeftPanel.prototype.dataBindThumbsView = function () {
-            if (!this.thumbsView)
-                return;
-            var width;
-            var height;
-            var viewingDirection = this.extension.helper.getViewingDirection().toString();
-            if (viewingDirection === manifesto.ViewingDirection.topToBottom().toString() || viewingDirection === manifesto.ViewingDirection.bottomToTop().toString()) {
-                width = this.config.options.oneColThumbWidth;
-                height = this.config.options.oneColThumbHeight;
-            }
-            else {
-                width = this.config.options.twoColThumbWidth;
-                height = this.config.options.twoColThumbHeight;
-            }
-            if (typeof (width) === "undefined") {
-                width = 100;
-            }
-            if (typeof (height) === "undefined") {
-                height = 100;
-            }
-            this.thumbsView.thumbs = this.extension.helper.getThumbs(width, height);
-            // hide thumb selector for single-part manifests
-            if (this.thumbsView.thumbs.length < 2) {
-                this.$thumbsView.hide();
-            }
-            this.thumbsView.databind();
-        };
-        ResourcesLeftPanel.prototype.expandFullStart = function () {
-            _super.prototype.expandFullStart.call(this);
-            $.publish(BaseEvents_1.BaseEvents.LEFTPANEL_EXPAND_FULL_START);
-        };
-        ResourcesLeftPanel.prototype.expandFullFinish = function () {
-            _super.prototype.expandFullFinish.call(this);
-            $.publish(BaseEvents_1.BaseEvents.LEFTPANEL_EXPAND_FULL_FINISH);
-        };
-        ResourcesLeftPanel.prototype.collapseFullStart = function () {
-            _super.prototype.collapseFullStart.call(this);
-            $.publish(BaseEvents_1.BaseEvents.LEFTPANEL_COLLAPSE_FULL_START);
-        };
-        ResourcesLeftPanel.prototype.collapseFullFinish = function () {
-            _super.prototype.collapseFullFinish.call(this);
-            $.publish(BaseEvents_1.BaseEvents.LEFTPANEL_COLLAPSE_FULL_FINISH);
-        };
-        ResourcesLeftPanel.prototype.resize = function () {
-            _super.prototype.resize.call(this);
-            this.$views.height(this.$main.height());
-            this.$resources.height(this.$main.height());
-        };
-        return ResourcesLeftPanel;
-    }(LeftPanel_1.LeftPanel));
-    exports.ResourcesLeftPanel = ResourcesLeftPanel;
-});
-//# sourceMappingURL=ResourcesLeftPanel.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('modules/uv-dialogues-module/SettingsDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var SettingsDialogue = /** @class */ (function (_super) {
-        __extends(SettingsDialogue, _super);
-        function SettingsDialogue($element) {
-            return _super.call(this, $element) || this;
-        }
-        SettingsDialogue.prototype.create = function () {
-            var _this = this;
-            this.setConfig('settingsDialogue');
-            _super.prototype.create.call(this);
-            this.openCommand = BaseEvents_1.BaseEvents.SHOW_SETTINGS_DIALOGUE;
-            this.closeCommand = BaseEvents_1.BaseEvents.HIDE_SETTINGS_DIALOGUE;
-            $.subscribe(this.openCommand, function () {
-                _this.open();
-            });
-            $.subscribe(this.closeCommand, function () {
-                _this.close();
-            });
-            this.$title = $('<h1></h1>');
-            this.$content.append(this.$title);
-            this.$scroll = $('<div class="scroll"></div>');
-            this.$content.append(this.$scroll);
-            this.$version = $('<div class="version"></div>');
-            this.$content.append(this.$version);
-            this.$website = $('<div class="website"></div>');
-            this.$content.append(this.$website);
-            this.$locale = $('<div class="setting locale"></div>');
-            this.$scroll.append(this.$locale);
-            this.$localeLabel = $('<label for="locale">' + this.content.locale + '</label>');
-            this.$locale.append(this.$localeLabel);
-            this.$localeDropDown = $('<select id="locale"></select>');
-            this.$locale.append(this.$localeDropDown);
-            // initialise ui.
-            this.$title.text(this.content.title);
-            this.$website.html(this.content.website);
-            this.$website.targetBlank();
-            this._createLocalesMenu();
-            this.$element.hide();
-        };
-        SettingsDialogue.prototype.getSettings = function () {
-            return this.extension.getSettings();
-        };
-        SettingsDialogue.prototype.updateSettings = function (settings) {
-            this.extension.updateSettings(settings);
-            $.publish(BaseEvents_1.BaseEvents.UPDATE_SETTINGS, [settings]);
-        };
-        SettingsDialogue.prototype.open = function () {
-            var _this = this;
-            _super.prototype.open.call(this);
-            $.getJSON(this.extension.data.root + "/package.json", function (pjson) {
-                _this.$version.text("v" + pjson.version);
-            });
-        };
-        SettingsDialogue.prototype._createLocalesMenu = function () {
-            var _this = this;
-            var locales = this.extension.data.locales;
-            if (locales && locales.length > 1) {
-                for (var i = 0; i < locales.length; i++) {
-                    var locale = locales[i];
-                    this.$localeDropDown.append('<option value="' + locale.name + '">' + locale.label + '</option>');
-                }
-                this.$localeDropDown.val(locales[0].name);
-            }
-            else {
-                this.$locale.hide();
-            }
-            this.$localeDropDown.change(function () {
-                _this.extension.changeLocale(_this.$localeDropDown.val());
-            });
-        };
-        SettingsDialogue.prototype.resize = function () {
-            _super.prototype.resize.call(this);
-        };
-        return SettingsDialogue;
-    }(Dialogue_1.Dialogue));
-    exports.SettingsDialogue = SettingsDialogue;
-});
-//# sourceMappingURL=SettingsDialogue.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('extensions/uv-default-extension/SettingsDialogue',["require", "exports", "../../modules/uv-dialogues-module/SettingsDialogue"], function (require, exports, SettingsDialogue_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var SettingsDialogue = /** @class */ (function (_super) {
-        __extends(SettingsDialogue, _super);
-        function SettingsDialogue($element) {
-            return _super.call(this, $element) || this;
-        }
-        SettingsDialogue.prototype.create = function () {
-            this.setConfig('settingsDialogue');
-            _super.prototype.create.call(this);
-        };
-        return SettingsDialogue;
-    }(SettingsDialogue_1.SettingsDialogue));
-    exports.SettingsDialogue = SettingsDialogue;
-});
-//# sourceMappingURL=SettingsDialogue.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('modules/uv-dialogues-module/ShareDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var ShareDialogue = /** @class */ (function (_super) {
-        __extends(ShareDialogue, _super);
-        function ShareDialogue($element) {
-            var _this = _super.call(this, $element) || this;
-            _this.aspectRatio = .75;
-            _this.isEmbedViewVisible = false;
-            _this.isShareViewVisible = false;
-            _this.maxWidth = 8000;
-            _this.maxHeight = _this.maxWidth * _this.aspectRatio;
-            _this.minWidth = 200;
-            _this.minHeight = _this.minWidth * _this.aspectRatio;
-            return _this;
-        }
-        ShareDialogue.prototype.create = function () {
-            var _this = this;
-            this.setConfig('shareDialogue');
-            _super.prototype.create.call(this);
-            this.openCommand = BaseEvents_1.BaseEvents.SHOW_SHARE_DIALOGUE;
-            this.closeCommand = BaseEvents_1.BaseEvents.HIDE_SHARE_DIALOGUE;
-            $.subscribe(this.openCommand, function (e, $triggerButton) {
-                _this.open($triggerButton);
-                if (_this.isShareAvailable()) {
-                    _this.openShareView();
-                }
-                else {
-                    _this.openEmbedView();
-                }
-            });
-            $.subscribe(this.closeCommand, function () {
-                _this.close();
-            });
-            $.subscribe(BaseEvents_1.BaseEvents.SHOW_EMBED_DIALOGUE, function (e, $triggerButton) {
-                _this.open($triggerButton);
-                _this.openEmbedView();
-            });
-            this.$tabs = $('<div class="tabs"></div>');
-            this.$content.append(this.$tabs);
-            this.$shareButton = $('<a class="share tab default" tabindex="0">' + this.content.share + '</a>');
-            this.$shareButton.prop('title', this.content.share);
-            this.$tabs.append(this.$shareButton);
-            this.$embedButton = $('<a class="embed tab" tabindex="0">' + this.content.embed + '</a>');
-            this.$embedButton.prop('title', this.content.embed);
-            this.$tabs.append(this.$embedButton);
-            this.$tabsContent = $('<div class="tabsContent"></div>');
-            this.$content.append(this.$tabsContent);
-            this.$footer = $('<div class="footer"></div>');
-            this.$content.append(this.$footer);
-            this.$shareView = $('<div class="shareView view"></div>');
-            this.$tabsContent.append(this.$shareView);
-            this.$shareHeader = $('<div class="header"></div>');
-            this.$shareView.append(this.$shareHeader);
-            this.$shareLink = $('<a class="shareLink" onclick="return false;"></a>');
-            this.$shareView.append(this.$shareLink);
-            this.$shareInput = $("<input class=\"shareInput\" type=\"text\" readonly aria-label=\"" + this.content.shareUrl + "\"/>");
-            this.$shareView.append(this.$shareInput);
-            this.$shareFrame = $('<iframe class="shareFrame"></iframe>');
-            this.$shareView.append(this.$shareFrame);
-            this.$embedView = $('<div class="embedView view"></div>');
-            this.$tabsContent.append(this.$embedView);
-            this.$embedHeader = $('<div class="header"></div>');
-            this.$embedView.append(this.$embedHeader);
-            // this.$link = $('<a target="_blank"></a>');
-            // this.$embedView.find('.leftCol').append(this.$link);
-            // this.$image = $('<img class="share" />');
-            // this.$embedView.append(this.$image);
-            this.$code = $("<input class=\"code\" type=\"text\" readonly aria-label=\"" + this.content.embed + "\"/>");
-            this.$embedView.append(this.$code);
-            this.$customSize = $('<div class="customSize"></div>');
-            this.$embedView.append(this.$customSize);
-            this.$size = $('<span class="size">' + this.content.size + '</span>');
-            this.$customSize.append(this.$size);
-            this.$customSizeDropDown = $('<select id="size" aria-label="' + this.content.size + '"></select>');
-            this.$customSize.append(this.$customSizeDropDown);
-            this.$customSizeDropDown.append('<option value="small" data-width="560" data-height="420">560 x 420</option>');
-            this.$customSizeDropDown.append('<option value="medium" data-width="640" data-height="480">640 x 480</option>');
-            this.$customSizeDropDown.append('<option value="large" data-width="800" data-height="600">800 x 600</option>');
-            this.$customSizeDropDown.append('<option value="custom">' + this.content.customSize + '</option>');
-            this.$widthInput = $('<input class="width" type="text" maxlength="10" aria-label="' + this.content.width + '"/>');
-            this.$customSize.append(this.$widthInput);
-            this.$x = $('<span class="x">x</span>');
-            this.$customSize.append(this.$x);
-            this.$heightInput = $('<input class="height" type="text" maxlength="10" aria-label="' + this.content.height + '"/>');
-            this.$customSize.append(this.$heightInput);
-            var iiifUrl = this.extension.getIIIFShareUrl();
-            this.$iiifButton = $('<a class="imageBtn iiif" href="' + iiifUrl + '" title="' + this.content.iiif + '" target="_blank"></a>');
-            this.$footer.append(this.$iiifButton);
-            this.$termsOfUseButton = $('<a href="#">' + this.extension.data.config.content.termsOfUse + '</a>');
-            this.$footer.append(this.$termsOfUseButton);
-            this.$widthInput.on('keydown', function (e) {
-                return Utils.Numbers.numericalInput(e);
-            });
-            this.$heightInput.on('keydown', function (e) {
-                return Utils.Numbers.numericalInput(e);
-            });
-            this.$shareInput.focus(function () {
-                $(this).select();
-            });
-            this.$code.focus(function () {
-                $(this).select();
-            });
-            this.$shareButton.onPressed(function () {
-                _this.openShareView();
-            });
-            this.$embedButton.onPressed(function () {
-                _this.openEmbedView();
-            });
-            this.$customSizeDropDown.change(function () {
-                _this.update();
-            });
-            this.$widthInput.change(function () {
-                _this.updateHeightRatio();
-                _this.update();
-            });
-            this.$heightInput.change(function () {
-                _this.updateWidthRatio();
-                _this.update();
-            });
-            this.$termsOfUseButton.onPressed(function () {
-                $.publish(BaseEvents_1.BaseEvents.SHOW_TERMS_OF_USE);
-            });
-            this.$element.hide();
-            this.update();
-        };
-        ShareDialogue.prototype.open = function ($triggerButton) {
-            _super.prototype.open.call(this, $triggerButton);
-            this.update();
-        };
-        ShareDialogue.prototype.getShareUrl = function () {
-            return this.extension.getShareUrl();
-        };
-        ShareDialogue.prototype.isShareAvailable = function () {
-            return !!this.getShareUrl();
-        };
-        ShareDialogue.prototype.update = function () {
-            if (this.isShareAvailable()) {
-                this.$shareButton.show();
-            }
-            else {
-                this.$shareButton.hide();
-            }
-            var $selected = this.getSelectedSize();
-            if ($selected.val() === 'custom') {
-                this.$widthInput.show();
-                this.$x.show();
-                this.$heightInput.show();
-            }
-            else {
-                this.$widthInput.hide();
-                this.$x.hide();
-                this.$heightInput.hide();
-                this.currentWidth = Number($selected.data('width'));
-                this.currentHeight = Number($selected.data('height'));
-                this.$widthInput.val(String(this.currentWidth));
-                this.$heightInput.val(String(this.currentHeight));
-            }
-            this.updateInstructions();
-            this.updateShareOptions();
-            this.updateShareFrame();
-            this.updateTermsOfUseButton();
-        };
-        ShareDialogue.prototype.updateShareOptions = function () {
-            var shareUrl = this.getShareUrl();
-            if (shareUrl) {
-                this.$shareInput.val(shareUrl);
-                this.$shareLink.prop('href', shareUrl);
-                this.$shareLink.text(shareUrl);
-            }
-            if ($.browser.mobile) {
-                this.$shareInput.hide();
-                this.$shareLink.show();
-            }
-            else {
-                this.$shareInput.show();
-                this.$shareLink.hide();
-            }
-        };
-        ShareDialogue.prototype.updateInstructions = function () {
-            if (Utils.Bools.getBool(this.options.instructionsEnabled, false)) {
-                this.$shareHeader.show();
-                this.$embedHeader.show();
-                this.$shareHeader.text(this.content.shareInstructions);
-                this.$embedHeader.text(this.content.embedInstructions);
-            }
-            else {
-                this.$shareHeader.hide();
-                this.$embedHeader.hide();
-            }
-        };
-        // updateThumbnail(): void {
-        //     var canvas: Manifesto.ICanvas = this.extension.helper.getCurrentCanvas();
-        //     if (!canvas) return;
-        //     var thumbnail = canvas.getProperty('thumbnail');
-        //     if (!thumbnail || !_.isString(thumbnail)){
-        //         thumbnail = canvas.getCanonicalImageUri(this.extension.data.config.options.bookmarkThumbWidth);
-        //     }
-        //     this.$link.attr('href', thumbnail);
-        //     this.$image.attr('src', thumbnail);
-        // }
-        ShareDialogue.prototype.getSelectedSize = function () {
-            return this.$customSizeDropDown.find(':selected');
-        };
-        ShareDialogue.prototype.updateWidthRatio = function () {
-            this.currentHeight = Number(this.$heightInput.val());
-            if (this.currentHeight < this.minHeight) {
-                this.currentHeight = this.minHeight;
-                this.$heightInput.val(String(this.currentHeight));
-            }
-            else if (this.currentHeight > this.maxHeight) {
-                this.currentHeight = this.maxHeight;
-                this.$heightInput.val(String(this.currentHeight));
-            }
-            this.currentWidth = Math.floor(this.currentHeight / this.aspectRatio);
-            this.$widthInput.val(String(this.currentWidth));
-        };
-        ShareDialogue.prototype.updateHeightRatio = function () {
-            this.currentWidth = Number(this.$widthInput.val());
-            if (this.currentWidth < this.minWidth) {
-                this.currentWidth = this.minWidth;
-                this.$widthInput.val(String(this.currentWidth));
-            }
-            else if (this.currentWidth > this.maxWidth) {
-                this.currentWidth = this.maxWidth;
-                this.$widthInput.val(String(this.currentWidth));
-            }
-            this.currentHeight = Math.floor(this.currentWidth * this.aspectRatio);
-            this.$heightInput.val(String(this.currentHeight));
-        };
-        ShareDialogue.prototype.updateShareFrame = function () {
-            var shareUrl = this.extension.helper.getShareServiceUrl();
-            if (!shareUrl) {
-                return;
-            }
-            if (Utils.Bools.getBool(this.config.options.shareFrameEnabled, true) && shareUrl) {
-                this.$shareFrame.prop('src', shareUrl);
-                this.$shareFrame.show();
-            }
-            else {
-                this.$shareFrame.hide();
-            }
-        };
-        ShareDialogue.prototype.updateTermsOfUseButton = function () {
-            var attribution = this.extension.helper.getAttribution(); // todo: this should eventually use a suitable IIIF 'terms' field.
-            if (Utils.Bools.getBool(this.extension.data.config.options.termsOfUseEnabled, false) && attribution) {
-                this.$termsOfUseButton.show();
-            }
-            else {
-                this.$termsOfUseButton.hide();
-            }
-        };
-        ShareDialogue.prototype.openShareView = function () {
-            this.isShareViewVisible = true;
-            this.isEmbedViewVisible = false;
-            this.$embedView.hide();
-            this.$shareView.show();
-            this.$shareButton.addClass('on default');
-            this.$embedButton.removeClass('on default');
-            this.resize();
-        };
-        ShareDialogue.prototype.openEmbedView = function () {
-            this.isShareViewVisible = false;
-            this.isEmbedViewVisible = true;
-            this.$embedView.show();
-            this.$shareView.hide();
-            this.$shareButton.removeClass('on default');
-            this.$embedButton.addClass('on default');
-            this.resize();
-        };
-        ShareDialogue.prototype.close = function () {
-            _super.prototype.close.call(this);
-        };
-        ShareDialogue.prototype.getViews = function () {
-            return this.$tabsContent.find('.view');
-        };
-        ShareDialogue.prototype.equaliseViewHeights = function () {
-            this.getViews().equaliseHeight(true);
-        };
-        ShareDialogue.prototype.resize = function () {
-            this.equaliseViewHeights();
-            this.setDockedPosition();
-        };
-        return ShareDialogue;
-    }(Dialogue_1.Dialogue));
-    exports.ShareDialogue = ShareDialogue;
-});
-//# sourceMappingURL=ShareDialogue.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('extensions/uv-default-extension/ShareDialogue',["require", "exports", "../../modules/uv-dialogues-module/ShareDialogue"], function (require, exports, ShareDialogue_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var ShareDialogue = /** @class */ (function (_super) {
-        __extends(ShareDialogue, _super);
-        function ShareDialogue($element) {
-            return _super.call(this, $element) || this;
-        }
-        ShareDialogue.prototype.create = function () {
-            this.setConfig('shareDialogue');
-            _super.prototype.create.call(this);
-        };
-        ShareDialogue.prototype.update = function () {
-            _super.prototype.update.call(this);
-            this.code = this.extension.getEmbedScript(this.options.embedTemplate, this.currentWidth, this.currentHeight);
-            this.$code.val(this.code);
-        };
-        ShareDialogue.prototype.resize = function () {
-            _super.prototype.resize.call(this);
-        };
-        return ShareDialogue;
-    }(ShareDialogue_1.ShareDialogue));
-    exports.ShareDialogue = ShareDialogue;
-});
-//# sourceMappingURL=ShareDialogue.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('extensions/uv-default-extension/Extension',["require", "exports", "../../modules/uv-shared-module/BaseEvents", "../../modules/uv-shared-module/BaseExtension", "../../modules/uv-filelinkcenterpanel-module/FileLinkCenterPanel", "../../modules/uv-shared-module/FooterPanel", "../../modules/uv-shared-module/HeaderPanel", "../../modules/uv-dialogues-module/HelpDialogue", "../../modules/uv-moreinforightpanel-module/MoreInfoRightPanel", "../../modules/uv-resourcesleftpanel-module/ResourcesLeftPanel", "./SettingsDialogue", "./ShareDialogue", "../../modules/uv-shared-module/Shell"], function (require, exports, BaseEvents_1, BaseExtension_1, FileLinkCenterPanel_1, FooterPanel_1, HeaderPanel_1, HelpDialogue_1, MoreInfoRightPanel_1, ResourcesLeftPanel_1, SettingsDialogue_1, ShareDialogue_1, Shell_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var Extension = /** @class */ (function (_super) {
-        __extends(Extension, _super);
-        function Extension() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        Extension.prototype.create = function () {
-            var _this = this;
-            _super.prototype.create.call(this);
-            // listen for mediaelement enter/exit fullscreen events.
-            $(window).bind('enterfullscreen', function () {
-                $.publish(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN);
-            });
-            $(window).bind('exitfullscreen', function () {
-                $.publish(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN);
-            });
-            $.subscribe(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, function (e, canvasIndex) {
-                _this.viewCanvas(canvasIndex);
-            });
-            $.subscribe(BaseEvents_1.BaseEvents.THUMB_SELECTED, function (e, canvasIndex) {
-                $.publish(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, [canvasIndex]);
-            });
-        };
-        Extension.prototype.createModules = function () {
-            _super.prototype.createModules.call(this);
-            if (this.isHeaderPanelEnabled()) {
-                this.headerPanel = new HeaderPanel_1.HeaderPanel(Shell_1.Shell.$headerPanel);
-            }
-            else {
-                Shell_1.Shell.$headerPanel.hide();
-            }
-            if (this.isLeftPanelEnabled()) {
-                this.leftPanel = new ResourcesLeftPanel_1.ResourcesLeftPanel(Shell_1.Shell.$leftPanel);
-            }
-            this.centerPanel = new FileLinkCenterPanel_1.FileLinkCenterPanel(Shell_1.Shell.$centerPanel);
-            if (this.isRightPanelEnabled()) {
-                this.rightPanel = new MoreInfoRightPanel_1.MoreInfoRightPanel(Shell_1.Shell.$rightPanel);
-            }
-            if (this.isFooterPanelEnabled()) {
-                this.footerPanel = new FooterPanel_1.FooterPanel(Shell_1.Shell.$footerPanel);
-            }
-            else {
-                Shell_1.Shell.$footerPanel.hide();
-            }
-            this.$helpDialogue = $('<div class="overlay help" aria-hidden="true"></div>');
-            Shell_1.Shell.$overlays.append(this.$helpDialogue);
-            this.helpDialogue = new HelpDialogue_1.HelpDialogue(this.$helpDialogue);
-            this.$shareDialogue = $('<div class="overlay share" aria-hidden="true"></div>');
-            Shell_1.Shell.$overlays.append(this.$shareDialogue);
-            this.shareDialogue = new ShareDialogue_1.ShareDialogue(this.$shareDialogue);
-            this.$settingsDialogue = $('<div class="overlay settings" aria-hidden="true"></div>');
-            Shell_1.Shell.$overlays.append(this.$settingsDialogue);
-            this.settingsDialogue = new SettingsDialogue_1.SettingsDialogue(this.$settingsDialogue);
-            if (this.isLeftPanelEnabled()) {
-                this.leftPanel.init();
-            }
-            if (this.isRightPanelEnabled()) {
-                this.rightPanel.init();
-            }
-        };
-        Extension.prototype.update = function () {
-            _super.prototype.update.call(this);
-        };
-        Extension.prototype.isLeftPanelEnabled = function () {
-            return Utils.Bools.getBool(this.data.config.options.leftPanelEnabled, true)
-                && ((this.helper.isMultiCanvas() || this.helper.isMultiSequence()) || this.helper.hasResources());
-        };
-        Extension.prototype.getEmbedScript = function (template, width, height) {
-            //const configUri: string = this.data.config.uri || '';
-            //const script: string = String.format(template, this.getSerializedLocales(), configUri, this.helper.iiifResourceUri, this.helper.collectionIndex, this.helper.manifestIndex, this.helper.sequenceIndex, this.helper.canvasIndex, width, height, this.data.embedScriptUri);
-            var appUri = this.getAppUri();
-            var iframeSrc = appUri + "#?manifest=" + this.helper.iiifResourceUri + "&c=" + this.helper.collectionIndex + "&m=" + this.helper.manifestIndex + "&s=" + this.helper.sequenceIndex + "&cv=" + this.helper.canvasIndex;
-            var script = String.format(template, iframeSrc, width, height);
-            return script;
-        };
-        return Extension;
-    }(BaseExtension_1.BaseExtension));
-    exports.Extension = Extension;
-});
-//# sourceMappingURL=Extension.js.map
-define('modules/uv-shared-module/Bookmark',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var Bookmark = /** @class */ (function () {
-        function Bookmark() {
-        }
-        return Bookmark;
-    }());
-    exports.Bookmark = Bookmark;
-});
-//# sourceMappingURL=Bookmark.js.map
-define('modules/uv-shared-module/DownloadOption',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var DownloadOption = /** @class */ (function () {
-        function DownloadOption(value) {
-            this.value = value;
-        }
-        DownloadOption.prototype.toString = function () {
-            return this.value;
-        };
-        DownloadOption.currentViewAsJpg = new DownloadOption("currentViewAsJpg");
-        DownloadOption.dynamicCanvasRenderings = new DownloadOption("dynamicCanvasRenderings");
-        DownloadOption.dynamicImageRenderings = new DownloadOption("dynamicImageRenderings");
-        DownloadOption.dynamicSequenceRenderings = new DownloadOption("dynamicSequenceRenderings");
-        DownloadOption.entireFileAsOriginal = new DownloadOption("entireFileAsOriginal");
-        DownloadOption.selection = new DownloadOption("selection");
-        DownloadOption.wholeImageHighRes = new DownloadOption("wholeImageHighRes");
-        DownloadOption.wholeImagesHighRes = new DownloadOption("wholeImagesHighRes");
-        DownloadOption.wholeImageLowResAsJpg = new DownloadOption("wholeImageLowResAsJpg");
-        return DownloadOption;
-    }());
-    exports.DownloadOption = DownloadOption;
-});
-//# sourceMappingURL=DownloadOption.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('modules/uv-dialogues-module/DownloadDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue", "../uv-shared-module/DownloadOption"], function (require, exports, BaseEvents_1, Dialogue_1, DownloadOption_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var DownloadDialogue = /** @class */ (function (_super) {
-        __extends(DownloadDialogue, _super);
-        function DownloadDialogue($element) {
-            return _super.call(this, $element) || this;
-        }
-        DownloadDialogue.prototype.create = function () {
-            var _this = this;
-            this.setConfig('downloadDialogue');
-            _super.prototype.create.call(this);
-            this.openCommand = BaseEvents_1.BaseEvents.SHOW_DOWNLOAD_DIALOGUE;
-            this.closeCommand = BaseEvents_1.BaseEvents.HIDE_DOWNLOAD_DIALOGUE;
-            $.subscribe(this.openCommand, function (e, $triggerButton) {
-                _this.open($triggerButton);
-            });
-            $.subscribe(this.closeCommand, function () {
-                _this.close();
-            });
-            // create ui.
-            this.$title = $('<h1>' + this.content.title + '</h1>');
-            this.$content.append(this.$title);
-            this.$noneAvailable = $('<div class="noneAvailable">' + this.content.noneAvailable + '</div>');
-            this.$content.append(this.$noneAvailable);
-            this.$downloadOptions = $('<ol class="options"></ol>');
-            this.$content.append(this.$downloadOptions);
-            this.$footer = $('<div class="footer"></div>');
-            this.$content.append(this.$footer);
-            this.$termsOfUseButton = $('<a href="#">' + this.extension.data.config.content.termsOfUse + '</a>');
-            this.$footer.append(this.$termsOfUseButton);
-            this.$termsOfUseButton.onPressed(function () {
-                $.publish(BaseEvents_1.BaseEvents.SHOW_TERMS_OF_USE);
-            });
-            // hide
-            this.$element.hide();
-            this.updateTermsOfUseButton();
-        };
-        DownloadDialogue.prototype.addEntireFileDownloadOptions = function () {
-            if (this.isDownloadOptionAvailable(DownloadOption_1.DownloadOption.entireFileAsOriginal)) {
-                this.$downloadOptions.empty();
-                // add each file src
-                var canvas = this.extension.helper.getCurrentCanvas();
-                var renderingFound = false;
-                var renderings = canvas.getRenderings();
-                for (var i = 0; i < renderings.length; i++) {
-                    var rendering = renderings[i];
-                    var renderingFormat = rendering.getFormat();
-                    var format = '';
-                    if (renderingFormat) {
-                        format = renderingFormat.toString();
-                    }
-                    this.addEntireFileDownloadOption(rendering.id, Manifesto.TranslationCollection.getValue(rendering.getLabel()), format);
-                    renderingFound = true;
-                }
-                if (!renderingFound) {
-                    var annotationFound = false;
-                    var annotations = canvas.getContent();
-                    for (var i = 0; i < annotations.length; i++) {
-                        var annotation = annotations[i];
-                        var body = annotation.getBody();
-                        if (body.length) {
-                            var format = body[0].getFormat();
-                            if (format) {
-                                this.addEntireFileDownloadOption(body[0].id, '', format.toString());
-                                annotationFound = true;
-                            }
-                        }
-                    }
-                    if (!annotationFound) {
-                        this.addEntireFileDownloadOption(canvas.id, '', '');
-                    }
-                }
-            }
-        };
-        DownloadDialogue.prototype.addEntireFileDownloadOption = function (uri, label, format) {
-            var fileType;
-            if (format) {
-                fileType = Utils.Files.simplifyMimeType(format);
-            }
-            else {
-                fileType = this.getFileExtension(uri);
-            }
-            if (!label) {
-                label = this.content.entireFileAsOriginal;
-            }
-            if (fileType) {
-                label += " (" + fileType + ")";
-            }
-            this.$downloadOptions.append('<li><a href="' + uri + '" target="_blank" download tabindex="0">' + label + '</li>');
-        };
-        DownloadDialogue.prototype.updateNoneAvailable = function () {
-            if (!this.$downloadOptions.find('li:visible').length) {
-                this.$noneAvailable.show();
-            }
-            else {
-                // select first option.
-                this.$noneAvailable.hide();
-            }
-        };
-        DownloadDialogue.prototype.updateTermsOfUseButton = function () {
-            var attribution = this.extension.helper.getAttribution(); // todo: this should eventually use a suitable IIIF 'terms' field.
-            if (Utils.Bools.getBool(this.extension.data.config.options.termsOfUseEnabled, false) && attribution) {
-                this.$termsOfUseButton.show();
-            }
-            else {
-                this.$termsOfUseButton.hide();
-            }
-        };
-        DownloadDialogue.prototype.getFileExtension = function (fileUri) {
-            var extension = fileUri.split('.').pop();
-            // if it's not a valid file extension
-            if (extension.length > 5 || extension.indexOf('/') !== -1) {
-                return null;
-            }
-            return extension;
-        };
-        DownloadDialogue.prototype.isDownloadOptionAvailable = function (option) {
-            switch (option) {
-                case DownloadOption_1.DownloadOption.entireFileAsOriginal:
-                    // check if ui-extensions disable it
-                    var uiExtensions = this.extension.helper.manifest.getService(manifesto.ServiceProfile.uiExtensions());
-                    if (uiExtensions && !this.extension.helper.isUIEnabled('mediaDownload')) {
-                        return false;
-                    }
-            }
-            return true;
-        };
-        DownloadDialogue.prototype.close = function () {
-            _super.prototype.close.call(this);
-        };
-        DownloadDialogue.prototype.resize = function () {
-            this.setDockedPosition();
-        };
-        return DownloadDialogue;
-    }(Dialogue_1.Dialogue));
-    exports.DownloadDialogue = DownloadDialogue;
-});
-//# sourceMappingURL=DownloadDialogue.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('extensions/uv-mediaelement-extension/DownloadDialogue',["require", "exports", "../../modules/uv-dialogues-module/DownloadDialogue"], function (require, exports, DownloadDialogue_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var DownloadDialogue = /** @class */ (function (_super) {
-        __extends(DownloadDialogue, _super);
-        function DownloadDialogue($element) {
-            return _super.call(this, $element) || this;
-        }
-        DownloadDialogue.prototype.create = function () {
-            this.setConfig('downloadDialogue');
-            _super.prototype.create.call(this);
-        };
-        DownloadDialogue.prototype.open = function ($triggerButton) {
-            _super.prototype.open.call(this, $triggerButton);
-            this.addEntireFileDownloadOptions();
-            this.updateNoneAvailable();
-            this.resize();
-        };
-        DownloadDialogue.prototype.isDownloadOptionAvailable = function (option) {
-            return _super.prototype.isDownloadOptionAvailable.call(this, option);
-        };
-        return DownloadDialogue;
-    }(DownloadDialogue_1.DownloadDialogue));
-    exports.DownloadDialogue = DownloadDialogue;
-});
-//# sourceMappingURL=DownloadDialogue.js.map
-define('extensions/uv-mediaelement-extension/Events',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var Events = /** @class */ (function () {
-        function Events() {
-        }
-        Events.namespace = 'mediaelementExtension.';
-        Events.MEDIA_ENDED = Events.namespace + 'mediaEnded';
-        Events.MEDIA_PAUSED = Events.namespace + 'mediaPaused';
-        Events.MEDIA_PLAYED = Events.namespace + 'mediaPlayed';
-        return Events;
-    }());
-    exports.Events = Events;
-});
-//# sourceMappingURL=Events.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('modules/uv-mediaelementcenterpanel-module/MediaElementCenterPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../../extensions/uv-mediaelement-extension/Events", "../uv-shared-module/CenterPanel"], function (require, exports, BaseEvents_1, Events_1, CenterPanel_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var MediaElementCenterPanel = /** @class */ (function (_super) {
-        __extends(MediaElementCenterPanel, _super);
-        function MediaElementCenterPanel($element) {
-            return _super.call(this, $element) || this;
-        }
-        MediaElementCenterPanel.prototype.create = function () {
-            this.setConfig('mediaelementCenterPanel');
-            _super.prototype.create.call(this);
-            var that = this;
-            // events.
-            // only full screen video
-            if (this.isVideo()) {
-                $.subscribe(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN, function () {
-                    if (that.component.isFullScreen) {
-                        that.player.enterFullScreen(false);
-                    }
-                    else {
-                        that.player.exitFullScreen(false);
-                    }
-                });
-            }
-            $.subscribe(BaseEvents_1.BaseEvents.OPEN_EXTERNAL_RESOURCE, function (e, resources) {
-                that.openMedia(resources);
-            });
-            this.$container = $('<div class="container"></div>');
-            this.$content.append(this.$container);
-            this.title = this.extension.helper.getLabel();
-        };
-        MediaElementCenterPanel.prototype.openMedia = function (resources) {
-            var _this = this;
-            var that = this;
-            this.extension.getExternalResources(resources).then(function () {
-                _this.$container.empty();
-                var canvas = _this.extension.helper.getCurrentCanvas();
-                _this.mediaHeight = _this.config.defaultHeight;
-                _this.mediaWidth = _this.config.defaultWidth;
-                _this.$container.height(_this.mediaHeight);
-                _this.$container.width(_this.mediaWidth);
-                var poster = _this.extension.getPosterImageUri();
-                var sources = [];
-                var renderings = canvas.getRenderings();
-                if (renderings && renderings.length) {
-                    $.each(canvas.getRenderings(), function (index, rendering) {
-                        sources.push({
-                            type: rendering.getFormat().toString(),
-                            src: rendering.id
-                        });
-                    });
-                }
-                else {
-                    var formats = _this.extension.getMediaFormats(_this.extension.helper.getCurrentCanvas());
-                    if (formats && formats.length) {
-                        $.each(formats, function (index, format) {
-                            var type = format.getFormat();
-                            if (type) {
-                                sources.push({
-                                    type: type.toString(),
-                                    src: format.id
-                                });
-                            }
-                        });
-                    }
-                }
-                if (_this.isVideo()) {
-                    _this.$media = $('<video controls="controls" preload="none"></video>');
-                    _this.$container.append(_this.$media);
-                    _this.player = new MediaElementPlayer($('video')[0], {
-                        //pluginPath: this.extension.data.root + 'lib/mediaelement/',
-                        poster: poster,
-                        features: ['playpause', 'current', 'progress', 'volume'],
-                        success: function (mediaElement, originalNode) {
-                            mediaElement.addEventListener('canplay', function () {
-                                that.resize();
-                            });
-                            mediaElement.addEventListener('play', function () {
-                                $.publish(Events_1.Events.MEDIA_PLAYED, [Math.floor(mediaElement.currentTime)]);
-                            });
-                            mediaElement.addEventListener('pause', function () {
-                                // mediaelement creates a pause event before the ended event. ignore this.
-                                if (Math.floor(mediaElement.currentTime) != Math.floor(mediaElement.duration)) {
-                                    $.publish(Events_1.Events.MEDIA_PAUSED, [Math.floor(mediaElement.currentTime)]);
-                                }
-                            });
-                            mediaElement.addEventListener('ended', function () {
-                                $.publish(Events_1.Events.MEDIA_ENDED, [Math.floor(mediaElement.duration)]);
-                            });
-                            mediaElement.setSrc(sources);
-                        }
-                    });
-                }
-                else {
-                    // Try to find an MP3, since this is most likely to work:
-                    var preferredSource = 0;
-                    for (var i in sources) {
-                        if (sources[i].type === "audio/mp3") {
-                            preferredSource = i;
-                            break;
-                        }
-                    }
-                    _this.$media = $('<audio controls="controls" preload="none"></audio>');
-                    _this.$container.append(_this.$media);
-                    _this.player = new MediaElementPlayer($('audio')[0], {
-                        poster: poster,
-                        defaultAudioWidth: that.mediaWidth,
-                        defaultAudioHeight: that.mediaHeight,
-                        showPosterWhenPaused: true,
-                        showPosterWhenEnded: true,
-                        success: function (mediaElement, originalNode) {
-                            mediaElement.addEventListener('canplay', function () {
-                                that.resize();
-                            });
-                            mediaElement.addEventListener('play', function () {
-                                $.publish(Events_1.Events.MEDIA_PLAYED, [Math.floor(mediaElement.currentTime)]);
-                            });
-                            mediaElement.addEventListener('pause', function () {
-                                // mediaelement creates a pause event before the ended event. ignore this.
-                                if (Math.floor(mediaElement.currentTime) != Math.floor(mediaElement.duration)) {
-                                    $.publish(Events_1.Events.MEDIA_PAUSED, [Math.floor(mediaElement.currentTime)]);
-                                }
-                            });
-                            mediaElement.addEventListener('ended', function () {
-                                $.publish(Events_1.Events.MEDIA_ENDED, [Math.floor(mediaElement.duration)]);
-                            });
-                            mediaElement.setSrc(sources);
-                        }
-                    });
-                }
-                _this.resize();
-            });
-        };
-        MediaElementCenterPanel.prototype.isVideo = function () {
-            return this.extension.isVideo();
-        };
-        MediaElementCenterPanel.prototype.resize = function () {
-            _super.prototype.resize.call(this);
-            // if in Firefox < v13 don't resize the media container.
-            if (window.browserDetect.browser === 'Firefox' && window.browserDetect.version < 13) {
-                this.$container.width(this.mediaWidth);
-                this.$container.height(this.mediaHeight);
-            }
-            else {
-                // fit media to available space.
-                var size = Utils.Measurements.Dimensions.fitRect(this.mediaWidth, this.mediaHeight, this.$content.width(), this.$content.height());
-                this.$container.height(size.height);
-                this.$container.width(size.width);
-                if (this.player && !this.extension.isFullScreen()) {
-                    this.$media.width(size.width);
-                    this.$media.height(size.height);
-                }
-            }
-            var left = Math.floor((this.$content.width() - this.$container.width()) / 2);
-            var top = Math.floor((this.$content.height() - this.$container.height()) / 2);
-            this.$container.css({
-                'left': left,
-                'top': top
-            });
-            if (this.title) {
-                this.$title.ellipsisFill(this.title);
-            }
-            if (this.player) {
-                if (!this.isVideo() || (this.isVideo() && !this.component.isFullScreen)) {
-                    this.player.setPlayerSize();
-                    this.player.setControlsSize();
-                    var $mejs = $('.mejs__container');
-                    $mejs.css({
-                        'margin-top': (this.$container.height() - $mejs.height()) / 2
-                    });
-                }
-            }
-        };
-        return MediaElementCenterPanel;
-    }(CenterPanel_1.CenterPanel));
-    exports.MediaElementCenterPanel = MediaElementCenterPanel;
-});
-//# sourceMappingURL=MediaElementCenterPanel.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('extensions/uv-mediaelement-extension/SettingsDialogue',["require", "exports", "../../modules/uv-dialogues-module/SettingsDialogue"], function (require, exports, SettingsDialogue_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var SettingsDialogue = /** @class */ (function (_super) {
-        __extends(SettingsDialogue, _super);
-        function SettingsDialogue($element) {
-            return _super.call(this, $element) || this;
-        }
-        SettingsDialogue.prototype.create = function () {
-            this.setConfig('settingsDialogue');
-            _super.prototype.create.call(this);
-        };
-        return SettingsDialogue;
-    }(SettingsDialogue_1.SettingsDialogue));
-    exports.SettingsDialogue = SettingsDialogue;
-});
-//# sourceMappingURL=SettingsDialogue.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('extensions/uv-mediaelement-extension/ShareDialogue',["require", "exports", "../../modules/uv-dialogues-module/ShareDialogue"], function (require, exports, ShareDialogue_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var ShareDialogue = /** @class */ (function (_super) {
-        __extends(ShareDialogue, _super);
-        function ShareDialogue($element) {
-            return _super.call(this, $element) || this;
-        }
-        ShareDialogue.prototype.create = function () {
-            this.setConfig('shareDialogue');
-            _super.prototype.create.call(this);
-        };
-        ShareDialogue.prototype.update = function () {
-            _super.prototype.update.call(this);
-            this.code = this.extension.getEmbedScript(this.options.embedTemplate, this.currentWidth, this.currentHeight);
-            this.$code.val(this.code);
-        };
-        ShareDialogue.prototype.resize = function () {
-            _super.prototype.resize.call(this);
-        };
-        return ShareDialogue;
-    }(ShareDialogue_1.ShareDialogue));
-    exports.ShareDialogue = ShareDialogue;
-});
-//# sourceMappingURL=ShareDialogue.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('extensions/uv-mediaelement-extension/Extension',["require", "exports", "../../modules/uv-shared-module/BaseEvents", "../../modules/uv-shared-module/BaseExtension", "../../modules/uv-shared-module/Bookmark", "./DownloadDialogue", "./Events", "../../modules/uv-shared-module/FooterPanel", "../../modules/uv-shared-module/HeaderPanel", "../../modules/uv-dialogues-module/HelpDialogue", "../../modules/uv-mediaelementcenterpanel-module/MediaElementCenterPanel", "../../modules/uv-moreinforightpanel-module/MoreInfoRightPanel", "../../modules/uv-resourcesleftpanel-module/ResourcesLeftPanel", "./SettingsDialogue", "./ShareDialogue", "../../modules/uv-shared-module/Shell"], function (require, exports, BaseEvents_1, BaseExtension_1, Bookmark_1, DownloadDialogue_1, Events_1, FooterPanel_1, HeaderPanel_1, HelpDialogue_1, MediaElementCenterPanel_1, MoreInfoRightPanel_1, ResourcesLeftPanel_1, SettingsDialogue_1, ShareDialogue_1, Shell_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var Extension = /** @class */ (function (_super) {
-        __extends(Extension, _super);
-        function Extension() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        Extension.prototype.create = function () {
-            var _this = this;
-            _super.prototype.create.call(this);
-            // listen for mediaelement enter/exit fullscreen events.
-            $(window).bind('enterfullscreen', function () {
-                $.publish(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN);
-            });
-            $(window).bind('exitfullscreen', function () {
-                $.publish(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN);
-            });
-            $.subscribe(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, function (e, canvasIndex) {
-                _this.viewCanvas(canvasIndex);
-            });
-            $.subscribe(BaseEvents_1.BaseEvents.THUMB_SELECTED, function (e, thumb) {
-                $.publish(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, [thumb.index]);
-            });
-            $.subscribe(BaseEvents_1.BaseEvents.LEFTPANEL_EXPAND_FULL_START, function () {
-                Shell_1.Shell.$centerPanel.hide();
-                Shell_1.Shell.$rightPanel.hide();
-            });
-            $.subscribe(BaseEvents_1.BaseEvents.LEFTPANEL_COLLAPSE_FULL_FINISH, function () {
-                Shell_1.Shell.$centerPanel.show();
-                Shell_1.Shell.$rightPanel.show();
-                _this.resize();
-            });
-            $.subscribe(Events_1.Events.MEDIA_ENDED, function () {
-                _this.fire(Events_1.Events.MEDIA_ENDED);
-            });
-            $.subscribe(Events_1.Events.MEDIA_PAUSED, function () {
-                _this.fire(Events_1.Events.MEDIA_PAUSED);
-            });
-            $.subscribe(Events_1.Events.MEDIA_PLAYED, function () {
-                _this.fire(Events_1.Events.MEDIA_PLAYED);
-            });
-        };
-        Extension.prototype.createModules = function () {
-            _super.prototype.createModules.call(this);
-            if (this.isHeaderPanelEnabled()) {
-                this.headerPanel = new HeaderPanel_1.HeaderPanel(Shell_1.Shell.$headerPanel);
-            }
-            else {
-                Shell_1.Shell.$headerPanel.hide();
-            }
-            if (this.isLeftPanelEnabled()) {
-                this.leftPanel = new ResourcesLeftPanel_1.ResourcesLeftPanel(Shell_1.Shell.$leftPanel);
-            }
-            this.centerPanel = new MediaElementCenterPanel_1.MediaElementCenterPanel(Shell_1.Shell.$centerPanel);
-            if (this.isRightPanelEnabled()) {
-                this.rightPanel = new MoreInfoRightPanel_1.MoreInfoRightPanel(Shell_1.Shell.$rightPanel);
-            }
-            if (this.isFooterPanelEnabled()) {
-                this.footerPanel = new FooterPanel_1.FooterPanel(Shell_1.Shell.$footerPanel);
-            }
-            else {
-                Shell_1.Shell.$footerPanel.hide();
-            }
-            this.$helpDialogue = $('<div class="overlay help" aria-hidden="true"></div>');
-            Shell_1.Shell.$overlays.append(this.$helpDialogue);
-            this.helpDialogue = new HelpDialogue_1.HelpDialogue(this.$helpDialogue);
-            this.$downloadDialogue = $('<div class="overlay download" aria-hidden="true"></div>');
-            Shell_1.Shell.$overlays.append(this.$downloadDialogue);
-            this.downloadDialogue = new DownloadDialogue_1.DownloadDialogue(this.$downloadDialogue);
-            this.$shareDialogue = $('<div class="overlay share" aria-hidden="true"></div>');
-            Shell_1.Shell.$overlays.append(this.$shareDialogue);
-            this.shareDialogue = new ShareDialogue_1.ShareDialogue(this.$shareDialogue);
-            this.$settingsDialogue = $('<div class="overlay settings" aria-hidden="true"></div>');
-            Shell_1.Shell.$overlays.append(this.$settingsDialogue);
-            this.settingsDialogue = new SettingsDialogue_1.SettingsDialogue(this.$settingsDialogue);
-            if (this.isLeftPanelEnabled()) {
-                this.leftPanel.init();
-            }
-            if (this.isRightPanelEnabled()) {
-                this.rightPanel.init();
-            }
-        };
-        Extension.prototype.update = function () {
-            _super.prototype.update.call(this);
-        };
-        Extension.prototype.isLeftPanelEnabled = function () {
-            return Utils.Bools.getBool(this.data.config.options.leftPanelEnabled, true)
-                && ((this.helper.isMultiCanvas() || this.helper.isMultiSequence()) || this.helper.hasResources());
-        };
-        Extension.prototype.bookmark = function () {
-            _super.prototype.bookmark.call(this);
-            var canvas = this.extensions.helper.getCurrentCanvas();
-            var bookmark = new Bookmark_1.Bookmark();
-            bookmark.index = this.helper.canvasIndex;
-            bookmark.label = Manifesto.TranslationCollection.getValue(canvas.getLabel());
-            bookmark.thumb = canvas.getProperty('thumbnail');
-            bookmark.title = this.helper.getLabel();
-            bookmark.trackingLabel = window.trackingLabel;
-            if (this.isVideo()) {
-                bookmark.type = manifesto.ResourceType.movingimage().toString();
-            }
-            else {
-                bookmark.type = manifesto.ResourceType.sound().toString();
-            }
-            this.fire(BaseEvents_1.BaseEvents.BOOKMARK, bookmark);
-        };
-        Extension.prototype.getEmbedScript = function (template, width, height) {
-            //const configUri: string = this.data.config.uri || '';
-            //const script: string = String.format(template, this.getSerializedLocales(), configUri, this.helper.iiifResourceUri, this.helper.collectionIndex, this.helper.manifestIndex, this.helper.sequenceIndex, this.helper.canvasIndex, width, height, this.data.embedScriptUri);
-            var appUri = this.getAppUri();
-            var iframeSrc = appUri + "#?manifest=" + this.helper.iiifResourceUri + "&c=" + this.helper.collectionIndex + "&m=" + this.helper.manifestIndex + "&s=" + this.helper.sequenceIndex + "&cv=" + this.helper.canvasIndex;
-            var script = String.format(template, iframeSrc, width, height);
-            return script;
-        };
-        // todo: use canvas.getThumbnail()
-        Extension.prototype.getPosterImageUri = function () {
-            var canvas = this.helper.getCurrentCanvas();
-            var annotations = canvas.getContent();
-            if (annotations && annotations.length) {
-                return annotations[0].getProperty('thumbnail');
-            }
-            else {
-                return canvas.getProperty('thumbnail');
-            }
-        };
-        Extension.prototype.isVideoFormat = function (type) {
-            var videoFormats = [manifesto.MediaType.mp4().toString(), manifesto.MediaType.webm().toString()];
-            return videoFormats.indexOf(type) != -1;
-        };
-        Extension.prototype.isVideo = function () {
-            var canvas = this.helper.getCurrentCanvas();
-            var annotations = canvas.getContent();
-            if (annotations && annotations.length) {
-                var formats = this.getMediaFormats(canvas);
-                for (var i = 0; i < formats.length; i++) {
-                    var format = formats[i];
-                    var type = format.getFormat();
-                    if (type) {
-                        if (this.isVideoFormat(type.toString())) {
-                            return true;
-                        }
-                    }
-                }
-            }
-            else {
-                var type = canvas.getType();
-                if (type) {
-                    return type.toString() === manifesto.ResourceType.movingimage().toString();
-                }
-            }
-            throw (new Error("Unable to determine media type"));
-        };
-        return Extension;
-    }(BaseExtension_1.BaseExtension));
-    exports.Extension = Extension;
-});
-//# sourceMappingURL=Extension.js.map
-define('modules/uv-shared-module/AnnotationResults',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var AnnotationResults = /** @class */ (function () {
-        function AnnotationResults() {
-        }
-        return AnnotationResults;
-    }());
-    exports.AnnotationResults = AnnotationResults;
-});
-//# sourceMappingURL=AnnotationResults.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-define('modules/uv-contentleftpanel-module/GalleryView',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/BaseView"], function (require, exports, BaseEvents_1, BaseView_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var GalleryView = /** @class */ (function (_super) {
-        __extends(GalleryView, _super);
-        function GalleryView($element) {
-            var _this = _super.call(this, $element, true, true) || this;
-            _this.isOpen = false;
-            return _this;
-        }
-        GalleryView.prototype.create = function () {
-            this.setConfig('contentLeftPanel');
-            _super.prototype.create.call(this);
-            // search preview doesn't work well with the gallery because it loads thumbs in "chunks"
-            // $.subscribe(Events.SEARCH_PREVIEW_START, (e, canvasIndex) => {
-            //     this.galleryComponent.searchPreviewStart(canvasIndex);
-            // });
-            // $.subscribe(Events.SEARCH_PREVIEW_FINISH, () => {
-            //     this.galleryComponent.searchPreviewFinish();
-            // });
-            this.$gallery = $('<div class="iiif-gallery-component"></div>');
-            this.$element.append(this.$gallery);
-        };
-        GalleryView.prototype.setup = function () {
-            this.galleryComponent = new IIIFComponents.GalleryComponent({
-                target: this.$gallery[0],
-                data: this.galleryData
-            });
-            this.galleryComponent.on('thumbSelected', function (thumb) {
-                $.publish(BaseEvents_1.BaseEvents.GALLERY_THUMB_SELECTED, [thumb]);
-                $.publish(BaseEvents_1.BaseEvents.THUMB_SELECTED, [thumb]);
-            }, false);
-            this.galleryComponent.on('decreaseSize', function () {
-                $.publish(BaseEvents_1.BaseEvents.GALLERY_DECREASE_SIZE);
-            }, false);
-            this.galleryComponent.on('increaseSize', function () {
-                $.publish(BaseEvents_1.BaseEvents.GALLERY_INCREASE_SIZE);
-            }, false);
-        };
-        GalleryView.prototype.databind = function () {
-            this.galleryComponent.options.data = this.galleryData;
-            this.galleryComponent.set(new Object()); // todo: should be passing options.data
-            this.resize();
-        };
-        GalleryView.prototype.show = function () {
-            var _this = this;
-            this.isOpen = true;
-            this.$element.show();
-            // todo: would be better to have no imperative methods on components and use a reactive pattern
-            setTimeout(function () {
-                _this.galleryComponent.selectIndex(_this.extension.helper.canvasIndex);
-            }, 10);
-        };
-        GalleryView.prototype.hide = function () {
-            this.isOpen = false;
-            this.$element.hide();
-        };
-        GalleryView.prototype.resize = function () {
-            _super.prototype.resize.call(this);
-            var $main = this.$gallery.find('.main');
-            var $header = this.$gallery.find('.header');
-            $main.height(this.$element.height() - $header.height());
-        };
-        return GalleryView;
-    }(BaseView_1.BaseView));
-    exports.GalleryView = GalleryView;
-});
-//# sourceMappingURL=GalleryView.js.map
-define('extensions/uv-seadragon-extension/Mode',["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var Mode = /** @class */ (function () {
-        function Mode(value) {
-            this.value = value;
-        }
-        Mode.prototype.toString = function () {
-            return this.value;
-        };
-        Mode.image = new Mode("image");
-        Mode.page = new Mode("page");
-        return Mode;
-    }());
-    exports.Mode = Mode;
-});
-//# sourceMappingURL=Mode.js.map
 define('extensions/uv-seadragon-extension/Events',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -21314,6 +19460,7 @@ define('modules/uv-contentleftpanel-module/ThumbsView',["require", "exports", ".
             // }
         };
         ThumbsView.prototype.isPageModeEnabled = function () {
+            // todo: move getMode to BaseExtension. call it getIndexingMode which can be Label or Index
             if (typeof this.extension.getMode === "function") {
                 return this.config.options.pageModeEnabled && this.extension.getMode().toString() === Mode_1.Mode.page.toString();
             }
@@ -21450,7 +19597,7 @@ define('modules/uv-contentleftpanel-module/ContentLeftPanel',["require", "export
                 _this.collapseFull();
             });
             $.subscribe(BaseEvents_1.BaseEvents.METRIC_CHANGED, function () {
-                if (_this.extension.isMobileView()) {
+                if (!_this.extension.isDesktopMetric()) {
                     if (_this.isFullyExpanded) {
                         _this.collapseFull();
                     }
@@ -21916,6 +20063,2475 @@ define('modules/uv-contentleftpanel-module/ContentLeftPanel',["require", "export
     exports.ContentLeftPanel = ContentLeftPanel;
 });
 //# sourceMappingURL=ContentLeftPanel.js.map
+define('modules/uv-shared-module/DownloadOption',["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var DownloadOption = /** @class */ (function () {
+        function DownloadOption(value) {
+            this.value = value;
+        }
+        DownloadOption.prototype.toString = function () {
+            return this.value;
+        };
+        DownloadOption.currentViewAsJpg = new DownloadOption("currentViewAsJpg");
+        DownloadOption.dynamicCanvasRenderings = new DownloadOption("dynamicCanvasRenderings");
+        DownloadOption.dynamicImageRenderings = new DownloadOption("dynamicImageRenderings");
+        DownloadOption.dynamicSequenceRenderings = new DownloadOption("dynamicSequenceRenderings");
+        DownloadOption.entireFileAsOriginal = new DownloadOption("entireFileAsOriginal");
+        DownloadOption.rangeRendering = new DownloadOption("rangeRendering");
+        DownloadOption.selection = new DownloadOption("selection");
+        DownloadOption.wholeImageHighRes = new DownloadOption("wholeImageHighRes");
+        DownloadOption.wholeImageLowResAsJpg = new DownloadOption("wholeImageLowResAsJpg");
+        DownloadOption.wholeImagesHighRes = new DownloadOption("wholeImagesHighRes");
+        return DownloadOption;
+    }());
+    exports.DownloadOption = DownloadOption;
+});
+//# sourceMappingURL=DownloadOption.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-dialogues-module/DownloadDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue", "../uv-shared-module/DownloadOption"], function (require, exports, BaseEvents_1, Dialogue_1, DownloadOption_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var DownloadDialogue = /** @class */ (function (_super) {
+        __extends(DownloadDialogue, _super);
+        function DownloadDialogue($element) {
+            return _super.call(this, $element) || this;
+        }
+        DownloadDialogue.prototype.create = function () {
+            var _this = this;
+            this.setConfig('downloadDialogue');
+            _super.prototype.create.call(this);
+            this.openCommand = BaseEvents_1.BaseEvents.SHOW_DOWNLOAD_DIALOGUE;
+            this.closeCommand = BaseEvents_1.BaseEvents.HIDE_DOWNLOAD_DIALOGUE;
+            $.subscribe(this.openCommand, function (e, $triggerButton) {
+                _this.open($triggerButton);
+            });
+            $.subscribe(this.closeCommand, function () {
+                _this.close();
+            });
+            // create ui.
+            this.$title = $('<h1>' + this.content.title + '</h1>');
+            this.$content.append(this.$title);
+            this.$noneAvailable = $('<div class="noneAvailable">' + this.content.noneAvailable + '</div>');
+            this.$content.append(this.$noneAvailable);
+            this.$downloadOptions = $('<ol class="options"></ol>');
+            this.$content.append(this.$downloadOptions);
+            this.$footer = $('<div class="footer"></div>');
+            this.$content.append(this.$footer);
+            this.$termsOfUseButton = $('<a href="#">' + this.extension.data.config.content.termsOfUse + '</a>');
+            this.$footer.append(this.$termsOfUseButton);
+            this.$termsOfUseButton.onPressed(function () {
+                $.publish(BaseEvents_1.BaseEvents.SHOW_TERMS_OF_USE);
+            });
+            // hide
+            this.$element.hide();
+            this.updateTermsOfUseButton();
+        };
+        DownloadDialogue.prototype.addEntireFileDownloadOptions = function () {
+            if (this.isDownloadOptionAvailable(DownloadOption_1.DownloadOption.entireFileAsOriginal)) {
+                this.$downloadOptions.empty();
+                // add each file src
+                var canvas = this.extension.helper.getCurrentCanvas();
+                var renderingFound = false;
+                var renderings = canvas.getRenderings();
+                for (var i = 0; i < renderings.length; i++) {
+                    var rendering = renderings[i];
+                    var renderingFormat = rendering.getFormat();
+                    var format = '';
+                    if (renderingFormat) {
+                        format = renderingFormat.toString();
+                    }
+                    this.addEntireFileDownloadOption(rendering.id, Manifesto.TranslationCollection.getValue(rendering.getLabel()), format);
+                    renderingFound = true;
+                }
+                if (!renderingFound) {
+                    var annotationFound = false;
+                    var annotations = canvas.getContent();
+                    for (var i = 0; i < annotations.length; i++) {
+                        var annotation = annotations[i];
+                        var body = annotation.getBody();
+                        if (body.length) {
+                            var format = body[0].getFormat();
+                            if (format) {
+                                this.addEntireFileDownloadOption(body[0].id, '', format.toString());
+                                annotationFound = true;
+                            }
+                        }
+                    }
+                    if (!annotationFound) {
+                        this.addEntireFileDownloadOption(canvas.id, '', '');
+                    }
+                }
+            }
+        };
+        DownloadDialogue.prototype.addEntireFileDownloadOption = function (uri, label, format) {
+            var fileType;
+            if (format) {
+                fileType = Utils.Files.simplifyMimeType(format);
+            }
+            else {
+                fileType = this.getFileExtension(uri);
+            }
+            if (!label) {
+                label = this.content.entireFileAsOriginal;
+            }
+            if (fileType) {
+                label += " (" + fileType + ")";
+            }
+            this.$downloadOptions.append('<li><a href="' + uri + '" target="_blank" download tabindex="0">' + label + '</li>');
+        };
+        DownloadDialogue.prototype.updateNoneAvailable = function () {
+            if (!this.$downloadOptions.find('li:visible').length) {
+                this.$noneAvailable.show();
+            }
+            else {
+                // select first option.
+                this.$noneAvailable.hide();
+            }
+        };
+        DownloadDialogue.prototype.updateTermsOfUseButton = function () {
+            var attribution = this.extension.helper.getAttribution(); // todo: this should eventually use a suitable IIIF 'terms' field.
+            if (Utils.Bools.getBool(this.extension.data.config.options.termsOfUseEnabled, false) && attribution) {
+                this.$termsOfUseButton.show();
+            }
+            else {
+                this.$termsOfUseButton.hide();
+            }
+        };
+        DownloadDialogue.prototype.getFileExtension = function (fileUri) {
+            var extension = fileUri.split('.').pop();
+            // if it's not a valid file extension
+            if (extension.length > 5 || extension.indexOf('/') !== -1) {
+                return null;
+            }
+            return extension;
+        };
+        DownloadDialogue.prototype.isDownloadOptionAvailable = function (option) {
+            switch (option) {
+                case DownloadOption_1.DownloadOption.entireFileAsOriginal:
+                    // check if ui-extensions disable it
+                    var uiExtensions = this.extension.helper.manifest.getService(manifesto.ServiceProfile.uiExtensions());
+                    if (uiExtensions && !this.extension.helper.isUIEnabled('mediaDownload')) {
+                        return false;
+                    }
+            }
+            return true;
+        };
+        DownloadDialogue.prototype.close = function () {
+            _super.prototype.close.call(this);
+        };
+        DownloadDialogue.prototype.resize = function () {
+            this.setDockedPosition();
+        };
+        return DownloadDialogue;
+    }(Dialogue_1.Dialogue));
+    exports.DownloadDialogue = DownloadDialogue;
+});
+//# sourceMappingURL=DownloadDialogue.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('extensions/uv-av-extension/DownloadDialogue',["require", "exports", "../../modules/uv-dialogues-module/DownloadDialogue"], function (require, exports, DownloadDialogue_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var DownloadDialogue = /** @class */ (function (_super) {
+        __extends(DownloadDialogue, _super);
+        function DownloadDialogue($element) {
+            return _super.call(this, $element) || this;
+        }
+        DownloadDialogue.prototype.create = function () {
+            this.setConfig('downloadDialogue');
+            _super.prototype.create.call(this);
+        };
+        DownloadDialogue.prototype.open = function ($triggerButton) {
+            _super.prototype.open.call(this, $triggerButton);
+            this.addEntireFileDownloadOptions();
+            this.updateNoneAvailable();
+            this.resize();
+        };
+        DownloadDialogue.prototype.isDownloadOptionAvailable = function (option) {
+            return _super.prototype.isDownloadOptionAvailable.call(this, option);
+        };
+        return DownloadDialogue;
+    }(DownloadDialogue_1.DownloadDialogue));
+    exports.DownloadDialogue = DownloadDialogue;
+});
+//# sourceMappingURL=DownloadDialogue.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-shared-module/FooterPanel',["require", "exports", "./BaseEvents", "./BaseView"], function (require, exports, BaseEvents_1, BaseView_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var FooterPanel = /** @class */ (function (_super) {
+        __extends(FooterPanel, _super);
+        function FooterPanel($element) {
+            return _super.call(this, $element) || this;
+        }
+        FooterPanel.prototype.create = function () {
+            var _this = this;
+            this.setConfig('footerPanel');
+            _super.prototype.create.call(this);
+            $.subscribe(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN, function () {
+                _this.updateFullScreenButton();
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.METRIC_CHANGED, function () {
+                _this.updateMinimisedButtons();
+                _this.updateMoreInfoButton();
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.SETTINGS_CHANGED, function () {
+                _this.updateDownloadButton();
+            });
+            this.$options = $('<div class="options"></div>');
+            this.$element.append(this.$options);
+            this.$feedbackButton = $("\n          <button class=\"feedback btn imageBtn\" title=\"" + this.content.feedback + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-feedback\" aria-hidden=\"true\"></i>" + this.content.feedback + "\n          </button>\n        ");
+            this.$options.prepend(this.$feedbackButton);
+            this.$openButton = $("\n          <button class=\"open btn imageBtn\" title=\"" + this.content.open + "\" tabindex=\"0\">\n            <i class=\"uv-icon-open\" aria-hidden=\"true\"></i>" + this.content.open + "\n          </button>\n        ");
+            this.$options.prepend(this.$openButton);
+            this.$bookmarkButton = $("\n          <button class=\"bookmark btn imageBtn\" title=\"" + this.content.bookmark + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-bookmark\" aria-hidden=\"true\"></i>" + this.content.bookmark + "\n          </button>\n        ");
+            this.$options.prepend(this.$bookmarkButton);
+            this.$shareButton = $("\n          <button class=\"share btn imageBtn\" title=\"" + this.content.share + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-share\" aria-hidden=\"true\"></i>" + this.content.share + "\n          </button>\n        ");
+            this.$options.append(this.$shareButton);
+            this.$embedButton = $("\n          <button class=\"embed btn imageBtn\" title=\"" + this.content.embed + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-embed\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$options.append(this.$embedButton);
+            this.$downloadButton = $("\n          <button class=\"download btn imageBtn\" title=\"" + this.content.download + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-download\" aria-hidden=\"true\"></i>" + this.content.download + "\n          </button>\n        ");
+            this.$options.prepend(this.$downloadButton);
+            this.$moreInfoButton = $("\n          <button class=\"moreInfo btn imageBtn\" title=\"" + this.content.moreInfo + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-more-info\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$options.prepend(this.$moreInfoButton);
+            this.$fullScreenBtn = $("\n          <button class=\"fullScreen btn imageBtn\" title=\"" + this.content.fullScreen + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-fullscreen\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$options.append(this.$fullScreenBtn);
+            this.$openButton.onPressed(function () {
+                $.publish(BaseEvents_1.BaseEvents.OPEN);
+            });
+            this.$feedbackButton.onPressed(function () {
+                $.publish(BaseEvents_1.BaseEvents.FEEDBACK);
+            });
+            this.$bookmarkButton.onPressed(function () {
+                $.publish(BaseEvents_1.BaseEvents.BOOKMARK);
+            });
+            this.$shareButton.onPressed(function () {
+                $.publish(BaseEvents_1.BaseEvents.SHOW_SHARE_DIALOGUE, [_this.$shareButton]);
+            });
+            this.$embedButton.onPressed(function () {
+                $.publish(BaseEvents_1.BaseEvents.SHOW_EMBED_DIALOGUE, [_this.$embedButton]);
+            });
+            this.$downloadButton.onPressed(function () {
+                $.publish(BaseEvents_1.BaseEvents.SHOW_DOWNLOAD_DIALOGUE, [_this.$downloadButton]);
+            });
+            this.$moreInfoButton.onPressed(function () {
+                $.publish(BaseEvents_1.BaseEvents.SHOW_MOREINFO_DIALOGUE, [_this.$moreInfoButton]);
+            });
+            this.$fullScreenBtn.on('click', function (e) {
+                e.preventDefault();
+                $.publish(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN);
+            });
+            if (!Utils.Bools.getBool(this.options.embedEnabled, true)) {
+                this.$embedButton.hide();
+            }
+            this.updateMoreInfoButton();
+            this.updateOpenButton();
+            this.updateFeedbackButton();
+            this.updateBookmarkButton();
+            this.updateEmbedButton();
+            this.updateDownloadButton();
+            this.updateFullScreenButton();
+            this.updateShareButton();
+            this.updateMinimisedButtons();
+        };
+        FooterPanel.prototype.updateMinimisedButtons = function () {
+            // if configured to always minimise buttons
+            if (Utils.Bools.getBool(this.options.minimiseButtons, false)) {
+                this.$options.addClass('minimiseButtons');
+                return;
+            }
+            // otherwise, check metric
+            if (!this.extension.isDesktopMetric()) {
+                this.$options.addClass('minimiseButtons');
+            }
+            else {
+                this.$options.removeClass('minimiseButtons');
+            }
+        };
+        FooterPanel.prototype.updateMoreInfoButton = function () {
+            var configEnabled = Utils.Bools.getBool(this.options.moreInfoEnabled, false);
+            if (configEnabled && !this.extension.isDesktopMetric()) {
+                this.$moreInfoButton.show();
+            }
+            else {
+                this.$moreInfoButton.hide();
+            }
+        };
+        FooterPanel.prototype.updateOpenButton = function () {
+            var configEnabled = Utils.Bools.getBool(this.options.openEnabled, false);
+            if (configEnabled && Utils.Documents.isInIFrame()) {
+                this.$openButton.show();
+            }
+            else {
+                this.$openButton.hide();
+            }
+        };
+        FooterPanel.prototype.updateFullScreenButton = function () {
+            if (!Utils.Bools.getBool(this.options.fullscreenEnabled, true) || !Utils.Documents.supportsFullscreen()) {
+                this.$fullScreenBtn.hide();
+                return;
+            }
+            if (this.extension.data.isLightbox) {
+                this.$fullScreenBtn.addClass('lightbox');
+            }
+            if (this.extension.isFullScreen()) {
+                this.$fullScreenBtn.swapClass('fullScreen', 'exitFullscreen');
+                this.$fullScreenBtn.find('i').swapClass('uv-icon-fullscreen', 'uv-icon-exit-fullscreen');
+                this.$fullScreenBtn.attr('title', this.content.exitFullScreen);
+            }
+            else {
+                this.$fullScreenBtn.swapClass('exitFullscreen', 'fullScreen');
+                this.$fullScreenBtn.find('i').swapClass('uv-icon-exit-fullscreen', 'uv-icon-fullscreen');
+                this.$fullScreenBtn.attr('title', this.content.fullScreen);
+            }
+        };
+        FooterPanel.prototype.updateEmbedButton = function () {
+            if (this.extension.helper.isUIEnabled('embed') && Utils.Bools.getBool(this.options.embedEnabled, false)) {
+                // current jquery version sets display to 'inline' in mobile version, while this should remain hidden (see media query)
+                if (!$.browser.mobile) {
+                    this.$embedButton.show();
+                }
+            }
+            else {
+                this.$embedButton.hide();
+            }
+        };
+        FooterPanel.prototype.updateShareButton = function () {
+            if (this.extension.helper.isUIEnabled('share') && Utils.Bools.getBool(this.options.shareEnabled, true)) {
+                this.$shareButton.show();
+            }
+            else {
+                this.$shareButton.hide();
+            }
+        };
+        FooterPanel.prototype.updateDownloadButton = function () {
+            var configEnabled = Utils.Bools.getBool(this.options.downloadEnabled, true);
+            if (configEnabled) {
+                this.$downloadButton.show();
+            }
+            else {
+                this.$downloadButton.hide();
+            }
+        };
+        FooterPanel.prototype.updateFeedbackButton = function () {
+            var configEnabled = Utils.Bools.getBool(this.options.feedbackEnabled, false);
+            if (configEnabled) {
+                this.$feedbackButton.show();
+            }
+            else {
+                this.$feedbackButton.hide();
+            }
+        };
+        FooterPanel.prototype.updateBookmarkButton = function () {
+            var configEnabled = Utils.Bools.getBool(this.options.bookmarkEnabled, false);
+            if (configEnabled) {
+                this.$bookmarkButton.show();
+            }
+            else {
+                this.$bookmarkButton.hide();
+            }
+        };
+        FooterPanel.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+        };
+        return FooterPanel;
+    }(BaseView_1.BaseView));
+    exports.FooterPanel = FooterPanel;
+});
+//# sourceMappingURL=FooterPanel.js.map
+define('modules/uv-shared-module/Information',["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Information = /** @class */ (function () {
+        function Information(message, actions) {
+            this.message = message;
+            this.actions = actions;
+        }
+        return Information;
+    }());
+    exports.Information = Information;
+});
+//# sourceMappingURL=Information.js.map
+define('modules/uv-shared-module/InformationAction',["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var InformationAction = /** @class */ (function () {
+        function InformationAction() {
+        }
+        return InformationAction;
+    }());
+    exports.InformationAction = InformationAction;
+});
+//# sourceMappingURL=InformationAction.js.map
+define('modules/uv-shared-module/InformationFactory',["require", "exports", "./BaseEvents", "./Information", "./InformationAction", "./InformationType"], function (require, exports, BaseEvents_1, Information_1, InformationAction_1, InformationType_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var InformationFactory = /** @class */ (function () {
+        function InformationFactory(extension) {
+            this.extension = extension;
+        }
+        InformationFactory.prototype.Get = function (args) {
+            switch (args.informationType) {
+                case (InformationType_1.InformationType.AUTH_CORS_ERROR):
+                    return new Information_1.Information(this.extension.data.config.content.authCORSError, []);
+                case (InformationType_1.InformationType.DEGRADED_RESOURCE):
+                    var actions = [];
+                    var loginAction = new InformationAction_1.InformationAction();
+                    var label = args.param.loginService.getConfirmLabel();
+                    if (!label) {
+                        label = this.extension.data.config.content.fallbackDegradedLabel;
+                    }
+                    loginAction.label = label;
+                    var resource_1 = args.param;
+                    loginAction.action = function () {
+                        resource_1.authHoldingPage = window.open("", "_blank");
+                        $.publish(BaseEvents_1.BaseEvents.HIDE_INFORMATION);
+                        $.publish(BaseEvents_1.BaseEvents.OPEN_EXTERNAL_RESOURCE, [[resource_1]]);
+                    };
+                    actions.push(loginAction);
+                    var message = args.param.loginService.getServiceLabel();
+                    if (!message) {
+                        message = this.extension.data.config.content.fallbackDegradedMessage;
+                    }
+                    return new Information_1.Information(message, actions);
+            }
+        };
+        return InformationFactory;
+    }());
+    exports.InformationFactory = InformationFactory;
+});
+//# sourceMappingURL=InformationFactory.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-shared-module/HeaderPanel',["require", "exports", "./BaseEvents", "./BaseView", "../uv-shared-module/InformationFactory"], function (require, exports, BaseEvents_1, BaseView_1, InformationFactory_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var HeaderPanel = /** @class */ (function (_super) {
+        __extends(HeaderPanel, _super);
+        function HeaderPanel($element) {
+            return _super.call(this, $element, false, false) || this;
+        }
+        HeaderPanel.prototype.create = function () {
+            var _this = this;
+            this.setConfig('headerPanel');
+            _super.prototype.create.call(this);
+            $.subscribe(BaseEvents_1.BaseEvents.SHOW_INFORMATION, function (e, args) {
+                _this.showInformation(args);
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.HIDE_INFORMATION, function () {
+                _this.hideInformation();
+            });
+            this.$options = $('<div class="options"></div>');
+            this.$element.append(this.$options);
+            this.$centerOptions = $('<div class="centerOptions"></div>');
+            this.$options.append(this.$centerOptions);
+            this.$rightOptions = $('<div class="rightOptions"></div>');
+            this.$options.append(this.$rightOptions);
+            //this.$helpButton = $('<a href="#" class="action help">' + this.content.help + '</a>');
+            //this.$rightOptions.append(this.$helpButton);
+            this.$localeToggleButton = $('<a class="localeToggle" tabindex="0"></a>');
+            this.$rightOptions.append(this.$localeToggleButton);
+            this.$settingsButton = $("\n          <button class=\"btn imageBtn settings\" tabindex=\"0\">\n            <i class=\"uv-icon-settings\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$settingsButton.attr('title', this.content.settings);
+            this.$rightOptions.append(this.$settingsButton);
+            this.$informationBox = $('<div class="informationBox" aria-hidden="true"> \
+                                    <div class="message"></div> \
+                                    <div class="actions"></div> \
+                                    <button type="button" class="close" aria-label="Close"> \
+                                        <span aria-hidden="true">&times;</span>\
+                                    </button> \
+                                  </div>');
+            this.$element.append(this.$informationBox);
+            this.$informationBox.hide();
+            this.$informationBox.find('.close').attr('title', this.content.close);
+            this.$informationBox.find('.close').on('click', function (e) {
+                e.preventDefault();
+                $.publish(BaseEvents_1.BaseEvents.HIDE_INFORMATION);
+            });
+            this.$localeToggleButton.on('click', function () {
+                _this.extension.changeLocale(String(_this.$localeToggleButton.data('locale')));
+            });
+            this.$settingsButton.onPressed(function () {
+                $.publish(BaseEvents_1.BaseEvents.SHOW_SETTINGS_DIALOGUE);
+            });
+            if (!Utils.Bools.getBool(this.options.centerOptionsEnabled, true)) {
+                this.$centerOptions.hide();
+            }
+            this.updateLocaleToggle();
+            this.updateSettingsButton();
+        };
+        HeaderPanel.prototype.updateLocaleToggle = function () {
+            if (!this.localeToggleIsVisible()) {
+                this.$localeToggleButton.hide();
+                return;
+            }
+            var alternateLocale = this.extension.getAlternateLocale();
+            var text = alternateLocale.name.split('-')[0].toUpperCase();
+            this.$localeToggleButton.data('locale', alternateLocale.name);
+            this.$localeToggleButton.attr('title', alternateLocale.label);
+            this.$localeToggleButton.text(text);
+        };
+        HeaderPanel.prototype.updateSettingsButton = function () {
+            var settingsEnabled = Utils.Bools.getBool(this.options.settingsButtonEnabled, true);
+            if (!settingsEnabled) {
+                this.$settingsButton.hide();
+            }
+            else {
+                this.$settingsButton.show();
+            }
+        };
+        HeaderPanel.prototype.localeToggleIsVisible = function () {
+            var locales = this.extension.data.locales;
+            if (locales) {
+                return locales.length > 1 && Utils.Bools.getBool(this.options.localeToggleEnabled, false);
+            }
+            return false;
+        };
+        HeaderPanel.prototype.showInformation = function (args) {
+            var informationFactory = new InformationFactory_1.InformationFactory(this.extension);
+            this.information = informationFactory.Get(args);
+            var $message = this.$informationBox.find('.message');
+            $message.html(this.information.message).find('a').attr('target', '_top');
+            var $actions = this.$informationBox.find('.actions');
+            $actions.empty();
+            for (var i = 0; i < this.information.actions.length; i++) {
+                var action = this.information.actions[i];
+                var $action = $('<a href="#" class="btn btn-default">' + action.label + '</a>');
+                $action.on('click', action.action);
+                $actions.append($action);
+            }
+            this.$informationBox.attr('aria-hidden', 'false');
+            this.$informationBox.show();
+            this.$element.addClass('showInformation');
+            this.extension.resize();
+        };
+        HeaderPanel.prototype.hideInformation = function () {
+            this.$element.removeClass('showInformation');
+            this.$informationBox.attr('aria-hidden', 'true');
+            this.$informationBox.hide();
+            this.extension.resize();
+        };
+        HeaderPanel.prototype.getSettings = function () {
+            return this.extension.getSettings();
+        };
+        HeaderPanel.prototype.updateSettings = function (settings) {
+            this.extension.updateSettings(settings);
+            $.publish(BaseEvents_1.BaseEvents.UPDATE_SETTINGS, [settings]);
+        };
+        HeaderPanel.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+            var headerWidth = this.$element.width();
+            var center = headerWidth / 2;
+            var containerWidth = this.$centerOptions.outerWidth();
+            var pos = center - (containerWidth / 2);
+            this.$centerOptions.css({
+                left: pos
+            });
+            if (this.$informationBox.is(':visible')) {
+                var $actions = this.$informationBox.find('.actions');
+                var $message = this.$informationBox.find('.message');
+                $message.width(Math.floor(this.$element.width()) - Math.ceil($message.horizontalMargins()) - Math.ceil($actions.outerWidth(true)) - Math.ceil(this.$informationBox.find('.close').outerWidth(true)) - 2);
+                $message.ellipsisFill(this.information.message);
+            }
+            // hide toggle buttons below minimum width
+            if (this.extension.width() < this.extension.data.config.options.minWidthBreakPoint) {
+                if (this.localeToggleIsVisible())
+                    this.$localeToggleButton.hide();
+            }
+            else {
+                if (this.localeToggleIsVisible())
+                    this.$localeToggleButton.show();
+            }
+        };
+        return HeaderPanel;
+    }(BaseView_1.BaseView));
+    exports.HeaderPanel = HeaderPanel;
+});
+//# sourceMappingURL=HeaderPanel.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-shared-module/RightPanel',["require", "exports", "./BaseEvents", "./BaseExpandPanel"], function (require, exports, BaseEvents_1, BaseExpandPanel_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var RightPanel = /** @class */ (function (_super) {
+        __extends(RightPanel, _super);
+        function RightPanel($element) {
+            return _super.call(this, $element) || this;
+        }
+        RightPanel.prototype.create = function () {
+            _super.prototype.create.call(this);
+            this.$element.width(this.options.panelCollapsedWidth);
+        };
+        RightPanel.prototype.init = function () {
+            var _this = this;
+            _super.prototype.init.call(this);
+            var shouldOpenPanel = Utils.Bools.getBool(this.extension.getSettings().rightPanelOpen, this.options.panelOpen);
+            if (shouldOpenPanel) {
+                this.toggle(true);
+            }
+            $.subscribe(BaseEvents_1.BaseEvents.TOGGLE_EXPAND_RIGHT_PANEL, function () {
+                if (_this.isFullyExpanded) {
+                    _this.collapseFull();
+                }
+                else {
+                    _this.expandFull();
+                }
+            });
+        };
+        RightPanel.prototype.getTargetWidth = function () {
+            return this.isExpanded ? this.options.panelCollapsedWidth : this.options.panelExpandedWidth;
+        };
+        RightPanel.prototype.getTargetLeft = function () {
+            return this.isExpanded ? this.$element.parent().width() - this.options.panelCollapsedWidth : this.$element.parent().width() - this.options.panelExpandedWidth;
+        };
+        RightPanel.prototype.toggleFinish = function () {
+            _super.prototype.toggleFinish.call(this);
+            if (this.isExpanded) {
+                $.publish(BaseEvents_1.BaseEvents.OPEN_RIGHT_PANEL);
+            }
+            else {
+                $.publish(BaseEvents_1.BaseEvents.CLOSE_RIGHT_PANEL);
+            }
+            this.extension.updateSettings({ rightPanelOpen: this.isExpanded });
+        };
+        RightPanel.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+            this.$element.css({
+                'left': Math.floor(this.$element.parent().width() - this.$element.outerWidth())
+            });
+        };
+        return RightPanel;
+    }(BaseExpandPanel_1.BaseExpandPanel));
+    exports.RightPanel = RightPanel;
+});
+//# sourceMappingURL=RightPanel.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-moreinforightpanel-module/MoreInfoRightPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/RightPanel", "../uv-shared-module/Utils"], function (require, exports, BaseEvents_1, RightPanel_1, Utils_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var MoreInfoRightPanel = /** @class */ (function (_super) {
+        __extends(MoreInfoRightPanel, _super);
+        function MoreInfoRightPanel($element) {
+            return _super.call(this, $element) || this;
+        }
+        MoreInfoRightPanel.prototype.create = function () {
+            var _this = this;
+            this.setConfig('moreInfoRightPanel');
+            _super.prototype.create.call(this);
+            $.subscribe(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, function () {
+                _this.databind();
+            });
+            this.setTitle(this.config.content.title);
+            this.$metadata = $('<div class="iiif-metadata-component"></div>');
+            this.$main.append(this.$metadata);
+            this.metadataComponent = new IIIFComponents.MetadataComponent({
+                target: this.$metadata[0],
+                data: this._getData()
+            });
+        };
+        MoreInfoRightPanel.prototype.toggleFinish = function () {
+            _super.prototype.toggleFinish.call(this);
+            this.databind();
+        };
+        MoreInfoRightPanel.prototype.databind = function () {
+            this.metadataComponent.options.data = this._getData();
+            this.metadataComponent.set(new Object()); // todo: should be passing data
+        };
+        MoreInfoRightPanel.prototype._getData = function () {
+            return {
+                canvasDisplayOrder: this.config.options.canvasDisplayOrder,
+                canvases: this.extension.getCurrentCanvases(),
+                canvasExclude: this.config.options.canvasExclude,
+                canvasLabels: this.extension.getCanvasLabels(this.content.page),
+                content: this.config.content,
+                copiedMessageDuration: 2000,
+                copyToClipboardEnabled: Utils.Bools.getBool(this.config.options.copyToClipboardEnabled, false),
+                helper: this.extension.helper,
+                licenseFormatter: null,
+                limit: this.config.options.textLimit || 4,
+                limitType: IIIFComponents.MetadataComponentOptions.LimitType.LINES,
+                manifestDisplayOrder: this.config.options.manifestDisplayOrder,
+                manifestExclude: this.config.options.manifestExclude,
+                range: this.extension.getCurrentCanvasRange(),
+                rtlLanguageCodes: this.config.options.rtlLanguageCodes,
+                sanitizer: function (html) {
+                    return Utils_1.UVUtils.sanitize(html);
+                },
+                showAllLanguages: this.config.options.showAllLanguages
+            };
+        };
+        MoreInfoRightPanel.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+            this.$main.height(this.$element.height() - this.$top.height() - this.$main.verticalMargins());
+        };
+        return MoreInfoRightPanel;
+    }(RightPanel_1.RightPanel));
+    exports.MoreInfoRightPanel = MoreInfoRightPanel;
+});
+//# sourceMappingURL=MoreInfoRightPanel.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-shared-module/CenterPanel',["require", "exports", "./Shell", "./BaseView", "./Utils"], function (require, exports, Shell_1, BaseView_1, Utils_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var CenterPanel = /** @class */ (function (_super) {
+        __extends(CenterPanel, _super);
+        function CenterPanel($element) {
+            return _super.call(this, $element, false, true) || this;
+        }
+        CenterPanel.prototype.create = function () {
+            var _this = this;
+            _super.prototype.create.call(this);
+            this.$title = $('<div class="title"></div>');
+            this.$element.append(this.$title);
+            this.$content = $('<div id="content" class="content"></div>');
+            this.$element.append(this.$content);
+            this.$attribution = $("\n                                <div class=\"attribution\">\n                                  <div class=\"header\">\n                                    <div class=\"title\"></div>\n                                    <button type=\"button\" class=\"close\" aria-label=\"Close\">\n                                      <span aria-hidden=\"true\">&times;</span>\n                                    </button>\n                                  </div>\n                                  <div class=\"main\">\n                                    <div class=\"attribution-text\"></div>\n                                    <div class=\"license\"></div>\n                                    <div class=\"logo\"></div>\n                                  </div>\n                                </div>\n        ");
+            this.$attribution.find('.header .title').text(this.content.attribution);
+            this.$content.append(this.$attribution);
+            this.$attribution.hide();
+            this.$closeAttributionButton = this.$attribution.find('.header .close');
+            this.$closeAttributionButton.on('click', function (e) {
+                e.preventDefault();
+                _this.$attribution.hide();
+            });
+            if (!Utils.Bools.getBool(this.options.titleEnabled, true)) {
+                this.$title.hide();
+            }
+        };
+        CenterPanel.prototype.updateAttribution = function () {
+            var _this = this;
+            var attribution = this.extension.helper.getAttribution();
+            //var license = this.provider.getLicense();
+            //var logo = this.provider.getLogo();
+            var enabled = Utils.Bools.getBool(this.options.attributionEnabled, true);
+            if (!attribution || !enabled) {
+                return;
+            }
+            this.$attribution.show();
+            var $attribution = this.$attribution.find('.attribution-text');
+            var $license = this.$attribution.find('.license');
+            var $logo = this.$attribution.find('.logo');
+            var sanitized = Utils_1.UVUtils.sanitize(attribution);
+            $attribution.html(sanitized);
+            $attribution.find('img').one('load', function () {
+                _this.resize();
+            }).each(function () {
+                if (this.complete)
+                    $(this).load();
+            });
+            $attribution.targetBlank();
+            // $attribution.toggleExpandText(this.options.trimAttributionCount, () => {
+            //     this.resize();
+            // });
+            //if (license){
+            //    $license.append('<a href="' + license + '">' + license + '</a>');
+            //} else {
+            $license.hide();
+            //}
+            //
+            //if (logo){
+            //    $logo.append('<img src="' + logo + '"/>');
+            //} else {
+            $logo.hide();
+            //}
+        };
+        CenterPanel.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+            var leftPanelWidth = Shell_1.Shell.$leftPanel.is(':visible') ? Math.floor(Shell_1.Shell.$leftPanel.width()) : 0;
+            var rightPanelWidth = Shell_1.Shell.$rightPanel.is(':visible') ? Math.floor(Shell_1.Shell.$rightPanel.width()) : 0;
+            var width = Math.floor(this.$element.parent().width() - leftPanelWidth - rightPanelWidth);
+            this.$element.css({
+                'left': leftPanelWidth,
+                'width': width
+            });
+            var titleHeight;
+            if (this.options && this.options.titleEnabled === false) {
+                titleHeight = 0;
+            }
+            else {
+                titleHeight = this.$title.height();
+            }
+            this.$content.height(this.$element.height() - titleHeight);
+            this.$content.width(this.$element.width());
+            if (this.$attribution && this.$attribution.is(':visible')) {
+                this.$attribution.css('top', this.$content.height() - this.$attribution.outerHeight() - this.$attribution.verticalMargins());
+            }
+        };
+        return CenterPanel;
+    }(BaseView_1.BaseView));
+    exports.CenterPanel = CenterPanel;
+});
+//# sourceMappingURL=CenterPanel.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-avcenterpanel-module/AVCenterPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/CenterPanel"], function (require, exports, BaseEvents_1, CenterPanel_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var AVCenterPanel = /** @class */ (function (_super) {
+        __extends(AVCenterPanel, _super);
+        function AVCenterPanel($element) {
+            var _this = _super.call(this, $element) || this;
+            _this._canvasReady = false;
+            _this._resourceOpened = false;
+            return _this;
+        }
+        AVCenterPanel.prototype.create = function () {
+            var _this = this;
+            this.setConfig('avCenterPanel');
+            _super.prototype.create.call(this);
+            var that = this;
+            $.subscribe(BaseEvents_1.BaseEvents.OPEN_EXTERNAL_RESOURCE, function (e, resources) {
+                if (!_this._resourceOpened) {
+                    that.openMedia(resources);
+                    _this._resourceOpened = true;
+                }
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, function (e, canvasIndex) {
+                var canvas = _this.extension.helper.getCanvasByIndex(canvasIndex);
+                if (canvas) {
+                    _this.avcomponent.showCanvas(canvas.id);
+                }
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.RANGE_CHANGED, function (e, range) {
+                that.viewRange(range);
+            });
+            this.$avcomponent = $('<div class="iiif-av-component"></div>');
+            this.$content.append(this.$avcomponent);
+            this.title = this.extension.helper.getLabel();
+            this.avcomponent = new IIIFComponents.AVComponent({
+                target: this.$avcomponent[0]
+            });
+            this.avcomponent.on('canvasready', function () {
+                _this._canvasReady = true;
+            }, false);
+        };
+        AVCenterPanel.prototype.openMedia = function (resources) {
+            var _this = this;
+            this.extension.getExternalResources(resources).then(function () {
+                _this.avcomponent.set({
+                    helper: _this.extension.helper,
+                    autoPlay: _this.config.options.autoPlay,
+                    defaultAspectRatio: 0.56,
+                    content: {
+                        play: _this.content.play,
+                        pause: _this.content.pause,
+                        currentTime: _this.content.currentTime,
+                        duration: _this.content.duration
+                    }
+                });
+                _this.resize();
+            });
+        };
+        AVCenterPanel.prototype.viewRange = function (range) {
+            var _this = this;
+            if (!range.canvases || !range.canvases.length)
+                return;
+            var canvasId = range.canvases[0];
+            var canvas = this.extension.helper.getCanvasById(canvasId);
+            if (canvas) {
+                Utils.Async.waitFor(function () {
+                    return _this._canvasReady;
+                }, function () {
+                    _this.avcomponent.play(canvasId);
+                });
+            }
+        };
+        AVCenterPanel.prototype.viewCanvas = function (canvasIndex) {
+            var canvas = this.extension.helper.getCanvasByIndex(canvasIndex);
+            if (canvas) {
+                this.avcomponent.showCanvas(canvas.id);
+            }
+        };
+        AVCenterPanel.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+            if (this.title) {
+                this.$title.ellipsisFill(this.title);
+            }
+            this.$avcomponent.height(this.$content.height());
+            this.avcomponent.resize();
+        };
+        return AVCenterPanel;
+    }(CenterPanel_1.CenterPanel));
+    exports.AVCenterPanel = AVCenterPanel;
+});
+//# sourceMappingURL=AVCenterPanel.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-dialogues-module/SettingsDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var SettingsDialogue = /** @class */ (function (_super) {
+        __extends(SettingsDialogue, _super);
+        function SettingsDialogue($element) {
+            return _super.call(this, $element) || this;
+        }
+        SettingsDialogue.prototype.create = function () {
+            var _this = this;
+            this.setConfig('settingsDialogue');
+            _super.prototype.create.call(this);
+            this.openCommand = BaseEvents_1.BaseEvents.SHOW_SETTINGS_DIALOGUE;
+            this.closeCommand = BaseEvents_1.BaseEvents.HIDE_SETTINGS_DIALOGUE;
+            $.subscribe(this.openCommand, function () {
+                _this.open();
+            });
+            $.subscribe(this.closeCommand, function () {
+                _this.close();
+            });
+            this.$title = $('<h1></h1>');
+            this.$content.append(this.$title);
+            this.$scroll = $('<div class="scroll"></div>');
+            this.$content.append(this.$scroll);
+            this.$version = $('<div class="version"></div>');
+            this.$content.append(this.$version);
+            this.$website = $('<div class="website"></div>');
+            this.$content.append(this.$website);
+            this.$locale = $('<div class="setting locale"></div>');
+            this.$scroll.append(this.$locale);
+            this.$localeLabel = $('<label for="locale">' + this.content.locale + '</label>');
+            this.$locale.append(this.$localeLabel);
+            this.$localeDropDown = $('<select id="locale"></select>');
+            this.$locale.append(this.$localeDropDown);
+            // initialise ui.
+            this.$title.text(this.content.title);
+            this.$website.html(this.content.website);
+            this.$website.targetBlank();
+            this._createLocalesMenu();
+            this.$element.hide();
+        };
+        SettingsDialogue.prototype.getSettings = function () {
+            return this.extension.getSettings();
+        };
+        SettingsDialogue.prototype.updateSettings = function (settings) {
+            this.extension.updateSettings(settings);
+            $.publish(BaseEvents_1.BaseEvents.UPDATE_SETTINGS, [settings]);
+        };
+        SettingsDialogue.prototype.open = function () {
+            var _this = this;
+            _super.prototype.open.call(this);
+            $.getJSON(this.extension.data.root + "/info.json", function (pjson) {
+                _this.$version.text("v" + pjson.version);
+            });
+        };
+        SettingsDialogue.prototype._createLocalesMenu = function () {
+            var _this = this;
+            var locales = this.extension.data.locales;
+            if (locales && locales.length > 1) {
+                for (var i = 0; i < locales.length; i++) {
+                    var locale = locales[i];
+                    this.$localeDropDown.append('<option value="' + locale.name + '">' + locale.label + '</option>');
+                }
+                this.$localeDropDown.val(locales[0].name);
+            }
+            else {
+                this.$locale.hide();
+            }
+            this.$localeDropDown.change(function () {
+                _this.extension.changeLocale(_this.$localeDropDown.val());
+            });
+        };
+        SettingsDialogue.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+        };
+        return SettingsDialogue;
+    }(Dialogue_1.Dialogue));
+    exports.SettingsDialogue = SettingsDialogue;
+});
+//# sourceMappingURL=SettingsDialogue.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('extensions/uv-av-extension/SettingsDialogue',["require", "exports", "../../modules/uv-dialogues-module/SettingsDialogue"], function (require, exports, SettingsDialogue_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var SettingsDialogue = /** @class */ (function (_super) {
+        __extends(SettingsDialogue, _super);
+        function SettingsDialogue($element) {
+            return _super.call(this, $element) || this;
+        }
+        SettingsDialogue.prototype.create = function () {
+            this.setConfig('settingsDialogue');
+            _super.prototype.create.call(this);
+        };
+        return SettingsDialogue;
+    }(SettingsDialogue_1.SettingsDialogue));
+    exports.SettingsDialogue = SettingsDialogue;
+});
+//# sourceMappingURL=SettingsDialogue.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-dialogues-module/ShareDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ShareDialogue = /** @class */ (function (_super) {
+        __extends(ShareDialogue, _super);
+        function ShareDialogue($element) {
+            var _this = _super.call(this, $element) || this;
+            _this.aspectRatio = .75;
+            _this.isEmbedViewVisible = false;
+            _this.isShareViewVisible = false;
+            _this.maxWidth = 8000;
+            _this.maxHeight = _this.maxWidth * _this.aspectRatio;
+            _this.minWidth = 200;
+            _this.minHeight = _this.minWidth * _this.aspectRatio;
+            return _this;
+        }
+        ShareDialogue.prototype.create = function () {
+            var _this = this;
+            this.setConfig('shareDialogue');
+            _super.prototype.create.call(this);
+            this.openCommand = BaseEvents_1.BaseEvents.SHOW_SHARE_DIALOGUE;
+            this.closeCommand = BaseEvents_1.BaseEvents.HIDE_SHARE_DIALOGUE;
+            $.subscribe(this.openCommand, function (e, $triggerButton) {
+                _this.open($triggerButton);
+                if (_this.isShareAvailable()) {
+                    _this.openShareView();
+                }
+                else {
+                    _this.openEmbedView();
+                }
+            });
+            $.subscribe(this.closeCommand, function () {
+                _this.close();
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.SHOW_EMBED_DIALOGUE, function (e, $triggerButton) {
+                _this.open($triggerButton);
+                _this.openEmbedView();
+            });
+            this.$tabs = $('<div class="tabs"></div>');
+            this.$content.append(this.$tabs);
+            this.$shareButton = $('<a class="share tab default" tabindex="0">' + this.content.share + '</a>');
+            this.$shareButton.prop('title', this.content.share);
+            this.$tabs.append(this.$shareButton);
+            this.$embedButton = $('<a class="embed tab" tabindex="0">' + this.content.embed + '</a>');
+            this.$embedButton.prop('title', this.content.embed);
+            this.$tabs.append(this.$embedButton);
+            this.$tabsContent = $('<div class="tabsContent"></div>');
+            this.$content.append(this.$tabsContent);
+            this.$footer = $('<div class="footer"></div>');
+            this.$content.append(this.$footer);
+            this.$shareView = $('<div class="shareView view"></div>');
+            this.$tabsContent.append(this.$shareView);
+            this.$shareHeader = $('<div class="header"></div>');
+            this.$shareView.append(this.$shareHeader);
+            this.$shareLink = $('<a class="shareLink" onclick="return false;"></a>');
+            this.$shareView.append(this.$shareLink);
+            this.$shareInput = $("<input class=\"shareInput\" type=\"text\" readonly aria-label=\"" + this.content.shareUrl + "\"/>");
+            this.$shareView.append(this.$shareInput);
+            this.$shareFrame = $('<iframe class="shareFrame"></iframe>');
+            this.$shareView.append(this.$shareFrame);
+            this.$embedView = $('<div class="embedView view"></div>');
+            this.$tabsContent.append(this.$embedView);
+            this.$embedHeader = $('<div class="header"></div>');
+            this.$embedView.append(this.$embedHeader);
+            // this.$link = $('<a target="_blank"></a>');
+            // this.$embedView.find('.leftCol').append(this.$link);
+            // this.$image = $('<img class="share" />');
+            // this.$embedView.append(this.$image);
+            this.$code = $("<input class=\"code\" type=\"text\" readonly aria-label=\"" + this.content.embed + "\"/>");
+            this.$embedView.append(this.$code);
+            this.$customSize = $('<div class="customSize"></div>');
+            this.$embedView.append(this.$customSize);
+            this.$size = $('<span class="size">' + this.content.size + '</span>');
+            this.$customSize.append(this.$size);
+            this.$customSizeDropDown = $('<select id="size" aria-label="' + this.content.size + '"></select>');
+            this.$customSize.append(this.$customSizeDropDown);
+            this.$customSizeDropDown.append('<option value="small" data-width="560" data-height="420">560 x 420</option>');
+            this.$customSizeDropDown.append('<option value="medium" data-width="640" data-height="480">640 x 480</option>');
+            this.$customSizeDropDown.append('<option value="large" data-width="800" data-height="600">800 x 600</option>');
+            this.$customSizeDropDown.append('<option value="custom">' + this.content.customSize + '</option>');
+            this.$widthInput = $('<input class="width" type="text" maxlength="10" aria-label="' + this.content.width + '"/>');
+            this.$customSize.append(this.$widthInput);
+            this.$x = $('<span class="x">x</span>');
+            this.$customSize.append(this.$x);
+            this.$heightInput = $('<input class="height" type="text" maxlength="10" aria-label="' + this.content.height + '"/>');
+            this.$customSize.append(this.$heightInput);
+            var iiifUrl = this.extension.getIIIFShareUrl();
+            this.$iiifButton = $('<a class="imageBtn iiif" href="' + iiifUrl + '" title="' + this.content.iiif + '" target="_blank"></a>');
+            this.$footer.append(this.$iiifButton);
+            this.$termsOfUseButton = $('<a href="#">' + this.extension.data.config.content.termsOfUse + '</a>');
+            this.$footer.append(this.$termsOfUseButton);
+            this.$widthInput.on('keydown', function (e) {
+                return Utils.Numbers.numericalInput(e);
+            });
+            this.$heightInput.on('keydown', function (e) {
+                return Utils.Numbers.numericalInput(e);
+            });
+            this.$shareInput.focus(function () {
+                $(this).select();
+            });
+            this.$code.focus(function () {
+                $(this).select();
+            });
+            this.$shareButton.onPressed(function () {
+                _this.openShareView();
+            });
+            this.$embedButton.onPressed(function () {
+                _this.openEmbedView();
+            });
+            this.$customSizeDropDown.change(function () {
+                _this.update();
+            });
+            this.$widthInput.change(function () {
+                _this.updateHeightRatio();
+                _this.update();
+            });
+            this.$heightInput.change(function () {
+                _this.updateWidthRatio();
+                _this.update();
+            });
+            this.$termsOfUseButton.onPressed(function () {
+                $.publish(BaseEvents_1.BaseEvents.SHOW_TERMS_OF_USE);
+            });
+            this.$element.hide();
+            this.update();
+        };
+        ShareDialogue.prototype.open = function ($triggerButton) {
+            _super.prototype.open.call(this, $triggerButton);
+            this.update();
+        };
+        ShareDialogue.prototype.getShareUrl = function () {
+            return this.extension.getShareUrl();
+        };
+        ShareDialogue.prototype.isShareAvailable = function () {
+            return !!this.getShareUrl();
+        };
+        ShareDialogue.prototype.update = function () {
+            if (this.isShareAvailable()) {
+                this.$shareButton.show();
+            }
+            else {
+                this.$shareButton.hide();
+            }
+            var $selected = this.getSelectedSize();
+            if ($selected.val() === 'custom') {
+                this.$widthInput.show();
+                this.$x.show();
+                this.$heightInput.show();
+            }
+            else {
+                this.$widthInput.hide();
+                this.$x.hide();
+                this.$heightInput.hide();
+                this.currentWidth = Number($selected.data('width'));
+                this.currentHeight = Number($selected.data('height'));
+                this.$widthInput.val(String(this.currentWidth));
+                this.$heightInput.val(String(this.currentHeight));
+            }
+            this.updateInstructions();
+            this.updateShareOptions();
+            this.updateShareFrame();
+            this.updateTermsOfUseButton();
+        };
+        ShareDialogue.prototype.updateShareOptions = function () {
+            var shareUrl = this.getShareUrl();
+            if (shareUrl) {
+                this.$shareInput.val(shareUrl);
+                this.$shareLink.prop('href', shareUrl);
+                this.$shareLink.text(shareUrl);
+            }
+            if ($.browser.mobile) {
+                this.$shareInput.hide();
+                this.$shareLink.show();
+            }
+            else {
+                this.$shareInput.show();
+                this.$shareLink.hide();
+            }
+        };
+        ShareDialogue.prototype.updateInstructions = function () {
+            if (Utils.Bools.getBool(this.options.instructionsEnabled, false)) {
+                this.$shareHeader.show();
+                this.$embedHeader.show();
+                this.$shareHeader.text(this.content.shareInstructions);
+                this.$embedHeader.text(this.content.embedInstructions);
+            }
+            else {
+                this.$shareHeader.hide();
+                this.$embedHeader.hide();
+            }
+        };
+        // updateThumbnail(): void {
+        //     var canvas: Manifesto.ICanvas = this.extension.helper.getCurrentCanvas();
+        //     if (!canvas) return;
+        //     var thumbnail = canvas.getProperty('thumbnail');
+        //     if (!thumbnail || !_.isString(thumbnail)){
+        //         thumbnail = canvas.getCanonicalImageUri(this.extension.data.config.options.bookmarkThumbWidth);
+        //     }
+        //     this.$link.attr('href', thumbnail);
+        //     this.$image.attr('src', thumbnail);
+        // }
+        ShareDialogue.prototype.getSelectedSize = function () {
+            return this.$customSizeDropDown.find(':selected');
+        };
+        ShareDialogue.prototype.updateWidthRatio = function () {
+            this.currentHeight = Number(this.$heightInput.val());
+            if (this.currentHeight < this.minHeight) {
+                this.currentHeight = this.minHeight;
+                this.$heightInput.val(String(this.currentHeight));
+            }
+            else if (this.currentHeight > this.maxHeight) {
+                this.currentHeight = this.maxHeight;
+                this.$heightInput.val(String(this.currentHeight));
+            }
+            this.currentWidth = Math.floor(this.currentHeight / this.aspectRatio);
+            this.$widthInput.val(String(this.currentWidth));
+        };
+        ShareDialogue.prototype.updateHeightRatio = function () {
+            this.currentWidth = Number(this.$widthInput.val());
+            if (this.currentWidth < this.minWidth) {
+                this.currentWidth = this.minWidth;
+                this.$widthInput.val(String(this.currentWidth));
+            }
+            else if (this.currentWidth > this.maxWidth) {
+                this.currentWidth = this.maxWidth;
+                this.$widthInput.val(String(this.currentWidth));
+            }
+            this.currentHeight = Math.floor(this.currentWidth * this.aspectRatio);
+            this.$heightInput.val(String(this.currentHeight));
+        };
+        ShareDialogue.prototype.updateShareFrame = function () {
+            var shareUrl = this.extension.helper.getShareServiceUrl();
+            if (!shareUrl) {
+                return;
+            }
+            if (Utils.Bools.getBool(this.config.options.shareFrameEnabled, true) && shareUrl) {
+                this.$shareFrame.prop('src', shareUrl);
+                this.$shareFrame.show();
+            }
+            else {
+                this.$shareFrame.hide();
+            }
+        };
+        ShareDialogue.prototype.updateTermsOfUseButton = function () {
+            var attribution = this.extension.helper.getAttribution(); // todo: this should eventually use a suitable IIIF 'terms' field.
+            if (Utils.Bools.getBool(this.extension.data.config.options.termsOfUseEnabled, false) && attribution) {
+                this.$termsOfUseButton.show();
+            }
+            else {
+                this.$termsOfUseButton.hide();
+            }
+        };
+        ShareDialogue.prototype.openShareView = function () {
+            this.isShareViewVisible = true;
+            this.isEmbedViewVisible = false;
+            this.$embedView.hide();
+            this.$shareView.show();
+            this.$shareButton.addClass('on default');
+            this.$embedButton.removeClass('on default');
+            this.resize();
+        };
+        ShareDialogue.prototype.openEmbedView = function () {
+            this.isShareViewVisible = false;
+            this.isEmbedViewVisible = true;
+            this.$embedView.show();
+            this.$shareView.hide();
+            this.$shareButton.removeClass('on default');
+            this.$embedButton.addClass('on default');
+            this.resize();
+        };
+        ShareDialogue.prototype.close = function () {
+            _super.prototype.close.call(this);
+        };
+        ShareDialogue.prototype.getViews = function () {
+            return this.$tabsContent.find('.view');
+        };
+        ShareDialogue.prototype.equaliseViewHeights = function () {
+            this.getViews().equaliseHeight(true);
+        };
+        ShareDialogue.prototype.resize = function () {
+            this.equaliseViewHeights();
+            this.setDockedPosition();
+        };
+        return ShareDialogue;
+    }(Dialogue_1.Dialogue));
+    exports.ShareDialogue = ShareDialogue;
+});
+//# sourceMappingURL=ShareDialogue.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('extensions/uv-av-extension/ShareDialogue',["require", "exports", "../../modules/uv-dialogues-module/ShareDialogue"], function (require, exports, ShareDialogue_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ShareDialogue = /** @class */ (function (_super) {
+        __extends(ShareDialogue, _super);
+        function ShareDialogue($element) {
+            return _super.call(this, $element) || this;
+        }
+        ShareDialogue.prototype.create = function () {
+            this.setConfig('shareDialogue');
+            _super.prototype.create.call(this);
+        };
+        ShareDialogue.prototype.update = function () {
+            _super.prototype.update.call(this);
+            this.code = this.extension.getEmbedScript(this.options.embedTemplate, this.currentWidth, this.currentHeight);
+            this.$code.val(this.code);
+        };
+        ShareDialogue.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+        };
+        return ShareDialogue;
+    }(ShareDialogue_1.ShareDialogue));
+    exports.ShareDialogue = ShareDialogue;
+});
+//# sourceMappingURL=ShareDialogue.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('extensions/uv-av-extension/Extension',["require", "exports", "../../modules/uv-shared-module/BaseEvents", "../../modules/uv-shared-module/BaseExtension", "../../modules/uv-contentleftpanel-module/ContentLeftPanel", "./DownloadDialogue", "../../modules/uv-shared-module/FooterPanel", "../../modules/uv-shared-module/HeaderPanel", "../../modules/uv-moreinforightpanel-module/MoreInfoRightPanel", "../../modules/uv-avcenterpanel-module/AVCenterPanel", "./SettingsDialogue", "./ShareDialogue", "../../modules/uv-shared-module/Shell"], function (require, exports, BaseEvents_1, BaseExtension_1, ContentLeftPanel_1, DownloadDialogue_1, FooterPanel_1, HeaderPanel_1, MoreInfoRightPanel_1, AVCenterPanel_1, SettingsDialogue_1, ShareDialogue_1, Shell_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Extension = /** @class */ (function (_super) {
+        __extends(Extension, _super);
+        function Extension() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Extension.prototype.create = function () {
+            var _this = this;
+            _super.prototype.create.call(this);
+            $.subscribe(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, function (e, canvasIndex) {
+                _this.viewCanvas(canvasIndex);
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.TREE_NODE_SELECTED, function (e, node) {
+                _this.fire(BaseEvents_1.BaseEvents.TREE_NODE_SELECTED, node.data.path);
+                _this.treeNodeSelected(node);
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.THUMB_SELECTED, function (e, thumb) {
+                $.publish(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, [thumb.index]);
+            });
+        };
+        Extension.prototype.createModules = function () {
+            _super.prototype.createModules.call(this);
+            if (this.isHeaderPanelEnabled()) {
+                this.headerPanel = new HeaderPanel_1.HeaderPanel(Shell_1.Shell.$headerPanel);
+            }
+            else {
+                Shell_1.Shell.$headerPanel.hide();
+            }
+            if (this.isLeftPanelEnabled()) {
+                this.leftPanel = new ContentLeftPanel_1.ContentLeftPanel(Shell_1.Shell.$leftPanel);
+            }
+            else {
+                Shell_1.Shell.$leftPanel.hide();
+            }
+            this.centerPanel = new AVCenterPanel_1.AVCenterPanel(Shell_1.Shell.$centerPanel);
+            if (this.isRightPanelEnabled()) {
+                this.rightPanel = new MoreInfoRightPanel_1.MoreInfoRightPanel(Shell_1.Shell.$rightPanel);
+            }
+            else {
+                Shell_1.Shell.$rightPanel.hide();
+            }
+            if (this.isFooterPanelEnabled()) {
+                this.footerPanel = new FooterPanel_1.FooterPanel(Shell_1.Shell.$footerPanel);
+            }
+            else {
+                Shell_1.Shell.$footerPanel.hide();
+            }
+            this.$shareDialogue = $('<div class="overlay share" aria-hidden="true"></div>');
+            Shell_1.Shell.$overlays.append(this.$shareDialogue);
+            this.shareDialogue = new ShareDialogue_1.ShareDialogue(this.$shareDialogue);
+            this.$downloadDialogue = $('<div class="overlay download" aria-hidden="true"></div>');
+            Shell_1.Shell.$overlays.append(this.$downloadDialogue);
+            this.downloadDialogue = new DownloadDialogue_1.DownloadDialogue(this.$downloadDialogue);
+            this.$settingsDialogue = $('<div class="overlay settings" aria-hidden="true"></div>');
+            Shell_1.Shell.$overlays.append(this.$settingsDialogue);
+            this.settingsDialogue = new SettingsDialogue_1.SettingsDialogue(this.$settingsDialogue);
+            if (this.isHeaderPanelEnabled()) {
+                this.headerPanel.init();
+            }
+            if (this.isLeftPanelEnabled()) {
+                this.leftPanel.init();
+            }
+            if (this.isRightPanelEnabled()) {
+                this.rightPanel.init();
+            }
+            if (this.isFooterPanelEnabled()) {
+                this.footerPanel.init();
+            }
+        };
+        Extension.prototype.isLeftPanelEnabled = function () {
+            var isEnabled = _super.prototype.isLeftPanelEnabled.call(this);
+            var tree = this.helper.getTree();
+            if (tree && tree.nodes.length) {
+                isEnabled = true;
+            }
+            return isEnabled;
+        };
+        Extension.prototype.update = function () {
+            _super.prototype.update.call(this);
+        };
+        Extension.prototype.getEmbedScript = function (template, width, height) {
+            var appUri = this.getAppUri();
+            var iframeSrc = appUri + "#?manifest=" + this.helper.iiifResourceUri + "&c=" + this.helper.collectionIndex + "&m=" + this.helper.manifestIndex + "&s=" + this.helper.sequenceIndex + "&cv=" + this.helper.canvasIndex + "&rid=" + this.helper.rangeId;
+            var script = String.format(template, iframeSrc, width, height);
+            return script;
+        };
+        Extension.prototype.treeNodeSelected = function (node) {
+            var data = node.data;
+            if (!data.type)
+                return;
+            switch (data.type) {
+                case manifesto.IIIFResourceType.manifest().toString():
+                    // do nothing
+                    break;
+                case manifesto.IIIFResourceType.collection().toString():
+                    // do nothing
+                    break;
+                default:
+                    this.viewRange(data.path);
+                    break;
+            }
+        };
+        Extension.prototype.viewRange = function (path) {
+            var range = this.helper.getRangeByPath(path);
+            if (!range)
+                return;
+            $.publish(BaseEvents_1.BaseEvents.RANGE_CHANGED, [range]);
+            if (range.canvases && range.canvases.length) {
+                var canvasId = range.canvases[0];
+                var canvas = this.helper.getCanvasById(canvasId);
+                if (canvas) {
+                    var canvasIndex = canvas.index;
+                    if (canvasIndex !== this.helper.canvasIndex) {
+                        $.publish(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, [canvasIndex]);
+                    }
+                }
+            }
+        };
+        return Extension;
+    }(BaseExtension_1.BaseExtension));
+    exports.Extension = Extension;
+});
+//# sourceMappingURL=Extension.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-filelinkcenterpanel-module/FileLinkCenterPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/CenterPanel", "../uv-shared-module/Utils"], function (require, exports, BaseEvents_1, CenterPanel_1, Utils_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var FileLinkCenterPanel = /** @class */ (function (_super) {
+        __extends(FileLinkCenterPanel, _super);
+        function FileLinkCenterPanel($element) {
+            return _super.call(this, $element) || this;
+        }
+        FileLinkCenterPanel.prototype.create = function () {
+            var _this = this;
+            this.setConfig('fileLinkCenterPanel');
+            _super.prototype.create.call(this);
+            $.subscribe(BaseEvents_1.BaseEvents.OPEN_EXTERNAL_RESOURCE, function (e, resources) {
+                _this.openMedia(resources);
+            });
+            this.$scroll = $('<div class="scroll"><div>');
+            this.$content.append(this.$scroll);
+            this.$downloadItems = $('<ol></ol>');
+            this.$scroll.append(this.$downloadItems);
+            this.$downloadItemTemplate = $('<li><img><div class="col2"><a class="filename" target="_blank" download></a><span class="label"></span><a class="description" target="_blank" download></a></div></li>');
+            this.title = this.extension.helper.getLabel();
+        };
+        FileLinkCenterPanel.prototype.openMedia = function (resources) {
+            var _this = this;
+            this.extension.getExternalResources(resources).then(function () {
+                var canvas = _this.extension.helper.getCurrentCanvas();
+                var annotations = canvas.getContent();
+                var $item;
+                for (var i = 0; i < annotations.length; i++) {
+                    var annotation = annotations[i];
+                    if (!annotation.getBody().length) {
+                        continue;
+                    }
+                    $item = _this.$downloadItemTemplate.clone();
+                    var $fileName = $item.find('.filename');
+                    var $label = $item.find('.label');
+                    var $thumb = $item.find('img');
+                    var $description = $item.find('.description');
+                    var annotationBody = annotation.getBody()[0];
+                    var id = annotationBody.getProperty('id');
+                    if (id) {
+                        $fileName.prop('href', id);
+                        $fileName.text(id.substr(id.lastIndexOf('/') + 1));
+                    }
+                    var label = Manifesto.TranslationCollection.getValue(annotationBody.getLabel());
+                    if (label) {
+                        $label.text(Utils_1.UVUtils.sanitize(label));
+                    }
+                    var thumbnail = annotation.getProperty('thumbnail');
+                    if (thumbnail) {
+                        $thumb.prop('src', thumbnail);
+                    }
+                    else {
+                        $thumb.hide();
+                    }
+                    var description = annotationBody.getProperty('description');
+                    if (description) {
+                        $description.text(Utils_1.UVUtils.sanitize(description));
+                        if (id) {
+                            $description.prop('href', id);
+                        }
+                    }
+                    _this.$downloadItems.append($item);
+                }
+            });
+        };
+        FileLinkCenterPanel.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+            if (this.title) {
+                this.$title.ellipsisFill(this.title);
+            }
+            this.$scroll.height(this.$content.height() - this.$scroll.verticalMargins());
+        };
+        return FileLinkCenterPanel;
+    }(CenterPanel_1.CenterPanel));
+    exports.FileLinkCenterPanel = FileLinkCenterPanel;
+});
+//# sourceMappingURL=FileLinkCenterPanel.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-dialogues-module/HelpDialogue',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/Dialogue"], function (require, exports, BaseEvents_1, Dialogue_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var HelpDialogue = /** @class */ (function (_super) {
+        __extends(HelpDialogue, _super);
+        function HelpDialogue($element) {
+            return _super.call(this, $element) || this;
+        }
+        HelpDialogue.prototype.create = function () {
+            var _this = this;
+            this.setConfig('helpDialogue');
+            _super.prototype.create.call(this);
+            this.openCommand = BaseEvents_1.BaseEvents.SHOW_HELP_DIALOGUE;
+            this.closeCommand = BaseEvents_1.BaseEvents.HIDE_HELP_DIALOGUE;
+            $.subscribe(this.openCommand, function () {
+                _this.open();
+            });
+            $.subscribe(this.closeCommand, function () {
+                _this.close();
+            });
+            this.$title = $('<h1></h1>');
+            this.$content.append(this.$title);
+            this.$scroll = $('<div class="scroll"></div>');
+            this.$content.append(this.$scroll);
+            this.$message = $('<p></p>');
+            this.$scroll.append(this.$message);
+            // initialise ui.
+            this.$title.text(this.content.title);
+            this.$message.html(this.content.text);
+            // ensure anchor tags link to _blank.
+            this.$message.targetBlank();
+            this.$element.hide();
+        };
+        HelpDialogue.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+        };
+        return HelpDialogue;
+    }(Dialogue_1.Dialogue));
+    exports.HelpDialogue = HelpDialogue;
+});
+//# sourceMappingURL=HelpDialogue.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-resourcesleftpanel-module/ThumbsView',["require", "exports", "../uv-shared-module/ThumbsView"], function (require, exports, ThumbsView_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ThumbsView = /** @class */ (function (_super) {
+        __extends(ThumbsView, _super);
+        function ThumbsView() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        ThumbsView.prototype.create = function () {
+            this.setConfig('resourcesLeftPanel');
+            _super.prototype.create.call(this);
+        };
+        return ThumbsView;
+    }(ThumbsView_1.ThumbsView));
+    exports.ThumbsView = ThumbsView;
+});
+//# sourceMappingURL=ThumbsView.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-resourcesleftpanel-module/ResourcesLeftPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../uv-shared-module/LeftPanel", "./ThumbsView"], function (require, exports, BaseEvents_1, LeftPanel_1, ThumbsView_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ResourcesLeftPanel = /** @class */ (function (_super) {
+        __extends(ResourcesLeftPanel, _super);
+        function ResourcesLeftPanel($element) {
+            return _super.call(this, $element) || this;
+        }
+        ResourcesLeftPanel.prototype.create = function () {
+            this.setConfig('resourcesLeftPanel');
+            _super.prototype.create.call(this);
+            this.setTitle(this.content.title);
+            /*
+             TODO: make tabs work
+            this.$tabs = $('<div class="tabs"></div>');
+            this.$main.append(this.$tabs);
+    
+            this.$thumbsButton = $('<a class="thumbs tab">' + this.content.thumbnails + '</a>');
+            this.$thumbsButton.prop('title', this.content.thumbnails);
+            this.$tabs.append(this.$thumbsButton);
+    
+            this.$resourcesButton = $('<a class="resources tab">' + this.content.resources+ '</a>');
+            this.$resourcesButton.prop('title', this.content.resources);
+            this.$tabs.append(this.$resourcesButton);
+             */
+            this.$tabsContent = $('<div class="tabsContent"></div>');
+            this.$main.append(this.$tabsContent);
+            this.$views = $('<div class="views"></div>');
+            this.$tabsContent.append(this.$views);
+            this.$thumbsView = $('<div class="thumbsView"></div>');
+            this.$views.append(this.$thumbsView);
+            this.$resourcesView = $('<div class="resourcesView"></div>');
+            this.$resources = $('<ul></ul>');
+            this.$resourcesView.append(this.$resources);
+            this.$views.append(this.$resourcesView);
+            this.thumbsView = new ThumbsView_1.ThumbsView(this.$thumbsView);
+            this.dataBind();
+        };
+        ResourcesLeftPanel.prototype.dataBind = function () {
+            this.dataBindThumbsView();
+            var annotations = this.extension.helper.getCurrentCanvas().getResources();
+            if (annotations.length === 0) {
+                this.$resourcesView.hide();
+            }
+            for (var i = 0; i < annotations.length; i++) {
+                var annotation = annotations[i];
+                var resource = annotation.getResource();
+                if (resource) {
+                    var label = Manifesto.TranslationCollection.getValue(resource.getLabel());
+                    if (label) {
+                        var mime = Utils.Files.simplifyMimeType(resource.getFormat().toString());
+                        var $listItem = $('<li><a href="' + resource.id + '" target="_blank">' + label + ' (' + mime + ')' + '</li>');
+                        this.$resources.append($listItem);
+                    }
+                }
+            }
+        };
+        ResourcesLeftPanel.prototype.dataBindThumbsView = function () {
+            if (!this.thumbsView)
+                return;
+            var width;
+            var height;
+            var viewingDirection = this.extension.helper.getViewingDirection().toString();
+            if (viewingDirection === manifesto.ViewingDirection.topToBottom().toString() || viewingDirection === manifesto.ViewingDirection.bottomToTop().toString()) {
+                width = this.config.options.oneColThumbWidth;
+                height = this.config.options.oneColThumbHeight;
+            }
+            else {
+                width = this.config.options.twoColThumbWidth;
+                height = this.config.options.twoColThumbHeight;
+            }
+            if (typeof (width) === "undefined") {
+                width = 100;
+            }
+            if (typeof (height) === "undefined") {
+                height = 100;
+            }
+            this.thumbsView.thumbs = this.extension.helper.getThumbs(width, height);
+            // hide thumb selector for single-part manifests
+            if (this.thumbsView.thumbs.length < 2) {
+                this.$thumbsView.hide();
+            }
+            this.thumbsView.databind();
+        };
+        ResourcesLeftPanel.prototype.expandFullStart = function () {
+            _super.prototype.expandFullStart.call(this);
+            $.publish(BaseEvents_1.BaseEvents.LEFTPANEL_EXPAND_FULL_START);
+        };
+        ResourcesLeftPanel.prototype.expandFullFinish = function () {
+            _super.prototype.expandFullFinish.call(this);
+            $.publish(BaseEvents_1.BaseEvents.LEFTPANEL_EXPAND_FULL_FINISH);
+        };
+        ResourcesLeftPanel.prototype.collapseFullStart = function () {
+            _super.prototype.collapseFullStart.call(this);
+            $.publish(BaseEvents_1.BaseEvents.LEFTPANEL_COLLAPSE_FULL_START);
+        };
+        ResourcesLeftPanel.prototype.collapseFullFinish = function () {
+            _super.prototype.collapseFullFinish.call(this);
+            $.publish(BaseEvents_1.BaseEvents.LEFTPANEL_COLLAPSE_FULL_FINISH);
+        };
+        ResourcesLeftPanel.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+            this.$views.height(this.$main.height());
+            this.$resources.height(this.$main.height());
+        };
+        return ResourcesLeftPanel;
+    }(LeftPanel_1.LeftPanel));
+    exports.ResourcesLeftPanel = ResourcesLeftPanel;
+});
+//# sourceMappingURL=ResourcesLeftPanel.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('extensions/uv-default-extension/SettingsDialogue',["require", "exports", "../../modules/uv-dialogues-module/SettingsDialogue"], function (require, exports, SettingsDialogue_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var SettingsDialogue = /** @class */ (function (_super) {
+        __extends(SettingsDialogue, _super);
+        function SettingsDialogue($element) {
+            return _super.call(this, $element) || this;
+        }
+        SettingsDialogue.prototype.create = function () {
+            this.setConfig('settingsDialogue');
+            _super.prototype.create.call(this);
+        };
+        return SettingsDialogue;
+    }(SettingsDialogue_1.SettingsDialogue));
+    exports.SettingsDialogue = SettingsDialogue;
+});
+//# sourceMappingURL=SettingsDialogue.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('extensions/uv-default-extension/ShareDialogue',["require", "exports", "../../modules/uv-dialogues-module/ShareDialogue"], function (require, exports, ShareDialogue_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ShareDialogue = /** @class */ (function (_super) {
+        __extends(ShareDialogue, _super);
+        function ShareDialogue($element) {
+            return _super.call(this, $element) || this;
+        }
+        ShareDialogue.prototype.create = function () {
+            this.setConfig('shareDialogue');
+            _super.prototype.create.call(this);
+        };
+        ShareDialogue.prototype.update = function () {
+            _super.prototype.update.call(this);
+            this.code = this.extension.getEmbedScript(this.options.embedTemplate, this.currentWidth, this.currentHeight);
+            this.$code.val(this.code);
+        };
+        ShareDialogue.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+        };
+        return ShareDialogue;
+    }(ShareDialogue_1.ShareDialogue));
+    exports.ShareDialogue = ShareDialogue;
+});
+//# sourceMappingURL=ShareDialogue.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('extensions/uv-default-extension/Extension',["require", "exports", "../../modules/uv-shared-module/BaseEvents", "../../modules/uv-shared-module/BaseExtension", "../../modules/uv-filelinkcenterpanel-module/FileLinkCenterPanel", "../../modules/uv-shared-module/FooterPanel", "../../modules/uv-shared-module/HeaderPanel", "../../modules/uv-dialogues-module/HelpDialogue", "../../modules/uv-moreinforightpanel-module/MoreInfoRightPanel", "../../modules/uv-resourcesleftpanel-module/ResourcesLeftPanel", "./SettingsDialogue", "./ShareDialogue", "../../modules/uv-shared-module/Shell"], function (require, exports, BaseEvents_1, BaseExtension_1, FileLinkCenterPanel_1, FooterPanel_1, HeaderPanel_1, HelpDialogue_1, MoreInfoRightPanel_1, ResourcesLeftPanel_1, SettingsDialogue_1, ShareDialogue_1, Shell_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Extension = /** @class */ (function (_super) {
+        __extends(Extension, _super);
+        function Extension() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Extension.prototype.create = function () {
+            var _this = this;
+            _super.prototype.create.call(this);
+            // listen for mediaelement enter/exit fullscreen events.
+            $(window).bind('enterfullscreen', function () {
+                $.publish(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN);
+            });
+            $(window).bind('exitfullscreen', function () {
+                $.publish(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN);
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, function (e, canvasIndex) {
+                _this.viewCanvas(canvasIndex);
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.THUMB_SELECTED, function (e, canvasIndex) {
+                $.publish(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, [canvasIndex]);
+            });
+        };
+        Extension.prototype.createModules = function () {
+            _super.prototype.createModules.call(this);
+            if (this.isHeaderPanelEnabled()) {
+                this.headerPanel = new HeaderPanel_1.HeaderPanel(Shell_1.Shell.$headerPanel);
+            }
+            else {
+                Shell_1.Shell.$headerPanel.hide();
+            }
+            if (this.isLeftPanelEnabled()) {
+                this.leftPanel = new ResourcesLeftPanel_1.ResourcesLeftPanel(Shell_1.Shell.$leftPanel);
+            }
+            this.centerPanel = new FileLinkCenterPanel_1.FileLinkCenterPanel(Shell_1.Shell.$centerPanel);
+            if (this.isRightPanelEnabled()) {
+                this.rightPanel = new MoreInfoRightPanel_1.MoreInfoRightPanel(Shell_1.Shell.$rightPanel);
+            }
+            if (this.isFooterPanelEnabled()) {
+                this.footerPanel = new FooterPanel_1.FooterPanel(Shell_1.Shell.$footerPanel);
+            }
+            else {
+                Shell_1.Shell.$footerPanel.hide();
+            }
+            this.$helpDialogue = $('<div class="overlay help" aria-hidden="true"></div>');
+            Shell_1.Shell.$overlays.append(this.$helpDialogue);
+            this.helpDialogue = new HelpDialogue_1.HelpDialogue(this.$helpDialogue);
+            this.$shareDialogue = $('<div class="overlay share" aria-hidden="true"></div>');
+            Shell_1.Shell.$overlays.append(this.$shareDialogue);
+            this.shareDialogue = new ShareDialogue_1.ShareDialogue(this.$shareDialogue);
+            this.$settingsDialogue = $('<div class="overlay settings" aria-hidden="true"></div>');
+            Shell_1.Shell.$overlays.append(this.$settingsDialogue);
+            this.settingsDialogue = new SettingsDialogue_1.SettingsDialogue(this.$settingsDialogue);
+            if (this.isLeftPanelEnabled()) {
+                this.leftPanel.init();
+            }
+            if (this.isRightPanelEnabled()) {
+                this.rightPanel.init();
+            }
+        };
+        Extension.prototype.update = function () {
+            _super.prototype.update.call(this);
+        };
+        Extension.prototype.isLeftPanelEnabled = function () {
+            return Utils.Bools.getBool(this.data.config.options.leftPanelEnabled, true)
+                && ((this.helper.isMultiCanvas() || this.helper.isMultiSequence()) || this.helper.hasResources());
+        };
+        Extension.prototype.getEmbedScript = function (template, width, height) {
+            //const configUri: string = this.data.config.uri || '';
+            //const script: string = String.format(template, this.getSerializedLocales(), configUri, this.helper.iiifResourceUri, this.helper.collectionIndex, this.helper.manifestIndex, this.helper.sequenceIndex, this.helper.canvasIndex, width, height, this.data.embedScriptUri);
+            var appUri = this.getAppUri();
+            var iframeSrc = appUri + "#?manifest=" + this.helper.iiifResourceUri + "&c=" + this.helper.collectionIndex + "&m=" + this.helper.manifestIndex + "&s=" + this.helper.sequenceIndex + "&cv=" + this.helper.canvasIndex;
+            var script = String.format(template, iframeSrc, width, height);
+            return script;
+        };
+        return Extension;
+    }(BaseExtension_1.BaseExtension));
+    exports.Extension = Extension;
+});
+//# sourceMappingURL=Extension.js.map
+define('modules/uv-shared-module/Bookmark',["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Bookmark = /** @class */ (function () {
+        function Bookmark() {
+        }
+        return Bookmark;
+    }());
+    exports.Bookmark = Bookmark;
+});
+//# sourceMappingURL=Bookmark.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('extensions/uv-mediaelement-extension/DownloadDialogue',["require", "exports", "../../modules/uv-dialogues-module/DownloadDialogue"], function (require, exports, DownloadDialogue_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var DownloadDialogue = /** @class */ (function (_super) {
+        __extends(DownloadDialogue, _super);
+        function DownloadDialogue($element) {
+            return _super.call(this, $element) || this;
+        }
+        DownloadDialogue.prototype.create = function () {
+            this.setConfig('downloadDialogue');
+            _super.prototype.create.call(this);
+        };
+        DownloadDialogue.prototype.open = function ($triggerButton) {
+            _super.prototype.open.call(this, $triggerButton);
+            this.addEntireFileDownloadOptions();
+            this.updateNoneAvailable();
+            this.resize();
+        };
+        DownloadDialogue.prototype.isDownloadOptionAvailable = function (option) {
+            return _super.prototype.isDownloadOptionAvailable.call(this, option);
+        };
+        return DownloadDialogue;
+    }(DownloadDialogue_1.DownloadDialogue));
+    exports.DownloadDialogue = DownloadDialogue;
+});
+//# sourceMappingURL=DownloadDialogue.js.map
+define('extensions/uv-mediaelement-extension/Events',["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Events = /** @class */ (function () {
+        function Events() {
+        }
+        Events.namespace = 'mediaelementExtension.';
+        Events.MEDIA_ENDED = Events.namespace + 'mediaEnded';
+        Events.MEDIA_PAUSED = Events.namespace + 'mediaPaused';
+        Events.MEDIA_PLAYED = Events.namespace + 'mediaPlayed';
+        return Events;
+    }());
+    exports.Events = Events;
+});
+//# sourceMappingURL=Events.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('modules/uv-mediaelementcenterpanel-module/MediaElementCenterPanel',["require", "exports", "../uv-shared-module/BaseEvents", "../../extensions/uv-mediaelement-extension/Events", "../uv-shared-module/CenterPanel"], function (require, exports, BaseEvents_1, Events_1, CenterPanel_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var MediaElementCenterPanel = /** @class */ (function (_super) {
+        __extends(MediaElementCenterPanel, _super);
+        function MediaElementCenterPanel($element) {
+            return _super.call(this, $element) || this;
+        }
+        MediaElementCenterPanel.prototype.create = function () {
+            this.setConfig('mediaelementCenterPanel');
+            _super.prototype.create.call(this);
+            var that = this;
+            // events.
+            // only full screen video
+            if (this.isVideo()) {
+                $.subscribe(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN, function () {
+                    if (that.component.isFullScreen) {
+                        that.player.enterFullScreen(false);
+                    }
+                    else {
+                        that.player.exitFullScreen(false);
+                    }
+                });
+            }
+            $.subscribe(BaseEvents_1.BaseEvents.OPEN_EXTERNAL_RESOURCE, function (e, resources) {
+                that.openMedia(resources);
+            });
+            this.$container = $('<div class="container"></div>');
+            this.$content.append(this.$container);
+            this.title = this.extension.helper.getLabel();
+        };
+        MediaElementCenterPanel.prototype.openMedia = function (resources) {
+            var _this = this;
+            var that = this;
+            this.extension.getExternalResources(resources).then(function () {
+                _this.$container.empty();
+                var canvas = _this.extension.helper.getCurrentCanvas();
+                _this.mediaHeight = _this.config.defaultHeight;
+                _this.mediaWidth = _this.config.defaultWidth;
+                _this.$container.height(_this.mediaHeight);
+                _this.$container.width(_this.mediaWidth);
+                var poster = _this.extension.getPosterImageUri();
+                var sources = [];
+                var renderings = canvas.getRenderings();
+                if (renderings && renderings.length) {
+                    $.each(canvas.getRenderings(), function (index, rendering) {
+                        sources.push({
+                            type: rendering.getFormat().toString(),
+                            src: rendering.id
+                        });
+                    });
+                }
+                else {
+                    var formats = _this.extension.getMediaFormats(_this.extension.helper.getCurrentCanvas());
+                    if (formats && formats.length) {
+                        $.each(formats, function (index, format) {
+                            var type = format.getFormat();
+                            if (type) {
+                                sources.push({
+                                    type: type.toString(),
+                                    src: format.id
+                                });
+                            }
+                        });
+                    }
+                }
+                if (_this.isVideo()) {
+                    _this.$media = $('<video controls="controls" preload="none"></video>');
+                    _this.$container.append(_this.$media);
+                    _this.player = new MediaElementPlayer($('video')[0], {
+                        //pluginPath: this.extension.data.root + 'lib/mediaelement/',
+                        poster: poster,
+                        features: ['playpause', 'current', 'progress', 'volume'],
+                        success: function (mediaElement, originalNode) {
+                            mediaElement.addEventListener('canplay', function () {
+                                that.resize();
+                            });
+                            mediaElement.addEventListener('play', function () {
+                                $.publish(Events_1.Events.MEDIA_PLAYED, [Math.floor(mediaElement.currentTime)]);
+                            });
+                            mediaElement.addEventListener('pause', function () {
+                                // mediaelement creates a pause event before the ended event. ignore this.
+                                if (Math.floor(mediaElement.currentTime) != Math.floor(mediaElement.duration)) {
+                                    $.publish(Events_1.Events.MEDIA_PAUSED, [Math.floor(mediaElement.currentTime)]);
+                                }
+                            });
+                            mediaElement.addEventListener('ended', function () {
+                                $.publish(Events_1.Events.MEDIA_ENDED, [Math.floor(mediaElement.duration)]);
+                            });
+                            mediaElement.setSrc(sources);
+                        }
+                    });
+                }
+                else {
+                    _this.$media = $('<audio controls="controls" preload="none"></audio>');
+                    _this.$container.append(_this.$media);
+                    _this.player = new MediaElementPlayer($('audio')[0], {
+                        poster: poster,
+                        defaultAudioWidth: that.mediaWidth,
+                        defaultAudioHeight: that.mediaHeight,
+                        showPosterWhenPaused: true,
+                        showPosterWhenEnded: true,
+                        success: function (mediaElement, originalNode) {
+                            mediaElement.addEventListener('canplay', function () {
+                                that.resize();
+                            });
+                            mediaElement.addEventListener('play', function () {
+                                $.publish(Events_1.Events.MEDIA_PLAYED, [Math.floor(mediaElement.currentTime)]);
+                            });
+                            mediaElement.addEventListener('pause', function () {
+                                // mediaelement creates a pause event before the ended event. ignore this.
+                                if (Math.floor(mediaElement.currentTime) != Math.floor(mediaElement.duration)) {
+                                    $.publish(Events_1.Events.MEDIA_PAUSED, [Math.floor(mediaElement.currentTime)]);
+                                }
+                            });
+                            mediaElement.addEventListener('ended', function () {
+                                $.publish(Events_1.Events.MEDIA_ENDED, [Math.floor(mediaElement.duration)]);
+                            });
+                            mediaElement.setSrc(sources);
+                        }
+                    });
+                }
+                _this.resize();
+            });
+        };
+        MediaElementCenterPanel.prototype.isVideo = function () {
+            return this.extension.isVideo();
+        };
+        MediaElementCenterPanel.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+            // if in Firefox < v13 don't resize the media container.
+            if (window.browserDetect.browser === 'Firefox' && window.browserDetect.version < 13) {
+                this.$container.width(this.mediaWidth);
+                this.$container.height(this.mediaHeight);
+            }
+            else {
+                // fit media to available space.
+                var size = Utils.Measurements.Dimensions.fitRect(this.mediaWidth, this.mediaHeight, this.$content.width(), this.$content.height());
+                this.$container.height(size.height);
+                this.$container.width(size.width);
+                if (this.player && !this.extension.isFullScreen()) {
+                    this.$media.width(size.width);
+                    this.$media.height(size.height);
+                }
+            }
+            var left = Math.floor((this.$content.width() - this.$container.width()) / 2);
+            var top = Math.floor((this.$content.height() - this.$container.height()) / 2);
+            this.$container.css({
+                'left': left,
+                'top': top
+            });
+            if (this.title) {
+                this.$title.ellipsisFill(this.title);
+            }
+            if (this.player) {
+                if (!this.isVideo() || (this.isVideo() && !this.component.isFullScreen)) {
+                    this.player.setPlayerSize();
+                    this.player.setControlsSize();
+                    var $mejs = $('.mejs__container');
+                    $mejs.css({
+                        'margin-top': (this.$container.height() - $mejs.height()) / 2
+                    });
+                }
+            }
+        };
+        return MediaElementCenterPanel;
+    }(CenterPanel_1.CenterPanel));
+    exports.MediaElementCenterPanel = MediaElementCenterPanel;
+});
+//# sourceMappingURL=MediaElementCenterPanel.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('extensions/uv-mediaelement-extension/SettingsDialogue',["require", "exports", "../../modules/uv-dialogues-module/SettingsDialogue"], function (require, exports, SettingsDialogue_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var SettingsDialogue = /** @class */ (function (_super) {
+        __extends(SettingsDialogue, _super);
+        function SettingsDialogue($element) {
+            return _super.call(this, $element) || this;
+        }
+        SettingsDialogue.prototype.create = function () {
+            this.setConfig('settingsDialogue');
+            _super.prototype.create.call(this);
+        };
+        return SettingsDialogue;
+    }(SettingsDialogue_1.SettingsDialogue));
+    exports.SettingsDialogue = SettingsDialogue;
+});
+//# sourceMappingURL=SettingsDialogue.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('extensions/uv-mediaelement-extension/ShareDialogue',["require", "exports", "../../modules/uv-dialogues-module/ShareDialogue"], function (require, exports, ShareDialogue_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var ShareDialogue = /** @class */ (function (_super) {
+        __extends(ShareDialogue, _super);
+        function ShareDialogue($element) {
+            return _super.call(this, $element) || this;
+        }
+        ShareDialogue.prototype.create = function () {
+            this.setConfig('shareDialogue');
+            _super.prototype.create.call(this);
+        };
+        ShareDialogue.prototype.update = function () {
+            _super.prototype.update.call(this);
+            this.code = this.extension.getEmbedScript(this.options.embedTemplate, this.currentWidth, this.currentHeight);
+            this.$code.val(this.code);
+        };
+        ShareDialogue.prototype.resize = function () {
+            _super.prototype.resize.call(this);
+        };
+        return ShareDialogue;
+    }(ShareDialogue_1.ShareDialogue));
+    exports.ShareDialogue = ShareDialogue;
+});
+//# sourceMappingURL=ShareDialogue.js.map
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+define('extensions/uv-mediaelement-extension/Extension',["require", "exports", "../../modules/uv-shared-module/BaseEvents", "../../modules/uv-shared-module/BaseExtension", "../../modules/uv-shared-module/Bookmark", "./DownloadDialogue", "./Events", "../../modules/uv-shared-module/FooterPanel", "../../modules/uv-shared-module/HeaderPanel", "../../modules/uv-dialogues-module/HelpDialogue", "../../modules/uv-mediaelementcenterpanel-module/MediaElementCenterPanel", "../../modules/uv-moreinforightpanel-module/MoreInfoRightPanel", "../../modules/uv-resourcesleftpanel-module/ResourcesLeftPanel", "./SettingsDialogue", "./ShareDialogue", "../../modules/uv-shared-module/Shell"], function (require, exports, BaseEvents_1, BaseExtension_1, Bookmark_1, DownloadDialogue_1, Events_1, FooterPanel_1, HeaderPanel_1, HelpDialogue_1, MediaElementCenterPanel_1, MoreInfoRightPanel_1, ResourcesLeftPanel_1, SettingsDialogue_1, ShareDialogue_1, Shell_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Extension = /** @class */ (function (_super) {
+        __extends(Extension, _super);
+        function Extension() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        Extension.prototype.create = function () {
+            var _this = this;
+            _super.prototype.create.call(this);
+            // listen for mediaelement enter/exit fullscreen events.
+            $(window).bind('enterfullscreen', function () {
+                $.publish(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN);
+            });
+            $(window).bind('exitfullscreen', function () {
+                $.publish(BaseEvents_1.BaseEvents.TOGGLE_FULLSCREEN);
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, function (e, canvasIndex) {
+                _this.viewCanvas(canvasIndex);
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.THUMB_SELECTED, function (e, thumb) {
+                $.publish(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, [thumb.index]);
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.LEFTPANEL_EXPAND_FULL_START, function () {
+                Shell_1.Shell.$centerPanel.hide();
+                Shell_1.Shell.$rightPanel.hide();
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.LEFTPANEL_COLLAPSE_FULL_FINISH, function () {
+                Shell_1.Shell.$centerPanel.show();
+                Shell_1.Shell.$rightPanel.show();
+                _this.resize();
+            });
+            $.subscribe(Events_1.Events.MEDIA_ENDED, function () {
+                _this.fire(Events_1.Events.MEDIA_ENDED);
+            });
+            $.subscribe(Events_1.Events.MEDIA_PAUSED, function () {
+                _this.fire(Events_1.Events.MEDIA_PAUSED);
+            });
+            $.subscribe(Events_1.Events.MEDIA_PLAYED, function () {
+                _this.fire(Events_1.Events.MEDIA_PLAYED);
+            });
+        };
+        Extension.prototype.createModules = function () {
+            _super.prototype.createModules.call(this);
+            if (this.isHeaderPanelEnabled()) {
+                this.headerPanel = new HeaderPanel_1.HeaderPanel(Shell_1.Shell.$headerPanel);
+            }
+            else {
+                Shell_1.Shell.$headerPanel.hide();
+            }
+            if (this.isLeftPanelEnabled()) {
+                this.leftPanel = new ResourcesLeftPanel_1.ResourcesLeftPanel(Shell_1.Shell.$leftPanel);
+            }
+            this.centerPanel = new MediaElementCenterPanel_1.MediaElementCenterPanel(Shell_1.Shell.$centerPanel);
+            if (this.isRightPanelEnabled()) {
+                this.rightPanel = new MoreInfoRightPanel_1.MoreInfoRightPanel(Shell_1.Shell.$rightPanel);
+            }
+            if (this.isFooterPanelEnabled()) {
+                this.footerPanel = new FooterPanel_1.FooterPanel(Shell_1.Shell.$footerPanel);
+            }
+            else {
+                Shell_1.Shell.$footerPanel.hide();
+            }
+            this.$helpDialogue = $('<div class="overlay help" aria-hidden="true"></div>');
+            Shell_1.Shell.$overlays.append(this.$helpDialogue);
+            this.helpDialogue = new HelpDialogue_1.HelpDialogue(this.$helpDialogue);
+            this.$downloadDialogue = $('<div class="overlay download" aria-hidden="true"></div>');
+            Shell_1.Shell.$overlays.append(this.$downloadDialogue);
+            this.downloadDialogue = new DownloadDialogue_1.DownloadDialogue(this.$downloadDialogue);
+            this.$shareDialogue = $('<div class="overlay share" aria-hidden="true"></div>');
+            Shell_1.Shell.$overlays.append(this.$shareDialogue);
+            this.shareDialogue = new ShareDialogue_1.ShareDialogue(this.$shareDialogue);
+            this.$settingsDialogue = $('<div class="overlay settings" aria-hidden="true"></div>');
+            Shell_1.Shell.$overlays.append(this.$settingsDialogue);
+            this.settingsDialogue = new SettingsDialogue_1.SettingsDialogue(this.$settingsDialogue);
+            if (this.isLeftPanelEnabled()) {
+                this.leftPanel.init();
+            }
+            if (this.isRightPanelEnabled()) {
+                this.rightPanel.init();
+            }
+        };
+        Extension.prototype.update = function () {
+            _super.prototype.update.call(this);
+        };
+        Extension.prototype.isLeftPanelEnabled = function () {
+            return Utils.Bools.getBool(this.data.config.options.leftPanelEnabled, true)
+                && ((this.helper.isMultiCanvas() || this.helper.isMultiSequence()) || this.helper.hasResources());
+        };
+        Extension.prototype.bookmark = function () {
+            _super.prototype.bookmark.call(this);
+            var canvas = this.extensions.helper.getCurrentCanvas();
+            var bookmark = new Bookmark_1.Bookmark();
+            bookmark.index = this.helper.canvasIndex;
+            bookmark.label = Manifesto.TranslationCollection.getValue(canvas.getLabel());
+            bookmark.thumb = canvas.getProperty('thumbnail');
+            bookmark.title = this.helper.getLabel();
+            bookmark.trackingLabel = window.trackingLabel;
+            if (this.isVideo()) {
+                bookmark.type = manifesto.ResourceType.movingimage().toString();
+            }
+            else {
+                bookmark.type = manifesto.ResourceType.sound().toString();
+            }
+            this.fire(BaseEvents_1.BaseEvents.BOOKMARK, bookmark);
+        };
+        Extension.prototype.getEmbedScript = function (template, width, height) {
+            //const configUri: string = this.data.config.uri || '';
+            //const script: string = String.format(template, this.getSerializedLocales(), configUri, this.helper.iiifResourceUri, this.helper.collectionIndex, this.helper.manifestIndex, this.helper.sequenceIndex, this.helper.canvasIndex, width, height, this.data.embedScriptUri);
+            var appUri = this.getAppUri();
+            var iframeSrc = appUri + "#?manifest=" + this.helper.iiifResourceUri + "&c=" + this.helper.collectionIndex + "&m=" + this.helper.manifestIndex + "&s=" + this.helper.sequenceIndex + "&cv=" + this.helper.canvasIndex;
+            var script = String.format(template, iframeSrc, width, height);
+            return script;
+        };
+        // todo: use canvas.getThumbnail()
+        Extension.prototype.getPosterImageUri = function () {
+            var canvas = this.helper.getCurrentCanvas();
+            var annotations = canvas.getContent();
+            if (annotations && annotations.length) {
+                return annotations[0].getProperty('thumbnail');
+            }
+            else {
+                return canvas.getProperty('thumbnail');
+            }
+        };
+        Extension.prototype.isVideoFormat = function (type) {
+            var videoFormats = [manifesto.MediaType.mp4().toString(), manifesto.MediaType.webm().toString()];
+            return videoFormats.indexOf(type) != -1;
+        };
+        Extension.prototype.isVideo = function () {
+            var canvas = this.helper.getCurrentCanvas();
+            var annotations = canvas.getContent();
+            if (annotations && annotations.length) {
+                var formats = this.getMediaFormats(canvas);
+                for (var i = 0; i < formats.length; i++) {
+                    var format = formats[i];
+                    var type = format.getFormat();
+                    if (type) {
+                        if (this.isVideoFormat(type.toString())) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            else {
+                var type = canvas.getType();
+                if (type) {
+                    return type.toString() === manifesto.ResourceType.movingimage().toString();
+                }
+            }
+            throw (new Error("Unable to determine media type"));
+        };
+        return Extension;
+    }(BaseExtension_1.BaseExtension));
+    exports.Extension = Extension;
+});
+//# sourceMappingURL=Extension.js.map
+define('modules/uv-shared-module/AnnotationResults',["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var AnnotationResults = /** @class */ (function () {
+        function AnnotationResults() {
+        }
+        return AnnotationResults;
+    }());
+    exports.AnnotationResults = AnnotationResults;
+});
+//# sourceMappingURL=AnnotationResults.js.map
 define('modules/uv-shared-module/Point',["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -22144,7 +22760,16 @@ define('extensions/uv-seadragon-extension/DownloadDialogue',["require", "exports
                 // dimensions
                 var size = this.getCanvasComputedDimensions(this.extension.helper.getCurrentCanvas());
                 if (!size) {
-                    this.$wholeImageHighResButton.hide();
+                    // if there is no image service, allow the image to be downloaded directly.
+                    if (canvas.externalResource && !canvas.externalResource.hasServiceDescriptor()) {
+                        var label = String.format(this.content.wholeImageHighRes, '?', '?', mime);
+                        $label.text(label);
+                        $input.prop('title', label);
+                        this.$wholeImageHighResButton.show();
+                    }
+                    else {
+                        this.$wholeImageHighResButton.hide();
+                    }
                 }
                 else {
                     var label = hasNormalDimensions ?
@@ -22241,6 +22866,14 @@ define('extensions/uv-seadragon-extension/DownloadDialogue',["require", "exports
                 this.$selectionButton.hide();
             }
             this.resetDynamicDownloadOptions();
+            if (this.isDownloadOptionAvailable(DownloadOption_1.DownloadOption.rangeRendering)) {
+                if (canvas.ranges && canvas.ranges.length) {
+                    for (var i = 0; i < canvas.ranges.length; i++) {
+                        var range = canvas.ranges[i];
+                        this.addDownloadOptionsForRenderings(range, this.content.entireFileAsOriginal, DownloadOption_1.DownloadOption.dynamicCanvasRenderings);
+                    }
+                }
+            }
             if (this.isDownloadOptionAvailable(DownloadOption_1.DownloadOption.dynamicImageRenderings)) {
                 var images = canvas.getImages();
                 for (var i = 0; i < images.length; i++) {
@@ -22331,7 +22964,7 @@ define('extensions/uv-seadragon-extension/DownloadDialogue',["require", "exports
             for (var i = 0; i < renderings.length; i++) {
                 var rendering = renderings[i];
                 if (rendering) {
-                    var label = Manifesto.TranslationCollection.getValue(rendering.getLabel());
+                    var label = Manifesto.TranslationCollection.getValue(rendering.getLabel(), this.extension.getLocale());
                     var currentId = "downloadOption" + ++this.renderingUrlsCount;
                     if (label) {
                         label += " ({0})";
@@ -22372,11 +23005,17 @@ define('extensions/uv-seadragon-extension/DownloadDialogue',["require", "exports
             if (size) {
                 var width = size.width;
                 var uri = canvas.getCanonicalImageUri(width);
-                var uri_parts = uri.split('/');
-                var rotation = this.extension.getViewerRotation();
-                uri_parts[uri_parts.length - 2] = String(rotation);
-                uri = uri_parts.join('/');
+                if (canvas.externalResource && canvas.externalResource.hasServiceDescriptor()) {
+                    var uri_parts = uri.split('/');
+                    var rotation = this.extension.getViewerRotation();
+                    uri_parts[uri_parts.length - 2] = String(rotation);
+                    uri = uri_parts.join('/');
+                }
                 return uri;
+            }
+            else if (canvas.externalResource && !canvas.externalResource.hasServiceDescriptor()) {
+                // if there is no image service, return the dataUri.
+                return canvas.externalResource.dataUri;
             }
             return '';
         };
@@ -22393,13 +23032,20 @@ define('extensions/uv-seadragon-extension/DownloadDialogue',["require", "exports
         DownloadDialogue.prototype.getCanvasDimensions = function (canvas) {
             // externalResource may not have loaded yet
             if (canvas.externalResource.data) {
-                return new Size(canvas.externalResource.data.width, canvas.externalResource.data.height);
+                var width = canvas.externalResource.data.width;
+                var height = canvas.externalResource.data.height;
+                if (width && height) {
+                    return new Size(width, height);
+                }
             }
-            return new Size(0, 0);
+            return null;
         };
         DownloadDialogue.prototype.getCanvasComputedDimensions = function (canvas) {
             var imageSize = this.getCanvasDimensions(canvas);
             var requiredSize = canvas.getMaxDimensions();
+            if (!imageSize) {
+                return null;
+            }
             if (!requiredSize) {
                 return imageSize;
             }
@@ -22415,6 +23061,19 @@ define('extensions/uv-seadragon-extension/DownloadDialogue',["require", "exports
             if (!this.extension.resources) {
                 return false;
             }
+            var canvas = this.extension.helper.getCurrentCanvas();
+            // if the external resource doesn't have a service descriptor
+            // only allow wholeImageHighRes
+            if (!canvas.externalResource.hasServiceDescriptor()) {
+                if (option === DownloadOption_1.DownloadOption.wholeImageHighRes) {
+                    // if in one-up mode, or in two-up mode with a single page being shown
+                    if (!this.extension.isPagingSettingEnabled() ||
+                        this.extension.isPagingSettingEnabled() && this.extension.resources && this.extension.resources.length === 1) {
+                        return true;
+                    }
+                }
+                return false;
+            }
             switch (option) {
                 case DownloadOption_1.DownloadOption.currentViewAsJpg:
                 case DownloadOption_1.DownloadOption.dynamicCanvasRenderings:
@@ -22423,7 +23082,6 @@ define('extensions/uv-seadragon-extension/DownloadDialogue',["require", "exports
                     // if in one-up mode, or in two-up mode with a single page being shown
                     if (!this.extension.isPagingSettingEnabled() ||
                         this.extension.isPagingSettingEnabled() && this.extension.resources && this.extension.resources.length === 1) {
-                        var canvas = this.extension.helper.getCurrentCanvas();
                         var maxDimensions = canvas.getMaxDimensions();
                         if (maxDimensions) {
                             if (maxDimensions.width <= this.options.maxImageWidth) {
@@ -22443,12 +23101,19 @@ define('extensions/uv-seadragon-extension/DownloadDialogue',["require", "exports
                     return false;
                 case DownloadOption_1.DownloadOption.wholeImageLowResAsJpg:
                     // hide low-res option if hi-res width is smaller than constraint
-                    var size = this.getCanvasComputedDimensions(this.extension.helper.getCurrentCanvas());
-                    if (!size)
+                    var size = this.getCanvasComputedDimensions(canvas);
+                    if (!size) {
                         return false;
+                    }
                     return (!this.extension.isPagingSettingEnabled() && (size.width > this.options.confinedImageSize));
                 case DownloadOption_1.DownloadOption.selection:
                     return this.options.selectionEnabled;
+                case DownloadOption_1.DownloadOption.rangeRendering:
+                    if (canvas.ranges.length) {
+                        var range = canvas.ranges[0];
+                        return range.getRenderings().length > 0;
+                    }
+                    return false;
                 default:
                     return _super.prototype.isDownloadOptionAvailable.call(this, option);
             }
@@ -22555,15 +23220,14 @@ define('modules/uv-shared-module/AutoComplete',["require", "exports"], function 
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var AutoComplete = /** @class */ (function () {
+        //private _navigationKeyDownCodes: number[] = [KeyCodes.KeyDown.Backspace, KeyCodes.KeyDown.Spacebar, KeyCodes.KeyDown.Tab, KeyCodes.KeyDown.LeftArrow, KeyCodes.KeyDown.RightArrow, KeyCodes.KeyDown.Delete];
+        //private _validKeyPressCodes: number[] = [KeyCodes.KeyPress.GraveAccent, KeyCodes.KeyPress.DoubleQuote];
+        //private _lastKeyDownWasNavigation: boolean = false;
         function AutoComplete(element, autoCompleteFunc, parseResultsFunc, onSelect, delay, minChars, positionAbove) {
             if (delay === void 0) { delay = 300; }
             if (minChars === void 0) { minChars = 2; }
             if (positionAbove === void 0) { positionAbove = false; }
             var _this = this;
-            // valid keys that are not 
-            this._validKeyDownCodes = [KeyCodes.KeyDown.Backspace, KeyCodes.KeyDown.Spacebar, KeyCodes.KeyDown.Tab, KeyCodes.KeyDown.LeftArrow, KeyCodes.KeyDown.RightArrow, KeyCodes.KeyDown.Delete];
-            this._validKeyPressCodes = [KeyCodes.KeyPress.GraveAccent, KeyCodes.KeyPress.DoubleQuote];
-            this._lastKeyDownWasValid = false;
             this._$element = element;
             this._autoCompleteFunc = autoCompleteFunc;
             this._delay = delay;
@@ -22590,10 +23254,9 @@ define('modules/uv-shared-module/AutoComplete',["require", "exports"], function 
                 };
             })();
             var that = this;
-            // validate
             this._$element.on("keydown", function (e) {
                 var originalEvent = e.originalEvent;
-                that._lastKeyDownWasValid = that._isValidKeyDown(originalEvent);
+                //that._lastKeyDownWasNavigation = that._isNavigationKeyDown(originalEvent);
                 var charCode = Utils.Keyboard.getCharCode(originalEvent);
                 var cancelEvent = false;
                 if (charCode === KeyCodes.KeyDown.LeftArrow) {
@@ -22609,14 +23272,14 @@ define('modules/uv-shared-module/AutoComplete',["require", "exports"], function 
                 }
             });
             // prevent invalid characters being entered
-            this._$element.on("keypress", function (e) {
-                var isValidKeyPress = that._isValidKeyPress(e.originalEvent);
-                if (!(that._lastKeyDownWasValid || isValidKeyPress)) {
-                    e.preventDefault();
-                    return false;
-                }
-                return true;
-            });
+            // this._$element.on("keypress", function(e: JQueryEventObject) {
+            //     const isValidKeyPress: boolean = that._isValidKeyPress(<KeyboardEvent>e.originalEvent);
+            //     if (!(that._lastKeyDownWasNavigation || isValidKeyPress)) {
+            //         e.preventDefault();
+            //         return false;
+            //     }
+            //     return true;
+            // });
             // auto complete
             this._$element.on("keyup", function (e) {
                 // if pressing enter without a list item selected
@@ -22664,16 +23327,16 @@ define('modules/uv-shared-module/AutoComplete',["require", "exports"], function 
             });
             this._hideResults();
         }
-        AutoComplete.prototype._isValidKeyDown = function (e) {
-            var isValid = this._validKeyDownCodes.includes(Utils.Keyboard.getCharCode(e));
-            return isValid;
-        };
-        AutoComplete.prototype._isValidKeyPress = function (e) {
-            var charCode = Utils.Keyboard.getCharCode(e);
-            var key = String.fromCharCode(charCode);
-            var isValid = key.isAlphanumeric() || this._validKeyPressCodes.includes(charCode);
-            return isValid;
-        };
+        // private _isNavigationKeyDown(e: KeyboardEvent): boolean {
+        //     const isNavigationKeyDown: boolean = this._navigationKeyDownCodes.includes(Utils.Keyboard.getCharCode(e));
+        //     return isNavigationKeyDown;
+        // }
+        // private _isValidKeyPress(e: KeyboardEvent): boolean {
+        //     const charCode: number = Utils.Keyboard.getCharCode(e);
+        //     const key: string = String.fromCharCode(charCode);
+        //     const isValid: boolean = key.isAlphanumeric() || this._validKeyPressCodes.includes(charCode);
+        //     return isValid;
+        // }
         AutoComplete.prototype._getTerms = function () {
             return this._$element.val().trim();
         };
@@ -24060,6 +24723,10 @@ define('modules/uv-seadragoncenterpanel-module/SeadragonCenterPanel',["require",
             _super.prototype.create.call(this);
             this.$viewer = $('<div id="viewer"></div>');
             this.$content.prepend(this.$viewer);
+            $.subscribe(BaseEvents_1.BaseEvents.ANNOTATIONS, function (e, args) {
+                _this.overlayAnnotations();
+                _this.zoomToInitialAnnotation();
+            });
             $.subscribe(BaseEvents_1.BaseEvents.SETTINGS_CHANGED, function (e, args) {
                 _this.viewer.gestureSettingsMouse.clickToZoom = args.clickToZoomEnabled;
             });
@@ -24130,7 +24797,7 @@ define('modules/uv-seadragoncenterpanel-module/SeadragonCenterPanel',["require",
         };
         SeadragonCenterPanel.prototype.updateResponsiveView = function () {
             this.setNavigatorVisible();
-            if (this.extension.isMobileView()) {
+            if (!this.extension.isDesktopMetric()) {
                 this.viewer.autoHideControls = false;
                 this.$viewportNavButtons.hide();
             }
@@ -24363,19 +25030,27 @@ define('modules/uv-seadragoncenterpanel-module/SeadragonCenterPanel',["require",
             var _this = this;
             this.$spinner.show();
             this.items = [];
-            // todo: this should be a more specific Manifold.IImageResource
             this.extension.getExternalResources(resources).then(function (resources) {
-                // OSD can open an array info.json objects
-                //this.viewer.open(resources);
                 _this.viewer.close();
                 resources = _this.getPagePositions(resources);
                 for (var i = 0; i < resources.length; i++) {
-                    var resource = resources[i];
+                    var data = resources[i];
+                    var tileSource = void 0;
+                    if (data.hasServiceDescriptor) {
+                        tileSource = data;
+                    }
+                    else {
+                        tileSource = {
+                            type: 'image',
+                            url: data.id,
+                            buildPyramid: false
+                        };
+                    }
                     _this.viewer.addTiledImage({
-                        tileSource: resource,
-                        x: resource.x,
-                        y: resource.y,
-                        width: resource.width,
+                        tileSource: tileSource,
+                        x: data.x,
+                        y: data.y,
+                        width: data.width,
                         success: function (item) {
                             _this.items.push(item);
                             if (_this.items.length === resources.length) {
@@ -24495,17 +25170,33 @@ define('modules/uv-seadragoncenterpanel-module/SeadragonCenterPanel',["require",
                 }
             }
             this.setNavigatorVisible();
-            //setTimeout(() => {
             this.overlayAnnotations();
             this.updateBounds();
+            this.zoomToInitialAnnotation();
+            this.isFirstLoad = false;
+        };
+        SeadragonCenterPanel.prototype.zoomToInitialAnnotation = function () {
             var annotationRect = this.getInitialAnnotationRect();
             this.extension.previousAnnotationRect = null;
             this.extension.currentAnnotationRect = null;
             if (annotationRect && this.isZoomToSearchResultEnabled()) {
                 this.zoomToAnnotation(annotationRect);
             }
-            this.isFirstLoad = false;
-            //}, 1000);
+        };
+        SeadragonCenterPanel.prototype.overlayAnnotations = function () {
+            var annotations = this.getAnnotationsForCurrentImages();
+            for (var i = 0; i < annotations.length; i++) {
+                var annotation = annotations[i];
+                var overlayRects = this.getAnnotationOverlayRects(annotation);
+                for (var k = 0; k < overlayRects.length; k++) {
+                    var overlayRect = overlayRects[k];
+                    var div = document.createElement('div');
+                    div.id = 'searchResult-' + overlayRect.canvasIndex + '-' + overlayRect.resultIndex;
+                    div.className = 'searchOverlay';
+                    div.title = Utils_1.UVUtils.sanitize(overlayRect.chars);
+                    this.viewer.addOverlay(div, overlayRect);
+                }
+            }
         };
         SeadragonCenterPanel.prototype.updateBounds = function () {
             var settings = this.extension.getSettings();
@@ -24604,21 +25295,6 @@ define('modules/uv-seadragoncenterpanel-module/SeadragonCenterPanel',["require",
         };
         SeadragonCenterPanel.prototype.clearAnnotations = function () {
             this.$canvas.find('.searchOverlay').hide();
-        };
-        SeadragonCenterPanel.prototype.overlayAnnotations = function () {
-            var annotations = this.getAnnotationsForCurrentImages();
-            for (var i = 0; i < annotations.length; i++) {
-                var annotation = annotations[i];
-                var overlayRects = this.getAnnotationOverlayRects(annotation);
-                for (var k = 0; k < overlayRects.length; k++) {
-                    var overlayRect = overlayRects[k];
-                    var div = document.createElement('div');
-                    div.id = 'searchResult-' + overlayRect.canvasIndex + '-' + overlayRect.resultIndex;
-                    div.className = 'searchOverlay';
-                    div.title = Utils_1.UVUtils.sanitize(overlayRect.chars);
-                    this.viewer.addOverlay(div, overlayRect);
-                }
-            }
         };
         SeadragonCenterPanel.prototype.getAnnotationsForCurrentImages = function () {
             var annotationsForCurrentImages = [];
@@ -24832,7 +25508,7 @@ define('modules/uv-seadragoncenterpanel-module/SeadragonCenterPanel',["require",
             }
         };
         SeadragonCenterPanel.prototype.setNavigatorVisible = function () {
-            var navigatorEnabled = Utils.Bools.getBool(this.extension.getSettings().navigatorEnabled, true) && !this.extension.isMobileView();
+            var navigatorEnabled = Utils.Bools.getBool(this.extension.getSettings().navigatorEnabled, true) && this.extension.isDesktopMetric();
             this.viewer.navigator.setVisible(navigatorEnabled);
             if (navigatorEnabled) {
                 this.$navigator.show();
@@ -25043,7 +25719,7 @@ define('extensions/uv-seadragon-extension/Extension',["require", "exports", "../
             var _this = this;
             _super.prototype.create.call(this);
             $.subscribe(BaseEvents_1.BaseEvents.METRIC_CHANGED, function () {
-                if (_this.isMobileView()) {
+                if (!_this.isDesktopMetric()) {
                     var settings = {};
                     settings.pagingEnabled = false;
                     _this.updateSettings(settings);
@@ -25105,7 +25781,7 @@ define('extensions/uv-seadragon-extension/Extension',["require", "exports", "../
                 }
             });
             $.subscribe(BaseEvents_1.BaseEvents.LEFTPANEL_COLLAPSE_FULL_START, function () {
-                if (!_this.isMobileView()) {
+                if (_this.isDesktopMetric()) {
                     Shell_1.Shell.$rightPanel.show();
                 }
             });
@@ -25216,6 +25892,7 @@ define('extensions/uv-seadragon-extension/Extension',["require", "exports", "../
                 if (!_this.useArrowKeysToNavigate()) {
                     _this.centerPanel.setFocus();
                 }
+                _this.fire(Events_1.Events.SEADRAGON_OPEN);
             });
             $.subscribe(Events_1.Events.SEADRAGON_RESIZE, function () {
                 _this.fire(Events_1.Events.SEADRAGON_RESIZE);
@@ -25359,23 +26036,18 @@ define('extensions/uv-seadragon-extension/Extension',["require", "exports", "../
             //$.publish(BaseEvents.CANVAS_INDEX_CHANGED, [this.helper.canvasIndex]);
         };
         Extension.prototype.checkForSearchParam = function () {
-            // if a h value is in the hash params, do a search.
-            if (this.isDeepLinkingEnabled()) {
-                // if a highlight param is set, use it to search.
-                var highlight = this.data.highlight;
-                if (highlight) {
-                    highlight.replace(/\+/g, " ").replace(/"/g, "");
-                    $.publish(Events_1.Events.SEARCH, [highlight]);
-                }
+            // if a highlight param is set, use it to search.
+            var highlight = this.data.highlight;
+            if (highlight) {
+                highlight.replace(/\+/g, " ").replace(/"/g, "");
+                $.publish(Events_1.Events.SEARCH, [highlight]);
             }
         };
         Extension.prototype.checkForRotationParam = function () {
-            // if a rotation value is in the hash params, set currentRotation
-            if (this.isDeepLinkingEnabled()) {
-                var rotation = this.data.rotation;
-                if (rotation) {
-                    $.publish(Events_1.Events.SEADRAGON_ROTATION, [rotation]);
-                }
+            // if a rotation value is passed, set rotation
+            var rotation = this.data.rotation;
+            if (rotation) {
+                $.publish(Events_1.Events.SEADRAGON_ROTATION, [rotation]);
             }
         };
         Extension.prototype.viewPage = function (canvasIndex) {
@@ -25491,14 +26163,12 @@ define('extensions/uv-seadragon-extension/Extension',["require", "exports", "../
             }
         };
         Extension.prototype.nextSearchResult = function () {
-            var foundResult;
             if (!this.annotations)
                 return;
             // get the first result with an index greater than the current index.
             for (var i = 0; i < this.annotations.length; i++) {
                 var result = this.annotations[i];
                 if (result && result.canvasIndex >= this.getNextPageIndex()) {
-                    foundResult = result;
                     $.publish(BaseEvents_1.BaseEvents.CANVAS_INDEX_CHANGED, [result.canvasIndex]);
                     break;
                 }
@@ -26339,7 +27009,7 @@ define('modules/uv-virtexcenterpanel-module/VirtexCenterPanel',["require", "expo
                     _this.viewport.toggleVR();
                 }
             });
-            if (!WEBVR.isAvailable()) {
+            if (!this._isVREnabled()) {
                 this.$vrButton.hide();
             }
         };
@@ -26376,6 +27046,9 @@ define('modules/uv-virtexcenterpanel-module/VirtexCenterPanel',["require", "expo
                 });
                 _this.resize();
             });
+        };
+        VirtexCenterPanel.prototype._isVREnabled = function () {
+            return (Utils.Bools.getBool(this.config.options.vrEnabled, false) && WEBVR.isAvailable());
         };
         VirtexCenterPanel.prototype.resize = function () {
             _super.prototype.resize.call(this);
@@ -26511,7 +27184,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-define('UVComponent',["require", "exports", "./modules/uv-shared-module/BaseEvents", "./extensions/uv-default-extension/Extension", "./extensions/uv-mediaelement-extension/Extension", "./extensions/uv-seadragon-extension/Extension", "./extensions/uv-pdf-extension/Extension", "./extensions/uv-virtex-extension/Extension"], function (require, exports, BaseEvents_1, Extension_1, Extension_2, Extension_3, Extension_4, Extension_5) {
+define('UVComponent',["require", "exports", "./modules/uv-shared-module/BaseEvents", "./extensions/uv-av-extension/Extension", "./extensions/uv-default-extension/Extension", "./extensions/uv-mediaelement-extension/Extension", "./extensions/uv-seadragon-extension/Extension", "./extensions/uv-pdf-extension/Extension", "./extensions/uv-virtex-extension/Extension"], function (require, exports, BaseEvents_1, Extension_1, Extension_2, Extension_3, Extension_4, Extension_5, Extension_6) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var UVComponent = /** @class */ (function (_super) {
@@ -26530,48 +27203,52 @@ define('UVComponent',["require", "exports", "./modules/uv-shared-module/BaseEven
             }
             this._extensions = {};
             this._extensions[manifesto.ResourceType.canvas().toString()] = {
-                type: Extension_3.Extension,
+                type: Extension_4.Extension,
                 name: 'uv-seadragon-extension'
             };
             this._extensions[manifesto.ResourceType.movingimage().toString()] = {
-                type: Extension_2.Extension,
+                type: Extension_3.Extension,
                 name: 'uv-mediaelement-extension'
             };
             this._extensions[manifesto.ResourceType.physicalobject().toString()] = {
-                type: Extension_5.Extension,
+                type: Extension_6.Extension,
                 name: 'uv-virtex-extension'
             };
             this._extensions[manifesto.ResourceType.sound().toString()] = {
-                type: Extension_2.Extension,
+                type: Extension_3.Extension,
                 name: 'uv-mediaelement-extension'
             };
             this._extensions[manifesto.RenderingFormat.pdf().toString()] = {
-                type: Extension_4.Extension,
+                type: Extension_5.Extension,
                 name: 'uv-pdf-extension'
             };
             // presentation 3
-            this._extensions["image/jpeg"] = {
-                type: Extension_3.Extension,
+            this._extensions[manifesto.MediaType.jpg().toString()] = {
+                type: Extension_4.Extension,
                 name: 'uv-seadragon-extension'
             };
             this._extensions[manifesto.MediaType.pdf().toString()] = {
-                type: Extension_4.Extension,
+                type: Extension_5.Extension,
                 name: 'uv-pdf-extension'
             };
             this._extensions[manifesto.MediaType.mp4().toString()] = {
-                type: Extension_2.Extension,
+                type: Extension_3.Extension,
                 name: 'uv-mediaelement-extension'
             };
             this._extensions[manifesto.MediaType.webm().toString()] = {
-                type: Extension_2.Extension,
+                type: Extension_3.Extension,
                 name: 'uv-mediaelement-extension'
             };
             this._extensions[manifesto.MediaType.threejs().toString()] = {
-                type: Extension_5.Extension,
+                type: Extension_6.Extension,
                 name: 'uv-virtex-extension'
             };
-            this._extensions['default'] = {
+            this._extensions['av'] = {
                 type: Extension_1.Extension,
+                name: 'uv-av-extension'
+            };
+            this._extensions['default'] = {
+                type: Extension_2.Extension,
                 name: 'uv-default-extension'
             };
             this.set(this.options.data);
@@ -26585,7 +27262,7 @@ define('UVComponent',["require", "exports", "./modules/uv-shared-module/BaseEven
                 collectionIndex: 0,
                 config: null,
                 configUri: null,
-                deepLinkingEnabled: true,
+                embedded: false,
                 iiifResourceUri: '',
                 isLightbox: false,
                 isReload: false,
@@ -26596,6 +27273,7 @@ define('UVComponent',["require", "exports", "./modules/uv-shared-module/BaseEven
                     }
                 ],
                 manifestIndex: 0,
+                rangeId: null,
                 rotation: 0,
                 sequenceIndex: 0,
                 xywh: ''
@@ -26667,6 +27345,7 @@ define('UVComponent',["require", "exports", "./modules/uv-shared-module/BaseEven
                 manifestIndex: data.manifestIndex,
                 sequenceIndex: data.sequenceIndex,
                 canvasIndex: data.canvasIndex,
+                rangeId: data.rangeId,
                 locale: data.locales[0].name
             }).then(function (helper) {
                 var trackingLabel = helper.getTrackingLabel();
@@ -26683,37 +27362,44 @@ define('UVComponent',["require", "exports", "./modules/uv-shared-module/BaseEven
                     return;
                 }
                 var extension = null;
-                // canvasType will always be "canvas" in IIIF presentation 3.0
-                // to determine the correct extension to use, we need to inspect canvas.content.items[0].format
-                // which is an iana media type: http://www.iana.org/assignments/media-types/media-types.xhtml
-                var content = canvas.getContent();
-                if (content.length) {
-                    var annotation = content[0];
-                    var body = annotation.getBody();
-                    if (body) {
-                        var format = body[0].getFormat();
-                        if (format) {
-                            extension = that._extensions[format.toString()];
-                            if (!extension) {
-                                // try type
-                                var type = body[0].getType();
-                                if (type) {
-                                    extension = that._extensions[type.toString()];
+                // if the canvas has a duration, use the uv-av-extension
+                var duration = canvas.getDuration();
+                if (typeof (duration) !== 'undefined') {
+                    extension = that._extensions["av"];
+                }
+                else {
+                    // canvasType will always be "canvas" in IIIF presentation 3.0
+                    // to determine the correct extension to use, we need to inspect canvas.content.items[0].format
+                    // which is an iana media type: http://www.iana.org/assignments/media-types/media-types.xhtml
+                    var content = canvas.getContent();
+                    if (content.length) {
+                        var annotation = content[0];
+                        var body = annotation.getBody();
+                        if (body) {
+                            var format = body[0].getFormat();
+                            if (format) {
+                                extension = that._extensions[format.toString()];
+                                if (!extension) {
+                                    // try type
+                                    var type = body[0].getType();
+                                    if (type) {
+                                        extension = that._extensions[type.toString()];
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                else {
-                    var canvasType = canvas.getType();
-                    if (canvasType) {
-                        // try using canvasType
-                        extension = that._extensions[canvasType.toString()];
-                    }
-                    // if there isn't an extension for the canvasType, try the format
-                    if (!extension) {
-                        var format = canvas.getProperty('format');
-                        extension = that._extensions[format];
+                    else {
+                        var canvasType = canvas.getType();
+                        if (canvasType) {
+                            // try using canvasType
+                            extension = that._extensions[canvasType.toString()];
+                        }
+                        // if there isn't an extension for the canvasType, try the format
+                        if (!extension) {
+                            var format = canvas.getProperty('format');
+                            extension = that._extensions[format];
+                        }
                     }
                 }
                 // if there still isn't a matching extension, use the default extension.
@@ -26824,6 +27510,20 @@ define('UVComponent',["require", "exports", "./modules/uv-shared-module/BaseEven
     exports.default = UVComponent;
 });
 //# sourceMappingURL=UVComponent.js.map
+/// <reference types="base-component" />
+/// <reference types="exjs" />
+/// <reference types="extensions" />
+/// <reference types="http-status-codes" />
+/// <reference types="iiif-av-component" />
+/// <reference types="iiif-gallery-component" />
+/// <reference types="iiif-metadata-component" />
+/// <reference types="iiif-tree-component" />
+/// <reference types="jquery-plugins" />
+/// <reference types="key-codes" />
+/// <reference types="manifesto.js" />
+/// <reference types="manifold" />
+/// <reference types="utils" />
+/// <reference types="virtex3d" />
 if (typeof jQuery === "function") {
     define('jquery', [], function () {
         return jQuery;

@@ -2,7 +2,37 @@
     "options": {
         "rightPanelEnabled": true,
         "limitLocales": true,
-        "shareFrameEnabled": false
+        "shareFrameEnabled": false,
+        "metrics": [
+          {
+            "type": "watch",
+            "minWidth": 100001,
+            "maxWidth": 100001,
+            "minHeight": 100001,
+            "maxHeight": 100001
+          },
+          {
+            "type": "mobileportrait",
+            "minWidth": 100001,
+            "maxWidth": 100001,
+            "minHeight": 100001,
+            "maxHeight": 100001
+          },
+          {
+            "type": "mobilelandscape",
+            "minWidth": 100001,
+            "maxWidth": 100001,
+            "minHeight": 100001,
+            "maxHeight": 100001
+          },
+          {
+            "type": "desktop",
+            "minWidth": 0,
+            "maxWidth": 100000,
+            "minHeight": 0,
+            "maxHeight": 100000
+          }
+        ]
     },
     "modules": {
         "seadragonCenterPanel": {
