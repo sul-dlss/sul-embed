@@ -4,7 +4,6 @@ describe Embed::Viewer::CommonViewer do
   include PURLFixtures
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:file_viewer) { Embed::Viewer::File.new(request) }
-  let(:image_x_viewer) { Embed::Viewer::ImageX.new(request) }
   let(:geo_viewer) { Embed::Viewer::Geo.new(request) }
   let(:media_viewer) { Embed::Viewer::Media.new(request) }
   let(:was_seed_viewer) { Embed::Viewer::WasSeed.new(request) }
@@ -52,7 +51,6 @@ describe Embed::Viewer::CommonViewer do
       expect(file_viewer.show_download?).to be_falsey
     end
     it 'true for image, geo and media viewer' do
-      expect(image_x_viewer.show_download?).to be_truthy
       expect(geo_viewer.show_download?).to be_truthy
       expect_any_instance_of(Embed::PURL).to receive(:downloadable_files).and_return(['a'])
       expect(media_viewer.show_download?).to be_truthy
@@ -65,9 +63,6 @@ describe Embed::Viewer::CommonViewer do
     end
   end
   describe '#show_download_count?' do
-    it 'false for image_x viewer' do
-      expect(image_x_viewer.show_download_count?).to be_falsey
-    end
     it 'true for non-image viewers' do
       expect(file_viewer.show_download_count?).to be_truthy
       expect(geo_viewer.show_download_count?).to be_truthy

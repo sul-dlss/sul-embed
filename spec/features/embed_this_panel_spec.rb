@@ -52,13 +52,6 @@ describe 'embed this panel', js: true do
       expect(page.find('.sul-embed-embed-this-panel textarea').value).not_to match(/&hide_search=true/)
     end
   end
-  describe 'image objects' do
-    let(:spec_fixture) { image_purl }
-    it 'include the form elements for downloading an image' do
-      page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).trigger('click')
-      expect(page).to have_css('input#sul-embed-embed-download[type="checkbox"]')
-    end
-  end
 
   describe 'Customization Options' do
     let(:spec_fixture) { file_purl }

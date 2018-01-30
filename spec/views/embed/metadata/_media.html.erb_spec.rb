@@ -12,7 +12,6 @@ RSpec.describe 'embed/metadata/_media.html.erb' do
     allow(request).to receive(:purl_object).and_return(object)
     allow(object).to receive(:response).and_return(video_purl)
     allow(view).to receive(:viewer).and_return(viewer)
-    stub_template 'metadata/_iiif_drag_and_drop_icon.html.erb' => 'Icon'
     render
   end
 

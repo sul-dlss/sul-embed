@@ -64,6 +64,6 @@ streaming_prefix:
   mpeg: 'mp4'
   m4a: 'mp4'
   mp3: 'mp3'
-# Right now options include Embed::Viewer::ImageX and Embed::Viewer::UVImage, but really any Embed::Viewer could be put here.
-image_viewer: Embed::Viewer::ImageX
+# Any Embed::Viewer could be put here.
+image_viewer: Embed::Viewer::UVImage
 use_uv_for_files: false # A feature flag that toggles registering the Embed::Viewer::UVFile viewer
