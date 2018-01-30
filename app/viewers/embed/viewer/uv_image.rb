@@ -31,6 +31,15 @@ module Embed
       def default_body_height
         420
       end
+
+      # The UV UI provides its own header and footer integrated into the viewer height itself.
+      def header_height
+        0
+      end
+
+      def footer_height
+        0
+      end
     end
   end
 end
