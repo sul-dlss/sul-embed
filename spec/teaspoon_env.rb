@@ -186,9 +186,6 @@ Teaspoon.configure do |config|
   config.suite :geo do |suite|
     suite.matcher = '{spec/javascripts/geo}/**/*_spec.{js,js.coffee,coffee}'
   end
-  config.suite :image_x do |suite|
-    suite.matcher = '{spec/javascripts/image_x}/**/*_spec.{js,js.coffee,coffee}'
-  end
   config.suite :thumb_slider do |suite|
     suite.matcher = '{spec/javascripts/thumb_slider}/**/*_spec.{js,js.coffee,coffee}'
   end

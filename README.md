@@ -102,7 +102,7 @@ For links that are intended to navigate the users browser away from the current 
 
 Viewers can customize the embed panel.  To do this, create a template in `app/views/embed/embed-this`, to provide the HTML for the embed panel.
 
-See ImageX and File viewers for examples.
+See File viewers for an example.
 
 
 ### Adding a Download Panel

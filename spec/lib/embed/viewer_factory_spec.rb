@@ -30,7 +30,7 @@ describe Embed::ViewerFactory do
     before { stub_purl_response_with_fixture(image_purl) }
     subject { instance.viewer }
     context 'when the request has a type' do
-      it { is_expected.to be_kind_of Embed::Viewer::ImageX }
+      it { is_expected.to be_kind_of Embed::Viewer::UVImage }
     end
 
     context "when the request doesn't have a type" do
