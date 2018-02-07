@@ -2,7 +2,8 @@
     "options": {
         "rightPanelEnabled": true,
         "limitLocales": true,
-        "shareFrameEnabled": false
+        "shareFrameEnabled": false,
+        "zoomToSearchResultEnabled": false
     },
     "modules": {
         "seadragonCenterPanel": {
