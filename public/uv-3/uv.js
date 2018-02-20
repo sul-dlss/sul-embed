@@ -3516,8 +3516,8 @@ var HTTPStatusCode;
 }(jQuery));
 define("lib/ba-tiny-pubsub.js", function(){});
 
-// manifesto v2.2.10 https://github.com/iiif-commons/manifesto
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/manifesto.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifesto = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+// manifesto v2.2.11 https://github.com/iiif-commons/manifesto
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/manifesto.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifesto = f()}})(function(){var define,module,exports;return (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
 (function (global){
 
 var Manifesto;
@@ -5632,9 +5632,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var http = require("http");
-var https = require("https");
-var url = require("url");
+var http = require('http');
+var https = require('https');
+var url = require('url');
 var Manifesto;
 (function (Manifesto) {
     var Utils = /** @class */ (function () {
@@ -5797,7 +5797,7 @@ var Manifesto;
         Utils.loadResource = function (uri) {
             return new Promise(function (resolve, reject) {
                 var u = url.parse(uri);
-                var request;
+                var req;
                 var opts = {
                     host: u.hostname,
                     port: u.port,
@@ -5805,32 +5805,48 @@ var Manifesto;
                     method: "GET",
                     withCredentials: false
                 };
-                if (u.protocol === 'https:') {
-                    request = https.request(opts, function (response) {
-                        var result = "";
-                        response.on('data', function (chunk) {
-                            result += chunk;
+                switch (u.protocol) {
+                    case 'https:':
+                        req = https.request(opts, function (response) {
+                            var result = "";
+                            response.on('data', function (chunk) {
+                                result += chunk;
+                            });
+                            response.on('end', function () {
+                                resolve(result);
+                            });
                         });
-                        response.on('end', function () {
-                            resolve(result);
+                        req.on('error', function (error) {
+                            reject(error);
                         });
-                    });
+                        req.end();
+                        break;
+                    case 'dat:':
+                        var xhr_1 = new XMLHttpRequest();
+                        xhr_1.onreadystatechange = function () {
+                            if (xhr_1.readyState === 4) {
+                                resolve(xhr_1.response);
+                            }
+                        };
+                        xhr_1.open("GET", uri, true);
+                        xhr_1.send();
+                        break;
+                    default:
+                        req = http.request(opts, function (response) {
+                            var result = "";
+                            response.on('data', function (chunk) {
+                                result += chunk;
+                            });
+                            response.on('end', function () {
+                                resolve(result);
+                            });
+                        });
+                        req.on('error', function (error) {
+                            reject(error);
+                        });
+                        req.end();
+                        break;
                 }
-                else {
-                    request = http.request(opts, function (response) {
-                        var result = "";
-                        response.on('data', function (chunk) {
-                            result += chunk;
-                        });
-                        response.on('end', function () {
-                            resolve(result);
-                        });
-                    });
-                }
-                request.on('error', function (error) {
-                    reject(error);
-                });
-                request.end();
             });
         };
         Utils.loadExternalResourcesAuth1 = function (resources, openContentProviderInteraction, openTokenService, getStoredAccessToken, userInteractedWithContentProvider, getContentProviderInteraction, handleMovedTemporarily, showOutOfOptionsMessages) {
@@ -9253,7 +9269,7 @@ if (typeof Object.create === 'function') {
 /*!
  * Determine if an object is a Buffer
  *
- * @author   Feross Aboukhadijeh <feross@feross.org> <http://feross.org>
+ * @author   Feross Aboukhadijeh <https://feross.org>
  * @license  MIT
  */
 
@@ -9286,9 +9302,9 @@ module.exports = Array.isArray || function (arr) {
 if (!process.version ||
     process.version.indexOf('v0.') === 0 ||
     process.version.indexOf('v1.') === 0 && process.version.indexOf('v1.8.') !== 0) {
-  module.exports = nextTick;
+  module.exports = { nextTick: nextTick };
 } else {
-  module.exports = process.nextTick;
+  module.exports = process
 }
 
 function nextTick(fn, arg1, arg2, arg3) {
@@ -9324,6 +9340,7 @@ function nextTick(fn, arg1, arg2, arg3) {
     });
   }
 }
+
 
 }).call(this,require('_process'))
 },{"_process":14}],14:[function(require,module,exports){
@@ -10259,7 +10276,7 @@ exports.encode = exports.stringify = require('./encode');
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var processNextTick = require('process-nextick-args').nextTick;
 /*</replacement>*/
 
 /*<replacement>*/
@@ -10428,7 +10445,7 @@ PassThrough.prototype._transform = function (chunk, encoding, cb) {
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var processNextTick = require('process-nextick-args').nextTick;
 /*</replacement>*/
 
 module.exports = Readable;
@@ -10455,9 +10472,8 @@ var EElistenerCount = function (emitter, type) {
 var Stream = require('./internal/streams/stream');
 /*</replacement>*/
 
-// TODO(bmeurer): Change this back to const once hole checks are
-// properly optimized away early in Ignition+TurboFan.
 /*<replacement>*/
+
 var Buffer = require('safe-buffer').Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
@@ -10466,6 +10482,7 @@ function _uint8ArrayToBuffer(chunk) {
 function _isUint8Array(obj) {
   return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
 }
+
 /*</replacement>*/
 
 /*<replacement>*/
@@ -10494,15 +10511,13 @@ var kProxyEvents = ['error', 'close', 'destroy', 'pause', 'resume'];
 function prependListener(emitter, event, fn) {
   // Sadly this is not cacheable as some libraries bundle their own
   // event emitter implementation with them.
-  if (typeof emitter.prependListener === 'function') {
-    return emitter.prependListener(event, fn);
-  } else {
-    // This is a hack to make sure that our error handler is attached before any
-    // userland ones.  NEVER DO THIS. This is here only because this code needs
-    // to continue to work with older versions of Node.js that do not include
-    // the prependListener() method. The goal is to eventually remove this hack.
-    if (!emitter._events || !emitter._events[event]) emitter.on(event, fn);else if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);else emitter._events[event] = [fn, emitter._events[event]];
-  }
+  if (typeof emitter.prependListener === 'function') return emitter.prependListener(event, fn);
+
+  // This is a hack to make sure that our error handler is attached before any
+  // userland ones.  NEVER DO THIS. This is here only because this code needs
+  // to continue to work with older versions of Node.js that do not include
+  // the prependListener() method. The goal is to eventually remove this hack.
+  if (!emitter._events || !emitter._events[event]) emitter.on(event, fn);else if (isArray(emitter._events[event])) emitter._events[event].unshift(fn);else emitter._events[event] = [fn, emitter._events[event]];
 }
 
 function ReadableState(options, stream) {
@@ -10510,17 +10525,26 @@ function ReadableState(options, stream) {
 
   options = options || {};
 
+  // Duplex streams are both readable and writable, but share
+  // the same options object.
+  // However, some cases require setting options to different
+  // values for the readable and the writable sides of the duplex stream.
+  // These options can be provided separately as readableXXX and writableXXX.
+  var isDuplex = stream instanceof Duplex;
+
   // object stream flag. Used to make read(n) ignore n and to
   // make all the buffer merging and length checks go away
   this.objectMode = !!options.objectMode;
 
-  if (stream instanceof Duplex) this.objectMode = this.objectMode || !!options.readableObjectMode;
+  if (isDuplex) this.objectMode = this.objectMode || !!options.readableObjectMode;
 
   // the point at which it stops calling _read() to fill the buffer
   // Note: 0 is a valid value, means "don't call _read preemptively ever"
   var hwm = options.highWaterMark;
+  var readableHwm = options.readableHighWaterMark;
   var defaultHwm = this.objectMode ? 16 : 16 * 1024;
-  this.highWaterMark = hwm || hwm === 0 ? hwm : defaultHwm;
+
+  if (hwm || hwm === 0) this.highWaterMark = hwm;else if (isDuplex && (readableHwm || readableHwm === 0)) this.highWaterMark = readableHwm;else this.highWaterMark = defaultHwm;
 
   // cast to ints.
   this.highWaterMark = Math.floor(this.highWaterMark);
@@ -11215,18 +11239,19 @@ function flow(stream) {
 // This is *not* part of the readable stream interface.
 // It is an ugly unfortunate mess of history.
 Readable.prototype.wrap = function (stream) {
+  var _this = this;
+
   var state = this._readableState;
   var paused = false;
 
-  var self = this;
   stream.on('end', function () {
     debug('wrapped end');
     if (state.decoder && !state.ended) {
       var chunk = state.decoder.end();
-      if (chunk && chunk.length) self.push(chunk);
+      if (chunk && chunk.length) _this.push(chunk);
     }
 
-    self.push(null);
+    _this.push(null);
   });
 
   stream.on('data', function (chunk) {
@@ -11236,7 +11261,7 @@ Readable.prototype.wrap = function (stream) {
     // don't skip over falsy values in objectMode
     if (state.objectMode && (chunk === null || chunk === undefined)) return;else if (!state.objectMode && (!chunk || !chunk.length)) return;
 
-    var ret = self.push(chunk);
+    var ret = _this.push(chunk);
     if (!ret) {
       paused = true;
       stream.pause();
@@ -11257,12 +11282,12 @@ Readable.prototype.wrap = function (stream) {
 
   // proxy certain important events.
   for (var n = 0; n < kProxyEvents.length; n++) {
-    stream.on(kProxyEvents[n], self.emit.bind(self, kProxyEvents[n]));
+    stream.on(kProxyEvents[n], this.emit.bind(this, kProxyEvents[n]));
   }
 
   // when we try to consume some more bytes, simply unpause the
   // underlying stream.
-  self._read = function (n) {
+  this._read = function (n) {
     debug('wrapped _read', n);
     if (paused) {
       paused = false;
@@ -11270,7 +11295,7 @@ Readable.prototype.wrap = function (stream) {
     }
   };
 
-  return self;
+  return this;
 };
 
 // exposed for testing purposes only.
@@ -11488,39 +11513,28 @@ util.inherits = require('inherits');
 
 util.inherits(Transform, Duplex);
 
-function TransformState(stream) {
-  this.afterTransform = function (er, data) {
-    return afterTransform(stream, er, data);
-  };
-
-  this.needTransform = false;
-  this.transforming = false;
-  this.writecb = null;
-  this.writechunk = null;
-  this.writeencoding = null;
-}
-
-function afterTransform(stream, er, data) {
-  var ts = stream._transformState;
+function afterTransform(er, data) {
+  var ts = this._transformState;
   ts.transforming = false;
 
   var cb = ts.writecb;
 
   if (!cb) {
-    return stream.emit('error', new Error('write callback called multiple times'));
+    return this.emit('error', new Error('write callback called multiple times'));
   }
 
   ts.writechunk = null;
   ts.writecb = null;
 
-  if (data !== null && data !== undefined) stream.push(data);
+  if (data != null) // single equals check for both `null` and `undefined`
+    this.push(data);
 
   cb(er);
 
-  var rs = stream._readableState;
+  var rs = this._readableState;
   rs.reading = false;
   if (rs.needReadable || rs.length < rs.highWaterMark) {
-    stream._read(rs.highWaterMark);
+    this._read(rs.highWaterMark);
   }
 }
 
@@ -11529,9 +11543,14 @@ function Transform(options) {
 
   Duplex.call(this, options);
 
-  this._transformState = new TransformState(this);
-
-  var stream = this;
+  this._transformState = {
+    afterTransform: afterTransform.bind(this),
+    needTransform: false,
+    transforming: false,
+    writecb: null,
+    writechunk: null,
+    writeencoding: null
+  };
 
   // start out asking for a readable event once data is transformed.
   this._readableState.needReadable = true;
@@ -11548,11 +11567,19 @@ function Transform(options) {
   }
 
   // When the writable side finishes, then flush out anything remaining.
-  this.once('prefinish', function () {
-    if (typeof this._flush === 'function') this._flush(function (er, data) {
-      done(stream, er, data);
-    });else done(stream);
-  });
+  this.on('prefinish', prefinish);
+}
+
+function prefinish() {
+  var _this = this;
+
+  if (typeof this._flush === 'function') {
+    this._flush(function (er, data) {
+      done(_this, er, data);
+    });
+  } else {
+    done(this, null, null);
+  }
 }
 
 Transform.prototype.push = function (chunk, encoding) {
@@ -11602,27 +11629,25 @@ Transform.prototype._read = function (n) {
 };
 
 Transform.prototype._destroy = function (err, cb) {
-  var _this = this;
+  var _this2 = this;
 
   Duplex.prototype._destroy.call(this, err, function (err2) {
     cb(err2);
-    _this.emit('close');
+    _this2.emit('close');
   });
 };
 
 function done(stream, er, data) {
   if (er) return stream.emit('error', er);
 
-  if (data !== null && data !== undefined) stream.push(data);
+  if (data != null) // single equals check for both `null` and `undefined`
+    stream.push(data);
 
   // if there's nothing in the write buffer, then that means
   // that nothing more will ever be provided
-  var ws = stream._writableState;
-  var ts = stream._transformState;
+  if (stream._writableState.length) throw new Error('Calling transform done when ws.length != 0');
 
-  if (ws.length) throw new Error('Calling transform done when ws.length != 0');
-
-  if (ts.transforming) throw new Error('Calling transform done when still transforming');
+  if (stream._transformState.transforming) throw new Error('Calling transform done when still transforming');
 
   return stream.push(null);
 }
@@ -11657,7 +11682,7 @@ function done(stream, er, data) {
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var processNextTick = require('process-nextick-args').nextTick;
 /*</replacement>*/
 
 module.exports = Writable;
@@ -11709,6 +11734,7 @@ var Stream = require('./internal/streams/stream');
 /*</replacement>*/
 
 /*<replacement>*/
+
 var Buffer = require('safe-buffer').Buffer;
 var OurUint8Array = global.Uint8Array || function () {};
 function _uint8ArrayToBuffer(chunk) {
@@ -11717,6 +11743,7 @@ function _uint8ArrayToBuffer(chunk) {
 function _isUint8Array(obj) {
   return Buffer.isBuffer(obj) || obj instanceof OurUint8Array;
 }
+
 /*</replacement>*/
 
 var destroyImpl = require('./internal/streams/destroy');
@@ -11730,18 +11757,27 @@ function WritableState(options, stream) {
 
   options = options || {};
 
+  // Duplex streams are both readable and writable, but share
+  // the same options object.
+  // However, some cases require setting options to different
+  // values for the readable and the writable sides of the duplex stream.
+  // These options can be provided separately as readableXXX and writableXXX.
+  var isDuplex = stream instanceof Duplex;
+
   // object stream flag to indicate whether or not this stream
   // contains buffers or objects.
   this.objectMode = !!options.objectMode;
 
-  if (stream instanceof Duplex) this.objectMode = this.objectMode || !!options.writableObjectMode;
+  if (isDuplex) this.objectMode = this.objectMode || !!options.writableObjectMode;
 
   // the point at which write() starts returning false
   // Note: 0 is a valid value, means that we always return false if
   // the entire buffer is not flushed immediately on write()
   var hwm = options.highWaterMark;
+  var writableHwm = options.writableHighWaterMark;
   var defaultHwm = this.objectMode ? 16 : 16 * 1024;
-  this.highWaterMark = hwm || hwm === 0 ? hwm : defaultHwm;
+
+  if (hwm || hwm === 0) this.highWaterMark = hwm;else if (isDuplex && (writableHwm || writableHwm === 0)) this.highWaterMark = writableHwm;else this.highWaterMark = defaultHwm;
 
   // cast to ints.
   this.highWaterMark = Math.floor(this.highWaterMark);
@@ -11855,6 +11891,7 @@ if (typeof Symbol === 'function' && Symbol.hasInstance && typeof Function.protot
   Object.defineProperty(Writable, Symbol.hasInstance, {
     value: function (object) {
       if (realHasInstance.call(this, object)) return true;
+      if (this !== Writable) return false;
 
       return object && object._writableState instanceof WritableState;
     }
@@ -11932,7 +11969,7 @@ function validChunk(stream, state, chunk, cb) {
 Writable.prototype.write = function (chunk, encoding, cb) {
   var state = this._writableState;
   var ret = false;
-  var isBuf = _isUint8Array(chunk) && !state.objectMode;
+  var isBuf = !state.objectMode && _isUint8Array(chunk);
 
   if (isBuf && !Buffer.isBuffer(chunk)) {
     chunk = _uint8ArrayToBuffer(chunk);
@@ -12144,6 +12181,7 @@ function clearBuffer(stream, state) {
     } else {
       state.corkedRequestsFree = new CorkedRequest(state);
     }
+    state.bufferedRequestCount = 0;
   } else {
     // Slow case, write chunks one-by-one
     while (entry) {
@@ -12154,6 +12192,7 @@ function clearBuffer(stream, state) {
 
       doWrite(stream, state, false, len, chunk, encoding, cb);
       entry = entry.next;
+      state.bufferedRequestCount--;
       // if we didn't call the onwrite immediately, then
       // it means that we need to wait until it does.
       // also, that means that the chunk and cb are currently
@@ -12166,7 +12205,6 @@ function clearBuffer(stream, state) {
     if (entry === null) state.lastBufferedRequest = null;
   }
 
-  state.bufferedRequestCount = 0;
   state.bufferedRequest = entry;
   state.bufferProcessing = false;
 }
@@ -12296,12 +12334,10 @@ Writable.prototype._destroy = function (err, cb) {
 },{"./_stream_duplex":19,"./internal/streams/destroy":25,"./internal/streams/stream":26,"_process":14,"core-util-is":6,"inherits":10,"process-nextick-args":13,"safe-buffer":29,"util-deprecate":37}],24:[function(require,module,exports){
 'use strict';
 
-/*<replacement>*/
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var Buffer = require('safe-buffer').Buffer;
-/*</replacement>*/
+var util = require('util');
 
 function copyBuffer(src, target, offset) {
   src.copy(target, offset);
@@ -12368,12 +12404,19 @@ module.exports = function () {
 
   return BufferList;
 }();
-},{"safe-buffer":29}],25:[function(require,module,exports){
+
+if (util && util.inspect && util.inspect.custom) {
+  module.exports.prototype[util.inspect.custom] = function () {
+    var obj = util.inspect({ length: this.length });
+    return this.constructor.name + ' ' + obj;
+  };
+}
+},{"safe-buffer":29,"util":3}],25:[function(require,module,exports){
 'use strict';
 
 /*<replacement>*/
 
-var processNextTick = require('process-nextick-args');
+var processNextTick = require('process-nextick-args').nextTick;
 /*</replacement>*/
 
 // undocumented cb() API, needed for core, not for public API
@@ -12389,7 +12432,7 @@ function destroy(err, cb) {
     } else if (err && (!this._writableState || !this._writableState.errorEmitted)) {
       processNextTick(emitErrorNT, this, err);
     }
-    return;
+    return this;
   }
 
   // we set destroyed to true before firing error callbacks in order
@@ -12414,6 +12457,8 @@ function destroy(err, cb) {
       cb(err);
     }
   });
+
+  return this;
 }
 
 function undestroy() {
@@ -12793,6 +12838,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
 },{"buffer":4}],30:[function(require,module,exports){
 (function (global){
 var ClientRequest = require('./lib/request')
+var IncomingMessage = require('./lib/response')
 var extend = require('xtend')
 var statusCodes = require('builtin-status-codes')
 var url = require('url')
@@ -12838,6 +12884,9 @@ http.get = function get (opts, cb) {
 	return req
 }
 
+http.ClientRequest = ClientRequest
+http.IncomingMessage = IncomingMessage
+
 http.Agent = function () {}
 http.Agent.defaultMaxSockets = 4
 
@@ -12872,9 +12921,13 @@ http.METHODS = [
 	'UNSUBSCRIBE'
 ]
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./lib/request":32,"builtin-status-codes":5,"url":35,"xtend":38}],31:[function(require,module,exports){
+},{"./lib/request":32,"./lib/response":33,"builtin-status-codes":5,"url":35,"xtend":38}],31:[function(require,module,exports){
 (function (global){
 exports.fetch = isFunction(global.fetch) && isFunction(global.ReadableStream)
+
+exports.writableStream = isFunction(global.WritableStream)
+
+exports.abortController = isFunction(global.AbortController)
 
 exports.blobConstructor = false
 try {
@@ -12987,9 +13040,8 @@ var ClientRequest = module.exports = function (opts) {
 
 	var preferBinary
 	var useFetch = true
-	if (opts.mode === 'disable-fetch' || 'timeout' in opts) {
-		// If the use of XHR should be preferred and includes preserving the 'content-type' header.
-		// Force XHR to be used since the Fetch API does not yet support timeouts.
+	if (opts.mode === 'disable-fetch' || ('requestTimeout' in opts && !capability.abortController)) {
+		// If the use of XHR should be preferred. Not typically needed.
 		useFetch = false
 		preferBinary = true
 	} else if (opts.mode === 'prefer-streaming') {
@@ -13051,7 +13103,9 @@ ClientRequest.prototype._onFinish = function () {
 	var headersObj = self._headers
 	var body = null
 	if (opts.method !== 'GET' && opts.method !== 'HEAD') {
-		if (capability.blobConstructor) {
+		if (capability.arraybuffer) {
+			body = toArrayBuffer(Buffer.concat(self._body))
+		} else if (capability.blobConstructor) {
 			body = new global.Blob(self._body.map(function (buffer) {
 				return toArrayBuffer(buffer)
 			}), {
@@ -13078,12 +13132,28 @@ ClientRequest.prototype._onFinish = function () {
 	})
 
 	if (self._mode === 'fetch') {
+		var signal = null
+		if (capability.abortController) {
+			var controller = new AbortController()
+			signal = controller.signal
+			self._fetchAbortController = controller
+
+			if ('requestTimeout' in opts && opts.requestTimeout !== 0) {
+				global.setTimeout(function () {
+					self.emit('requestTimeout')
+					if (self._fetchAbortController)
+						self._fetchAbortController.abort()
+				}, opts.requestTimeout)
+			}
+		}
+
 		global.fetch(self._opts.url, {
 			method: self._opts.method,
 			headers: headersList,
 			body: body || undefined,
 			mode: 'cors',
-			credentials: opts.withCredentials ? 'include' : 'same-origin'
+			credentials: opts.withCredentials ? 'include' : 'same-origin',
+			signal: signal
 		}).then(function (response) {
 			self._fetchResponse = response
 			self._connect()
@@ -13111,10 +13181,10 @@ ClientRequest.prototype._onFinish = function () {
 		if (self._mode === 'text' && 'overrideMimeType' in xhr)
 			xhr.overrideMimeType('text/plain; charset=x-user-defined')
 
-		if ('timeout' in opts) {
-			xhr.timeout = opts.timeout
+		if ('requestTimeout' in opts) {
+			xhr.timeout = opts.requestTimeout
 			xhr.ontimeout = function () {
-				self.emit('timeout')
+				self.emit('requestTimeout')
 			}
 		}
 
@@ -13210,8 +13280,8 @@ ClientRequest.prototype.abort = ClientRequest.prototype.destroy = function () {
 		self._response._destroyed = true
 	if (self._xhr)
 		self._xhr.abort()
-	// Currently, there isn't a way to truly abort a fetch.
-	// If you like bikeshedding, see https://github.com/whatwg/fetch/issues/27
+	else if (self._fetchAbortController)
+		self._fetchAbortController.abort()
 }
 
 ClientRequest.prototype.end = function (data, encoding, cb) {
@@ -13294,13 +13364,40 @@ var IncomingMessage = exports.IncomingMessage = function (xhr, response, mode) {
 		self.statusCode = response.status
 		self.statusMessage = response.statusText
 		
-		response.headers.forEach(function(header, key){
+		response.headers.forEach(function (header, key){
 			self.headers[key.toLowerCase()] = header
 			self.rawHeaders.push(key, header)
 		})
 
+		if (capability.writableStream) {
+			var writable = new WritableStream({
+				write: function (chunk) {
+					return new Promise(function (resolve, reject) {
+						if (self._destroyed) {
+							return
+						} else if(self.push(new Buffer(chunk))) {
+							resolve()
+						} else {
+							self._resumeFetch = resolve
+						}
+					})
+				},
+				close: function () {
+					if (!self._destroyed)
+						self.push(null)
+				},
+				abort: function (err) {
+					if (!self._destroyed)
+						self.emit('error', err)
+				}
+			})
 
-		// TODO: this doesn't respect backpressure. Once WritableStream is available, this can be fixed
+			try {
+				response.body.pipeTo(writable)
+				return
+			} catch (e) {} // pipeTo method isn't defined. Can't find a better way to feature test this
+		}
+		// fallback for when writableStream or pipeTo aren't available
 		var reader = response.body.getReader()
 		function read () {
 			reader.read().then(function (result) {
@@ -13313,11 +13410,11 @@ var IncomingMessage = exports.IncomingMessage = function (xhr, response, mode) {
 				self.push(new Buffer(result.value))
 				read()
 			}).catch(function(err) {
-				self.emit('error', err)
+				if (!self._destroyed)
+					self.emit('error', err)
 			})
 		}
 		read()
-
 	} else {
 		self._xhr = xhr
 		self._pos = 0
@@ -13361,7 +13458,15 @@ var IncomingMessage = exports.IncomingMessage = function (xhr, response, mode) {
 
 inherits(IncomingMessage, stream.Readable)
 
-IncomingMessage.prototype._read = function () {}
+IncomingMessage.prototype._read = function () {
+	var self = this
+
+	var resolve = self._resumeFetch
+	if (resolve) {
+		self._resumeFetch = null
+		resolve()
+	}
+}
 
 IncomingMessage.prototype._onXHRProgress = function () {
 	var self = this
@@ -14316,8 +14421,8 @@ function extend() {
 
 },{}]},{},[1])(1)
 });
-// manifold v1.2.16 https://github.com/iiif-commons/manifold#readme
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/manifold.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.manifold = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+// @iiif/manifold v1.2.19 https://github.com/iiif-commons/manifold#readme
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/manifold.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.iiifmanifold = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 
 var Manifold;
@@ -14741,6 +14846,14 @@ var Manifold;
     Manifold.ExternalResource = ExternalResource;
 })(Manifold || (Manifold = {}));
 
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var Manifold;
 (function (Manifold) {
     var Helper = /** @class */ (function () {
@@ -14983,6 +15096,79 @@ var Manifold;
             }
             return this._multiSelectState;
         };
+        Helper.prototype.getCurrentRange = function () {
+            if (this.rangeId) {
+                return this.getRangeById(this.rangeId);
+            }
+            return null;
+        };
+        Helper.prototype.getPreviousRange = function (range) {
+            var currentRange = null;
+            if (range) {
+                currentRange = range;
+            }
+            else {
+                currentRange = this.getCurrentRange();
+            }
+            if (currentRange) {
+                var flatTree = this._getFlattenedTree(this._extractChildren(this.getTree()), this._extractChildren).map(function (x) { return delete x.children && x; });
+                for (var i = 0; i < flatTree.length; i++) {
+                    var node = flatTree[i];
+                    // find current range in flattened tree
+                    if (node.data.id === currentRange.id) {
+                        // find the first node before it that has canvases
+                        while (i > 0) {
+                            i--;
+                            var prevNode = flatTree[i];
+                            if (prevNode.data.canvases && prevNode.data.canvases.length) {
+                                return prevNode.data;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            return null;
+        };
+        Helper.prototype.getNextRange = function (range) {
+            // if a range is passed, use that. otherwise get the current range.
+            var currentRange = null;
+            if (range) {
+                currentRange = range;
+            }
+            else {
+                currentRange = this.getCurrentRange();
+            }
+            if (currentRange) {
+                var flatTree = this.getFlattenedTree();
+                for (var i = 0; i < flatTree.length; i++) {
+                    var node = flatTree[i];
+                    // find current range in flattened tree
+                    if (node.data.id === currentRange.id) {
+                        // find the first node after it that has canvases
+                        while (i < flatTree.length - 1) {
+                            i++;
+                            var nextNode = flatTree[i];
+                            if (nextNode.data.canvases && nextNode.data.canvases.length) {
+                                return nextNode.data;
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+            return null;
+        };
+        Helper.prototype.getFlattenedTree = function () {
+            return this._getFlattenedTree(this._extractChildren(this.getTree()), this._extractChildren).map(function (x) { return delete x.children && x; });
+        };
+        Helper.prototype._getFlattenedTree = function (children, extractChildren, level, parent) {
+            var _this = this;
+            return Array.prototype.concat.apply(children.map(function (x) { return (__assign({}, x, { level: level || 1, parent: parent || null })); }), children.map(function (x) { return _this._getFlattenedTree(extractChildren(x) || [], extractChildren, (level || 1) + 1, x.id); }));
+        };
+        Helper.prototype._extractChildren = function (treeNode) {
+            return treeNode.nodes;
+        };
         Helper.prototype.getRanges = function () {
             return this.manifest.getAllRanges();
         };
@@ -15051,6 +15237,9 @@ var Manifold;
         Helper.prototype.getTrackingLabel = function () {
             return this.manifest.getTrackingLabel();
         };
+        Helper.prototype._getTopRanges = function () {
+            return this.iiifResource.getTopRanges();
+        };
         Helper.prototype.getTree = function (topRangeIndex, sortType) {
             // if it's a collection, use IIIFResource.getDefaultTree()
             // otherwise, get the top range by index and use Range.getTree()
@@ -15064,7 +15253,7 @@ var Manifold;
                 tree = this.iiifResource.getDefaultTree();
             }
             else {
-                var topRanges = this.iiifResource.getTopRanges();
+                var topRanges = this._getTopRanges();
                 var root = new manifesto.TreeNode();
                 root.label = 'root';
                 root.data = this.iiifResource;
@@ -16401,6 +16590,7 @@ define('modules/uv-shared-module/BaseEvents',["require", "exports"], function (r
         BaseEvents.MULTISELECT_CHANGE = 'multiSelectChange';
         BaseEvents.MULTISELECTION_MADE = 'multiSelectionMade';
         BaseEvents.NEXT = 'next';
+        BaseEvents.NO_RANGE = 'norange';
         BaseEvents.NOT_FOUND = 'notFound';
         BaseEvents.OPEN_EXTERNAL_RESOURCE = 'openExternalResource';
         BaseEvents.OPEN_LEFT_PANEL = 'openLeftPanel';
@@ -18299,6 +18489,9 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
                     if (range) {
                         $.publish(BaseEvents_1.BaseEvents.RANGE_CHANGED, [range]);
                     }
+                    else {
+                        console.warn('range id not found:', this.data.rangeId);
+                    }
                 }
             }
         };
@@ -18376,22 +18569,28 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
         BaseExtension.prototype._updateMetric = function () {
             var _this = this;
             setTimeout(function () {
-                var metricChanged = false;
+                // loop through all metrics
+                // find one that matches the current dimensions
+                // if a metric is found, and it's not the current metric, set it to be the current metric and publish a METRIC_CHANGED event
+                // if no metric is found, set MetricType.NONE to be the current metric and publish a METRIC_CHANGED event
+                var metricFound = false;
                 for (var i = 0; i < _this.metrics.length; i++) {
                     var metric = _this.metrics[i];
-                    // if the width and height is within this metric's defined range
+                    // if the current width and height is within this metric's defined range
                     if (_this.width() >= metric.minWidth && _this.width() <= metric.maxWidth &&
                         _this.height() >= metric.minHeight && _this.height() <= metric.maxHeight) {
+                        metricFound = true;
                         if (_this.metric !== metric.type) {
                             _this.metric = metric.type;
-                            metricChanged = true;
-                            //console.log("metric changed", metric.type.toString());
                             $.publish(BaseEvents_1.BaseEvents.METRIC_CHANGED);
                         }
                     }
                 }
-                if (!metricChanged) {
-                    _this.metric = MetricType_1.MetricType.NONE;
+                if (!metricFound) {
+                    if (_this.metric !== MetricType_1.MetricType.NONE) {
+                        _this.metric = MetricType_1.MetricType.NONE;
+                        $.publish(BaseEvents_1.BaseEvents.METRIC_CHANGED);
+                    }
                 }
             }, 1);
         };
@@ -18653,6 +18852,7 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
         BaseExtension.prototype.isDesktopMetric = function () {
             return this.metric.toString() === MetricType_1.MetricType.DESKTOP.toString();
         };
+        // todo: use redux in manifold to get reset state
         BaseExtension.prototype.viewManifest = function (manifest) {
             var data = {};
             data.iiifResourceUri = this.helper.iiifResourceUri;
@@ -18662,6 +18862,7 @@ define('modules/uv-shared-module/BaseExtension',["require", "exports", "./Auth09
             data.canvasIndex = 0;
             this.reload(data);
         };
+        // todo: use redux in manifold to get reset state
         BaseExtension.prototype.viewCollection = function (collection) {
             var data = {};
             data.iiifResourceUri = this.helper.iiifResourceUri;
@@ -19622,6 +19823,17 @@ define('modules/uv-contentleftpanel-module/ContentLeftPanel',["require", "export
                 _this.selectCurrentTreeNode();
                 _this.updateTreeTabBySelection();
             });
+            $.subscribe(BaseEvents_1.BaseEvents.RANGE_CHANGED, function () {
+                if (_this.isFullyExpanded) {
+                    _this.collapseFull();
+                }
+                _this.selectCurrentTreeNode();
+                _this.updateTreeTabBySelection();
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.NO_RANGE, function () {
+                _this.selectCurrentTreeNode();
+                _this.updateTreeTabBySelection();
+            });
             this.$tabs = $('<div class="tabs"></div>');
             this.$main.append(this.$tabs);
             this.$treeButton = $('<a class="index tab" tabindex="0">' + this.content.index + '</a>');
@@ -19771,17 +19983,33 @@ define('modules/uv-contentleftpanel-module/ContentLeftPanel',["require", "export
         };
         ContentLeftPanel.prototype.getTreeData = function () {
             return {
-                branchNodesSelectable: false,
+                autoExpand: this._isTreeAutoExpanded(),
+                branchNodesSelectable: Utils.Bools.getBool(this.config.options.branchNodesSelectable, false),
                 helper: this.extension.helper,
                 topRangeIndex: this.getSelectedTopRangeIndex(),
                 treeSortType: this.treeSortType
             };
+        };
+        ContentLeftPanel.prototype._isTreeAutoExpanded = function () {
+            var autoExpandTreeEnabled = Utils.Bools.getBool(this.config.options.autoExpandTreeEnabled, false);
+            var autoExpandTreeIfFewerThan = this.config.options.autoExpandTreeIfFewerThan || 0;
+            if (autoExpandTreeEnabled) {
+                // get total number of tree nodes
+                var flatTree = this.extension.helper.getFlattenedTree();
+                if (flatTree.length < autoExpandTreeIfFewerThan) {
+                    return true;
+                }
+            }
+            return false;
         };
         ContentLeftPanel.prototype.updateTreeTabByCanvasIndex = function () {
             // update tab to current top range label (if there is one)
             var topRanges = this.extension.helper.getTopRanges();
             if (topRanges.length > 1) {
                 var index = this.getCurrentCanvasTopRangeIndex();
+                if (index === -1) {
+                    return;
+                }
                 var currentRange = topRanges[index];
                 this.setTreeTabTitle(Manifesto.TranslationCollection.getValue(currentRange.getLabel()));
             }
@@ -20028,14 +20256,17 @@ define('modules/uv-contentleftpanel-module/ContentLeftPanel',["require", "export
             }
             return topRangeIndex;
         };
+        // todo: a lot of this was written prior to manifold storing the current range id
+        // use that instead - probably after porting manifold to redux.
         ContentLeftPanel.prototype.selectCurrentTreeNode = function () {
             if (this.treeView) {
                 var node = null;
                 var currentCanvasTopRangeIndex = this.getCurrentCanvasTopRangeIndex();
                 var selectedTopRangeIndex = this.getSelectedTopRangeIndex();
                 var usingCorrectTree = currentCanvasTopRangeIndex === selectedTopRangeIndex;
-                if (currentCanvasTopRangeIndex != -1) {
-                    var range = this.extension.getCurrentCanvasRange();
+                var range = null;
+                if (currentCanvasTopRangeIndex !== -1) {
+                    range = this.extension.getCurrentCanvasRange();
                     if (range && range.treeNode) {
                         node = this.treeView.getNodeById(range.treeNode.id);
                     }
@@ -20049,7 +20280,16 @@ define('modules/uv-contentleftpanel-module/ContentLeftPanel',["require", "export
                     this.treeView.selectNode(node);
                 }
                 else {
-                    this.treeView.deselectCurrentNode();
+                    range = this.extension.helper.getCurrentRange();
+                    if (range && range.treeNode) {
+                        node = this.treeView.getNodeById(range.treeNode.id);
+                    }
+                    if (node) {
+                        this.treeView.selectNode(node);
+                    }
+                    else {
+                        this.treeView.deselectCurrentNode();
+                    }
                 }
             }
         };
@@ -20315,13 +20555,13 @@ define('modules/uv-shared-module/FooterPanel',["require", "exports", "./BaseEven
             this.$options.prepend(this.$bookmarkButton);
             this.$shareButton = $("\n          <button class=\"share btn imageBtn\" title=\"" + this.content.share + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-share\" aria-hidden=\"true\"></i>" + this.content.share + "\n          </button>\n        ");
             this.$options.append(this.$shareButton);
-            this.$embedButton = $("\n          <button class=\"embed btn imageBtn\" title=\"" + this.content.embed + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-embed\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$embedButton = $("\n          <button class=\"embed btn imageBtn\" title=\"" + this.content.embed + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-embed\" aria-hidden=\"true\"></i>" + this.content.embed + "\n          </button>\n        ");
             this.$options.append(this.$embedButton);
             this.$downloadButton = $("\n          <button class=\"download btn imageBtn\" title=\"" + this.content.download + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-download\" aria-hidden=\"true\"></i>" + this.content.download + "\n          </button>\n        ");
             this.$options.prepend(this.$downloadButton);
-            this.$moreInfoButton = $("\n          <button class=\"moreInfo btn imageBtn\" title=\"" + this.content.moreInfo + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-more-info\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$moreInfoButton = $("\n          <button class=\"moreInfo btn imageBtn\" title=\"" + this.content.moreInfo + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-more-info\" aria-hidden=\"true\"></i>" + this.content.moreInfo + "\n          </button>\n        ");
             this.$options.prepend(this.$moreInfoButton);
-            this.$fullScreenBtn = $("\n          <button class=\"fullScreen btn imageBtn\" title=\"" + this.content.fullScreen + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-fullscreen\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$fullScreenBtn = $("\n          <button class=\"fullScreen btn imageBtn\" title=\"" + this.content.fullScreen + "\" tabindex=\"0\">\n            <i class=\"uv-icon uv-icon-fullscreen\" aria-hidden=\"true\"></i>" + this.content.fullScreen + "\n          </button>\n        ");
             this.$options.append(this.$fullScreenBtn);
             this.$openButton.onPressed(function () {
                 $.publish(BaseEvents_1.BaseEvents.OPEN);
@@ -20566,7 +20806,7 @@ define('modules/uv-shared-module/HeaderPanel',["require", "exports", "./BaseEven
             //this.$rightOptions.append(this.$helpButton);
             this.$localeToggleButton = $('<a class="localeToggle" tabindex="0"></a>');
             this.$rightOptions.append(this.$localeToggleButton);
-            this.$settingsButton = $("\n          <button class=\"btn imageBtn settings\" tabindex=\"0\">\n            <i class=\"uv-icon-settings\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$settingsButton = $("\n          <button class=\"btn imageBtn settings\" tabindex=\"0\" title=\"" + this.content.settings + "\">\n            <i class=\"uv-icon-settings\" aria-hidden=\"true\"></i>" + this.content.settings + "\n          </button>\n        ");
             this.$settingsButton.attr('title', this.content.settings);
             this.$rightOptions.append(this.$settingsButton);
             this.$informationBox = $('<div class="informationBox" aria-hidden="true"> \
@@ -20799,7 +21039,7 @@ define('modules/uv-moreinforightpanel-module/MoreInfoRightPanel',["require", "ex
                 copiedMessageDuration: 2000,
                 copyToClipboardEnabled: Utils.Bools.getBool(this.config.options.copyToClipboardEnabled, false),
                 helper: this.extension.helper,
-                licenseFormatter: null,
+                licenseFormatter: new Manifold.UriLabeller(this.config.license ? this.config.license : {}),
                 limit: this.config.options.textLimit || 4,
                 limitType: IIIFComponents.MetadataComponentOptions.LimitType.LINES,
                 manifestDisplayOrder: this.config.options.manifestDisplayOrder,
@@ -20962,17 +21202,70 @@ define('modules/uv-avcenterpanel-module/AVCenterPanel',["require", "exports", ".
                 }
             });
             $.subscribe(BaseEvents_1.BaseEvents.RANGE_CHANGED, function (e, range) {
-                that.viewRange(range);
+                that._viewRange(range);
+                that._setTitle();
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.METRIC_CHANGED, function () {
+                _this.avcomponent.set({
+                    limitToRange: !_this.extension.isDesktopMetric(),
+                    constrainNavigationToRange: true
+                });
+            });
+            $.subscribe(BaseEvents_1.BaseEvents.CREATED, function () {
+                _this._setTitle();
             });
             this.$avcomponent = $('<div class="iiif-av-component"></div>');
             this.$content.append(this.$avcomponent);
-            this.title = this.extension.helper.getLabel();
             this.avcomponent = new IIIFComponents.AVComponent({
                 target: this.$avcomponent[0]
             });
             this.avcomponent.on('canvasready', function () {
                 _this._canvasReady = true;
             }, false);
+            this.avcomponent.on('previousrange', function () {
+                _this._setTitle();
+                $.publish(BaseEvents_1.BaseEvents.RANGE_CHANGED, [_this.extension.helper.getCurrentRange()]);
+            }, false);
+            this.avcomponent.on('nextrange', function () {
+                _this._setTitle();
+                $.publish(BaseEvents_1.BaseEvents.RANGE_CHANGED, [_this.extension.helper.getCurrentRange()]);
+            }, false);
+            this.avcomponent.on('norange', function () {
+                _this._setTitle();
+                $.publish(BaseEvents_1.BaseEvents.NO_RANGE);
+            }, false);
+        };
+        AVCenterPanel.prototype._setTitle = function () {
+            var title = '';
+            var value;
+            var label;
+            // get the current range or canvas title
+            var currentRange = this.extension.helper.getCurrentRange();
+            if (currentRange) {
+                label = currentRange.getLabel();
+            }
+            else {
+                label = this.extension.helper.getCurrentCanvas().getLabel();
+            }
+            value = Manifesto.TranslationCollection.getValue(label);
+            if (value) {
+                title = value;
+            }
+            // get the parent range or manifest's title
+            if (currentRange) {
+                if (currentRange.parentRange) {
+                    label = currentRange.parentRange.getLabel();
+                    value = Manifesto.TranslationCollection.getValue(label);
+                }
+            }
+            else {
+                value = this.extension.helper.getLabel();
+            }
+            if (value) {
+                title += this.content.delimiter + value;
+            }
+            this.title = title;
+            this.resize();
         };
         AVCenterPanel.prototype.openMedia = function (resources) {
             var _this = this;
@@ -20981,17 +21274,14 @@ define('modules/uv-avcenterpanel-module/AVCenterPanel',["require", "exports", ".
                     helper: _this.extension.helper,
                     autoPlay: _this.config.options.autoPlay,
                     defaultAspectRatio: 0.56,
-                    content: {
-                        play: _this.content.play,
-                        pause: _this.content.pause,
-                        currentTime: _this.content.currentTime,
-                        duration: _this.content.duration
-                    }
+                    limitToRange: false,
+                    doubleClickMS: 350,
+                    content: _this.content
                 });
                 _this.resize();
             });
         };
-        AVCenterPanel.prototype.viewRange = function (range) {
+        AVCenterPanel.prototype._viewRange = function (range) {
             var _this = this;
             if (!range.canvases || !range.canvases.length)
                 return;
@@ -21001,7 +21291,8 @@ define('modules/uv-avcenterpanel-module/AVCenterPanel',["require", "exports", ".
                 Utils.Async.waitFor(function () {
                     return _this._canvasReady;
                 }, function () {
-                    _this.avcomponent.play(canvasId);
+                    _this.avcomponent.playCanvas(canvasId);
+                    _this.resize();
                 });
             }
         };
@@ -23191,11 +23482,11 @@ define('modules/uv-osdmobilefooterpanel-module/MobileFooter',["require", "export
             _super.prototype.create.call(this);
             this.$spacer = $('<div class="spacer"></div>');
             this.$options.prepend(this.$spacer);
-            this.$rotateButton = $("\n            <button class=\"btn imageBtn rotate\" title=\"" + this.content.rotateRight + "\">\n                <i class=\"uv-icon-rotate\" aria-hidden=\"true\"></i>\n            </button>\n        ");
+            this.$rotateButton = $("\n            <button class=\"btn imageBtn rotate\" title=\"" + this.content.rotateRight + "\">\n                <i class=\"uv-icon-rotate\" aria-hidden=\"true\"></i>" + this.content.rotateRight + "\n            </button>\n        ");
             this.$options.prepend(this.$rotateButton);
-            this.$zoomOutButton = $("\n            <button class=\"btn imageBtn zoomOut\" title=\"" + this.content.zoomOut + "\">\n                <i class=\"uv-icon-zoom-out\" aria-hidden=\"true\"></i>\n            </button>\n        ");
+            this.$zoomOutButton = $("\n            <button class=\"btn imageBtn zoomOut\" title=\"" + this.content.zoomOut + "\">\n                <i class=\"uv-icon-zoom-out\" aria-hidden=\"true\"></i>" + this.content.zoomOut + "\n            </button>\n        ");
             this.$options.prepend(this.$zoomOutButton);
-            this.$zoomInButton = $("\n            <button class=\"btn imageBtn zoomIn\" title=\"" + this.content.zoomOut + "\">\n                <i class=\"uv-icon-zoom-in\" aria-hidden=\"true\"></i>\n            </button>\n        ");
+            this.$zoomInButton = $("\n            <button class=\"btn imageBtn zoomIn\" title=\"" + this.content.zoomIn + "\">\n                <i class=\"uv-icon-zoom-in\" aria-hidden=\"true\"></i>" + this.content.zoomIn + "\n            </button>\n        ");
             this.$options.prepend(this.$zoomInButton);
             this.$zoomInButton.onPressed(function () {
                 $.publish(Events_1.Events.ZOOM_IN);
@@ -23786,8 +24077,7 @@ define('modules/uv-searchfooterpanel-module/FooterPanel',["require", "exports", 
             that.currentPlacemarkerIndex = canvasIndex;
             that.$placemarkerDetails.show();
             var title = "{0} {1}";
-            var mode = that.extension.getMode();
-            if (mode.toString() === Mode_1.Mode.page.toString()) {
+            if (that.isPageModeEnabled()) {
                 var canvas = that.extension.helper.getCanvasByIndex(canvasIndex);
                 var label = Manifesto.TranslationCollection.getValue(canvas.getLabel());
                 if (!label) {
@@ -23924,7 +24214,7 @@ define('modules/uv-searchfooterpanel-module/FooterPanel',["require", "exports", 
             }
         };
         FooterPanel.prototype.isPageModeEnabled = function () {
-            return this.config.options.pageModeEnabled && this.extension.getMode().toString() === Mode_1.Mode.page.toString();
+            return this.config.options.pageModeEnabled && this.extension.getMode().toString() === Mode_1.Mode.page.toString() && !Utils.Bools.getBool(this.config.options.forceImageMode, false);
         };
         FooterPanel.prototype.showSearchSpinner = function () {
             this.$searchText.addClass('searching');
@@ -24216,9 +24506,9 @@ define('modules/uv-pagingheaderpanel-module/PagingHeaderPanel',["require", "expo
             });
             this.$prevOptions = $('<div class="prevOptions"></div>');
             this.$centerOptions.append(this.$prevOptions);
-            this.$firstButton = $("\n          <button class=\"btn imageBtn first\" tabindex=\"0\">\n            <i class=\"uv-icon-first\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$firstButton = $("\n          <button class=\"btn imageBtn first\" tabindex=\"0\" title=\"" + this.content.first + "\">\n            <i class=\"uv-icon-first\" aria-hidden=\"true\"></i>" + this.content.first + "\n          </button>\n        ");
             this.$prevOptions.append(this.$firstButton);
-            this.$prevButton = $("\n          <button class=\"btn imageBtn prev\" tabindex=\"0\">\n            <i class=\"uv-icon-prev\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$prevButton = $("\n          <button class=\"btn imageBtn prev\" tabindex=\"0\" title=\"" + this.content.previous + "\">\n            <i class=\"uv-icon-prev\" aria-hidden=\"true\"></i>" + this.content.previous + "\n          </button>\n        ");
             this.$prevOptions.append(this.$prevButton);
             this.$modeOptions = $('<div class="mode"></div>');
             this.$centerOptions.append(this.$modeOptions);
@@ -24288,9 +24578,9 @@ define('modules/uv-pagingheaderpanel-module/PagingHeaderPanel',["require", "expo
             this.$search.append(this.$searchButton);
             this.$nextOptions = $('<div class="nextOptions"></div>');
             this.$centerOptions.append(this.$nextOptions);
-            this.$nextButton = $("\n          <button class=\"btn imageBtn next\" tabindex=\"0\">\n            <i class=\"uv-icon-next\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$nextButton = $("\n          <button class=\"btn imageBtn next\" tabindex=\"0\" title=\"" + this.content.next + "\">\n            <i class=\"uv-icon-next\" aria-hidden=\"true\"></i>" + this.content.next + "\n          </button>\n        ");
             this.$nextOptions.append(this.$nextButton);
-            this.$lastButton = $("\n          <button class=\"btn imageBtn last\" tabindex=\"0\">\n            <i class=\"uv-icon-last\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$lastButton = $("\n          <button class=\"btn imageBtn last\" tabindex=\"0\" title=\"" + this.content.last + "\">\n            <i class=\"uv-icon-last\" aria-hidden=\"true\"></i>" + this.content.last + "\n          </button>\n        ");
             this.$nextOptions.append(this.$lastButton);
             if (this.isPageModeEnabled()) {
                 this.$pageModeOption.attr('checked', 'checked');
@@ -24309,13 +24599,13 @@ define('modules/uv-pagingheaderpanel-module/PagingHeaderPanel',["require", "expo
             else {
                 this.$pageModeLabel.text(this.content.page);
             }
-            this.$galleryButton = $("\n          <button class=\"btn imageBtn gallery\" title=\"" + this.content.gallery + "\" tabindex=\"0\">\n            <i class=\"uv-icon-gallery\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$galleryButton = $("\n          <button class=\"btn imageBtn gallery\" title=\"" + this.content.gallery + "\" tabindex=\"0\">\n            <i class=\"uv-icon-gallery\" aria-hidden=\"true\"></i>" + this.content.gallery + "\n          </button>\n        ");
             this.$rightOptions.prepend(this.$galleryButton);
             this.$pagingToggleButtons = $('<div class="pagingToggleButtons"></div>');
             this.$rightOptions.prepend(this.$pagingToggleButtons);
-            this.$oneUpButton = $("\n          <button class=\"btn imageBtn one-up\" title=\"" + this.content.oneUp + "\" tabindex=\"0\">\n            <i class=\"uv-icon-one-up\" aria-hidden=\"true\"></i>\n          </button>");
+            this.$oneUpButton = $("\n          <button class=\"btn imageBtn one-up\" title=\"" + this.content.oneUp + "\" tabindex=\"0\">\n            <i class=\"uv-icon-one-up\" aria-hidden=\"true\"></i>" + this.content.oneUp + "\n          </button>");
             this.$pagingToggleButtons.append(this.$oneUpButton);
-            this.$twoUpButton = $("\n          <button class=\"btn imageBtn two-up\" title=\"" + this.content.twoUp + "\" tabindex=\"0\">\n            <i class=\"uv-icon-two-up\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$twoUpButton = $("\n          <button class=\"btn imageBtn two-up\" title=\"" + this.content.twoUp + "\" tabindex=\"0\">\n            <i class=\"uv-icon-two-up\" aria-hidden=\"true\"></i>" + this.content.twoUp + "\n          </button>\n        ");
             this.$pagingToggleButtons.append(this.$twoUpButton);
             this.updatePagingToggle();
             this.updateGalleryButton();
@@ -25366,8 +25656,9 @@ define('modules/uv-seadragoncenterpanel-module/SeadragonCenterPanel',["require",
         SeadragonCenterPanel.prototype.prevAnnotation = function () {
             var annotationRects = this.getAnnotationRectsForCurrentImages();
             var currentAnnotationRect = this.extension.currentAnnotationRect;
-            if (!currentAnnotationRect)
+            if (this.isZoomToSearchResultEnabled() && !currentAnnotationRect) {
                 return;
+            }
             var currentAnnotationRectIndex = this.getAnnotationRectIndex(currentAnnotationRect);
             var foundRect = null;
             for (var i = currentAnnotationRectIndex - 1; i >= 0; i--) {
@@ -26380,8 +26671,10 @@ define('extensions/uv-seadragon-extension/Extension',["require", "exports", "../
             return infoUri;
         };
         Extension.prototype.getEmbedScript = function (template, width, height, zoom, rotation) {
+            var config = this.data.config.uri || '';
+            var locales = this.getSerializedLocales();
             var appUri = this.getAppUri();
-            var iframeSrc = appUri.replace('/uv-3', '').replace('/uv.html', '') + "/iframe?url=" + this.helper.iiifResourceUri.replace('/iiif/manifest', '');
+            var iframeSrc = appUri + "#?manifest=" + this.helper.iiifResourceUri + "&c=" + this.helper.collectionIndex + "&m=" + this.helper.manifestIndex + "&s=" + this.helper.sequenceIndex + "&cv=" + this.helper.canvasIndex + "&config=" + config + "&locales=" + locales + "&xywh=" + zoom + "&r=" + rotation;
             var script = String.format(template, iframeSrc, width, height);
             return script;
         };
@@ -26981,11 +27274,11 @@ define('modules/uv-virtexcenterpanel-module/VirtexCenterPanel',["require", "expo
             });
             this.$navigation = $('<div class="navigation"></div>');
             this.$content.prepend(this.$navigation);
-            this.$zoomInButton = $("\n          <button class=\"btn imageBtn zoomIn\" title=\"" + this.content.zoomIn + "\">\n            <i class=\"uv-icon-zoom-in\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$zoomInButton = $("\n          <button class=\"btn imageBtn zoomIn\" title=\"" + this.content.zoomIn + "\">\n            <i class=\"uv-icon-zoom-in\" aria-hidden=\"true\"></i>" + this.content.zoomIn + "\n          </button>\n        ");
             this.$navigation.append(this.$zoomInButton);
-            this.$zoomOutButton = $("\n          <button class=\"btn imageBtn zoomOut\" title=\"" + this.content.zoomOut + "\">\n            <i class=\"uv-icon-zoom-out\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$zoomOutButton = $("\n          <button class=\"btn imageBtn zoomOut\" title=\"" + this.content.zoomOut + "\">\n            <i class=\"uv-icon-zoom-out\" aria-hidden=\"true\"></i>" + this.content.zoomOut + "\n          </button>\n        ");
             this.$navigation.append(this.$zoomOutButton);
-            this.$vrButton = $("\n          <button class=\"btn imageBtn vr\" title=\"" + this.content.vr + "\">\n            <i class=\"uv-icon-vr\" aria-hidden=\"true\"></i>\n          </button>\n        ");
+            this.$vrButton = $("\n          <button class=\"btn imageBtn vr\" title=\"" + this.content.vr + "\">\n            <i class=\"uv-icon-vr\" aria-hidden=\"true\"></i>" + this.content.vr + "\n          </button>\n        ");
             this.$navigation.append(this.$vrButton);
             this.$viewport = $('<div class="virtex"></div>');
             this.$content.prepend(this.$viewport);
@@ -27044,6 +27337,12 @@ define('modules/uv-virtexcenterpanel-module/VirtexCenterPanel',["require", "expo
                         showStats: _this.options.showStats
                     }
                 });
+                _this.viewport.on('vravailable', function () {
+                    _this.$vrButton.show();
+                }, false);
+                _this.viewport.on('vrunavailable', function () {
+                    _this.$vrButton.hide();
+                }, false);
                 _this.resize();
             });
         };
@@ -27510,20 +27809,6 @@ define('UVComponent',["require", "exports", "./modules/uv-shared-module/BaseEven
     exports.default = UVComponent;
 });
 //# sourceMappingURL=UVComponent.js.map
-/// <reference types="base-component" />
-/// <reference types="exjs" />
-/// <reference types="extensions" />
-/// <reference types="http-status-codes" />
-/// <reference types="iiif-av-component" />
-/// <reference types="iiif-gallery-component" />
-/// <reference types="iiif-metadata-component" />
-/// <reference types="iiif-tree-component" />
-/// <reference types="jquery-plugins" />
-/// <reference types="key-codes" />
-/// <reference types="manifesto.js" />
-/// <reference types="manifold" />
-/// <reference types="utils" />
-/// <reference types="virtex3d" />
 if (typeof jQuery === "function") {
     define('jquery', [], function () {
         return jQuery;
