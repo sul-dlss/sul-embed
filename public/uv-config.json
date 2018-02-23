@@ -43,6 +43,11 @@
                 "titleEnabled": false
             }
         },
+        "searchFooterPanel": {
+            "options": {
+              "forceImageMode": true
+            }
+        },
         "footerPanel": {
             "options": {
                 "bookmarkEnabled": false,
