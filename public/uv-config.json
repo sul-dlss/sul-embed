@@ -50,6 +50,7 @@
         },
         "footerPanel": {
             "options": {
+                "autocompleteAllowWords": true,
                 "bookmarkEnabled": false,
                 "downloadEnabled": true,
                 "embedEnabled": false,

@@ -23511,13 +23511,11 @@ define('modules/uv-shared-module/AutoComplete',["require", "exports"], function 
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var AutoComplete = /** @class */ (function () {
-        //private _navigationKeyDownCodes: number[] = [KeyCodes.KeyDown.Backspace, KeyCodes.KeyDown.Spacebar, KeyCodes.KeyDown.Tab, KeyCodes.KeyDown.LeftArrow, KeyCodes.KeyDown.RightArrow, KeyCodes.KeyDown.Delete];
-        //private _validKeyPressCodes: number[] = [KeyCodes.KeyPress.GraveAccent, KeyCodes.KeyPress.DoubleQuote];
-        //private _lastKeyDownWasNavigation: boolean = false;
-        function AutoComplete(element, autoCompleteFunc, parseResultsFunc, onSelect, delay, minChars, positionAbove) {
+        function AutoComplete(element, autoCompleteFunc, parseResultsFunc, onSelect, delay, minChars, positionAbove, allowWords) {
             if (delay === void 0) { delay = 300; }
             if (minChars === void 0) { minChars = 2; }
             if (positionAbove === void 0) { positionAbove = false; }
+            if (allowWords === void 0) { allowWords = false; }
             var _this = this;
             this._$element = element;
             this._autoCompleteFunc = autoCompleteFunc;
@@ -23526,6 +23524,7 @@ define('modules/uv-shared-module/AutoComplete',["require", "exports"], function 
             this._onSelect = onSelect;
             this._parseResultsFunc = parseResultsFunc;
             this._positionAbove = positionAbove;
+            this._allowWords = allowWords;
             // create ui.
             this._$searchResultsList = $('<ul class="autocomplete"></ul>');
             if (this._positionAbove) {
@@ -23562,15 +23561,6 @@ define('modules/uv-shared-module/AutoComplete',["require", "exports"], function 
                         originalEvent.stopPropagation();
                 }
             });
-            // prevent invalid characters being entered
-            // this._$element.on("keypress", function(e: JQueryEventObject) {
-            //     const isValidKeyPress: boolean = that._isValidKeyPress(<KeyboardEvent>e.originalEvent);
-            //     if (!(that._lastKeyDownWasNavigation || isValidKeyPress)) {
-            //         e.preventDefault();
-            //         return false;
-            //     }
-            //     return true;
-            // });
             // auto complete
             this._$element.on("keyup", function (e) {
                 // if pressing enter without a list item selected
@@ -23596,9 +23586,9 @@ define('modules/uv-shared-module/AutoComplete',["require", "exports"], function 
                     // after a delay, show autocomplete list.
                     typewatch(function () {
                         var val = that._getTerms();
-                        // if there are more than x chars and no spaces
+                        // if there are more than x chars
                         // update the autocomplete list.
-                        if (val && val.length > that._minChars && !val.includes(' ')) {
+                        if (val && val.length > that._minChars && that._searchForWords(val)) {
                             that._search(val);
                         }
                         else {
@@ -23618,16 +23608,14 @@ define('modules/uv-shared-module/AutoComplete',["require", "exports"], function 
             });
             this._hideResults();
         }
-        // private _isNavigationKeyDown(e: KeyboardEvent): boolean {
-        //     const isNavigationKeyDown: boolean = this._navigationKeyDownCodes.includes(Utils.Keyboard.getCharCode(e));
-        //     return isNavigationKeyDown;
-        // }
-        // private _isValidKeyPress(e: KeyboardEvent): boolean {
-        //     const charCode: number = Utils.Keyboard.getCharCode(e);
-        //     const key: string = String.fromCharCode(charCode);
-        //     const isValid: boolean = key.isAlphanumeric() || this._validKeyPressCodes.includes(charCode);
-        //     return isValid;
-        // }
+        AutoComplete.prototype._searchForWords = function (search) {
+            if (this._allowWords || !search.includes(' ')) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        };
         AutoComplete.prototype._getTerms = function () {
             return this._$element.val().trim();
         };
@@ -23650,7 +23638,6 @@ define('modules/uv-shared-module/AutoComplete',["require", "exports"], function 
             $items.removeClass('selected');
             var $selectedItem = $items.eq(this._selectedResultIndex);
             $selectedItem.addClass('selected');
-            //var top = selectedItem.offset().top;
             var top = $selectedItem.outerHeight(true) * this._selectedResultIndex;
             this._$searchResultsList.scrollTop(top);
         };
@@ -23883,7 +23870,7 @@ define('modules/uv-searchfooterpanel-module/FooterPanel',["require", "exports", 
                     });
                 }, function (terms) {
                     _this.search(terms);
-                }, 300, 2, true);
+                }, 300, 2, true, Utils.Bools.getBool(this.options.autocompleteAllowWords, false));
             }
             else {
                 this.$searchText.on("keyup", function (e) {
@@ -24555,7 +24542,7 @@ define('modules/uv-pagingheaderpanel-module/PagingHeaderPanel',["require", "expo
                     return results;
                 }, function (terms) {
                     _this.search(terms);
-                }, 300, 0);
+                }, 300, 0, Utils.Bools.getBool(this.options.autocompleteAllowWords, false));
             }
             else if (Utils.Bools.getBool(this.options.imageSelectionBoxEnabled, true)) {
                 this.$selectionBoxOptions = $('<div class="image-selectionbox-options"></div>');
