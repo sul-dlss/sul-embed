@@ -1,11 +1,11 @@
-<script type='text/javascript' src='/uv-3/helpers.js'></script>
-<script type='text/javascript' src='/uv-3/lib/offline.js'></script>
+<script type='text/javascript' src='<%= viewer.uv_root %>/helpers.js'></script>
+<script type='text/javascript' src='<%= viewer.uv_root %>/lib/offline.js'></script>
 <div class='sul-embed-body' style='height: <%= viewer.body_height%>px' data-sul-embed-theme='<%= asset_url("uv.css") %>'>
   <div
     id='uv'
     class='uv'
     data-behavior='uv'
-    data-uv-root='<%= viewer.uv_root %>'
+    data-uv-root='.<%= viewer.uv_root %>'
     data-uv-uri='<%= viewer.manifest_json_url %>'
     data-uv-config='<%= viewer.config_url %>'
     data-canvas-index='<%= viewer.request.canvas_index %>'
