@@ -30,14 +30,25 @@
 
         window.addEventListener('uvLoaded', function(e) { 
 
-            urlDataProvider = new UV.URLDataProvider();
-            var locales = urlDataProvider.get("locales", '');
-            var names = locales.split(',');
-            var formattedLocales = [];
+            urlDataProvider = new UV.URLDataProvider(true);
+            var formattedLocales;
+            var locales = urlDataProvider.get('locales', '');
 
-            for (var i in names) {
-                var nameparts = String(names[i]).split(':');
-                formattedLocales[i] = {name: nameparts[0], label: nameparts[1]};
+            if (locales) {
+                var names = locales.split(',');
+                formattedLocales = [];
+
+                for (var i in names) {
+                    var nameparts = String(names[i]).split(':');
+                    formattedLocales[i] = {name: nameparts[0], label: nameparts[1]};
+                }
+                
+            } else {
+                formattedLocales = [
+                    {
+                        name: 'en-GB'
+                    }
+                ]
             }
 
             uv = createUV('#uv', {
@@ -47,10 +58,10 @@
                 manifestIndex: Number(urlDataProvider.get('m', 0)),
                 sequenceIndex: Number(urlDataProvider.get('s', 0)),
                 canvasIndex: Number(urlDataProvider.get('cv', 0)),
-                deepLinkingEnabled: false,
                 rotation: Number(urlDataProvider.get('r', 0)),
-                locales: formattedLocales,
-                xywh: urlDataProvider.get('xywh', '')
+                xywh: urlDataProvider.get('xywh', ''),
+                embedded: true,
+                locales: formattedLocales
             }, urlDataProvider);
 
         }, false);
