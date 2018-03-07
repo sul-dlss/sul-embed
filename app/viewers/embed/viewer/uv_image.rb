@@ -15,11 +15,16 @@ module Embed
       end
 
       def embed_url
-        "#{uv_root}/uv.js"
+        ".#{uv_root}/uv.js"
       end
 
       def uv_root
-        './uv-3'
+        "/uv-3-#{asset_thumbprint}"
+      end
+
+      # retrieve the MD5-thumbprinted name for our assets (see the rake uv:update task)
+      def asset_thumbprint
+        ::File.read(Rails.root.join('public', 'uv-3', '.md5')).strip
       end
 
       def manifest_json_url
