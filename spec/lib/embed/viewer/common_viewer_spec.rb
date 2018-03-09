@@ -35,6 +35,9 @@ describe Embed::Viewer::CommonViewer do
     it 'adds a download param' do
       expect(file_viewer.file_url('cool_file', download: true)).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file?download=true'
     end
+    it 'escapes special characters in the file' do
+      expect(file_viewer.file_url('[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf')).to eq 'https://stacks.stanford.edu/file/druid:abc123/%5BDissertation%5D+micro-TEC+vfinal+%28for+submission%29-augmented.pdf'
+    end
   end
 
   describe '#sul_pretty_date' do

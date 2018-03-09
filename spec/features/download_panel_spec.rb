@@ -15,7 +15,7 @@ describe 'download panel', type: :feature, js: true do
     stub_purl_response_with_fixture(wonky_filename_purl)
     visit_iframe_response
     link = page.find('.sul-embed-media-list a', match: :first)
-    expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:ignored/%23Title%20of%20the%20PDF.pdf') # this file link had a # and spaces, encoding is needed
+    expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:ignored/%23Title+of+the+PDF.pdf') # this file link had a # and spaces, encoding is needed
   end
   describe 'toggle button' do
     before do
