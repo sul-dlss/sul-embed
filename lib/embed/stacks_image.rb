@@ -18,7 +18,7 @@ module Embed
     private
 
     def normalized_stacks_image_file_name(file_name)
-      file_name.gsub(/\.\w+$/, '')
+      ERB::Util.url_encode(file_name.gsub(/\.\w+$/, ''))
     end
   end
 end

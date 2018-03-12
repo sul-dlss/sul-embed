@@ -37,11 +37,19 @@ describe Embed::StacksImage do
     it 'accpets an optional size parameter' do
       expect(subject.stacks_square_url('abc123', 'filename.jpg', size: 50)).to match(%r{square/50,50/})
     end
+
+    it 'escapes special characters in the image file name' do
+      expect(subject.stacks_square_url('abc123', 'file name.jpg')).to match(/file%20name/)
+    end
   end
 
   describe '#stacks_thumb_url' do
     it 'requests an image that is 400px on the long edge' do
       expect(subject.stacks_thumb_url('abc123', 'filename.jpg')).to match(%r{/full/\!400,400/})
+    end
+
+    it 'escapes special characters in the image file name' do
+      expect(subject.stacks_thumb_url('abc123', 'file name.jpg')).to match(/file%20name/)
     end
   end
 end
