@@ -45,7 +45,7 @@ module Embed
       # @param [Boolean] download
       # @return [String]
       def file_url(title, download: false)
-        uri = URI.parse("#{stacks_url}/#{CGI.escape(title)}")
+        uri = URI.parse("#{stacks_url}/#{ERB::Util.url_encode(title)}")
         uri.query = URI.encode_www_form(download: true) if download
         uri.to_s
       end

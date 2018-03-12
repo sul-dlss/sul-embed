@@ -93,7 +93,7 @@ RSpec.describe 'embed/template/_file.html.erb' do
     it 'adds a Stanford specific embargo message with links still present' do
       # ?expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com')
       expect(rendered).to have_css('.sul-embed-embargo-message', visible: false, text: "Access is restricted to Stanford-affiliated patrons until #{(Time.current + 1.month).strftime('%d-%b-%Y')}")
-      expect(rendered).to have_css('.sul-embed-media-heading a[href="https://stacks.stanford.edu/file/druid:12345/Title+of+the+PDF.pdf"]', visible: false)
+      expect(rendered).to have_css('.sul-embed-media-heading a[href="https://stacks.stanford.edu/file/druid:12345/Title%20of%20the%20PDF.pdf"]', visible: false)
     end
 
     it 'includes an element with a stanford icon class (with screen reader text)' do
