@@ -72,6 +72,7 @@ module Embed
         :hide_download,
         :min_files_to_search,
         :fullheight,
+        :canvas_id,
         :canvas_index
       )
 
@@ -80,6 +81,10 @@ module Embed
       else
         p
       end
+    end
+
+    def canvas_id
+      params[:canvas_id]
     end
 
     def canvas_index
