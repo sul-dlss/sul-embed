@@ -8,7 +8,7 @@
     data-uv-root='.<%= viewer.uv_root %>'
     data-uv-uri='<%= viewer.manifest_json_url %>'
     data-uv-config='<%= viewer.config_url %>'
-    data-canvas-index='<%= viewer.request.canvas_index %>'
+    data-canvas-index='<%= viewer.canvas_index %>'
     style='height: <%= viewer.body_height%>px; width:100%'>
   </div>
   <%= javascript_include_tag 'sul_uv.js', defer: true %>

@@ -187,6 +187,24 @@ describe Embed::PURL do
       end
     end
 
+    describe '#manifest_json_url' do
+      it 'constructs a URL to a IIIF manifest' do
+        expect(Embed::PURL.new('12345').manifest_json_url).to eq 'https://purl.stanford.edu/12345/iiif/manifest'
+      end
+    end
+
+    describe '#manifest_json_response' do
+      it 'fetches the IIIF manifest' do
+        allow_any_instance_of(Faraday::Connection).to receive(:get).and_return(instance_double(Faraday::Response, body: '{}', success?: true))
+        expect(Embed::PURL.new('12345').manifest_json_response).to eq '{}'
+      end
+
+      it 'raises an application error on failure' do
+        allow_any_instance_of(Faraday::Connection).to receive(:get).and_return(instance_double(Faraday::Response, success?: false))
+        expect { Embed::PURL.new('12345').manifest_json_response }.to raise_error(Embed::PURL::ResourceNotAvailable)
+      end
+    end
+
     describe 'PURL::Resource::ResourceFile' do
       describe 'attributes' do
         before { stub_purl_response_with_fixture(file_purl) }
