@@ -1973,6 +1973,7 @@ input[type=range]:focus::-ms-fill-upper {
   background: chartreuse;
   height: 20px;
   border: none;
+  border-radius: 0;
 }
 .iiif-av-component .canvas-timeline-container {
   background: #AFAFAF;
@@ -2459,37 +2460,37 @@ input[type=range]:focus::-ms-fill-upper {
     display: block !important;
   }
 }
-@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 640px) and (max-height: 100000px) {
+@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 415px) and (max-height: 100000px) {
   .uv #debug #desktop {
     display: block !important;
   }
 }
-@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 640px) and (max-height: 100000px) {
+@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 415px) and (max-height: 100000px) {
   .uv .headerPanel {
     display: block;
   }
 }
-@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 640px) and (max-height: 100000px) {
+@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 415px) and (max-height: 100000px) {
   .uv .mainPanel .leftPanel {
     display: block;
   }
 }
-@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 640px) and (max-height: 100000px) {
+@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 415px) and (max-height: 100000px) {
   .uv .mainPanel .rightPanel {
     display: block;
   }
 }
-@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 640px) and (max-height: 100000px) {
+@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 415px) and (max-height: 100000px) {
   .uv .footerPanel {
     display: block;
   }
 }
-@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 640px) and (max-height: 100000px) {
+@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 415px) and (max-height: 100000px) {
   .uv .footerPanel .moreInfo {
     display: none;
   }
 }
-@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 640px) and (max-height: 100000px) {
+@media only screen and (min-width: 800px) and (max-width: 100000px) and (min-height: 415px) and (max-height: 100000px) {
   .uv .mobileFooterPanel {
     display: none;
   }

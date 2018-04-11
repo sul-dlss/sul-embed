@@ -724,12 +724,12 @@
   background-position: 50% 50%;
 }
 .uv .centerPanel .content .searchOverlay {
-  background-color: #0098db;
+  background-color: #2c87af;
   opacity: 0.5;
   filter: alpha(opacity=50);
 }
 .uv .centerPanel .content .searchOverlay.current {
-  border: 3px solid #fff;
+  background-color: #42c5ff;
 }
 .uv .openseadragon-canvas {
   outline: none;
@@ -2612,6 +2612,7 @@ input[type=range]:focus::-ms-fill-upper {
   background: chartreuse;
   height: 20px;
   border: none;
+  border-radius: 0;
 }
 .iiif-av-component .canvas-timeline-container {
   background: #AFAFAF;

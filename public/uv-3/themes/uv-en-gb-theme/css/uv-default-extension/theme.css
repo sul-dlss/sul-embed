@@ -1833,6 +1833,7 @@ input[type=range]:focus::-ms-fill-upper {
   background: chartreuse;
   height: 20px;
   border: none;
+  border-radius: 0;
 }
 .iiif-av-component .canvas-timeline-container {
   background: #AFAFAF;
