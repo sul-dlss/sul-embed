@@ -14341,7 +14341,7 @@ function extend() {
 
 },{}]},{},[1])(1)
 });
-// @iiif/manifold v1.2.23 https://github.com/iiif-commons/manifold#readme
+// @iiif/manifold v1.2.24 https://github.com/iiif-commons/manifold#readme
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('lib/manifold.js',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.iiifmanifold = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (global){
 
@@ -14766,14 +14766,6 @@ var Manifold;
     Manifold.ExternalResource = ExternalResource;
 })(Manifold || (Manifold = {}));
 
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
 var Manifold;
 (function (Manifold) {
     var Helper = /** @class */ (function () {
@@ -15031,7 +15023,7 @@ var Manifold;
                 currentRange = this.getCurrentRange();
             }
             if (currentRange) {
-                var flatTree = this._getFlattenedTree(this._extractChildren(this.getTree()), this._extractChildren).map(function (x) { return delete x.children && x; });
+                var flatTree = this.getFlattenedTree();
                 for (var i = 0; i < flatTree.length; i++) {
                     var node = flatTree[i];
                     // find current range in flattened tree
@@ -15080,14 +15072,18 @@ var Manifold;
             return null;
         };
         Helper.prototype.getFlattenedTree = function () {
-            return this._getFlattenedTree(this._extractChildren(this.getTree()), this._extractChildren).map(function (x) { return delete x.children && x; });
+            return this._flattenTree(this.getTree(), 'nodes');
         };
-        Helper.prototype._getFlattenedTree = function (children, extractChildren, level, parent) {
+        Helper.prototype._flattenTree = function (root, key) {
             var _this = this;
-            return Array.prototype.concat.apply(children.map(function (x) { return (__assign({}, x, { level: level || 1, parent: parent || null })); }), children.map(function (x) { return _this._getFlattenedTree(extractChildren(x) || [], extractChildren, (level || 1) + 1, x.id); }));
-        };
-        Helper.prototype._extractChildren = function (treeNode) {
-            return treeNode.nodes;
+            var flatten = [Object.assign({}, root)];
+            delete flatten[0][key];
+            if (root[key] && root[key].length > 0) {
+                return flatten.concat(root[key]
+                    .map(function (child) { return _this._flattenTree(child, key); })
+                    .reduce(function (a, b) { return a.concat(b); }, []));
+            }
+            return flatten;
         };
         Helper.prototype.getRanges = function () {
             return this.manifest.getAllRanges();
@@ -16387,7 +16383,12 @@ define('URLDataProvider',["require", "exports", "./UVDataProvider"], function (r
         };
         URLDataProvider.prototype.set = function (key, value) {
             if (!this.readonly) {
-                Utils.Urls.setHashParameter(key, value.toString(), document);
+                if (value) {
+                    Utils.Urls.setHashParameter(key, value.toString(), document);
+                }
+                else {
+                    Utils.Urls.setHashParameter(key, '', document);
+                }
             }
         };
         return URLDataProvider;
@@ -22428,8 +22429,8 @@ define('modules/uv-mediaelementcenterpanel-module/MediaElementCenterPanel',["req
                     _this.$container.append(_this.$media);
                     _this.player = new MediaElementPlayer($('audio')[0], {
                         poster: poster,
-                        defaultAudioWidth: that.mediaWidth,
-                        defaultAudioHeight: that.mediaHeight,
+                        defaultAudioWidth: 'auto',
+                        defaultAudioHeight: 'auto',
                         showPosterWhenPaused: true,
                         showPosterWhenEnded: true,
                         success: function (mediaElement, originalNode) {

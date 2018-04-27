@@ -2569,6 +2569,9 @@ input[type=range]:focus::-ms-fill-upper {
 .uv.en-gb .leftPanel .views .thumbsView .thumbs .thumb {
   padding-top: 2px;
 }
+.uv.en-gb .leftPanel .views .thumbsView .thumbs .thumb .info .searchResults {
+  display: none;
+}
 .uv.en-gb .leftPanel .views .thumbsView .thumbs .thumb .wrap {
   border: none;
 }
