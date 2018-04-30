@@ -26654,7 +26654,7 @@ define('extensions/uv-seadragon-extension/Extension',["require", "exports", "../
         };
         Extension.prototype.getEmbedScript = function (template, width, height, zoom, rotation) {
             var appUri = this.getAppUri();
-            var iframeSrc = appUri.replace(/\/uv-3.*\/uv.html/, '/iframe') + "?url=" + this.helper.iiifResourceUri.replace('/iiif/manifest', '');
+            var iframeSrc = appUri.replace(/(\/uv-3.*)?\/uv.html/, '/iframe') + "?url=" + this.helper.iiifResourceUri.replace('/iiif/manifest', '');
             var script = Utils.Strings.format(template, iframeSrc, width.toString(), height.toString());
             return script;
         };
