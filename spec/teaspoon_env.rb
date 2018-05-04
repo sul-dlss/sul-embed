@@ -1,6 +1,6 @@
 unless defined?(Rails)
-  ENV['RAILS_ROOT'] = File.expand_path('../../', __FILE__)
-  require File.expand_path('../../config/environment', __FILE__)
+  ENV['RAILS_ROOT'] = File.expand_path('..', __dir__)
+  require File.expand_path('../config/environment', __dir__)
 end
 
 Teaspoon.configure do |config|

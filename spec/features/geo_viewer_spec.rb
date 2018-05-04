@@ -1,7 +1,8 @@
 require 'rails_helper'
-include PURLFixtures
 
 describe 'geo viewer public', js: true do
+  include PURLFixtures
+
   before do
     stub_purl_response_with_fixture(geo_purl_public)
     visit_iframe_response
@@ -50,6 +51,8 @@ describe 'geo viewer public', js: true do
 end
 
 describe 'geo viewer restricted', js: true do
+  include PURLFixtures
+
   before do
     stub_purl_response_with_fixture(geo_purl_restricted)
     visit_iframe_response

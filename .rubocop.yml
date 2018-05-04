@@ -6,6 +6,7 @@ AllCops:
     - 'Guardfile'
     - 'Rakefile'
     - 'bin/**/*'
+    - 'config/**/*'
     - 'spec/fixtures/**/*'
     - 'vendor/**/*'
   TargetRubyVersion: 2.2

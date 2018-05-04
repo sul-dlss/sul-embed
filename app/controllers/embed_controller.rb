@@ -24,23 +24,23 @@ class EmbedController < ApplicationController
   end
 
   rescue_from Embed::Request::NoURLProvided do |e|
-    render body: e.to_s, status: 400
+    render body: e.to_s, status: :bad_request
   end
 
   rescue_from Embed::PURL::ResourceNotEmbeddable do |e|
-    render body: e.to_s, status: 400
+    render body: e.to_s, status: :bad_request
   end
 
   rescue_from Embed::Request::InvalidURLScheme do |e|
-    render body: e.to_s, status: 404
+    render body: e.to_s, status: :not_found
   end
 
   rescue_from Embed::PURL::ResourceNotAvailable do |e|
-    render body: e.to_s, status: 404
+    render body: e.to_s, status: :not_found
   end
 
   rescue_from Embed::Request::InvalidFormat do |e|
-    render body: e.to_s, status: 415
+    render body: e.to_s, status: :unsupported_media_type
   end
 
   private
