@@ -1,7 +1,15 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.1.2'
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?('/')
+  "https://github.com/#{repo_name}.git"
+end
 
+gem 'rails', '~> 5.2.0'
+# Use Puma as the app server
+gem 'puma', '~> 3.11'
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', '>= 1.1.0', require: false
 gem 'faraday'
 
 gem 'nokogiri', '>= 1.7.1'
@@ -14,13 +22,12 @@ gem 'deprecation'
 gem 'iso8601' # to parse durations, since ActiveSupport::Duration doesn't get a parse method till rails 5
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.5.2' # pinned for https://github.com/rspec/rspec-rails/issues/1800
+  gem 'rspec-rails', '~> 3.7'
   gem 'capybara'
-  gem 'poltergeist'
+  gem 'selenium-webdriver'
+  # Easy installation and use of chromedriver to run system tests with Chrome
+  gem 'chromedriver-helper'
   gem 'high_voltage'
-
-  # Coveralls gem for code coverage reporting
-  gem 'coveralls', require: false
 
   # Teaspoon-jasmine is a wrapper for the Jasmine javascript testing library
   gem 'teaspoon-jasmine'
@@ -35,7 +42,7 @@ group :development, :test do
   gem 'coffee-rails'
 
   # Linting/Styleguide Enforcement
-  gem 'rubocop', '~> 0.49.1'
+  gem 'rubocop', '~> 0.49'
 
   # guard-rspec for auto-running tests when relevant files are changed
   gem 'guard-rspec', require: false

@@ -12,18 +12,18 @@ describe 'was seed viewer public', js: true do
 
   describe 'loading was-seed-viewer' do
     it 'displays the viewer on the frame' do
-      expect(page).to have_css('.sul-embed-was-seed', count: 1, visible: true)
-      expect(page).to have_css('.sul-embed-was-thumb-item', count: 4, visible: true)
-      expect(page).to have_css('.sul-embed-was-thumb-item-div', count: 4, visible: true)
+      expect(page).to have_css('.sul-embed-was-seed', count: 1)
+      expect(page).to have_css('.sul-embed-was-thumb-item', count: 4, visible: false)
+      expect(page).to have_css('.sul-embed-was-thumb-item-div', count: 4, visible: false)
     end
     it 'loads the SLY slider and scroll' do
-      expect(page).to have_css('.sul-embed-thumb-slider-scroll', count: 1, visible: true)
+      expect(page).to have_css('.sul-embed-thumb-slider-scroll', count: 1)
       within '.sul-embed-was-seed' do
-        expect(page.find('.sul-embed-was-thumb-list')['style']).to match(/webkit-transform: translateZ/)
+        expect(page.find('.sul-embed-was-thumb-list')['style']).to match(/transform: translateZ/)
       end
     end
     it 'selects the one before the last to be active' do
-      expect(page).to have_css('.active', count: 1, visible: true)
+      expect(page).to have_css('.active', count: 1)
       expect(page.find('.active').text).to eq('12-Oct-2013')
     end
     it 'changes the active one with the select' do

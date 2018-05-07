@@ -44,7 +44,7 @@ describe Embed::EmbedThisPanel do
   context 'body' do
     context 'title' do
       it 'has the purl object title' do
-        expect(subject).to have_content('title (The Object Title)')
+        expect(subject).to have_content(/title\s*\(The Object Title\)/)
       end
       it 'has span with only the purl object title' do
         expect(subject).to have_css(
