@@ -18,7 +18,7 @@ set :log_level, :info
 # set :pty, true
 
 # Default value for :linked_files is []
-set :linked_files, %w(config/honeybadger.yml)
+set :linked_files, %w(config/honeybadger.yml config/newrelic.yml)
 
 # Default value for linked_dirs is []
 set :linked_dirs, %w(bin config/settings log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system)
