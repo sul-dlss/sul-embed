@@ -66,4 +66,4 @@ streaming_prefix:
   mp3: 'mp3'
 # Any Embed::Viewer could be put here.
 image_viewer: Embed::Viewer::UVImage
-use_uv_for_files: false # A feature flag that toggles registering the Embed::Viewer::UVFile viewer
+use_uv_for_files: true # A feature flag that toggles registering the Embed::Viewer::UVFile viewer

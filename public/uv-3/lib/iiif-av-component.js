@@ -1,5 +1,5 @@
-// iiif-av-component v0.0.32 https://github.com/iiif-commons/iiif-av-component#readme
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.iiifAvComponent = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+// iiif-av-component v0.0.38 https://github.com/iiif-commons/iiif-av-component#readme
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.iiifAvComponent = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 (function (global){
 
 var __extends = (this && this.__extends) || (function () {
@@ -56,10 +56,8 @@ var IIIFComponents;
             var diff = IIIFComponents.AVComponentUtils.Utils.diff(oldData, this._data);
             // changing any of these data properties forces a reload.
             if (diff.includes('helper')) {
-                // reset all global properties and terminate all running processes
                 // create canvases
                 this._reset();
-                return;
             }
             if (!this._data.helper) {
                 console.warn('must pass a helper object');
@@ -91,8 +89,7 @@ var IIIFComponents;
                 this.canvasInstances.forEach(function (canvasInstance, index) {
                     if (canvasInstance !== currentCanvasInstance_1) {
                         canvasInstance.set({
-                            visible: false,
-                            limitToRange: false
+                            visible: false
                         });
                     }
                     else {
@@ -140,14 +137,25 @@ var IIIFComponents;
             });
             this.canvasInstances = [];
             this._$element.empty();
-            var canvases = this._getCanvases();
-            canvases.forEach(function (canvas) {
-                _this._initCanvas(canvas);
-            });
-            if (this.canvasInstances.length > 0) {
-                this.set({
-                    canvasId: this.canvasInstances[0].getCanvasId()
-                });
+            // if the manifest has an auto-advance behavior, join the canvases into a single "virtual" canvas
+            if (this._data && this._data.helper) {
+                var behavior = this._data.helper.manifest.getBehavior();
+                var canvases = this._getCanvases();
+                if (behavior && behavior.toString() === manifesto.Behavior.autoadvance().toString()) {
+                    var virtualCanvas_1 = new IIIFComponents.AVComponentObjects.VirtualCanvas();
+                    canvases.forEach(function (canvas) {
+                        virtualCanvas_1.addCanvas(canvas);
+                    });
+                    this._initCanvas(virtualCanvas_1);
+                }
+                else {
+                    canvases.forEach(function (canvas) {
+                        _this._initCanvas(canvas);
+                    });
+                }
+                if (this.canvasInstances.length > 0) {
+                    this._data.canvasId = this.canvasInstances[0].getCanvasId();
+                }
             }
         };
         AVComponent.prototype._getCanvases = function () {
@@ -182,6 +190,10 @@ var IIIFComponents;
             canvasInstance.on(AVComponent.Events.RANGE_CHANGED, function (rangeId) {
                 _this.fire(AVComponent.Events.RANGE_CHANGED, rangeId);
             }, false);
+            canvasInstance.on(IIIFComponents.AVVolumeControl.Events.VOLUME_CHANGED, function (volume) {
+                _this._setCanvasInstanceVolumes(volume);
+                _this.fire(IIIFComponents.AVVolumeControl.Events.VOLUME_CHANGED, volume);
+            }, false);
         };
         AVComponent.prototype._prevRange = function () {
             if (!this._data || !this._data.helper) {
@@ -205,15 +217,30 @@ var IIIFComponents;
                 this.playRange(nextRange.id);
             }
         };
+        AVComponent.prototype._setCanvasInstanceVolumes = function (volume) {
+            this.canvasInstances.forEach(function (canvasInstance) {
+                canvasInstance.set({
+                    volume: volume
+                });
+            });
+        };
         AVComponent.prototype._getCanvasInstanceById = function (canvasId) {
             canvasId = Manifesto.Utils.normaliseUrl(canvasId);
             for (var i = 0; i < this.canvasInstances.length; i++) {
                 var canvasInstance = this.canvasInstances[i];
-                var id = canvasInstance.getCanvasId();
-                if (id) {
-                    var canvasInstanceId = Manifesto.Utils.normaliseUrl(id);
-                    if (canvasInstanceId === canvasId) {
+                // if the canvasinstance has a virtual canvas
+                if (canvasInstance.isVirtual()) {
+                    if (canvasInstance.includesVirtualSubCanvas(canvasId)) {
                         return canvasInstance;
+                    }
+                }
+                else {
+                    var id = canvasInstance.getCanvasId();
+                    if (id) {
+                        var canvasInstanceId = Manifesto.Utils.normaliseUrl(id);
+                        if (canvasInstanceId === canvasId) {
+                            return canvasInstance;
+                        }
                     }
                 }
             }
@@ -315,9 +342,9 @@ var IIIFComponents;
         __extends(AVVolumeControl, _super);
         function AVVolumeControl(options) {
             var _this = _super.call(this, options) || this;
-            _this._state = {
-                currentVolume: 1,
-                lastVolume: 1
+            _this._lastVolume = 1;
+            _this._data = {
+                volume: 1
             };
             _this._init();
             _this._resize();
@@ -335,44 +362,48 @@ var IIIFComponents;
             var that = this;
             this._$volumeMute.on('click', function () {
                 // start reducer
-                if (_this._state.currentVolume !== 0) {
+                if (_this._data.volume !== 0) {
                     // mute
-                    _this._state.lastVolume = _this._state.currentVolume;
-                    _this._state.currentVolume = 0;
+                    _this._lastVolume = _this._data.volume;
+                    _this._data.volume = 0;
                 }
                 else {
                     // unmute
-                    _this._state.currentVolume = _this._state.lastVolume;
+                    _this._data.volume = _this._lastVolume;
                 }
                 // end reducer
                 _this._render();
-                _this.fire(AVVolumeControl.Events.VOLUME_CHANGED, _this._state.currentVolume);
+                _this.fire(AVVolumeControl.Events.VOLUME_CHANGED, _this._data.volume);
             });
             this._$volumeSlider.on('input', function () {
                 // start reducer
-                that._state.currentVolume = Number(this.value);
-                if (that._state.currentVolume === 0) {
-                    that._state.lastVolume = 0;
+                that._data.volume = Number(this.value);
+                if (that._data.volume === 0) {
+                    that._lastVolume = 0;
                 }
                 // end reducer
                 that._render();
-                that.fire(AVVolumeControl.Events.VOLUME_CHANGED, that._state.currentVolume);
+                that.fire(AVVolumeControl.Events.VOLUME_CHANGED, that._data.volume);
             });
             this._$volumeSlider.on('change', function () {
                 // start reducer
-                that._state.currentVolume = Number(this.value);
-                if (that._state.currentVolume === 0) {
-                    that._state.lastVolume = 0;
+                that._data.volume = Number(this.value);
+                if (that._data.volume === 0) {
+                    that._lastVolume = 0;
                 }
                 // end reducer
                 that._render();
-                that.fire(AVVolumeControl.Events.VOLUME_CHANGED, that._state.currentVolume);
+                that.fire(AVVolumeControl.Events.VOLUME_CHANGED, that._data.volume);
             });
             return success;
         };
+        AVVolumeControl.prototype.set = function (data) {
+            this._data = Object.assign(this._data, data);
+            this._render();
+        };
         AVVolumeControl.prototype._render = function () {
-            this._$volumeSlider.val(this._state.currentVolume);
-            if (this._state.currentVolume === 0) {
+            this._$volumeSlider.val(this._data.volume);
+            if (this._data.volume === 0) {
                 this._$volumeMute.find('i').switchClass('on', 'off');
             }
             else {
@@ -425,6 +456,7 @@ var IIIFComponents;
             _this._isPlaying = false;
             _this._isStalled = false;
             _this._lowPriorityFrequency = 250;
+            _this._mediaSyncMarginSecs = 1;
             _this._ranges = [];
             _this._readyCanvasesCount = 0;
             _this._stallRequestedBy = []; //todo: type
@@ -463,7 +495,7 @@ var IIIFComponents;
                 data: Object.assign({}, this._data)
             });
             this._volume.on(IIIFComponents.AVVolumeControl.Events.VOLUME_CHANGED, function (value) {
-                _this._setVolume(value);
+                _this.fire(IIIFComponents.AVVolumeControl.Events.VOLUME_CHANGED, value);
             }, false);
             this._$controlsContainer.append(this._$prevButton, this._$playButton, this._$nextButton, this._$timeDisplay, $volume);
             this._$canvasTimelineContainer.append(this._$canvasHoverPreview, this._$canvasHoverHighlight, this._$durationHighlight);
@@ -472,9 +504,29 @@ var IIIFComponents;
             this.$playerElement.append(this._$canvasContainer, this._$optionsContainer);
             this._$canvasHoverPreview.hide();
             this._$rangeHoverPreview.hide();
-            if (this._data.helper && this._data.canvas) {
-                var ranges = this._data.helper.getCanvasRanges(this._data.canvas);
-                ranges.forEach(function (range) {
+            if (this._data && this._data.helper && this._data.canvas) {
+                var ranges_1 = [];
+                // if the canvas is virtual, get the ranges for all sub canvases
+                if (this.isVirtual()) {
+                    this._data.canvas.canvases.forEach(function (canvas) {
+                        if (_this._data && _this._data.helper) {
+                            var r = _this._data.helper.getCanvasRanges(canvas);
+                            // shift the range targets forward by the duration of their previous canvases
+                            r.forEach(function (range) {
+                                if (range.canvases && range.canvases.length) {
+                                    for (var i = 0; i < range.canvases.length; i++) {
+                                        range.canvases[i] = IIIFComponents.AVComponentUtils.Utils.retargetTemporalComponent(_this._data.canvas.canvases, range.__jsonld.items[i].id);
+                                    }
+                                }
+                            });
+                            ranges_1.push.apply(ranges_1, r);
+                        }
+                    });
+                }
+                else {
+                    ranges_1.concat(this._data.helper.getCanvasRanges(this._data.canvas));
+                }
+                ranges_1.forEach(function (range) {
                     _this._ranges.push(new IIIFComponents.AVComponentObjects.CanvasRange(range));
                 });
             }
@@ -581,6 +633,7 @@ var IIIFComponents;
                 }
                 var body = bodies[0];
                 var type = body.getType();
+                var format = body.getFormat();
                 // if (type && type.toString() === 'choice') {
                 //     // Choose first "Choice" item as body
                 //     const tmpItem = item;
@@ -611,23 +664,15 @@ var IIIFComponents;
                     console.warn('item has no target');
                     return;
                 }
-                var spatial = /xywh=([^&]+)/g.exec(target);
-                var temporal = /t=([^&]+)/g.exec(target);
-                var xywh = void 0;
-                if (spatial && spatial[1]) {
-                    xywh = spatial[1].split(',');
-                }
-                else {
+                var xywh = IIIFComponents.AVComponentUtils.Utils.getSpatialComponent(target);
+                var t = IIIFComponents.AVComponentUtils.Utils.getTemporalComponent(target);
+                if (!xywh) {
                     xywh = [0, 0, this._canvasWidth, this._canvasHeight];
                 }
-                var t = void 0;
-                if (temporal && temporal[1]) {
-                    t = temporal[1].split(',');
-                }
-                else {
+                if (!t) {
                     t = [0, this._canvasClockDuration];
                 }
-                var positionLeft = parseInt(xywh[0]), positionTop = parseInt(xywh[1]), mediaWidth = parseInt(xywh[2]), mediaHeight = parseInt(xywh[3]), startTime = parseInt(t[0]), endTime = parseInt(t[1]);
+                var positionLeft = parseInt(String(xywh[0])), positionTop = parseInt(String(xywh[1])), mediaWidth = parseInt(String(xywh[2])), mediaHeight = parseInt(String(xywh[3])), startTime = parseInt(String(t[0])), endTime = parseInt(String(t[1]));
                 var percentageTop = this._convertToPercentage(positionTop, this._canvasHeight), percentageLeft = this._convertToPercentage(positionLeft, this._canvasWidth), percentageWidth = this._convertToPercentage(mediaWidth, this._canvasWidth), percentageHeight = this._convertToPercentage(mediaHeight, this._canvasHeight);
                 var temporalOffsets = /t=([^&]+)/g.exec(body.id);
                 var ot = void 0;
@@ -638,6 +683,7 @@ var IIIFComponents;
                     ot = [null, null];
                 }
                 var offsetStart = (ot[0]) ? parseInt(ot[0]) : ot[0], offsetEnd = (ot[1]) ? parseInt(ot[1]) : ot[1];
+                // todo: type this
                 var itemData = {
                     'type': type,
                     'source': mediaSource,
@@ -649,10 +695,25 @@ var IIIFComponents;
                     'height': percentageHeight,
                     'startOffset': offsetStart,
                     'endOffset': offsetEnd,
-                    'active': false
+                    'active': false,
+                    'format': format
                 };
                 this._renderMediaElement(itemData);
             }
+        };
+        CanvasInstance.prototype.isVirtual = function () {
+            return this._data.canvas instanceof IIIFComponents.AVComponentObjects.VirtualCanvas;
+        };
+        CanvasInstance.prototype.includesVirtualSubCanvas = function (canvasId) {
+            if (this.isVirtual() && this._data.canvas && this._data.canvas.canvases) {
+                for (var i = 0; i < this._data.canvas.canvases.length; i++) {
+                    var canvas = this._data.canvas.canvases[i];
+                    if (Manifesto.Utils.normaliseUrl(canvas.id) === canvasId) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         };
         CanvasInstance.prototype.set = function (data) {
             var oldData = Object.assign({}, this._data);
@@ -690,6 +751,7 @@ var IIIFComponents;
             this._render();
         };
         CanvasInstance.prototype._render = function () {
+            var _this = this;
             if (this._data.range && this._data.range.duration) {
                 // get the total length in seconds.
                 var totalLength = this._canvasClockDuration;
@@ -730,6 +792,12 @@ var IIIFComponents;
             else {
                 this._$durationHighlight.hide();
             }
+            this._contentAnnotations.forEach(function ($mediaElement) {
+                $($mediaElement.element).prop("volume", _this._data.volume);
+                _this._volume.set({
+                    volume: _this._data.volume
+                });
+            });
             if (this._data.limitToRange && this._data.range) {
                 this._$canvasTimelineContainer.hide();
                 this._$rangeTimelineContainer.show();
@@ -745,7 +813,7 @@ var IIIFComponents;
             if (this._data && this._data.canvas) {
                 return this._data.canvas.id;
             }
-            return null;
+            return undefined;
         };
         CanvasInstance.prototype._updateHoverPreview = function (e, $container, duration) {
             var offset = $container.offset();
@@ -836,6 +904,7 @@ var IIIFComponents;
             return percentage;
         };
         CanvasInstance.prototype._renderMediaElement = function (data) {
+            var _this = this;
             var $mediaElement;
             var type = data.type.toString().toLowerCase();
             switch (type) {
@@ -843,16 +912,43 @@ var IIIFComponents;
                     $mediaElement = $('<img class="anno" src="' + data.source + '" />');
                     break;
                 case 'video':
-                    $mediaElement = $('<video class="anno" src="' + data.source + '" />');
+                    $mediaElement = $('<video class="anno" />');
                     break;
                 case 'audio':
-                    $mediaElement = $('<audio class="anno" src="' + data.source + '" />');
+                    $mediaElement = $('<audio class="anno" />');
                     break;
                 case 'textualbody':
                     $mediaElement = $('<div class="anno">' + data.source + '</div>');
                     break;
                 default:
                     return;
+            }
+            var video = $mediaElement[0];
+            if (data.format && data.format.toString() === 'application/dash+xml') {
+                // dash
+                $mediaElement.attr('data-dashjs-player', '');
+                var player = dashjs.MediaPlayer().create();
+                player.initialize(video, data.source);
+            }
+            else if (data.format && data.format.toString() === 'application/vnd.apple.mpegurl') {
+                // hls
+                if (Hls.isSupported()) {
+                    var hls = new Hls();
+                    hls.loadSource(data.source);
+                    hls.attachMedia(video);
+                    hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                        video.play();
+                    });
+                }
+                else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = data.source;
+                    video.addEventListener('canplay', function () {
+                        video.play();
+                    });
+                }
+            }
+            else {
+                $mediaElement.attr('src', data.source);
             }
             $mediaElement.css({
                 top: data.top + '%',
@@ -891,7 +987,6 @@ var IIIFComponents;
                 this._$canvasContainer.append($mediaElement);
             }
             if (type === 'video' || type === 'audio') {
-                var that_3 = this;
                 $mediaElement.on('loadstart', function () {
                     //console.log('loadstart');
                     data.checkForStall();
@@ -905,14 +1000,16 @@ var IIIFComponents;
                     //data.checkForStall();
                 });
                 $mediaElement.on('loadedmetadata', function () {
-                    that_3._readyCanvasesCount++;
-                    if (that_3._readyCanvasesCount === that_3._contentAnnotations.length) {
-                        that_3._setCurrentTime(0);
-                        if (that_3.options.data.autoPlay) {
-                            that_3._play();
+                    _this._readyCanvasesCount++;
+                    if (_this._readyCanvasesCount === _this._contentAnnotations.length) {
+                        //if (!this._data.range) {
+                        _this._setCurrentTime(0);
+                        //}                        
+                        if (_this.options.data.autoPlay) {
+                            _this._play();
                         }
-                        that_3._updateDurationDisplay();
-                        that_3.fire(IIIFComponents.AVComponent.Events.CANVASREADY);
+                        _this._updateDurationDisplay();
+                        _this.fire(IIIFComponents.AVComponent.Events.CANVASREADY);
                     }
                 });
                 $mediaElement.attr('preload', 'auto');
@@ -931,7 +1028,7 @@ var IIIFComponents;
         CanvasInstance.prototype._getRangeForCurrentTime = function () {
             for (var i = 0; i < this._ranges.length; i++) {
                 var range = this._ranges[i];
-                if (range.spans(this._canvasClockTime)) {
+                if (!range.nonav && range.spans(this._canvasClockTime)) {
                     return range;
                 }
             }
@@ -954,12 +1051,14 @@ var IIIFComponents;
                 this._$canvasDuration.text(IIIFComponents.AVComponentUtils.Utils.formatTime(this._canvasClockDuration));
             }
         };
-        CanvasInstance.prototype._setVolume = function (value) {
-            for (var i = 0; i < this._contentAnnotations.length; i++) {
-                var $mediaElement = this._contentAnnotations[i];
-                $($mediaElement.element).prop("volume", value);
-            }
-        };
+        // public setVolume(value: number): void {
+        //     //console.log('set volume', (<any>this._data.canvas).id);
+        //     this._data.volume = value;
+        //     for (let i = 0; i < this._contentAnnotations.length; i++) {
+        //         const $mediaElement = this._contentAnnotations[i];
+        //         $($mediaElement.element).prop("volume", value);
+        //     }
+        // }
         CanvasInstance.prototype._renderSyncIndicator = function (mediaElementData) {
             var leftPercent = this._convertToPercentage(mediaElementData.start, this._canvasClockDuration);
             var widthPercent = this._convertToPercentage(mediaElementData.end - mediaElementData.start, this._canvasClockDuration);
@@ -1089,7 +1188,7 @@ var IIIFComponents;
         };
         CanvasInstance.prototype._lowPriorityUpdater = function () {
             this._updateMediaActiveStates();
-            if (this._data.autoSelectRange) {
+            if (this._isPlaying && this._data.autoSelectRange) {
                 this._hasRangeChanged();
             }
         };
@@ -1108,7 +1207,7 @@ var IIIFComponents;
                     }
                     if (type === 'video' || type === 'audio') {
                         if (contentAnnotation.element[0].currentTime > contentAnnotation.element[0].duration - contentAnnotation.endOffset) {
-                            contentAnnotation.element[0].pause();
+                            this._pauseMedia(contentAnnotation.element[0]);
                         }
                     }
                 }
@@ -1118,12 +1217,29 @@ var IIIFComponents;
                         contentAnnotation.element.hide();
                         contentAnnotation.timelineElement.removeClass('active');
                         if (type === 'video' || type === 'audio') {
-                            contentAnnotation.element[0].pause();
+                            this._pauseMedia(contentAnnotation.element[0]);
                         }
                     }
                 }
             }
             //this.logMessage('UPDATE MEDIA ACTIVE STATES at: '+ this._canvasClockTime + ' seconds.');
+        };
+        CanvasInstance.prototype._pauseMedia = function (media) {
+            var playPromise = media.play();
+            if (playPromise !== undefined) {
+                playPromise.then(function (_) {
+                    // https://developers.google.com/web/updates/2017/06/play-request-was-interrupted
+                    media.pause();
+                });
+            }
+            else {
+                media.pause();
+            }
+        };
+        CanvasInstance.prototype._setMediaCurrentTime = function (media, time) {
+            if (!isNaN(media.duration)) {
+                media.currentTime = time;
+            }
         };
         CanvasInstance.prototype._synchronizeMedia = function () {
             var contentAnnotation;
@@ -1131,7 +1247,7 @@ var IIIFComponents;
                 contentAnnotation = this._contentAnnotations[i];
                 var type = contentAnnotation.type.toString().toLowerCase();
                 if (type === 'video' || type === 'audio') {
-                    contentAnnotation.element[0].currentTime = this._canvasClockTime - contentAnnotation.start + contentAnnotation.startOffset;
+                    this._setMediaCurrentTime(contentAnnotation.element[0], this._canvasClockTime - contentAnnotation.start + contentAnnotation.startOffset);
                     if (contentAnnotation.start <= this._canvasClockTime && contentAnnotation.end >= this._canvasClockTime) {
                         if (this._isPlaying) {
                             if (contentAnnotation.element[0].paused) {
@@ -1142,14 +1258,14 @@ var IIIFComponents;
                             }
                         }
                         else {
-                            contentAnnotation.element[0].pause();
+                            this._pauseMedia(contentAnnotation.element[0]);
                         }
                     }
                     else {
-                        contentAnnotation.element[0].pause();
+                        this._pauseMedia(contentAnnotation.element[0]);
                     }
                     if (contentAnnotation.element[0].currentTime > contentAnnotation.element[0].duration - contentAnnotation.endOffset) {
-                        contentAnnotation.element[0].pause();
+                        this._pauseMedia(contentAnnotation.element[0]);
                     }
                 }
             }
@@ -1165,12 +1281,12 @@ var IIIFComponents;
                     var correctTime = (this._canvasClockTime - contentAnnotation.start + contentAnnotation.startOffset);
                     var factualTime = contentAnnotation.element[0].currentTime;
                     // off by 0.2 seconds
-                    if (Math.abs(factualTime - correctTime) > 0.4) {
+                    if (Math.abs(factualTime - correctTime) > this._mediaSyncMarginSecs) {
                         contentAnnotation.outOfSync = true;
                         //this.playbackStalled(true, contentAnnotation);
                         var lag = Math.abs(factualTime - correctTime);
                         this.logMessage('DETECTED synchronization lag: ' + Math.abs(lag));
-                        contentAnnotation.element[0].currentTime = correctTime;
+                        this._setMediaCurrentTime(contentAnnotation.element[0], correctTime);
                         //this.synchronizeMedia();
                     }
                     else {
@@ -1260,17 +1376,31 @@ var IIIFComponents;
             function CanvasRange(range) {
                 this.rangeId = null;
                 this.duration = null;
+                this.nonav = false;
                 if (!range.canvases || !range.canvases.length) {
                     return;
                 }
                 this.rangeId = range.id;
-                var canvasId = range.canvases[0];
-                // get the temporal part of the canvas id
-                var temporal = /t=([^&]+)/g.exec(canvasId);
-                if (temporal && temporal.length > 1) {
-                    var rangeTiming = temporal[1].split(',');
-                    this.duration = new AVComponentObjects.Duration(Number(rangeTiming[0]), Number(rangeTiming[1]));
+                // if there are multiple canvases, get the start of the first canvas,
+                // and the end of the last canvas.
+                var start;
+                var end;
+                for (var i = 0; i < range.canvases.length; i++) {
+                    var canvas = range.canvases[i];
+                    var temporal = IIIFComponents.AVComponentUtils.Utils.getTemporalComponent(canvas);
+                    if (temporal && temporal.length > 1) {
+                        if (i === 0) {
+                            start = Number(temporal[0]);
+                        }
+                        if (i === range.canvases.length - 1) {
+                            end = Number(temporal[1]);
+                        }
+                    }
                 }
+                if (start && end) {
+                    this.duration = new AVComponentObjects.Duration(start, end);
+                }
+                this.nonav = range.getProperty('behavior') === 'no-nav';
             }
             CanvasRange.prototype.spans = function (time) {
                 if (this.duration) {
@@ -1307,6 +1437,7 @@ var IIIFComponents;
 
 
 
+
 var IIIFComponents;
 (function (IIIFComponents) {
     var AVComponentUtils;
@@ -1325,6 +1456,47 @@ var IIIFComponents;
             };
             Utils.diff = function (a, b) {
                 return Array.from(new Set(Utils._compare(a, b).concat(Utils._compare(b, a))));
+            };
+            Utils.getSpatialComponent = function (target) {
+                var spatial = /xywh=([^&]+)/g.exec(target);
+                var xywh = null;
+                if (spatial && spatial[1]) {
+                    xywh = spatial[1].split(',');
+                }
+                return xywh;
+            };
+            Utils.getTemporalComponent = function (target) {
+                var temporal = /t=([^&]+)/g.exec(target);
+                var t = null;
+                if (temporal && temporal[1]) {
+                    t = temporal[1].split(',');
+                }
+                return t;
+            };
+            Utils.retargetTemporalComponent = function (canvases, target) {
+                var t = AVComponentUtils.Utils.getTemporalComponent(target);
+                if (t) {
+                    var offset = 0;
+                    var targetWithoutTemporal = target.substr(0, target.indexOf('#'));
+                    // loop through canvases adding up their durations until we reach the targeted canvas
+                    for (var i = 0; i < canvases.length; i++) {
+                        var canvas = canvases[i];
+                        if (!canvas.id.includes(targetWithoutTemporal)) {
+                            var duration = canvas.getDuration();
+                            if (duration) {
+                                offset += duration;
+                            }
+                        }
+                        else {
+                            // we've reached the canvas whose target we're adjusting
+                            break;
+                        }
+                    }
+                    t[0] = Number(t[0]) + offset;
+                    t[1] = Number(t[1]) + offset;
+                    return targetWithoutTemporal + '#t=' + t[0] + ',' + t[1];
+                }
+                return undefined;
             };
             Utils.formatTime = function (aNumber) {
                 var hours, minutes, seconds, hourValue;
@@ -1347,6 +1519,71 @@ var IIIFComponents;
         }());
         AVComponentUtils.Utils = Utils;
     })(AVComponentUtils = IIIFComponents.AVComponentUtils || (IIIFComponents.AVComponentUtils = {}));
+})(IIIFComponents || (IIIFComponents = {}));
+
+var IIIFComponents;
+(function (IIIFComponents) {
+    var AVComponentObjects;
+    (function (AVComponentObjects) {
+        var VirtualCanvas = /** @class */ (function () {
+            function VirtualCanvas() {
+                this.canvases = [];
+            }
+            VirtualCanvas.prototype.addCanvas = function (canvas) {
+                this.canvases.push(canvas);
+            };
+            VirtualCanvas.prototype.getContent = function () {
+                var _this = this;
+                var annotations = [];
+                this.canvases.forEach(function (canvas) {
+                    var items = canvas.getContent();
+                    // if the annotations have no temporal target, add one so that
+                    // they specifically target the duration of their canvas
+                    items.forEach(function (item) {
+                        var target = item.getTarget();
+                        if (target) {
+                            var t = IIIFComponents.AVComponentUtils.Utils.getTemporalComponent(target);
+                            if (!t) {
+                                item.__jsonld.target += '#t=0,' + canvas.getDuration();
+                            }
+                        }
+                    });
+                    items.forEach(function (item) {
+                        var target = item.getTarget();
+                        if (target) {
+                            item.__jsonld.target = IIIFComponents.AVComponentUtils.Utils.retargetTemporalComponent(_this.canvases, target);
+                        }
+                    });
+                    annotations.push.apply(annotations, items);
+                });
+                return annotations;
+            };
+            VirtualCanvas.prototype.getDuration = function () {
+                var duration = 0;
+                this.canvases.forEach(function (canvas) {
+                    var d = canvas.getDuration();
+                    if (d) {
+                        duration += d;
+                    }
+                });
+                return duration;
+            };
+            VirtualCanvas.prototype.getWidth = function () {
+                if (this.canvases.length) {
+                    return this.canvases[0].getWidth();
+                }
+                return 0;
+            };
+            VirtualCanvas.prototype.getHeight = function () {
+                if (this.canvases.length) {
+                    return this.canvases[0].getHeight();
+                }
+                return 0;
+            };
+            return VirtualCanvas;
+        }());
+        AVComponentObjects.VirtualCanvas = VirtualCanvas;
+    })(AVComponentObjects = IIIFComponents.AVComponentObjects || (IIIFComponents.AVComponentObjects = {}));
 })(IIIFComponents || (IIIFComponents = {}));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
