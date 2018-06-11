@@ -203,6 +203,11 @@ describe Embed::PURL do
         allow_any_instance_of(Faraday::Connection).to receive(:get).and_return(instance_double(Faraday::Response, success?: false))
         expect { Embed::PURL.new('12345').manifest_json_response }.to raise_error(Embed::PURL::ResourceNotAvailable)
       end
+
+      it 'raises an application error on timeout' do
+        allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(Faraday::Error::ConnectionFailed.new(''))
+        expect { Embed::PURL.new('12345').manifest_json_response }.to raise_error(Embed::PURL::ResourceNotAvailable)
+      end
     end
 
     describe 'PURL::Resource::ResourceFile' do
