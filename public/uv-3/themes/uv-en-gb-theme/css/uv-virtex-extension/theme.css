@@ -781,6 +781,9 @@
 .uv ::-webkit-scrollbar-thumb {
   background: #565656;
 }
+.uv ::-webkit-scrollbar-corner {
+  background: transparent;
+}
 .uv input,
 .uv button,
 .uv select,
