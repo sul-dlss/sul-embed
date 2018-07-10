@@ -4,6 +4,7 @@
         "limitLocales": true,
         "shareFrameEnabled": false,
         "zoomToSearchResultEnabled": false,
+        "maxZoomPixelRatio": 1000,
         "metrics": [
           {
             "type": "watch",
