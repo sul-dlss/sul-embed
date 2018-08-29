@@ -82,8 +82,8 @@
         }
 
         var isLocationRestricted = $(mediaDiv).data('location-restricted');
-        var fileLabel = $(mediaDiv).data('file-label');
-        var duration = $(mediaDiv).data('duration');
+        var fileLabel = String($(mediaDiv).data('file-label') || '');
+        var duration = String($(mediaDiv).data('duration') || '');
         thumbs.push(
           '<li class="' + thumbClass + activeClass + '">' +
             thumbnailIcon +
