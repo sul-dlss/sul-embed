@@ -32,6 +32,7 @@ module Embed
 
     def streaming_url_for(type)
       return unless file_name && streaming_file_prefix
+
       protocol = streaming_protocol(type)
       suffix = TYPE_TO_MANIFEST_FILE[type]
       delimiter = streaming_url_delimiter(type)
@@ -40,6 +41,7 @@ module Embed
 
     def streaming_url_delimiter(type)
       return '&' if type == :flash
+
       '/'
     end
 

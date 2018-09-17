@@ -47,6 +47,7 @@ class EmbedController < ApplicationController
 
   def set_cache
     return unless Rails.env.production?
+
     request.session_options[:skip] = true
     response.headers['Cache-Control'] = "public, max-age=#{Settings.cache_life}"
   end

@@ -7,6 +7,7 @@ module Embed
 
       def self.supported_types
         return [] unless ::Settings.enable_media_viewer?
+
         [:media]
       end
 

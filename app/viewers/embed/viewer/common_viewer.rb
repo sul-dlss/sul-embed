@@ -101,11 +101,13 @@ module Embed
 
       def container_styles
         return unless height_style.present? || width_style.present?
+
         [height_style, width_style].compact.join(' ').to_s
       end
 
       def tooltip_text(file)
         return unless file.stanford_only?
+
         ['Available only to Stanford-affiliated patrons',
          sul_pretty_date(@purl_object.embargo_release_date)]
           .compact.join(' until ')
@@ -122,6 +124,7 @@ module Embed
 
       def height_style
         return 'max-height:100%;' if @request.fullheight?
+
         "max-height:#{height}px;" if height
       end
 
@@ -131,11 +134,13 @@ module Embed
 
       def width_style_attribute
         return '100%' unless width
+
         "#{width}px"
       end
 
       def header_height
         return 0 unless display_header?
+
         63
       end
 
@@ -145,6 +150,7 @@ module Embed
 
       def calculate_height
         return nil unless body_height
+
         body_height + header_height + footer_height
       end
 
