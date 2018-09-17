@@ -100,6 +100,7 @@ module Embed
           request.options.open_timeout = Settings.purl_conn_timeout
         end
         raise ResourceNotAvailable unless response.success?
+
         response.body
       rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
         raise ResourceNotAvailable
@@ -150,6 +151,7 @@ module Embed
         end
 
         raise ResourceNotAvailable unless response.success?
+
         response.body
       rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
         nil
@@ -216,6 +218,7 @@ module Embed
 
         def label
           return resource.description if resource.description.present?
+
           title
         end
 
@@ -235,6 +238,7 @@ module Embed
         def thumbnail?
           return true if resource.object_thumbnail?
           return false unless image?
+
           Settings.resource_types_that_contain_thumbnails.include?(resource.type)
         end
 

@@ -18,6 +18,7 @@ module Embed
 
   def self.register_viewer(viewer)
     raise DuplicateViewerRegistration if viewer_supported_type_already_registered?(viewer)
+
     registered_viewers << viewer
   end
 

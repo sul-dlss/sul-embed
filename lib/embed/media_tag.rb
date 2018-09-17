@@ -20,6 +20,7 @@ module Embed
       output = ''
       purl_document.contents.each do |resource|
         next unless resource.primary_file.present?
+
         output << if SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
                     media_element(resource.primary_file, resource.type)
                   else
@@ -91,6 +92,7 @@ module Embed
 
     def media_element_height
       return "#{viewer.body_height}px" unless many_primary_files?
+
       "#{viewer.body_height.to_i - MEDIA_INDEX_CONTROL_HEIGHT}px"
     end
 
@@ -106,6 +108,7 @@ module Embed
 
     def poster_attribute(file)
       return unless file.thumbnail
+
       "poster='#{stacks_thumb_url(@purl_document.druid, file.thumbnail)}'"
     end
 
@@ -125,6 +128,7 @@ module Embed
 
     def access_restricted_overlay(stanford_only, location_restricted)
       return unless stanford_only || location_restricted
+
       # TODO: line1 and line1 spans should be populated by values returned from stacks
       <<-HTML.strip_heredoc
         <div class='sul-embed-media-access-restricted-container' data-access-restricted-message>

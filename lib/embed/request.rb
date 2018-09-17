@@ -18,11 +18,13 @@ module Embed
 
     def maxheight
       return if params[:maxheight].to_i.zero?
+
       params[:maxheight].to_i
     end
 
     def maxwidth
       return if params[:maxwidth].to_i.zero?
+
       params[:maxwidth].to_i
     end
 
