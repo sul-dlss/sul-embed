@@ -151,14 +151,13 @@
     function ms10Browser() {
       var fingerprinter = new ClientJS();
       var browser = fingerprinter.getBrowser();
-      return (((browser.toLowerCase() === 'edge') || (browser.toLowerCase() === 'ie')) &&
-              fingerprinter.getOS().toLowerCase() === 'windows');
+      return (browser.toLowerCase() === 'ie' && fingerprinter.getOS().toLowerCase() === 'windows');
     }
 
     // We must use flash for MP3s on browsers that do not support HLS natively.
     // This is a simple boolean function that can easily tell us if the current
     // browser does not support HLS and the media is an MP3. We also use flash
-    // on Windows Microsoft browsers (IE and Edge) because of a known issue
+    // on Windows Microsoft browsers (IE) because of a known issue
     // with the VideoJS HLS plugin. See
     // https://github.com/videojs/videojs-contrib-hls/issues/833
     function mustUseFlash(mediaObject) {
