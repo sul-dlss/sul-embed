@@ -4,6 +4,9 @@
   var Module = (function() {
     var dataAttributes;
     var map;
+    var $el;
+    var sidebar;
+    var lSidebar;
 
     var isDefined = function(object) {
        return typeof object !== 'undefined';
@@ -11,7 +14,8 @@
 
     return {
       init: function() {
-        dataAttributes = jQuery('#sul-embed-geo-map').data();
+        $el = jQuery('#sul-embed-geo-map');
+        dataAttributes = $el.data();
 
         map = L.map('sul-embed-geo-map').fitBounds(dataAttributes.boundingBox);
 
@@ -37,11 +41,62 @@
               transparent: true,
               tiled: true
           }).addTo(map);
+          Module.setupSidebar();
+          Module.setupFeatureInspection();
         } else {
           L.rectangle(dataAttributes.boundingBox, {color: '#0000FF', weight: 4})
             .addTo(map);
         }
-      }
+      },
+      setupFeatureInspection: function() {
+        map.on('click', function(e) {
+          // Return early if original target is not actually the map
+          if (e.originalEvent.target.id !== 'sul-embed-geo-map') {
+            return;
+          }
+          var wmsoptions = {
+            LAYERS: dataAttributes.layers,
+            BBOX: map.getBounds().toBBoxString(),
+            WIDTH: $('#sul-embed-geo-map').width(),
+            HEIGHT: $('#sul-embed-geo-map').height(),
+            QUERY_LAYERS: dataAttributes.layers,
+            X: Math.round(e.containerPoint.x),
+            Y: Math.round(e.containerPoint.y),
+            SERVICE: 'WMS',
+            VERSION: '1.1.1',
+            REQUEST: 'GetFeatureInfo',
+            STYLES: '',
+            SRS: 'EPSG:4326',
+            EXCEPTIONS: 'application/json',
+            INFO_FORMAT: 'application/json'
+          };
+          $.ajax({
+            type: 'GET',
+            url: dataAttributes.wmsUrl,
+            data: wmsoptions,
+            success: function(data) {
+              // Handle the case where GeoServer returns a 200 but with an exception;
+              if (data.exceptions && data.exceptions.length > 0) {
+                return;
+              }
+              var html = '<h3>Attributes</h3><dl class="inline-flex">';
+              $.each(data.features, function(i, val) {
+                Object.keys(val.properties).forEach(function(key) {
+                  html += L.Util.template('<dt>{k}</dt><dd>{v}</dd>', {k: key, v: val.properties[key]});
+                });
+              });
+              html += '</dl>';
+              sidebar.find('.sidebar-content').html(html);
+              lSidebar.open();
+            }
+          });
+        });
+      },
+      setupSidebar: function() {
+        sidebar = jQuery('#sul-embed-geo-sidebar');
+        sidebar.show();
+        lSidebar = L.control.sidebar('sul-embed-geo-sidebar', { position: 'right' }).addTo(map);
+      },
     };
   })();
 

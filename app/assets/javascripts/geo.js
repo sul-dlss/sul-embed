@@ -6,6 +6,7 @@
 //= require modules/popup_panels
 //= require modules/embed_this
 //= require leaflet
+//= require leaflet-sidebar
 //= require modules/geo_viewer
 
 CssInjection.injectFontIcons();
