@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Embed
   class MediaDuration
     attr_reader :media_data_element, :iso8601_duration
@@ -44,7 +46,7 @@ module Embed
         # zero pad any field after the first, join with colons (e.g., returns '1:02:03' for 'P0DT1H2M3S',
         # '2:03' for 'PT2M3S').
         field_accumulator.map.with_index do |atom_val, idx|
-          (idx > 0) ? atom_val.to_i.to_s.rjust(2, '0') : atom_val.to_i.to_s
+          idx.positive? ? atom_val.to_i.to_s.rjust(2, '0') : atom_val.to_i.to_s
         end.join ':'
       end
 
@@ -54,7 +56,7 @@ module Embed
       def supported_duration?
         errors = []
         errors << "#{self.class} does not support specifying durations in weeks" if atoms[:weeks].nonzero?
-        errors << "#{self.class} does not support specifying negative durations" if atoms.values.any? { |val| val < 0 }
+        errors << "#{self.class} does not support specifying negative durations" if atoms.values.any?(&:negative?)
         return true if errors.empty?
 
         errors.each { |e| Honeybadger.notify(e) }

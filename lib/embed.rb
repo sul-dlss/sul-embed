@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Embed
   require 'constants'
   require 'embed/url_schemes'

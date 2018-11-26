@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 unless defined?(Rails)
   ENV['RAILS_ROOT'] = File.expand_path('..', __dir__)
   require File.expand_path('../config/environment', __dir__)

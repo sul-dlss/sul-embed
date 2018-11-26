@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module EmbedHelper
   def download_panel(title: 'Download item', &block)
     Embed::DownloadPanel.new(title: title) { capture(&block) }.to_html.html_safe

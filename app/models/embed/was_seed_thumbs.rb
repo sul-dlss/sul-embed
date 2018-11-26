@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Embed
   # WasSeedThumbs class is responsible of reading the thumbnails
   # list retrieved from was-thumbnail service in JSON format.

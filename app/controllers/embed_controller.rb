@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EmbedController < ApplicationController
   append_view_path Rails.root.join('app', 'views', 'embed')
   before_action :validate_request

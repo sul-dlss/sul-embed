@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'embed/download_panel'
 describe Embed::DownloadPanel do

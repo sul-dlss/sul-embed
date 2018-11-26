@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Constants
   FILE_ICON = {
     'application/msword' => 'sul-i-file-words',

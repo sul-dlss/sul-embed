@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Embed
   ###
   # A module to be mixed into classes to generate

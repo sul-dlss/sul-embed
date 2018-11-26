@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Embed
   ##
   # Mixin to provide standardized convenience methods to make filesize's pretty

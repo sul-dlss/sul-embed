@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Embed
   module Viewer
     class WasSeed < CommonViewer
