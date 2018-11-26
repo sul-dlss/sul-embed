@@ -49,14 +49,14 @@ describe 'geo viewer public', js: true do
     end
 
     it 'shows the sidebar with attribute information after map is clicked' do
-      expect(page).to have_css '.sidebar-content', visible: false
       page.driver.browser.action.move_to(find(:css, '#sul-embed-geo-map').native, 380, 245).click.perform
-      page.save_and_open_screenshot
       using_wait_time 20 do
-        expect(page).to have_css '.sidebar-content h3', text: 'Attributes', visible: true
-        expect(page).to have_css '.sidebar-content dt', text: 's_02_id'
-        expect(page).to have_css '.sidebar-content dd'
+        expect(page).to have_css '.sul-embed-geo-sidebar-header h3', text: 'Features', visible: true
+        expect(page).to have_css '.sul-embed-geo-sidebar-content dt', text: 's_02_id', visible: true
+        expect(page).to have_css '.sul-embed-geo-sidebar-content dd'
       end
+      find('.sul-embed-geo-sidebar-header i').click
+      expect(page).to have_css '.sul-embed-geo-sidebar-content dt', text: 's_02_id', visible: false
     end
   end
 end

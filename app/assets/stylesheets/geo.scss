@@ -2,7 +2,6 @@
 @import 'modules/bootstrap_media';
 @import 'vendor/tooltip';
 @import 'leaflet';
-@import 'leaflet-sidebar';
 
 [data-wms-url] {
   cursor: crosshair;
@@ -12,49 +11,55 @@
   position: relative;
 }
 
-#sul-embed-geo-sidebar {
+.sul-embed-geo-sidebar {
   background: $sul-metadata-bg;
-  cursor: default;
+  height: 100%;
+  width: 300px;
 
-  &.collapsed .sidebar-tabs ul li a i:before {
-    -webkit-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
-    -o-transform: rotate(180deg);
-    transform: rotate(180deg);
-  }
-
-  .sidebar-tabs {
-    background: $sul-metadata-bg;
-    ul li.active a {
-      background-color: $sul-border-color;
-      color: $white-color;
+  &.collapsed {
+    i {
+      @include rotate(180);
     }
   }
+}
 
-  .sidebar-content {
-    background: $sul-metadata-bg;
-    margin: 15px;
+.sul-embed-geo-sidebar-header {
+  padding: 10px;
 
-    .inline-flex {
-      display: flex;
-      flex-flow: row;
-      flex-wrap: wrap;
-      overflow: visible;
-      width: 100%;
+  i {
+    height: 20px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+}
 
-      dt {
-        flex: 0 0 33%;
-        overflow: scroll;
-        text-overflow: ellipsis;
-      }
+.sul-embed-geo-sidebar-content {
+  background: $sul-metadata-bg;
+  height: 100%;
+  overflow: scroll;
+  padding: 0 10px 10px;
 
-      dd {
-        flex: 0 0 66%;
-        margin-left: auto;
-        overflow: scroll;
-        text-align: left;
-      }
+  .inline-flex {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    overflow: visible;
+    width: 100%;
+
+    // scss-lint:disable SelectorDepth
+    dt {
+      flex: 0 0 33%;
+      overflow: scroll;
+      text-overflow: ellipsis;
     }
+
+    dd {
+      flex: 0 0 66%;
+      margin-left: auto;
+      overflow: scroll;
+      text-align: left;
+    }
+    // scss-lint:enable SelectorDepth
   }
 }

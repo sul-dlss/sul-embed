@@ -1,13 +1,5 @@
 <div class='sul-embed-body sul-embed-geo' style="max-height: <%= viewer.body_height %>px" data-sul-embed-theme="<%= asset_url('geo.css') %>">
-  <div id="sul-embed-geo-sidebar" class="sidebar collapsed sidebar-right" style="display: none; max-height: <%= viewer.body_height %>;">
-    <div class="sidebar-tabs">
-      <ul role="tablist">
-        <li><a href="#home" role="tab"><i class="sul-i-arrow-right-8"></i></a></li>
-      </ul>
-    </div>
-    <div class="sidebar-content">
-      Click the map to inspect features.
-    </div>
+  <div id="sul-embed-geo-sidebar" class="" style="display: none; max-height: <%= viewer.body_height %>;">
   </div>
   <%= content_tag :div, viewer.map_element_options do %>
   

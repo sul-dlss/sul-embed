@@ -5,8 +5,6 @@
     var dataAttributes;
     var map;
     var $el;
-    var sidebar;
-    var lSidebar;
 
     var isDefined = function(object) {
        return typeof object !== 'undefined';
@@ -79,23 +77,56 @@
               if (data.exceptions && data.exceptions.length > 0) {
                 return;
               }
-              var html = '<h3>Attributes</h3><dl class="inline-flex">';
+              var html = '<dl class="inline-flex">';
               $.each(data.features, function(i, val) {
                 Object.keys(val.properties).forEach(function(key) {
                   html += L.Util.template('<dt>{k}</dt><dd>{v}</dd>', {k: key, v: val.properties[key]});
                 });
               });
               html += '</dl>';
-              sidebar.find('.sidebar-content').html(html);
-              lSidebar.open();
+              $el
+                .find('.sul-embed-geo-sidebar')
+                .removeClass('collapsed')
+                .find('.sul-embed-geo-sidebar-content')
+                .html(html)
+                .slideDown(400)
+                .attr('aria-hidden', false);
             }
           });
         });
       },
       setupSidebar: function() {
-        sidebar = jQuery('#sul-embed-geo-sidebar');
-        sidebar.show();
-        lSidebar = L.control.sidebar('sul-embed-geo-sidebar', { position: 'right' }).addTo(map);
+        var control = '<div class="sul-embed-geo-sidebar">' +
+                        '<div class="sul-embed-geo-sidebar-header">' +
+                          '<h3>Features</h3>' +
+                          '<i class="sul-i-arrow-up-8"></i>' +
+                        '</div>' +
+                        '<div class="sul-embed-geo-sidebar-content">Click the map to inspect features.</div>' +
+                      '</div>';
+        L.control.custom({
+          position: 'topright',
+          content: control,
+          classes: 'leaflet-bar',
+          events: {
+            click: function(e) {
+              // When clicking outside of icon
+              if (e.target.localName !== 'i') {
+                return;
+              }
+              // When bar is not collapsed
+              var $container = $(e.target).parent().parent();
+              if (!$container.hasClass('collapsed')) {
+                $('.sul-embed-geo-sidebar-content').slideUp(400, function() {
+                  $container.addClass('collapsed');
+                }).attr('aria-hidden', true);
+              } else {
+                $('.sul-embed-geo-sidebar-content').slideDown(400, function() {
+                  $container.removeClass('collapsed');
+                }).attr('aria-hidden', false);
+              }
+            }
+          }
+        }).addTo(map);
       },
     };
   })();
