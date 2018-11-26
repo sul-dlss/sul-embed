@@ -20,7 +20,7 @@ describe Embed::Envelope do
     end
     it 'returns a 2D array when @envelope is a gml envelope' do
       expect(envelope.to_bounding_box.length).to eq 2
-      expect(envelope.to_bounding_box).to eq [['38.298673', '-123.387626'], ['39.399103', '-122.528843']]
+      expect(envelope.to_bounding_box).to eq [['-1.478794', '29.572742'], ['4.234077', '35.000308']]
     end
   end
 end

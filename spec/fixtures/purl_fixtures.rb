@@ -506,29 +506,36 @@ module PURLFixtures
   end
   def geo_purl_public
      <<-XML
-      <publicObject>
+      <publicObject id="druid:cz128vq0535" published="2018-07-20T20:56:19Z">
         <identityMetadata>
           <objectLabel>Geo Title</objectLabel>
         </identityMetadata>
-        <contentMetadata type="geo">
-          <resource sequence="1" type="object">
+        <contentMetadata objectId="cz128vq0535" type="geo">
+          <resource id="cz128vq0535_1" sequence="1" type="object">
             <label>Data</label>
-            <file id="data.zip" mimetype="application/zip" size="127368" role="master">
+            <file id="data.zip" mimetype="application/zip" size="7988069" role="master">
               <geoData>
-                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://purl.stanford.edu/fp756wn9369">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://purl.stanford.edu/cz128vq0535">
                   <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">application/x-esri-shapefile; format=Shapefile</dc:format>
                   <dc:type xmlns:dc="http://purl.org/dc/elements/1.1/">Dataset#Polygon</dc:type>
                   <gml:boundedBy xmlns:gml="http://www.opengis.net/gml/3.2/">
                     <gml:Envelope gml:srsName="EPSG:4326">
-                      <gml:lowerCorner>-123.387626 38.298673</gml:lowerCorner>
-                      <gml:upperCorner>-122.528843 39.399103</gml:upperCorner>
+                      <gml:lowerCorner>29.572742 -1.478794</gml:lowerCorner>
+                      <gml:upperCorner>35.000308 4.234077</gml:upperCorner>
                     </gml:Envelope>
                   </gml:boundedBy>
-                  <dc:coverage xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:resource="" dc:language="eng" dc:title="Russian River Watershed (Calif.)"/>
-                  <dc:coverage xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:resource="http://sws.geonames.org/5397100/about.rdf" dc:language="eng" dc:title="Sonoma County (Calif.)"/>
-                  <dc:coverage xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:resource="http://sws.geonames.org/5372163/about.rdf" dc:language="eng" dc:title="Mendocino County (Calif.)"/>
+                  <dc:coverage xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:resource="http://sws.geonames.org/226074/about.rdf" dc:language="eng" dc:title="Uganda" />
                 </rdf:Description>
               </geoData>
+            </file>
+            <file id="data_EPSG_4326.zip" mimetype="application/zip" size="7878575" role="derivative">
+              <geoData srsName="EPSG:4326" />
+            </file>
+          </resource>
+          <resource id="cz128vq0535_2" sequence="2" type="preview">
+            <label>Preview</label>
+            <file id="preview.jpg" mimetype="image/jpeg" size="91351" role="master">
+              <imageData width="483" height="477" />
             </file>
           </resource>
         </contentMetadata>

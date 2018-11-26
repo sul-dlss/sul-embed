@@ -30,7 +30,7 @@ RSpec.describe 'embed/download/_geo.html.erb' do
   end
 
   it 'generates a file list when file has resources' do
-    expect(rendered).to have_css 'li', visible: false, count: 1
+    expect(rendered).to have_css 'li', visible: false, count: 3
     expect(rendered).to have_css 'a[href="https://stacks.stanford.edu/file/druid:12345/data.zip?download=true"]', visible: false
   end
 

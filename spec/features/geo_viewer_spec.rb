@@ -43,7 +43,7 @@ describe 'geo viewer public', js: true do
       find('button.sul-embed-footer-tool.sul-i-download-3').click
       within '.sul-embed-download-panel' do
         within '.sul-embed-panel-body' do
-          expect(page).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 1)
+          expect(page).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 3)
         end
       end
     end

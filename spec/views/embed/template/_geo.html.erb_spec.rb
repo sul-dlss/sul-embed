@@ -24,7 +24,7 @@ RSpec.describe 'embed/template/_geo.html.erb' do
     expect(rendered).to have_css '.sul-embed-geo', visible: false
     expect(rendered).to have_css '#sul-embed-geo-map', visible: false
     expect(rendered).to have_css('#sul-embed-geo-map[style="height: 400px"]', visible: false)
-    expect(rendered).to have_css('#sul-embed-geo-map[data-bounding-box=\'[["38.298673", "-123.387626"], ["39.399103", "-122.528843"]]\']', visible: false)
+    expect(rendered).to have_css('#sul-embed-geo-map[data-bounding-box=\'[["-1.478794", "29.572742"], ["4.234077", "35.000308"]]\']', visible: false)
     expect(rendered).to have_css('#sul-embed-geo-map[data-wms-url="https://geowebservices.stanford.edu/geoserver/wms/"]', visible: false)
     expect(rendered).to have_css('#sul-embed-geo-map[data-layers="druid:12345"]', visible: false)
   end
