@@ -54,3 +54,14 @@
 // TODO: need svg version
 //  background: url('#{$asset_base}<%= asset_url("stanford_red_s.svg") %>') no-repeat 5px, none;
 }
+
+@mixin transform($transforms) {
+  -webkit-transform: $transforms;
+  -moz-transform: $transforms;
+  -ms-transform: $transforms;
+  transform: $transforms;
+}
+
+@mixin rotate ($deg) { 
+	@include transform(rotate(#{$deg}deg));
+}

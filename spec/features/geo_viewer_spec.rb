@@ -7,7 +7,7 @@ describe 'geo viewer public', js: true do
 
   before do
     stub_purl_response_with_fixture(geo_purl_public)
-    visit_iframe_response
+    visit_iframe_response('cz128vq0535')
   end
 
   describe 'loading geo viewer' do
@@ -45,9 +45,20 @@ describe 'geo viewer public', js: true do
       find('button.sul-embed-footer-tool.sul-i-download-3').click
       within '.sul-embed-download-panel' do
         within '.sul-embed-panel-body' do
-          expect(page).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 1)
+          expect(page).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 3)
         end
       end
+    end
+
+    it 'shows the sidebar with attribute information after map is clicked' do
+      page.driver.browser.action.move_to(find(:css, '#sul-embed-geo-map').native, 380, 245).click.perform
+      using_wait_time 20 do
+        expect(page).to have_css '.sul-embed-geo-sidebar-header h3', text: 'Features', visible: true
+        expect(page).to have_css '.sul-embed-geo-sidebar-content dt', text: 's_02_id', visible: true
+        expect(page).to have_css '.sul-embed-geo-sidebar-content dd'
+      end
+      find('.sul-embed-geo-sidebar-header i').click
+      expect(page).to have_css '.sul-embed-geo-sidebar-content dt', text: 's_02_id', visible: false
     end
   end
 end
