@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Embed
   class DownloadPanel
     def initialize(title: 'Download item', &block)

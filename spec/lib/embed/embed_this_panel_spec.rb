@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 require 'embed/embed_this_panel'
 describe Embed::EmbedThisPanel do

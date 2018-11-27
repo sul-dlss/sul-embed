@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Embed
   # Utility class to handle generating HTML <video> and <audio> tags
   # Currently, MPEG-DASH is used at the <video> element level (in a data attribute to be picked up by javascript)
@@ -17,7 +19,7 @@ module Embed
     end
 
     def to_html
-      output = ''
+      output = []
       purl_document.contents.each do |resource|
         next unless resource.primary_file.present?
 
@@ -28,7 +30,7 @@ module Embed
                   end
         self.file_index += 1
       end
-      output
+      output.join('')
     end
 
     private

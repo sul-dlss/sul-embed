@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Embed
   class Response
     delegate :height, :width, to: :viewer

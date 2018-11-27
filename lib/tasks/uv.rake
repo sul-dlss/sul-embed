@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :uv do
   desc 'Update from Universal Viewer repo, fingerprint the directory, and symlink the thumbprinted directory into place'
   task :update do

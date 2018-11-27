@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Embed
   class ViewerFactory
     delegate :height, :width, to: :viewer

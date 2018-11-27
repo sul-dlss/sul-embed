@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Embed
   class EmbedThisPanel
     def initialize(druid:, height:, width:, request:, purl_object_title:)

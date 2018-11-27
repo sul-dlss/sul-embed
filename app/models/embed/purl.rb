@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Embed
   class PURL
     require 'embed/media_duration'
@@ -271,7 +273,7 @@ module Embed
 
         def duration
           md = Embed::MediaDuration.new(@file.xpath('./*[@duration]').first) if @file.xpath('./*/@duration').present?
-          md.to_s if md
+          md&.to_s
         end
 
         # unused (9/2016) - candidate for removal?

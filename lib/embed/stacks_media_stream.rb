@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ##
 # Construct the urls to the streaming
 # server for a given file w/i an object

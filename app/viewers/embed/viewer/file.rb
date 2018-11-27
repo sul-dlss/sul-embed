@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Embed
   module Viewer
     class File < CommonViewer
@@ -59,10 +61,15 @@ module Embed
       # only embargoed items
       # @return [String]
       def embargo_message
-        message = ['Access is restricted', pretty_embargo_date]
-        if @purl_object.stanford_only_unrestricted?
-          message[0] << ' to Stanford-affiliated patrons'
-        end
+        message = []
+
+        message << if @purl_object.stanford_only_unrestricted?
+                     'Access is restricted to Stanford-affiliated patrons'
+                   else
+                     'Access is restricted'
+                   end
+
+        message << pretty_embargo_date
         message.compact.join(' until ')
       end
 

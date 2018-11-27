@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ##
 # A simple rack application to stub the
 # Stacks authentication check endpoint
