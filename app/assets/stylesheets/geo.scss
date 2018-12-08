@@ -13,7 +13,9 @@
 
 .sul-embed-geo-sidebar {
   background: $sul-metadata-bg;
-  height: 100%;
+  min-height: 50px;
+  position: absolute;
+  right: 0;
   width: 300px;
 
   &.collapsed {
@@ -36,7 +38,6 @@
 
 .sul-embed-geo-sidebar-content {
   background: $sul-metadata-bg;
-  height: 100%;
   overflow: scroll;
   padding: 0 10px 10px;
 
