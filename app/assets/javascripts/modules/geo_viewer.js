@@ -90,6 +90,7 @@
                 .find('.sul-embed-geo-sidebar-content')
                 .html(html)
                 .slideDown(400)
+                .css({'height': map.getSize().y - 90})
                 .attr('aria-hidden', false);
             }
           });
