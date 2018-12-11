@@ -171,7 +171,7 @@ GEM
       rspec (>= 2.99.0, < 4.0)
     high_voltage (3.1.0)
     honeybadger (4.1.0)
-    i18n (1.1.1)
+    i18n (1.2.0)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
     iso8601 (0.12.1)
@@ -385,4 +385,4 @@ DEPENDENCIES
   uglifier
 
 BUNDLED WITH
-   1.17.1
+   1.17.2
