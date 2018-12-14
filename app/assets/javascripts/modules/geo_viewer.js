@@ -1,4 +1,4 @@
-
+/* global HandlebarsTemplates */
 (function( global ) {
   'use strict';
   var Module = (function() {
@@ -83,7 +83,7 @@
         var style = {
           radius: 4,
           weight: 1,
-        }
+        };
         // Style the colors based on availability
         if (typeof(availability) === 'undefined') {
           return style; // default Leaflet style colorings
@@ -94,19 +94,19 @@
         } else {
           style.color = '#b3001e';
         }
-        return style
+        return style;
       },
       indexMapInspection: function(e) {
         var thumbDeferred = $.Deferred();
         var data = e.target.feature.properties;
         var _this = this;
         $.when(thumbDeferred).done(function() {
-          var html = HandlebarsTemplates["index_map_info"](data);
+          var html = HandlebarsTemplates.index_map_info(data);
           _this.openSidebarWithContent(html);
         });
 
         if (data.iiifUrl) {
-          var manifest = $.getJSON(data.iiifUrl, function(manifestResponse) {
+          $.getJSON(data.iiifUrl, function(manifestResponse) {
             if (manifestResponse.thumbnail['@id'] !== null) {
               data.thumbnailUrl = manifestResponse.thumbnail['@id'];
               thumbDeferred.resolve();
@@ -171,7 +171,7 @@
           .attr('aria-hidden', false);
       },
       setupSidebar: function() {
-        var control = HandlebarsTemplates['geo_sidebar']();
+        var control = HandlebarsTemplates.geo_sidebar();
         L.control.custom({
           position: 'topright',
           content: control,
