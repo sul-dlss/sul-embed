@@ -173,13 +173,7 @@
         });
       },
       setupSidebar: function() {
-        var control = '<div class="sul-embed-geo-sidebar">' +
-                        '<div class="sul-embed-geo-sidebar-header">' +
-                          '<h3>Features</h3>' +
-                          '<i class="sul-i-arrow-up-8"></i>' +
-                        '</div>' +
-                        '<div class="sul-embed-geo-sidebar-content">Click the map to inspect features.</div>' +
-                      '</div>';
+        var control = HandlebarsTemplates['geo_sidebar']();
         L.control.custom({
           position: 'topright',
           content: control,
