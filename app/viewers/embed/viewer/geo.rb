@@ -20,6 +20,7 @@ module Embed
           options['data-wms-url'] = Settings.geo_wms_url
           options['data-layers'] = "druid:#{@purl_object.druid}"
         end
+        options['data-index-map'] = file_url('index_map.json') if index_map?
         options
       end
 
@@ -33,6 +34,10 @@ module Embed
 
       def self.show_download?
         true
+      end
+
+      def index_map?
+        purl_object.contents.map { |c| c.files.map(&:title) }.flatten.include? 'index_map.json'
       end
 
       def external_url

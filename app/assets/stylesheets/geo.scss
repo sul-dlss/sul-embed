@@ -41,6 +41,10 @@
   overflow: scroll;
   padding: 0 10px 10px;
 
+  dt {
+    font-weight: bold;
+  }
+
   .inline-flex {
     display: flex;
     flex-flow: row;

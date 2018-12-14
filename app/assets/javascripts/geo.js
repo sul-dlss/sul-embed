@@ -8,6 +8,8 @@
 //= require leaflet
 //= require Leaflet.Control.Custom.js
 //= require modules/geo_viewer
+//= require handlebars.runtime
+//= require templates/index_map_info
 
 CssInjection.injectFontIcons();
 CssInjection.appendToHead();

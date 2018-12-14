@@ -31,8 +31,40 @@
       addVisualizationLayer: function() {
         var hasWmsUrl = isDefined(dataAttributes.wmsUrl);
         var hasLayers = isDefined(dataAttributes.layers);
+        var indexMapUrl = dataAttributes.indexMap;
 
-        if (hasWmsUrl && hasLayers) {
+        if (isDefined(indexMapUrl)) {
+          // Index map viewer
+          var geoJSONLayer;
+          var _this = this;
+          $.getJSON(indexMapUrl, function(data) {
+            geoJSONLayer = L.geoJson(data,
+              {
+                style: function(feature) {
+                  return _this.availabilityStyle(feature.properties.available);
+                },
+                onEachFeature: function(feature, layer) {
+                  // Add a hover label for the label property
+                  if (feature.properties.label !== null) {
+                    layer.bindTooltip(feature.properties.label);
+                  }
+                  // If it is available add clickable info
+                  if (feature.properties.available !== null) {
+                    layer.on('click', function(e) {
+                      _this.indexMapInspection(e);
+                    });
+                  }
+                },
+                // For point index maps, use circle markers
+                pointToLayer: function (feature, latlng) {
+                  return L.circleMarker(latlng);
+                }
+              }).addTo(map);
+              map.fitBounds(geoJSONLayer.getBounds());
+              Module.setupSidebar();
+          });
+        } else if (hasWmsUrl && hasLayers) {
+          // Feature inspection for public layers
           L.tileLayer.wms(dataAttributes.wmsUrl, {
               layers: dataAttributes.layers,
               format: 'image/png',
@@ -42,8 +74,52 @@
           Module.setupSidebar();
           Module.setupFeatureInspection();
         } else {
+          // Restricted layers
           L.rectangle(dataAttributes.boundingBox, {color: '#0000FF', weight: 4})
             .addTo(map);
+        }
+      },
+      availabilityStyle: function(availability) {
+        var style = {
+          radius: 4,
+          weight: 1,
+        }
+        // Style the colors based on availability
+        if (typeof(availability) === 'undefined') {
+          return style; // default Leaflet style colorings
+        }
+
+        if (availability) {
+          style.color = '#1eb300';
+        } else {
+          style.color = '#b3001e';
+        }
+        return style
+      },
+      indexMapInspection: function(e) {
+        var thumbDeferred = $.Deferred();
+        var data = e.target.feature.properties;
+        $.when(thumbDeferred).done(function() {
+          var html = HandlebarsTemplates["index_map_info"](data);
+          $el
+            .find('.sul-embed-geo-sidebar')
+            .removeClass('collapsed')
+            .find('.sul-embed-geo-sidebar-content')
+            .html(html)
+            .slideDown(400)
+            .css({'height': map.getSize().y - 90})
+            .attr('aria-hidden', false);
+        });
+
+        if (data.iiifUrl) {
+          var manifest = $.getJSON(data.iiifUrl, function(manifestResponse) {
+            if (manifestResponse.thumbnail['@id'] !== null) {
+              data.thumbnailUrl = manifestResponse.thumbnail['@id'];
+              thumbDeferred.resolve();
+            }
+          });
+        } else {
+          thumbDeferred.resolve();
         }
       },
       setupFeatureInspection: function() {
@@ -107,7 +183,7 @@
         L.control.custom({
           position: 'topright',
           content: control,
-          classes: 'leaflet-bar',
+          classes: '',
           events: {
             click: function(e) {
               // When clicking outside of icon
