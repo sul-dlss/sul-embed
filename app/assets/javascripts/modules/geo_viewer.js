@@ -99,16 +99,10 @@
       indexMapInspection: function(e) {
         var thumbDeferred = $.Deferred();
         var data = e.target.feature.properties;
+        var _this = this;
         $.when(thumbDeferred).done(function() {
           var html = HandlebarsTemplates["index_map_info"](data);
-          $el
-            .find('.sul-embed-geo-sidebar')
-            .removeClass('collapsed')
-            .find('.sul-embed-geo-sidebar-content')
-            .html(html)
-            .slideDown(400)
-            .css({'height': map.getSize().y - 90})
-            .attr('aria-hidden', false);
+          _this.openSidebarWithContent(html);
         });
 
         if (data.iiifUrl) {
@@ -123,6 +117,7 @@
         }
       },
       setupFeatureInspection: function() {
+        var _this = this;
         map.on('click', function(e) {
           // Return early if original target is not actually the map
           if (e.originalEvent.target.id !== 'sul-embed-geo-map') {
@@ -160,17 +155,20 @@
                 });
               });
               html += '</dl>';
-              $el
-                .find('.sul-embed-geo-sidebar')
-                .removeClass('collapsed')
-                .find('.sul-embed-geo-sidebar-content')
-                .html(html)
-                .slideDown(400)
-                .css({'height': map.getSize().y - 90})
-                .attr('aria-hidden', false);
+              _this.openSidebarWithContent(html);
             }
           });
         });
+      },
+      openSidebarWithContent: function(html) {
+        $el
+          .find('.sul-embed-geo-sidebar')
+          .removeClass('collapsed')
+          .find('.sul-embed-geo-sidebar-content')
+          .html(html)
+          .slideDown(400)
+          .css({'height': map.getSize().y - 90})
+          .attr('aria-hidden', false);
       },
       setupSidebar: function() {
         var control = HandlebarsTemplates['geo_sidebar']();
