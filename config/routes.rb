@@ -1,12 +1,13 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root to: 'pages#home'
-
   get 'embed' => 'embed#get'
 
   get 'iframe' => 'embed#iframe'
 
-  unless Rails.env.production?
+  if Rails.env.production?
+    root to: proc { [200, {}, ['OK'] ] }
+  else
+    root to: 'pages#home'
     get '/pages/*id' => 'pages#show', as: :page, format: false
   end
 
