@@ -169,6 +169,10 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    handlebars_assets (0.23.2)
+      execjs (~> 2.0)
+      sprockets (>= 2.0.0)
+      tilt (>= 1.2)
     high_voltage (3.1.0)
     honeybadger (4.1.0)
     i18n (1.2.0)
@@ -364,6 +368,7 @@ DEPENDENCIES
   faraday
   filesize
   guard-rspec
+  handlebars_assets
   high_voltage
   honeybadger
   iso8601

@@ -559,6 +559,49 @@ module PURLFixtures
       </publicObject>
     XML
   end
+  def geo_purl_index_map
+    <<-XML
+      <publicObject id="druid:ts545zc6250" published="2018-09-10T12:43:23Z" publishVersion="dor-services/5.31.1">
+        <identityMetadata>
+          <sourceId source="branner">topo_index_JMM_B14_J59.shp</sourceId>
+          <objectId>druid:ts545zc6250</objectId>
+        </identityMetadata>
+        <contentMetadata objectId="ts545zc6250" type="geo">
+          <resource id="ts545zc6250_1" sequence="1" type="object">
+            <label>Data</label>
+            <file id="data.zip" mimetype="application/zip" size="103504" role="master">
+              <geoData>
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://purl.stanford.edu/ts545zc6250">
+                  <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">application/x-esri-shapefile; format=Shapefile</dc:format>
+                  <dc:type xmlns:dc="http://purl.org/dc/elements/1.1/">Dataset#Polygon</dc:type>
+                  <gml:boundedBy xmlns:gml="http://www.opengis.net/gml/3.2/">
+                    <gml:Envelope gml:srsName="EPSG:4326">
+                      <gml:lowerCorner>124.0 38.0</gml:lowerCorner>
+                      <gml:upperCorner>130.0 42.666667</gml:upperCorner>
+                    </gml:Envelope>
+                  </gml:boundedBy>
+                  <dc:coverage xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:resource="" dc:language="eng" dc:title="Korea (North)" />
+                </rdf:Description>
+              </geoData>
+            </file>
+            <file id="data_EPSG_4326.zip" mimetype="application/zip" size="25807" role="derivative">
+              <geoData srsName="EPSG:4326" />
+            </file>
+            <file id="index_map.json" mimetype="application/json" size="411978" role="master" />
+          </resource>
+          <resource id="ts545zc6250_2" sequence="2" type="preview">
+            <label>Preview</label>
+            <file id="preview.jpg" mimetype="image/jpeg" size="80392" role="master">
+              <imageData width="769" height="984" />
+            </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          #{access_read_world}
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
   def geo_purl_restricted
     <<-XML
       <publicObject id="druid:fp756wn9369" published="2015-02-04T20:03:27-08:00">

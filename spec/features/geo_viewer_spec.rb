@@ -81,3 +81,24 @@ describe 'geo viewer restricted', js: true do
     end
   end
 end
+
+describe 'geo index map viewer', js: true do
+  include PURLFixtures
+
+  before do
+    stub_purl_response_with_fixture(geo_purl_index_map)
+    visit_iframe_response 'ts545zc6250'
+  end
+  describe 'loads viewer' do
+    it 'shows the geojson' do
+      # This is a hack, but there is no other way (that we know of) to
+      # find this svg element on the page.
+      # We also need to explicitly wait for the JS to run.
+      expect(page).to have_css('.sul-embed-geo', count: 1, visible: true)
+      expect(page).to have_css '[data-index-map="https://stacks.stanford.edu/file/druid:ts545zc6250/index_map.json"]'
+      page.save_and_open_screenshot
+      find '.leaflet-overlay-pane'
+      expect(Nokogiri::HTML.parse(page.body).css('path').length).to eq 480
+    end
+  end
+end

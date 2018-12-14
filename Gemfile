@@ -79,6 +79,8 @@ gem 'leaflet-rails'
 
 gem 'sul_styles', '~>0.6'
 
+gem 'handlebars_assets'
+
 # Use okcomputer to monitor the application
 gem 'okcomputer'
 gem 'newrelic_rpm', group: :production
