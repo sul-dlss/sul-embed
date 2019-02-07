@@ -40,7 +40,8 @@
             "options": {
                 "animationTime": 1.2,
                 "blendTime": 0.1,
-                "titleEnabled": false
+                "titleEnabled": false,
+                "immediateRender": true
             }
         },
         "searchFooterPanel": {
