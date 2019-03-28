@@ -2,31 +2,13 @@
 
 module Embed
   module Viewer
-    class UVImage < CommonViewer
+    class M3Viewer < CommonViewer
       def to_partial_path
-        'embed/template/uv_image'
+        'embed/template/m3_image'
       end
 
       def self.supported_types
-        []
-      end
-
-      # we want to change this
-      def config_url
-        './uv-config.json'
-      end
-
-      def embed_url
-        ".#{uv_root}/uv.js"
-      end
-
-      def uv_root
-        "/uv-3-#{asset_thumbprint}"
-      end
-
-      # retrieve the MD5-thumbprinted name for our assets (see the rake uv:update task)
-      def asset_thumbprint
-        ::File.read(Rails.root.join('public', 'uv-3', '.md5')).strip
+        %i[image manuscript map book]
       end
 
       def manifest_json_url
