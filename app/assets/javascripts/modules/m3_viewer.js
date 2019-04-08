@@ -12,8 +12,8 @@
           theme: {
             palette: {
               type: 'dark',
-              primary: {
-                light: '#5f574f'
+              lightened: {
+                dark: '#5f574f'
               }
             }
           },
