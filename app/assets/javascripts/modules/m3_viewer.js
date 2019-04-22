@@ -9,11 +9,23 @@
         var data = $el.data();
         var miradorViewer = Mirador.viewer({
           id: 'sul-embed-m3',
-          theme: {
-            palette: {
-              type: 'dark',
-              lightened: {
-                dark: '#5f574f'
+          
+          selectedTheme: 'stanford',
+          themes: {
+            stanford: {
+              palette: {
+                type: 'dark',
+                primary: {
+                  main: '#610e0e',
+                },
+                secondary: {
+                  main: '#610e0e',
+                },
+                shades: {
+                  dark: '#000000',
+                  main: '#5f574f',
+                  light: '#616161',
+                }
               }
             }
           },
@@ -22,6 +34,12 @@
               loadedManifest: data.m3Uri
             }
           ],
+          window: {
+            allowClose: false,
+            allowMaximize: false,
+            hideAnnotationsPanel: true,
+            sideBarOpenByDefault: true
+          },
           workspaceControlPanel: {
             enabled: false
           }
