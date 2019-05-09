@@ -27,8 +27,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.7'
   gem 'capybara'
   gem 'selenium-webdriver', '!= 3.13.0'
-  # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
+  gem 'webdrivers'
   gem 'high_voltage'
 
   # Teaspoon-jasmine is a wrapper for the Jasmine javascript testing library

@@ -11,15 +11,7 @@ require 'capybara/rails'
 require 'capybara/rspec'
 require 'selenium-webdriver'
 
-Capybara.javascript_driver = :headless_chrome
-
-Capybara.register_driver :headless_chrome do |app|
-  capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
-    chromeOptions: { args: %w[headless disable-gpu no-sandbox] }
-  )
-
-  Capybara::Selenium::Driver.new(app, browser: :chrome, desired_capabilities: capabilities)
-end
+Capybara.javascript_driver = :selenium_chrome_headless
 
 Capybara.default_max_wait_time = 10
 # Requires supporting ruby files with custom matchers and macros, etc, in
