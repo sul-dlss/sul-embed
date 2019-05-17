@@ -24,11 +24,12 @@ gem 'deprecation'
 gem 'iso8601' # to parse durations, since ActiveSupport::Duration doesn't get a parse method till rails 5
 
 group :development, :test do
-  gem 'rspec-rails', '~> 3.7'
   gem 'capybara'
+  gem 'high_voltage'
+  gem 'rspec-rails', '~> 3.7'
+
   gem 'selenium-webdriver', '!= 3.13.0'
   gem 'webdrivers'
-  gem 'high_voltage'
 
   # Teaspoon-jasmine is a wrapper for the Jasmine javascript testing library
   gem 'teaspoon-jasmine'
@@ -58,8 +59,8 @@ gem 'codeclimate-test-reporter', group: :test, require: false
 group :deployment do
   gem 'capistrano', '~> 3.0'
   gem 'capistrano-bundler'
-  gem 'capistrano-rails'
   gem 'capistrano-passenger'
+  gem 'capistrano-rails'
   gem 'capistrano-shared_configs'
   gem 'dlss-capistrano'
 end
@@ -81,6 +82,7 @@ gem 'sul_styles', '~>0.6'
 
 gem 'handlebars_assets'
 
+gem 'newrelic_rpm', group: :production
+
 # Use okcomputer to monitor the application
 gem 'okcomputer'
-gem 'newrelic_rpm', group: :production
