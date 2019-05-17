@@ -33,7 +33,8 @@ module Embed
     end
 
     def embed_hash
-      { type: type,
+      {
+        type: type,
         version: version,
         provider_name: provider_name,
         title: title,

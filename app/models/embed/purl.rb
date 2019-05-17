@@ -95,18 +95,19 @@ module Embed
     end
 
     def manifest_json_response
-      @manifest_json_response ||= begin
-        conn = Faraday.new(url: manifest_json_url)
-        response = conn.get do |request|
-          request.options.timeout = Settings.purl_read_timeout
-          request.options.open_timeout = Settings.purl_conn_timeout
-        end
-        raise ResourceNotAvailable unless response.success?
+      @manifest_json_response ||=
+        begin
+          conn = Faraday.new(url: manifest_json_url)
+          response = conn.get do |request|
+            request.options.timeout = Settings.purl_read_timeout
+            request.options.open_timeout = Settings.purl_conn_timeout
+          end
+          raise ResourceNotAvailable unless response.success?
 
-        response.body
-      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
-        raise ResourceNotAvailable
-      end
+          response.body
+        rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
+          raise ResourceNotAvailable
+        end
     end
 
     private
@@ -144,20 +145,21 @@ module Embed
     end
 
     def response
-      @response ||= begin
-        conn = Faraday.new(url: purl_xml_url)
+      @response ||=
+        begin
+          conn = Faraday.new(url: purl_xml_url)
 
-        response = conn.get do |request|
-          request.options.timeout = Settings.purl_read_timeout
-          request.options.open_timeout = Settings.purl_conn_timeout
+          response = conn.get do |request|
+            request.options.timeout = Settings.purl_read_timeout
+            request.options.open_timeout = Settings.purl_conn_timeout
+          end
+
+          raise ResourceNotAvailable unless response.success?
+
+          response.body
+        rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
+          nil
         end
-
-        raise ResourceNotAvailable unless response.success?
-
-        response.body
-      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
-        nil
-      end
     end
 
     class ResourceNotAvailable < StandardError
