@@ -65,7 +65,7 @@ module Embed
       # @param [String] date_string
       # @return [String]
       def sul_pretty_date(date_string)
-        I18n.l(Date.parse(date_string), format: :sul) unless date_string.blank?
+        I18n.l(Date.parse(date_string), format: :sul) if date_string.present?
       end
 
       ##

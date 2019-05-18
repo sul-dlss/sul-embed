@@ -50,9 +50,7 @@ module Embed
 
     def embargo_release_date
       @embargo_release_date ||= begin
-        if embargoed?
-          ng_xml.xpath('//rightsMetadata/access[@type="read"]/machine/embargoReleaseDate').try(:text)
-        end
+        ng_xml.xpath('//rightsMetadata/access[@type="read"]/machine/embargoReleaseDate').try(:text) if embargoed?
       end
     end
 
@@ -256,7 +254,7 @@ module Embed
 
         # unused (9/2016) - candidate for removal?
         def image?
-          mimetype =~ /image\/jp2/i
+          mimetype =~ %r{image/jp2}i
         end
 
         def size

@@ -2,7 +2,7 @@
 
 class EmbedController < ApplicationController
   append_view_path Rails.root.join('app', 'views', 'embed')
-  before_action :validate_request
+  before_action :embed_request
   before_action :set_cache
   before_action :allow_iframe, only: :iframe
 
@@ -21,7 +21,7 @@ class EmbedController < ApplicationController
     render 'iframe'
   end
 
-  def validate_request
+  def embed_request
     @embed_request ||= Embed::Request.new(params, request)
   end
 

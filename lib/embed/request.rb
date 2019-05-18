@@ -104,7 +104,7 @@ module Embed
     end
 
     def require_url_parameter
-      raise NoURLProvided unless url.present?
+      raise NoURLProvided if url.blank?
     end
 
     def validate_url_scheme
@@ -114,7 +114,7 @@ module Embed
     def url_scheme_is_valid?
       url_schemes.any? do |scheme|
         url =~ scheme
-      end && url =~ /\/\w+$/
+      end && url =~ %r{/\w+$}
     end
 
     def validate_format

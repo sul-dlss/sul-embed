@@ -35,7 +35,7 @@ module Embed
 
         # build up a list of the fields we want to use for output string
         field_accumulator = []
-        [:years, :months, :days, :hours, :minutes, :seconds].each do |atom_type|
+        %i[years months days hours minutes seconds].each do |atom_type|
           atom_val = atoms[atom_type]
           # if we've already started accumulating fields, or this field is non-zero, add this field to the list.
           # if we've hit the minutes field, start accumulating no matter what, since we always want to show minutes

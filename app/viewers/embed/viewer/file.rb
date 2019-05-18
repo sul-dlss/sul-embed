@@ -40,7 +40,7 @@ module Embed
       end
 
       def file_size_text(file_size)
-        return pretty_filesize(file_size) unless file_size.blank?
+        return pretty_filesize(file_size) if file_size.present?
 
         'Download'
       end
