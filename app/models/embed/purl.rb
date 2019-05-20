@@ -50,9 +50,7 @@ module Embed
 
     def embargo_release_date
       @embargo_release_date ||= begin
-        if embargoed?
-          ng_xml.xpath('//rightsMetadata/access[@type="read"]/machine/embargoReleaseDate').try(:text)
-        end
+        ng_xml.xpath('//rightsMetadata/access[@type="read"]/machine/embargoReleaseDate').try(:text) if embargoed?
       end
     end
 
@@ -95,24 +93,27 @@ module Embed
     end
 
     def manifest_json_response
-      @manifest_json_response ||= begin
-        conn = Faraday.new(url: manifest_json_url)
-        response = conn.get do |request|
-          request.options.timeout = Settings.purl_read_timeout
-          request.options.open_timeout = Settings.purl_conn_timeout
-        end
-        raise ResourceNotAvailable unless response.success?
+      @manifest_json_response ||=
+        begin
+          conn = Faraday.new(url: manifest_json_url)
+          response = conn.get do |request|
+            request.options.timeout = Settings.purl_read_timeout
+            request.options.open_timeout = Settings.purl_conn_timeout
+          end
+          raise ResourceNotAvailable unless response.success?
 
-        response.body
-      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
-        raise ResourceNotAvailable
-      end
+          response.body
+        rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
+          raise ResourceNotAvailable
+        end
     end
 
     private
 
     def cc_license
-      { human: cc_license_human, machine: cc_license_machine } if cc_license_human.present? && cc_license_machine.present?
+      return unless cc_license_human.present? && cc_license_machine.present?
+
+      { human: cc_license_human, machine: cc_license_machine }
     end
 
     def cc_license_machine
@@ -124,7 +125,9 @@ module Embed
     end
 
     def odc_licence
-      { human: odc_licence_human, machine: odc_licence_machine } if odc_licence_human.present? && odc_licence_machine.present?
+      return unless odc_licence_human.present? && odc_licence_machine.present?
+
+      { human: odc_licence_human, machine: odc_licence_machine }
     end
 
     def odc_licence_human
@@ -144,20 +147,21 @@ module Embed
     end
 
     def response
-      @response ||= begin
-        conn = Faraday.new(url: purl_xml_url)
+      @response ||=
+        begin
+          conn = Faraday.new(url: purl_xml_url)
 
-        response = conn.get do |request|
-          request.options.timeout = Settings.purl_read_timeout
-          request.options.open_timeout = Settings.purl_conn_timeout
+          response = conn.get do |request|
+            request.options.timeout = Settings.purl_read_timeout
+            request.options.open_timeout = Settings.purl_conn_timeout
+          end
+
+          raise ResourceNotAvailable unless response.success?
+
+          response.body
+        rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
+          nil
         end
-
-        raise ResourceNotAvailable unless response.success?
-
-        response.body
-      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
-        nil
-      end
     end
 
     class ResourceNotAvailable < StandardError
@@ -254,7 +258,7 @@ module Embed
 
         # unused (9/2016) - candidate for removal?
         def image?
-          mimetype =~ /image\/jp2/i
+          mimetype =~ %r{image/jp2}i
         end
 
         def size

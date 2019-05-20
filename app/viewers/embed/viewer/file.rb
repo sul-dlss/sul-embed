@@ -40,7 +40,7 @@ module Embed
       end
 
       def file_size_text(file_size)
-        return pretty_filesize(file_size) unless file_size.blank?
+        return pretty_filesize(file_size) if file_size.present?
 
         'Download'
       end
@@ -52,7 +52,7 @@ module Embed
       def display_file_search?
         @display_file_search ||= begin
           @request.params[:hide_search] != 'true' &&
-          @purl_object.contents.map(&:files).flatten.length >= min_files_to_search
+            @purl_object.contents.map(&:files).flatten.length >= min_files_to_search
         end
       end
 

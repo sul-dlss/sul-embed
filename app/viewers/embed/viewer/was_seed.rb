@@ -16,7 +16,7 @@ module Embed
       end
 
       def format_memento_datetime(memento_datetime)
-        I18n.l(Date.parse(memento_datetime), format: :sul) unless memento_datetime.blank?
+        I18n.l(Date.parse(memento_datetime), format: :sul) if memento_datetime.present?
       end
 
       def external_url

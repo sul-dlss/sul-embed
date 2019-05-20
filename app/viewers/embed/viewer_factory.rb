@@ -28,7 +28,7 @@ module Embed
     end
 
     def registered_viewer(type:)
-      @registered_type ||= Embed.registered_viewers.detect do |type_class|
+      @registered_viewer ||= Embed.registered_viewers.detect do |type_class|
         type_class.supported_types.include?(type)
       end
     end

@@ -16,16 +16,16 @@ describe 'embed this panel', js: true do
     let(:spec_fixture) { file_purl }
     it 'includes the allowfullscreen no-scrolling, no-border, and no margin/padding attributes' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*frameborder='0'.*\/>/)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*marginwidth='0'.*\/>/)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*marginheight='0'.*\/>/)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*scrolling='no'.*\/>/)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*allowfullscreen.*>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(%r{<iframe.*frameborder='0'.*/>}m)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(%r{<iframe.*marginwidth='0'.*/>}m)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(%r{<iframe.*marginheight='0'.*/>}m)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(%r{<iframe.*scrolling='no'.*/>}m)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*allowfullscreen.*>/m)
     end
     it 'includes height and width attributes' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*height='200px'.*\/>/)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*width='100%'.*\/>/)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(%r{<iframe.*height='200px'.*/>}m)
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(%r{<iframe.*width='100%'.*/>}m)
     end
   end
   describe 'file objects' do

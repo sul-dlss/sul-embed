@@ -34,19 +34,20 @@ module Embed
     # @return [String] response of the request, nil if there is error
     # @raise [ResourceNotAvailable] if there response returns not success
     def response
-      @response ||= begin
-        conn = Faraday.new(url: was_thumbs_url)
-        response = conn.get do |request|
-          request.options.timeout = Settings.was_thumb_read_timeout
-          request.options.open_timeout = Settings.was_thumb_conn_timeout
-          request.params['format'] = 'json'
-        end
-        raise ResourceNotAvailable unless response.success?
+      @response ||=
+        begin
+          conn = Faraday.new(url: was_thumbs_url)
+          response = conn.get do |request|
+            request.options.timeout = Settings.was_thumb_read_timeout
+            request.options.open_timeout = Settings.was_thumb_conn_timeout
+            request.params['format'] = 'json'
+          end
+          raise ResourceNotAvailable unless response.success?
 
-        response.body
-      rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
-        nil
-      end
+          response.body
+        rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
+          nil
+        end
     end
 
     def was_thumbs_url

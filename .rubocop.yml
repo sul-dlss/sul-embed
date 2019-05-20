@@ -18,6 +18,19 @@ Style/StringLiterals:
   Enabled: true
   EnforcedStyle: single_quotes
 
+Metrics/LineLength:
+  Max: 120
+  Exclude:
+    - 'spec/**/*'
+
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+
+Metrics/ParameterLists:
+  Exclude:
+    - 'spec/rails_helper.rb'
+
+Rails/OutputSafety:
+  Exclude:
+    - 'app/helpers/embed_helper.rb'

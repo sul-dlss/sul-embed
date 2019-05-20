@@ -5,7 +5,7 @@ module Embed
   # Currently, MPEG-DASH is used at the <video> element level (in a data attribute to be picked up by javascript)
   # and HLS is used as a <source> within the <video> or <audio> tag.
   class MediaTag
-    SUPPORTED_MEDIA_TYPES = [:audio, :video].freeze
+    SUPPORTED_MEDIA_TYPES = %i[audio video].freeze
     MEDIA_INDEX_CONTROL_HEIGHT = 24
 
     include Embed::StacksImage
@@ -21,7 +21,7 @@ module Embed
     def to_html
       output = []
       purl_document.contents.each do |resource|
-        next unless resource.primary_file.present?
+        next if resource.primary_file.blank?
 
         output << if SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
                     media_element(resource.primary_file, resource.type)

@@ -37,7 +37,7 @@ describe Embed::Response do
       allow(viewer).to receive(:width).and_return('100')
     end
     it 'is the iframe snippet pointing to the embed' do
-      expect(response.html).to match(%r{<iframe src='https://embed\.stanford\.edu.*'.*/>})
+      expect(response.html).to match(%r{<iframe.*src='https://embed\.stanford\.edu.*'.*/>}m)
     end
   end
   describe 'embed hash' do
@@ -61,7 +61,7 @@ describe Embed::Response do
           width: '100'
         )
       )
-      expect(embed_hash[:html]).to match(%r{<iframe .*/>})
+      expect(embed_hash[:html]).to match(%r{<iframe.*/>}m)
     end
   end
 end

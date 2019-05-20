@@ -64,7 +64,10 @@ module Embed
                        "#{height}px"
                      end
       src = "#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{druid}&#{request.as_url_params.to_query}"
-      "<iframe src='#{src}' height='#{height_style}' width='#{width_style}' frameborder='0' marginwidth='0' marginheight='0' scrolling='no' allowfullscreen />"
+      "<iframe
+        src='#{src}' height='#{height_style}' width='#{width_style}'
+        frameborder='0' marginwidth='0' marginheight='0' scrolling='no' allowfullscreen
+      />"
     end
 
     private
