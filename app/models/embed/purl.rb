@@ -111,7 +111,9 @@ module Embed
     private
 
     def cc_license
-      { human: cc_license_human, machine: cc_license_machine } if cc_license_human.present? && cc_license_machine.present?
+      return unless cc_license_human.present? && cc_license_machine.present?
+
+      { human: cc_license_human, machine: cc_license_machine }
     end
 
     def cc_license_machine
@@ -123,7 +125,9 @@ module Embed
     end
 
     def odc_licence
-      { human: odc_licence_human, machine: odc_licence_machine } if odc_licence_human.present? && odc_licence_machine.present?
+      return unless odc_licence_human.present? && odc_licence_machine.present?
+
+      { human: odc_licence_human, machine: odc_licence_machine }
     end
 
     def odc_licence_human

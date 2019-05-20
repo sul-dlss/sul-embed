@@ -4,7 +4,8 @@ module Embed
   class MediaDuration
     attr_reader :media_data_element, :iso8601_duration
 
-    # @param media_data_element [Nokogiri::XML::Node] <videoData> or <audioData> element from contentMetadata/resource/file
+    # @param media_data_element [Nokogiri::XML::Node] <videoData> or <audioData>
+    #                                                 element from contentMetadata/resource/file
     def initialize(media_data_element)
       @media_data_element = media_data_element
     end
