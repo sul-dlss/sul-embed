@@ -28,7 +28,6 @@ describe 'UV', type: :feature, js: true do
           click_button 'Embed'
           within_frame(0) do
             find('button.share').trigger(:click) # When in the iFrame `#click` doesn't work
-            page.save_and_open_screenshot
             expect(page).to have_css '.embedView', visible: true
             expect(find('.code').value).to match(
               %r{<iframe src="http:\/\/127.0.0.1:\d+\/iframe\?url=https:\/\/purl.stanford.edu\/bb023ts9016" width="560" height="420" allowfullscreen frameborder="0"><\/iframe>}

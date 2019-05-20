@@ -96,7 +96,6 @@ describe 'geo index map viewer', js: true do
       # We also need to explicitly wait for the JS to run.
       expect(page).to have_css('.sul-embed-geo', count: 1, visible: true)
       expect(page).to have_css '[data-index-map="https://stacks.stanford.edu/file/druid:ts545zc6250/index_map.json"]'
-      page.save_and_open_screenshot
       find '.leaflet-overlay-pane'
       expect(Nokogiri::HTML.parse(page.body).css('path').length).to eq 480
     end
