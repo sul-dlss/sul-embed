@@ -5,6 +5,5 @@
 //= require mirador.min
 //= require modules/m3_viewer
 
-CssInjection.injectFontIcons();
 CssInjection.appendToHead();
 CommonViewerBehavior.initializeViewer(M3Viewer.init);
