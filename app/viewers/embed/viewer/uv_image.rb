@@ -8,7 +8,7 @@ module Embed
       end
 
       def self.supported_types
-        []
+        %i[image manuscript map book]
       end
 
       # we want to change this

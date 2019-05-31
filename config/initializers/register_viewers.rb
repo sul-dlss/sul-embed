@@ -8,4 +8,3 @@ Embed.register_viewer(Settings.image_viewer.constantize)
 Embed.register_viewer(Embed::Viewer::UVFile) if Settings.use_uv_for_files
 Embed.register_viewer(Embed::Viewer::Media)
 Embed.register_viewer(Embed::Viewer::WasSeed)
-Embed.register_viewer(Embed::Viewer::M3Viewer)
