@@ -9,6 +9,7 @@ AllCops:
     - 'config/**/*'
     - 'spec/fixtures/**/*'
     - 'vendor/**/*'
+    - 'node_modules/**/*'
   TargetRubyVersion: 2.5
 
 Rails:
