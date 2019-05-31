@@ -11,5 +11,9 @@
   "bugs": {
     "url": "https://github.com/sul-dlss/sul-embed/issues"
   },
-  "homepage": "https://github.com/sul-dlss/sul-embed"
+  "private": true,
+  "homepage": "https://github.com/sul-dlss/sul-embed",
+  "dependencies": {
+    "mirador": "^3.0.0-alpha.7"
+  }
 }
