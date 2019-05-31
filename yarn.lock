@@ -746,7 +746,7 @@ http-signature@~1.2.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
-"http-status-codes@github:edsilv/http-status-codes#v0.0.7":
+http-status-codes@edsilv/http-status-codes#v0.0.7:
   version "0.0.7"
   resolved "https://codeload.github.com/edsilv/http-status-codes/tar.gz/af3a8ab9970b1f291a79b03c7382dc16aebee749"
 
@@ -1039,6 +1039,11 @@ lcid@^1.0.0:
   integrity sha1-MIrMr6C8SDo4Z7S28rlQYlHRuDU=
   dependencies:
     invert-kv "^1.0.0"
+
+list.js@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/list.js/-/list.js-1.1.1.tgz#30329dc9a6b8ce8c99f9d5373c189a2fac2e4294"
+  integrity sha1-MDKdyaa4zoyZ+dU3PBiaL6wuQpQ=
 
 load-json-file@^1.0.0:
   version "1.1.0"
