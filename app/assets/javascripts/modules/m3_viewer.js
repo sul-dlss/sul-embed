@@ -1,4 +1,4 @@
-/* global HandlebarsTemplates */
+/* global Mirador */
 (function( global ) {
   'use strict';
   var Module = (function() {
@@ -7,7 +7,7 @@
       init: function() {
         var $el = jQuery('#sul-embed-m3');
         var data = $el.data();
-        var miradorViewer = Mirador.viewer({
+        Mirador.viewer({
           id: 'sul-embed-m3',
           
           selectedTheme: 'stanford',
