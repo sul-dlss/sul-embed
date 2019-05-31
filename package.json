@@ -2,9 +2,6 @@
   "name": "sul-embed",
   "version": "0.0.0",
   "description": "embed service for Stanford University Libraries",
-  "devDependencies": {
-    "bower": "^1.3.12"
-  },
   "repository": {
     "type": "git",
     "url": "git://github.com/sul-dlss/sul-embed.git"
