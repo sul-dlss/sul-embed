@@ -1,0 +1,11 @@
+<div class='sul-embed-body sul-embed-m3' style="max-height: <%= viewer.body_height %>px" data-sul-embed-theme="<%= asset_url('m3.css') %>">
+  <div
+    id='sul-embed-m3'
+    class='m3'
+    data-m3-uri='<%= viewer.manifest_json_url %>'
+    data-canvas-index='<%= viewer.canvas_index %>'
+    style='height: <%= viewer.body_height%>px; width:100%'>
+  </div>
+  
+  <script>;jQuery.getScript("<%= asset_url('m3.js') %>");</script>
+</div>
