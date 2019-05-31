@@ -4,7 +4,7 @@ module Embed
   module Viewer
     class M3Viewer < CommonViewer
       def to_partial_path
-        'embed/template/m3_image'
+        'embed/template/m3_viewer'
       end
 
       def self.supported_types
@@ -25,7 +25,7 @@ module Embed
         420
       end
 
-      # The UV UI provides its own header and footer integrated into the viewer height itself.
+      # The Mirador UI provides its own header and footer integrated into the viewer height itself.
       def header_height
         0
       end
