@@ -2,7 +2,7 @@
 
 //= require modules/css_injection
 //= require modules/common_viewer_behavior
-//= require mirador.min
+//= require mirador/dist/mirador.min
 //= require modules/m3_viewer
 
 CssInjection.appendToHead();

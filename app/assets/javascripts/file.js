@@ -1,7 +1,7 @@
 /*global CssInjection */
 
 //= require modules/css_injection
-//= require listjs/dist/list
+//= require list.js/dist/list
 //= require vendor/tooltip
 //= require modules/file_search
 //= require modules/common_viewer_behavior
