@@ -9,23 +9,26 @@
         var data = $el.data();
         Mirador.viewer({
           id: 'sul-embed-m3',
-          
-          selectedTheme: 'stanford',
+
+          selectedTheme: 'sul',
           themes: {
-            stanford: {
+            sul: {
               palette: {
-                type: 'dark',
+                type: 'light',
                 primary: {
-                  main: '#610e0e',
+                  main: '#8c1515',
                 },
                 secondary: {
-                  main: '#610e0e',
+                  main: '#8c1515',
                 },
                 shades: {
-                  dark: '#000000',
-                  main: '#5f574f',
-                  light: '#616161',
-                }
+                  dark: '#2e2d29',
+                  main: '#ffffff',
+                  light: '#f4f4f4',
+                },
+                notification: {
+                  main: '#e98300'
+                },
               }
             }
           },
