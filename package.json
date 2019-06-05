@@ -15,6 +15,6 @@
   "homepage": "https://github.com/sul-dlss/sul-embed",
   "dependencies": {
     "list.js": "1.1.1",
-    "mirador": "^3.0.0-alpha.8"
+    "mirador": "^3.0.0-alpha.9"
   }
 }
