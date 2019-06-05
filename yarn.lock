@@ -1161,10 +1161,10 @@ minimist@^1.1.3, minimist@^1.2.0:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
   integrity sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
 
-mirador@^3.0.0-alpha.8:
-  version "3.0.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-alpha.8.tgz#3aa92156dc6af78bbc1546b381972b92a770c5c1"
-  integrity sha512-cLoJpHW+7iziD3lt2Djpb1SJcjxdSmAXeGHikskTIEvOLr5u4E7FbJ0vN0jU31HyAH32gfe6bNPAywv8qzzgXA==
+mirador@^3.0.0-alpha.9:
+  version "3.0.0-alpha.9"
+  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-alpha.9.tgz#eb9fac99fa360eca0c7ddab9ea21f895467043d3"
+  integrity sha512-gO/doBUU6pfK91k9mI5mLdyuZpqG3QuASb4WxJF4y4kKjvQTtkkEkhM4Pn5IvJpOMZ/qjozVM0s+arNSwWNymQ==
   dependencies:
     "@material-ui/core" "^3.9.3"
     "@material-ui/icons" "^3.0.2"
