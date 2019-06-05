@@ -755,7 +755,7 @@ hyphenate-style-name@^1.0.2:
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.3.tgz#097bb7fa0b8f1a9cf0bd5c734cf95899981a9b48"
   integrity sha512-EcuixamT82oplpoJ2XU4pDtKGWQ7b00CD9f1ug9IaQ3p1bkHMiKCZ9ut9QDI6qsa6cpUuB+A/I+zLtdNK4n2DQ==
 
-i18next@^15.0.9:
+i18next@^15.1.3:
   version "15.1.3"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-15.1.3.tgz#f1984cbee0e3cb00cff9008b037264289ce8840a"
   integrity sha512-hN2DZLoRSY2h/RYeNqth5XxV4N1ekKGSJDCGhFmmuXkOCAfK5CkUG4VBv9OBXrvf93xApv0KKBVrb0zJP31EKg==
@@ -1161,10 +1161,10 @@ minimist@^1.1.3, minimist@^1.2.0:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.0.tgz#a35008b20f41383eec1fb914f4cd5df79a264284"
   integrity sha1-o1AIsg9BOD7sH7kU9M1d95omQoQ=
 
-mirador@^3.0.0-alpha.7:
-  version "3.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-alpha.7.tgz#05afd2d68938fc22004a1483027a0ddcf4651666"
-  integrity sha512-VXB/wU8NSHvXYXasVycS0yDDUaCgOkC1zKf8+1vMgOrpav0U9v+sJRcYfaE97qzyU8pUmD7jTfgP04FYYvMC0A==
+mirador@^3.0.0-alpha.8:
+  version "3.0.0-alpha.8"
+  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-alpha.8.tgz#3aa92156dc6af78bbc1546b381972b92a770c5c1"
+  integrity sha512-cLoJpHW+7iziD3lt2Djpb1SJcjxdSmAXeGHikskTIEvOLr5u4E7FbJ0vN0jU31HyAH32gfe6bNPAywv8qzzgXA==
   dependencies:
     "@material-ui/core" "^3.9.3"
     "@material-ui/icons" "^3.0.2"
@@ -1173,13 +1173,13 @@ mirador@^3.0.0-alpha.7:
     css-ns "^1.2.2"
     deepmerge "^3.1.0"
     dompurify "^1.0.9"
-    i18next "^15.0.9"
+    i18next "^15.1.3"
     immutable "^4.0.0-rc.12"
     intersection-observer "^0.5.1"
     lodash "^4.17.11"
     manifesto.js "^3.0.9"
-    node-fetch "^2.3.0"
-    node-sass "^4.9.2"
+    node-fetch "^2.6.0"
+    node-sass "^4.12.0"
     normalize-url "^4.2.0"
     openseadragon "^2.4.0"
     prop-types "^15.6.2"
@@ -1194,8 +1194,8 @@ mirador@^3.0.0-alpha.7:
     react-redux "^7.0.0"
     react-resize-observer "^1.1.1"
     react-rnd "^9.1.1"
-    react-sizeme "^2.5.2"
-    react-svg-unique-id "^1.0.1"
+    react-sizeme "^2.6.7"
+    react-svg-unique-id "^1.3.0"
     react-virtualized-auto-sizer "^1.0.2"
     react-window "^1.8.1"
     redux "4.0.1"
@@ -1238,7 +1238,7 @@ node-fetch@^1.0.1:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-fetch@^2.3.0:
+node-fetch@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
   integrity sha512-8dG4H5ujfvFiqDmVu9fQ5bOHUC15JMjMY/Zumv26oOvvVJjM67KF8koCWIabKQ1GJIa9r2mMZscBq/TbdOcmNA==
@@ -1261,7 +1261,7 @@ node-gyp@^3.8.0:
     tar "^2.0.0"
     which "1"
 
-node-sass@^4.9.2:
+node-sass@^4.12.0:
   version "4.12.0"
   resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.12.0.tgz#0914f531932380114a30cc5fa4fa63233a25f017"
   integrity sha512-A1Iv4oN+Iel6EPv77/HddXErL2a+gZ4uBeZUy+a8O35CFYTXhgA8MgLCWBtwpGZdCvTvQ9d+bQxX/QC36GDPpQ==
@@ -1693,7 +1693,7 @@ react-rnd@^9.1.1:
     react-draggable "3.1.1"
     tslib "1.9.3"
 
-react-sizeme@^2.5.2:
+react-sizeme@^2.6.7:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/react-sizeme/-/react-sizeme-2.6.7.tgz#231339ce8821ac2c26424c791e0027f89dae3e90"
   integrity sha512-xCjPoBP5jmeW58TxIkcviMZqabZis7tTvDFWf0/Wa5XCgVWQTIe74NQBes2N1Kmp64GRLkpm60BaP0kk+v8aCQ==
@@ -1703,7 +1703,7 @@ react-sizeme@^2.5.2:
     shallowequal "^1.1.0"
     throttle-debounce "^2.1.0"
 
-react-svg-unique-id@^1.0.1:
+react-svg-unique-id@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/react-svg-unique-id/-/react-svg-unique-id-1.3.0.tgz#2356ae0ae7badf6cfe2670e62682cac1e15db441"
   integrity sha512-7ODk134USGdLSVXKatT0seYz59NLs2IKL9aaslVAkmfUwv8Sx0BZWMWJHKIECbN7yvqZDsXkYAi4/3ANv/a2+g==

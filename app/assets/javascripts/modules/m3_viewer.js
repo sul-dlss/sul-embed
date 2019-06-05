@@ -36,12 +36,15 @@
           ],
           window: {
             allowClose: false,
+            allowFullscreen: true,
             allowMaximize: false,
-            hideAnnotationsPanel: true,
+            defaultSideBarPanel: 'attribution',
+            hideWindowTitle: true,
             sideBarOpenByDefault: true
           },
           workspaceControlPanel: {
-            enabled: false
+            enabled: false,
+            showZoomControls: true
           }
         });
       },
