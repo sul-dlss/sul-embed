@@ -84,3 +84,5 @@ gem 'newrelic_rpm', group: :production
 
 # Use okcomputer to monitor the application
 gem 'okcomputer'
+
+gem 'webpacker', '~> 4.x'

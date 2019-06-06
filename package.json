@@ -14,7 +14,11 @@
   "private": true,
   "homepage": "https://github.com/sul-dlss/sul-embed",
   "dependencies": {
+    "@rails/webpacker": "^4.0.7",
     "list.js": "1.1.1",
     "mirador": "^3.0.0-alpha.9"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.7.0"
   }
 }
