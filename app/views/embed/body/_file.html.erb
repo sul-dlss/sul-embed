@@ -78,6 +78,6 @@
         <% end %>
       <% end %>
     </ul>
-    <script>;jQuery.getScript("<%= asset_url('file.js') %>");</script>
+    <script>;jQuery.ajax({url: "<%= asset_url('file.js') %>", cache: true, dataType: 'script'});</script>
   </div>
 </div>

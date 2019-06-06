@@ -7,5 +7,5 @@
     style='height: <%= viewer.body_height%>px; width:100%'>
   </div>
   
-  <script>;jQuery.getScript("<%= asset_url('m3.js') %>");</script>
+  <script>;jQuery.ajax({url: "<%= asset_url('m3.js') %>", cache: true, dataType: 'script'});</script>
 </div>
