@@ -2,3 +2,5 @@ vendor/*
 app/assets/javascripts/vendor/*
 spec/javascripts/support/*
 public/uv-3/*
+*config.js
+config/**/*.js
