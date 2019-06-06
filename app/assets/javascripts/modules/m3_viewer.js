@@ -42,7 +42,7 @@
             allowFullscreen: true,
             allowMaximize: false,
             defaultSideBarPanel: 'attribution',
-            hideWindowTitle: true,
+            hideWindowTitle: (data.hideTitle === true),
             sideBarOpenByDefault: true
           },
           workspaceControlPanel: {
