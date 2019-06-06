@@ -5,5 +5,5 @@
   
   <% end %>
   
-  <script>;jQuery.getScript("<%= asset_url('geo.js') %>");</script>
+  <script>;jQuery.ajax({url: "<%= asset_url('geo.js') %>", cache: true, dataType: 'script'});</script>
 </div>

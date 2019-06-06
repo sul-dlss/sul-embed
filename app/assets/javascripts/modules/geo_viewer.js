@@ -126,8 +126,8 @@
           var wmsoptions = {
             LAYERS: dataAttributes.layers,
             BBOX: map.getBounds().toBBoxString(),
-            WIDTH: $('#sul-embed-geo-map').width(),
-            HEIGHT: $('#sul-embed-geo-map').height(),
+            WIDTH: Math.round($('#sul-embed-geo-map').width()),
+            HEIGHT: Math.round($('#sul-embed-geo-map').height()),
             QUERY_LAYERS: dataAttributes.layers,
             X: Math.round(e.containerPoint.x),
             Y: Math.round(e.containerPoint.y),

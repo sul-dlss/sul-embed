@@ -17,5 +17,5 @@
       <% end %>
     </ul>
   </div>
-  <script>;jQuery.getScript("<%= asset_url('was_seed.js') %>");</script>
+  <script>;jQuery.ajax({url: "<%= asset_url('was_seed.js') %>", cache: true, dataType: 'script'});</script>
 </div>
