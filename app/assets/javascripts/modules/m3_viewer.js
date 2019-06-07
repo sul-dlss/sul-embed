@@ -1,4 +1,6 @@
 import Mirador from 'mirador/dist/es/src/index.js';
+import miradorShareDialogPlugin from 'mirador-share-plugin/es/MiradorShareDialog.js';
+import miradorSharePlugin from 'mirador-share-plugin/es/miradorSharePlugin.js';
 
 export default class M3Viewer {
   static init() {
@@ -6,7 +8,16 @@ export default class M3Viewer {
     var data = $el.data();
     Mirador.viewer({
       id: 'sul-embed-m3',
-
+      miradorSharePlugin: {
+        dragAndDropInfoLink: 'https://library.stanford.edu/projects/international-image-interoperability-framework/viewers',
+        shareLink: {
+          enabled: true,
+          manifestIdReplacePattern: [
+            /\/iiif\/manifest/,
+            '',
+          ],
+        },
+      },
       selectedTheme: 'sul',
       themes: {
         sul: {
@@ -46,6 +57,8 @@ export default class M3Viewer {
         enabled: false,
         showZoomControls: true
       }
-    });
+    }, [
+      miradorSharePlugin, miradorShareDialogPlugin,
+    ]);
   }
 }
