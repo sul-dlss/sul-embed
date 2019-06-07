@@ -11,6 +11,13 @@ export default class M3Viewer {
     Mirador.viewer({
       id: 'sul-embed-m3',
       miradorSharePlugin: {
+        embedOption: {
+          enabled: true,
+          embedUrlReplacePattern: [
+            /.*\.edu\/(\w+)\/iiif\/manifest/,
+            'https://embed.stanford.edu/iframe?url=https://purl.stanford.edu/$1',
+          ],
+        },
         dragAndDropInfoLink: 'https://library.stanford.edu/projects/international-image-interoperability-framework/viewers',
         shareLink: {
           enabled: true,
