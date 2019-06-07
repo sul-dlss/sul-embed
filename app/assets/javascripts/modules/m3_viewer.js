@@ -1,6 +1,9 @@
 import Mirador from 'mirador/dist/es/src/index.js';
 import miradorShareDialogPlugin from 'mirador-share-plugin/es/MiradorShareDialog.js';
 import miradorSharePlugin from 'mirador-share-plugin/es/miradorSharePlugin.js';
+import miradorDownloadPlugin from 'mirador-dl-plugin/es/miradorDownloadPlugin.js';
+import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDialog.js';
+import osdReferencePlugin from 'mirador-dl-plugin/es/OSDReferences.js';
 
 export default class M3Viewer {
   static init() {
@@ -9,6 +12,13 @@ export default class M3Viewer {
     Mirador.viewer({
       id: 'sul-embed-m3',
       miradorSharePlugin: {
+        embedOption: {
+          enabled: true,
+          embedUrlReplacePattern: [
+            /.*\.edu\/(\w+)\/iiif\/manifest/,
+            'https://embed.stanford.edu/iframe?url=https://purl.stanford.edu/$1',
+          ],
+        },
         dragAndDropInfoLink: 'https://library.stanford.edu/projects/international-image-interoperability-framework/viewers',
         shareLink: {
           enabled: true,
@@ -58,7 +68,11 @@ export default class M3Viewer {
         showZoomControls: true
       }
     }, [
-      miradorSharePlugin, miradorShareDialogPlugin,
+      miradorSharePlugin,
+      miradorShareDialogPlugin,
+      osdReferencePlugin,
+      miradorDownloadDialogPlugin,
+      miradorDownloadPlugin,
     ]);
   }
 }
