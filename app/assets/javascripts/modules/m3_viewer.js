@@ -1,4 +1,4 @@
-import Mirador from 'mirador';
+import Mirador from 'mirador/dist/es/src/index.js';
 
 export default class M3Viewer {
   static init() {
