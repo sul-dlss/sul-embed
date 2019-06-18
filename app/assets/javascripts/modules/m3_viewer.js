@@ -61,6 +61,7 @@ export default class M3Viewer {
         allowMaximize: false,
         defaultSideBarPanel: 'attribution',
         hideAnnotationsPanel: true,
+        hideSearchPanel: false,
         hideWindowTitle: (data.hideTitle === true),
         sideBarOpenByDefault: true
       },
