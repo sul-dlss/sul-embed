@@ -59,6 +59,7 @@ export default class M3Viewer {
         allowClose: false,
         allowFullscreen: true,
         allowMaximize: false,
+        authNewWindowCenter: 'screen',
         defaultSideBarPanel: 'attribution',
         hideAnnotationsPanel: true,
         hideSearchPanel: false,
