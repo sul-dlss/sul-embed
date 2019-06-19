@@ -60,11 +60,11 @@ export default class M3Viewer {
         allowFullscreen: true,
         allowMaximize: false,
         authNewWindowCenter: 'screen',
-        defaultSideBarPanel: 'attribution',
+        defaultSideBarPanel: (data.showAttribution === true) ? 'attribution' : 'info',
         hideAnnotationsPanel: true,
         hideSearchPanel: false,
         hideWindowTitle: (data.hideTitle === true),
-        sideBarOpenByDefault: true
+        sideBarOpenByDefault: (data.showAttribution === true)
       },
       workspaceControlPanel: {
         enabled: false,
