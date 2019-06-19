@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'embed/template/_m3_viewer.html.erb' do
   include PURLFixtures
 
-  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
+  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', search: 'xyz', suggested_search: 'abc') }
   let(:object) { Embed::PURL.new('12345') }
   let(:viewer) { Embed::Viewer::M3Viewer.new(request) }
 
@@ -28,5 +28,11 @@ RSpec.describe 'embed/template/_m3_viewer.html.erb' do
       render
       expect(rendered).to_not have_css '.sul-embed-header', visible: false
     end
+  end
+
+  it 'passes along seeded search queries' do
+    render
+    expect(rendered).to have_css '[data-search="xyz"]', visible: false
+    expect(rendered).to have_css '[data-suggested-search="abc"]', visible: false
   end
 end
