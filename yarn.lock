@@ -2500,6 +2500,20 @@ dnd-core@^4.0.5:
     lodash "^4.17.10"
     redux "^4.0.0"
 
+dnd-core@^7.4.4:
+  version "7.7.0"
+  resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-7.7.0.tgz#3166aefc8c5b85ca4ade4ae836712a3108975fab"
+  integrity sha512-+YqwflWEY1MEAEl2QiEiRaglYkCwIZryyQwximQGuTOm/ns7fS6Lg/i7OCkrtjM10D5FhArf/VUHIL4ZaRBK0g==
+  dependencies:
+    asap "^2.0.6"
+    invariant "^2.2.4"
+    redux "^4.0.1"
+
+dnd-multi-backend@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/dnd-multi-backend/-/dnd-multi-backend-3.2.1.tgz#528c7624b831d1c23512cbed191b34fb506dcf93"
+  integrity sha512-A783JbrONpeufxX+jDMHOxR2AWh+gFv5Z/lLpDB3vdON6t0bb2fHSh8fKH2h8gOLRAJGD08m9xYXAJIWreTI5A==
+
 dns-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/dns-equal/-/dns-equal-1.0.0.tgz#b39e7f1da6eb0a75ba9c17324b34753c47e0654d"
@@ -3542,12 +3556,12 @@ ignore-walk@^3.0.1:
   dependencies:
     minimatch "^3.0.4"
 
-immutability-helper@~2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-2.4.0.tgz#00d421e2957c17f0f0781475f05ffd837e73458d"
-  integrity sha512-rW/L/56ZMo9NStMK85kFrUFFGy4NeJbCdhfrDHIZrFfxYtuwuxD+dT3mWMcdmrNO61hllc60AeGglCRhfZ1dZw==
+immutability-helper@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/immutability-helper/-/immutability-helper-3.0.1.tgz#4f609c5afbf8d78cb297970e8af2fba8b0eda1d6"
+  integrity sha512-U92ROQQt7XkIwrdqCByUI118TQM1hXdKnRQpvKeA0HRyGSnJipu9IWHe4UD8zCN00O8UnQjQzPCgZ1CC3yBzHA==
   dependencies:
-    invariant "^2.2.0"
+    invariant "^2.2.4"
 
 immutable@^4.0.0-rc.12:
   version "4.0.0-rc.12"
@@ -3652,7 +3666,7 @@ intersection-observer@^0.5.1:
   resolved "https://registry.yarnpkg.com/intersection-observer/-/intersection-observer-0.5.1.tgz#e340fc56ce74290fe2b2394d1ce88c4353ac6dfa"
   integrity sha512-Zd7Plneq82kiXFixs7bX62YnuZ0BMRci9br7io88LwDyF3V43cQMI+G5IiTlTNTt+LsDUppl19J/M2Fp9UkH6g==
 
-invariant@^2.1.0, invariant@^2.2.0, invariant@^2.2.2, invariant@^2.2.4:
+invariant@^2.1.0, invariant@^2.2.2, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -4276,6 +4290,11 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
+lodash.uniqby@^4.7.0:
+  version "4.7.0"
+  resolved "https://registry.yarnpkg.com/lodash.uniqby/-/lodash.uniqby-4.7.0.tgz#d99c07a669e9e6d24e1362dfe266c67616af1302"
+  integrity sha1-2ZwHpmnp5tJOE2Lf4mbGdhavEwI=
+
 lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.5, lodash@~4.17.10:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
@@ -4534,20 +4553,20 @@ minizlib@^1.2.1:
   dependencies:
     minipass "^2.2.1"
 
-mirador-dl-plugin@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-0.5.0.tgz#2414f83f80237f4cd96e13b8d61f85265f0c8b21"
-  integrity sha512-Q1TcD8CmoyPOYgb87MxA4pJPEH3jMBy4l1DqbDXXNXeCfaiLbBnF7K7K0jvRp3KL4tSX6HwDb1V0XNazus5uyA==
+mirador-dl-plugin@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-0.6.0.tgz#1f304d27799c6c0eb4d5f6905bce53a75e536c36"
+  integrity sha512-y75awYGiidSBzCwgLd6fRQXxB/g5sDLDIgZR2MuVB1n5139pgh9OcLc63eh6h7J9SDQ2jMdsiFNjW52s/Xwy7A==
 
-mirador-share-plugin@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/mirador-share-plugin/-/mirador-share-plugin-0.5.0.tgz#b75bf29b78194245bf7bed19d9479eb077fbb903"
-  integrity sha512-4WJcaXxnb3qciVw8Yii4aLJW9rPqOPD4S7HnxedBT2duaAvKB0IVOAAehioAjtUsVT3oMy6zCwEtooYiQ0gybA==
+mirador-share-plugin@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/mirador-share-plugin/-/mirador-share-plugin-0.6.0.tgz#7b392dd38aa06ce7a531ea59ce550cbc9b6bc6eb"
+  integrity sha512-/uik6v5qR8m9Bb1N8AsgZprUn+CpI4errZUdtBf4AlsctP4yXPU7SwJ/He5RY8Feq7a2TSlUaosMBfyd4fG5sA==
 
-mirador@^3.0.0-alpha.12:
-  version "3.0.0-alpha.12"
-  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-alpha.12.tgz#bfcd772ca2cb947c519cc26b6259b140471aede2"
-  integrity sha512-7LRfIFw9dnUhNaQddi7IYEyZMgcYaBBoClLrBwdFcCJSkkn8VSCLfBFNxqyNKbi7jZvHmezTHA9gr1M//OrXZg==
+mirador@^3.0.0-alpha.13:
+  version "3.0.0-alpha.13"
+  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-alpha.13.tgz#000962f6380664d501a4b5a0632ed18a3d3bf328"
+  integrity sha512-iqe4oNlA/i8AGk5uV9y7wty8h/VXMrDbUU5YhzA/fRVaYNIe24UsGmqtiBsWjrb/v71RemqwFU7ueF0fiCG0GA==
   dependencies:
     "@material-ui/core" "^4.1.0"
     "@material-ui/icons" "^4.1.0"
@@ -4573,8 +4592,7 @@ mirador@^3.0.0-alpha.12:
     react-i18next "^10.8.1"
     react-iframe-comm "^1.2.2"
     react-image "^2.1.3"
-    react-mosaic-component "^2.1.0"
-    react-new-window "0.0.12"
+    react-mosaic-component "^3.0.0"
     react-placeholder "^3.0.1"
     react-redux "^7.0.0"
     react-resize-observer "^1.1.1"
@@ -6022,7 +6040,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.7.2, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@15.7.2, prop-types@^15.5.10, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6219,6 +6237,30 @@ react-dnd-html5-backend@^5.0.1:
     lodash "^4.17.10"
     shallowequal "^1.0.2"
 
+react-dnd-multi-backend@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-dnd-multi-backend/-/react-dnd-multi-backend-3.2.1.tgz#bfda3b72b738704d638c56fd5e992c3fac556652"
+  integrity sha512-UrS1Ey4l80F6Fu+QAodZGX9OJYi4EB23nWhQP3L+DSyXXJkoQLPoX3JqoCYs/tUpH9Ztkr+sRORRBRj6D22WOg==
+  dependencies:
+    dnd-multi-backend "^3.2.1"
+    prop-types "^15.6.2"
+    react-dnd-preview "^3.2.1"
+
+react-dnd-preview@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-dnd-preview/-/react-dnd-preview-3.2.1.tgz#8067f146d58b2d8b4b15ca785fae4320dbdd0de0"
+  integrity sha512-LeLEwNhCrl33Di0qqUPou/NmXTbuq6kFO1CyiOvpa44ZOXk0a6a0ZDwCXGmqFV4qLEkbcRvjHzvIWqz983VBWg==
+  dependencies:
+    prop-types "^15.6.2"
+
+react-dnd-touch-backend@^0.8.3:
+  version "0.8.3"
+  resolved "https://registry.yarnpkg.com/react-dnd-touch-backend/-/react-dnd-touch-backend-0.8.3.tgz#85d961ec8578dc9efa5b78000ea904d37e01e60f"
+  integrity sha512-LLJlpeJftRreP9ixm3yfd1JEXf+6BeKo5dkfJFHvNSOEOu+FDSwNl5l8uAG0FeD4z2ZVi7RDQ/jUxdjkBV3zBg==
+  dependencies:
+    dnd-core "^7.4.4"
+    invariant "^2.2.4"
+
 react-dnd@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-5.0.0.tgz#c4a17c70109e456dad8906be838e6ee8f32b06b5"
@@ -6311,25 +6353,20 @@ react-lifecycles-compat@^3.0.2:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-mosaic-component@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-mosaic-component/-/react-mosaic-component-2.1.0.tgz#3959032616aa7aca0a3519da81be4b1ed3f6d504"
-  integrity sha512-3DTrbMnzpECD3tWEbvcfrOHxIeiq+2GIMW+Vlx/TttP6aV/VU0+NsDOZLSOhdZGH9wt7+gTVkY0nZrP764PRNQ==
+react-mosaic-component@^3.0.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-mosaic-component/-/react-mosaic-component-3.1.0.tgz#d801913fa4e13b18bac43f4b74482a60492eb323"
+  integrity sha512-LG7jc7ScM/ZzIlacj96nVahab0hNnBT2W9I59sjuK9HxTYAexfn6W3+aJaU0oknGPk3DsBCgscFCm/A2oN3nkw==
   dependencies:
     classnames "^2.2.6"
-    immutability-helper "~2.4.0"
+    immutability-helper "^3.0.1"
     lodash "^4.17.11"
-    prop-types "^15.6.2"
+    prop-types "^15.7.2"
     react-dnd "^5.0.0"
     react-dnd-html5-backend "^5.0.1"
+    react-dnd-multi-backend "^3.2.1"
+    react-dnd-touch-backend "^0.8.3"
     uuid "^3.3.2"
-
-react-new-window@0.0.12:
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/react-new-window/-/react-new-window-0.0.12.tgz#6bc8e96f42da6ffe7ca253b68bddf8c2b3c650c0"
-  integrity sha512-E1DQJy4+Vx1mJ132rc1/epXI/4Q02v+StN9XCQb1NK4z+wyKgbKcKeEFKREM9DCcURq7BWSh/yiiKrHfgEkWpw==
-  dependencies:
-    prop-types "^15.6.1"
 
 react-placeholder@^3.0.1:
   version "3.0.2"
@@ -6519,7 +6556,7 @@ redux-thunk@^2.3.0:
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
   integrity sha512-km6dclyFnmcvxhAcrQV2AkZmPQjzPDjgVlQtR0EQjxZPyJ0BnMf3in1ryuR8A2qU0HldVRfxYXbFSKlI3N7Slw==
 
-redux@4.0.1, redux@^4.0.0:
+redux@4.0.1, redux@^4.0.0, redux@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.1.tgz#436cae6cc40fbe4727689d7c8fae44808f1bfef5"
   integrity sha512-R7bAtSkk7nY6O/OYMVR9RiBI+XghjF9rlbl5806HJbQph0LJVHZrU5oaO4q70eUKiqMRqm4y07KLTlMZ2BlVmg==
