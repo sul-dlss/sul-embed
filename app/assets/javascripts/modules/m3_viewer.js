@@ -66,9 +66,11 @@ export default class M3Viewer {
         hideWindowTitle: (data.hideTitle === true),
         sideBarOpenByDefault: true
       },
+      workspace: {
+        showZoomControls: true,
+      },
       workspaceControlPanel: {
         enabled: false,
-        showZoomControls: true
       }
     }, [
       miradorSharePlugin,
