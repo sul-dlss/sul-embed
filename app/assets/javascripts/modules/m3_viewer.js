@@ -11,6 +11,9 @@ export default class M3Viewer {
     var data = $el.data();
     Mirador.viewer({
       id: 'sul-embed-m3',
+      miradorDownloadPlugin: {
+        restrictDownloadOnSizeDefinition: true,
+      },
       miradorSharePlugin: {
         embedOption: {
           enabled: true,
