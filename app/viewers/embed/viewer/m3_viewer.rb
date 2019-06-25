@@ -34,6 +34,12 @@ module Embed
         0
       end
 
+      def show_attribution_panel?
+        purl_object.collections.any? do |druid|
+          Settings.collections_to_show_attribution.include?(druid)
+        end
+      end
+
       def canvas_index
         if request.canvas_id
           canvases = manifest_json.fetch('sequences', []).map { |seq| seq['canvases'] }.first

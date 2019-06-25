@@ -108,6 +108,13 @@ module Embed
         end
     end
 
+    def collections
+      ng_xml.at_xpath(
+        '//fedora:isMemberOf',
+        'xmlns:fedora' => 'info:fedora/fedora-system:def/relations-external#'
+      )&.map { |_name, value| value.gsub('info:fedora/druid:', '') } || []
+    end
+
     private
 
     def cc_license

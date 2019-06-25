@@ -93,4 +93,12 @@ describe Embed::Viewer::M3Viewer do
       end
     end
   end
+
+  describe '#show_attribution_panel?' do
+    let(:purl) { instance_double('Purl', collections: %w[abc 123]) }
+    it 'based off of a purls collection being specified in settings' do
+      expect(request).to receive(:purl_object).and_return(purl)
+      expect(m3_viewer.show_attribution_panel?).to eq true
+    end
+  end
 end

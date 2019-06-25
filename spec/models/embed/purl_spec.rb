@@ -61,6 +61,17 @@ describe Embed::PURL do
     end
   end
 
+  describe '#collections' do
+    it 'formats a list of collection druids' do
+      stub_purl_response_with_fixture(was_seed_purl)
+      expect(Embed::PURL.new('12345').collections).to eq ['mk656nf8485']
+    end
+    it 'is empty when no collection is present in xml' do
+      stub_purl_response_with_fixture(file_purl)
+      expect(Embed::PURL.new('12345').collections).to eq []
+    end
+  end
+
   describe 'contents' do
     it 'should return an array of resources' do
       stub_purl_response_with_fixture(file_purl)
