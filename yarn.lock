@@ -4290,11 +4290,6 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash.uniqby@^4.7.0:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/lodash.uniqby/-/lodash.uniqby-4.7.0.tgz#d99c07a669e9e6d24e1362dfe266c67616af1302"
-  integrity sha1-2ZwHpmnp5tJOE2Lf4mbGdhavEwI=
-
 lodash@^4.0.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.5, lodash@~4.17.10:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
@@ -4553,20 +4548,20 @@ minizlib@^1.2.1:
   dependencies:
     minipass "^2.2.1"
 
-mirador-dl-plugin@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-0.6.0.tgz#1f304d27799c6c0eb4d5f6905bce53a75e536c36"
-  integrity sha512-y75awYGiidSBzCwgLd6fRQXxB/g5sDLDIgZR2MuVB1n5139pgh9OcLc63eh6h7J9SDQ2jMdsiFNjW52s/Xwy7A==
+mirador-dl-plugin@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-0.7.0.tgz#68a677bfc445ee3e4564d7389b74f17fb8fa0f1e"
+  integrity sha512-J0xSBSSE93+Ls5c+UFsSkmpdC0R3pQCfGw7Qbt7wk3KGFjtRIRzmXzDVVdVu6iAHAcOQGP3bodQ3B4SAVCy4eQ==
 
-mirador-share-plugin@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/mirador-share-plugin/-/mirador-share-plugin-0.6.0.tgz#7b392dd38aa06ce7a531ea59ce550cbc9b6bc6eb"
-  integrity sha512-/uik6v5qR8m9Bb1N8AsgZprUn+CpI4errZUdtBf4AlsctP4yXPU7SwJ/He5RY8Feq7a2TSlUaosMBfyd4fG5sA==
+mirador-share-plugin@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/mirador-share-plugin/-/mirador-share-plugin-0.7.0.tgz#fc80a07b17032acd39ffe97018b680725ac8a8d7"
+  integrity sha512-90O4CP6fMQyEd31cGEMwzo1sBXvSD2pdt1mE7Wyt3eEZwqgTNbItQz8LmNjpannnzzvNzm1nrKQIwKeLRWr4VA==
 
-mirador@^3.0.0-alpha.13:
-  version "3.0.0-alpha.13"
-  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-alpha.13.tgz#000962f6380664d501a4b5a0632ed18a3d3bf328"
-  integrity sha512-iqe4oNlA/i8AGk5uV9y7wty8h/VXMrDbUU5YhzA/fRVaYNIe24UsGmqtiBsWjrb/v71RemqwFU7ueF0fiCG0GA==
+mirador@^3.0.0-alpha.14:
+  version "3.0.0-alpha.14"
+  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-alpha.14.tgz#bd7fb4b4abca52227ec28855905640eac41bbddf"
+  integrity sha512-VD2eOE6cMjSo9KsXmHyXTKLNXs14Fwkf1e1xY7a/f8rRSbawuJyHqfUROGt3TXijy25I4o4rHW+x8sgFaIDOEQ==
   dependencies:
     "@material-ui/core" "^4.1.0"
     "@material-ui/icons" "^4.1.0"
