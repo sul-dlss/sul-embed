@@ -95,6 +95,14 @@ module Embed
       params[:canvas_index]
     end
 
+    def search
+      params[:search]
+    end
+
+    def suggested_search
+      params[:suggested_search]
+    end
+
     private
 
     def validate

@@ -3,6 +3,8 @@
 module Embed
   module Viewer
     class M3Viewer < CommonViewer
+      delegate :search, :suggested_search, to: :request
+
       def to_partial_path
         'embed/template/m3_viewer'
       end

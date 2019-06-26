@@ -9,6 +9,16 @@ export default class M3Viewer {
   static init() {
     var $el = jQuery('#sul-embed-m3');
     var data = $el.data();
+
+    // Determine which panel should be open
+    var sideBarPanel = 'info';
+    if (data.search) {
+      sideBarPanel = 'search';
+    }
+    if (data.showAttribution) {
+      sideBarPanel = 'attribution';
+    }
+
     Mirador.viewer({
       id: 'sul-embed-m3',
       miradorDownloadPlugin: {
@@ -55,6 +65,8 @@ export default class M3Viewer {
       },
       windows: [
         {
+          defaultSearchQuery: data.search.length > 0 ? data.search : undefined,
+          suggestedSearches: data.suggestedSearch.length > 0 ? [data.suggestedSearch] : [],
           loadedManifest: data.m3Uri
         }
       ],
@@ -63,11 +75,11 @@ export default class M3Viewer {
         allowFullscreen: true,
         allowMaximize: false,
         authNewWindowCenter: 'screen',
-        defaultSideBarPanel: (data.showAttribution === true) ? 'attribution' : 'info',
+        defaultSideBarPanel: sideBarPanel,
         hideAnnotationsPanel: true,
         hideSearchPanel: false,
         hideWindowTitle: (data.hideTitle === true),
-        sideBarOpenByDefault: (data.showAttribution === true)
+        sideBarOpenByDefault: (data.showAttribution === true || data.search.length > 0)
       },
       workspace: {
         showZoomControls: true,
