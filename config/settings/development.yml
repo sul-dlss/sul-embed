@@ -1,1 +1,3 @@
 embed_iframe_url: 'http://localhost:3000/iframe'
+
+image_viewer: Embed::Viewer::M3Viewer

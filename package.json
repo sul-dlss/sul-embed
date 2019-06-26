@@ -14,13 +14,16 @@
   "private": true,
   "homepage": "https://github.com/sul-dlss/sul-embed",
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
     "@rails/webpacker": "^4.0.7",
     "list.js": "1.1.1",
     "mirador": "^3.0.0-alpha.14",
     "mirador-dl-plugin": "^0.7.0",
     "mirador-share-plugin": "^0.7.0",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "unfetch": "^4.1.0",
+    "url-polyfill": "^1.1.5"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.7.0"
