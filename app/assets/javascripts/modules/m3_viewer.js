@@ -66,7 +66,7 @@ export default class M3Viewer {
       windows: [
         {
           defaultSearchQuery: data.search.length > 0 ? data.search : undefined,
-          suggestedSearches: data.suggestedSearch.length > 0 ? [data.suggestedSearch] : [],
+          suggestedSearches: data.suggestedSearch.length > 0 ? [data.suggestedSearch] : null,
           loadedManifest: data.m3Uri
         }
       ],
