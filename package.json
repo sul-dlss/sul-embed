@@ -17,7 +17,7 @@
     "@babel/polyfill": "^7.4.4",
     "@rails/webpacker": "^4.0.7",
     "list.js": "1.1.1",
-    "mirador": "^3.0.0-alpha.14",
+    "mirador": "^3.0.0-alpha.15",
     "mirador-dl-plugin": "^0.7.0",
     "mirador-share-plugin": "^0.7.0",
     "react": "^16.8.6",
