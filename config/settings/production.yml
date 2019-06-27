@@ -1,2 +1,2 @@
 static_assets_base: 'https://embed.stanford.edu'
-cache_life: <%= 1.week.to_s %>
+cache_life: <%= 15.minutes.to_s %>
