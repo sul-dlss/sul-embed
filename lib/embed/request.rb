@@ -68,16 +68,11 @@ module Embed
 
     def as_url_params
       p = params.slice(
-        :maxheight,
-        :maxwidth,
-        :hide_title,
-        :hide_embed,
-        :hide_search,
-        :hide_download,
+        :maxheight, :maxwidth, :fullheight,
+        :hide_title, :hide_embed, :hide_search, :hide_download,
         :min_files_to_search,
-        :fullheight,
-        :canvas_id,
-        :canvas_index
+        :canvas_id, :canvas_index,
+        :search, :suggested_search
       )
 
       if p.respond_to? :permit!
