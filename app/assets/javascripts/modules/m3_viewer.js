@@ -85,6 +85,7 @@ export default {
           },
           workspace: {
             showZoomControls: true,
+            type: 'single',
           },
           workspaceControlPanel: {
             enabled: false,
