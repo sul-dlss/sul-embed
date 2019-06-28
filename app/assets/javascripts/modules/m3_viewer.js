@@ -78,9 +78,11 @@ export default {
             allowMaximize: false,
             authNewWindowCenter: 'screen',
             defaultSideBarPanel: sideBarPanel,
-            hideAnnotationsPanel: true,
-            hideSearchPanel: false,
             hideWindowTitle: (data.hideTitle === true),
+            panels: {
+              annotations: false,
+              search: true,
+            },
             sideBarOpenByDefault: (data.showAttribution === true || data.search.length > 0)
           },
           workspace: {
