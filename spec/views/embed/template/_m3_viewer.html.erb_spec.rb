@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'embed/template/_m3_viewer.html.erb' do
   include PURLFixtures
 
-  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', search: 'xyz', suggested_search: 'abc') }
+  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', canvas_index: 3, search: 'xyz', suggested_search: 'abc') }
   let(:object) { Embed::PURL.new('12345') }
   let(:viewer) { Embed::Viewer::M3Viewer.new(request) }
 
@@ -28,6 +28,11 @@ RSpec.describe 'embed/template/_m3_viewer.html.erb' do
       render
       expect(rendered).to_not have_css '.sul-embed-header', visible: false
     end
+  end
+
+  it 'passes along canvas index' do
+    render
+    expect(rendered).to have_css '[data-canvas-index="3"]', visible: false
   end
 
   it 'passes along seeded search queries' do
