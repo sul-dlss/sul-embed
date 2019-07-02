@@ -1,0 +1,20 @@
+<div class="sul-embed-3d">
+  <div class="buttons">
+    <button aria-label="Zoom in" class="zoom-in">+</button>
+    <button aria-label="Zoom out" class="zoom-out">-</button>
+  </div>
+  <div
+    id="virtex-3d-viewer"
+    class="virtex"
+    style="height: <%= viewer.body_height %>px"
+    data-sul-embed-theme="<%= viewer.asset_url('virtex_3d.css') %>"
+    data-three-dimensional-file="<%= viewer.three_dimensional_files.first %>"
+  >
+  </div>
+  <button
+    aria-label="Exit full screen"
+    class="sul-embed-btn sul-i-close sul-close-fullscreen-button"
+    id="close-full-screen-button">
+  </button>
+</div>
+<script>;jQuery.ajax({url: "<%= asset_pack_url('virtex_3d_viewer.js') %>", cache: true, dataType: 'script'});</script>

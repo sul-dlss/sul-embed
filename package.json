@@ -24,8 +24,10 @@
     "pdfjs-dist": "^2.0.943",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "three": "^0.112.1",
     "unfetch": "^4.1.0",
-    "url-polyfill": "^1.1.5"
+    "url-polyfill": "^1.1.5",
+    "virtex3d": "^0.4.0"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.7.0"
