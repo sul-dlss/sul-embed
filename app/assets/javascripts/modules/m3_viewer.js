@@ -69,7 +69,9 @@ export default {
             {
               defaultSearchQuery: data.search.length > 0 ? data.search : undefined,
               suggestedSearches: data.suggestedSearch.length > 0 ? [data.suggestedSearch] : null,
-              loadedManifest: data.m3Uri
+              loadedManifest: data.m3Uri,
+              canvasIndex: Number(data.canvasIndex),
+              canvasId: data.canvasId
             }
           ],
           window: {
