@@ -3,3 +3,4 @@ streaming:
   auth_url: '/test_auth_endpoint'
 collections_to_show_attribution:
   - abc
+use_custom_pdf_viewer: true

@@ -1,0 +1,48 @@
+@import 'sul_variables';
+
+// scss-lint:disable ImportantRule VendorPrefix
+// I'm not certain why, but when using the typical syntax of comma separating
+// these selectors Safari stops recognizing the webkit vendor prefix.
+:-webkit-full-screen {
+  height: 100% !important;
+  width: 100% !important;
+
+  .sul-close-fullscreen-button {
+    display: block !important;
+  }
+}
+
+:-ms-fullscreen {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+:-moz-full-screen {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+:fullscreen {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+.sul-fullscreen-button {
+  float: right;
+  margin-right: 0 !important;
+  margin-top: 3px !important;
+}
+
+.sul-close-fullscreen-button {
+  background: $black-50-percent-opaque;
+  color: $white-color;
+  display: none !important;
+  font-size: 18px !important;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+
+  &:focus,
+  &:hover { color: $white-color !important; }
+}
+// scss-lint:enable ImportantRule VendorPrefix

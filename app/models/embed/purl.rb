@@ -255,6 +255,10 @@ module Embed
           Settings.resource_types_that_contain_thumbnails.include?(resource.type)
         end
 
+        def pdf?
+          mimetype == 'application/pdf'
+        end
+
         def mimetype
           @file.attributes['mimetype'].try(:value)
         end

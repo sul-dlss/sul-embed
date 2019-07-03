@@ -1,0 +1,9 @@
+<div class="sul-embed-container<%= ' sul-embed-fullheight' if viewer.request.fullheight? %>"
+  id='sul-embed-object' style='display:none; <%= viewer.container_styles %>'>
+  <%= render 'header/pdf_viewer', viewer: viewer if viewer.display_header? %>
+  <%= render 'body/pdf_viewer', viewer: viewer %>
+  <%= render 'metadata_panel', viewer: viewer %>
+  <%= render 'embed_this/generic', viewer: viewer %>
+  <%= render 'download/pdf', viewer: viewer %>
+  <%= render 'footer/generic', viewer: viewer %>
+ </div>

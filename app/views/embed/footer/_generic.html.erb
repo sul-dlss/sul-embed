@@ -30,5 +30,13 @@
         <span class='sul-embed-sr-only'><%= viewer.external_url_text %></span>
       </a>
     <% end %>
+
+    <% if viewer.fullscreen? %>
+      <button
+        aria-label="Full screen"
+        class="sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-expand-1 sul-fullscreen-button"
+        id="full-screen-button">
+      </button>
+    <% end %>
   </div>
 </div>
