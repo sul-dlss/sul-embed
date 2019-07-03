@@ -4,6 +4,8 @@ module Embed
   module Viewer
     class UVFile < UVImage
       def self.supported_types
+        return %i[3d] if Settings.use_custom_pdf_viewer
+
         %i[3d document]
       end
 

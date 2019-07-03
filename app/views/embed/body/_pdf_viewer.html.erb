@@ -1,0 +1,20 @@
+<div class='sul-embed-body sul-embed-pdf'
+      data-sul-embed-theme="<%= viewer.asset_url('pdf.css') %>"
+      style="height: <%= viewer.body_height %>px">
+  <button aria-label="Zoom in" class="button zoom-in">+</button>
+  <button aria-label="Zoom out" class="button zoom-out">-</button>
+  <button aria-label="Previous page" class="button prev-page">
+    <i class="sul-i-arrow-left-8"></i>
+  </button>
+  <button aria-label="Next page" class="button next-page">
+    <i class="sul-i-arrow-right-8"></i>
+  </button>
+  <div id="pdf-viewer" class="pdf-viewer"
+    style="height: <%= viewer.body_height %>px"
+    data-worker-url="<%= asset_pack_url('pdf_worker.js') %>"
+    data-pdf-url="<%= viewer.pdf_files.first %>"
+  >
+    <canvas></canvas>
+  </div>
+  <script>;jQuery.ajax({url: "<%= asset_pack_url('pdf_viewer.js') %>", cache: true, dataType: 'script'});</script>
+</div>
