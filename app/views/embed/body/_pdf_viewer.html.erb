@@ -1,0 +1,18 @@
+<div class='sul-embed-body sul-embed-pdf'
+      data-sul-embed-theme="<%= viewer.asset_url('pdf.css') %>"
+      style="height: <%= viewer.body_height %>px">
+  <div class="buttons">
+    <button class="zoom-in">+</button>
+    <button class="zoom-out">-</button>
+    <button class="prev-page">👈</button>
+    <button class="next-page">👉</button>
+  </div>
+  <div id="pdf-viewer" class="pdf-viewer"
+    style="height: <%= viewer.body_height %>px"
+    data-worker-url="<%= asset_pack_url('pdf_worker.js') %>"
+    data-pdf-url="<%= viewer.pdf_files.first %>"
+  >
+    <canvas></canvas>
+  </div>
+  <script>;jQuery.ajax({url: "<%= asset_pack_url('pdf_viewer.js') %>", cache: true, dataType: 'script'});</script>
+</div>

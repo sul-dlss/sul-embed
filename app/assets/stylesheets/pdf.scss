@@ -1,0 +1,27 @@
+@import 'common';
+
+.#{$namespace}-pdf {
+  position: relative;
+
+  .pdf-viewer {
+    background-color: $black-color;
+    overflow-y: auto;
+    text-align: center;
+  }
+
+  .buttons {
+    left: 10px;
+    position: absolute;
+    top: 10px;
+    z-index: 1;
+
+    button {
+      background: $black-color;
+      border: none;
+      color: $white-color;
+      cursor: pointer;
+      font-size: 2em;
+      padding: 5px 13px;
+    }
+  }
+}

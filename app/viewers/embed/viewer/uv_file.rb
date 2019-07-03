@@ -4,7 +4,7 @@ module Embed
   module Viewer
     class UVFile < UVImage
       def self.supported_types
-        %i[3d document]
+        %i[3d]
       end
 
       def manifest_json_url
