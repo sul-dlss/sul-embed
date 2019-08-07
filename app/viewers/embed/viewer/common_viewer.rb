@@ -115,6 +115,10 @@ module Embed
           .compact.join(' until ')
       end
 
+      def fullscreen?
+        false
+      end
+
       ##
       # Not a great method name here as sometimes the header is still displayed,
       # even if the title is hidden.

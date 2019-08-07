@@ -21,6 +21,10 @@ module Embed
         true
       end
 
+      def fullscreen?
+        true
+      end
+
       private
 
       ##
