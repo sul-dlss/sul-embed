@@ -14,6 +14,7 @@
     data-worker-url="<%= asset_pack_url('pdf_worker.js') %>"
     data-pdf-url="<%= viewer.pdf_files.first %>"
   >
+    <div class="loading-spinner"></div>
     <canvas></canvas>
   </div>
   <script>;jQuery.ajax({url: "<%= asset_pack_url('pdf_viewer.js') %>", cache: true, dataType: 'script'});</script>

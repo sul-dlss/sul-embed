@@ -5,6 +5,7 @@ export default {
   viewer: function() { return $('#pdf-viewer'); },
   buttons: function() { return this.viewer().prevAll('.button'); },
   pdfUrl: function() { return this.viewer().data('pdfUrl'); },
+  loadingSpinner: function() { return this.viewer().find('.loading-spinner'); },
   pdfDoc: null,
   pageNum: 1,
   pageRendering: false,
@@ -87,6 +88,7 @@ export default {
     var _this = this;
     PDFJSLib.GlobalWorkerOptions.workerSrc = _this.viewer().data('workerUrl');
     PDFJSLib.getDocument(_this.pdfUrl()).promise.then(function(pdfDoc_) {
+      _this.loadingSpinner().remove();
       _this.pdfDoc = pdfDoc_;
       _this.renderPage(_this.pageNum);
     }, function() {
