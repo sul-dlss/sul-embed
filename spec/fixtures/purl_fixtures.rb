@@ -1079,6 +1079,29 @@ module PURLFixtures
     XML
   end
 
+  def pdf_document_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>PDF Title</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="document">
+          <resource sequence="1" type="document">
+            <label>PDF Label</label>
+            <file id="TheNameOfThe.pdf" mimetype="application/pdf" size="12345"></file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          #{access_discover_world}
+          #{access_read_world}
+        </rightsMetadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:title>PDF Title</dc:title>
+        </oai_dc:dc>
+      </publicObject>
+    XML
+  end
+
   def empty_content_metadata_purl
     <<-XML
       <publicObject>
