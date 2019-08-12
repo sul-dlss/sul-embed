@@ -4,9 +4,11 @@ class EmbedController < ApplicationController
   append_view_path Rails.root.join('app', 'views', 'embed')
   before_action :embed_request
   before_action :set_cache
-  before_action :allow_iframe, only: :iframe
+  before_action :allow_iframe, only: %i[iiif iframe]
 
   def get
+    @embed_request.validate!
+
     if @embed_request.format.to_sym == :xml
       render xml: Embed::Response.new(@embed_request).embed_hash.to_xml(root: 'oembed')
     else
@@ -16,9 +18,14 @@ class EmbedController < ApplicationController
 
   def iframe
     # Trigger purl object validation (will raise Embed::PURL::ResourceNotAvailable)
+    @embed_request.validate!
     @embed_request.purl_object.valid?
     @embed_response = Embed::Response.new(@embed_request)
     render 'iframe'
+  end
+
+  def iiif
+    @embed_request.validate! url_scheme: false, format: false
   end
 
   def embed_request
