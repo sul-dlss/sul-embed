@@ -45,6 +45,9 @@ class EmbedController < ApplicationController
     render body: e.to_s, status: :unsupported_media_type
   end
 
+  def iiif
+  end
+
   private
 
   def set_cache

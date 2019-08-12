@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   get 'iframe' => 'embed#iframe'
 
+  get 'iiif' => 'embed#iiif'
+
   if Rails.env.production?
     root to: proc { [200, {}, ['OK'] ] }
   else
