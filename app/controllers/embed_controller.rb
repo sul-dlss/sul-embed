@@ -7,6 +7,8 @@ class EmbedController < ApplicationController
   before_action :allow_iframe, only: %i[iiif iframe]
 
   def get
+    @embed_request.validate!
+
     if @embed_request.format.to_sym == :xml
       render xml: Embed::Response.new(@embed_request).embed_hash.to_xml(root: 'oembed')
     else
@@ -20,6 +22,10 @@ class EmbedController < ApplicationController
     @embed_request.purl_object.valid?
     @embed_response = Embed::Response.new(@embed_request)
     render 'iframe'
+  end
+
+  def iiif
+    @embed_request.validate! url_scheme: false, format: false
   end
 
   def embed_request
@@ -44,9 +50,6 @@ class EmbedController < ApplicationController
 
   rescue_from Embed::Request::InvalidFormat do |e|
     render body: e.to_s, status: :unsupported_media_type
-  end
-
-  def iiif
   end
 
   private

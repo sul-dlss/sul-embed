@@ -97,10 +97,10 @@ module Embed
       params[:suggested_search]
     end
 
-    def validate!
-      require_url_parameter
-      validate_url_scheme
-      validate_format
+    def validate!(url_parameter: true, url_scheme: true, format: true)
+      require_url_parameter if url_parameter
+      validate_url_scheme if url_scheme
+      validate_format if format
     end
 
     private
