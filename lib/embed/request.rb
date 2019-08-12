@@ -7,7 +7,6 @@ module Embed
     def initialize(params, rails_request = nil)
       @params = params
       @rails_request = rails_request
-      validate
     end
 
     def url
@@ -98,13 +97,13 @@ module Embed
       params[:suggested_search]
     end
 
-    private
-
-    def validate
+    def validate!
       require_url_parameter
       validate_url_scheme
       validate_format
     end
+
+    private
 
     def require_url_parameter
       raise NoURLProvided if url.blank?

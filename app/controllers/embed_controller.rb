@@ -16,6 +16,7 @@ class EmbedController < ApplicationController
 
   def iframe
     # Trigger purl object validation (will raise Embed::PURL::ResourceNotAvailable)
+    @embed_request.validate!
     @embed_request.purl_object.valid?
     @embed_response = Embed::Response.new(@embed_request)
     render 'iframe'
