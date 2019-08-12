@@ -4,7 +4,7 @@ class EmbedController < ApplicationController
   append_view_path Rails.root.join('app', 'views', 'embed')
   before_action :embed_request
   before_action :set_cache
-  before_action :allow_iframe, only: :iframe
+  before_action :allow_iframe, only: %i[iiif iframe]
 
   def get
     if @embed_request.format.to_sym == :xml
