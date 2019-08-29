@@ -38,8 +38,8 @@ export default {
             shareLink: {
               enabled: true,
               manifestIdReplacePattern: [
-                /\/iiif\/manifest/,
-                '',
+                /(purl.*.stanford.edu.*)\/iiif\/manifest(.json)?$/,
+                '$1',
               ],
             },
           },
