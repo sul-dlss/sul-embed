@@ -70,7 +70,7 @@ gem 'honeybadger'
 
 gem 'uglifier'
 
-gem 'sass-rails', '< 6'
+gem 'sassc-rails'
 
 gem 'filesize'
 
