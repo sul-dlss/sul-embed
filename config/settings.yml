@@ -69,3 +69,4 @@ image_viewer: Embed::Viewer::UVImage
 use_uv_for_files: true # A feature flag that toggles registering the Embed::Viewer::UVFile viewer
 collections_to_show_attribution:
   - dc876nn4469
+REVISION: <%= File.read("#{Rails.root}/REVISION").chomp if File.exists?("#{Rails.root}/REVISION") %>

@@ -1,5 +1,6 @@
 /*global EmbedThis, CssInjection, CommonViewerBehavior, PopupPanels */
 
+//= require common
 //= require modules/css_injection
 //= require vendor/tooltip
 //= require modules/common_viewer_behavior

@@ -1,5 +1,6 @@
 /*global CssInjection */
 
+//= require common
 //= require modules/css_injection
 //= require modules/common_viewer_behavior
 //= require modules/popup_panels

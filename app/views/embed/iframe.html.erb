@@ -5,6 +5,15 @@
     <script>
       <%= 'if (window.jQuery) { jQuery.fx.off = true; }' if Rails.env.test? %>
     </script>
+    <script type="text/javascript">
+      Honeybadger.configure({
+        apiKey: '<%= Honeybadger.config.get(:api_key) %>',
+        environment: '<%= Honeybadger.config.get(:env) %>',
+        debug: false,
+        onerror: true,
+        revision: '<%= Settings.REVISION %>'
+      });
+    </script>
   </head>
   <body>
     <%= render 'embed_response', embed_response: @embed_response %>
