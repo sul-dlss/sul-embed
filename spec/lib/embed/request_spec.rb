@@ -118,16 +118,16 @@ describe Embed::Request do
   end
   describe 'error handling' do
     it 'should raise an error when no URL is provided' do
-      expect(-> { Embed::Request.new({}).validate! }).to raise_error(Embed::Request::NoURLProvided)
+      expect { Embed::Request.new({}).validate! }.to raise_error(Embed::Request::NoURLProvided)
     end
     it 'should raise an error when a URL is provided that does not match the scheme' do
-      expect(-> { Embed::Request.new(url: 'http://library.stanford.edu').validate! }).to raise_error(Embed::Request::InvalidURLScheme)
+      expect { Embed::Request.new(url: 'http://library.stanford.edu').validate! }.to raise_error(Embed::Request::InvalidURLScheme)
     end
     it 'should raise an error when the scheme matches but there is no valid ID in the URL' do
-      expect(-> { Embed::Request.new(url: 'http://purl.stanford.edu/').validate! }).to raise_error(Embed::Request::InvalidURLScheme)
+      expect { Embed::Request.new(url: 'http://purl.stanford.edu/').validate! }.to raise_error(Embed::Request::InvalidURLScheme)
     end
     it 'should raise an error when an invalid format is requested' do
-      expect(-> { Embed::Request.new(url: 'http://purl.stanford.edu/abc', format: 'yml').validate! }).to raise_error(Embed::Request::InvalidFormat)
+      expect { Embed::Request.new(url: 'http://purl.stanford.edu/abc', format: 'yml').validate! }.to raise_error(Embed::Request::InvalidFormat)
     end
   end
 end
