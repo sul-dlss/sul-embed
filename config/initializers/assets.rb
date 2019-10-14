@@ -13,5 +13,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 
-Rails.application.config.assets.precompile += Dir.glob(Rails.root + 'app' + 'assets' + 'javascripts' + '*.js').map { |x| File.basename(x) }
-Rails.application.config.assets.precompile += Dir.glob(Rails.root + 'app' + 'assets' + 'stylesheets' + '*.scss*').map { |x| File.basename(x) }
+Rails.application.config.assets.precompile = ["manifest.js"]
