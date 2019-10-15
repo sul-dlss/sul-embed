@@ -2,16 +2,6 @@
 @import 'modules/loading_spinner';
 @import 'modules/fullscreen';
 
-
-// scss-lint:disable IdSelector ImportantRule
-.sul-embed-fullscreen {
-  // Ensure that the pdf viewer gets full height in fullscreen
-  #pdf-viewer {
-    height: 100% !important;
-  }
-}
-// scss-lint:enable IdSelector ImportantRule
-
 .#{$namespace}-pdf {
   position: relative;
 

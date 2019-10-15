@@ -1,5 +1,22 @@
-// scss-lint:disable ImportantRule
-.sul-embed-fullscreen {
+// scss-lint:disable ImportantRule VendorPrefix
+// I'm not certain why, but when using the typical syntax of comma separating
+// these selectors Safari stops recognizing the webkit vendor prefix.
+:-webkit-full-screen {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+:-ms-fullscreen {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+:-moz-full-screen {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+:fullscreen {
   height: 100% !important;
   width: 100% !important;
 }
