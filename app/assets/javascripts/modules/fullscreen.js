@@ -3,11 +3,16 @@
 import fscreen from 'fscreen';
 
 export default {
+  closeFullScreenButton: function() { return $('#close-full-screen-button'); },
   fullScreenButton: function() { return $('#full-screen-button'); },
 
   init: function(fullScreenSelector) {
-    $('#full-screen-button').on('click', function() {
+    this.fullScreenButton().on('click', function() {
       fscreen.requestFullscreen($(fullScreenSelector)[0]);
+    });
+
+    this.closeFullScreenButton().on('click', function() {
+      fscreen.exitFullscreen();
     });
   }
 };

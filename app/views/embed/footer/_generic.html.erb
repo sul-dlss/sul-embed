@@ -32,7 +32,11 @@
     <% end %>
 
     <% if viewer.fullscreen? %>
-      <button class="sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-expand-1 sul-fullscreen-button" id="full-screen-button"></button>
+      <button
+        aria-label="Full screen"
+        class="sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-expand-1 sul-fullscreen-button"
+        id="full-screen-button">
+      </button>
     <% end %>
   </div>
 </div>
