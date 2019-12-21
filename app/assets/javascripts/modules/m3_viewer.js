@@ -5,7 +5,7 @@ import miradorShareDialogPlugin from 'mirador-share-plugin/es/MiradorShareDialog
 import miradorSharePlugin from 'mirador-share-plugin/es/miradorSharePlugin.js';
 import miradorDownloadPlugin from 'mirador-dl-plugin/es/miradorDownloadPlugin.js';
 import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDialog.js';
-import osdReferencePlugin from 'mirador-dl-plugin/es/OSDReferences.js';
+import OSDReferencesPlugin from 'mirador/dist/es/src/plugins/OSDReferences';
 
 export default {
       init: function() {
@@ -97,7 +97,7 @@ export default {
         }, [
           miradorSharePlugin,
           miradorShareDialogPlugin,
-          osdReferencePlugin,
+          OSDReferencesPlugin,
           miradorDownloadDialogPlugin,
           miradorDownloadPlugin,
         ]);

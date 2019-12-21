@@ -700,16 +700,16 @@
     git-url-parse "^6.0.2"
     shelljs "^0.7.0"
 
-"@material-ui/core@^4.1.3":
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.5.2.tgz#90a27655db527326876f4390a9d28d69de2ed639"
-  integrity sha512-yARw/hwavOXqljP+biDXHcmfbC63n8EkA8C10/tZt7KkBp7fs+7+z3BNR+ffotd8/uhirIC1jQWWKdLoUc34yA==
+"@material-ui/core@^4.7.2":
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.8.0.tgz#8fb4f4df2b35e3e781b1eec17d4aaf388edf3099"
+  integrity sha512-ODyvWlDOP0D3tU32wVlYRNrdS+LeJxB3xJbXdDxq6gnG4JhKk79+ylP0cImjPBI2yEZw0hcYHWFZOGD+0R1X4g==
   dependencies:
     "@babel/runtime" "^7.4.4"
-    "@material-ui/styles" "^4.5.2"
-    "@material-ui/system" "^4.5.2"
+    "@material-ui/styles" "^4.7.1"
+    "@material-ui/system" "^4.7.1"
     "@material-ui/types" "^4.1.1"
-    "@material-ui/utils" "^4.5.2"
+    "@material-ui/utils" "^4.7.1"
     "@types/react-transition-group" "^4.2.0"
     clsx "^1.0.2"
     convert-css-length "^2.0.1"
@@ -717,24 +717,36 @@
     normalize-scroll-left "^0.2.0"
     popper.js "^1.14.1"
     prop-types "^15.7.2"
+    react-is "^16.8.0"
     react-transition-group "^4.3.0"
 
-"@material-ui/icons@^4.2.1":
+"@material-ui/icons@^4.5.1":
   version "4.5.1"
   resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-4.5.1.tgz#6963bad139e938702ece85ca43067688018f04f8"
   integrity sha512-YZ/BgJbXX4a0gOuKWb30mBaHaoXRqPanlePam83JQPZ/y4kl+3aW0Wv9tlR70hB5EGAkEJGW5m4ktJwMgxQAeA==
   dependencies:
     "@babel/runtime" "^7.4.4"
 
-"@material-ui/styles@^4.5.2":
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.5.2.tgz#95ac4641a3daed5ee9cc91af1e224d39efafbecb"
-  integrity sha512-QUqPk4tdPiDLs/1flB6qdAqUrYSxHv4YLCgvFeZw9A9OK/lf8LFjciF/SsSIDOCwoV2kf3BiGTzWUGjb/TTgzA==
+"@material-ui/lab@^4.0.0-alpha.28":
+  version "4.0.0-alpha.36"
+  resolved "https://registry.yarnpkg.com/@material-ui/lab/-/lab-4.0.0-alpha.36.tgz#85420c59c88a9620bd65fed530c288c04afee26a"
+  integrity sha512-T5dMW4RYmjH/VWjXui5uBPcqfMsKv5Ig/uX77UwTQts2CS6YeNF7619WtEm6yl9kV2O5CVpRsPw1ulrt2T2Hrg==
+  dependencies:
+    "@babel/runtime" "^7.4.4"
+    "@material-ui/utils" "^4.7.1"
+    clsx "^1.0.4"
+    prop-types "^15.7.2"
+    react-is "^16.8.0"
+
+"@material-ui/styles@^4.7.1":
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/@material-ui/styles/-/styles-4.7.1.tgz#48fa70f06441c35e301a9c4b6c825526a97b7a29"
+  integrity sha512-BBfxVThaPrglqHmKtSdrZJxnbFGJqKdZ5ZvDarj3HsmkteGCXsP1ohrDi5TWoa5JEJFo9S6q6NywqsENZn9rZA==
   dependencies:
     "@babel/runtime" "^7.4.4"
     "@emotion/hash" "^0.7.1"
     "@material-ui/types" "^4.1.1"
-    "@material-ui/utils" "^4.5.2"
+    "@material-ui/utils" "^4.7.1"
     clsx "^1.0.2"
     csstype "^2.5.2"
     hoist-non-react-statics "^3.2.1"
@@ -748,13 +760,13 @@
     jss-plugin-vendor-prefixer "^10.0.0"
     prop-types "^15.7.2"
 
-"@material-ui/system@^4.5.2":
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/@material-ui/system/-/system-4.5.2.tgz#7143bd8422a3f33f435c23f378136254004bbd60"
-  integrity sha512-h9RWvdM9XKlHHqwiuhyvWdobptQkHli+m2jJFs7i1AI/hmGsIc4reDmS7fInhETgt/Txx7uiAIznfRNIIVHmQw==
+"@material-ui/system@^4.7.1":
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/@material-ui/system/-/system-4.7.1.tgz#d928dacc0eeae6bea569ff3ee079f409efb3517d"
+  integrity sha512-zH02p+FOimXLSKOW/OT2laYkl9bB3dD1AvnZqsHYoseUaq0aVrpbl2BGjQi+vJ5lg8w73uYlt9zOWzb3+1UdMQ==
   dependencies:
     "@babel/runtime" "^7.4.4"
-    "@material-ui/utils" "^4.5.2"
+    "@material-ui/utils" "^4.7.1"
     prop-types "^15.7.2"
 
 "@material-ui/types@^4.1.1":
@@ -764,14 +776,14 @@
   dependencies:
     "@types/react" "*"
 
-"@material-ui/utils@^4.5.2":
-  version "4.5.2"
-  resolved "https://registry.yarnpkg.com/@material-ui/utils/-/utils-4.5.2.tgz#4c2fb531d357cf0da8cece53b588dff9b0bde934"
-  integrity sha512-zhbNfHd1gLa8At6RPDG7uMZubHxbY+LtM6IkSfeWi6Lo4Ax80l62YaN1QmUpO1IvGCkn/j62tQX3yObiQZrJsQ==
+"@material-ui/utils@^4.7.1":
+  version "4.7.1"
+  resolved "https://registry.yarnpkg.com/@material-ui/utils/-/utils-4.7.1.tgz#dc16c7f0d2cd02fbcdd5cfe601fd6863ae3cc652"
+  integrity sha512-+ux0SlLdlehvzCk2zdQ3KiS3/ylWvuo/JwAGhvb8dFVvwR21K28z0PU9OQW2PGogrMEdvX3miEI5tGxTwwWiwQ==
   dependencies:
     "@babel/runtime" "^7.4.4"
     prop-types "^15.7.2"
-    react-is "^16.8.6"
+    react-is "^16.8.0"
 
 "@rails/webpacker@^4.0.7":
   version "4.0.7"
@@ -2017,7 +2029,7 @@ core-js@^2.6.5:
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.10.tgz#8a5b8391f8cc7013da703411ce5b585706300d7f"
   integrity sha512-I39t74+4t+zau64EN1fE5v2W31Adtc/REhzWN+gWRRXg6WH5qAsZm62DHpQ1+Yhe4047T55jvzz7MUqF/dBBlA==
 
-core-js@^3.0.0, core-js@^3.1.3:
+core-js@^3.1.3:
   version "3.3.6"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.3.6.tgz#6ad1650323c441f45379e176ed175c0d021eac92"
   integrity sha512-u4oM8SHwmDuh5mWZdDg9UwNVq5s1uqq6ZDLLIs07VY+VJU91i3h4f3K/pgFvtUQPGdeStrZ+odKyfyt4EnKHfA==
@@ -3532,7 +3544,7 @@ hyphenate-style-name@^1.0.3:
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.3.tgz#097bb7fa0b8f1a9cf0bd5c734cf95899981a9b48"
   integrity sha512-EcuixamT82oplpoJ2XU4pDtKGWQ7b00CD9f1ug9IaQ3p1bkHMiKCZ9ut9QDI6qsa6cpUuB+A/I+zLtdNK4n2DQ==
 
-i18next@^17.0.4:
+i18next@^17.0.6:
   version "17.3.1"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-17.3.1.tgz#5fe75e054aae39a6f38f1a79f7ab49184c6dc7a1"
   integrity sha512-4nY+yaENaoZKmpbiDXPzucVHCN3hN9Z9Zk7LyQXVOKVIpnYOJ3L/yxHJlBPtJDq3PGgjFwA0QBFm/26Z0iDT5A==
@@ -4366,7 +4378,7 @@ mamacro@^0.0.3:
   resolved "https://registry.yarnpkg.com/mamacro/-/mamacro-0.0.3.tgz#ad2c9576197c9f1abf308d0787865bd975a3f3e4"
   integrity sha512-qMEwh+UujcQ+kbz3T6V+wAmO2U8veoq2w+3wY8MquqwVA3jChfwY+Tk52GZKDfACEPjuZ7r2oJLejwpt8jtwTA==
 
-manifesto.js@^3.0.9:
+manifesto.js@^3.0.11:
   version "3.0.12"
   resolved "https://registry.yarnpkg.com/manifesto.js/-/manifesto.js-3.0.12.tgz#a1f017528873642f017c1e0af72c02905f1ca606"
   integrity sha512-AUrU2YH+TJW4BvgJrU1tPLH9wZZvNSSsgSha+4Sdei80/wUQqnUOFhTOkiYaf8fPNQa3nbaXnbbzz835vX8r3Q==
@@ -4584,23 +4596,24 @@ minizlib@^1.2.1:
   dependencies:
     minipass "^2.9.0"
 
-mirador-dl-plugin@^0.8.0:
+mirador-dl-plugin@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-0.9.0.tgz#ff505a56b47573adfcc1a18cb9f16f260eaf986c"
+  integrity sha512-fnouFQkp3g8sVXml1Xwe51DrkY1rW8ZGX00SPSg37jmhY/URLuAnExtNKj+R+8nYATcE12T5q5oJHHZTPCOhIw==
+
+mirador-share-plugin@^0.8.0:
   version "0.8.0"
-  resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-0.8.0.tgz#31ca2479f152a31a3e4394593c87d42c368f9889"
-  integrity sha512-tImve5o73hGZjPaD5N5XaMiN9UCp9z1FV5Bsw7kkBS6WaM/rwgkZc8uhFsaIQEKuoPBBwJbyCaepQRbKv6552g==
+  resolved "https://registry.yarnpkg.com/mirador-share-plugin/-/mirador-share-plugin-0.8.0.tgz#f8448d8dae00794bf859662e2615cbc051f6d06a"
+  integrity sha512-WDHqkq3OVP7C6uTZJUNv+yOH0Lu2kvdOqMoZL1Phe5IrA5UEdsJ2F50bkX2YoNoPb7BIcvl2E/WZ4XsQb5jVZA==
 
-mirador-share-plugin@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/mirador-share-plugin/-/mirador-share-plugin-0.7.0.tgz#fc80a07b17032acd39ffe97018b680725ac8a8d7"
-  integrity sha512-90O4CP6fMQyEd31cGEMwzo1sBXvSD2pdt1mE7Wyt3eEZwqgTNbItQz8LmNjpannnzzvNzm1nrKQIwKeLRWr4VA==
-
-mirador@^3.0.0-alpha.16:
-  version "3.0.0-alpha.16"
-  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-alpha.16.tgz#ea48f384fad5127773071676d2f759ee29c5c55f"
-  integrity sha512-BEP5bFhnuMW1mlYJjSXw1/cnWjLNFGQDRrv8B/JlBqLFk5ino9JmDxa7BMNoKac4ulC7wKna2olDD0w96rV5ew==
+mirador@^3.0.0-beta.3:
+  version "3.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-beta.3.tgz#261a1ab80758ce02ed5c670d88d0a993e11976b7"
+  integrity sha512-hGATEua3aq9Hkw7pY1igA8h3Z06BWAN0t/mVtRCF/0+jpLXleBzMKKgOhISouVUvHqAZoacjZP6+8RHo9TM3xw==
   dependencies:
-    "@material-ui/core" "^4.1.3"
-    "@material-ui/icons" "^4.2.1"
+    "@material-ui/core" "^4.7.2"
+    "@material-ui/icons" "^4.5.1"
+    "@material-ui/lab" "^4.0.0-alpha.28"
     "@researchgate/react-intersection-observer" "^1.0.0"
     classnames "^2.2.6"
     clsx "^1.0.4"
@@ -4608,36 +4621,32 @@ mirador@^3.0.0-alpha.16:
     deepmerge "^3.3.0"
     dompurify "^1.0.11"
     downshift "^3.2.10"
-    i18next "^17.0.4"
+    i18next "^17.0.6"
     immutable "^4.0.0-rc.12"
     intersection-observer "^0.7.0"
     lodash "^4.17.11"
-    manifesto.js "^3.0.9"
+    manifesto.js "^3.0.11"
     node-fetch "^2.6.0"
-    node-sass "^4.12.0"
     normalize-url "^4.2.0"
-    openseadragon "^2.4.0"
+    openseadragon "^2.4.1"
     prop-types "^15.6.2"
     react-aria-live "^2.0.5"
     react-copy-to-clipboard "^5.0.1"
     react-full-screen "^0.2.4"
-    react-i18next "^10.11.2"
+    react-i18next "^10.11.4"
     react-iframe-comm "^1.2.2"
     react-image "^2.1.3"
     react-mosaic-component "^3.2.0"
-    react-placeholder "^3.0.1"
     react-redux "^7.1.0"
     react-resize-observer "^1.1.1"
-    react-rnd "^9.2.0"
+    react-rnd "^10.1"
     react-sizeme "^2.6.7"
-    react-svg-unique-id "^1.3.1"
     react-virtualized-auto-sizer "^1.0.2"
-    react-window "^1.8.3"
+    react-window "^1.8.5"
     redux "4.0.1"
     redux-devtools-extension "^2.13.2"
     redux-thunk "^2.3.0"
     reselect "^4.0.0"
-    sass-loader "^7.1.0"
     uuid "^3.3.2"
 
 mississippi@^3.0.0:
@@ -5082,7 +5091,7 @@ once@^1.3.0, once@^1.3.1, once@^1.4.0:
   dependencies:
     wrappy "1"
 
-openseadragon@^2.4.0:
+openseadragon@^2.4.1:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/openseadragon/-/openseadragon-2.4.1.tgz#91fda5245558f5e4f939c2173bdf582359154b21"
   integrity sha512-7fWUnCkGvWcnoRxqeXcg4bSLPApWbI0hHumEZF8K2pziMfPNjvvHL5XB4oQeT2XfrGKfaasVrPe2XqhAr5kogA==
@@ -6243,10 +6252,10 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-re-resizable@5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/re-resizable/-/re-resizable-5.0.1.tgz#66756a7aa0583b199e23e23f12a71c546031146d"
-  integrity sha512-Iy8v5li7bhNBDxCN1DbA4l6G2Hk8NCZtcExoI1D+5pfvKyQcH8LH2P5h3DGoEfHhs0uyyRC1Qx8bHBomfrmxgA==
+re-resizable@6.1.1:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/re-resizable/-/re-resizable-6.1.1.tgz#7ff7cfe92c0b9d8b0bceaa578aadaeeff8931eaf"
+  integrity sha512-ngzX5xbXi9LlIghJUYZaBDkJUIMLYqO3tQ2cJZoNprCRGhfHnbyufKm51MZRIOBlLigLzPPFKBxQE8ZLezKGfA==
   dependencies:
     fast-memoize "^2.5.1"
 
@@ -6256,11 +6265,6 @@ react-aria-live@^2.0.5:
   integrity sha512-rXiH1HNKJrr/UfVeGwA2aKY43r5WbjLs+AYB6/kJF1qny2hwxzQc1qewQmUpdQ5h8HAOTD8O/XlGcEHjqlCl0g==
   dependencies:
     uuid "^3.2.1"
-
-react-children-utilities@^1.2.1:
-  version "1.3.3"
-  resolved "https://registry.yarnpkg.com/react-children-utilities/-/react-children-utilities-1.3.3.tgz#4d6725b51471c119e5319a309d07c51543b65cb2"
-  integrity sha512-4VnHQweSerPlsKS65dBeKuAPDhHAOllDgsjDLLdluMOZ+1yOE29pFqdGAnnOnFVfhIhvYnGyRbiJ7NtMemsu7w==
 
 react-copy-to-clipboard@^5.0.1:
   version "5.0.1"
@@ -6332,10 +6336,10 @@ react-dom@^16.8.6:
     prop-types "^15.6.2"
     scheduler "^0.17.0"
 
-react-draggable@3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-3.3.0.tgz#2ed7ea3f92e7d742d747f9e6324860606cd4d997"
-  integrity sha512-U7/jD0tAW4T0S7DCPK0kkKLyL0z61sC/eqU+NUfDjnq+JtBKaYKDHpsK2wazctiA4alEzCXUnzkREoxppOySVw==
+react-draggable@4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/react-draggable/-/react-draggable-4.2.0.tgz#40cc5209082ca7d613104bf6daf31372cc0e1114"
+  integrity sha512-5wFq//gEoeTYprnd4ze8GrFc+Rbnx+9RkOMR3vk4EbWxj02U6L6T3yrlKeiw4X5CtjD2ma2+b3WujghcXNRzkw==
   dependencies:
     classnames "^2.2.5"
     prop-types "^15.6.0"
@@ -6348,7 +6352,7 @@ react-full-screen@^0.2.4:
     "@types/react" "*"
     fscreen "^1.0.1"
 
-react-i18next@^10.11.2:
+react-i18next@^10.11.4:
   version "10.13.2"
   resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-10.13.2.tgz#2943705fa751d366fc95b3755520ebe6eeed2408"
   integrity sha512-DGoauWUdPEv/+PLa03nN+wlW31XrGmQJz+zIyOA+tRTIwlRaNgeM62nGP1WG3g7fJrphMZUwPcAQqNv6XBYM4w==
@@ -6373,10 +6377,15 @@ react-image@^2.1.3:
   dependencies:
     prop-types "15.7.2"
 
-react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.6, react-is@^16.9.0:
+react-is@^16.7.0, react-is@^16.8.1, react-is@^16.9.0:
   version "16.11.0"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.11.0.tgz#b85dfecd48ad1ce469ff558a882ca8e8313928fa"
   integrity sha512-gbBVYR2p8mnriqAwWx9LbuUrShnAuSCNnuPGyc7GJrMVQtPDAh8iLpv7FRuMPFb56KkaVZIYSz1PrjI9q0QPCw==
+
+react-is@^16.8.0:
+  version "16.12.0"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.12.0.tgz#2cc0fe0fba742d97fd527c42a13bec4eeb06241c"
+  integrity sha512-rPCkf/mWBtKc97aLL9/txD8DZdemK0vkA3JMLShjlJB3Pj3s+lpf1KaBzMfQrAmhMQB0n1cU/SUGgKKBCe837Q==
 
 react-mosaic-component@^3.2.0:
   version "3.2.0"
@@ -6392,13 +6401,6 @@ react-mosaic-component@^3.2.0:
     react-dnd-multi-backend "^3.2.1"
     react-dnd-touch-backend "^0.8.3"
     uuid "^3.3.2"
-
-react-placeholder@^3.0.1:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/react-placeholder/-/react-placeholder-3.0.2.tgz#08bf95b8e2ff20827d8ae8235c4cb2a3a428b292"
-  integrity sha512-PItNXiq7GO3bK8iLobGLcBeRPtxyGdtAdZ7S0zeVdAlpIlUrJy+c6igzKr6uyK74Fh/WhOL5uCNju8FVUjCJEQ==
-  dependencies:
-    prop-types "^15.6.0"
 
 react-redux@^7.1.0:
   version "7.1.1"
@@ -6417,14 +6419,14 @@ react-resize-observer@^1.1.1:
   resolved "https://registry.yarnpkg.com/react-resize-observer/-/react-resize-observer-1.1.1.tgz#641dfa2e0f4bd2549a8ab4bbbaf43b68f3dcaf76"
   integrity sha512-3R+90Hou90Mr3wJYc+unsySC8Pn91V4nmjO32NKvUvjphRUbq9HisyLg7bDyGBE7xlMrrM6Fax7iNQaFdc/FYA==
 
-react-rnd@^9.2.0:
-  version "9.2.0"
-  resolved "https://registry.yarnpkg.com/react-rnd/-/react-rnd-9.2.0.tgz#0642a9f788ee2f16267d13cefe21d0e94da99668"
-  integrity sha512-Sp2vCUcvnHcdwwODbL50FJqZL6yt/ElPGVIaennOulsRWWJZ+dMWo0eJl+5qlh8uxRaLzpi9VQoq+ADTkvytsg==
+react-rnd@^10.1:
+  version "10.1.3"
+  resolved "https://registry.yarnpkg.com/react-rnd/-/react-rnd-10.1.3.tgz#2b24930c8c197d3537797e76ed9ad819bb747567"
+  integrity sha512-mY9lczt5noY/dNYT7l3EIg4fwmKda4jwEaVFsMva2yM2ZKmiqsqqgc4F9rzhqFo8XUNUMKceFZxe82FxXdf3hw==
   dependencies:
-    re-resizable "5.0.1"
-    react-draggable "3.3.0"
-    tslib "1.9.3"
+    re-resizable "6.1.1"
+    react-draggable "4.2.0"
+    tslib "1.10.0"
 
 react-sizeme@^2.6.7:
   version "2.6.10"
@@ -6435,14 +6437,6 @@ react-sizeme@^2.6.7:
     invariant "^2.2.4"
     shallowequal "^1.1.0"
     throttle-debounce "^2.1.0"
-
-react-svg-unique-id@^1.3.1:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/react-svg-unique-id/-/react-svg-unique-id-1.3.2.tgz#8fe3450bae2b5a962b5de32223be4dd6a36cb453"
-  integrity sha512-lr0w+8uPEcZRnxZaehYxNp9/jGS22/FcSQIgrYxosXPXei1GiqOm96SGogrzOCww7JfjJ8b5ln/r8YaaH4GrDA==
-  dependencies:
-    core-js "^3.0.0"
-    react-children-utilities "^1.2.1"
 
 react-transition-group@^4.3.0:
   version "4.3.0"
@@ -6459,7 +6453,7 @@ react-virtualized-auto-sizer@^1.0.2:
   resolved "https://registry.yarnpkg.com/react-virtualized-auto-sizer/-/react-virtualized-auto-sizer-1.0.2.tgz#a61dd4f756458bbf63bd895a92379f9b70f803bd"
   integrity sha512-MYXhTY1BZpdJFjUovvYHVBmkq79szK/k7V3MO+36gJkWGkrXKtyr4vCPtpphaTLRAdDNoYEYFZWE8LjN+PIHNg==
 
-react-window@^1.8.3:
+react-window@^1.8.5:
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/react-window/-/react-window-1.8.5.tgz#a56b39307e79979721021f5d06a67742ecca52d1"
   integrity sha512-HeTwlNa37AFa8MDZFZOKcNEkuF2YflA0hpGPiTT9vR7OawEt+GZbfM6wqkBahD3D3pUjIabQYzsnY/BSJbgq6Q==
@@ -7588,12 +7582,7 @@ ts-pnp@^1.1.2:
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.1.4.tgz#ae27126960ebaefb874c6d7fa4729729ab200d90"
   integrity sha512-1J/vefLC+BWSo+qe8OnJQfWTYRS6ingxjwqmHMqaMxXMj7kFtKLgAaYW3JeX3mktjgUL+etlU8/B4VUAUI9QGw==
 
-tslib@1.9.3:
-  version "1.9.3"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
-  integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
-
-tslib@^1.9.0:
+tslib@1.10.0, tslib@^1.9.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
