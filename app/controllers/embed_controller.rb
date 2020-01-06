@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class EmbedController < ApplicationController
-  append_view_path Rails.root.join('app', 'views', 'embed')
+  append_view_path Rails.root.join('app/views/embed')
   before_action :embed_request
   before_action :set_cache
   before_action :allow_iframe, only: %i[iiif iframe]

@@ -2,7 +2,7 @@
 
 namespace :uv do
   desc 'Update from Universal Viewer repo, fingerprint the directory, and symlink the thumbprinted directory into place'
-  task :update do
+  task update: [:environment] do
     src = ENV['UV_SRC'] || '../universalviewer/examples/uv/.'
     dest = ENV['UV_DEST'] || './public/uv-3'
     puts 'Copying over build uv'
