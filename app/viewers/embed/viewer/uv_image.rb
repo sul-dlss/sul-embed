@@ -26,7 +26,7 @@ module Embed
 
       # retrieve the MD5-thumbprinted name for our assets (see the rake uv:update task)
       def asset_thumbprint
-        ::File.read(Rails.root.join('public', 'uv-3', '.md5')).strip
+        ::File.read(Rails.root.join('public/uv-3/.md5')).strip
       end
 
       def manifest_json_url

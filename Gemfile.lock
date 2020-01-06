@@ -297,6 +297,9 @@ GEM
       unicode-display_width (>= 1.4.0, < 1.7)
     rubocop-performance (1.5.1)
       rubocop (>= 0.71.0)
+    rubocop-rails (2.4.1)
+      rack (>= 1.1)
+      rubocop (>= 0.72.0)
     ruby-progressbar (1.10.1)
     rubyzip (2.0.0)
     sassc (2.2.1)
@@ -386,6 +389,7 @@ DEPENDENCIES
   rspec-rails (~> 3.7)
   rubocop (~> 0.49)
   rubocop-performance
+  rubocop-rails
   sassc-rails
   selenium-webdriver (!= 3.13.0)
   sul_styles (~> 0.6)

@@ -1,6 +1,10 @@
 inherit_from:
   - .rubocop_todo.yml
 
+require:
+  - rubocop-rails
+  - rubocop-performance
+
 AllCops:
   Exclude:
     - 'Guardfile'
@@ -19,7 +23,7 @@ Style/StringLiterals:
   Enabled: true
   EnforcedStyle: single_quotes
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 120
   Exclude:
     - 'spec/**/*'
