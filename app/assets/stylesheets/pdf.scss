@@ -12,7 +12,20 @@
     text-align: center;
 
     &.error {
-      background-color: $white-color;
+      color: $white-color;
+      position: relative;
+
+      .error-icon {
+        color: $color-cardinal-red;
+      }
+
+      h2 {
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+      }
     }
   }
 

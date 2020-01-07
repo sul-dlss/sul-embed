@@ -5,6 +5,7 @@ export default {
   viewer: function() { return $('#pdf-viewer'); },
   buttons: function() { return this.viewer().prevAll('.button'); },
   pdfUrl: function() { return this.viewer().data('pdfUrl'); },
+  locationRestricted: function() { return this.viewer().data('locationRestricted'); },
   loadingSpinner: function() { return this.viewer().find('.loading-spinner'); },
   pdfDoc: null,
   pageNum: 1,
@@ -94,7 +95,20 @@ export default {
     }, function() {
       _this.viewer().addClass('error');
       _this.buttons().hide();
-      _this.viewer().html('There was an issue viewing this document.');
+      if (_this.locationRestricted()) {
+        _this.viewer().html(
+          '<h2>' +
+          '<span class="error-icon" aria-hidden="true">&#9888;</span> ' +
+          'Restricted document cannot be viewed in your location.' +
+          '<br />' +
+          'See Access conditions for more information.' +
+          '</h2>'
+        );
+      } else {
+        _this.viewer().html(
+          '<h2><span class="error-icon" aria-hidden="true">&#9888;</span> There was an issue viewing this document</h2>'
+        );
+      }
     });
 
     _this.setupButtonListeners();

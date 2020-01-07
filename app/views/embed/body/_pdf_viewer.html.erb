@@ -13,6 +13,7 @@
   <div id="pdf-viewer" class="pdf-viewer"
     data-worker-url="<%= asset_pack_url('pdf_worker.js') %>"
     data-pdf-url="<%= viewer.pdf_files.first %>"
+    data-location-restricted="<%= viewer.all_documents_location_restricted? %>"
   >
     <div class="loading-spinner"></div>
     <canvas></canvas>

@@ -25,6 +25,10 @@ module Embed
         true
       end
 
+      def all_documents_location_restricted?
+        document_resource_files.all?(&:location_restricted?)
+      end
+
       private
 
       ##
