@@ -22,4 +22,16 @@ RSpec.describe 'embed/footer/_generic.html.erb' do
     expect(rendered).to have_css '[aria-label="open embed this panel"]'
     expect(rendered).to have_css '[aria-label="open download panel"]'
   end
+
+  describe 'fullscreen button' do
+    context 'when the viewer is configured to use the local fullscreen function' do
+      let(:viewer) { Embed::Viewer::PDFViewer.new(request) }
+
+      it { expect(rendered).to have_css('button#full-screen-button') }
+    end
+
+    context 'when the viewer is not configured to use the local fullscreen function' do
+      it { expect(rendered).not_to have_css('button#full-screen-button') }
+    end
+  end
 end
