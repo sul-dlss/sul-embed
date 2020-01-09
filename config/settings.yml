@@ -68,5 +68,6 @@ streaming_prefix:
 image_viewer: Embed::Viewer::UVImage
 use_uv_for_files: true # A feature flag that toggles registering the Embed::Viewer::UVFile viewer
 use_custom_pdf_viewer: false
+use_custom_3d_viewer: false
 collections_to_show_attribution:
   - dc876nn4469

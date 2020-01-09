@@ -4,9 +4,10 @@ module Embed
   module Viewer
     class UVFile < UVImage
       def self.supported_types
-        return %i[3d] if Settings.use_custom_pdf_viewer
-
-        %i[3d document]
+        types = []
+        types << :'3d' unless Settings.use_custom_3d_viewer
+        types << :document unless Settings.use_custom_pdf_viewer
+        types
       end
 
       def manifest_json_url

@@ -4,3 +4,4 @@ streaming:
 collections_to_show_attribution:
   - abc
 use_custom_pdf_viewer: true
+use_custom_3d_viewer: true
