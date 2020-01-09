@@ -6,6 +6,7 @@ import miradorSharePlugin from 'mirador-share-plugin/es/miradorSharePlugin.js';
 import miradorDownloadPlugin from 'mirador-dl-plugin/es/miradorDownloadPlugin.js';
 import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDialog.js';
 import OSDReferencesPlugin from 'mirador/dist/es/src/plugins/OSDReferences';
+import customIconPlugin from '../plugins/customIconPlugin';
 
 export default {
       init: function() {
@@ -100,6 +101,7 @@ export default {
           OSDReferencesPlugin,
           miradorDownloadDialogPlugin,
           miradorDownloadPlugin,
+          customIconPlugin,
         ]);
       }
     };
