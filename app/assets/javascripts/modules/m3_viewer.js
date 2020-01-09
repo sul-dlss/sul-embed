@@ -66,6 +66,11 @@ export default {
               }
             }
           },
+          translations: {
+            en: {
+              windowPluginMenu: 'Download & share'
+            }
+          },
           windows: [
             {
               defaultSearchQuery: data.search.length > 0 ? data.search : undefined,
