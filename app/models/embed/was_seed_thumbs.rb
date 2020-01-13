@@ -45,7 +45,7 @@ module Embed
           raise ResourceNotAvailable unless response.success?
 
           response.body
-        rescue Faraday::Error::ConnectionFailed, Faraday::Error::TimeoutError
+        rescue Faraday::ConnectionFailed, Faraday::TimeoutError
           nil
         end
     end
