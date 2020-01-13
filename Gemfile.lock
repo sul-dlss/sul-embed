@@ -376,7 +376,7 @@ DEPENDENCIES
   deprecation
   dlss-capistrano
   dor-rights-auth (>= 1.3.0)
-  faraday
+  faraday (~> 1)
   filesize
   guard-rspec
   handlebars_assets
