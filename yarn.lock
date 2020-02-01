@@ -4696,10 +4696,10 @@ minizlib@^1.2.1:
   dependencies:
     minipass "^2.9.0"
 
-mirador-dl-plugin@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-0.9.0.tgz#ff505a56b47573adfcc1a18cb9f16f260eaf986c"
-  integrity sha512-fnouFQkp3g8sVXml1Xwe51DrkY1rW8ZGX00SPSg37jmhY/URLuAnExtNKj+R+8nYATcE12T5q5oJHHZTPCOhIw==
+mirador-dl-plugin@^0.10.0:
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-0.10.0.tgz#05fceaf3e18ac039b956fec4c2a94eb9a136fe41"
+  integrity sha512-OMj2Mn+XFVga895sDkWU38RJC32h2O6qEOTjtfO4jnYBdNFlczR/6AC0GWeNGNPlHrYooHq5Sy/qCC3LeEnPwg==
 
 mirador-share-plugin@^0.8.0:
   version "0.8.0"
