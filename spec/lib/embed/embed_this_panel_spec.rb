@@ -78,7 +78,8 @@ describe Embed::EmbedThisPanel do
           druid: 'oo000oo0000',
           height: '555',
           width: '666',
-          request: request
+          request: request,
+          title: 'Hello world'
         )
       )
     end
@@ -96,6 +97,11 @@ describe Embed::EmbedThisPanel do
           expect(iframe['height']).to eq '100%'
         end
       end
+    end
+
+    it 'adds the title to html' do
+      iframe = subject.find('iframe')
+      expect(iframe['title']).to eq 'Hello world'
     end
 
     describe 'the src' do

@@ -76,6 +76,12 @@ describe Embed::Viewer::CommonViewer do
     end
   end
 
+  describe '#iframe_title' do
+    it 'determines the title from the class name' do
+      expect(file_viewer.iframe_title).to eq 'File viewer'
+    end
+  end
+
   describe '#body_height' do
     it 'is the default_body_height when no maxheight is provided' do
       expect(file_viewer).to receive(:default_body_height).and_return(200)

@@ -126,6 +126,10 @@ module Embed
         !@request.hide_title?
       end
 
+      def iframe_title
+        I18n.t("viewers.#{self.class.name.demodulize.underscore}.title", default: 'Viewer')
+      end
+
       private
 
       def height_style

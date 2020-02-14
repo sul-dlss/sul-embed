@@ -35,6 +35,7 @@ describe Embed::Response do
       expect(request).to receive(:fullheight?).and_return(nil)
       allow(viewer).to receive(:height).and_return('100')
       allow(viewer).to receive(:width).and_return('100')
+      allow(viewer).to receive(:iframe_title).and_return('Kewl Viewer')
     end
     it 'is the iframe snippet pointing to the embed' do
       expect(response.html).to match(%r{<iframe.*src='https://embed\.stanford\.edu.*'.*/>}m)
@@ -48,6 +49,7 @@ describe Embed::Response do
       expect(response).to receive(:viewer).at_least(:once).and_return(viewer)
       allow(viewer).to receive(:height).and_return('100')
       allow(viewer).to receive(:width).and_return('100')
+      allow(viewer).to receive(:iframe_title).and_return('Kewl Viewer')
     end
     it 'should provide a hash that conforms to the oEmbed SPEC' do
       embed_hash = response.embed_hash
