@@ -24,3 +24,22 @@ en:
   date:
     formats:
       sul: '%d-%b-%Y'
+  viewers:
+    file:
+      title: 'File viewer'
+    geo:
+      title: 'Geospatial viewer'
+    m3_viewer:
+      title: 'Image viewer'
+    media:
+      title: 'Media viewer'
+    pdf_viewer:
+      title: 'PDF viewer'
+    uv_file:
+      title: 'File viewer'
+    uv_image:
+      title: 'Image viewer'
+    virtex_3d_viewer:
+      title: '3-D object viewer'
+    was_seed:
+      title: 'File viewer'

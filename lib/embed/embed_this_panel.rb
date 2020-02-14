@@ -62,7 +62,7 @@ module Embed
       HTML
     end
 
-    def self.iframe_html(druid:, height:, width:, request:)
+    def self.iframe_html(druid:, height:, width:, request:, title: '')
       width_style = if width
                       "#{width}px"
                     else
@@ -75,7 +75,7 @@ module Embed
                      end
       src = "#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{druid}&#{request.as_url_params.to_query}"
       "<iframe
-        src='#{src}' height='#{height_style}' width='#{width_style}'
+        src='#{src}' height='#{height_style}' width='#{width_style}' title='#{title}'
         frameborder='0' marginwidth='0' marginheight='0' scrolling='no' allowfullscreen
       />"
     end

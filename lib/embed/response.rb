@@ -28,7 +28,8 @@ module Embed
         druid: @request.purl_object.druid,
         height: viewer.height,
         width: viewer.width,
-        request: @request
+        request: @request,
+        title: viewer.iframe_title
       )
     end
 
