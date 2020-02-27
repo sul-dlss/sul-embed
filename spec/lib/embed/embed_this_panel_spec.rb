@@ -11,6 +11,7 @@ describe Embed::EmbedThisPanel do
         height: '555',
         width: '666',
         request: request,
+        iframe_title: 'File viewer',
         purl_object_title: 'The Object Title'
       ) do
         'Added Panel Content'
@@ -20,16 +21,16 @@ describe Embed::EmbedThisPanel do
 
   context 'block param' do
     it 'instantiates without passing a block' do
-      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', request: request, purl_object_title: 'a') }.not_to raise_error
+      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', request: request, purl_object_title: 'a', iframe_title: 'File viewer') }.not_to raise_error
     end
     it 'instantiates with an empty block' do
-      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', request: request, purl_object_title: 'a') {} }.not_to raise_error
+      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', request: request, purl_object_title: 'a', iframe_title: 'File viewer') {} }.not_to raise_error
     end
     it 'instantiates with a nil block' do
-      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', request: request, purl_object_title: 'a') { nil } }.not_to raise_error
+      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', request: request, purl_object_title: 'a', iframe_title: 'File viewer') { nil } }.not_to raise_error
     end
     it 'instantiates with an empty string block' do
-      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', request: request, purl_object_title: 'a') { '' } }.not_to raise_error
+      expect { described_class.new(druid: 'oo000oo0000', height: '1', width: '2', request: request, purl_object_title: 'a', iframe_title: 'File viewer') { '' } }.not_to raise_error
     end
   end
 

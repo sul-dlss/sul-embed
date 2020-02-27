@@ -27,6 +27,11 @@ describe 'embed this panel', js: true do
       expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(%r{<iframe.*height='200px'.*/>}m)
       expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(%r{<iframe.*width='100%'.*/>}m)
     end
+
+    it 'includes the viewer\'s iframe title' do
+      page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
+      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match("title='File viewer'")
+    end
   end
   describe 'file objects' do
     let(:spec_fixture) { file_purl }

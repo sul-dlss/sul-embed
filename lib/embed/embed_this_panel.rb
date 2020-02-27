@@ -2,11 +2,12 @@
 
 module Embed
   class EmbedThisPanel
-    def initialize(druid:, height:, width:, request:, purl_object_title:)
+    def initialize(druid:, height:, width:, request:, iframe_title:, purl_object_title:)
       @druid = druid
       @height = height
       @width = width
       @request = request
+      @iframe_title = iframe_title
       @purl_object_title = purl_object_title
       @panel_content = yield if block_given?
     end
@@ -82,10 +83,10 @@ module Embed
 
     private
 
-    attr_reader :druid, :height, :width, :request, :purl_object_title, :panel_content
+    attr_reader :druid, :height, :width, :request, :purl_object_title, :panel_content, :iframe_title
 
     def iframe_html
-      self.class.iframe_html(druid: druid, height: height, width: width, request: request)
+      self.class.iframe_html(druid: druid, height: height, width: width, request: request, title: iframe_title)
     end
   end
 end
