@@ -1,8 +1,5 @@
 <% unless viewer.request.hide_embed_this? %>
-  <%= embed_panel(druid: viewer.purl_object.druid,
-                                height: viewer.height, width: viewer.width,
-                                request: viewer.request,
-                                purl_object_title: viewer.purl_object.title) do %>
+  <%= embed_panel(viewer: viewer) do %>
     <div class='sul-embed-section'>
       <% checkbox_options = { type: 'checkbox', id: 'sul-embed-embed-search', 'data-embed-attr': 'hide_search' } %>
       <% checkbox_options[:checked] = 'checked' unless viewer.request.hide_search? %>
