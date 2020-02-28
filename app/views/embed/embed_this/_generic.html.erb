@@ -1,8 +1,3 @@
 <% unless viewer.request.hide_embed_this? %>
-  <%= embed_panel(druid: viewer.purl_object.druid,
-                                height: viewer.height,
-                                width: viewer.width,
-                                request: viewer.request,
-                                iframe_title: viewer.iframe_title,
-                                purl_object_title: viewer.purl_object.title) %>
+  <%= embed_panel(viewer: viewer) %>
 <% end %>

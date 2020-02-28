@@ -2,13 +2,13 @@
 
 module Embed
   class EmbedThisPanel
-    def initialize(druid:, height:, width:, request:, iframe_title:, purl_object_title:)
-      @druid = druid
-      @height = height
-      @width = width
-      @request = request
-      @iframe_title = iframe_title
-      @purl_object_title = purl_object_title
+    def initialize(viewer:)
+      @druid = viewer&.purl_object&.druid
+      @height = viewer&.height
+      @width = viewer&.width
+      @request = viewer&.request
+      @iframe_title = viewer&.iframe_title
+      @purl_object_title = viewer&.purl_object&.title
       @panel_content = yield if block_given?
     end
 
