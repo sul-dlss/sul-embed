@@ -16,6 +16,7 @@ OkComputer::Registry.register 'ruby_version', OkComputer::RubyVersionCheck.new
 purl_url_to_check = Settings.purl_url + (Settings.purl_url.end_with?('/') ? '' : '/') + 'status'
 OkComputer::Registry.register 'purl_url', OkComputer::HttpCheck.new(purl_url_to_check)
 OkComputer::Registry.register 'stacks_url', OkComputer::HttpCheck.new(Settings.stacks_url)
+OkComputer.make_optional ['stacks_url']
 
 # ------------------------------------------------------------------------------
 
