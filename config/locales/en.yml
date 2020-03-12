@@ -35,10 +35,6 @@ en:
       title: 'Media viewer'
     pdf_viewer:
       title: 'PDF viewer'
-    uv_file:
-      title: 'File viewer'
-    uv_image:
-      title: 'Image viewer'
     virtex_3d_viewer:
       title: '3-D object viewer'
     was_seed:
