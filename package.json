@@ -20,7 +20,7 @@
     "fscreen": "^1.0.2",
     "list.js": "1.1.1",
     "mirador": "^3.0.0-beta.4",
-    "mirador-dl-plugin": "^0.10.0",
+    "mirador-dl-plugin": "^0.11.0",
     "mirador-share-plugin": "^0.9.0",
     "pdfjs-dist": "^2.0.943",
     "react": "^16.8.6",
