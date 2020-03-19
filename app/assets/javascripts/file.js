@@ -1,5 +1,6 @@
 /*global CssInjection */
 
+//= require common
 //= require modules/css_injection
 //= require list.js/dist/list
 //= require vendor/tooltip

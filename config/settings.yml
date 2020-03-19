@@ -71,3 +71,4 @@ use_custom_pdf_viewer: false
 use_custom_3d_viewer: false
 collections_to_show_attribution:
   - dc876nn4469
+REVISION: <%= File.read("#{Rails.root}/REVISION").chomp if File.exists?("#{Rails.root}/REVISION") %>
