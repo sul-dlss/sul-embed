@@ -5,9 +5,8 @@
 
     var linkHtml = '<link rel="stylesheet" href="{{stylesheetLink}}" type="text/css" />',
         themeUrl = $("[data-sul-embed-theme]").data("sul-embed-theme"),
-        pluginStylesheets = $("[data-plugin-styles]").data("plugin-styles") || '',
-        fontIconsHtml = '<link href="https://sul-cdn.stanford.edu/sul_s' +
-          'tyles/0.5.1/sul-icons.min.css" rel="stylesheet">';
+        iconsUrl = $('[data-sul-icons]').data('sul-icons'),
+        pluginStylesheets = $('[data-plugin-styles]').data('plugin-styles') || '';
 
     return {
       appendToHead: function() {
@@ -18,7 +17,10 @@
       },
 
       injectFontIcons: function() {
-        $('head').append(fontIconsHtml);
+        if ( iconsUrl ) {
+          var htmlSnippet = linkHtml.replace('{{stylesheetLink}}', iconsUrl);
+          $('head').append(htmlSnippet);
+        }
       },
 
       injectPluginStyles: function() {        
