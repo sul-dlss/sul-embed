@@ -30,7 +30,7 @@ module Embed
       end
 
       def height
-        @request.maxheight || calculate_height
+        @request.maxheight || default_height
       end
 
       def width
@@ -80,18 +80,6 @@ module Embed
         self.class.show_download_count?
       end
 
-      # Set a specific height for the body. We need to subtract
-      # the header and footer heights from the consumer
-      # requested maxheight, otherwise we set a default
-      # which can be set by the specific viewers.
-      def body_height
-        if @request.maxheight
-          @request.maxheight.to_i - (header_height + footer_height)
-        else
-          default_body_height
-        end
-      end
-
       def self.show_download?
         false
       end
@@ -99,12 +87,6 @@ module Embed
       # default is to show the download file count (when download toolbar is shown)
       def self.show_download_count?
         true
-      end
-
-      def container_styles
-        return unless height_style.present? || width_style.present?
-
-        [height_style, width_style].compact.join(' ').to_s
       end
 
       def tooltip_text(file)
@@ -132,43 +114,11 @@ module Embed
 
       private
 
-      def height_style
-        return 'max-height:100%;' if @request.fullheight?
-
-        "max-height:#{height}px;" if height
-      end
-
-      def width_style
-        "max-width:#{width_style_attribute};"
-      end
-
-      def width_style_attribute
-        return '100%' unless width
-
-        "#{width}px"
-      end
-
-      def header_height
-        return 0 unless display_header?
-
-        63
-      end
-
-      def footer_height
-        30
-      end
-
-      def calculate_height
-        return nil unless body_height
-
-        body_height + header_height + footer_height
+      def default_height
+        520
       end
 
       def default_width
-        nil
-      end
-
-      def default_body_height
         nil
       end
     end

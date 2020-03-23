@@ -1,4 +1,4 @@
-<div class='sul-embed-body sul-embed-m3' style="max-height: <%= viewer.body_height %>px" data-sul-embed-theme="<%= asset_url('m3.css') %>">
+<div class='sul-embed-body sul-embed-m3' data-sul-embed-theme="<%= asset_url('m3.css') %>">
   <div
     id='sul-embed-m3'
     class='m3'
@@ -8,8 +8,7 @@
     data-hide-title='<%= viewer.request.hide_title? %>'
     data-show-attribution='<%= viewer.show_attribution_panel? %>'
     data-search='<%= viewer.search %>'
-    data-suggested-search='<%= viewer.suggested_search %>'
-    style='height: <%= viewer.body_height%>px; width:100%'>
+    data-suggested-search='<%= viewer.suggested_search %>'>
   </div>
 
   <script>;jQuery.ajax({url: "<%= asset_pack_url('m3.js') %>", cache: true, dataType: 'script'});</script>

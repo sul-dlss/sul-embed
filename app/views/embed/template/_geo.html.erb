@@ -1,5 +1,4 @@
-<div class="sul-embed-container <%= 'sul-embed-fullheight' if viewer.request.fullheight? %>"
-  id='sul-embed-object' style='display:none; <%= viewer.container_styles %>'>
+<div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
   <%= render 'header/geo', viewer: viewer if viewer.display_header? %>
   <%= render 'body/geo', viewer: viewer %>
   <%= render 'metadata_panel', viewer: viewer %>

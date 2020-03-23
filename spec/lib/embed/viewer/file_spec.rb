@@ -19,27 +19,51 @@ describe Embed::Viewer::File do
       expect(Embed::Viewer::File.supported_types).to eq [:file]
     end
   end
-  describe 'body_height' do
-    it 'defaults to 400 minus the footer and header height' do
-      stub_purl_response_and_request(multi_resource_multi_type_purl, request)
-      expect(file_viewer.send(:body_height)).to eq 307
+  describe 'default_height' do
+    context 'when title and search is hidden' do
+      before do
+        expect(request).to receive(:hide_title?).at_least(:once).and_return(true)
+        expect(request).to receive(:hide_search?).at_least(:once).and_return(true)
+      end
+
+      it 'defaults to 400' do
+        stub_purl_response_and_request(multi_resource_multi_type_purl, request)
+        expect(file_viewer.send(:default_height)).to eq 330
+      end
+
+      it 'reduces the height based on the number of files in the object (1 file)' do
+        stub_purl_response_and_request(file_purl, request)
+        expect(file_viewer.send(:default_height)).to eq 92
+      end
+
+      it 'reduces the height based on the number of files in the object (2 files)' do
+        stub_purl_response_and_request(image_purl, request)
+        expect(file_viewer.send(:default_height)).to eq 191
+      end
     end
 
-    it 'consumer requested maxheight minus the header/footer height' do
-      height_request = Embed::Request.new(url: 'http://purl.stanford.edu/abc123', maxheight: '500')
-      stub_request(height_request)
-      viewer = Embed::Viewer::File.new(height_request)
-      expect(viewer.send(:body_height)).to eq 407
+    context 'when the title bar is present' do
+      before do
+        expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
+      end
+
+      it 'adds the necessary height' do
+        stub_purl_response_and_request(file_purl, request)
+        expect(file_viewer.send(:default_height)).to eq 132
+      end
     end
 
-    it 'reduces the height based on the number of files in the object (1 file)' do
-      stub_purl_response_and_request(file_purl, request)
-      expect(file_viewer.send(:body_height)).to eq 107
-    end
+    context 'when the title and search bar are present' do
+      before do
+        expect(request).to receive(:min_files_to_search).and_return(3)
+        expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
+        expect(request).to receive(:hide_search?).at_least(:once).and_return(false)
+      end
 
-    it 'reduces the height based on the number of files in the object (2 files)' do
-      stub_purl_response_and_request(image_purl, request)
-      expect(file_viewer.send(:body_height)).to eq 182
+      it 'adds height if the title or search is hidden' do
+        stub_purl_response_and_request(multi_resource_multi_type_purl, request)
+        expect(file_viewer.send(:default_height)).to eq 398
+      end
     end
   end
 

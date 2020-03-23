@@ -121,10 +121,14 @@ describe Embed::EmbedThisPanel do
 
       it 'includes the relevant request parameters' do
         src = subject.find('iframe')['src']
-        expect(src).to match(/&maxheight=555/)
-        expect(src).to match(/&maxwidth=666/)
         expect(src).to match(/&hide_embed=true/)
         expect(src).to match(/&hide_title=true/)
+      end
+
+      it 'does not include the maxheight / maxwidth parameters (these are handled in the iframe)' do
+        src = subject.find('iframe')['src']
+        expect(src).not_to match(/maxheight/)
+        expect(src).not_to match(/maxwidth/)
       end
     end
   end

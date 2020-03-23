@@ -13,7 +13,7 @@ module Embed
       def map_element_options
         options = {
           id: 'sul-embed-geo-map',
-          style: "height: #{body_height}px",
+          style: 'height: 100%',
           'data-bounding-box' => @purl_object.bounding_box.to_s
         }
         if @purl_object.public?
@@ -22,10 +22,6 @@ module Embed
         end
         options['data-index-map'] = file_url('index_map.json') if index_map?
         options
-      end
-
-      def default_body_height
-        400
       end
 
       def self.supported_types
@@ -46,6 +42,12 @@ module Embed
 
       def external_url_text
         'View this in EarthWorks'
+      end
+
+      private
+
+      def default_height
+        493
       end
     end
   end

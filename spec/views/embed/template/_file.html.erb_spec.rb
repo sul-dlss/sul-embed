@@ -41,15 +41,7 @@ RSpec.describe 'embed/template/_file.html.erb' do
     stub_template 'header/_file.html.erb' => '<div class="sul-embed-header"></div>'
     stub_template '_metadata_panel.html.erb' => '<div class="ul-embed-panel-container"></div>'
     stub_template 'footer/_generic.html.erb' => '<div class="sul-embed-footer"></div>'
-    expect(rendered).to have_css '.sul-embed-container[style="display:none; max-height:200px; max-width:200px;"]', visible: false
-  end
-
-  context 'when the fullheight option is passed' do
-    it 'includes the sul-embed-fullheight class' do
-      allow(request).to receive(:fullheight?).at_least(:once).and_return(true)
-      render
-      expect(rendered).to have_css('.sul-embed-fullheight[style="display:none; max-height:100%; max-width:100%;"]', visible: false)
-    end
+    expect(rendered).to have_css '.sul-embed-container[style="display:none;"]', visible: false
   end
 
   context 'multi_resource_multi_type_purl' do

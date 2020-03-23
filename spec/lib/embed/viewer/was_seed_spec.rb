@@ -46,29 +46,25 @@ describe Embed::Viewer::WasSeed do
     end
   end
 
+  describe 'default_height' do
+    it 'defaults to 353' do
+      stub_request(request)
+
+      expect(was_seed_viewer.send(:default_height)).to eq 353
+    end
+
+    it 'is smaller when the title is hidden' do
+      expect(request).to receive(:hide_title?).and_return(true)
+      stub_request(request)
+
+      expect(was_seed_viewer.send(:default_height)).to eq 274
+    end
+  end
+
   describe '.external_url' do
     it 'should build the external url based on wayback url as extracted from prul' do
       stub_purl_response_and_request(was_seed_purl, request)
       expect(was_seed_viewer.external_url).to eq('https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/')
-    end
-  end
-
-  describe '.item_size' do
-    it 'returns the item_size based on the default_body_height' do
-      expect(was_seed_viewer.item_size).to eq([200, 200])
-    end
-    it 'returns the item_size based on defined body_height' do
-      request_with_max_height = Embed::Request.new(maxheight: 500, url: purl)
-      customized_was_seed_viewer = Embed::Viewer::WasSeed.new(request_with_max_height)
-
-      expect(customized_was_seed_viewer.item_size).to eq([347, 347])
-    end
-  end
-
-  describe '.image_height' do
-    it 'returns the image_height based on the item_size' do
-      allow(was_seed_viewer).to receive(:item_size).and_return([100, 100])
-      expect(was_seed_viewer.image_height).to eq(76)
     end
   end
 end

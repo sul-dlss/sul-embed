@@ -4,15 +4,23 @@
 @import 'modules/slider';
 @import 'modules/shadows';
 
+$sly-slider-height: 10px;
+
 .#{$namespace}-was-seed {
   background-color: $sul-background;
+  height: calc(100% - #{$sly-slider-height});
   padding: 0;
  }
- 
+
 .#{$namespace}-was-thumb-list {
+  height: calc(100% - (#{$sly-slider-height} + 10px));
   list-style: none;
   padding: 10px;
  }
+
+.#{$namespace}-was-thumb-item-img {
+  height: calc(100% - (#{$sly-slider-height} + 30px));
+}
 
 .#{$namespace}-was-thumb-item-date a {
   &:after {
@@ -23,6 +31,7 @@
 
 .#{$namespace}-was-thumb-item {
   float: left;
+  height: 100%;
   margin: 2px 2px 10px 2px; //top right bottom left
 
   &:hover {
@@ -34,7 +43,7 @@
   &.active {
     @include shadow(2);
     background-color: $white-color;
-    
+
     a {
       font-size: 1.2em;
       font-weight: 400;
@@ -43,6 +52,7 @@
 }
 
 .#{$namespace}-was-thumb-item-div {
+  height: 100%;
   margin: 5px;
   text-align: center;
 }
