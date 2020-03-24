@@ -1,5 +1,5 @@
 'use strict';
-import PDFJSLib from 'pdfjs-dist';
+import PDFJSLib from 'pdfjs-dist/webpack';
 
 export default {
   viewer: function() { return $('#pdf-viewer'); },

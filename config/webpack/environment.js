@@ -12,4 +12,6 @@ environment.config.merge({
   }
 })
 
+environment.splitChunks();
+
 module.exports = environment

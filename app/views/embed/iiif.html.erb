@@ -31,7 +31,7 @@
           style='height:100%; width:100%'>
         </div>
 
-        <script>;jQuery.ajax({url: "<%= asset_pack_url('m3.js') %>", cache: true, dataType: 'script'});</script>
+        <%= javascript_packs_with_chunks_tag('m3') %>
       </div>
      </div>
   </body>
