@@ -19,6 +19,33 @@ describe Embed::Viewer::File do
       expect(Embed::Viewer::File.supported_types).to eq [:file]
     end
   end
+
+  describe 'height' do
+    before { stub_purl_response_with_fixture(multi_file_purl) }
+
+    context 'when the requested maxheight is larger than the default height' do
+      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', maxheight: 600) }
+
+      it 'is the default height (max is a maximum, we can be smaller)' do
+        expect(file_viewer.height).to eq 231 # 2 files + header
+      end
+    end
+
+    context 'when the requested maxheight is smaller than the default height' do
+      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', maxheight: 200) }
+
+      it 'is the requested maxheight' do
+        expect(file_viewer.height).to eq 200
+      end
+    end
+
+    context 'whne there is no requseted maxheight' do
+      it 'is the default height' do
+        expect(file_viewer.height).to eq 231 # 2 files + header
+      end
+    end
+  end
+
   describe 'default_height' do
     context 'when title and search is hidden' do
       before do

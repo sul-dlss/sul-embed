@@ -7,6 +7,12 @@ module Embed
         'embed/template/file'
       end
 
+      def height
+        return default_height if @request.maxheight.to_i > default_height
+
+        super
+      end
+
       def file_type_icon(mimetype)
         if Constants::FILE_ICON[mimetype].nil?
           'sul-i-file-new-1'
