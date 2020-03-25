@@ -24,8 +24,8 @@ module Embed
 
       private
 
-      def default_body_height
-        400 - (header_height + footer_height)
+      def default_height
+        400
       end
     end
   end

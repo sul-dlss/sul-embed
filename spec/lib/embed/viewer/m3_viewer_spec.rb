@@ -16,8 +16,6 @@ describe Embed::Viewer::M3Viewer do
     end
   end
 
-  it { is_expected.to have_attributes(header_height: 0, footer_height: 0) }
-
   describe '#canvas_index' do
     context 'with an explicit index' do
       let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', canvas_index: 5) }

@@ -2,7 +2,15 @@
 @import 'modules/bootstrap_media';
 @import 'vendor/tooltip';
 
+body {
+  overflow-y: hidden;
+}
+
 .#{$namespace}-container {
+  .#{$namespace}-header {
+    flex-shrink: 0;
+  }
+
   .#{$namespace}-search {
     padding-top: 8px;
 
@@ -19,7 +27,7 @@
   }
 
   .#{$namespace}-body {
-    overflow-y: auto;
+    overflow-y: scroll;
   }
 
   .#{$namespace}-description {
@@ -69,6 +77,8 @@
 
 .#{$namespace}-file-list {
   @include well-container;
+
+  height: 100%;
 }
 
 .#{$namespace}-media-list {

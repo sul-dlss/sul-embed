@@ -13,12 +13,6 @@ module Embed
         end
       end
 
-      ##
-      # Sets the default body height
-      def default_body_height
-        420
-      end
-
       def fullscreen?
         true
       end
@@ -29,6 +23,12 @@ module Embed
 
       def self.supported_types
         %i[3d]
+      end
+
+      private
+
+      def default_height
+        513
       end
     end
   end

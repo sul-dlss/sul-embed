@@ -17,9 +17,9 @@ $thumb-slider-background-color: $sul-background;
 
 .#{$namespace}-hidden-slider-object,
 .#{$namespace}-hidden-slider-object * {
-  height: 0;
-  visibility: hidden;
-  width: 0;
+  height: 0 !important;
+  visibility: hidden !important;
+  width: 0 !important;
 }
 
 .#{$namespace}-thumb-slider-open-close {

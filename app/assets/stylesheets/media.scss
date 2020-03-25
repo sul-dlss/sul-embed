@@ -5,6 +5,7 @@
 
 .#{$namespace}-media {
   min-height: 175px;
+  overflow-y: hidden !important;
   position: relative;
   text-align: center;
 
@@ -13,13 +14,19 @@
     width: 100%;
   }
 
-  .#{$namespace}-many-media {
-    margin-bottom: $sul-media-index-height;
+  .#{$namespace}-media-file {
+    height: 100%;
+
+    &.#{$namespace}-many-media {
+      height: calc(100% - #{$sul-media-index-height}) !important;
+      padding-bottom: $sul-media-index-height;
+    }
   }
 }
 
 .#{$namespace}-media-wrapper {
   display: inline-block;
+  height: 100%;
   position: relative;
   text-align: center;
   width: 100%;

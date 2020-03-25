@@ -6,6 +6,13 @@
 
     return {
       init: function() {
+        $('li.sul-embed-was-thumb-item').each(function() {
+
+          // Set all list item widths to their height (making a square)
+          // so that Sly can calculate the container's width appropriately
+          $(this).width($(this).height());
+        });
+
         var $wasThumbFrame = $('.sul-embed-was-seed');
         var dataAttributes = $wasThumbFrame.data();
 
@@ -20,7 +27,7 @@
           activateMiddle: 1,
           activateOn: 'click',
           mouseDragging: 1,
-          touchDragging: 1,       
+          touchDragging: 1,
           releaseSwing: 1,
           scrollBar: $wasThumbScroll,
           dragHandle: 1,

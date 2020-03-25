@@ -7,17 +7,39 @@
 @import 'modules/shadows';
 @import 'modules/utility';
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.#{$namespace}-container {
+  display: flex;
+  flex-direction: column;
+
+  .#{$namespace}-header {
+    flex: 0 1 auto;
+  }
+
+  .#{$namespace}-body {
+    flex: 1 1 auto;
+    overflow-y: scroll; // May need to evaluate this on a viewer by viewer basis
+  }
+
+  .#{$namespace}-footer {
+    flex: 0 1 auto;
+  }
+}
+
+
 .#{$namespace}-container {
   background: $white-color;
   border: 1px solid $color-pantone-405;
   color: $sul-font-color;
   font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
   font-size: $font-size-base;
+  height: 100vh;
   overflow-x: hidden;
   overflow-y: hidden;
-  width: 1px;
-  min-width: 99%;
-  *width: 99%;
 
   * {
     padding: 0;

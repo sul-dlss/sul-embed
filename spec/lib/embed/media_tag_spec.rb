@@ -43,8 +43,8 @@ describe Embed::MediaTag do
 
     context 'single video' do
       let(:purl) { single_video_purl }
-      it 'includes a height attribute equal to the body height' do
-        expect(subject).to have_css("video[height='#{viewer.body_height}px']", visible: false)
+      it 'includes a 100% height attribute' do
+        expect(subject).to have_css("video[height='100%']", visible: false)
       end
 
       it 'shows location restricted messages to the screen reader' do
@@ -61,12 +61,6 @@ describe Embed::MediaTag do
       let(:purl) { video_purl_unrestricted }
       it 'does not show any location restricted messages' do
         expect(subject).not_to have_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')
-      end
-    end
-
-    context 'multiple videos' do
-      it 'includes a height attribute equal to the body height minus some px to make way for the thumb slider' do
-        expect(subject).to have_css('video[height="276px"]', visible: false)
       end
     end
 
@@ -224,10 +218,6 @@ describe Embed::MediaTag do
         expect(previewable_element).to match(
           %r{src='https://stacks.*/iiif/.*abc123/full/\!400,400.*'}
         )
-      end
-
-      it 'defines a max-height on the image that is equal to the viewer body height' do
-        expect(previewable_element).to match(/style='max-height: 276px'/)
       end
 
       it 'includes a class that indicates that there is are many media objects (to make room for the slider control)' do

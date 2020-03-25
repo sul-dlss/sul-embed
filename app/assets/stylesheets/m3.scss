@@ -3,6 +3,7 @@
 .#{$namespace}-container {
   border: 0;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 2px 1px -1px rgba(0, 0, 0, 0.2);
-  margin: 1px;
+  height: calc(100vh - 3px); // Give a little space for the box shadow
+  margin: 0 1px 3px 0;
   position: relative;
 }

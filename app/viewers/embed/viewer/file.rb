@@ -7,31 +7,17 @@ module Embed
         'embed/template/file'
       end
 
+      def height
+        return default_height if @request.maxheight.to_i > default_height
+
+        super
+      end
+
       def file_type_icon(mimetype)
         if Constants::FILE_ICON[mimetype].nil?
           'sul-i-file-new-1'
         else
           Constants::FILE_ICON[mimetype]
-        end
-      end
-
-      def default_body_height
-        file_specific_body_height - (header_height + footer_height)
-      end
-
-      # This is neccessary because the file viewer's height is meant to be dynamic,
-      # however we need to specify the exact height of the containing iframe (which
-      # will give us extra whitespace below the embed viewer unless we do this)
-      def file_specific_body_height
-        case @purl_object.all_resource_files.count
-        when 1
-          200
-        when 2
-          275
-        when 3
-          375
-        else
-          400
         end
       end
 
@@ -51,7 +37,7 @@ module Embed
 
       def display_file_search?
         @display_file_search ||= begin
-          @request.params[:hide_search] != 'true' &&
+          !@request.hide_search? &&
             @purl_object.contents.map(&:files).flatten.length >= min_files_to_search
         end
       end
@@ -78,6 +64,33 @@ module Embed
       end
 
       private
+
+      def default_height
+        file_specific_height + header_height
+      end
+
+      def header_height
+        return 68 if !request.hide_title? && display_file_search?
+        return 40 if !request.hide_title? || display_file_search?
+
+        0
+      end
+
+      # This is neccessary because the file viewer's height is meant to be dynamic,
+      # however we need to specify the exact height of the containing iframe (which
+      # will give us extra whitespace below the embed viewer unless we do this)
+      def file_specific_height
+        case @purl_object.all_resource_files.count
+        when 1
+          92
+        when 2
+          191
+        when 3
+          226
+        else
+          330
+        end
+      end
 
       ##
       # Creates a pretty date for display

@@ -26,14 +26,11 @@ RSpec.describe 'embed/template/_was_seed.html.erb' do
     expect(rendered).to have_css '.sul-embed-was-thumb-list', visible: false, count: 1
     expect(rendered).to have_css '.sul-embed-was-thumb-item', visible: false, count: 4
     expect(rendered).to have_css '.sul-embed-was-thumb-item-div', visible: false, count: 4
-    expect(rendered).to have_css '.sul-embed-was-thumb-item-div[style="height: 200px; width: 200px;"]', visible: false, count: 4
     expect(rendered).to have_css '.sul-embed-was-seed[data-sul-thumbs-list-count="4"]', visible: false
 
     expect(rendered).to have_css '.sul-embed-was-thumb-item-div a[href="https://swap.stanford.edu/20121129060351/http://naca.central.cranfield.ac.uk/"]', visible: false
     expect(rendered).to have_css '.sul-embed-was-thumb-item-date', text: '29-Nov-2012', visible: false
     expect(rendered).to have_css '.sul-embed-was-thumb-item img[src="https://stacks.stanford.edu/image/iiif/gb089bd2251%2F20121129060351/full/200,/0/default.jpg"]', visible: false
-
-    expect(rendered).to have_css '.sul-embed-was-thumb-item img[style="height: 176px;"]', visible: false
 
     expect(rendered).to have_css '.sul-embed-was-thumb-item-div a[href="https://swap.stanford.edu/20130412231301/http://naca.central.cranfield.ac.uk/"]', visible: false
     expect(rendered).to have_css '.sul-embed-was-thumb-item-date', text: '12-Apr-2013', visible: false

@@ -27,16 +27,12 @@ module Embed
         'View this in the Stanford Web Archive Portal'
       end
 
-      def default_body_height
-        260
-      end
+      private
 
-      def item_size
-        [body_height - 60, body_height - 60]
-      end
+      def default_height
+        return 274 if request.hide_title?
 
-      def image_height
-        item_size[0] - 24
+        353
       end
     end
   end

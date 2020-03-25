@@ -6,7 +6,6 @@ module Embed
   # and HLS is used as a <source> within the <video> or <audio> tag.
   class MediaTag
     SUPPORTED_MEDIA_TYPES = %i[audio video].freeze
-    MEDIA_INDEX_CONTROL_HEIGHT = 24
 
     include Embed::StacksImage
 
@@ -49,9 +48,9 @@ module Embed
             #{poster_attribute(file)}
             controls='controls'
             aria-labelledby="access-restricted-message-div-#{file_index}"
-            class="#{'sul-embed-many-media' if many_primary_files?}"
-            style="height: #{media_element_height}; display:none;"
-            height="#{media_element_height}">
+            class="sul-embed-media-file #{'sul-embed-many-media' if many_primary_files?}"
+            style="display:none; height: 100%;"
+            height="100%">
             #{enabled_streaming_sources(file)}
           </#{type}>
         HTML
@@ -63,14 +62,14 @@ module Embed
         "<img
           src='#{stacks_thumb_url(@purl_document.druid, file.title)}'
           class='sul-embed-media-thumb #{'sul-embed-many-media' if many_primary_files?}'
-          style='max-height: #{media_element_height}'
         />"
       end
     end
 
     def media_wrapper(thumbnail: '', file: nil, &block)
       <<-HTML.strip_heredoc
-        <div data-stanford-only="#{file.try(:stanford_only?)}"
+        <div style="height: 100%"
+             data-stanford-only="#{file.try(:stanford_only?)}"
              data-location-restricted="#{file.try(:location_restricted?)}"
              data-file-label="#{file.label}"
              data-slider-object="#{file_index}"
@@ -90,12 +89,6 @@ module Embed
            type='#{streaming_settings_for(streaming_type)[:mimetype]}'>
         </source>"
       end.join
-    end
-
-    def media_element_height
-      return "#{viewer.body_height}px" unless many_primary_files?
-
-      "#{viewer.body_height.to_i - MEDIA_INDEX_CONTROL_HEIGHT}px"
     end
 
     def many_primary_files?
