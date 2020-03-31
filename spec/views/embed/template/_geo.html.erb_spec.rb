@@ -25,7 +25,7 @@ RSpec.describe 'embed/template/_geo.html.erb' do
     # visible false because we display:none the container until we've loaded the CSS.
     expect(rendered).to have_css '.sul-embed-geo', visible: false
     expect(rendered).to have_css '#sul-embed-geo-map', visible: false
-    expect(rendered).to have_css('#sul-embed-geo-map[style="height: 100%"]', visible: false)
+    expect(rendered).to have_css('#sul-embed-geo-map[style="flex: 1"]', visible: false)
     expect(rendered).to have_css('#sul-embed-geo-map[data-bounding-box=\'[["-1.478794", "29.572742"], ["4.234077", "35.000308"]]\']', visible: false)
     expect(rendered).to have_css('#sul-embed-geo-map[data-wms-url="https://geowebservices.stanford.edu/geoserver/wms/"]', visible: false)
     expect(rendered).to have_css('#sul-embed-geo-map[data-layers="druid:12345"]', visible: false)

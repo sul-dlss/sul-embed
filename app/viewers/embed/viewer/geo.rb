@@ -13,7 +13,7 @@ module Embed
       def map_element_options
         options = {
           id: 'sul-embed-geo-map',
-          style: 'height: 100%',
+          style: 'flex: 1',
           'data-bounding-box' => @purl_object.bounding_box.to_s
         }
         if @purl_object.public?
