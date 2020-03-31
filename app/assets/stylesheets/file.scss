@@ -77,8 +77,6 @@ body {
 
 .#{$namespace}-file-list {
   @include well-container;
-
-  height: 100%;
 }
 
 .#{$namespace}-media-list {

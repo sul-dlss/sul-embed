@@ -70,8 +70,8 @@ module Embed
       end
 
       def header_height
-        return 68 if !request.hide_title? && display_file_search?
-        return 40 if !request.hide_title? || display_file_search?
+        return 68 unless request.hide_title?
+        return 40 if display_file_search?
 
         0
       end
@@ -79,17 +79,16 @@ module Embed
       # This is neccessary because the file viewer's height is meant to be dynamic,
       # however we need to specify the exact height of the containing iframe (which
       # will give us extra whitespace below the embed viewer unless we do this)
+      # Each item is 67px tall w/ a base of 55px we determine heights by: (item count * 67px) + 55px
       def file_specific_height
-        case @purl_object.all_resource_files.count
-        when 1
-          92
-        when 2
-          191
-        when 3
-          226
-        else
-          330
-        end
+        file_count = @purl_object.all_resource_files.count
+        items_to_account_for = if file_count >= 4
+                                 4
+                               else
+                                 file_count
+                               end
+
+        55 + (items_to_account_for * 67)
       end
 
       ##
