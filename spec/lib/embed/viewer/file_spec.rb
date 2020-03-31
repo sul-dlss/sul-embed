@@ -69,6 +69,19 @@ describe Embed::Viewer::File do
       end
     end
 
+    context 'when the item is emargoed' do
+      before do
+        expect(request).to receive(:hide_title?).at_least(:once).and_return(true)
+        expect(request).to receive(:hide_search?).at_least(:once).and_return(true)
+      end
+
+      it 'adds 44 pixels to the height (to avoid unnecessary scroll)' do
+        stub_purl_response_and_request(embargoed_stanford_file_purl, request)
+
+        expect(file_viewer.send(:default_height)).to eq 166 # 122 + 44
+      end
+    end
+
     context 'when the title bar is present' do
       before do
         expect(request).to receive(:hide_title?).at_least(:once).and_return(false)

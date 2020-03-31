@@ -66,12 +66,18 @@ module Embed
       private
 
       def default_height
-        file_specific_height + header_height
+        file_specific_height + embargo_message_height + header_height
       end
 
       def header_height
         return 68 unless request.hide_title?
         return 40 if display_file_search?
+
+        0
+      end
+
+      def embargo_message_height
+        return 44 if purl_object.embargoed?
 
         0
       end
