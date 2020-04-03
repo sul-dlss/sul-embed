@@ -68,7 +68,7 @@ module Embed
 
     def media_wrapper(thumbnail: '', file: nil, &block)
       <<-HTML.strip_heredoc
-        <div style="height: 100%"
+        <div style="flex: 1 0 100%"
              data-stanford-only="#{file.try(:stanford_only?)}"
              data-location-restricted="#{file.try(:location_restricted?)}"
              data-file-label="#{file.label}"
