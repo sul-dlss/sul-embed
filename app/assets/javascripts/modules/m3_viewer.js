@@ -34,9 +34,6 @@ export default {
             /.*\.edu\/(\w+)\/iiif\/manifest/,
             'https://embed.stanford.edu/iframe?url=https://purl.stanford.edu/$1',
           ],
-          syncIframeDimensions: {
-            height: { param: 'maxheight' },
-          },
         },
         dragAndDropInfoLink: 'https://library.stanford.edu/projects/international-image-interoperability-framework/viewers',
         shareLink: {
