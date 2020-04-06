@@ -58,7 +58,8 @@ module Embed
     end
 
     def previewable_element(file)
-      media_wrapper(thumbnail: stacks_square_url(@purl_document.druid, file.title, size: '75'), file: file) do
+      thumb_url = stacks_square_url(@purl_document.druid, file.title, size: '75')
+      media_wrapper(thumbnail: thumb_url, file: file, scroll: true) do
         "<img
           src='#{stacks_thumb_url(@purl_document.druid, file.title)}'
           class='sul-embed-media-thumb #{'sul-embed-many-media' if many_primary_files?}'
@@ -66,9 +67,9 @@ module Embed
       end
     end
 
-    def media_wrapper(thumbnail: '', file: nil, &block)
+    def media_wrapper(thumbnail: '', file: nil, scroll: false, &block)
       <<-HTML.strip_heredoc
-        <div style="flex: 1 0 100%"
+        <div style="flex: 1 0 100%;#{' overflow-y: scroll' if scroll}"
              data-stanford-only="#{file.try(:stanford_only?)}"
              data-location-restricted="#{file.try(:location_restricted?)}"
              data-file-label="#{file.label}"
