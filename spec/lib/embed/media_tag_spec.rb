@@ -41,6 +41,12 @@ describe Embed::MediaTag do
       expect(auth_url).to eq(Settings.streaming.auth_url)
     end
 
+    it 'are not scrollable' do
+      object = subject.find('[data-slider-object="0"]')
+
+      expect(object['style']).not_to match(/overflow.*scroll/)
+    end
+
     context 'single video' do
       let(:purl) { single_video_purl }
       it 'includes a 100% height attribute' do
@@ -95,6 +101,12 @@ describe Embed::MediaTag do
       let(:purl) { video_purl_with_image }
       it 'are included as top level objects' do
         expect(subject).to have_css('div img.sul-embed-media-thumb')
+      end
+
+      it 'are scrollable' do
+        object = subject.find('[data-slider-object="1"]')
+
+        expect(object['style']).to include 'overflow-y: scroll'
       end
     end
 
