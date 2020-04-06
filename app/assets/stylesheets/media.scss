@@ -4,6 +4,7 @@
 @import 'video.js/video-js';
 
 .#{$namespace}-media {
+  display: flex;
   min-height: 175px;
   overflow-y: hidden !important;
   position: relative;
