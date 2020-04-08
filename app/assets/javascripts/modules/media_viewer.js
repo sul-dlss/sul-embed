@@ -194,7 +194,6 @@
     function initializeVideoJSPlayer(mediaObject) {
       removeUnusableSources(mediaObject);
       mediaObject.addClass('video-js vjs-default-skin');
-      mediaObject.show();
       videojs(mediaObject.attr('id'), videoJsOptions(mediaObject));
     }
 

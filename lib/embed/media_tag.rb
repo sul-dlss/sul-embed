@@ -49,7 +49,6 @@ module Embed
             controls='controls'
             aria-labelledby="access-restricted-message-div-#{file_index}"
             class="sul-embed-media-file #{'sul-embed-many-media' if many_primary_files?}"
-            style="display:none; height: 100%;"
             height="100%">
             #{enabled_streaming_sources(file)}
           </#{type}>
