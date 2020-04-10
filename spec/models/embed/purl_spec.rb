@@ -339,6 +339,10 @@ describe Embed::PURL do
             stub_purl_response_with_fixture(stanford_restricted_file_purl)
             expect(Embed::PURL.new('12345').contents.first.files.all?(&:stanford_only?)).to be true
           end
+          it 'should identify stanford_only no-download objects' do
+            stub_purl_response_with_fixture(stanford_no_download_restricted_file_purl)
+            expect(Embed::PURL.new('12345').contents.first.files.all?(&:stanford_only?)).to be true
+          end
           it 'should identify world accessible objects as not stanford only' do
             stub_purl_response_with_fixture(file_purl)
             expect(Embed::PURL.new('12345').contents.first.files.all?(&:stanford_only?)).to be false

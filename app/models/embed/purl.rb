@@ -301,7 +301,9 @@ module Embed
         end
 
         def stanford_only?
-          @rights.stanford_only_unrestricted_file?(title)
+          value, _rule = @rights.stanford_only_rights_for_file(title)
+
+          value
         end
 
         def location_restricted?
