@@ -306,6 +306,28 @@ module PURLFixtures
       </publicObject>
     XML
   end
+  def stanford_no_download_restricted_file_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the object</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="file">
+          <resource sequence="1" type="file">
+            <attr name="label">PDF1</attr>
+            <file size="12345" mimetype="application/pdf" id="Title_of_the_PDF.pdf" />
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="read">
+            <machine>
+              <group rule="no-download">stanford</group>
+            </machine>
+          </access>
+        </rightsMetadata>
+      </publicObject>
+    XML
+  end
   def stanford_restricted_image_purl
     <<-XML
       <publicObject>
