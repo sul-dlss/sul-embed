@@ -374,6 +374,21 @@ describe Embed::PURL do
             expect(last_file).to_not be_location_restricted
           end
         end
+
+        describe 'world_downloadable?' do
+          it 'is false for stanford-only objects' do
+            stub_purl_response_with_fixture(stanford_restricted_file_purl)
+            expect(Embed::PURL.new('12345').contents.first.files.all?(&:world_downloadable?)).to be false
+          end
+          it 'is false for no-download objects' do
+            stub_purl_response_with_fixture(stanford_no_download_restricted_file_purl)
+            expect(Embed::PURL.new('12345').contents.first.files.all?(&:world_downloadable?)).to be false
+          end
+          it 'is true for identify world accessible objects' do
+            stub_purl_response_with_fixture(file_purl)
+            expect(Embed::PURL.new('12345').contents.first.files.all?(&:world_downloadable?)).to be true
+          end
+        end
       end
       describe 'image data' do
         before { stub_purl_response_with_fixture(image_purl) }

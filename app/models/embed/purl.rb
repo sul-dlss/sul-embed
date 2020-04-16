@@ -310,6 +310,10 @@ module Embed
           @rights.restricted_by_location?(title)
         end
 
+        def world_downloadable?
+          @rights.world_downloadable_file?(@file.attributes['id'])
+        end
+
         private
 
         attr_reader :resource
