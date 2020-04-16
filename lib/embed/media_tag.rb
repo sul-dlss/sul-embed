@@ -104,7 +104,13 @@ module Embed
     def poster_attribute(file)
       return unless file.thumbnail
 
-      "poster='#{stacks_thumb_url(@purl_document.druid, file.thumbnail.title)}'"
+      thumb_url = if file.thumbnail.world_downloadable?
+                    stacks_thumb_url(@purl_document.druid, file.thumbnail.title, size: '!800,600')
+                  else
+                    stacks_thumb_url(@purl_document.druid, file.thumbnail.title)
+                  end
+
+      "poster='#{thumb_url}'"
     end
 
     def access_restricted_message(stanford_only, location_restricted)

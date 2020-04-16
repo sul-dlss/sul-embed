@@ -5,8 +5,8 @@ module Embed
   # A module to be mixed into classes to generate
   # URLs to stacks images using the IIIF image API
   module StacksImage
-    def stacks_thumb_url(druid, file_name)
-      "#{stacks_image_url(druid, file_name)}/full/!400,400/0/default.jpg"
+    def stacks_thumb_url(druid, file_name, size: '!400,400')
+      "#{stacks_image_url(druid, file_name)}/full/#{size}/0/default.jpg"
     end
 
     def stacks_square_url(druid, file_name, size: 100)
