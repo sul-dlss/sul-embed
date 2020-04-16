@@ -249,7 +249,7 @@ module Embed
         end
 
         def thumbnail
-          resource.files.find(&:thumbnail?).try(:title)
+          resource.files.find(&:thumbnail?)
         end
 
         def thumbnail?
