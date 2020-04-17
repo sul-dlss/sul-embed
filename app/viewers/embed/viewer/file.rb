@@ -66,7 +66,11 @@ module Embed
       private
 
       def default_height
-        file_specific_height + embargo_message_height + header_height
+        [file_specific_height + embargo_message_height + header_height, min_height].max
+      end
+
+      def min_height
+        189
       end
 
       def header_height
