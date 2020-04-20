@@ -249,7 +249,7 @@ module Embed
         end
 
         def thumbnail
-          resource.files.find(&:thumbnail?).try(:title)
+          resource.files.find(&:thumbnail?)
         end
 
         def thumbnail?
@@ -308,6 +308,10 @@ module Embed
 
         def location_restricted?
           @rights.restricted_by_location?(title)
+        end
+
+        def world_downloadable?
+          @rights.world_downloadable_file?(@file.attributes['id'])
         end
 
         private

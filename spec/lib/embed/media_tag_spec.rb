@@ -125,6 +125,13 @@ describe Embed::MediaTag do
           expect(video['poster']).to match(%r{/druid%2Fvideo_1/full/})
         end
       end
+      context 'when the file-level thumbnail is downloadable' do
+        let(:purl) { file_and_object_level_downloadable_thumb_purl }
+        it 'uses a large thumbnail' do
+          video = subject.find('video[poster]', visible: false)
+          expect(video['poster']).to match(%r{/full/!800,600/})
+        end
+      end
       context 'when a file level thumbnail is not present' do
         it 'does not include a poster attribute' do
           expect(subject).to_not have_css('video[poster]', visible: false)

@@ -271,9 +271,9 @@ describe Embed::PURL do
           )
         end
 
-        it 'is the file name of the thumbnail within the same resource' do
+        it 'is the thumbnail within the same resource' do
           file = Embed::PURL::Resource::ResourceFile.new(resource_with_thumb, double('File'), double('Rights'))
-          expect(file.thumbnail).to eq 'The Thumb'
+          expect(file.thumbnail.title).to eq 'The Thumb'
         end
 
         it 'is nil when the resource does not have a file specific thumb' do
@@ -372,6 +372,21 @@ describe Embed::PURL do
             last_file = contents.last.files.first
             expect(first_file).to be_location_restricted
             expect(last_file).to_not be_location_restricted
+          end
+        end
+
+        describe 'world_downloadable?' do
+          it 'is false for stanford-only objects' do
+            stub_purl_response_with_fixture(stanford_restricted_file_purl)
+            expect(Embed::PURL.new('12345').contents.first.files.all?(&:world_downloadable?)).to be false
+          end
+          it 'is false for no-download objects' do
+            stub_purl_response_with_fixture(stanford_no_download_restricted_file_purl)
+            expect(Embed::PURL.new('12345').contents.first.files.all?(&:world_downloadable?)).to be false
+          end
+          it 'is true for identify world accessible objects' do
+            stub_purl_response_with_fixture(file_purl)
+            expect(Embed::PURL.new('12345').contents.first.files.all?(&:world_downloadable?)).to be true
           end
         end
       end

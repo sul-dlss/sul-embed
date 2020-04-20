@@ -37,7 +37,7 @@ module Embed
     attr_reader :purl_document, :request, :viewer
 
     def media_element(file, type)
-      file_thumb = stacks_square_url(@purl_document.druid, file.thumbnail, size: '75') if file.thumbnail
+      file_thumb = stacks_square_url(@purl_document.druid, file.thumbnail.title, size: '75') if file.thumbnail
       media_wrapper(thumbnail: file_thumb, file: file) do
         <<-HTML.strip_heredoc
           #{access_restricted_overlay(file.try(:stanford_only?), file.try(:location_restricted?))}
@@ -104,7 +104,13 @@ module Embed
     def poster_attribute(file)
       return unless file.thumbnail
 
-      "poster='#{stacks_thumb_url(@purl_document.druid, file.thumbnail)}'"
+      thumb_url = if file.thumbnail.world_downloadable?
+                    stacks_thumb_url(@purl_document.druid, file.thumbnail.title, size: '!800,600')
+                  else
+                    stacks_thumb_url(@purl_document.druid, file.thumbnail.title)
+                  end
+
+      "poster='#{thumb_url}'"
     end
 
     def access_restricted_message(stanford_only, location_restricted)
