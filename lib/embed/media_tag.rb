@@ -23,7 +23,7 @@ module Embed
         next if resource.primary_file.blank?
 
         output << if SUPPORTED_MEDIA_TYPES.include?(resource.type.to_sym)
-                    media_element(resource.primary_file, resource.type)
+                    media_element(resource, resource.type)
                   else
                     previewable_element(resource.primary_file)
                   end
@@ -36,7 +36,8 @@ module Embed
 
     attr_reader :purl_document, :request, :viewer
 
-    def media_element(file, type)
+    def media_element(resource, type)
+      file = resource.primary_file
       file_thumb = stacks_square_url(@purl_document.druid, file.thumbnail, size: '75') if file.thumbnail
       media_wrapper(thumbnail: file_thumb, file: file) do
         <<-HTML.strip_heredoc
@@ -50,7 +51,7 @@ module Embed
             aria-labelledby="access-restricted-message-div-#{file_index}"
             class="sul-embed-media-file #{'sul-embed-many-media' if many_primary_files?}"
             height="100%">
-            #{enabled_streaming_sources(file)}
+            #{enabled_streaming_sources(resource)}
           </#{type}>
         HTML
       end
@@ -82,13 +83,17 @@ module Embed
       HTML
     end
 
-    def enabled_streaming_sources(file)
-      enabled_streaming_types.map do |streaming_type|
+    def enabled_streaming_sources(resource)
+      sources = enabled_streaming_types.map do |streaming_type|
         "<source
-           src='#{streaming_url_for(file, streaming_type)}'
+           src='#{streaming_url_for(resource.primary_file, streaming_type)}'
            type='#{streaming_settings_for(streaming_type)[:mimetype]}'>
         </source>"
-      end.join
+      end
+
+      tracks = ["<track kind='captions' src='#{viewer.file_url(resource.transcription.title)}'>"] if resource.transcription
+
+      (sources + tracks).join
     end
 
     def many_primary_files?

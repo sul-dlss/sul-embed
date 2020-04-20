@@ -226,6 +226,10 @@ module Embed
         files.find(&:thumbnail?)
       end
 
+      def transcription
+        files.find(&:transcription?)
+      end
+
       class ResourceFile
         def initialize(resource, file, rights)
           @resource = resource
@@ -261,6 +265,10 @@ module Embed
 
         def pdf?
           mimetype == 'application/pdf'
+        end
+
+        def transcription?
+          @file.attributes['role'].try(:value) == 'transcription'
         end
 
         def mimetype
