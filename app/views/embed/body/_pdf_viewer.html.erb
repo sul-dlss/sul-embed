@@ -23,5 +23,5 @@
       id="close-full-screen-button">
     </button>
   </div>
-  <script>;jQuery.ajax({url: "<%= asset_pack_url('pdf_viewer.js') %>", cache: true, dataType: 'script'});</script>
+  <%= javascript_packs_with_chunks_tag('pdf_viewer') %>
 </div>
