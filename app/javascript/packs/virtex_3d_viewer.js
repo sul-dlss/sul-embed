@@ -7,11 +7,13 @@ import { PopupPanels } from '../../assets/javascripts/modules/popup_panels.js';
 import Fullscreen from '../../assets/javascripts/modules/fullscreen.js';
 import Virtex3DViewer from '../../assets/javascripts/modules/virtex_3d_viewer.js';
 
-CssInjection.injectFontIcons();
-CssInjection.appendToHead();
-CommonViewerBehavior.initializeViewer(
-  Virtex3DViewer.init
-);
-PopupPanels.init();
-EmbedThis.init();
-Fullscreen.init('.sul-embed-3d');
+$(document).ready(function() {
+  CssInjection.injectFontIcons();
+  CssInjection.appendToHead();
+  CommonViewerBehavior.initializeViewer(
+    Virtex3DViewer.init
+  );
+  PopupPanels.init();
+  EmbedThis.init();
+  Fullscreen.init('.sul-embed-3d');
+});

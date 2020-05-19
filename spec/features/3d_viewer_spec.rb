@@ -14,4 +14,12 @@ describe '3D Viewer', js: true do
   it 'renders the 3D viewer for 3D objects' do
     expect(page).to have_css('.sul-embed-3d #virtex-3d-viewer')
   end
+
+  it 'has working panels' do
+    expect(page).to have_css('.sul-embed-metadata-panel', visible: false)
+    within '.sul-embed-footer-toolbar' do
+      first('button').click
+    end
+    expect(page).to have_css('.sul-embed-metadata-panel', visible: true)
+  end
 end

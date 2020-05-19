@@ -18,4 +18,12 @@ describe 'PDF Viewer', js: true do
   it 'renders a loading spinner' do
     expect(page).to have_css('.loading-spinner')
   end
+
+  it 'has working panels' do
+    expect(page).to have_css('.sul-embed-metadata-panel', visible: false)
+    within '.sul-embed-footer-toolbar' do
+      first('button').click
+    end
+    expect(page).to have_css('.sul-embed-metadata-panel', visible: true)
+  end
 end
