@@ -21,6 +21,7 @@ before_script:
   - nvm install lts/*
   - node --version
   - yarn install
+  - RAILS_ENV=test bin/rails webpacker:compile
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
