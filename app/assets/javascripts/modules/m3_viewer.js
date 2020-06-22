@@ -8,6 +8,7 @@ import miradorDownloadPlugin from 'mirador-dl-plugin/es/miradorDownloadPlugin.js
 import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDialog.js';
 import customIconPlugin from '../plugins/customIconPlugin';
 import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin';
+import embedModePlugin from '../plugins/embedModePlugin';
 
 export default {
   init: function() {
@@ -73,6 +74,7 @@ export default {
         }
       },
       windows: [{
+        id: 'main',
         defaultSearchQuery: data.search.length > 0 ? data.search : undefined,
         suggestedSearches: data.suggestedSearch.length > 0 ? [data.suggestedSearch] : null,
         loadedManifest: data.m3Uri,
@@ -94,7 +96,7 @@ export default {
       },
       workspace: {
         showZoomControls: true,
-        type: 'single',
+        type: data.imageTools ? 'mosaic' : 'single',
       },
       workspaceControlPanel: {
         enabled: false,
@@ -102,6 +104,7 @@ export default {
     }, [
       data.imageTools && miradorImageToolsPlugin,
       miradorZoomBugPlugin,
+      ...((data.imageTools && embedModePlugin) || []),
       miradorSharePlugin,
       miradorShareDialogPlugin,
       miradorDownloadDialogPlugin,
