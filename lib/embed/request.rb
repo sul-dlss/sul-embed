@@ -70,7 +70,8 @@ module Embed
         :hide_title, :hide_embed, :hide_search, :hide_download,
         :min_files_to_search,
         :canvas_id, :canvas_index,
-        :search, :image_tools
+        :search, :suggested_search,
+        :image_tools
       )
 
       if p.respond_to? :permit!
