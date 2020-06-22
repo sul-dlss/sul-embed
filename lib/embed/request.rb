@@ -70,7 +70,8 @@ module Embed
         :hide_title, :hide_embed, :hide_search, :hide_download,
         :min_files_to_search,
         :canvas_id, :canvas_index,
-        :search, :suggested_search
+        :search, :suggested_search,
+        :image_tools
       )
 
       if p.respond_to? :permit!
@@ -94,6 +95,10 @@ module Embed
 
     def suggested_search
       params[:suggested_search]
+    end
+
+    def image_tools
+      params[:image_tools]
     end
 
     def validate!(url_parameter: true, url_scheme: true, format: true)
