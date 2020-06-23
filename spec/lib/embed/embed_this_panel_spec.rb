@@ -83,7 +83,8 @@ describe Embed::EmbedThisPanel do
           height: '555',
           width: '666',
           request: request,
-          title: 'Hello world'
+          title: 'Hello world',
+          version: '123'
         )
       )
     end
@@ -129,6 +130,11 @@ describe Embed::EmbedThisPanel do
         src = subject.find('iframe')['src']
         expect(src).not_to match(/maxheight/)
         expect(src).not_to match(/maxwidth/)
+      end
+
+      it 'includes a cache busting parameter' do
+        src = subject.find('iframe')['src']
+        expect(src).to match(/&_v=123/)
       end
     end
   end

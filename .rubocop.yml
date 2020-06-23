@@ -33,6 +33,7 @@ Metrics/BlockLength:
     - 'spec/**/*'
 
 Metrics/ParameterLists:
+  Max: 6
   Exclude:
     - 'spec/rails_helper.rb'
 
