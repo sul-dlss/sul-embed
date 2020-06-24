@@ -63,7 +63,7 @@ module Embed
       HTML
     end
 
-    def self.iframe_html(druid:, height:, width:, request:, title: '')
+    def self.iframe_html(druid:, height:, width:, request:, title: '', version: nil)
       width_style = if width
                       "#{width}px"
                     else
@@ -74,7 +74,8 @@ module Embed
                      else
                        "#{height}px"
                      end
-      src = "#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{druid}&#{request.as_url_params.to_query}"
+      query_params = request.as_url_params.merge(version ? { _v: version } : {}).to_query
+      src = "#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{druid}&#{query_params}"
 
       <<-IFRAME.strip_heredoc
         <iframe src="#{src}" height="#{height_style}" width="#{width_style}" title="#{title}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen />

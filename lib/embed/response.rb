@@ -29,7 +29,8 @@ module Embed
         height: viewer.height,
         width: viewer.width,
         request: @request,
-        title: viewer.iframe_title
+        title: viewer.iframe_title,
+        version: File.mtime(Rails.root).to_i
       )
     end
 
