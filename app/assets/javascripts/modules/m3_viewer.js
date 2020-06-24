@@ -7,6 +7,7 @@ import miradorSharePlugin from 'mirador-share-plugin/es/miradorSharePlugin.js';
 import miradorDownloadPlugin from 'mirador-dl-plugin/es/miradorDownloadPlugin.js';
 import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDialog.js';
 import customIconPlugin from '../plugins/customIconPlugin';
+import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin';
 
 export default {
   init: function() {
@@ -100,6 +101,7 @@ export default {
       }
     }, [
       data.imageTools && miradorImageToolsPlugin,
+      miradorZoomBugPlugin,
       miradorSharePlugin,
       miradorShareDialogPlugin,
       miradorDownloadDialogPlugin,
