@@ -1,5 +1,4 @@
 import React from 'react';
-import { WindowTopBarPluginMenuCustomIcon } from '../components/WindowTopBarPluginMenuCustomIcon';
 import { ZoomControls } from 'mirador/dist/es/src/components/ZoomControls.js';
 
 class FixedZoomControls extends ZoomControls {
