@@ -6,7 +6,7 @@ import miradorShareDialogPlugin from 'mirador-share-plugin/es/MiradorShareDialog
 import miradorSharePlugin from 'mirador-share-plugin/es/miradorSharePlugin.js';
 import miradorDownloadPlugin from 'mirador-dl-plugin/es/miradorDownloadPlugin.js';
 import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDialog.js';
-import customIconPlugin from '../plugins/customIconPlugin';
+import shareMenuPlugin from '../plugins/shareMenuPlugin';
 import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin';
 import embedModePlugin from '../plugins/embedModePlugin';
 
@@ -68,11 +68,6 @@ export default {
           }
         }
       },
-      translations: {
-        en: {
-          windowPluginMenu: 'Download & share'
-        }
-      },
       windows: [{
         id: 'main',
         defaultSearchQuery: data.search.length > 0 ? data.search : undefined,
@@ -103,13 +98,19 @@ export default {
       }
     }, [
       data.imageTools && miradorImageToolsPlugin,
+      shareMenuPlugin,
       miradorZoomBugPlugin,
       ...((data.imageTools && embedModePlugin) || []),
-      miradorSharePlugin,
+      {
+        ...miradorSharePlugin,
+        target: 'WindowTopBarShareMenu',
+      },
       miradorShareDialogPlugin,
       miradorDownloadDialogPlugin,
-      miradorDownloadPlugin,
-      customIconPlugin,
+      {
+        ...miradorDownloadPlugin,
+        target: 'WindowTopBarShareMenu',
+      },
     ].filter(Boolean));
   }
 };
