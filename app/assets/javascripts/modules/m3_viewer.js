@@ -9,6 +9,7 @@ import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDia
 import shareMenuPlugin from '../plugins/shareMenuPlugin';
 import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin';
 import embedModePlugin from '../plugins/embedModePlugin';
+import analyticsPlugin from '../plugins/analyticsPlugin';
 
 export default {
   init: function() {
@@ -119,6 +120,7 @@ export default {
         ...miradorDownloadPlugin,
         target: 'WindowTopBarShareMenu',
       },
+      analyticsPlugin,
     ].filter(Boolean));
   }
 };

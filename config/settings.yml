@@ -66,3 +66,4 @@ use_custom_pdf_viewer: true
 use_custom_3d_viewer: true
 collections_to_show_attribution:
   - dc876nn4469
+analytics_id:
