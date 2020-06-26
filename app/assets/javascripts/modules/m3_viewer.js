@@ -74,7 +74,8 @@ export default {
         suggestedSearches: data.suggestedSearch.length > 0 ? [data.suggestedSearch] : null,
         loadedManifest: data.m3Uri,
         canvasIndex: Number(data.canvasIndex),
-        canvasId: data.canvasId
+        canvasId: data.canvasId,
+        imageToolsEnabled: true,
       }],
       window: {
         allowClose: false,
@@ -97,7 +98,7 @@ export default {
         enabled: false,
       }
     }, [
-      data.imageTools && miradorImageToolsPlugin,
+      ...((data.imageTools && miradorImageToolsPlugin) || []),
       shareMenuPlugin,
       miradorZoomBugPlugin,
       ...((data.imageTools && embedModePlugin) || []),
