@@ -19,7 +19,7 @@ const CustomIcon = (props) => (
 const WindowTopBarShareMenu = (props) => (
   <WindowTopBarPluginMenu
     {...props}
-    t={() => 'Download & share'}
+    t={() => 'Share & download'}
     menuIcon={<CustomIcon />}
   />
 )
