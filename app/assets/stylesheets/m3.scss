@@ -2,8 +2,16 @@
 
 .#{$namespace}-container {
   border: 0;
+  border-left: 1px solid $gray-80-percent;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 2px 1px -1px rgba(0, 0, 0, 0.2);
   height: calc(100vh - 3px); // Give a little space for the box shadow
   margin: 0 1px 3px 0;
   position: relative;
+
+  // For single-window M3 embeds, this will be overriden by Mirador 3's
+  // selected window top-bar styling, but if there are mulitple
+  // windows, it will give the unselected windows a visible border.
+  .mirador-window-top-bar {
+    border-top-color: $gray-80-percent;
+  }
 }
