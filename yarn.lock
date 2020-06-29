@@ -5658,20 +5658,20 @@ mirador-dl-plugin@^0.12.0:
   resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-0.12.0.tgz#18b1dd475435e246dba8618969447dcaa2246609"
   integrity sha512-0FXxJxr8htkeB4j/zFINuYq0qRbont9MUqQ3GhfG+pUonApsKB+t1RrIbhmNqEj7yZ++GGZRyPPhUsYAH9e24w==
 
-mirador-image-tools@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/mirador-image-tools/-/mirador-image-tools-0.5.0.tgz#5de4e60b19e665f7b2567f7a2ef3ddcde4e313fa"
-  integrity sha512-QLwNSk81OJcc4uTZsioWjE9gH2xszy3yxQwBIQt8vSoQLqyQkLoI9Jrz6kp81BCpiqgNRKwJQmdVaJUYilHviQ==
+mirador-image-tools@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/mirador-image-tools/-/mirador-image-tools-0.6.0.tgz#aa30f00dccbfafe1c444e8c0a501005e533819b0"
+  integrity sha512-IMJS84WB8VYqxDMSIoEd3w/jxyPpvQ8HsljThRuHkiJk2bgqokPAGYDNLlDih3KhCRVt4zEnfn4CrvrDvDn36Q==
 
 mirador-share-plugin@^0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/mirador-share-plugin/-/mirador-share-plugin-0.9.0.tgz#c8742507e90bf3262c0b775ffeb56ac35f98309e"
   integrity sha512-o013pXA94sDATpNWwOaVm9Psv0f5Rs/j9r5V1BaPDyMOBHnCdiglLhHJMMt7ka0vEZBd9+okVab+ZsxS2lp9Bg==
 
-mirador@^3.0.0-rc.1:
-  version "3.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-rc.1.tgz#c214f7f40f9f72021f4c84cf97d81edd4c4d1c5f"
-  integrity sha512-bayyIxKDQTsHZPNXLiYJxlW0bnySsGREAF68m81bE2yhPEKdTF+URgiAkoHPXgUUeAVmlq80msKshyWbcyx9Og==
+mirador@^3.0.0-rc.3:
+  version "3.0.0-rc.3"
+  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-rc.3.tgz#53f16d86baf7bcd2533a16f58ef96819130c5ddd"
+  integrity sha512-stT1njiY+Nrvs5oeR2jANTzFbzcrqe3TmsmCNJkNRtu4m83kYSK1o6Fj/e1mi/OZEWzz+zaCxxS4iEcQiPEI5w==
   dependencies:
     "@material-ui/core" "^4.9.11"
     "@material-ui/icons" "^4.9.1"
