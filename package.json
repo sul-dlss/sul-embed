@@ -22,7 +22,7 @@
     "list.js": "1.1.1",
     "mirador": "^3.0.0-rc.3",
     "mirador-dl-plugin": "^0.12.0",
-    "mirador-image-tools": "^0.6.0",
+    "mirador-image-tools": "^0.7.0",
     "mirador-share-plugin": "^0.9.0",
     "pdfjs-dist": "^2.0.943",
     "react": "^16.8.6",

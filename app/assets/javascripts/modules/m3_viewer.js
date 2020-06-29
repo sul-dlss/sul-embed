@@ -75,20 +75,21 @@ export default {
         loadedManifest: data.m3Uri,
         canvasIndex: Number(data.canvasIndex),
         canvasId: data.canvasId,
-        imageToolsEnabled: true,
       }],
       window: {
         allowClose: false,
         allowFullscreen: true,
         allowMaximize: false,
         authNewWindowCenter: 'screen',
-        defaultSideBarPanel: sideBarPanel,
+        sideBarPanel,
         hideWindowTitle: (data.hideTitle === true),
         panels: {
           annotations: false,
           search: true,
         },
-        sideBarOpenByDefault: (data.showAttribution === true || data.search.length > 0)
+        sideBarOpen: (data.showAttribution === true || data.search.length > 0),
+        imageToolsEnabled: true,
+        imageToolsOpen: false,
       },
       workspace: {
         showZoomControls: true,
