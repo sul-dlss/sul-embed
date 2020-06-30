@@ -84,7 +84,7 @@ export default {
         sideBarPanel,
         hideWindowTitle: (data.hideTitle === true),
         panels: {
-          annotations: false,
+          annotations: (data.showAnnotations === true),
           search: true,
         },
         sideBarOpen: (data.showAttribution === true || data.search.length > 0),
