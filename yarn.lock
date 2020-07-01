@@ -5658,10 +5658,10 @@ mirador-dl-plugin@^0.12.0:
   resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-0.12.0.tgz#18b1dd475435e246dba8618969447dcaa2246609"
   integrity sha512-0FXxJxr8htkeB4j/zFINuYq0qRbont9MUqQ3GhfG+pUonApsKB+t1RrIbhmNqEj7yZ++GGZRyPPhUsYAH9e24w==
 
-mirador-image-tools@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/mirador-image-tools/-/mirador-image-tools-0.7.0.tgz#ebdef2089f2f45ddfd527a855bc566949b5c2e22"
-  integrity sha512-9DfbzWkZ3okqp0G01QXu7rosIyrBvg9mSDUXtprPeG2yxll+qmrPRFdZBoi+mvabE6wOp3WxEOJdWz172j7FKg==
+mirador-image-tools@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/mirador-image-tools/-/mirador-image-tools-0.8.0.tgz#0962026c97ca16b55de7582744b216877a9a5b11"
+  integrity sha512-+NSu1axG+zdh+Uz1WnxQTEalVg4T/CZIjiPmvjIhMvKffjUAbVMFZETbLtlEuM+d0A6y19yPEQcPbJnr37/OuQ==
 
 mirador-share-plugin@^0.9.0:
   version "0.9.0"
