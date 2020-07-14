@@ -6,8 +6,9 @@ import miradorShareDialogPlugin from 'mirador-share-plugin/es/MiradorShareDialog
 import miradorSharePlugin from 'mirador-share-plugin/es/miradorSharePlugin.js';
 import miradorDownloadPlugin from 'mirador-dl-plugin/es/miradorDownloadPlugin.js';
 import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDialog.js';
-import customIconPlugin from '../plugins/customIconPlugin';
+import shareMenuPlugin from '../plugins/shareMenuPlugin';
 import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin';
+import embedModePlugin from '../plugins/embedModePlugin';
 
 export default {
   init: function() {
@@ -67,46 +68,51 @@ export default {
           }
         }
       },
-      translations: {
-        en: {
-          windowPluginMenu: 'Download & share'
-        }
-      },
       windows: [{
+        id: 'main',
         defaultSearchQuery: data.search.length > 0 ? data.search : undefined,
         suggestedSearches: data.suggestedSearch.length > 0 ? [data.suggestedSearch] : null,
         loadedManifest: data.m3Uri,
         canvasIndex: Number(data.canvasIndex),
-        canvasId: data.canvasId
+        canvasId: data.canvasId,
       }],
       window: {
         allowClose: false,
         allowFullscreen: true,
         allowMaximize: false,
         authNewWindowCenter: 'screen',
-        defaultSideBarPanel: sideBarPanel,
+        sideBarPanel,
         hideWindowTitle: (data.hideTitle === true),
         panels: {
-          annotations: false,
+          annotations: (data.showAnnotations === true),
           search: true,
         },
-        sideBarOpenByDefault: (data.showAttribution === true || data.search.length > 0)
+        sideBarOpen: (data.showAttribution === true || data.search.length > 0),
+        imageToolsEnabled: true,
+        imageToolsOpen: false,
       },
       workspace: {
         showZoomControls: true,
-        type: 'single',
+        type: data.imageTools ? 'mosaic' : 'single',
       },
       workspaceControlPanel: {
         enabled: false,
       }
     }, [
-      data.imageTools && miradorImageToolsPlugin,
+      ...((data.imageTools && miradorImageToolsPlugin) || []),
+      shareMenuPlugin,
       miradorZoomBugPlugin,
-      miradorSharePlugin,
+      ...((data.imageTools && embedModePlugin) || []),
+      {
+        ...miradorSharePlugin,
+        target: 'WindowTopBarShareMenu',
+      },
       miradorShareDialogPlugin,
       miradorDownloadDialogPlugin,
-      miradorDownloadPlugin,
-      customIconPlugin,
+      {
+        ...miradorDownloadPlugin,
+        target: 'WindowTopBarShareMenu',
+      },
     ].filter(Boolean));
   }
 };

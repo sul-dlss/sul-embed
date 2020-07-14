@@ -1,5 +1,20 @@
 @import 'common';
 
+.mosaic-root {
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+}
+
+.mosaic-tile {
+  margin: 0 !important;
+}
+
+.mosaic-split.-row, .mosaic-split.-column {
+  background-color: #aaa;
+}
+
 .#{$namespace}-container {
   border: 0;
   border-left: 1px solid $gray-80-percent;
@@ -13,5 +28,13 @@
   // windows, it will give the unselected windows a visible border.
   .mirador-window-top-bar {
     border-top-color: $gray-80-percent;
+  }
+}
+
+.#{$namespace}-container {
+  .mirador-window-sidebar-annotation-panel {
+    .MuiMenuItem-root {
+      white-space: normal;
+    }
   }
 }
