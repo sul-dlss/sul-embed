@@ -3,7 +3,7 @@ set :repo_url, 'https://github.com/sul-dlss/sul-embed.git'
 set :user, 'embed'
 
 # Default branch is :master
-ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
+ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call unless ENV['DEPLOY']
 
 # Default value for :scm is :git
 # set :scm, :git
