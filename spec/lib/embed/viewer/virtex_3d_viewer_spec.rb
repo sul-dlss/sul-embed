@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Embed::Viewer::Virtex3DViewer do
+describe Embed::Viewer::Virtex3dViewer do
   subject(:viewer) { described_class.new(request) }
 
   let(:purl) do

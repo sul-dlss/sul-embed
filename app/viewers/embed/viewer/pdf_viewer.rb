@@ -2,7 +2,7 @@
 
 module Embed
   module Viewer
-    class PDFViewer < CommonViewer
+    class PdfViewer < CommonViewer
       def to_partial_path
         'embed/template/pdf_viewer'
       end

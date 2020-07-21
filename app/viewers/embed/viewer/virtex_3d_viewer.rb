@@ -2,7 +2,7 @@
 
 module Embed
   module Viewer
-    class Virtex3DViewer < CommonViewer
+    class Virtex3dViewer < CommonViewer
       def to_partial_path
         'embed/template/virtex_3d_viewer'
       end

@@ -6,7 +6,7 @@ require 'embed/viewer/virtex_3d_viewer'
 Embed.register_viewer(Embed::Viewer::File)
 Embed.register_viewer(Embed::Viewer::Geo)
 Embed.register_viewer(Settings.image_viewer.constantize)
-Embed.register_viewer(Embed::Viewer::PDFViewer) if Settings.use_custom_pdf_viewer
-Embed.register_viewer(Embed::Viewer::Virtex3DViewer) if Settings.use_custom_3d_viewer
+Embed.register_viewer(Embed::Viewer::PdfViewer) if Settings.use_custom_pdf_viewer
+Embed.register_viewer(Embed::Viewer::Virtex3dViewer) if Settings.use_custom_3d_viewer
 Embed.register_viewer(Embed::Viewer::Media)
 Embed.register_viewer(Embed::Viewer::WasSeed)
