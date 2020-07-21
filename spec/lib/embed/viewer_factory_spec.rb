@@ -3,23 +3,23 @@
 require 'rails_helper'
 
 describe Embed::ViewerFactory do
-  include PURLFixtures
+  include PurlFixtures
 
   let(:request) { double('EmbedRequest', purl_object: purl) }
-  let(:purl) { Embed::PURL.new('ignored') }
+  let(:purl) { Embed::Purl.new('ignored') }
   let(:instance) { described_class.new(request) }
 
   describe 'initialization' do
     subject { instance }
-    context 'invalid PURL object' do
+    context 'invalid Purl object' do
       before { stub_purl_response_with_fixture(empty_content_metadata_purl) }
 
       it 'raises an error' do
-        expect { subject }.to raise_error(Embed::PURL::ResourceNotEmbeddable)
+        expect { subject }.to raise_error(Embed::Purl::ResourceNotEmbeddable)
       end
     end
 
-    context 'valid PURL object' do
+    context 'valid Purl object' do
       before { stub_purl_response_with_fixture(file_purl) }
 
       it 'initializes successfully' do

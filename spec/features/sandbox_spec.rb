@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'embed sandbox page', js: true do
-  include PURLFixtures
+  include PurlFixtures
 
   before do
     stub_purl_response_with_fixture(file_purl)

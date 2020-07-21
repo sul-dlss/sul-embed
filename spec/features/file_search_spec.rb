@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'file viewer search bar', js: true do
-  include PURLFixtures
+  include PurlFixtures
   it 'should limit shown files when text is entered' do
     stub_purl_response_with_fixture(file_purl)
     visit_iframe_response('abc123', min_files_to_search: 1)

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'geo viewer public', js: true do
-  include PURLFixtures
+  include PurlFixtures
 
   before do
     stub_purl_response_with_fixture(geo_purl_public)
@@ -64,7 +64,7 @@ describe 'geo viewer public', js: true do
 end
 
 describe 'geo viewer restricted', js: true do
-  include PURLFixtures
+  include PurlFixtures
 
   before do
     stub_purl_response_with_fixture(geo_purl_restricted)
@@ -83,7 +83,7 @@ describe 'geo viewer restricted', js: true do
 end
 
 describe 'geo index map viewer', js: true do
-  include PURLFixtures
+  include PurlFixtures
 
   before do
     stub_purl_response_with_fixture(geo_purl_index_map)

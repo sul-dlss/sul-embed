@@ -54,7 +54,7 @@ module Embed
 
       ##
       # Checks to see if an item is embargoed to the world
-      # @param [Embed::PURL::Resource::ResourceFile]
+      # @param [Embed::Purl::Resource::ResourceFile]
       # @return [Boolean]
       def embargoed_to_world?(file)
         @purl_object.embargoed? && !file.stanford_only?

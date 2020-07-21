@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'media viewer', js: true do
-  include PURLFixtures
+  include PurlFixtures
   let(:purl) { video_purl }
   let(:stub_auth) {}
   before do

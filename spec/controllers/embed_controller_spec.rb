@@ -8,7 +8,7 @@ describe EmbedController do
       get :get
       expect(response.status).to eq(400)
     end
-    it 'has a 400 status when a PURL that is not embeddable is requested' do
+    it 'has a 400 status when a Purl that is not embeddable is requested' do
       get :get, params: { url: 'http://purl.stanford.edu/tz959sb6952' }
       expect(response.status).to eq(400)
     end
@@ -20,7 +20,7 @@ describe EmbedController do
       get :get, params: { url: 'http://purl.stanford.edu/' }
       expect(response.status).to eq(404)
     end
-    it 'has a 404 status for a PURL object that does not exists' do
+    it 'has a 404 status for a Purl object that does not exists' do
       get :get, params: { url: 'http://purl.stanford.edu/abc123notanobject' }
       expect(response.status).to eq(404)
     end
@@ -46,7 +46,7 @@ describe EmbedController do
       get :iframe, params: { url: 'http://purl.stanford.edu/' }
       expect(response.status).to eq(404)
     end
-    it 'has a 404 status for a PURL object that does not exists' do
+    it 'has a 404 status for a Purl object that does not exists' do
       get :iframe, params: { url: 'http://purl.stanford.edu/abc123notanobject' }
       expect(response.status).to eq(404)
     end

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Embed::Viewer::CommonViewer do
-  include PURLFixtures
+  include PurlFixtures
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:file_viewer) { Embed::Viewer::File.new(request) }
   let(:geo_viewer) { Embed::Viewer::Geo.new(request) }
@@ -58,7 +58,7 @@ describe Embed::Viewer::CommonViewer do
     end
     it 'true for image, geo and media viewer' do
       expect(geo_viewer.show_download?).to be_truthy
-      expect_any_instance_of(Embed::PURL).to receive(:downloadable_files).and_return(['a'])
+      expect_any_instance_of(Embed::Purl).to receive(:downloadable_files).and_return(['a'])
       expect(media_viewer.show_download?).to be_truthy
     end
     it 'false when hide_download is specified' do

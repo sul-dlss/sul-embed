@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'feature testing of viewers', js: true do
-  include PURLFixtures
+  include PurlFixtures
   describe 'basic functionality' do
     it 'makes purl embed request and embed' do
       stub_purl_response_with_fixture(file_purl)

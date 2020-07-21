@@ -62,7 +62,7 @@ module Embed
     end
 
     def purl_object
-      @purl_object ||= PURL.new(object_druid)
+      @purl_object ||= Purl.new(object_druid)
     end
 
     def as_url_params

@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'file list accessibility', js: true do
-  include PURLFixtures
+  include PurlFixtures
   it 'page has relevant sr-only classes' do
     stub_purl_response_with_fixture(hybrid_object_purl)
     visit_iframe_response

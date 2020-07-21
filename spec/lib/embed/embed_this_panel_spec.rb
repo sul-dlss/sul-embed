@@ -11,7 +11,7 @@ describe Embed::EmbedThisPanel do
       width: '666',
       request: request,
       iframe_title: 'File viewer',
-      purl_object: instance_double('Embed::PURL', druid: 'oo000oo0000', title: 'The Object Title')
+      purl_object: instance_double('Embed::Purl', druid: 'oo000oo0000', title: 'The Object Title')
     )
   end
   subject do

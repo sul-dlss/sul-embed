@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Embed::Viewer::WasSeed do
-  include PURLFixtures
+  include PurlFixtures
   include WasSeedThumbsFixtures
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:was_seed_viewer) { Embed::Viewer::WasSeed.new(request) }

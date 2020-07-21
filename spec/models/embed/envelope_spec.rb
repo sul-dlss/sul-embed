@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Embed::Envelope do
-  include PURLFixtures
+  include PurlFixtures
   describe '#initialize' do
     let(:envelope_object) { Embed::Envelope.new('test') }
     it 'creates an Envelope object' do

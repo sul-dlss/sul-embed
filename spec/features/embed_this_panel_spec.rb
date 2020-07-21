@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'embed this panel', js: true do
-  include PURLFixtures
+  include PurlFixtures
 
   let(:iframe_options) { {} }
 

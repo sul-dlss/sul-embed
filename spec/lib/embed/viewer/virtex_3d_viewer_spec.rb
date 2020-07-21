@@ -7,7 +7,7 @@ describe Embed::Viewer::Virtex3DViewer do
 
   let(:purl) do
     double(
-      Embed::PURL,
+      Embed::Purl,
       contents: [
         double(three_dimensional?: true, files: [double(title: 'obj1.obj')])
       ],

@@ -7,7 +7,7 @@ describe Embed::Viewer::PDFViewer do
 
   let(:purl) do
     double(
-      Embed::PURL,
+      Embed::Purl,
       contents: [
         double(type: 'file', files: [double(title: 'file-abc123.pdf'), double(title: 'file-xyz321.pdf')]),
         double(type: 'document', files: [double(title: 'doc-abc123.pdf'), double(title: 'doc-xyz321.pdf')])
@@ -29,7 +29,7 @@ describe Embed::Viewer::PDFViewer do
     context 'when all the files in the documents are location restricted' do
       let(:purl) do
         double(
-          Embed::PURL,
+          Embed::Purl,
           contents: [
             double(type: 'document', files: [double(title: 'doc-abc123.pdf', location_restricted?: true)])
           ],
@@ -42,7 +42,7 @@ describe Embed::Viewer::PDFViewer do
     context 'when all the files in the documents are not location restricted' do
       let(:purl) do
         double(
-          Embed::PURL,
+          Embed::Purl,
           contents: [
             double(type: 'document', files: [double(title: 'doc-abc123.pdf', location_restricted?: false)])
           ],
