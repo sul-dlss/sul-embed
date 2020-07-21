@@ -7,6 +7,7 @@ module Embed
     delegate :embargoed?, :stanford_only_unrestricted?, :world_unrestricted?,
              :world_downloadable_file?, :stanford_only_downloadable_file?, to: :rights
     attr_reader :druid
+
     def initialize(druid)
       @druid = druid
     end

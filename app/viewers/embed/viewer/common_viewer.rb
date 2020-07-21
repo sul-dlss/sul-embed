@@ -8,6 +8,7 @@ module Embed
       include Embed::StacksImage
 
       attr_reader :purl_object, :request
+
       def initialize(request)
         @request = request
         @purl_object = request.purl_object

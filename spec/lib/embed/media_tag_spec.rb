@@ -235,7 +235,7 @@ describe Embed::MediaTag do
       it 'includes an image element which points to a stacks 400px thumb' do
         expect(previewable_element).to match(/<img/)
         expect(previewable_element).to match(
-          %r{src='https://stacks.*/iiif/.*abc123/full/\!400,400.*'}
+          %r{src='https://stacks.*/iiif/.*abc123/full/!400,400.*'}
         )
       end
 
