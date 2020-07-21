@@ -7,9 +7,9 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 6.0'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'faraday', '~> 1'
@@ -26,7 +26,7 @@ gem 'iso8601' # to parse durations, since ActiveSupport::Duration doesn't get a 
 group :development, :test do
   gem 'capybara'
   gem 'high_voltage'
-  gem 'rspec-rails', '~> 3.7'
+  gem 'rspec-rails'
 
   gem 'selenium-webdriver', '!= 3.13.0'
   gem 'webdrivers'
@@ -87,4 +87,4 @@ gem 'newrelic_rpm', group: :production
 # Use okcomputer to monitor the application
 gem 'okcomputer'
 
-gem 'webpacker', '~> 4.x'
+gem 'webpacker', '~> 5.x'
