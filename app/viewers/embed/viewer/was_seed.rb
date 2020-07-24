@@ -11,6 +11,21 @@ module Embed
         [:"webarchive-seed"]
       end
 
+      def capture_list
+        Embed::WasTimeMap.new(archived_timemap_url).capture_list
+      end
+
+      def archived_site_url
+        @purl_object.ng_xml.xpath(
+          '//mods:url[@displayLabel="Archived website"]',
+          'mods' => 'http://www.loc.gov/mods/v3'
+        )&.text
+      end
+
+      def archived_timemap_url
+        archived_site_url.sub('/*/', '/timemap/')
+      end
+
       def thumbs_list
         Embed::WasSeedThumbs.new(@purl_object.druid).thumbs_list
       end
