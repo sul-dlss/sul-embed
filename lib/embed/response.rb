@@ -2,6 +2,8 @@
 
 module Embed
   class Response
+    attr_reader :request
+
     delegate :height, :width, to: :viewer
     def initialize(request)
       @request = request

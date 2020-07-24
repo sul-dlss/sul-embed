@@ -5,6 +5,7 @@
     <script>
       <%= 'if (window.jQuery) { jQuery.fx.off = true; }' if Rails.env.test? %>
     </script>
+    <%= tag :link, rel: "up", href: Embed::Purl.new(@embed_response.request.purl_object.collections.first).purl_url if @embed_response && @embed_response.request.purl_object.collections.any? %> %>
   </head>
   <body>
     <%= render 'embed_response', embed_response: @embed_response %>
@@ -15,6 +16,8 @@
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+        ga('set', 'anonymizeIp', true);
+        ga('set', 'dimension1', $('link[rel="up"]').attr('href'));
         ga('create', '<%= Settings.analytics_id %>', 'auto');
         ga('send', 'pageview');
       </script>
