@@ -36,7 +36,7 @@ module Embed
         new(
           url: items[0].remove(/^<|>$/),
           rel: items[1].remove(/^rel="|"$/),
-          datetime: items[2]&.remove(/^datetime="|"$/),
+          datetime: items[2]&.remove(/^datetime="|"$/)
         )
       end
     end

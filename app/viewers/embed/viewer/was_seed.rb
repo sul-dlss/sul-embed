@@ -3,6 +3,9 @@
 module Embed
   module Viewer
     class WasSeed < CommonViewer
+      include Embed::StacksImage
+      delegate :druid, to: :@purl_object
+
       def to_partial_path
         'embed/template/was_seed'
       end
@@ -24,6 +27,10 @@ module Embed
 
       def archived_timemap_url
         archived_site_url.sub('/*/', '/timemap/')
+      end
+
+      def shelved_thumb
+        stacks_thumb_url(druid, @purl_object.contents.first.primary_file.title, size: '200,')
       end
 
       def thumbs_list
