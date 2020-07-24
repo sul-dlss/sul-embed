@@ -111,8 +111,8 @@ describe Embed::Request do
   end
   describe 'purl_object' do
     let(:object) { double('purl') }
-    it 'should instantiate a PURL object w/ the object druid' do
-      expect(Embed::PURL).to receive(:new).with('abc123').and_return(object)
+    it 'should instantiate a Purl object w/ the object druid' do
+      expect(Embed::Purl).to receive(:new).with('abc123').and_return(object)
       expect(Embed::Request.new(url: purl).purl_object).to be object
     end
   end

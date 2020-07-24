@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'was seed viewer public', js: true do
-  include PURLFixtures
+  include PurlFixtures
   include WasSeedThumbsFixtures
 
   before do

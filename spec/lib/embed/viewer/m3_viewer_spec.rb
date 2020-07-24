@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe Embed::Viewer::M3Viewer do
-  include PURLFixtures
+  include PurlFixtures
   subject(:m3_viewer) { Embed::Viewer::M3Viewer.new(request) }
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
@@ -42,7 +42,7 @@ describe Embed::Viewer::M3Viewer do
       end
 
       it 'finds the requested canvas index in the IIIF manifest' do
-        allow_any_instance_of(Embed::PURL).to receive(:manifest_json_response).and_return(manifest_json_response)
+        allow_any_instance_of(Embed::Purl).to receive(:manifest_json_response).and_return(manifest_json_response)
         expect(m3_viewer.canvas_index).to eq 1
       end
     end
@@ -64,7 +64,7 @@ describe Embed::Viewer::M3Viewer do
       end
 
       it 'finds the requested canvas index in the IIIF manifest' do
-        allow_any_instance_of(Embed::PURL).to receive(:manifest_json_response).and_return(manifest_json_response)
+        allow_any_instance_of(Embed::Purl).to receive(:manifest_json_response).and_return(manifest_json_response)
         expect(m3_viewer.canvas_index).to eq nil
       end
     end
@@ -86,7 +86,7 @@ describe Embed::Viewer::M3Viewer do
       end
 
       it 'finds the requested canvas index in the IIIF manifest' do
-        allow_any_instance_of(Embed::PURL).to receive(:manifest_json_response).and_return(manifest_json_response)
+        allow_any_instance_of(Embed::Purl).to receive(:manifest_json_response).and_return(manifest_json_response)
         expect(m3_viewer.canvas_index).to eq 15
       end
     end

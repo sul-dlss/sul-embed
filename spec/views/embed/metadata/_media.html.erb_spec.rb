@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'embed/metadata/_media.html.erb' do
-  include PURLFixtures
+  include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
-  let(:object) { Embed::PURL.new('12345') }
+  let(:object) { Embed::Purl.new('12345') }
   let(:viewer) { Embed::Viewer::Media.new(request) }
 
   before do

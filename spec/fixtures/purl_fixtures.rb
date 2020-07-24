@@ -1,4 +1,4 @@
-module PURLFixtures
+module PurlFixtures
   def access_discover_world
     <<-XML
       <access type="discover">

@@ -17,7 +17,7 @@ class EmbedController < ApplicationController
   end
 
   def iframe
-    # Trigger purl object validation (will raise Embed::PURL::ResourceNotAvailable)
+    # Trigger purl object validation (will raise Embed::Purl::ResourceNotAvailable)
     @embed_request.validate!
     @embed_request.purl_object.valid?
     @embed_response = Embed::Response.new(@embed_request)
@@ -36,7 +36,7 @@ class EmbedController < ApplicationController
     render body: e.to_s, status: :bad_request
   end
 
-  rescue_from Embed::PURL::ResourceNotEmbeddable do |e|
+  rescue_from Embed::Purl::ResourceNotEmbeddable do |e|
     render body: e.to_s, status: :bad_request
   end
 
@@ -44,7 +44,7 @@ class EmbedController < ApplicationController
     render body: e.to_s, status: :not_found
   end
 
-  rescue_from Embed::PURL::ResourceNotAvailable do |e|
+  rescue_from Embed::Purl::ResourceNotAvailable do |e|
     render body: e.to_s, status: :not_found
   end
 

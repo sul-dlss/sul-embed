@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-describe Embed::Viewer::Virtex3DViewer do
+describe Embed::Viewer::Virtex3dViewer do
   subject(:viewer) { described_class.new(request) }
 
   let(:purl) do
     double(
-      Embed::PURL,
+      Embed::Purl,
       contents: [
         double(three_dimensional?: true, files: [double(title: 'obj1.obj')])
       ],

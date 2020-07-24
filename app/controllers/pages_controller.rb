@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-unless Rails.env.production?
-  class PagesController < ApplicationController
-    include HighVoltage::StaticPage
-    layout false
-  end
+class PagesController < ApplicationController
+  include HighVoltage::StaticPage unless Rails.env.production?
+
+  layout false
 end

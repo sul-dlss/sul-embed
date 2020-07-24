@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'embed/footer/_generic.html.erb' do
-  include PURLFixtures
+  include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
-  let(:object) { Embed::PURL.new('12345') }
+  let(:object) { Embed::Purl.new('12345') }
   let(:viewer) { Embed::Viewer::Geo.new(request) }
 
   before do
@@ -25,7 +25,7 @@ RSpec.describe 'embed/footer/_generic.html.erb' do
 
   describe 'fullscreen button' do
     context 'when the viewer is configured to use the local fullscreen function' do
-      let(:viewer) { Embed::Viewer::PDFViewer.new(request) }
+      let(:viewer) { Embed::Viewer::PdfViewer.new(request) }
 
       it { expect(rendered).to have_css('button#full-screen-button') }
     end

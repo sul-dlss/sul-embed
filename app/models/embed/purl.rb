@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 module Embed
-  class PURL
+  class Purl
     require 'embed/media_duration'
     require 'dor/rights_auth'
     delegate :embargoed?, :stanford_only_unrestricted?, :world_unrestricted?,
              :world_downloadable_file?, :stanford_only_downloadable_file?, to: :rights
     attr_reader :druid
+
     def initialize(druid)
       @druid = druid
     end
@@ -28,7 +29,7 @@ module Embed
 
     def contents
       @contents ||= ng_xml.xpath('//contentMetadata/resource').map do |resource|
-        PURL::Resource.new(resource, rights)
+        Purl::Resource.new(resource, rights)
       end
     end
 

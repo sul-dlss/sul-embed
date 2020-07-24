@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'basic oembed functionality' do
-  include PURLFixtures
+  include PurlFixtures
   it 'should return a response with required parameters (xml)' do
     stub_purl_response_with_fixture(file_purl)
     visit embed_path(url: 'http://purl.stanford.edu/abc', format: 'xml')

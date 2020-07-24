@@ -47,7 +47,7 @@ describe Embed::StacksImage do
 
   describe '#stacks_thumb_url' do
     it 'requests an image that is 400px on the long edge' do
-      expect(subject.stacks_thumb_url('abc123', 'filename.jpg')).to match(%r{/full/\!400,400/})
+      expect(subject.stacks_thumb_url('abc123', 'filename.jpg')).to match(%r{/full/!400,400/})
     end
 
     it 'escapes special characters in the image file name' do

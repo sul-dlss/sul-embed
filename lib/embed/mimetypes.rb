@@ -14,6 +14,7 @@ module Embed
     # A quick best effort to create a short human readable mimetype
     class PrettyMime
       attr_reader :mimetype
+
       ##
       # @param [String] mimetype
       def initialize(mimetype)

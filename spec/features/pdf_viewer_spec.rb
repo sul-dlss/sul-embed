@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'PDF Viewer', js: true do
-  include PURLFixtures
+  include PurlFixtures
   let(:purl) { pdf_document_purl }
 
   before do

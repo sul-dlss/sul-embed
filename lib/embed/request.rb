@@ -4,6 +4,7 @@ module Embed
   class Request
     include URLSchemes
     attr_reader :params, :rails_request
+
     def initialize(params, rails_request = nil)
       @params = params
       @rails_request = rails_request
@@ -62,7 +63,7 @@ module Embed
     end
 
     def purl_object
-      @purl_object ||= PURL.new(object_druid)
+      @purl_object ||= Purl.new(object_druid)
     end
 
     def as_url_params

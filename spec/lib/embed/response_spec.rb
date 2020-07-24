@@ -21,10 +21,10 @@ describe Embed::Response do
   describe 'title' do
     before do
       expect(request).to receive(:purl_object).and_return(purl_object)
-      expect(purl_object).to receive(:title).and_return('PURL Title')
+      expect(purl_object).to receive(:title).and_return('Purl Title')
     end
-    it 'should get the title from the PURL object' do
-      expect(response.title).to eq 'PURL Title'
+    it 'should get the title from the Purl object' do
+      expect(response.title).to eq 'Purl Title'
     end
   end
 
@@ -45,7 +45,7 @@ describe Embed::Response do
     before do
       expect(request).to receive(:purl_object).at_least(:once).and_return(purl_object)
       expect(request).to receive(:fullheight?).and_return(nil)
-      expect(purl_object).to receive(:title).and_return('PURL Title')
+      expect(purl_object).to receive(:title).and_return('Purl Title')
       expect(response).to receive(:viewer).at_least(:once).and_return(viewer)
       allow(viewer).to receive(:height).and_return('100')
       allow(viewer).to receive(:width).and_return('100')
@@ -58,7 +58,7 @@ describe Embed::Response do
           type: 'rich',
           version: '1.0',
           provider_name: 'SUL Embed Service',
-          title: 'PURL Title',
+          title: 'Purl Title',
           height: '100',
           width: '100'
         )

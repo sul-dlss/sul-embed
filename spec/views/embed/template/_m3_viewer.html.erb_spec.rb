@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'embed/template/_m3_viewer.html.erb' do
-  include PURLFixtures
+  include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', canvas_index: 3, search: 'xyz', suggested_search: 'abc') }
-  let(:object) { Embed::PURL.new('12345') }
+  let(:object) { Embed::Purl.new('12345') }
   let(:viewer) { Embed::Viewer::M3Viewer.new(request) }
 
   before do
