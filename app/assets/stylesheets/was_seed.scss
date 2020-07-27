@@ -2,9 +2,12 @@
 @import 'common';
 @import 'vendor/tooltip';
 
-.#{$namespace}-was-seed-row {
+.#{$namespace}-was-seed-content {
   @include well-content;
   background: $white-color;
+}
+
+.#{$namespace}-was-seed-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -16,6 +19,13 @@
   flex: 1;
   padding: 12px;
 }
+
+.#{$namespace}-was-seed-preview {
+  img {
+    max-height: 200px;
+  }
+}
+
 
 .#{$namespace}-was-seed-info {
   flex-basis: 200px;
@@ -30,22 +40,26 @@
 
 .#{$namespace}-was-seed-list-item {
   border: 1px solid $color-beige-30;
-  margin: 10px;
+  margin: 0 15px 15px 0;
+  min-width: 225px;
   padding: 10px;
-  
+  position: relative;
+
   &:before {
     content: ' \f123';
+    color: $gray-54-percent;
     font-family: 'sul-icons';
-  }
-
-  a {
-    &:after {
-      content: ' \f142';
-      font-family: 'sul-icons';
-    }
+    font-size: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
   }
 }
 
 .#{$namespace}-was-seed {
   @include well-container;
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: $sul-header-weight;
+  }
  }
