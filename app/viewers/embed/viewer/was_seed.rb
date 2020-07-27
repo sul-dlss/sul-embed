@@ -15,7 +15,7 @@ module Embed
       end
 
       def capture_list
-        Embed::WasTimeMap.new(archived_timemap_url).capture_list
+        @capture_list ||= Embed::WasTimeMap.new(archived_timemap_url).capture_list
       end
 
       def archived_site_url

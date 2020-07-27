@@ -696,6 +696,11 @@ module PurlFixtures
            <fedora:isMemberOfCollection rdf:resource="info:fedora/druid:mk656nf8485" />
         </rdf:Description>
         </rdf:RDF>
+        <mods xmlns="http://www.loc.gov/mods/v3">
+          <location>
+            <url displayLabel="Archived website">https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/</url>
+          </location>
+        </mods>
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
           <dc:identifier>https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/</dc:identifier>
         </oai_dc:dc>
