@@ -15,7 +15,7 @@
         <ul class='sul-embed-was-seed-list'>
           <% viewer.capture_list.each do |memento| %>
             <li class='sul-embed-was-seed-list-item'>
-              <%= link_to memento.url do %>
+              <%= link_to memento.url, target: '_top' do %>
                 <%= memento.datetime %>
               <% end %>
             </li>
