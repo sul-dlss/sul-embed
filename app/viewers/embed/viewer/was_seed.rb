@@ -33,10 +33,6 @@ module Embed
         stacks_thumb_url(druid, @purl_object.contents.first.primary_file.title, size: '200,')
       end
 
-      def thumbs_list
-        Embed::WasSeedThumbs.new(@purl_object.druid).thumbs_list
-      end
-
       def format_memento_datetime(memento_datetime)
         I18n.l(Date.parse(memento_datetime), format: :sul) if memento_datetime.present?
       end
