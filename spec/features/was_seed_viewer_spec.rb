@@ -7,7 +7,7 @@ describe 'was seed viewer public', js: true do
   include WasTimeMapFixtures
 
   before do
-    expect(Faraday).to receive(:get).and_return(double('response', body: timemap))
+    expect(Faraday).to receive(:get).and_return(double('response', body: timemap, success?: true))
     stub_purl_response_with_fixture(was_seed_purl)
     visit_iframe_response
   end

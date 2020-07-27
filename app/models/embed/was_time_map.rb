@@ -13,8 +13,22 @@ module Embed
     end
 
     def timemap
-      @timemap ||= Faraday.get(timemap_url).body.split(",\n").map do |item|
-        MementoLine.from_line(item)
+      @timemap ||=
+        begin
+          response = Faraday.get(timemap_url)
+          raise ResourceNotAvailable unless response.success?
+
+          response.body.split(",\n").map do |item|
+            MementoLine.from_line(item)
+          end
+        rescue Faraday::ConnectionFailed, Faraday::TimeoutError
+          raise ResourceNotAvailable
+        end
+    end
+
+    class ResourceNotAvailable < StandardError
+      def initialize(msg = 'The requested timemap was not available')
+        super
       end
     end
 

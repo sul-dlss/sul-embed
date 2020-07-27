@@ -12,7 +12,7 @@ RSpec.describe 'embed/template/_was_seed.html.erb' do
 
   before do
     view.lookup_context.view_paths.push 'app/views/embed'
-    expect(Faraday).to receive(:get).and_return(double('response', body: timemap))
+    expect(Faraday).to receive(:get).and_return(double('response', body: timemap, success?: true))
     allow(request).to receive(:purl_object).and_return(object)
     allow(object).to receive(:response).and_return(was_seed_purl)
     allow(viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
