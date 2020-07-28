@@ -36,8 +36,8 @@ describe Embed::WasTimeMap do
       expect(Faraday).to receive(:get).and_return(double('response', success?: false))
     end
 
-    it 'raises an exception' do
-      expect { subject.timemap }.to raise_error Embed::WasTimeMap::ResourceNotAvailable
+    it 'catches the exception and returns an empty array' do
+      expect(subject.timemap).to eq []
     end
   end
 end

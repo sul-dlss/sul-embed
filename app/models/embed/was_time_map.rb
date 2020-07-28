@@ -23,6 +23,8 @@ module Embed
           end
         rescue Faraday::ConnectionFailed, Faraday::TimeoutError
           raise ResourceNotAvailable
+        rescue ResourceNotAvailable
+          []
         end
     end
 

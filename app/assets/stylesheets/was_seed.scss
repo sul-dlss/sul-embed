@@ -17,7 +17,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding: 12px;
+  padding: 0 12px 12px 12px;
 }
 
 .#{$namespace}-was-seed-preview {
@@ -26,16 +26,28 @@
   }
 }
 
+.#{$namespace}-was-seed-captures {
+  padding-top: 6px;
+}
+
 
 .#{$namespace}-was-seed-info {
   flex-basis: 200px;
   max-width: 220px;
+  padding-top: 12px;
+  position: relative;
+
+  a {
+    border: 1px solid $color-beige-30;
+    text-align: center;
+  }
 }
 
 .#{$namespace}-was-seed-list {
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
+  padding-top: 12px;
 }
 
 .#{$namespace}-was-seed-list-item {
@@ -55,11 +67,11 @@
   }
 }
 
-.#{$namespace}-was-seed {
+.#{$namespace}-was-seed-container {
   @include well-container;
 
   h1 {
     font-size: 1.5rem;
     font-weight: $sul-header-weight;
   }
- }
+}

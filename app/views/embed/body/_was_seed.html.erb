@@ -4,19 +4,20 @@
   <div class='sul-embed-was-seed'>
     <div class='sul-embed-was-seed-content'>
       <div class='sul-embed-was-seed-row'>
-        <div class='sul-embed-was-seed-column'>
-          <h1>
-            <%= "Captured #{pluralize(viewer.capture_list.length, 'time')} between #{viewer.format_memento_datetime(viewer.capture_list.first.datetime)} and #{viewer.format_memento_datetime(viewer.capture_list.last.datetime)}" %>
-          </h1>
-        </div>
-      </div>
-      <div class='sul-embed-was-seed-row'>
         <div class='sul-embed-was-seed-column sul-embed-was-seed-info'>
-          <div class="sul-embed-was-seed-preview">
-            <%= image_tag viewer.shelved_thumb, alt: '' %>
-          </div>
+          <%= link_to viewer.archived_site_url, target: '_top' do %>
+            <div class="sul-embed-was-seed-preview">
+              <%= image_tag viewer.shelved_thumb, alt: '' %>
+            </div>
+            Stanford Web Archive Portal
+          <% end %>
         </div>
-        <div class='sul-embed-was-seed-column'>
+        <div class='sul-embed-was-seed-column sul-embed-was-seed-captures'>
+          <% if viewer.capture_list.length.positive? %>
+            <h1>
+              <%= "Captured #{pluralize(viewer.capture_list.length, 'time')} between #{viewer.format_memento_datetime(viewer.capture_list.first.datetime)} and #{viewer.format_memento_datetime(viewer.capture_list.last.datetime)}" %>
+            </h1>
+          <% end %>
           <ul class='sul-embed-was-seed-list'>
             <% viewer.capture_list.each do |memento| %>
               <li class='sul-embed-was-seed-list-item'>
