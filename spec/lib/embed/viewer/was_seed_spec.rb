@@ -46,7 +46,7 @@ describe Embed::Viewer::WasSeed do
   describe 'format_memento_datetime' do
     it 'returns a formated memento datetime' do
       stub_request(request)
-      expect(was_seed_viewer.format_memento_datetime('20121129060351')).to eq('29-Nov-2012')
+      expect(was_seed_viewer.format_memento_datetime('20121129060351')).to eq('29 November 2012')
     end
   end
 

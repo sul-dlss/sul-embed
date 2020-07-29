@@ -24,6 +24,7 @@ en:
   date:
     formats:
       sul: '%d-%b-%Y'
+      sul_was_long: '%d %B %Y'
   viewers:
     file:
       title: 'File viewer'

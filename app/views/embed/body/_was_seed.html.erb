@@ -22,7 +22,7 @@
             <% viewer.capture_list.each do |memento| %>
               <li class='sul-embed-was-seed-list-item'>
                 <%= link_to memento.url, target: '_top', class: 'sul-embed-stretched-link' do %>
-                  <%= memento.datetime %>
+                  <%= DateTime.parse(memento.datetime).utc %>
                 <% end %>
               </li>
             <% end %>

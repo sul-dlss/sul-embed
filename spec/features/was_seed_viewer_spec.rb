@@ -18,7 +18,7 @@ describe 'was seed viewer public', js: true do
       expect(page).to have_css('.sul-embed-was-seed-list-item', count: 7, visible: false)
     end
     it 'links to the memento URI with a _parent target' do
-      expect(page).to have_css('.sul-embed-was-seed-list-item a.sul-embed-stretched-link[href="https://swap.stanford.edu/20090718213431/http://ennejah.info/"]', text: 'Sat, 18 Jul 2009 21:34:31 GMT')
+      expect(page).to have_css('.sul-embed-was-seed-list-item a.sul-embed-stretched-link[href="https://swap.stanford.edu/20090718213431/http://ennejah.info/"]', text: '2009-07-18 21:34:31 UTC')
     end
     it 'has the thumbnail' do
       expect(page).to have_css('img[src="https://stacks.stanford.edu/image/iiif/ignored%2Fthumbnail/full/200,/0/default.jpg"]', visible: false)
