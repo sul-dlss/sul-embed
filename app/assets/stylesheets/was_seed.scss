@@ -1,58 +1,77 @@
 @import 'sul_variables';
 @import 'common';
 @import 'vendor/tooltip';
-@import 'modules/slider';
-@import 'modules/shadows';
 
-$sly-slider-height: 10px;
+.#{$namespace}-was-seed-content {
+  @include well-content;
+  background: $white-color;
+}
 
-.#{$namespace}-was-seed {
-  background-color: $sul-background;
-  height: calc(100% - #{$sly-slider-height});
-  padding: 0;
- }
+.#{$namespace}-was-seed-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
 
-.#{$namespace}-was-thumb-list {
-  height: calc(100% - (#{$sly-slider-height} + 10px));
-  list-style: none;
+.#{$namespace}-was-seed-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0 12px 12px 12px;
+}
+
+.#{$namespace}-was-seed-preview {
+  img {
+    max-height: 200px;
+  }
+}
+
+.#{$namespace}-was-seed-captures {
+  padding-top: 6px;
+}
+
+
+.#{$namespace}-was-seed-info {
+  flex-basis: 200px;
+  max-width: 220px;
+  padding-top: 12px;
+  position: relative;
+
+  a {
+    border: 1px solid $color-beige-30;
+    text-align: center;
+  }
+}
+
+.#{$namespace}-was-seed-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding-top: 12px;
+}
+
+.#{$namespace}-was-seed-list-item {
+  border: 1px solid $color-beige-30;
+  margin: 0 15px 15px 0;
+  min-width: 225px;
   padding: 10px;
- }
+  position: relative;
 
-.#{$namespace}-was-thumb-item-img {
-  height: calc(100% - (#{$sly-slider-height} + 30px));
-}
-
-.#{$namespace}-was-thumb-item-date a {
-  &:after {
-    content: ' \f142';
+  &:before {
+    content: ' \f123';
+    color: $gray-54-percent;
     font-family: 'sul-icons';
+    font-size: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
   }
 }
 
-.#{$namespace}-was-thumb-item {
-  float: left;
-  height: 100%;
-  margin: 2px 2px 10px 2px; //top right bottom left
+.#{$namespace}-was-seed-container {
+  @include well-container;
 
-  &:hover {
-    @include shadow(2);
-    background-color: $color-beige-05;
-    transition: all 0.2s ease-in-out;
+  h1 {
+    font-size: 1.5rem;
+    font-weight: $sul-header-weight;
   }
-
-  &.active {
-    @include shadow(2);
-    background-color: $white-color;
-
-    a {
-      font-size: 1.2em;
-      font-weight: 400;
-    }
-  }
-}
-
-.#{$namespace}-was-thumb-item-div {
-  height: 100%;
-  margin: 5px;
-  text-align: center;
 }

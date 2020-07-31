@@ -6,7 +6,7 @@ require 'spec_helper'
 require File.expand_path('../config/environment', __dir__)
 require 'rspec/rails'
 require 'fixtures/purl_fixtures'
-require 'fixtures/was_seed_thumbs_fixtures'
+require 'fixtures/was_time_map_fixtures'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'selenium-webdriver'

@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe Embed::Viewer::WasSeed do
   include PurlFixtures
-  include WasSeedThumbsFixtures
+  include WasTimeMapFixtures
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:was_seed_viewer) { Embed::Viewer::WasSeed.new(request) }
   let(:purl) { "#{Settings.purl_url}/abc123" }
@@ -22,27 +22,31 @@ describe Embed::Viewer::WasSeed do
     end
   end
 
-  describe 'thumbs_list' do
-    it 'calls the Embed::WasSeedThumbs with the same druid id' do
-      stub_request(request)
-      allow_any_instance_of(Embed::WasSeedThumbs).to receive(:thumbs_list)
-
-      expect(Embed::WasSeedThumbs).to receive(:new).with('12345').and_return(Embed::WasSeedThumbs.new('12345'))
-      was_seed_viewer.thumbs_list
+  describe '#archived_site_url' do
+    it 'parses a mods archived site' do
+      stub_purl_response_and_request(was_seed_purl, request)
+      expect(was_seed_viewer.archived_site_url).to eq 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/'
     end
-    it 'calls the Embed::WasSeedThumbs with the same druid id' do
-      stub_request(request)
-      allow_any_instance_of(Embed::WasSeedThumbs).to receive(:thumbs_list).and_return(thumbs_list_fixtures)
+  end
 
-      expect(Embed::WasSeedThumbs).to receive(:new).with('12345').and_return(Embed::WasSeedThumbs.new('12345'))
-      expect(was_seed_viewer.thumbs_list).to eq(thumbs_list_fixtures)
+  describe '#archived_timemap_url' do
+    it 'parses a mods archived site' do
+      stub_purl_response_and_request(was_seed_purl, request)
+      expect(was_seed_viewer.archived_timemap_url).to eq 'https://swap.stanford.edu/timemap/http://naca.central.cranfield.ac.uk/'
+    end
+  end
+
+  describe '#shelved_thumb' do
+    it 'parses a mods archived site' do
+      stub_purl_response_and_request(was_seed_purl, request)
+      expect(was_seed_viewer.shelved_thumb).to eq 'https://stacks.stanford.edu/image/iiif/12345%2Fthumbnail/full/200,/0/default.jpg'
     end
   end
 
   describe 'format_memento_datetime' do
     it 'returns a formated memento datetime' do
       stub_request(request)
-      expect(was_seed_viewer.format_memento_datetime('20121129060351')).to eq('29-Nov-2012')
+      expect(was_seed_viewer.format_memento_datetime('20121129060351')).to eq('29 November 2012')
     end
   end
 
@@ -50,14 +54,14 @@ describe Embed::Viewer::WasSeed do
     it 'defaults to 353' do
       stub_request(request)
 
-      expect(was_seed_viewer.send(:default_height)).to eq 353
+      expect(was_seed_viewer.send(:default_height)).to eq 420
     end
 
     it 'is smaller when the title is hidden' do
       expect(request).to receive(:hide_title?).and_return(true)
       stub_request(request)
 
-      expect(was_seed_viewer.send(:default_height)).to eq 274
+      expect(was_seed_viewer.send(:default_height)).to eq 340
     end
   end
 
