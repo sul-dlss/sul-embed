@@ -24,7 +24,11 @@ module Embed
       def show_attribution_panel?
         purl_object.collections.any? do |druid|
           Settings.collections_to_show_attribution.include?(druid)
-        end
+        end || cdl?
+      end
+
+      def cdl?
+        purl_object.rights.controlled_digital_lending?
       end
 
       def canvas_index

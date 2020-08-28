@@ -401,7 +401,7 @@ DEPENDENCIES
   config
   deprecation
   dlss-capistrano
-  dor-rights-auth (>= 1.3.0)
+  dor-rights-auth
   faraday (~> 1)
   filesize
   guard-rspec
