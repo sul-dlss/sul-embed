@@ -9,6 +9,7 @@ import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDia
 import shareMenuPlugin from '../plugins/shareMenuPlugin';
 import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin';
 import embedModePlugin from '../plugins/embedModePlugin';
+import cdlAuthPlugin from '../plugins/cdlAuthPlugin';
 
 export default {
   init: function() {
@@ -99,6 +100,7 @@ export default {
         enabled: false,
       }
     }, [
+      ...(data.cdl && [cdlAuthPlugin]),
       ...((data.imageTools && miradorImageToolsPlugin) || []),
       shareMenuPlugin,
       miradorZoomBugPlugin,
