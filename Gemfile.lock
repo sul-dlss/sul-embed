@@ -7,6 +7,14 @@ GIT
     teaspoon-jasmine (2.9.1)
       teaspoon (>= 1.0.0)
 
+GIT
+  remote: https://github.com/sul-dlss/dor-rights-auth.git
+  revision: 267dc29ad9c2603b2737fd4c1d28ebda56cd31cf
+  branch: add-file-support
+  specs:
+    dor-rights-auth (1.4.0)
+      nokogiri
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -130,8 +138,6 @@ GEM
       capistrano-one_time_key
       capistrano-shared_configs
     docile (1.1.5)
-    dor-rights-auth (1.4.0)
-      nokogiri
     dry-configurable (0.11.6)
       concurrent-ruby (~> 1.0)
       dry-core (~> 0.4, >= 0.4.7)
@@ -400,7 +406,7 @@ DEPENDENCIES
   config
   deprecation
   dlss-capistrano
-  dor-rights-auth (>= 1.3.0)
+  dor-rights-auth!
   faraday (~> 1)
   filesize
   guard-rspec
