@@ -25,7 +25,9 @@ const mapStateToProps = (state, { windowId} ) => {
 function* getAuthInfo({infoId, infoJson, ok, tokenServiceId}) {
   const service = yield select(selectCanvasAuthService, { infoId });
   const endpoint = service.getService('http://iiif.io/api/auth/1/info').id
-  yield call(requestCdlInfoAndAvailability, endpoint);
+  const accessTokens = yield select(getAccessTokens);
+  const accessToken = Object.values(accessTokens).find(service => service.authId === service.id);
+  yield call(requestCdlInfoAndAvailability, endpoint, accessToken);
 }
 
 function* refreshCdlInfo({ json, id }) {
@@ -46,14 +48,6 @@ function* refreshCdlInfo({ json, id }) {
 }
 
 function* requestCdlInfoAndAvailability(cdlInfoEndpoint, accessToken) {
-  const cdlInfoResponse = yield fetch(cdlInfoEndpoint)
-    .then(res => res.json());
-  
-  yield put({ id: 'main', payload: {
-    cdlInfoResponse,
-    cdlInfoResponseUrl: cdlInfoEndpoint,
-  }, type: ActionTypes.UPDATE_WINDOW });
-
   let options = {};
   
   if (accessToken) {
@@ -62,7 +56,15 @@ function* requestCdlInfoAndAvailability(cdlInfoEndpoint, accessToken) {
     }
   }
 
-  const cdlAvailability = yield fetch(cdlInfoResponse.availability_url, options)
+  const cdlInfoResponse = yield fetch(cdlInfoEndpoint, options)
+    .then(res => res.json());
+  
+  yield put({ id: 'main', payload: {
+    cdlInfoResponse,
+    cdlInfoResponseUrl: cdlInfoEndpoint,
+  }, type: ActionTypes.UPDATE_WINDOW });
+
+  const cdlAvailability = yield fetch(cdlInfoResponse.availability_url)
     .then(res => res.json());
 
   yield put({ id: 'main', payload: {
