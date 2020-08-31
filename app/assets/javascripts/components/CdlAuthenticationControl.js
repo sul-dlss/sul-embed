@@ -10,6 +10,12 @@ import CloseIcon from '@material-ui/icons/CloseSharp';
 import Avatar from '@material-ui/core/Avatar';
 import SanitizedHtml from 'mirador/dist/es/src/containers/SanitizedHtml';
 import AuthenticationLogout from 'mirador/dist/es/src/containers/AuthenticationLogout.js';
+import {
+  getCurrentCanvas,
+  getWindow,
+  selectCanvasAuthService,
+} from 'mirador/dist/es/src/state/selectors';
+
 
 
 class CdlAuthenticationControl extends Component {
@@ -179,4 +185,20 @@ CdlAuthenticationControl.defaultProps = {
   t: () => {},
 };
 
+const mapStateToProps = (state, { windowId} ) => {
+  const canvasId = (getCurrentCanvas(state, { windowId }) || {}).id;
+  const service = selectCanvasAuthService(state, { canvasId, windowId });
+  const window = getWindow(state, { windowId });
+
+  return {
+    available: window && window.cdlAvailability && window.cdlAvailability.available,
+    service,
+  }
+}
+
+const CdlAuthenticationControlPlugin = {
+  mapStateToProps,
+}
+
 export default withStyles(styles)(CdlAuthenticationControl);
+export { CdlAuthenticationControlPlugin };

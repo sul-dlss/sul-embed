@@ -100,7 +100,7 @@ export default {
         enabled: false,
       }
     }, [
-      ...(data.cdl && [cdlAuthPlugin]),
+      ...((data.cdl && cdlAuthPlugin) || []),
       ...((data.imageTools && miradorImageToolsPlugin) || []),
       shareMenuPlugin,
       miradorZoomBugPlugin,
