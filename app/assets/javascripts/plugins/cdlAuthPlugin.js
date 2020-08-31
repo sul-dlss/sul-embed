@@ -1,7 +1,10 @@
 import CdlAuthenticationControl from '../components/CdlAuthenticationControl';
+import { CdlAuthenticationControlPlugin } from '../components/CdlAuthenticationControl';
+import CdlLogout from '../components/CdlLogout';
+import { CdlLogoutPlugin } from '../components/CdlLogout';
+
 import {
   getAccessTokens,
-  getCurrentCanvas,
   getWindow,
   selectCanvasAuthService,
 } from 'mirador/dist/es/src/state/selectors';
@@ -9,18 +12,6 @@ import ActionTypes from 'mirador/dist/es/src/state/actions/action-types';
 import {
   all, put, select, takeEvery, call,
 } from 'redux-saga/effects';
-
-
-const mapStateToProps = (state, { windowId} ) => {
-  const canvasId = (getCurrentCanvas(state, { windowId }) || {}).id;
-  const service = selectCanvasAuthService(state, { canvasId, windowId });
-  const window = getWindow(state, { windowId });
-
-  return {
-    available: window && window.cdlAvailability && window.cdlAvailability.available,
-    service,
-  }
-}
 
 function* getAuthInfo({infoId, infoJson, ok, tokenServiceId}) {
   const service = yield select(selectCanvasAuthService, { infoId });
@@ -81,10 +72,18 @@ const saga = function* cdlSaga() {
   ])
 }
 
-export default {
-  component: CdlAuthenticationControl,
-  mapStateToProps,
-  target: 'WindowAuthenticationControl',
-  mode: 'wrap',
-  saga,
-}
+export default [
+  {
+    component: CdlAuthenticationControl,
+    mapStateToProps: CdlAuthenticationControlPlugin.mapStateToProps,
+    target: 'WindowAuthenticationControl',
+    mode: 'wrap',
+    saga,
+  },
+  {
+    component: CdlLogout,
+    mapStateToProps: CdlLogoutPlugin.mapStateToProps,
+    mode: 'wrap',
+    target: 'AuthenticationLogout',
+  }
+]
