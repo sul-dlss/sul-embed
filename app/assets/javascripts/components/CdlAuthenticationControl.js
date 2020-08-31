@@ -17,45 +17,12 @@ class CdlAuthenticationControl extends Component {
     super(props);
 
     this.state = {
-      available: undefined,
-      availabilityInfoEndpoint: undefined,
-      dueDate: null,
       statusText: null,
-      waitlist: null,
       open: false,
       showFailureMessage: true,
     };
 
     this.handleConfirm = this.handleConfirm.bind(this);
-  }
-
-  /** */
-  componentDidUpdate(prevProps, prevState) {
-    const { service } = this.props;
-    const { service: prevService } = prevProps;
-    if (!service) return;
-
-    if (prevService === service) return;
-    console.log(service);
-    const endpoint = service.getService('http://iiif.io/api/auth/1/info').id
-    fetch(endpoint)
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        //
-        const availabilityInfoEndpoint = data.availability_url;
-        fetch(availabilityInfoEndpoint)
-          .then(res => res.json())
-          .then(data => {
-            this.setState({
-              availabilityInfoEndpoint,
-              available: data.available,
-            });
-          });
-        
-        
-      });
-    console.log(endpoint)
   }
 
   /** */
@@ -66,7 +33,6 @@ class CdlAuthenticationControl extends Component {
     handleAuthInteraction(windowId, infoId, serviceId);
     this.setState({ showFailureMessage: true });
   }
-
 
   /** */
   isInteractive() {
@@ -79,8 +45,7 @@ class CdlAuthenticationControl extends Component {
 
   /** */
   availabilityIcon() {
-    const { classes } = this.props;
-    const { available } = this.state;
+    const { available, classes } = this.props;
     if (available === undefined) {
       return <LockIcon fontSize="small" color="primary" />;
     }
@@ -100,7 +65,7 @@ class CdlAuthenticationControl extends Component {
 
   /** */
   loginButtonText() {
-    const { available } = this.state;
+    const { available } = this.props;
     if (available === false) return 'Join waitlist';
   }
 
