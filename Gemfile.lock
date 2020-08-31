@@ -130,7 +130,7 @@ GEM
       capistrano-one_time_key
       capistrano-shared_configs
     docile (1.1.5)
-    dor-rights-auth (1.4.0)
+    dor-rights-auth (1.5.0)
       nokogiri
     dry-configurable (0.11.6)
       concurrent-ruby (~> 1.0)
@@ -213,7 +213,7 @@ GEM
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    loofah (2.6.0)
+    loofah (2.7.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
     lumberjack (1.2.7)
