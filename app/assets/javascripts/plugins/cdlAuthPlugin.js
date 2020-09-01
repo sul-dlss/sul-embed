@@ -2,6 +2,8 @@ import CdlAuthenticationControl from '../components/CdlAuthenticationControl';
 import { CdlAuthenticationControlPlugin } from '../components/CdlAuthenticationControl';
 import CdlLogout from '../components/CdlLogout';
 import { CdlLogoutPlugin } from '../components/CdlLogout';
+import CdlCopyright from '../components/CdlCopyright';
+import { CdlCopyrightPlugin } from '../components/CdlCopyright';
 
 import {
   getAccessTokens,
@@ -85,5 +87,11 @@ export default [
     mapStateToProps: CdlLogoutPlugin.mapStateToProps,
     mode: 'wrap',
     target: 'AuthenticationLogout',
+  },
+  {
+    component: CdlCopyright,
+    mapStateToProps: CdlCopyrightPlugin.mapStateToProps,
+    mode: 'wrap',
+    target: 'PrimaryWindow',
   }
 ]
