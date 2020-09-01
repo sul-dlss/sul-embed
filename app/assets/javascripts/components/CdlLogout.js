@@ -13,8 +13,9 @@ class CdlLogout extends Component {
   constructor(props) {
     super(props);
 
+    const dueDateObject = new Date(props.dueDate * 1000);
     this.state = {
-      remainingSeconds: null,
+      remainingSeconds: Math.floor((dueDateObject - Date.now()) / 1000),
     }
 
     this.timer = null;
@@ -58,6 +59,11 @@ class CdlLogout extends Component {
           <div className={classes.dueInformation}>
             <TimerIcon />
             Due at {dueDateObject.toLocaleTimeString('en-US', { timeZone: 'America/Los_Angeles' })} PT
+
+            { remainingSeconds < fifteenMinutes && (
+              <span className={classes.countdown}>
+                {Math.floor(remainingSeconds / 60)} { (remainingSeconds <= 60) ? 'minute' : 'minutes' } remaining
+              </span>) }
           </div>
           <Button variant="outlined" onClick={this.handleLogout} className={classes.checkIn}>
             {label}
@@ -71,6 +77,10 @@ class CdlLogout extends Component {
 const styles = (theme) => ({
   checkIn: {
     backgroundColor: theme.palette.background.paper,
+  },
+  countdown: {
+    color: theme.palette.primary.main,
+    marginLeft: theme.spacing(5)
   },
   dueInformation: {
     alignItems: 'center',
