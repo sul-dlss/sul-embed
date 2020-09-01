@@ -34,6 +34,11 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(4),
   },
+  statement: {
+    '& p': {
+      margin: theme.spacing(4),
+    }
+  }
 })
 
 const mapStateToProps = (state, { windowId }) => {
