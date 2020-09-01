@@ -102,7 +102,7 @@ export default {
     }, [
       ...((data.cdl && cdlAuthPlugin) || []),
       ...((data.imageTools && miradorImageToolsPlugin) || []),
-      shareMenuPlugin,
+      (!data.cdl && shareMenuPlugin),
       miradorZoomBugPlugin,
       ...((data.imageTools && embedModePlugin) || []),
       {
