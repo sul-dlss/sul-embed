@@ -13,25 +13,15 @@ class CdlLogout extends Component {
   constructor(props) {
     super(props);
 
-    const dueDateObject = new Date(props.dueDate * 1000);
-    this.state = {
-      remainingSeconds: Math.floor((dueDateObject - Date.now()) / 1000),
-    }
-
     this.timer = null;
     this.handleLogout = this.handleLogout.bind(this);
   }
 
   componentDidMount() {
-    const { dueDate } = this.props;
-
-    const dueDateObject = new Date(dueDate * 1000);
-    this.timer = setInterval(() => this.setState({
-      remainingSeconds: Math.floor((dueDateObject - Date.now()) / 1000),
-    }), 1000 * 15);
+    this.timer = setInterval(() => this.forceUpdate(), 1000 * 15);
   }
 
-  componentWillUnmount() { 
+  componentWillUnmount() {
     clearInterval(this.timer);
   }
 
@@ -47,8 +37,9 @@ class CdlLogout extends Component {
 
   render() {
     const { classes, dueDate, label, targetProps, TargetComponent } = this.props;
-    const { remainingSeconds } = this.state;
     const dueDateObject = new Date(dueDate * 1000);
+    const remainingSeconds = Math.floor((dueDateObject - Date.now()) / 1000);
+
     const fifteenMinutes = 60 * 15;
 
     const renewWarningClass = remainingSeconds < fifteenMinutes ? classes.renewWarning : null;
@@ -60,9 +51,9 @@ class CdlLogout extends Component {
             <TimerIcon />
             Due at {dueDateObject.toLocaleTimeString('en-US', { timeZone: 'America/Los_Angeles' })} PT
 
-            { remainingSeconds < fifteenMinutes && (
+            { remainingSeconds >= 0 && remainingSeconds < fifteenMinutes && (
               <span className={classes.countdown}>
-                {Math.floor(remainingSeconds / 60)} { (remainingSeconds <= 60) ? 'minute' : 'minutes' } remaining
+                {Math.floor(remainingSeconds / 60)} { (remainingSeconds > 60 && remainingSeconds <= 120) ? 'minute' : 'minutes' } remaining
               </span>) }
           </div>
           <Button variant="outlined" onClick={this.handleLogout} className={classes.checkIn}>
