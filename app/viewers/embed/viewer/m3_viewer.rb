@@ -24,7 +24,7 @@ module Embed
       def show_attribution_panel?
         purl_object.collections.any? do |druid|
           Settings.collections_to_show_attribution.include?(druid)
-        end || cdl?
+        end
       end
 
       def cdl?
