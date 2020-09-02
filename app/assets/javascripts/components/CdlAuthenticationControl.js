@@ -71,8 +71,8 @@ class CdlAuthenticationControl extends Component {
 
   /** */
   loginButtonText() {
-    const { available } = this.props;
-    if (available === false) return 'Join waitlist';
+    const { available, waitlist } = this.props;
+    if (available === false) return <>Join waitlist ({waitlist})</>;
   }
 
   render() {
@@ -194,6 +194,7 @@ const mapStateToProps = (state, { windowId} ) => {
   return {
     available: window && window.cdlAvailability && window.cdlAvailability.available,
     service,
+    waitlist: window && window.cdlAvailability && window.cdlAvailability.waitlist,
   }
 }
 
