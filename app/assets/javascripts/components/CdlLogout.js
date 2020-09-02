@@ -6,6 +6,7 @@ import TimerIcon from '@material-ui/icons/Timer';
 import {
   getWindow,
 } from 'mirador/dist/es/src/state/selectors';
+import CdlCountdown from './CdlCountdown';
 
 
 class CdlLogout extends Component {
@@ -52,9 +53,7 @@ class CdlLogout extends Component {
             Due at {dueDateObject.toLocaleTimeString('en-US', { timeZone: 'America/Los_Angeles' })} PT
 
             { remainingSeconds >= 0 && remainingSeconds < fifteenMinutes && (
-              <span className={classes.countdown}>
-                {Math.floor(remainingSeconds / 60)} { (remainingSeconds > 60 && remainingSeconds <= 120) ? 'minute' : 'minutes' } remaining
-              </span>) }
+              <CdlCountdown remainingSeconds={remainingSeconds} />) }
           </div>
           <Button variant="outlined" onClick={this.handleLogout} className={classes.checkIn}>
             {label}
@@ -68,10 +67,6 @@ class CdlLogout extends Component {
 const styles = (theme) => ({
   checkIn: {
     backgroundColor: theme.palette.background.paper,
-  },
-  countdown: {
-    color: theme.palette.primary.main,
-    marginLeft: theme.spacing(5)
   },
   dueInformation: {
     alignItems: 'center',
