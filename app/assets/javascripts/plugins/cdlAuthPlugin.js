@@ -11,7 +11,7 @@ import {
   selectCanvasAuthService,
   getCurrentCanvas,
 } from 'mirador/dist/es/src/state/selectors';
-import { fetchInfoResponse } from 'mirador/dist/es/src/state/actions';
+import { fetchInfoResponse, resolveAuthenticationRequest } from 'mirador/dist/es/src/state/actions';
 import ActionTypes from 'mirador/dist/es/src/state/actions/action-types';
 import MiradorCanvas from 'mirador/dist/es/src/lib/MiradorCanvas';
 import {
@@ -163,6 +163,7 @@ export default [
   },
   {
     component: CdlLogout,
+    mapDispatchToProps: { handleInteraction: resolveAuthenticationRequest },
     mapStateToProps: CdlLogoutPlugin.mapStateToProps,
     mode: 'wrap',
     target: 'AuthenticationLogout',
