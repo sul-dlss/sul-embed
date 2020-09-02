@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import TimerIcon from '@material-ui/icons/Timer';
+import Typography from '@material-ui/core/Typography';
 import {
   getWindow,
 } from 'mirador/dist/es/src/state/selectors';
@@ -49,15 +50,19 @@ class CdlLogout extends Component {
       <Paper square elevation={4} classes={{ root: [classes.paper, renewWarningClass].join(' ') }}>
         <div className={classes.topBar}>
           <div className={classes.dueInformation}>
-            <TimerIcon />
-            Due at {dueDateObject.toLocaleTimeString('en-US', { timeZone: 'America/Los_Angeles' })} PT
-
-            { remainingSeconds >= 0 && remainingSeconds < fifteenMinutes && (
-              <CdlCountdown remainingSeconds={remainingSeconds} />) }
+            <TimerIcon className={classes.icon} />
+            <Typography variant="body1">
+              Due: {dueDateObject.toLocaleTimeString(
+                'en-US',
+                { timeZone: 'America/Los_Angeles', timeZoneName: 'short', hour: '2-digit', minute: '2-digit' }
+              ).replace(' PM', 'pm').replace(' AM', 'am')}
+            </Typography>
           </div>
           <Button variant="outlined" onClick={this.handleLogout} className={classes.checkIn}>
             {label}
           </Button>
+          { remainingSeconds >= 0 && remainingSeconds < fifteenMinutes && (
+            <CdlCountdown remainingSeconds={remainingSeconds} />) }
         </div>
       </Paper>
     )
@@ -67,10 +72,13 @@ class CdlLogout extends Component {
 const styles = (theme) => ({
   checkIn: {
     backgroundColor: theme.palette.background.paper,
+    marginLeft: theme.spacing(5),
   },
   dueInformation: {
-    alignItems: 'center',
     display: 'inline-flex',
+  },
+  icon: {
+    marginRight: theme.spacing(2),
   },
   paper: {
   },
@@ -78,8 +86,8 @@ const styles = (theme) => ({
     backgroundColor: '#F9F6EF',
   },
   topBar: {
+    alignItems: 'center',
     display: 'flex',
-    justifyContent: 'space-between',
     paddingBottom: theme.spacing(1),
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
