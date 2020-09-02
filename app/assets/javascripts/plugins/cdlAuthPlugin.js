@@ -116,8 +116,34 @@ function* resetInfoResponses() {
   }))
 }
 
+// try to fetch the IIIF access token for CDL if we don't already have one
+function* preemptivelyRequestACdlAccessToken({ id, payload: { cdlInfoResponse }}) {
+  if (!cdlInfoResponse) return;
+  if (!cdlInfoResponse.payload) return;
+
+
+  const canvas = yield select(getCurrentCanvas, { windowId: id});
+  if (!canvas) return;
+  const service = yield select(selectCanvasAuthService, { canvasId: canvas.id, windowId: id });
+  if (!service) return;
+
+  const accessTokenServiceId = service.getService('http://iiif.io/api/auth/1/token').id;
+  const accessTokens = yield select(getAccessTokens);
+  const accessTokenService = Object.values(accessTokens).find(s => s.authId === service.id);
+
+  if (accessTokenService) return;
+
+  yield put({
+    authId: service.id,
+    infoIds: [infoId],
+    serviceId: accessTokenServiceId,
+    type: ActionTypes.REQUEST_ACCESS_TOKEN,
+  });
+}
+
 const saga = function* cdlSaga() {
   yield all([
+    takeEvery(ActionTypes.UPDATE_WINDOW, preemptivelyRequestACdlAccessToken),
     takeEvery(ActionTypes.RECEIVE_INFO_RESPONSE, getAuthInfo),
     takeEvery(ActionTypes.RECEIVE_ACCESS_TOKEN, refreshCdlInfo),
     takeEvery(ActionTypes.RESET_AUTHENTICATION_STATE, refreshCdlInfo),
