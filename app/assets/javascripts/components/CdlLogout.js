@@ -9,7 +9,7 @@ import {
   getWindow,
 } from 'mirador/dist/es/src/state/selectors';
 import CdlCountdown from './CdlCountdown';
-
+import DueDate from './DueDate';
 
 class CdlLogout extends Component {
   /** */
@@ -52,12 +52,7 @@ class CdlLogout extends Component {
         <div className={classes.topBar}>
           <div className={classes.dueInformation}>
             <TimerIcon className={classes.icon} />
-            <Typography variant="body1">
-              Due: {dueDateObject.toLocaleTimeString(
-                'en-US',
-                { timeZone: 'America/Los_Angeles', timeZoneName: 'short', hour: '2-digit', minute: '2-digit' }
-              ).replace(' PM', 'pm').replace(' AM', 'am')}
-            </Typography>
+            <DueDate timestamp={dueDate * 1000}/>
           </div>
           <Button variant="outlined" onClick={this.handleLogout} className={classes.checkIn}>
             {label}
@@ -97,6 +92,7 @@ const styles = (theme) => ({
   },
   waitlist: {
     alignItems: 'center',
+    display: 'inline-flex',
     color: theme.palette.primary.main,
     marginLeft: theme.spacing(5)
   },
