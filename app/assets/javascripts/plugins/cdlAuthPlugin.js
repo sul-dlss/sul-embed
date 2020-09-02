@@ -11,7 +11,9 @@ import {
   selectCanvasAuthService,
   getCurrentCanvas,
 } from 'mirador/dist/es/src/state/selectors';
+import { fetchInfoResponse } from 'mirador/dist/es/src/state/actions';
 import ActionTypes from 'mirador/dist/es/src/state/actions/action-types';
+import MiradorCanvas from 'mirador/dist/es/src/lib/MiradorCanvas';
 import {
   all, put, select, takeEvery, call, delay,
 } from 'redux-saga/effects';
@@ -21,7 +23,7 @@ function* getAuthInfo({infoId, infoJson, ok, tokenServiceId}) {
   const endpoint = service.getService('http://iiif.io/api/auth/1/info').id;
   const accessTokens = yield select(getAccessTokens);
   const accessTokenService = Object.values(accessTokens).find(s => s.authId === service.id);
-  const accessToken = accessTokenService.json.accessToken;
+  const accessToken = accessTokenService && accessTokenService.json && accessTokenService.json.accessToken;
   yield call(requestCdlInfoAndAvailability, endpoint, accessToken);
 }
 
@@ -38,7 +40,7 @@ function* refreshCdlInfo({ json, id }) {
   if (id && !accessToken) {
     const accessTokens = yield select(getAccessTokens);
     const accessTokenService = Object.values(accessTokens).find(service => service.authId === id);
-    accessToken = accessTokenService.json.accessToken;
+    accessToken = accessTokenService && accessTokenService.json && accessTokenService.json.accessToken;
   }
   yield call(requestCdlInfoAndAvailability, window.cdlInfoResponseUrl, accessToken);
 }
@@ -100,6 +102,11 @@ function* startTheClock({ id, payload: { cdlInfoResponse }}) {
       tokenServiceId: accessToken.id,
       type: ActionTypes.RESET_AUTHENTICATION_STATE,
     });
+
+    // Refetch the info response so we get a failure state which will reinitiate the auth controls
+    yield all(new MiradorCanvas(canvas).iiifImageResources.map(imageResource => {
+      return put(fetchInfoResponse({ imageResource }));
+    }))
   }
 }
 
