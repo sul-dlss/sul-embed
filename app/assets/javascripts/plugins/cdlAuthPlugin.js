@@ -104,10 +104,16 @@ function* startTheClock({ id, payload: { cdlInfoResponse }}) {
     });
 
     // Refetch the info response so we get a failure state which will reinitiate the auth controls
-    yield all(new MiradorCanvas(canvas).iiifImageResources.map(imageResource => {
-      return put(fetchInfoResponse({ imageResource }));
-    }))
+    yield call(resetInfoResponses);
   }
+}
+
+function* resetInfoResponses() {
+  const canvas = yield select(getCurrentCanvas, { windowId: 'main' });
+  if (!canvas) return;
+  yield all(new MiradorCanvas(canvas).iiifImageResources.map(imageResource => {
+    return put(fetchInfoResponse({ imageResource }));
+  }))
 }
 
 const saga = function* cdlSaga() {
@@ -115,6 +121,7 @@ const saga = function* cdlSaga() {
     takeEvery(ActionTypes.RECEIVE_INFO_RESPONSE, getAuthInfo),
     takeEvery(ActionTypes.RECEIVE_ACCESS_TOKEN, refreshCdlInfo),
     takeEvery(ActionTypes.RESET_AUTHENTICATION_STATE, refreshCdlInfo),
+    takeEvery(ActionTypes.RESET_AUTHENTICATION_STATE, resetInfoResponses),
     takeEvery(ActionTypes.RECEIVE_DEGRADED_INFO_RESPONSE, getAuthInfo), // checked in elsewhere
     takeEvery(ActionTypes.UPDATE_WINDOW, startTheClock),
   ])
