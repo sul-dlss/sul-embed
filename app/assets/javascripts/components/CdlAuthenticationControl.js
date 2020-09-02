@@ -15,8 +15,7 @@ import {
   getWindow,
   selectCanvasAuthService,
 } from 'mirador/dist/es/src/state/selectors';
-
-
+import DueDate from './DueDate';
 
 class CdlAuthenticationControl extends Component {
   constructor(props) {
@@ -59,13 +58,14 @@ class CdlAuthenticationControl extends Component {
       return <CheckIcon fontSize="small" className={classes.availableIcon} />;
     }
     return <CloseIcon fontSize="small" color="primary" />;
-    
+
   }
 
   authLabel(isInFailureState) {
-    const { failureHeader, label } = this.props;
+    const { available, failureHeader, label } = this.props;
     const { statusText } = this.state;
     if (statusText) return statusText;
+    if (!available) return 'Checked out';
     return (isInFailureState ? failureHeader : label) || t('authenticationRequired');
   }
 
@@ -81,6 +81,7 @@ class CdlAuthenticationControl extends Component {
       confirmLabel,
       degraded,
       description,
+      dueDate,
       failureDescription,
       failureHeader,
       header,
@@ -118,6 +119,7 @@ class CdlAuthenticationControl extends Component {
           </Avatar>
           <Typography className={classes.label} component="h3" variant="body1" color="inherit">
             <SanitizedHtml htmlString={this.authLabel(isInFailureState)} ruleSet="iiif" />
+            <DueDate className={classes.dueDate} timestamp={dueDate} />
           </Typography>
           { confirmButton }
         </div>
@@ -136,7 +138,14 @@ const styles = theme => ({
     height: '1.5em',
     width: '1.5em',
   },
+  dueDate: {
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+  },
   label: {
+    alignItems: 'center',
+    display: 'inline-flex',
+    flexDirection: 'row',
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
   },
@@ -193,6 +202,7 @@ const mapStateToProps = (state, { windowId} ) => {
 
   return {
     available: window && window.cdlAvailability && window.cdlAvailability.available,
+    dueDate:window && window.cdlAvailability && window.cdlAvailability.dueDate,
     service,
     waitlist: window && window.cdlAvailability && window.cdlAvailability.waitlist,
   }
