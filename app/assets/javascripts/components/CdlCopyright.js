@@ -7,32 +7,15 @@ import {
   getRequiredStatement,
   selectAuthStatus,
   selectCanvasAuthService,
-  getWindow,
 } from 'mirador/dist/es/src/state/selectors';
 import SanitizedHtml from 'mirador/dist/es/src/containers/SanitizedHtml';
 
 
 class CdlCopyright extends Component {
-  /** */
-  constructor(props) {
-    super(props);
-
-    this.timer = null;
-  }
-
-  componentDidMount() {
-    this.timer = setInterval(() => this.forceUpdate(), 1000 * 15);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
   render() {
-    const { classes, dueDate, requiredStatement, status, TargetComponent } = this.props;
-    const dueDateObject = new Date(dueDate * 1000);
+    const { classes, requiredStatement, status, TargetComponent } = this.props;
 
-    if (status === 'ok' && (dueDateObject - Date.now()) >= 0) {
+    if (status === 'ok') {
       return <TargetComponent {...this.props} />;
     }
     return (
@@ -62,11 +45,8 @@ const styles = (theme) => ({
 const mapStateToProps = (state, { windowId }) => {
   const canvasId = (getCurrentCanvas(state, { windowId }) || {}).id;
   const service = selectCanvasAuthService(state, { canvasId, windowId });
-  const window = getWindow(state, { windowId });
-  const payload = window.cdlInfoResponse && window.cdlInfoResponse.payload;
 
   return {
-    dueDate: (payload && payload.exp) || 0,
     requiredStatement: getRequiredStatement(state, { windowId }),
     status: service && selectAuthStatus(state, service),
   }
