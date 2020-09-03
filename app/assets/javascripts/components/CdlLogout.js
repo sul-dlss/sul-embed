@@ -67,7 +67,7 @@ class CdlLogout extends Component {
     const fifteenMinutes = 60 * 15;
     const fiveMinutes = 60 * 5;
 
-    const canRenew = authenticationUrl && (waitlist <= items) && (remainingSeconds >= 0 && remainingSeconds < fifteenMinutes);
+    const canRenew = authenticationUrl && (waitlist <= items) && (remainingSeconds >= 0 && remainingSeconds < fiveMinutes);
 
     const renewWarningClass = remainingSeconds < fifteenMinutes ? classes.renewWarning : null;
 
