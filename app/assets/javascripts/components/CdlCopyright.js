@@ -35,6 +35,7 @@ const styles = (theme) => ({
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(4),
   },
+  primaryWindow: {},
   statement: {
     '& p': {
       margin: theme.spacing(4),
