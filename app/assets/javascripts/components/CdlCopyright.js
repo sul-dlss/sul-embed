@@ -15,7 +15,7 @@ class CdlCopyright extends Component {
   render() {
     const { classes, requiredStatement, status, TargetComponent } = this.props;
 
-    if (status === 'ok') {
+    if (status !== null || status === 'ok') {
       return <TargetComponent {...this.props} />;
     }
     return (

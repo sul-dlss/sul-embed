@@ -94,7 +94,7 @@ class CdlAuthenticationControl extends Component {
 
     const failed = status === 'failed';
 
-    if ((!degraded || !profile) && status === 'ok') return <AuthenticationLogout windowId={windowId} />;
+    if ((!degraded || !profile) && (status !== null || status === 'ok')) return <AuthenticationLogout windowId={windowId} />;
     if (!this.isInteractive() && !failed) return <></>;
 
     const { showFailureMessage, open } = this.state;
