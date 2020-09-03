@@ -138,10 +138,15 @@ const styles = theme => ({
     height: '1.5em',
     width: '1.5em',
   },
+  buttonInvert: {},
   dueDate: {
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
   },
+  expanded: {},
+  failure: {},
+  fauxButton: {},
+  icon: {},
   label: {
     alignItems: 'center',
     display: 'inline-flex',
