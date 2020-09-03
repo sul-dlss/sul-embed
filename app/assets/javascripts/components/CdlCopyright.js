@@ -33,13 +33,13 @@ class CdlCopyright extends Component {
 const styles = (theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(4),
   },
   primaryWindow: {},
   statement: {
     '& p': {
       margin: theme.spacing(4),
-    }
+    },
+    fontSize: '18pt',
   }
 })
 
