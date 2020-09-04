@@ -9,7 +9,7 @@ import CheckIcon from '@material-ui/icons/CheckSharp';
 import CloseIcon from '@material-ui/icons/CloseSharp';
 import Avatar from '@material-ui/core/Avatar';
 import SanitizedHtml from 'mirador/dist/es/src/containers/SanitizedHtml';
-import AuthenticationLogout from 'mirador/dist/es/src/containers/AuthenticationLogout.js';
+import AuthenticationLogout from 'mirador/dist/es/src/containers/AuthenticationLogout';
 import {
   getCurrentCanvas,
   getWindow,
@@ -17,13 +17,15 @@ import {
 } from 'mirador/dist/es/src/state/selectors';
 import DueDate from './DueDate';
 
+/** */
 class CdlAuthenticationControl extends Component {
+  /** */
   constructor(props) {
     super(props);
 
     this.state = {
-      statusText: null,
       open: false,
+      statusText: null,
       showFailureMessage: true,
     };
 
@@ -58,9 +60,9 @@ class CdlAuthenticationControl extends Component {
       return <CheckIcon fontSize="small" className={classes.availableIcon} />;
     }
     return <CloseIcon fontSize="small" color="primary" />;
-
   }
 
+  /** */
   authLabel(isInFailureState) {
     const { available, failureHeader, label } = this.props;
     const { statusText } = this.state;
@@ -72,9 +74,18 @@ class CdlAuthenticationControl extends Component {
   /** */
   loginButtonText() {
     const { available, waitlist } = this.props;
-    if (available === false) return <>Join waitlist ({waitlist})</>;
+    if (available === false) {
+      return (
+        <>
+          Join waitlist (
+          {waitlist}
+          )
+        </>
+      );
+    }
   }
 
+  /** */
   render() {
     const {
       classes,
@@ -128,10 +139,10 @@ class CdlAuthenticationControl extends Component {
   }
 }
 
-
+/** */
 const styles = theme => ({
   availableIcon: {
-    color: '#009b76'
+    color: '#009b76',
   },
   avatar: {
     backgroundColor: 'white',
@@ -164,7 +175,7 @@ const styles = theme => ({
     paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
     paddingTop: theme.spacing(1),
-  }
+  },
 });
 
 CdlAuthenticationControl.propTypes = {
@@ -200,22 +211,23 @@ CdlAuthenticationControl.defaultProps = {
   t: () => {},
 };
 
-const mapStateToProps = (state, { windowId} ) => {
+/** */
+const mapStateToProps = (state, { windowId }) => {
   const canvasId = (getCurrentCanvas(state, { windowId }) || {}).id;
   const service = selectCanvasAuthService(state, { canvasId, windowId });
   const window = getWindow(state, { windowId });
 
   return {
     available: window && window.cdlAvailability && window.cdlAvailability.available,
-    dueDate:window && window.cdlAvailability && window.cdlAvailability.dueDate,
+    dueDate: window && window.cdlAvailability && window.cdlAvailability.dueDate,
     service,
     waitlist: window && window.cdlAvailability && window.cdlAvailability.waitlist,
-  }
-}
+  };
+};
 
 const CdlAuthenticationControlPlugin = {
   mapStateToProps,
-}
+};
 
 export default withStyles(styles)(CdlAuthenticationControl);
 export { CdlAuthenticationControlPlugin };
