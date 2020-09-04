@@ -1,10 +1,3 @@
-import CdlAuthenticationControl from '../components/CdlAuthenticationControl';
-import { CdlAuthenticationControlPlugin } from '../components/CdlAuthenticationControl';
-import CdlLogout from '../components/CdlLogout';
-import { CdlLogoutPlugin } from '../components/CdlLogout';
-import CdlCopyright from '../components/CdlCopyright';
-import { CdlCopyrightPlugin } from '../components/CdlCopyright';
-
 import {
   getAccessTokens,
   getWindow,
@@ -17,7 +10,15 @@ import MiradorCanvas from 'mirador/dist/es/src/lib/MiradorCanvas';
 import {
   all, put, select, takeEvery, call, delay,
 } from 'redux-saga/effects';
+import CdlAuthenticationControl from '../components/CdlAuthenticationControl';
+import { CdlAuthenticationControlPlugin } from '../components/CdlAuthenticationControl';
+import CdlLogout from '../components/CdlLogout';
+import { CdlLogoutPlugin } from '../components/CdlLogout';
+import CdlCopyright from '../components/CdlCopyright';
+import { CdlCopyrightPlugin } from '../components/CdlCopyright';
 
+
+/** */
 function* getAuthInfo({infoId, infoJson, ok, tokenServiceId}) {
   const service = yield select(selectCanvasAuthService, { infoId });
   const endpoint = service.getService('http://iiif.io/api/auth/1/info').id;
@@ -25,6 +26,14 @@ function* getAuthInfo({infoId, infoJson, ok, tokenServiceId}) {
   const accessTokenService = Object.values(accessTokens).find(s => s.authId === service.id);
   const accessToken = accessTokenService && accessTokenService.json && accessTokenService.json.accessToken;
   yield call(requestCdlInfoAndAvailability, endpoint, accessToken);
+}
+
+/**
+ * Wait a little bit to refresh availability
+ */
+function* sleepyRefreshCdlInfo(params) {
+  yield (delay(2000));
+  yield call(refreshCdlInfo, params);
 }
 
 function* refreshCdlInfo({ json, id }) {
@@ -147,6 +156,7 @@ const saga = function* cdlSaga() {
     takeEvery(ActionTypes.RECEIVE_INFO_RESPONSE, getAuthInfo),
     takeEvery(ActionTypes.RECEIVE_ACCESS_TOKEN, refreshCdlInfo),
     takeEvery(ActionTypes.RESET_AUTHENTICATION_STATE, refreshCdlInfo),
+    takeEvery(ActionTypes.RESET_AUTHENTICATION_STATE, sleepyRefreshCdlInfo),
     takeEvery(ActionTypes.RESET_AUTHENTICATION_STATE, resetInfoResponses),
     takeEvery(ActionTypes.RECEIVE_DEGRADED_INFO_RESPONSE, getAuthInfo), // checked in elsewhere
     takeEvery(ActionTypes.UPDATE_WINDOW, startTheClock),
