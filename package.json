@@ -33,6 +33,16 @@
     "virtex3d": "^0.4.0"
   },
   "devDependencies": {
+    "babel-eslint": "10.1.0",
+    "eslint": "^6.0.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-react-app": "^3.0.5",
+    "eslint-loader": "^4.0.2",
+    "eslint-plugin-flowtype": "^4.7.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-jest": "^23.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.14.2",
     "webpack-dev-server": "^3.7.0"
   }
 }
