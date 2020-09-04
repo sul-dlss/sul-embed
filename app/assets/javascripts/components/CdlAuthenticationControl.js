@@ -24,9 +24,8 @@ class CdlAuthenticationControl extends Component {
     super(props);
 
     this.state = {
-      open: false,
-      statusText: null,
       showFailureMessage: true,
+      statusText: null,
     };
 
     this.handleConfirm = this.handleConfirm.bind(this);
@@ -64,11 +63,14 @@ class CdlAuthenticationControl extends Component {
 
   /** */
   authLabel(isInFailureState) {
-    const { available, failureHeader, label } = this.props;
+    const {
+      available, failureHeader, label, loanPeriod,
+    } = this.props;
     const { statusText } = this.state;
     if (statusText) return statusText;
     if (!available) return 'Checked out';
-    return (isInFailureState ? failureHeader : label) || t('authenticationRequired');
+    if (available) return `Available for ${Math.floor(loanPeriod / 3600)}-hour loan`;
+    return isInFailureState ? failureHeader : label;
   }
 
   /** */
@@ -91,12 +93,7 @@ class CdlAuthenticationControl extends Component {
       classes,
       confirmLabel,
       degraded,
-      description,
       dueDate,
-      failureDescription,
-      failureHeader,
-      header,
-      label,
       profile,
       status,
       t,
@@ -108,13 +105,9 @@ class CdlAuthenticationControl extends Component {
     if ((!degraded || !profile) && (status !== null || status === 'ok')) return <AuthenticationLogout windowId={windowId} />;
     if (!this.isInteractive() && !failed) return <></>;
 
-    const { showFailureMessage, open } = this.state;
+    const { showFailureMessage } = this.state;
 
     const isInFailureState = showFailureMessage && failed;
-
-    const hasCollapsedContent = isInFailureState
-      ? failureDescription
-      : header || description;
 
     const confirmButton = (
       <Button onClick={this.handleConfirm} className={classes.buttonInvert} color="secondary" size="small">
@@ -179,36 +172,38 @@ const styles = theme => ({
 });
 
 CdlAuthenticationControl.propTypes = {
+  available: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
   confirmLabel: PropTypes.string,
   degraded: PropTypes.bool,
-  description: PropTypes.string,
-  failureDescription: PropTypes.string,
+  dueDate: PropTypes.string,
   failureHeader: PropTypes.string,
   handleAuthInteraction: PropTypes.func.isRequired,
-  header: PropTypes.string,
   infoId: PropTypes.string,
   label: PropTypes.string,
+  loanPeriod: PropTypes.number,
   profile: PropTypes.string,
   serviceId: PropTypes.string,
   status: PropTypes.oneOf(['ok', 'fetching', 'failed', null]),
   t: PropTypes.func,
+  waitlist: PropTypes.number,
   windowId: PropTypes.string.isRequired,
 };
 
 CdlAuthenticationControl.defaultProps = {
+  available: false,
   confirmLabel: undefined,
   degraded: false,
-  description: undefined,
-  failureDescription: undefined,
+  dueDate: undefined,
   failureHeader: undefined,
-  header: undefined,
   infoId: undefined,
   label: undefined,
+  loanPeriod: undefined,
   profile: undefined,
   serviceId: undefined,
   status: null,
   t: () => {},
+  waitlist: undefined,
 };
 
 /** */
@@ -216,10 +211,12 @@ const mapStateToProps = (state, { windowId }) => {
   const canvasId = (getCurrentCanvas(state, { windowId }) || {}).id;
   const service = selectCanvasAuthService(state, { canvasId, windowId });
   const window = getWindow(state, { windowId });
+  const cdlAvailability = window && window.cdlAvailability;
 
   return {
-    available: window && window.cdlAvailability && window.cdlAvailability.available,
-    dueDate: window && window.cdlAvailability && window.cdlAvailability.dueDate,
+    available: cdlAvailability && cdlAvailability.available,
+    dueDate: cdlAvailability && cdlAvailability.dueDate,
+    loanPeriod: cdlAvailability && cdlAvailability.loanPeriod,
     service,
     waitlist: window && window.cdlAvailability && window.cdlAvailability.waitlist,
   };
