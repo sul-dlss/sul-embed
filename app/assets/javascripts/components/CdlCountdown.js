@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
+/** */
 class CdlCountdown extends Component {
   /** */
   count() {
@@ -16,26 +17,28 @@ class CdlCountdown extends Component {
   units() {
     const { remainingSeconds } = this.props;
     if (remainingSeconds > 60) {
-      return 'minutes'
+      return 'minutes';
     }
     return 'seconds';
   }
 
+  /** */
   render() {
     const { classes } = this.props;
     return (
       <span className={classes.countdown}>
-        {this.count()} {this.units()} remaining
+        {[this.count(), this.units(), 'remaining'].join(' ')}
       </span>
     );
   }
 }
 
+/** */
 const styles = (theme) => ({
   countdown: {
     color: theme.palette.primary.main,
-    marginLeft: theme.spacing(5)
+    marginLeft: theme.spacing(5),
   },
 })
-
-export default withStyles(styles)(CdlCountdown)
+;
+export default withStyles(styles)(CdlCountdown);
