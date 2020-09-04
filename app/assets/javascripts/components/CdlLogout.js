@@ -11,10 +11,11 @@ import {
   selectCanvasAuthService,
   selectInfoResponse,
 } from 'mirador/dist/es/src/state/selectors';
+import { AuthenticationSender } from 'mirador/dist/es/src/components/AuthenticationSender';
 import CdlCountdown from './CdlCountdown';
 import DueDate from './DueDate';
-import { AuthenticationSender } from 'mirador/dist/es/src/components/AuthenticationSender';
 
+/** */
 class CdlLogout extends Component {
   /** */
   constructor(props) {
@@ -27,10 +28,12 @@ class CdlLogout extends Component {
     this.handleRenew = this.handleRenew.bind(this);
   }
 
+  /** */
   componentDidMount() {
     this.timer = setInterval(() => this.forceUpdate(), 1000 * 15);
   }
 
+  /** */
   componentWillUnmount() {
     clearInterval(this.timer);
   }
@@ -58,8 +61,11 @@ class CdlLogout extends Component {
     handleInteraction(loginUrl, [infoResponseId]);
   }
 
+  /** */
   render() {
-    const { authenticationUrl, classes, dueDate, items, label, targetProps, waitlist, TargetComponent } = this.props;
+    const {
+      authenticationUrl, classes, dueDate, items, label, targetProps, waitlist, TargetComponent,
+    } = this.props;
     const { renew } = this.state;
     const dueDateObject = new Date(dueDate * 1000);
     const remainingSeconds = Math.floor((dueDateObject - Date.now()) / 1000);
@@ -77,24 +83,32 @@ class CdlLogout extends Component {
         <div className={classes.topBar}>
           <div className={classes.dueInformation}>
             <TimerIcon className={classes.icon} />
-            <DueDate timestamp={dueDate * 1000}/>
+            <DueDate timestamp={dueDate * 1000} />
           </div>
           <Button variant="outlined" onClick={this.handleLogout} className={classes.button}>
             {label}
           </Button>
-          {canRenew && <Button variant="outlined" onClick={this.handleRenew} className={classes.button}>
-                                  Renew
-                                </Button>
-          }
-          { (waitlist > items) && <Typography className={classes.waitlist}><WarningIcon className={classes.warningIcon}/> Waitlist started, no renewals</Typography>}
+          {canRenew && (
+          <Button variant="outlined" onClick={this.handleRenew} className={classes.button}>
+            Renew
+          </Button>
+          )}
+          { (waitlist > items) && (
+          <Typography className={classes.waitlist}>
+            <WarningIcon className={classes.warningIcon} />
+            {' '}
+            Waitlist started, no renewals
+          </Typography>
+          )}
           { remainingSeconds >= 0 && remainingSeconds < fifteenMinutes && (
             <CdlCountdown remainingSeconds={remainingSeconds} />) }
         </div>
       </Paper>
-    )
+    );
   }
 }
 
+/** */
 const styles = (theme) => ({
   button: {
     backgroundColor: theme.palette.background.paper,
@@ -121,16 +135,17 @@ const styles = (theme) => ({
   },
   waitlist: {
     alignItems: 'center',
-    display: 'inline-flex',
     color: theme.palette.primary.main,
-    marginLeft: theme.spacing(5)
+    display: 'inline-flex',
+    marginLeft: theme.spacing(5),
   },
   warningIcon: {
     color: theme.palette.notification.main,
   },
-})
+});
 
-const mapStateToProps = (state, { windowId} ) => {
+/** */
+const mapStateToProps = (state, { windowId }) => {
   const canvasId = (getCurrentCanvas(state, { windowId }) || {}).id;
   const service = selectCanvasAuthService(state, { canvasId, windowId });
   const endpoint = service && service.getService('http://iiif.io/api/auth/1/renew');
@@ -145,12 +160,12 @@ const mapStateToProps = (state, { windowId} ) => {
     items: window && window.cdlAvailability && window.cdlAvailability.items,
     loginUrl: service && service.id,
     waitlist: window && window.cdlAvailability && window.cdlAvailability.waitlist,
-  }
-}
+  };
+};
 
 const CdlLogoutPlugin = {
   mapStateToProps,
-}
+};
 
 export default withStyles(styles)(CdlLogout);
 export { CdlLogoutPlugin };
