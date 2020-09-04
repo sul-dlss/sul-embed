@@ -90,6 +90,7 @@ class CdlAuthenticationControl extends Component {
   /** */
   render() {
     const {
+      available,
       classes,
       confirmLabel,
       degraded,
@@ -123,7 +124,7 @@ class CdlAuthenticationControl extends Component {
           </Avatar>
           <Typography className={classes.label} component="h3" variant="body1" color="inherit">
             <SanitizedHtml htmlString={this.authLabel(isInFailureState)} ruleSet="iiif" />
-            <DueDate className={classes.dueDate} timestamp={dueDate} />
+            <DueDate className={classes.dueDate} timestamp={available ? null : dueDate} />
           </Typography>
           { confirmButton }
         </div>
@@ -194,7 +195,7 @@ CdlAuthenticationControl.defaultProps = {
   available: false,
   confirmLabel: undefined,
   degraded: false,
-  dueDate: undefined,
+  dueDate: null,
   failureHeader: undefined,
   infoId: undefined,
   label: undefined,
