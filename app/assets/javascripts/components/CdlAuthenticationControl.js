@@ -143,7 +143,9 @@ const styles = theme => ({
     height: '1.5em',
     width: '1.5em',
   },
-  buttonInvert: {},
+  buttonInvert: {
+    marginLeft: theme.spacing(5),
+  },
   dueDate: {
     marginLeft: theme.spacing(3),
     marginRight: theme.spacing(3),
