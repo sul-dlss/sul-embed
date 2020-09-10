@@ -14,7 +14,7 @@ export default class DueDate extends Component {
 
     return (
       <Typography className={className} variant="body1">
-        Due:
+        Due:&nbsp;
         {dueDateObject.toLocaleTimeString(
           'en-US',
           {
