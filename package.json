@@ -27,6 +27,7 @@
     "mirador-image-tools": "^0.8.0",
     "mirador-share-plugin": "^0.9.0",
     "pdfjs-dist": "2.2.228",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "three": "^0.112.1",
