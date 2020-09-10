@@ -75,16 +75,16 @@ class CdlAuthenticationControl extends Component {
 
   /** */
   loginButtonText() {
-    const { available, waitlist } = this.props;
+    const { available, items, waitlist } = this.props;
     if (available === false) {
+      const waitListCount = waitlist > items ? `(${waitlist - 1})` : '';
       return (
         <>
-          Join waitlist (
-          {waitlist}
-          )
+          {['Join waitlist', waitListCount].join(' ')}
         </>
       );
     }
+    return null;
   }
 
   /** */
@@ -183,6 +183,7 @@ CdlAuthenticationControl.propTypes = {
   failureHeader: PropTypes.string,
   handleAuthInteraction: PropTypes.func.isRequired,
   infoId: PropTypes.string,
+  items: PropTypes.number,
   label: PropTypes.string,
   loanPeriod: PropTypes.number,
   profile: PropTypes.string,
@@ -200,6 +201,7 @@ CdlAuthenticationControl.defaultProps = {
   dueDate: null,
   failureHeader: undefined,
   infoId: undefined,
+  items: undefined,
   label: undefined,
   loanPeriod: undefined,
   profile: undefined,
@@ -219,6 +221,7 @@ const mapStateToProps = (state, { windowId }) => {
   return {
     available: cdlAvailability && cdlAvailability.available,
     dueDate: cdlAvailability && cdlAvailability.dueDate,
+    items: cdlAvailability && cdlAvailability.items,
     loanPeriod: cdlAvailability && cdlAvailability.loanPeriod,
     service,
     waitlist: window && window.cdlAvailability && window.cdlAvailability.waitlist,
