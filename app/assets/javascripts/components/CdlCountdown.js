@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 /** */
@@ -8,9 +9,9 @@ class CdlCountdown extends Component {
     const { remainingSeconds } = this.props;
     let count = remainingSeconds;
     if (remainingSeconds > 60) {
-      count = Math.floor(remainingSeconds / 60);
+      count = Math.ceil(remainingSeconds / 60);
     }
-    return new Number(count).toLocaleString();
+    return Number(count).toLocaleString();
   }
 
   /** */
@@ -18,6 +19,9 @@ class CdlCountdown extends Component {
     const { remainingSeconds } = this.props;
     if (remainingSeconds > 60) {
       return 'minutes';
+    }
+    if (remainingSeconds === 1) {
+      return 'second';
     }
     return 'seconds';
   }
@@ -39,6 +43,11 @@ const styles = (theme) => ({
     color: theme.palette.primary.main,
     marginLeft: theme.spacing(5),
   },
-})
-;
+});
+
+CdlCountdown.propTypes = {
+  classes: PropTypes.objectOf(PropTypes.string).isRequired,
+  remainingSeconds: PropTypes.number.isRequired,
+};
+
 export default withStyles(styles)(CdlCountdown);
