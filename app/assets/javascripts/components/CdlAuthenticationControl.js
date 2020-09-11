@@ -51,11 +51,11 @@ class CdlAuthenticationControl extends Component {
 
   /** */
   availabilityIcon() {
-    const { available, classes } = this.props;
+    const { available, nextUp, classes } = this.props;
     if (available === undefined) {
       return <LockIcon fontSize="small" color="primary" />;
     }
-    if (available) {
+    if (available || nextUp) {
       return <CheckIcon fontSize="small" className={classes.availableIcon} />;
     }
     return <CloseIcon fontSize="small" color="primary" />;
@@ -64,18 +64,28 @@ class CdlAuthenticationControl extends Component {
   /** */
   authLabel(isInFailureState) {
     const {
-      available, failureHeader, label, loanPeriod,
+      available, failureHeader, label, loanPeriod, nextUp,
     } = this.props;
     const { statusText } = this.state;
     if (statusText) return statusText;
-    if (!available) return 'Checked out';
-    if (available) return `Available for ${Math.floor(loanPeriod / 3600)}-hour loan`;
-    return isInFailureState ? failureHeader : label;
+    if (isInFailureState) return failureHeader;
+    if (available === undefined) return label;
+
+    if (available || nextUp) {
+      return `Available for ${Math.floor(loanPeriod / 3600)}-hour loan`;
+    }
+
+    return 'Checked out';
   }
 
   /** */
   loginButtonText() {
-    const { available, items, waitlist } = this.props;
+    const {
+      available, items, nextUp, waitlist,
+    } = this.props;
+
+    if (nextUp) return null;
+
     if (available === false) {
       const waitListCount = waitlist > items ? `(${waitlist - 1})` : '';
       return (
@@ -95,6 +105,7 @@ class CdlAuthenticationControl extends Component {
       confirmLabel,
       degraded,
       dueDate,
+      nextUp,
       profile,
       status,
       t,
@@ -124,7 +135,7 @@ class CdlAuthenticationControl extends Component {
           </Avatar>
           <Typography className={classes.label} component="h3" variant="body1" color="inherit">
             <SanitizedHtml htmlString={this.authLabel(isInFailureState)} ruleSet="iiif" />
-            <DueDate className={classes.dueDate} timestamp={available ? null : dueDate} />
+            <DueDate className={classes.dueDate} timestamp={nextUp || available ? null : dueDate} />
           </Typography>
           { confirmButton }
         </div>
@@ -186,6 +197,7 @@ CdlAuthenticationControl.propTypes = {
   items: PropTypes.number,
   label: PropTypes.string,
   loanPeriod: PropTypes.number,
+  nextUp: PropTypes.bool,
   profile: PropTypes.string,
   serviceId: PropTypes.string,
   status: PropTypes.oneOf(['ok', 'fetching', 'failed', null]),
@@ -204,6 +216,7 @@ CdlAuthenticationControl.defaultProps = {
   items: undefined,
   label: undefined,
   loanPeriod: undefined,
+  nextUp: undefined,
   profile: undefined,
   serviceId: undefined,
   status: null,
@@ -215,16 +228,17 @@ CdlAuthenticationControl.defaultProps = {
 const mapStateToProps = (state, { windowId }) => {
   const canvasId = (getCurrentCanvas(state, { windowId }) || {}).id;
   const service = selectCanvasAuthService(state, { canvasId, windowId });
-  const window = getWindow(state, { windowId });
-  const cdlAvailability = window && window.cdlAvailability;
+  const window = getWindow(state, { windowId }) || {};
+  const cdlAvailability = window.cdlAvailability || {};
 
   return {
-    available: cdlAvailability && cdlAvailability.available,
-    dueDate: cdlAvailability && cdlAvailability.dueDate,
-    items: cdlAvailability && cdlAvailability.items,
-    loanPeriod: cdlAvailability && cdlAvailability.loanPeriod,
+    available: cdlAvailability.available,
+    dueDate: cdlAvailability.dueDate,
+    items: cdlAvailability.items,
+    loanPeriod: cdlAvailability.loanPeriod,
+    nextUp: window.cdl && (cdlAvailability.nextUps || []).includes(window.cdl.cdlHoldRecordId),
     service,
-    waitlist: window && window.cdlAvailability && window.cdlAvailability.waitlist,
+    waitlist: cdlAvailability.waitlist,
   };
 };
 

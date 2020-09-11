@@ -108,6 +108,10 @@ module Embed
       validate_format if format
     end
 
+    def cdl_hold_record_id
+      params[:cdl_hold_record_id]
+    end
+
     private
 
     def require_url_parameter

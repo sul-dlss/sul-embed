@@ -76,6 +76,11 @@ export default {
         loadedManifest: data.m3Uri,
         canvasIndex: Number(data.canvasIndex),
         canvasId: data.canvasId,
+        ...(data.cdl && {
+          cdl: {
+            cdlHoldRecordId: data.cdlHoldRecordId && data.cdlHoldRecordId.toString(),
+          }
+        }),
       }],
       window: {
         allowClose: false,
