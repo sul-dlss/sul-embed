@@ -37,13 +37,18 @@ class CdlCopyright extends Component {
 const styles = (theme) => ({
   paper: {
     backgroundColor: theme.palette.background.paper,
+    overflowY: 'scroll',
+    width: '100%',
   },
   primaryWindow: {},
   statement: {
     '& p': {
       margin: theme.spacing(4),
+      maxWidth: '30em',
     },
+    display: 'flex',
     fontSize: '18pt',
+    justifyContent: 'center',
   },
 });
 
