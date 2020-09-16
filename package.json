@@ -33,6 +33,7 @@
     "virtex3d": "^0.4.0"
   },
   "devDependencies": {
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "webpack-dev-server": "^3.7.0"
   }
 }
