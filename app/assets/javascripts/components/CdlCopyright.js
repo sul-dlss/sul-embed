@@ -3,10 +3,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import {
-  getCurrentCanvas,
+  getAuth,
   getRequiredStatement,
-  selectAuthStatus,
-  selectCanvasAuthService,
+  selectCurrentAuthServices,
 } from 'mirador/dist/es/src/state/selectors';
 import SanitizedHtml from 'mirador/dist/es/src/containers/SanitizedHtml';
 
@@ -18,7 +17,7 @@ class CdlCopyright extends Component {
       classes, requiredStatement, status, TargetComponent,
     } = this.props;
 
-    if (status !== null || status === 'ok') {
+    if (status === 'ok') {
       return <TargetComponent {...this.props} />;
     }
     return (
@@ -54,12 +53,26 @@ const styles = (theme) => ({
 
 /** */
 const mapStateToProps = (state, { windowId }) => {
-  const canvasId = (getCurrentCanvas(state, { windowId }) || {}).id;
-  const service = selectCanvasAuthService(state, { canvasId, windowId });
+  const services = selectCurrentAuthServices(state, { windowId });
+
+  // Ported containers/IIIFAuthentication.js Should this be a selector?
+  // TODO: get the most actionable auth service...
+  const service = services[0];
+
+  const authStatuses = getAuth(state);
+  const authStatus = service && authStatuses[service.id];
+
+  let status = null;
+
+  if (!authStatus) {
+    status = null;
+  } else if (authStatus.ok) {
+    status = 'ok';
+  }
 
   return {
     requiredStatement: getRequiredStatement(state, { windowId }),
-    status: service && selectAuthStatus(state, service),
+    status,
   };
 };
 

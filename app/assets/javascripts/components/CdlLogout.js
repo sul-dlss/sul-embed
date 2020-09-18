@@ -54,12 +54,12 @@ class CdlLogout extends Component {
   }
 
   /** */
-  authenticationInteraction() {
-    const { handleInteraction, infoResponseId, loginUrl } = this.props;
-
-    this.setState({ renew: false });
-    handleInteraction(loginUrl, [infoResponseId]);
-  }
+  // authenticationInteraction() {
+  //   const { handleInteraction, infoResponseId, loginUrl } = this.props;
+  // 
+  //   this.setState({ renew: false });
+  //   handleInteraction(loginUrl, [infoResponseId]);
+  // }
 
   /** */
   render() {
@@ -79,7 +79,7 @@ class CdlLogout extends Component {
 
     return (
       <Paper square elevation={4} classes={{ root: [classes.paper, renewWarningClass].join(' ') }}>
-        <AuthenticationSender url={renew && authenticationUrl} handleInteraction={this.authenticationInteraction} />
+        <AuthenticationSender url={renew && authenticationUrl}  />
         <div className={classes.topBar}>
           <div className={classes.dueInformation}>
             <TimerIcon className={classes.icon} />
