@@ -9,56 +9,34 @@ import CheckIcon from '@material-ui/icons/CheckSharp';
 import CloseIcon from '@material-ui/icons/CloseSharp';
 import Avatar from '@material-ui/core/Avatar';
 import SanitizedHtml from 'mirador/dist/es/src/containers/SanitizedHtml';
-import AuthenticationLogout from 'mirador/dist/es/src/containers/AuthenticationLogout';
+// import AuthenticationLogout from 'mirador/dist/es/src/containers/AuthenticationLogout';
 import {
   getCurrentCanvas,
   getWindow,
-  selectCanvasAuthService,
+  selectCurrentAuthServices,
 } from 'mirador/dist/es/src/state/selectors';
 import DueDate from './DueDate';
 
 /** */
 class CdlAuthenticationControl extends Component {
-  /** */
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      showFailureMessage: true,
-      statusText: null,
-    };
-
-    this.handleConfirm = this.handleConfirm.bind(this);
-  }
-
-  /** */
-  handleConfirm() {
-    const {
-      handleAuthInteraction, infoId, serviceId, windowId,
-    } = this.props;
-    handleAuthInteraction(windowId, infoId, serviceId);
-    this.setState({ showFailureMessage: true });
-  }
-
-  /** */
-  isInteractive() {
-    const {
-      profile,
-    } = this.props;
-
-    return profile === 'http://iiif.io/api/auth/1/clickthrough' || profile === 'http://iiif.io/api/auth/1/login';
-  }
 
   /** */
   availabilityIcon() {
     const { available, nextUp, classes } = this.props;
+    let icon = null;
     if (available === undefined) {
-      return <LockIcon fontSize="small" color="primary" />;
+      icon = <LockIcon fontSize="small" color="primary" />;
     }
     if (available || nextUp) {
-      return <CheckIcon fontSize="small" className={classes.availableIcon} />;
+      icon = <CheckIcon fontSize="small" className={classes.availableIcon} />;
+    } else {
+      icon = <CloseIcon fontSize="small" color="primary" />;
     }
-    return <CloseIcon fontSize="small" color="primary" />;
+    return (
+      <Avatar className={classes.avatar}>
+        {icon}
+      </Avatar>
+    );
   }
 
   /** */
@@ -66,8 +44,6 @@ class CdlAuthenticationControl extends Component {
     const {
       available, failureHeader, label, loanPeriod, nextUp,
     } = this.props;
-    const { statusText } = this.state;
-    if (statusText) return statusText;
     if (isInFailureState) return failureHeader;
     if (available === undefined) return label;
 
@@ -81,8 +57,10 @@ class CdlAuthenticationControl extends Component {
   /** */
   loginButtonText() {
     const {
-      available, items, nextUp, waitlist,
+      available, confirmLabel, items, nextUp, waitlist, label,
     } = this.props;
+    
+    console.log(this.props);
 
     if (nextUp) return null;
 
@@ -94,52 +72,29 @@ class CdlAuthenticationControl extends Component {
         </>
       );
     }
-    return null;
+    return confirmButton;
   }
 
   /** */
   render() {
     const {
-      available,
-      classes,
-      confirmLabel,
-      degraded,
-      dueDate,
-      nextUp,
-      profile,
-      status,
-      t,
-      windowId,
+      classes, dueDate, targetProps, TargetComponent,
     } = this.props;
-
-    const failed = status === 'failed';
-
-    if ((!degraded || !profile) && (status !== null || status === 'ok')) return <AuthenticationLogout windowId={windowId} />;
-    if (!this.isInteractive() && !failed) return <></>;
-
-    const { showFailureMessage } = this.state;
-
-    const isInFailureState = showFailureMessage && failed;
-
-    const confirmButton = (
-      <Button onClick={this.handleConfirm} className={classes.buttonInvert} color="secondary" size="small">
-        {this.loginButtonText() || confirmLabel || (this.isInteractive() ? t('login') : t('retry')) }
-      </Button>
-    );
-
+    const {
+      status,
+    } = targetProps;
+    const pluginComponents = [DueDate];
     return (
-      <Paper square elevation={4} color="secondary" classes={{ root: classes.paper }}>
-        <div className={classes.topBar}>
-          <Avatar className={classes.avatar}>
-            {this.availabilityIcon()}
-          </Avatar>
-          <Typography className={classes.label} component="h3" variant="body1" color="inherit">
-            <SanitizedHtml htmlString={this.authLabel(isInFailureState)} ruleSet="iiif" />
-            <DueDate className={classes.dueDate} timestamp={nextUp || available ? null : dueDate} />
-          </Typography>
-          { confirmButton }
-        </div>
-      </Paper>
+      <TargetComponent
+        icon={this.availabilityIcon()}
+        {...targetProps}
+        confirmButton={this.loginButtonText()}
+        header={null}
+        label={this.authLabel((status === 'failed'))}
+        PluginComponents={pluginComponents}
+        timestamp={dueDate}
+        classes={classes}
+      />
     );
   }
 }
@@ -152,6 +107,7 @@ const styles = theme => ({
   avatar: {
     backgroundColor: 'white',
     height: '1.5em',
+    marginRight: theme.spacing(1),
     width: '1.5em',
   },
   buttonInvert: {
@@ -192,7 +148,6 @@ CdlAuthenticationControl.propTypes = {
   degraded: PropTypes.bool,
   dueDate: PropTypes.string,
   failureHeader: PropTypes.string,
-  handleAuthInteraction: PropTypes.func.isRequired,
   infoId: PropTypes.string,
   items: PropTypes.number,
   label: PropTypes.string,
@@ -200,7 +155,7 @@ CdlAuthenticationControl.propTypes = {
   nextUp: PropTypes.bool,
   profile: PropTypes.string,
   serviceId: PropTypes.string,
-  status: PropTypes.oneOf(['ok', 'fetching', 'failed', null]),
+  status: PropTypes.oneOf(['ok', 'token', 'cookie', 'fetching', 'failed', null]),
   t: PropTypes.func,
   waitlist: PropTypes.number,
   windowId: PropTypes.string.isRequired,
@@ -225,9 +180,10 @@ CdlAuthenticationControl.defaultProps = {
 };
 
 /** */
-const mapStateToProps = (state, { windowId }) => {
+const mapStateToProps = (state, { targetProps }) => {
+  const { windowId } = targetProps;
   const canvasId = (getCurrentCanvas(state, { windowId }) || {}).id;
-  const service = selectCanvasAuthService(state, { canvasId, windowId });
+  const service = selectCurrentAuthServices(state, { canvasId, windowId });
   const window = getWindow(state, { windowId }) || {};
   const cdlAvailability = window.cdlAvailability || {};
 
