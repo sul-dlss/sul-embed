@@ -90,6 +90,12 @@ export default {
         sideBarOpen: (data.showAttribution === true || data.search.length > 0),
         imageToolsEnabled: true,
         imageToolsOpen: false,
+        views: [
+          { key: 'single', behaviors: [null, 'individuals'] },
+          { key: 'book', behaviors: [null, 'paged'] },
+          { key: 'scroll', behaviors: ['continuous'] },
+          { key: 'gallery' },
+        ],
       },
       workspace: {
         showZoomControls: true,
