@@ -10,13 +10,8 @@ import MiradorCanvas from 'mirador/dist/es/src/lib/MiradorCanvas';
 import {
   all, put, select, takeEvery, call, delay,
 } from 'redux-saga/effects';
-import CdlAuthenticationControl from '../components/CdlAuthenticationControl';
-import { CdlAuthenticationControlPlugin } from '../components/CdlAuthenticationControl';
-// import CdlLogout from '../components/CdlLogout';
-// import { CdlLogoutPlugin } from '../components/CdlLogout';
-import CdlCopyright from '../components/CdlCopyright';
-import { CdlCopyrightPlugin } from '../components/CdlCopyright';
-// import CdlIiifAuthentication from '../components/CdlIiifAuthentication';
+import CdlAuthenticationControl, { CdlAuthenticationControlPlugin } from '../components/CdlAuthenticationControl';
+import CdlCopyright, { CdlCopyrightPlugin } from '../components/CdlCopyright';
 
 
 /** */
@@ -56,6 +51,7 @@ function* refreshCdlInfo({ json, id }) {
   yield call(requestCdlInfoAndAvailability, window.cdlInfoResponseUrl, accessToken);
 }
 
+/** */
 function* requestCdlInfoAndAvailability(cdlInfoEndpoint, accessToken) {
   let options = {};
 
@@ -81,6 +77,7 @@ function* requestCdlInfoAndAvailability(cdlInfoEndpoint, accessToken) {
   }, type: ActionTypes.UPDATE_WINDOW });
 }
 
+/** */
 function* startTheClock({ id, payload: { cdlInfoResponse }}) {
   if (!cdlInfoResponse) return;
 
@@ -119,6 +116,7 @@ function* startTheClock({ id, payload: { cdlInfoResponse }}) {
   }
 }
 
+/** */
 function* resetInfoResponses() {
   const canvas = yield select(getCurrentCanvas, { windowId: 'main' });
   if (!canvas) return;
