@@ -25,7 +25,7 @@ function* getAuthInfo() {
   if (!service || service.length === 0) return;
   const endpoint = service[0].getService('http://iiif.io/api/auth/1/info').id;
   const accessTokens = yield select(getAccessTokens);
-  const accessTokenService = Object.values(accessTokens).find(s => s.authId === service.id);
+  const accessTokenService = Object.values(accessTokens).find(s => s.authId === service[0].id);
   const accessToken = accessTokenService && accessTokenService.json && accessTokenService.json.accessToken;
   yield call(requestCdlInfoAndAvailability, endpoint, accessToken);
 }
@@ -127,35 +127,9 @@ function* resetInfoResponses() {
   }))
 }
 
-/**
- * try to fetch the IIIF access token for CDL if we don't already have one
- */
-function* preemptivelyRequestACdlAccessToken({ id, payload: { cdlInfoResponse } }) {
-  if (!cdlInfoResponse) return;
-  if (!cdlInfoResponse.payload) return;
-
-  const service = yield select(selectCurrentAuthServices, { windowId: id });
-  if (!service) return;
-  console.log(service);
-
-  const accessTokenServiceId = service[0].getService('http://iiif.io/api/auth/1/token').id;
-  const accessTokens = yield select(getAccessTokens);
-  const accessTokenService = Object.values(accessTokens).find(s => s.authId === service.id);
-
-  if (accessTokenService) return;
-
-  // yield put({
-  //   authId: service.id,
-  //   infoIds: [infoId],
-  //   serviceId: accessTokenServiceId,
-  //   type: ActionTypes.REQUEST_ACCESS_TOKEN,
-  // });
-}
-
 /** */
 const saga = function* cdlSaga() {
   yield all([
-    takeEvery(ActionTypes.UPDATE_WINDOW, preemptivelyRequestACdlAccessToken),
     takeEvery(ActionTypes.RECEIVE_INFO_RESPONSE, getAuthInfo),
     takeEvery(ActionTypes.RECEIVE_ACCESS_TOKEN, refreshCdlInfo),
     takeEvery(ActionTypes.RESET_AUTHENTICATION_STATE, refreshCdlInfo),
@@ -169,22 +143,16 @@ const saga = function* cdlSaga() {
 export default [
   {
     component: CdlAuthenticationControl,
+    mapDispatchToProps: CdlAuthenticationControlPlugin.mapDispatchToProps,
     mapStateToProps: CdlAuthenticationControlPlugin.mapStateToProps,
     mode: 'wrap',
     saga,
     target: 'WindowAuthenticationBar',
   },
-  // {
-  //   component: CdlLogout,
-  //   // mapDispatchToProps: { handleInteraction: fetchAccessTokenRequest },
-  //   mapStateToProps: CdlLogoutPlugin.mapStateToProps,
-  //   mode: 'wrap',
-  //   target: 'AuthenticationLogout',
-  // },
   {
     component: CdlCopyright,
     mapStateToProps: CdlCopyrightPlugin.mapStateToProps,
     mode: 'wrap',
     target: 'PrimaryWindow',
-  }
-]
+  },
+];

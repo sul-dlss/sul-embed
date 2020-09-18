@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
-import TimerIcon from '@material-ui/icons/TimerSharp';
 import WarningIcon from '@material-ui/icons/WarningSharp';
 import Typography from '@material-ui/core/Typography';
-import {
-  getCurrentCanvas,
-  getWindow,
-  selectCanvasAuthService,
-  selectInfoResponse,
-} from 'mirador/dist/es/src/state/selectors';
-import { AuthenticationSender } from 'mirador/dist/es/src/components/AuthenticationSender';
+import { NewWindow } from 'mirador/dist/es/src/components/NewWindow';
 import CdlCountdown from './CdlCountdown';
-import DueDate from './DueDate';
 
 /** */
 class CdlLogout extends Component {
@@ -21,31 +12,16 @@ class CdlLogout extends Component {
   constructor(props) {
     super(props);
 
-    this.timer = null;
     this.state = { renew: false };
-    this.authenticationInteraction = this.authenticationInteraction.bind(this);
-    this.handleLogout = this.handleLogout.bind(this);
     this.handleRenew = this.handleRenew.bind(this);
+    this.onRenewed = this.onRenewed.bind(this);
   }
 
   /** */
-  componentDidMount() {
-    this.timer = setInterval(() => this.forceUpdate(), 1000 * 15);
-  }
-
-  /** */
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
-  /** */
-  handleLogout() {
-    const {
-      authServiceId, depWindow, logoutServiceId, resetAuthenticationState,
-    } = this.props;
-    (depWindow || window).open(logoutServiceId);
-
-    resetAuthenticationState({ authServiceId });
+  onRenewed() {
+    const { authServiceId, accessTokenServiceId, requestAccessToken } = this.props;
+    requestAccessToken(accessTokenServiceId, authServiceId);
+    this.setState({ renew: false });
   }
 
   /** */
@@ -54,17 +30,9 @@ class CdlLogout extends Component {
   }
 
   /** */
-  // authenticationInteraction() {
-  //   const { handleInteraction, infoResponseId, loginUrl } = this.props;
-  // 
-  //   this.setState({ renew: false });
-  //   handleInteraction(loginUrl, [infoResponseId]);
-  // }
-
-  /** */
   render() {
     const {
-      authenticationUrl, classes, dueDate, items, label, targetProps, waitlist, TargetComponent,
+      classes, dueDate, items, label, renewServiceId, targetProps, waitlist, TargetComponent,
     } = this.props;
     const { renew } = this.state;
     const dueDateObject = new Date(dueDate * 1000);
@@ -73,37 +41,30 @@ class CdlLogout extends Component {
     const fifteenMinutes = 60 * 15;
     const fiveMinutes = 60 * 5;
 
-    const canRenew = authenticationUrl && (waitlist <= items) && (remainingSeconds >= 0 && remainingSeconds < fiveMinutes);
+    const canRenew = renewServiceId && (waitlist <= items) && (remainingSeconds >= 0 && remainingSeconds < fiveMinutes);
 
-    const renewWarningClass = remainingSeconds < fifteenMinutes ? classes.renewWarning : null;
-
+    if (renew) {
+      return (
+        <NewWindow name="IiifLoginSender" url={`${renewServiceId}?origin=${window.origin}`} features="centerscreen" onClose={this.onRenewed} />
+      );
+    }
     return (
-      <Paper square elevation={4} classes={{ root: [classes.paper, renewWarningClass].join(' ') }}>
-        <AuthenticationSender url={renew && authenticationUrl}  />
-        <div className={classes.topBar}>
-          <div className={classes.dueInformation}>
-            <TimerIcon className={classes.icon} />
-            <DueDate timestamp={dueDate * 1000} />
-          </div>
-          <Button variant="outlined" onClick={this.handleLogout} className={classes.button}>
-            {label}
-          </Button>
-          {canRenew && (
-          <Button variant="outlined" onClick={this.handleRenew} className={classes.button}>
-            Renew
-          </Button>
-          )}
-          { (waitlist > items) && (
-          <Typography className={classes.waitlist}>
-            <WarningIcon className={classes.warningIcon} />
-            {' '}
-            Waitlist started, no renewals
-          </Typography>
-          )}
-          { remainingSeconds >= 0 && remainingSeconds < fifteenMinutes && (
-            <CdlCountdown remainingSeconds={remainingSeconds} />) }
-        </div>
-      </Paper>
+      <>
+        {canRenew && (
+        <Button variant="outlined" onClick={this.handleRenew} className={classes.button}>
+          Renew
+        </Button>
+        )}
+        { (waitlist > items) && (
+        <Typography className={classes.waitlist}>
+          <WarningIcon className={classes.warningIcon} />
+          {' '}
+          Waitlist started, no renewals
+        </Typography>
+        )}
+        { remainingSeconds >= 0 && remainingSeconds < fifteenMinutes && (
+          <CdlCountdown remainingSeconds={remainingSeconds} />) }
+      </>
     );
   }
 }
@@ -113,14 +74,15 @@ const styles = (theme) => ({
   button: {
     backgroundColor: theme.palette.background.paper,
     marginLeft: theme.spacing(5),
+    order: 99,
+    paddingBottom: 0,
+    paddingTop: 0,
   },
   dueInformation: {
     display: 'inline-flex',
   },
   icon: {
     marginRight: theme.spacing(2),
-  },
-  paper: {
   },
   renewWarning: {
     backgroundColor: '#F9F6EF',
@@ -144,28 +106,4 @@ const styles = (theme) => ({
   },
 });
 
-/** */
-const mapStateToProps = (state, { windowId }) => {
-  const canvasId = (getCurrentCanvas(state, { windowId }) || {}).id;
-  const service = selectCanvasAuthService(state, { canvasId, windowId });
-  const endpoint = service && service.getService('http://iiif.io/api/auth/1/renew');
-  const infoResponse = selectInfoResponse(state, { canvasId, windowId });
-  const window = getWindow(state, { windowId });
-
-  const payload = window.cdlInfoResponse && window.cdlInfoResponse.payload;
-  return {
-    authenticationUrl: endpoint && endpoint.id,
-    dueDate: payload && payload.exp,
-    infoResponseId: infoResponse && infoResponse.id,
-    items: window && window.cdlAvailability && window.cdlAvailability.items,
-    loginUrl: service && service.id,
-    waitlist: window && window.cdlAvailability && window.cdlAvailability.waitlist,
-  };
-};
-
-const CdlLogoutPlugin = {
-  mapStateToProps,
-};
-
 export default withStyles(styles)(CdlLogout);
-export { CdlLogoutPlugin };
