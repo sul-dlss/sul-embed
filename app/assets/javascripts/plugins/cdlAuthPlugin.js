@@ -181,11 +181,6 @@ export default [
   //   mode: 'wrap',
   //   target: 'AuthenticationLogout',
   // },
-  // {
-  //   component: CdlIiifAuthentication,
-  //   mode: 'wrap',
-  //   target: 'IIIFAuthentication',
-  // },
   {
     component: CdlCopyright,
     mapStateToProps: CdlCopyrightPlugin.mapStateToProps,
