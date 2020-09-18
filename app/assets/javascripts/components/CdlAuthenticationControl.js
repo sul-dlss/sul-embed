@@ -152,13 +152,13 @@ const styles = theme => ({
   failure: {},
   fauxButton: {},
   icon: {},
-  // label: {
-  //   alignItems: 'center',
-  //   display: 'inline-flex',
-  //   flexDirection: 'row',
-  //   marginLeft: theme.spacing(1),
-  //   marginRight: theme.spacing(1),
-  // },
+  label: {
+    alignItems: 'center',
+    display: 'inline-flex',
+    flexDirection: 'row',
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+  },
   paper: {
     cursor: 'inherit !important',
   },
