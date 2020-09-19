@@ -12,6 +12,7 @@ import {
 } from 'redux-saga/effects';
 import CdlAuthenticationControl, { CdlAuthenticationControlPlugin } from '../components/CdlAuthenticationControl';
 import CdlCopyright, { CdlCopyrightPlugin } from '../components/CdlCopyright';
+import CdlLoginWindowSizing from '../components/CdlLoginWindowSizing';
 
 
 /** */
@@ -152,5 +153,10 @@ export default [
     mapStateToProps: CdlCopyrightPlugin.mapStateToProps,
     mode: 'wrap',
     target: 'PrimaryWindow',
+  },
+  {
+    component: CdlLoginWindowSizing,
+    mode: 'wrap',
+    target: 'IIIFAuthentication',
   },
 ];
