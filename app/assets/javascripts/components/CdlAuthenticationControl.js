@@ -79,12 +79,12 @@ class CdlAuthenticationControl extends Component {
   /** */
   loginButtonText() {
     const {
-      available, items, logoutService, nextUp, waitlist, status,
+      available, confirmButton, items, logoutService, nextUp, waitlist, status,
     } = this.props;
 
     // We don't have access to a log out service
     if (status === 'ok') return logoutService.getLabel()[0].value;
-    if (nextUp) return null;
+    if (nextUp) return confirmButton;
 
     if (available === false) {
       const waitListCount = waitlist > items ? `(${waitlist - 1})` : '';
@@ -94,7 +94,7 @@ class CdlAuthenticationControl extends Component {
         </>
       );
     }
-    return null;
+    return confirmButton;
   }
 
   /** */
@@ -254,7 +254,7 @@ CdlAuthenticationControl.propTypes = {
   availabilityDueDate: PropTypes.string,
   available: PropTypes.bool,
   classes: PropTypes.objectOf(PropTypes.string).isRequired,
-  confirmLabel: PropTypes.string,
+  confirmButton: PropTypes.string,
   degraded: PropTypes.bool,
   dueDate: PropTypes.number,
   failureHeader: PropTypes.string,
@@ -283,7 +283,7 @@ CdlAuthenticationControl.defaultProps = {
   accessTokenServiceId: null,
   availabilityDueDate: null,
   available: false,
-  confirmLabel: undefined,
+  confirmButton: undefined,
   degraded: false,
   dueDate: null,
   failureHeader: undefined,
