@@ -3,7 +3,7 @@
 module Embed
   module Viewer
     class M3Viewer < CommonViewer
-      delegate :search, :suggested_search, :canvas_id, to: :request
+      delegate :search, :suggested_search, :canvas_id, :cdl_hold_record_id, to: :request
 
       def to_partial_path
         'embed/template/m3_viewer'
@@ -25,6 +25,10 @@ module Embed
         purl_object.collections.any? do |druid|
           Settings.collections_to_show_attribution.include?(druid)
         end
+      end
+
+      def cdl?
+        purl_object.rights.controlled_digital_lending?
       end
 
       def canvas_index

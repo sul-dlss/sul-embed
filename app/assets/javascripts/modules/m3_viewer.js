@@ -9,6 +9,7 @@ import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDia
 import shareMenuPlugin from '../plugins/shareMenuPlugin';
 import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin';
 import embedModePlugin from '../plugins/embedModePlugin';
+import cdlAuthPlugin from '../plugins/cdlAuthPlugin';
 
 export default {
   init: function() {
@@ -75,6 +76,11 @@ export default {
         loadedManifest: data.m3Uri,
         canvasIndex: Number(data.canvasIndex),
         canvasId: data.canvasId,
+        ...(data.cdl && {
+          cdl: {
+            cdlHoldRecordId: data.cdlHoldRecordId && data.cdlHoldRecordId.toString(),
+          }
+        }),
       }],
       window: {
         allowClose: false,
@@ -105,8 +111,9 @@ export default {
         enabled: false,
       }
     }, [
+      ...((data.cdl && cdlAuthPlugin) || []),
       ...((data.imageTools && miradorImageToolsPlugin) || []),
-      shareMenuPlugin,
+      (!data.cdl && shareMenuPlugin),
       miradorZoomBugPlugin,
       ...((data.imageTools && embedModePlugin) || []),
       {
