@@ -125,16 +125,41 @@ function* onSetWorkspaceActionLayout({ layout, type }) {
   }});
 }
 
-function* onAddAuthRequest({ type, profile, windowId }) {
+function* onAddAuthRequest({ id, type, windowId }) {
   const { id: manifestId } = yield select(getManifest, { windowId });
 
   yield put({ type: 'mirador/analytics', payload: {
     hitType: 'event',
     eventCategory: manifestId,
     eventAction: type,
-    eventLabel: profile,
+    eventLabel: id,
   }});
 }
+
+function* onResetAuthState({ id, type }) {
+  yield put({ type: 'mirador/analytics', payload: {
+    hitType: 'event',
+    eventAction: type,
+    eventLabel: id,
+  }});
+}
+
+function* onTokenRequest({ type, authId }) {
+  yield put({ type: 'mirador/analytics', payload: {
+    hitType: 'event',
+    eventAction: type,
+    eventLabel: authId,
+  }});
+}
+
+function* onTokenFailure({ type, authId }) {
+  yield put({ type: 'mirador/analytics', payload: {
+    hitType: 'event',
+    eventAction: type,
+    eventLabel: authId,
+  }});
+}
+
 
 function* sendAnalyticsEvent({ payload }) {
   window.ga && window.ga('send', payload);
@@ -157,6 +182,9 @@ function* analyticsSaga() {
     takeEvery(ActionTypes.SET_WORKSPACE_ADD_VISIBILITY, onSetWorkspaceAction),
     takeEvery(ActionTypes.UPDATE_WORKSPACE_MOSAIC_LAYOUT, onSetWorkspaceActionLayout),
     takeEvery(ActionTypes.ADD_AUTHENTICATION_REQUEST, onAddAuthRequest),
+    takeEvery(ActionTypes.RESET_AUTHENTICATION_STATE, onResetAuthState),
+    takeEvery(ActionTypes.REQUEST_ACCESS_TOKEN, onTokenRequest),
+    takeEvery(ActionTypes.RECEIVE_ACCESS_TOKEN_FAILURE, onTokenFailure),
     takeEvery('mirador/analytics', sendAnalyticsEvent),
   ]);
 }
