@@ -125,8 +125,12 @@ function* onSetWorkspaceActionLayout({ layout, type }) {
   }});
 }
 
+const authTimes = {};
+
 function* onAddAuthRequest({ id, type, windowId }) {
   const { id: manifestId } = yield select(getManifest, { windowId });
+
+  authTimes[id] = Date.now();
 
   yield put({ type: 'mirador/analytics', payload: {
     hitType: 'event',
@@ -137,25 +141,45 @@ function* onAddAuthRequest({ id, type, windowId }) {
 }
 
 function* onResetAuthState({ id, type }) {
+  const sessionMinutes = Math.ceil((Date.now() - (authTimes[id] || Date.now())) / 1000 / 60);
+  authTimes[id] = undefined;
+
   yield put({ type: 'mirador/analytics', payload: {
     hitType: 'event',
     eventAction: type,
     eventLabel: id,
+    eventValue: sessionMinutes,
   }});
 }
 
+const tokenRequests = {};
 function* onTokenRequest({ type, authId }) {
+  const sessionMinutes = Math.ceil((Date.now() - (authTimes[authId] || Date.now())) / 1000 / 60);
+
+  // probably the initial token request
+  if (sessionMinutes < 5) return;
+  tokenRequests[authId] = (tokenRequests[authId] || 0) + 1;
+
   yield put({ type: 'mirador/analytics', payload: {
     hitType: 'event',
     eventAction: type,
     eventLabel: authId,
+    eventValue: tokenRequests[authId],
   }});
 }
 
 function* onTokenFailure({ type, authId }) {
+  const sessionMinutes = Math.ceil((Date.now() - (authTimes[authId] || Date.now())) / 1000 / 60);
+  let newOrExpired = 'expired';
+
+  if (sessionMinutes < 5) {
+    newOrExpired = 'login failed';
+  }
+
   yield put({ type: 'mirador/analytics', payload: {
     hitType: 'event',
     eventAction: type,
+    eventCategory: newOrExpired,
     eventLabel: authId,
   }});
 }
