@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  embed:
+    environment:
+      - 'SECRET_KEY_BASE=123456'
+    build: .
+    ports:
+      - 80
