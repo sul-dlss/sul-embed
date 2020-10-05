@@ -43,6 +43,12 @@ const styles = (theme) => ({
   statement: {
     '& p': {
       margin: theme.spacing(4),
+    },
+    '& p:first-of-type': {
+      fontSize: '10pt',
+      lineHeight: '14pt',
+    },
+    '& span': {
       maxWidth: '30em',
     },
     display: 'flex',
