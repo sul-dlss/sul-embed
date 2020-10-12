@@ -19,7 +19,9 @@ import CdlLoginWindowSizing from '../components/CdlLoginWindowSizing';
 function* getAuthInfo() {
   const service = yield select(selectCurrentAuthServices, { windowId: 'main' });
   if (!service || service.length === 0) return;
-  const endpoint = service[0].getService('http://iiif.io/api/auth/1/info').id;
+  const authInfoService = service[0].getService('http://iiif.io/api/auth/1/info');
+  if (!authInfoService) return;
+  const endpoint = authInfoService.id;
   const accessTokens = yield select(getAccessTokens);
   const accessTokenService = Object.values(accessTokens).find(s => s.authId === service[0].id);
   const accessToken = accessTokenService && accessTokenService.json && accessTokenService.json.accessToken;
