@@ -16,7 +16,7 @@ gem 'faraday', '~> 1'
 
 gem 'nokogiri', '>= 1.7.1'
 
-gem 'dor-rights-auth', '>= 1.3.0' # need downloadable methods
+gem 'dor-rights-auth'
 
 gem 'config'
 gem 'deprecation'
