@@ -84,8 +84,9 @@ function* startTheClock({ id, payload: { cdlInfoResponse }}) {
 
   const canvas = yield select(getCurrentCanvas, { windowId: id });
   if (!canvas) return;
+
   const service = yield select(selectCurrentAuthServices, { windowId: id });
-  if (!service) return;
+  if (!service || service.length == 0) return;
 
   // if there was no token payload, our token was no good.. 🤷‍♂️
   if (!cdlInfoResponse.payload) {
@@ -99,15 +100,13 @@ function* startTheClock({ id, payload: { cdlInfoResponse }}) {
   // double check that we're now after the expiry date (in case the resource got renewed or something)
   const window = yield select(getWindow, { windowId: id });
   const actualDueDate = new Date(window.cdlInfoResponse.payload.exp * 1000);
-
   if ((Date.now() - actualDueDate) >= 0) {
     const accessTokens = yield select(getAccessTokens);
-    const accessToken = Object.values(accessTokens).find(s => s.authId === service.id);
-
+    const accessToken = Object.values(accessTokens).find(s => s.authId === service[0].id);
     if (!accessToken) return;
 
     yield put({
-      id: service.id,
+      id: service[0].id,
       tokenServiceId: accessToken.id,
       type: ActionTypes.RESET_AUTHENTICATION_STATE,
     });
