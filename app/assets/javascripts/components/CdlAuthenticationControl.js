@@ -142,7 +142,7 @@ class CdlAuthenticationControl extends Component {
   render() {
     const {
       accessTokenServiceId, availabilityDueDate, dueDate, renewServiceId,
-      requestAccessToken, status, targetProps, TargetComponent,
+      requestAccessToken, status, targetProps, TargetComponent, waitlist, items,
     } = this.props;
     const pluginComponents = [DueDate];
     if (status === 'ok') {
@@ -163,6 +163,8 @@ class CdlAuthenticationControl extends Component {
         renewServiceId={renewServiceId} // Used for CdlLogout
         accessTokenServiceId={accessTokenServiceId} // Used for CdlLogout
         requestAccessToken={requestAccessToken} // Used for CdlLogout
+        waitlist={waitlist}
+        items={items}
       />
     );
   }
