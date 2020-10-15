@@ -12,7 +12,7 @@ import {
   getWindow,
   selectCurrentAuthServices,
 } from 'mirador/dist/es/src/state/selectors';
-import { requestAccessToken } from 'mirador/dist/es/src/state/actions';
+import { requestAccessToken, resolveAuthenticationRequest } from 'mirador/dist/es/src/state/actions';
 import DueDate from './DueDate';
 import CdlLogout from './CdlLogout';
 
@@ -330,9 +330,12 @@ const mapStateToProps = (state, { targetProps }) => {
 };
 
 /** */
-const mapDispatchToProps = {
-  requestAccessToken,
-};
+const mapDispatchToProps = (dispatch) => ({
+  requestAccessToken: (accessTokenServiceId, authServiceId) => {
+    dispatch(resolveAuthenticationRequest(authServiceId, accessTokenServiceId, { ok: undefined }))
+    dispatch(requestAccessToken(accessTokenServiceId, authServiceId));
+  },
+});
 
 const CdlAuthenticationControlPlugin = {
   mapDispatchToProps,
