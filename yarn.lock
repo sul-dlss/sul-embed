@@ -5479,10 +5479,10 @@ make-dir@^3.0.2:
   dependencies:
     semver "^6.0.0"
 
-manifesto.js@^4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/manifesto.js/-/manifesto.js-4.1.0.tgz#de57ad17f5923957c64f4352e95778f5ce137790"
-  integrity sha512-E/qm2LiIxI2PZEVow6nJJrYjaAqpwJfLXhuwkWNXP/BEy70OhQIoVLvmWQMtKVsgEdCQC8NqbFZRPPdINfe5pQ==
+manifesto.js@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/manifesto.js/-/manifesto.js-4.2.0.tgz#df2da920851ebbcc9355b46e26056d632db6072a"
+  integrity sha512-6aL+sU2aiji9RY6/oVi4n4MgaM2Bsuev8WM+BgCioReK/X+FGREXCUszd36S/Ridilx610xaqrXEa9yHr8u44g==
   dependencies:
     "@edsilv/http-status-codes" "^1.0.3"
     "@iiif/vocabulary" "^1.0.11"
@@ -5718,10 +5718,10 @@ mirador-share-plugin@^0.9.0:
   resolved "https://registry.yarnpkg.com/mirador-share-plugin/-/mirador-share-plugin-0.9.0.tgz#c8742507e90bf3262c0b775ffeb56ac35f98309e"
   integrity sha512-o013pXA94sDATpNWwOaVm9Psv0f5Rs/j9r5V1BaPDyMOBHnCdiglLhHJMMt7ka0vEZBd9+okVab+ZsxS2lp9Bg==
 
-mirador@^3.0.0-rc.6:
-  version "3.0.0-rc.6"
-  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-rc.6.tgz#e908321068c11d4fb5cc2df137b9fe2c0b4987c6"
-  integrity sha512-NVqxLwH0xUvBqtCFdiNH5RYilAvEwLY5z8U8RNCjfEoLhw1jnKBaCbBFaHfuzRn3eg28D3Rlh67sCsKQUqMAhA==
+mirador@^3.0.0-rc.7:
+  version "3.0.0-rc.7"
+  resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.0.0-rc.7.tgz#f7f4d0456f6bfb137788193d316850e5359a57e7"
+  integrity sha512-xn/O6/aeXWuwAj/JaCzjmQSEt2PD8kGCBj7lxOzcuEWfjd75aQVF4uFfvUq9xw8+T8eTLFj1tfGDplHk6PHB/g==
   dependencies:
     "@material-ui/core" "^4.11.0"
     "@material-ui/icons" "^4.9.1"
@@ -5738,7 +5738,7 @@ mirador@^3.0.0-rc.6:
     jss "^10.3.0"
     jss-rtl "^0.3.0"
     lodash "^4.17.11"
-    manifesto.js "^4.1.0"
+    manifesto.js "^4.2.0"
     normalize-url "^4.5.0"
     openseadragon "^2.4.2"
     prop-types "^15.6.2"
