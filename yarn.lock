@@ -5703,10 +5703,10 @@ minizlib@^2.1.1:
     minipass "^3.0.0"
     yallist "^4.0.0"
 
-mirador-dl-plugin@^0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-0.12.0.tgz#18b1dd475435e246dba8618969447dcaa2246609"
-  integrity sha512-0FXxJxr8htkeB4j/zFINuYq0qRbont9MUqQ3GhfG+pUonApsKB+t1RrIbhmNqEj7yZ++GGZRyPPhUsYAH9e24w==
+mirador-dl-plugin@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-0.13.0.tgz#9a6cb0fa3c566a2a1ebe1ad9caa1ff590ff22689"
+  integrity sha512-I/6etIvpTtO1zgjxx2uEUFoyB9NxQ43JWg8CMkKmZqblW7AAeFqRn1/zUlQH7N8KFZft9Rah6D8qxtuNAo9jmA==
 
 mirador-image-tools@^0.8.0:
   version "0.8.0"
