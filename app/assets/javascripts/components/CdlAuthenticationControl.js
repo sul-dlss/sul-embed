@@ -62,18 +62,35 @@ class CdlAuthenticationControl extends Component {
   /** */
   authLabel(isInFailureState) {
     const {
-      available, failureHeader, label, loanPeriod, nextUp, status,
+      available, failureHeader, label, nextUp, status,
     } = this.props;
     if (isInFailureState) return failureHeader;
     if (available === undefined) return label;
 
     if (available || nextUp) {
-      return `Available for ${Math.floor(loanPeriod / 3600)}-hour loan`;
+      return `Available for ${this.distanceOfLoanPeriod()} loan`;
     }
 
     if (status === 'ok') return null;
 
     return 'Checked out';
+  }
+
+  /** */
+  distanceOfLoanPeriod() {
+    const { loanPeriod } = this.props;
+    const minutes = loanPeriod / 60;
+    if (minutes < 60) {
+      return `${Math.floor(minutes)}-minute`;
+    }
+    const hours = loanPeriod / 3600;
+    if (hours < 23) {
+      return `${Math.floor(hours)}-hour`;
+    }
+    if (hours >= 23 && hours < 167) {
+      return `${Math.floor(hours / 24)}-day`;
+    }
+    return `${Math.floor(hours / 24 / 7)}-week`;
   }
 
   /** */
