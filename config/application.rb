@@ -12,6 +12,8 @@ require "action_controller/railtie"
 # require "action_text/engine"
 require "action_view/railtie"
 # require "action_cable/engine"
+require "active_support"
+require "active_support/core_ext"
 require "sprockets/railtie"
 require "rails/test_unit/railtie"
 
