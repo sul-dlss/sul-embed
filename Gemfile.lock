@@ -423,7 +423,7 @@ DEPENDENCIES
   okcomputer
   pry-byebug
   puma
-  rails (~> 6.0)
+  rails (~> 6.1)
   rspec-rails
   rubocop (~> 0.49)
   rubocop-performance
@@ -438,4 +438,4 @@ DEPENDENCIES
   webpacker (~> 5.x)
 
 BUNDLED WITH
-   2.2.0
+   2.2.4
