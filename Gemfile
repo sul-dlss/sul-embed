@@ -7,7 +7,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-gem 'rails', '~> 6.0'
+gem 'rails', '~> 6.1'
 # Use Puma as the app server
 gem 'puma'
 # Reduces boot times through caching; required in config/boot.rb
