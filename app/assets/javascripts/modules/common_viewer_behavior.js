@@ -28,6 +28,11 @@
     };
   })();
 
+  // Basic support of CommonJS module for import into test
+  if (typeof exports === "object") {
+    module.exports = Module;
+  }
+
   global.CommonViewerBehavior = Module;
 
-})( this );
+})( this || {} );
