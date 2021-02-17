@@ -1,32 +1,23 @@
-//= require modules/common_viewer_behavior
+const CommonViewerBehavior = require('../../../app/assets/javascripts/modules/common_viewer_behavior.js');
 
-'use strict';
-
-describe('Common Viewer Behavior', function() {
-  describe('initializeViewer', function() {
-    fixture.set('<div id="sul-embed-object"></div>');
-    var testObject;
-    beforeEach(function(done) {
-      testObject = {
-        fakeFunction: function() {}
-      };
-      spyOn(testObject, 'fakeFunction');
-      done();      
+let fakeFunction;
+describe('Common Viewer Behavior', () => {
+  describe('initializeViewer', () => {
+    document.body.innerHTML = '<div id="sul-embed-object"></div>';
+    beforeEach(() => {
+      fakeFunction = jest.fn();
     });
-    describe('with callback function', function() {
-      
-      it('should initialize and call passed in function', function(done) {
-        CommonViewerBehavior.initializeViewer(testObject.fakeFunction);
-        expect(testObject.fakeFunction).toHaveBeenCalled();
-        done();
+    describe('with callback function', () => {
+      test('should initialize and call passed in function', () => {
+        CommonViewerBehavior.initializeViewer(fakeFunction);
+        expect(fakeFunction).toHaveBeenCalled();
       });
     });
-    
-    describe('without callback function', function() {
-      it('should initialize', function(done) {
+
+    describe('without callback function', () => {
+      test('should initialize', () => {
         CommonViewerBehavior.initializeViewer();
-        expect(testObject.fakeFunction).not.toHaveBeenCalled();
-        done();
+        expect(fakeFunction).not.toHaveBeenCalled();
       });
     });
   });

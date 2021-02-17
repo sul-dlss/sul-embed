@@ -11,6 +11,9 @@
   "bugs": {
     "url": "https://github.com/sul-dlss/sul-embed/issues"
   },
+  "scripts": {
+    "test": "jest -c jest.config.js"
+  },
   "private": true,
   "homepage": "https://github.com/sul-dlss/sul-embed",
   "dependencies": {
@@ -46,6 +49,8 @@
     "eslint-plugin-jest": "^23.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.14.2",
+    "jest": "^26.6.3",
+    "jsdom": "^16.4.0",
     "webpack-dev-server": "^3.7.0"
   }
 }
