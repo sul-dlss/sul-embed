@@ -12,4 +12,12 @@ rescue LoadError
   # should only be here when gem group development and test aren't installed
 end
 
-task default: [:teaspoon, :spec, :rubocop]
+task default: [:javascript_tests, :spec, :rubocop]
+
+task asset_paths: [:environment] do
+  puts Rails.application.config.assets.paths
+end
+
+task javascript_tests: [:environment] do
+  system 'yarn test'
+end
