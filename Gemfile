@@ -31,13 +31,6 @@ group :development, :test do
   gem 'selenium-webdriver', '!= 3.13.0'
   gem 'webdrivers'
 
-  # Teaspoon-jasmine is a wrapper for the Jasmine javascript testing library
-  gem 'teaspoon', github: 'jejacks0n/teaspoon'
-  gem 'teaspoon-jasmine'
-
-  # Allows jQuery integration into the Jasmine javascript testing framework
-  gem 'jasmine-jquery-rails'
-
   # Have jQuery local for testing
   gem 'jquery-rails'
 
