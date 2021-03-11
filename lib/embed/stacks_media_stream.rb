@@ -20,10 +20,6 @@ module Embed
       streaming_url_for(:hls)
     end
 
-    def to_rtmp_url
-      streaming_url_for(:flash)
-    end
-
     def to_manifest_url
       streaming_url_for(:dash)
     end

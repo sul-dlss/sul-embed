@@ -1,10 +1,8 @@
 //= require modules/thumb_slider
 //= require video.js/video.js
 //= require videojs-contrib-hls/videojs-contrib-hls.js
-//= require client.js/client.min.js
 /*global ThumbSlider */
 /*global videojs */
-/*global ClientJS */
 
 (function( global ) {
   'use strict';
@@ -135,64 +133,17 @@
       });
     }
 
-    // canPlayType() returns 'probably', 'maybe', or ''
-    function canPlayHLS() {
-      var hlsMimeType = 'application/vnd.apple.mpegURL';
-      var tempVideo = document.createElement('video');
-      var canPlayTypsHLS = tempVideo.canPlayType(hlsMimeType);
-      return canPlayTypsHLS !== '';
-    }
-
-    function mediaObjectIsMP3(mediaObject) {
-      var hlsSource = mediaObject.find('source').first();
-      return hlsSource.prop('src').indexOf('/mp3:') >= 0;
-    }
-
-    function ms10Browser() {
-      var fingerprinter = new ClientJS();
-      var browser = fingerprinter.getBrowser();
-      return (browser.toLowerCase() === 'ie' && fingerprinter.getOS().toLowerCase() === 'windows');
-    }
-
-    // We must use flash for MP3s on browsers that do not support HLS natively.
-    // This is a simple boolean function that can easily tell us if the current
-    // browser does not support HLS and the media is an MP3. We also use flash
-    // on Windows Microsoft browsers (IE) because of a known issue
-    // with the VideoJS HLS plugin. See
-    // https://github.com/videojs/videojs-contrib-hls/issues/833
-    function mustUseFlash(mediaObject) {
-      return (ms10Browser() ||
-              (!canPlayHLS() && mediaObjectIsMP3(mediaObject)));
-    }
-
-    // Remove the HLS source for MP3 files if the browser
-    // does not natively support HLS. The VideoJS HLS plugin
-    // will attempt to play an HLS MP3 stream simply because
-    // it is HLS, even though it is not able to do so.
-    function removeUnusableSources(mediaObject) {
-      if(mustUseFlash(mediaObject)) {
-        mediaObject
-          .find('source[type="application/x-mpegURL"]')
-          .remove();
-      }
-    }
-
     function videoJsOptions(mediaObject) {
-      if (mustUseFlash(mediaObject)) {
-        return { techOrder: ['flash'] };
-      } else {
-        return {
-          html5: {
-            hls: {
-              withCredentials: true
-            }
+      return {
+        html5: {
+          hls: {
+            withCredentials: true
           }
-        };
-      }
+        }
+      };
     }
 
     function initializeVideoJSPlayer(mediaObject) {
-      removeUnusableSources(mediaObject);
       mediaObject.addClass('video-js vjs-default-skin');
       videojs(mediaObject.attr('id'), videoJsOptions(mediaObject));
     }

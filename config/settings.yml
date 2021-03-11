@@ -31,14 +31,10 @@ streaming:
   auth_url: "%{host}/media/%{druid}/%{title}/auth_check"
   source_types:
     - hls
-    - flash
   hls:
     suffix: '.m3u8'
     mimetype: 'application/x-mpegURL'
     protocol: 'https'
-  flash:
-    mimetype: 'audio/mpeg'
-    protocol: 'rtmp'
   dash:
     suffix: '.mpd'
     mimetype: 'application/dash+xml'
