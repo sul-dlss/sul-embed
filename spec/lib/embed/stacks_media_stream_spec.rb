@@ -50,19 +50,4 @@ describe Embed::StacksMediaStream do
       expect(sms.to_manifest_url).to be_nil
     end
   end
-
-  describe '#to_rtmp_url' do
-    let(:sms) { described_class.new(druid: 'ab012cd3456', file_name: 'def.mp3') }
-    it 'does not include a suffix' do
-      expect(sms.to_rtmp_url).to match(%r{/mp3:def.mp3$})
-    end
-
-    it 'delimits the stream host/application name from the stream name with an "&"' do
-      expect(sms.to_rtmp_url).to match(%r{#{streaming_base_url}&ab/012/cd})
-    end
-
-    it 'adds the rtmp protocl to the URL' do
-      expect(sms.to_rtmp_url).to match(%r{^rtmp://})
-    end
-  end
 end

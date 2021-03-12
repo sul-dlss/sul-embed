@@ -25,7 +25,7 @@ OkComputer.make_optional ['stacks_url']
 #   - in /status/all, these checks will display their result text, but will not affect HTTP response code
 if Settings.enable_media_viewer?
   stream_url = Settings.stream.url
-  unless stream_url.start_with?(Settings.streaming.hls.protocol, Settings.streaming.flash.protocol)
+  unless stream_url.start_with?(Settings.streaming.hls.protocol)
     stream_url = "#{Settings.streaming.hls.protocol}://#{stream_url}"
   end
   OkComputer::Registry.register 'streaming_url', OkComputer::HttpCheck.new(stream_url)

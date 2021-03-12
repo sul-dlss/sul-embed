@@ -7,9 +7,9 @@ module EmbedHelper
 
   def embed_panel(**args, &block)
     panel = if block_given?
-              Embed::EmbedThisPanel.new(args) { capture(&block) }
+              Embed::EmbedThisPanel.new(**args) { capture(&block) }
             else
-              Embed::EmbedThisPanel.new(args)
+              Embed::EmbedThisPanel.new(**args)
             end
     panel.to_html.html_safe
   end
