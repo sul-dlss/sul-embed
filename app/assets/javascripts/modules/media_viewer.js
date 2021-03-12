@@ -1,12 +1,9 @@
-//= require modules/thumb_slider
-//= require video.js/video.js
-//= require videojs-contrib-hls/videojs-contrib-hls.js
-/*global ThumbSlider */
-/*global videojs */
+'use strict';
 
-(function( global ) {
-  'use strict';
-  var Module = (function() {
+import ThumbSlider from './thumb_slider.js';
+import videojs from 'video.js';
+
+export default (function() {
     var restrictedMessageSelector = '[data-access-restricted-message]';
     var sliderObjectSelector = '[data-slider-object]';
     var restrictedText = '(Restricted)';
@@ -136,7 +133,7 @@
     function videoJsOptions(mediaObject) {
       return {
         html5: {
-          hls: {
+          vhs: {
             withCredentials: true
           }
         }
@@ -215,6 +212,3 @@
       }
     };
   })();
-
-  global.MediaViewer = Module;
-})(this);

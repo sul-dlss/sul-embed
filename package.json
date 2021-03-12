@@ -36,6 +36,7 @@
     "three": "^0.112.1",
     "unfetch": "^4.1.0",
     "url-polyfill": "^1.1.5",
+    "video.js": "^7.11.4",
     "virtex3d": "^0.4.0"
   },
   "devDependencies": {
