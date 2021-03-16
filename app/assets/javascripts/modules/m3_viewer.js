@@ -92,6 +92,7 @@ export default {
         hideWindowTitle: (data.hideTitle === true),
         panels: {
           annotations: true,
+          layers: true,
           search: true,
         },
         sideBarOpen: (data.showAttribution === true || data.search.length > 0),
