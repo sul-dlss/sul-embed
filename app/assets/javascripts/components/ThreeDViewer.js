@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, lazy } from 'react';
 import PropTypes from 'prop-types';
-import Virtex from './Virtex';
+const Virtex = lazy(() => import('./Virtex'));
 /** */
 class ThreeDViewer extends Component {
   /** */

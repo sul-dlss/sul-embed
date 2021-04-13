@@ -102,3 +102,22 @@ In order to enable the download panel you need to provide a method in your viewe
     def show_download?
       true
     end
+
+## Making sure things get chunked
+
+We use [Webpack chunking](https://webpack.js.org/plugins/split-chunks-plugin/) in our Mirador to ensure that we only critical path needed JavaScript is loaded for each viewer. For example, the Mirador ThreeDPlugin does not need to load ThreeJS dependencies when only viewing an image.
+
+### How to set this up in a plugin
+
+Use [JavaScript dynamic imports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import#dynamic_imports) and [React.lazy](https://reactjs.org/docs/code-splitting.html#reactlazy) to give a hint to our viewer as a good spot to chunk things up. Mirador does this same thing.
+
+```javascript
+const Virtex = lazy(() => import('./Virtex'));
+```
+
+### Checking on the chunks
+To verify this is happening, you can build the assets locally and check how they are being requested using Network developer tools. Then just make sure things add up / are / are not requested for the viewing experience you would expect.
+
+```sh
+$ NODE_ENV=production bundle exec rails assets:precompile
+```
