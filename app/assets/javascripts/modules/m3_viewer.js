@@ -11,6 +11,7 @@ import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin';
 import embedModePlugin from '../plugins/embedModePlugin';
 import analyticsPlugin from '../plugins/analyticsPlugin';
 import cdlAuthPlugin from '../plugins/cdlAuthPlugin';
+import three3DPlugin from '../plugins/threeDPlugin';
 
 export default {
   init: function() {
@@ -48,6 +49,16 @@ export default {
           ],
         },
       },
+      // // ...(data.threeD && {
+      //   requests: {
+      //     preprocessors: [
+      //       (url, options) => {
+      //         console.log(options);
+      //         return {...options, headers: { ...options.headers, Accept: 'application/ld+json;profile="http://iiif.io/api/presentation/3/context.json", */*'}}
+      //       }
+      //     ]
+      //   },
+      // // }),
       selectedTheme: 'sul',
       themes: {
         sul: {
@@ -74,7 +85,7 @@ export default {
         id: 'main',
         defaultSearchQuery: data.search.length > 0 ? data.search : undefined,
         suggestedSearches: data.suggestedSearch.length > 0 ? [data.suggestedSearch] : null,
-        loadedManifest: data.m3Uri,
+        loadedManifest: (data.threeD ? data.m3Uri.replace('/iiif/', '/iiif3/') : data.m3Uri),
         canvasIndex: Number(data.canvasIndex),
         canvasId: data.canvasId,
         ...(data.cdl && {
@@ -128,6 +139,7 @@ export default {
         ...miradorDownloadPlugin,
         target: 'WindowTopBarShareMenu',
       },
+      three3DPlugin,
       analyticsPlugin,
     ].filter(Boolean));
   }
