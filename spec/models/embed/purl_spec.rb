@@ -75,9 +75,7 @@ describe Embed::Purl do
   describe 'contents' do
     it 'should return an array of resources' do
       stub_purl_response_with_fixture(file_purl)
-      expect(Embed::Purl.new('12345').contents.all? do |resource|
-        resource.is_a?(Embed::Purl::Resource)
-      end).to be true
+      expect(Embed::Purl.new('12345').contents.all?(Embed::Purl::Resource)).to be true
     end
   end
   describe 'all_resource_files' do
@@ -194,9 +192,7 @@ describe Embed::Purl do
     describe 'files' do
       it 'should return an array of Purl::Resource::ResourceFile objects' do
         stub_purl_response_with_fixture(file_purl)
-        expect(Embed::Purl.new('12345').contents.first.files.all? do |resource_file|
-          resource_file.is_a?(Embed::Purl::Resource::ResourceFile)
-        end).to be true
+        expect(Embed::Purl.new('12345').contents.first.files.all?(Embed::Purl::Resource::ResourceFile)).to be true
       end
     end
 
