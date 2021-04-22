@@ -76,7 +76,7 @@ module Embed
              data-thumbnail-url="#{thumbnail}"
              data-duration="#{file.try(:duration)}">
           <div class='sul-embed-media-wrapper'>
-            #{yield(block) if block_given?}
+            #{yield(block) if block}
           </div>
         </div>
       HTML

@@ -9,7 +9,7 @@ describe 'embed this panel', js: true do
 
   before do
     stub_purl_response_with_fixture(spec_fixture)
-    visit_iframe_response('ab123cd4567', iframe_options)
+    visit_iframe_response('ab123cd4567', **iframe_options)
   end
 
   describe 'embed code' do
