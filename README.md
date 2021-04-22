@@ -1,5 +1,4 @@
-[![CI](https://github.com/sul-dlss/sul-embed/actions/workflows/ruby.yml/badge.svg)](https://github.com/sul-dlss/sul-embed/actions/workflows/ruby.yml) | [![Coverage Status](https://coveralls.io/repos/sul-dlss/sul-embed/badge.svg)](https://coveralls.io/r/sul-dlss/sul-embed) | [![Code Climate](https://codeclimate.com/github/sul-dlss/sul-embed/badges/gpa.svg)](https://codeclimate.com/github/sul-dlss/sul-embed) | [![codebeat badge](https://codebeat.co/badges/19d8eb69-455b-4b53-aaee-a385793a81f8)](https://codebeat.co/projects/github-com-sul-dlss-sul-embed)
-[![GitHub version](https://badge.fury.io/gh/sul-dlss%2Fsul-embed.svg)](https://badge.fury.io/gh/sul-dlss%2Fsul-embed)
+[![CI](https://github.com/sul-dlss/sul-embed/actions/workflows/ruby.yml/badge.svg)](https://github.com/sul-dlss/sul-embed/actions/workflows/ruby.yml) | [![Code Climate](https://codeclimate.com/github/sul-dlss/sul-embed/badges/gpa.svg)](https://codeclimate.com/github/sul-dlss/sul-embed)
 
 # SUL-Embed
 
