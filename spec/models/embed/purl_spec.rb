@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Embed::Purl do
+RSpec.describe Embed::Purl do
   include PurlFixtures
   describe 'title' do
     before { stub_purl_response_with_fixture(file_purl) }
@@ -125,24 +125,97 @@ describe Embed::Purl do
       expect(Embed::Purl.new('12345').envelope).to be_nil
     end
   end
-  describe 'licence' do
-    it 'should return cc license if present' do
-      stub_purl_response_with_fixture(file_purl)
-      purl = Embed::Purl.new('12345')
-      expect(purl.license[:human]).to eq 'CC Attribution Non-Commercial license'
-      expect(purl.license[:machine]).to eq 'by-nc'
+
+  describe '#licence' do
+    let(:purl) { Embed::Purl.new('12345') }
+    subject(:license) { purl.license }
+
+    context 'with a license node' do
+      before do
+        allow(purl).to receive(:response).and_return(xml)
+      end
+
+      let(:xml) do
+        <<~EOF
+          <publicObject>
+            <rightsMetadata>
+              <use>
+                <license>https://opensource.org/licenses/BSD-3-Clause</license>
+              </use>
+            </rightsMetadata>
+          </publicObject>
+        EOF
+      end
+
+      it 'returns the description' do
+        expect(license.description).to eq "BSD-3-Clause \"New\" or \"Revised\" License"
+      end
     end
-    it 'should return odc license if present' do
-      stub_purl_response_with_fixture(hybrid_object_purl)
-      purl = Embed::Purl.new('12345')
-      expect(purl.license[:human]).to eq 'ODC-By Attribution License'
-      expect(purl.license[:machine]).to eq 'odc-by'
+
+    context 'with a license attribute' do
+      before do
+        allow(purl).to receive(:response).and_return(xml)
+      end
+
+      let(:xml) do
+        <<~EOF
+          <publicObject>
+            <rightsMetadata>
+              <use>
+                <machine type="creativeCommons" uri="https://creativecommons.org/licenses/by-nc/4.0/legalcode">junk</machine>
+              </use>
+            </rightsMetadata>
+          </publicObject>
+        EOF
+      end
+
+      it 'returns the description' do
+        expect(license.description).to eq "CC-BY-NC-4.0 Attribution-NonCommercial International"
+      end
     end
-    it 'should return nil if no license is present' do
-      stub_purl_response_with_fixture(embargoed_file_purl)
-      expect(Embed::Purl.new('12345').license).to eq nil
+
+    context 'with a legacy cc license' do
+      before do
+        stub_purl_response_with_fixture(file_purl)
+      end
+
+      it 'returns the description' do
+        expect(license.description).to eq 'CC Attribution-NonCommercial 3.0 Unported License'
+      end
+    end
+
+    context 'with a legacy odc license' do
+      before do
+        stub_purl_response_with_fixture(hybrid_object_purl)
+      end
+
+      it 'returns the description' do
+        expect(license.description).to eq 'ODC-By-1.0 Attribution License'
+      end
     end
   end
+
+  describe '#license?' do
+    let(:purl) { Embed::Purl.new('12345') }
+    subject(:license) { purl.license? }
+
+    context 'with a license' do
+      before do
+        stub_purl_response_with_fixture(hybrid_object_purl)
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'without a license' do
+      before do
+        stub_purl_response_with_fixture(embargoed_file_purl)
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
   describe 'public?' do
     it 'should return true if the object is publicly accessible' do
       stub_purl_response_with_fixture(file_purl)
