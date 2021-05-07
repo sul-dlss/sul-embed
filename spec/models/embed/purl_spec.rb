@@ -156,11 +156,8 @@ describe Embed::Purl do
       expect(Embed::Purl.new('12345').public?).to be_falsy
     end
   end
+
   describe 'Purl::Resource' do
-    it 'should get the sequence attribute' do
-      stub_purl_response_with_fixture(file_purl)
-      expect(Embed::Purl.new('12345').contents.first.sequence).to eq '1'
-    end
     it 'should get the type attribute' do
       stub_purl_response_with_fixture(file_purl)
       expect(Embed::Purl.new('12345').contents.first.type).to eq 'file'
