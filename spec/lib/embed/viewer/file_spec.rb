@@ -58,9 +58,9 @@ describe Embed::Viewer::File do
         expect(file_viewer.send(:default_height)).to eq 323
       end
 
-      it 'reduces the height based on the number of files in the object (1 file)' do
+      it 'reduces the height based on the number of files in the object (1 file), but no lower than our min height' do
         stub_purl_response_and_request(file_purl, request)
-        expect(file_viewer.send(:default_height)).to eq 122
+        expect(file_viewer.send(:default_height)).to eq 189
       end
 
       it 'reduces the height based on the number of files in the object (2 files)' do
@@ -69,7 +69,7 @@ describe Embed::Viewer::File do
       end
     end
 
-    context 'when the item is emargoed' do
+    context 'when the item is embargoed' do
       before do
         expect(request).to receive(:hide_title?).at_least(:once).and_return(true)
         expect(request).to receive(:hide_search?).at_least(:once).and_return(true)
@@ -78,7 +78,7 @@ describe Embed::Viewer::File do
       it 'adds 44 pixels to the height (to avoid unnecessary scroll)' do
         stub_purl_response_and_request(embargoed_stanford_file_purl, request)
 
-        expect(file_viewer.send(:default_height)).to eq 166 # 122 + 44
+        expect(file_viewer.send(:default_height)).to eq 189 # minimum height
       end
     end
 
