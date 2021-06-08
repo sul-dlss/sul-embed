@@ -25,11 +25,12 @@
           <dt>Copyright</dt>
           <dd><%= viewer.purl_object.copyright %></dd>
         <% end %>
-        <% if viewer.purl_object.license.present? %>
+
+        <% if viewer.purl_object.license? %>
           <dt>License</dt>
           <dd>
-            <span class='sul-embed-license-<%= viewer.purl_object.license[:machine] %>'></span>
-            <%= viewer.purl_object.license[:human] %>
+            <%= tag.span class: viewer.purl_object.license.css_class %>
+            <%= viewer.purl_object.license.description %>
           </dd>
         <% end %>
       </dl>

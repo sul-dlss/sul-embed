@@ -37,6 +37,14 @@ module Embed
       @rights ||= ::Dor::RightsAuth.parse(rights_xml)
     end
 
+    def license
+      @license ||= License.new(url: license_url)
+    end
+
+    def license?
+      license_url.present?
+    end
+
     def use_and_reproduction
       ng_xml.xpath('//rightsMetadata/use/human[@type="useAndReproduction"]').first.try(:content)
     end
@@ -45,18 +53,10 @@ module Embed
       ng_xml.xpath('//rightsMetadata/copyright').first.try(:content)
     end
 
-    def license
-      cc_license || odc_licence
-    end
-
     def embargo_release_date
       @embargo_release_date ||= begin
         ng_xml.xpath('//rightsMetadata/access[@type="read"]/machine/embargoReleaseDate').try(:text) if embargoed?
       end
-    end
-
-    def ng_xml
-      @ng_xml ||= Nokogiri::XML(response)
     end
 
     def all_resource_files
@@ -115,35 +115,60 @@ module Embed
         'xmlns:fedora' => 'info:fedora/fedora-system:def/relations-external#'
       )&.map { |_name, value| value.gsub('info:fedora/druid:', '') } || []
     end
+    
+    def ng_xml
+      @ng_xml ||= Nokogiri::XML(response)
+    end
 
     private
 
-    def cc_license
-      return unless cc_license_human.present? && cc_license_machine.present?
-
-      { human: cc_license_human, machine: cc_license_machine }
+    # Try each way, from most prefered to least preferred to get the license
+    def license_url
+      license_url_from_node || url_from_attribute || url_from_code
     end
 
-    def cc_license_machine
-      ng_xml.xpath('//rightsMetadata/use/machine[@type="creativeCommons"]').first.try(:content)
+    # This is the most modern way of determining what license to use.
+    def license_url_from_node
+      ng_xml.at_xpath('//rightsMetadata/use/license').try(:text).presence
     end
 
-    def cc_license_human
-      ng_xml.xpath('//rightsMetadata/use/human[@type="creativeCommons"]').first.try(:content)
+    # This is a slightly older way, but it can differentiate between CC 3.0 and 4.0 licenses
+    def url_from_attribute
+      return unless machine_node
+
+      machine_node['uri'].presence
     end
 
-    def odc_licence
-      return unless odc_licence_human.present? && odc_licence_machine.present?
+    # This is the most legacy and least preferred way, because it only handles out of data license versions
+    def url_from_code
+      type, code = machine_readable_license
+      return unless type && code.present?
 
-      { human: odc_licence_human, machine: odc_licence_machine }
+      case type.to_s
+      when 'creativeCommons'
+        if code == 'pdm'
+          'https://creativecommons.org/publicdomain/mark/1.0/'
+        else
+          "https://creativecommons.org/licenses/#{code}/3.0/legalcode"
+        end
+      when 'openDataCommons'
+        case code
+        when 'odc-pddl', 'pddl'
+          'https://opendatacommons.org/licenses/pddl/1-0/'
+        when 'odc-by'
+          'https://opendatacommons.org/licenses/by/1-0/'
+        when 'odc-odbl'
+          'https://opendatacommons.org/licenses/odbl/1-0/'
+        end
+      end
     end
 
-    def odc_licence_human
-      ng_xml.xpath('//rightsMetadata/use/human[@type="openDataCommons"]').first.try(:content)
+    def machine_readable_license
+      [machine_node.attribute('type'), machine_node.text] if machine_node
     end
 
-    def odc_licence_machine
-      ng_xml.xpath('//rightsMetadata/use/machine[@type="openDataCommons"]').first.try(:content)
+    def machine_node
+      @machine_node ||= ng_xml.at_xpath('//rightsMetadata/use/machine[@type="openDataCommons" or @type="creativeCommons"]')
     end
 
     def rights_xml
