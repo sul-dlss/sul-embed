@@ -46,7 +46,7 @@ module Embed
     end
 
     def license
-      cc_license || odc_licence
+      cc_license || odc_license || mods_license
     end
 
     def embargo_release_date
@@ -118,32 +118,20 @@ module Embed
 
     private
 
+    def mods_license
+      ng_xml
+        .xpath('//mods:accessCondition[@type="license"]', 'mods' => 'http://www.loc.gov/mods/v3')
+        .first
+        .try(:content)
+        .try(:strip)
+    end
+
     def cc_license
-      return unless cc_license_human.present? && cc_license_machine.present?
-
-      { human: cc_license_human, machine: cc_license_machine }
-    end
-
-    def cc_license_machine
-      ng_xml.xpath('//rightsMetadata/use/machine[@type="creativeCommons"]').first.try(:content)
-    end
-
-    def cc_license_human
       ng_xml.xpath('//rightsMetadata/use/human[@type="creativeCommons"]').first.try(:content)
     end
 
-    def odc_licence
-      return unless odc_licence_human.present? && odc_licence_machine.present?
-
-      { human: odc_licence_human, machine: odc_licence_machine }
-    end
-
-    def odc_licence_human
+    def odc_license
       ng_xml.xpath('//rightsMetadata/use/human[@type="openDataCommons"]').first.try(:content)
-    end
-
-    def odc_licence_machine
-      ng_xml.xpath('//rightsMetadata/use/machine[@type="openDataCommons"]').first.try(:content)
     end
 
     def rights_xml

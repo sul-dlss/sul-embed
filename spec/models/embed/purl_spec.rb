@@ -125,18 +125,21 @@ describe Embed::Purl do
       expect(Embed::Purl.new('12345').envelope).to be_nil
     end
   end
-  describe 'licence' do
+  describe 'license' do
     it 'should return cc license if present' do
       stub_purl_response_with_fixture(file_purl)
       purl = Embed::Purl.new('12345')
-      expect(purl.license[:human]).to eq 'CC Attribution Non-Commercial license'
-      expect(purl.license[:machine]).to eq 'by-nc'
+      expect(purl.license).to eq 'Public Domain Mark 1.0'
     end
     it 'should return odc license if present' do
       stub_purl_response_with_fixture(hybrid_object_purl)
       purl = Embed::Purl.new('12345')
-      expect(purl.license[:human]).to eq 'ODC-By Attribution License'
-      expect(purl.license[:machine]).to eq 'odc-by'
+      expect(purl.license).to eq 'ODC-By Attribution License'
+    end
+    it 'should return MODS license if present' do
+      stub_purl_response_with_fixture(mods_license_purl)
+      purl = Embed::Purl.new('12345')
+      expect(purl.license).to eq 'This work is licensed under an Apache License 2.0 license.'
     end
     it 'should return nil if no license is present' do
       stub_purl_response_with_fixture(embargoed_file_purl)

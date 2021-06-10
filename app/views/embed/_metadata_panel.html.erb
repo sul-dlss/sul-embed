@@ -28,8 +28,7 @@
         <% if viewer.purl_object.license.present? %>
           <dt>License</dt>
           <dd>
-            <span class='sul-embed-license-<%= viewer.purl_object.license[:machine] %>'></span>
-            <%= viewer.purl_object.license[:human] %>
+            <%= viewer.purl_object.license %>
           </dd>
         <% end %>
       </dl>

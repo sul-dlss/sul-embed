@@ -39,13 +39,50 @@ module PurlFixtures
             <human type="useAndReproduction">
               You can use this.
             </human>
-            <machine type="creativeCommons">by-nc</machine>
-            <human type="creativeCommons">CC Attribution Non-Commercial license</human>
+            <machine type="creativeCommons" uri="https://creativecommons.org/publicdomain/mark/1.0/">pdm</machine>
+            <human type="creativeCommons">Public Domain Mark 1.0</human>
           </use>
         </rightsMetadata>
         <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
           <dc:title>File Title</dc:title>
         </oai_dc:dc>
+        <mods xmlns="http://www.loc.gov/mods/v3">
+          <accessCondition type="license">CC pdm: Public Domain Mark 1.0</accessCondition>
+        </mods>
+      </publicObject>
+    XML
+  end
+  def mods_license_purl
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>File Title</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="file">
+          <resource sequence="1" type="file">
+            <label>File1 Label</label>
+            <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf">
+              <location type="url">http://stacks.stanford.edu/file/druid:abc123/Title_of_the_PDF.pdf</location>
+            </file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          #{access_discover_world}
+          #{access_read_world}
+          <use>
+            <human type="useAndReproduction">
+              You can use this.
+            </human>
+          </use>
+        </rightsMetadata>
+        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+          <dc:title>File Title</dc:title>
+        </oai_dc:dc>
+        <mods xmlns="http://www.loc.gov/mods/v3">
+          <accessCondition type="license" xlink:href="https://www.apache.org/licenses/LICENSE-2.0">
+            This work is licensed under an Apache License 2.0 license.
+          </accessCondition>
+        </mods>
       </publicObject>
     XML
   end
