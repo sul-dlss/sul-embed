@@ -10,7 +10,7 @@ module Embed
       end
 
       def self.supported_types
-        %i[image manuscript map book]
+        %i[image manuscript map book 3d]
       end
 
       def manifest_json_url
@@ -29,6 +29,10 @@ module Embed
 
       def cdl?
         purl_object.rights.controlled_digital_lending?
+      end
+
+      def three_d?
+        purl_object.type == '3d'
       end
 
       def canvas_index
