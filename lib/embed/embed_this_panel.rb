@@ -78,7 +78,7 @@ module Embed
       src = "#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{druid}&#{query_params}"
 
       <<-IFRAME.strip_heredoc
-        <iframe src="#{src}" height="#{height_style}" width="#{width_style}" title="#{title}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen />
+        <iframe src="#{src}" height="#{height_style}" width="#{width_style}" title="#{title}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen></iframe>
       IFRAME
     end
 
