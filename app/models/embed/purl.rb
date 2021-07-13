@@ -177,10 +177,6 @@ module Embed
         @rights = rights
       end
 
-      def sequence
-        @resource.attributes['sequence'].try(:value)
-      end
-
       def type
         @resource.attributes['type'].try(:value)
       end
