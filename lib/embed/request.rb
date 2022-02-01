@@ -137,16 +137,19 @@ module Embed
         format =~ supported_format
       end
     end
+
     class NoURLProvided < StandardError
       def initialize(msg = 'You must provide a URL parameter')
         super
       end
     end
+
     class InvalidURLScheme < StandardError
       def initialize(msg = 'The provided URL is not a supported scheme for this embed service')
         super
       end
     end
+
     class InvalidFormat < StandardError
       def initialize(msg = 'The provided format is not supported for this embed service')
         super

@@ -5,7 +5,8 @@ require 'rails_helper'
 describe 'media viewer', js: true do
   include PurlFixtures
   let(:purl) { video_purl }
-  let(:stub_auth) {}
+  let(:stub_auth) { nil }
+
   before do
     stub_auth
     stub_purl_response_with_fixture(purl)

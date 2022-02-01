@@ -36,10 +36,8 @@ module Embed
       end
 
       def display_file_search?
-        @display_file_search ||= begin
-          !@request.hide_search? &&
-            @purl_object.contents.map(&:files).flatten.length >= min_files_to_search
-        end
+        @display_file_search ||= !@request.hide_search? &&
+                                 @purl_object.contents.map(&:files).flatten.length >= min_files_to_search
       end
 
       ##

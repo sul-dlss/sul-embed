@@ -50,9 +50,9 @@ module Embed
     end
 
     def embargo_release_date
-      @embargo_release_date ||= begin
-        ng_xml.xpath('//rightsMetadata/access[@type="read"]/machine/embargoReleaseDate').try(:text) if embargoed?
-      end
+      return unless embargoed?
+
+      @embargo_release_date ||= ng_xml.xpath('//rightsMetadata/access[@type="read"]/machine/embargoReleaseDate')&.text
     end
 
     def ng_xml
@@ -165,6 +165,7 @@ module Embed
         super
       end
     end
+
     class ResourceNotEmbeddable < StandardError
       def initialize(msg = 'The requested PURL resource was not embeddable.')
         super

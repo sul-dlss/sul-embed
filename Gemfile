@@ -39,7 +39,7 @@ group :development, :test do
   gem 'coffee-rails'
 
   # Linting/Styleguide Enforcement
-  gem 'rubocop', '~> 0.49'
+  gem 'rubocop', '~> 1.0'
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
 
