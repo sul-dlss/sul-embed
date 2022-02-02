@@ -26,6 +26,7 @@ gem 'iso8601' # to parse durations, since ActiveSupport::Duration doesn't get a 
 group :development, :test do
   gem 'capybara'
   gem 'high_voltage'
+  gem 'rspec'
   gem 'rspec-rails'
 
   gem 'selenium-webdriver', '!= 3.13.0'
@@ -38,12 +39,9 @@ group :development, :test do
   gem 'coffee-rails'
 
   # Linting/Styleguide Enforcement
-  gem 'rubocop', '~> 0.49'
+  gem 'rubocop', '~> 1.0'
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
-
-  # guard-rspec for auto-running tests when relevant files are changed
-  gem 'guard-rspec', require: false
 
   # for debugging
   gem 'pry-byebug'

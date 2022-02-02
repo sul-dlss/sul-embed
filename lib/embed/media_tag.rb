@@ -29,7 +29,7 @@ module Embed
                   end
         self.file_index += 1
       end
-      output.join('')
+      output.join
     end
 
     private

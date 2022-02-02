@@ -26,9 +26,6 @@ describe Embed::EmbedThisPanel do
     it 'instantiates without passing a block' do
       expect { described_class.new(viewer: viewer) }.not_to raise_error
     end
-    it 'instantiates with an empty block' do
-      expect { described_class.new(viewer: viewer) {} }.not_to raise_error
-    end
     it 'instantiates with a nil block' do
       expect { described_class.new(viewer: viewer) { nil } }.not_to raise_error
     end

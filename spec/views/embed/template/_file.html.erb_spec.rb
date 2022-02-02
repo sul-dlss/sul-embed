@@ -86,7 +86,7 @@ RSpec.describe 'embed/template/_file.html.erb' do
 
     it 'adds a Stanford specific embargo message with links still present' do
       # ?expect(file_viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com')
-      expect(rendered).to have_css('.sul-embed-embargo-message', visible: false, text: "Access is restricted to Stanford-affiliated patrons until #{(Time.current + 1.month).strftime('%d-%b-%Y')}")
+      expect(rendered).to have_css('.sul-embed-embargo-message', visible: false, text: "Access is restricted to Stanford-affiliated patrons until #{(1.month.from_now).strftime('%d-%b-%Y')}")
       expect(rendered).to have_css('.sul-embed-media-heading a[href="https://stacks.stanford.edu/file/druid:12345/Title%20of%20the%20PDF.pdf"]', visible: false)
     end
 
@@ -104,7 +104,7 @@ RSpec.describe 'embed/template/_file.html.erb' do
     before { render }
 
     it 'adds a generalized embargo message and no links are present' do
-      expect(rendered).to have_css('.sul-embed-embargo-message', visible: false, text: "Access is restricted until #{(Time.current + 1.month).strftime('%d-%b-%Y')}")
+      expect(rendered).to have_css('.sul-embed-embargo-message', visible: false, text: "Access is restricted until #{(1.month.from_now).strftime('%d-%b-%Y')}")
       # FIXME: this is a bad spec as it's not checking for visibility false
       expect(rendered).not_to have_css('a')
     end
