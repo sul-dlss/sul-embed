@@ -186,6 +186,9 @@ GEM
     json (2.6.1)
     leaflet-rails (1.7.0)
       rails (>= 4.2.0)
+    listen (3.7.1)
+      rb-fsevent (~> 0.10, >= 0.10.3)
+      rb-inotify (~> 0.9, >= 0.9.10)
     loofah (2.17.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -255,6 +258,9 @@ GEM
       thor (~> 1.0)
     rainbow (3.1.1)
     rake (13.0.6)
+    rb-fsevent (0.11.1)
+    rb-inotify (0.10.1)
+      ffi (~> 1.0)
     regexp_parser (2.4.0)
     rexml (3.2.5)
     rspec (3.11.0)
@@ -378,6 +384,7 @@ DEPENDENCIES
   iso8601
   jquery-rails
   leaflet-rails
+  listen
   newrelic_rpm
   nokogiri (>= 1.7.1)
   okcomputer

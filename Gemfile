@@ -45,6 +45,7 @@ group :development, :test do
 
   # for debugging
   gem 'pry-byebug'
+  gem 'listen'
 end
 
 gem 'codeclimate-test-reporter', group: :test, require: false
