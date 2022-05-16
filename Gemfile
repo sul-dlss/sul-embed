@@ -44,6 +44,7 @@ group :development, :test do
   gem 'rubocop-rails', require: false
 
   # for debugging
+  gem 'listen'
   gem 'pry-byebug'
 end
 
