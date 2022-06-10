@@ -14,11 +14,11 @@ class CdlCopyright extends Component {
   /** */
   render() {
     const {
-      classes, requiredStatement, status, TargetComponent,
+      classes, requiredStatement, status, TargetComponent, targetProps
     } = this.props;
 
     if (status === 'ok') {
-      return <TargetComponent {...this.props} />;
+      return <TargetComponent {...targetProps} />;
     }
     return (
       <Paper square className={classes.paper}>
