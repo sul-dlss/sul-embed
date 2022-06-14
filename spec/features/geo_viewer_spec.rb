@@ -34,20 +34,12 @@ describe 'geo viewer public', js: true do
 
     it 'download toolbar/panel is present with download links' do
       find('button.sul-embed-footer-tool.sul-i-download-3').click
-      within '.sul-embed-download-panel' do
-        within '.sul-embed-panel-body' do
-          expect(page).to have_css 'li', count: 1, text: 'data.zip'
-        end
-      end
+      expect(find('.sul-embed-download-panel').find('.sul-embed-panel-body')).to have_css('li', count: 1, text: 'data.zip')
     end
 
     it 'includes proper attributes for a _blank target on the download links' do
       find('button.sul-embed-footer-tool.sul-i-download-3').click
-      within '.sul-embed-download-panel' do
-        within '.sul-embed-panel-body' do
-          expect(page).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 3)
-        end
-      end
+      expect(find('.sul-embed-download-panel').find('.sul-embed-panel-body')).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 3)
     end
 
     it 'shows the sidebar with attribute information after map is clicked' do
@@ -58,7 +50,8 @@ describe 'geo viewer public', js: true do
         expect(page).to have_css '.sul-embed-geo-sidebar-content dd'
       end
       find('.sul-embed-geo-sidebar-header i').click
-      expect(page).to have_css '.sul-embed-geo-sidebar-content dt', text: 's_02_id', visible: false
+      # use find('body') to force Capybara to load content with find
+      expect(find('body')).to have_css('.sul-embed-geo-sidebar-content dt', text: 's_02_id', visible: false)
     end
   end
 end

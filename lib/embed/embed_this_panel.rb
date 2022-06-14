@@ -25,7 +25,7 @@ module Embed
             </div>
             <div class='sul-embed-panel-body'>
               <div class='sul-embed-embed-this-form'>
-                <span class='sul-embed-options-label'>Select options:</span>
+                <span class='sul-embed-options-label' id="select-options">Select options:</span>
                 <div class='sul-embed-section sul-embed-embed-title-section'>
                   <input
                     type='checkbox'

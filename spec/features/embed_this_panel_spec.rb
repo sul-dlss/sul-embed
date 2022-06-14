@@ -44,7 +44,7 @@ describe 'embed this panel', js: true do
     end
     it 'have the form elements for updating the embed code' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
-      expect(page).to have_css('.sul-embed-options-label', text: 'SELECT OPTIONS:')
+      expect(page.find('.sul-embed-options-label#select-options')).to have_content('SELECT OPTIONS:')
       expect(page).to have_css('input#sul-embed-embed-title[type="checkbox"]')
       expect(page).to have_css('input#sul-embed-embed-search[type="checkbox"]')
       expect(page).to have_css('input#sul-embed-embed[type="checkbox"]')
