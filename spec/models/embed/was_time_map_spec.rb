@@ -33,6 +33,33 @@ describe Embed::WasTimeMap do
     end
   end
 
+  describe '#timemap (new behavior)' do
+    context 'when HTTP is successful' do
+      before do
+        expect(Faraday).to receive(:get).and_return(double('response', body: timemap_new, success?: true))
+      end
+
+      it 'requests and parses timemap to an array' do
+        expect(subject.timemap.length).to eq 10
+        subject.timemap.each do |memento_line|
+          expect(memento_line).to be_an(Embed::WasTimeMap::MementoLine)
+        end
+      end
+
+      it 'the memento lines are not all memento entries' do
+        expect(subject.timemap.count(&:memento?)).to eq 7
+      end
+
+      it 'memento lines have accessors' do
+        memento_line = subject.timemap.find(&:memento?)
+        expect(memento_line.url).to eq 'https://swap.stanford.edu/20090718213431/http://ennejah.info/'
+        # NOTE: this needed changing to pass! Problematic?
+        expect(memento_line.rel).to eq 'memento'
+        expect(memento_line.datetime).to eq 'Sat, 18 Jul 2009 21:34:31 GMT'
+      end
+    end
+  end
+
   context 'when HTTP is not successful' do
     before do
       expect(Faraday).to receive(:get).and_return(double('response', success?: false))
