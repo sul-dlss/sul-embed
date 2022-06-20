@@ -13,7 +13,7 @@ module Embed
     end
 
     def to_html
-      <<-HTML.strip_heredoc
+      <<~HTML
         <div class='sul-embed-panel-container'>
           <div class='sul-embed-panel sul-embed-embed-this-panel' style='display:none' aria-hidden='true'>
             <div class='sul-embed-panel-header'>
@@ -77,7 +77,7 @@ module Embed
       query_params = request.as_url_params.merge(version ? { _v: version } : {}).to_query
       src = "#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{druid}&#{query_params}"
 
-      <<-IFRAME.strip_heredoc
+      <<~IFRAME
         <iframe src="#{src}" height="#{height_style}" width="#{width_style}" title="#{title}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen></iframe>
       IFRAME
     end
