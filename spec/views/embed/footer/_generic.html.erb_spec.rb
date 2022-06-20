@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'embed/footer/_generic.html.erb' do
+RSpec.describe 'embed/footer/_generic' do
   include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }

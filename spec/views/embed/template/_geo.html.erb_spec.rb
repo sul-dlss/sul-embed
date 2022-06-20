@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'embed/template/_geo.html.erb' do
+RSpec.describe 'embed/template/_geo' do
   include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }

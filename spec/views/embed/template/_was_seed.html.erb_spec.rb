@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'embed/template/_was_seed.html.erb' do
+RSpec.describe 'embed/template/_was_seed' do
   include PurlFixtures
   include WasTimeMapFixtures
 
