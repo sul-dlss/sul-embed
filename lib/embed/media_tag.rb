@@ -39,7 +39,7 @@ module Embed
     def media_element(file, type)
       file_thumb = stacks_square_url(@purl_document.druid, file.thumbnail.title, size: '75') if file.thumbnail
       media_wrapper(thumbnail: file_thumb, file: file) do
-        <<-HTML.strip_heredoc
+        <<~HTML
           #{access_restricted_overlay(file.try(:stanford_only?), file.try(:location_restricted?))}
           <#{type}
             id="sul-embed-media-#{file_index}"
@@ -67,7 +67,7 @@ module Embed
     end
 
     def media_wrapper(thumbnail: '', file: nil, scroll: false, &block)
-      <<-HTML.strip_heredoc
+      <<~HTML
         <div style="flex: 1 0 100%;#{' overflow-y: scroll' if scroll}"
              data-stanford-only="#{file.try(:stanford_only?)}"
              data-location-restricted="#{file.try(:location_restricted?)}"
@@ -115,12 +115,12 @@ module Embed
 
     def access_restricted_message(stanford_only, location_restricted)
       if location_restricted && !stanford_only
-        <<-HTML.strip_heredoc
+        <<~HTML
           <span class='line1'>Restricted media cannot be played in your location.</span>
           <span class='line2'>See Access conditions for more information.</span>
         HTML
       else
-        <<-HTML.strip_heredoc
+        <<~HTML
           <span class='line1'>Limited access for<br>non-Stanford guests.</span>
           <span class='line2'>See Access conditions for more information.</span>
         HTML
@@ -131,7 +131,7 @@ module Embed
       return unless stanford_only || location_restricted
 
       # TODO: line1 and line1 spans should be populated by values returned from stacks
-      <<-HTML.strip_heredoc
+      <<~HTML
         <div class='sul-embed-media-access-restricted-container' data-access-restricted-message>
           <div class='sul-embed-media-access-restricted' id="access-restricted-message-div-#{file_index}">
             #{access_restricted_message(stanford_only, location_restricted)}

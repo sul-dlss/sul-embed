@@ -8,7 +8,7 @@ module Embed
     end
 
     def to_html
-      <<-HTML.strip_heredoc
+      <<~HTML
         <div class='sul-embed-panel-container'>
           <div class='sul-embed-panel sul-embed-download-panel' style='display:none' aria-hidden='true'>
             <div class='sul-embed-panel-header'>
