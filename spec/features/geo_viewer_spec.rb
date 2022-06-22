@@ -45,9 +45,9 @@ describe 'geo viewer public', js: true do
     it 'shows the sidebar with attribute information after map is clicked' do
       page.driver.browser.action.move_to(find(:css, '#sul-embed-geo-map').native).click.perform
       using_wait_time 20 do
-        expect(page).to have_css '.sul-embed-geo-sidebar-header h3', text: 'Features', visible: :visible
-        expect(page).to have_css '.sul-embed-geo-sidebar-content dt', text: 's_02_id', visible: :visible
-        expect(page).to have_css '.sul-embed-geo-sidebar-content dd'
+        expect(page).to have_css '.sul-embed-geo-sidebar-header h3', text: 'Features', visible: :all
+        expect(page).to have_css '.sul-embed-geo-sidebar-content dt', text: 's_02_id', visible: :all
+        expect(page).to have_css '.sul-embed-geo-sidebar-content dd', visible: :all
       end
       find('.sul-embed-geo-sidebar-header i').click
       # use find('body') to force Capybara to load content with find
