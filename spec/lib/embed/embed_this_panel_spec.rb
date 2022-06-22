@@ -3,17 +3,6 @@
 require 'rails_helper'
 require 'embed/embed_this_panel'
 describe Embed::EmbedThisPanel do
-  let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/abc123') }
-  let(:viewer) do
-    instance_double(
-      'Embed::Viewer::CommonViewer',
-      height: '555',
-      width: '666',
-      request: request,
-      iframe_title: 'File viewer',
-      purl_object: instance_double('Embed::Purl', druid: 'oo000oo0000', title: 'The Object Title')
-    )
-  end
   subject do
     Capybara.string(
       described_class.new(viewer: viewer) do
@@ -22,13 +11,27 @@ describe Embed::EmbedThisPanel do
     )
   end
 
+  let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/abc123') }
+  let(:viewer) do
+    instance_double(
+      Embed::Viewer::CommonViewer,
+      height: '555',
+      width: '666',
+      request: request,
+      iframe_title: 'File viewer',
+      purl_object: instance_double(Embed::Purl, druid: 'oo000oo0000', title: 'The Object Title')
+    )
+  end
+
   context 'block param' do
     it 'instantiates without passing a block' do
       expect { described_class.new(viewer: viewer) }.not_to raise_error
     end
+
     it 'instantiates with a nil block' do
       expect { described_class.new(viewer: viewer) { nil } }.not_to raise_error
     end
+
     it 'instantiates with an empty string block' do
       expect { described_class.new(viewer: viewer) { '' } }.not_to raise_error
     end
@@ -39,7 +42,7 @@ describe Embed::EmbedThisPanel do
       expect(subject).to have_css(
         '.sul-embed-panel-header .sul-embed-panel-title',
         text: 'Embed',
-        visible: false
+        visible: :all
       )
     end
   end
@@ -49,26 +52,31 @@ describe Embed::EmbedThisPanel do
       it 'has the purl object title' do
         expect(subject).to have_content(/title\s*\(The Object Title\)/)
       end
+
       it 'has span with only the purl object title' do
         expect(subject).to have_css(
           'span',
           text: '(The Object Title)',
-          visible: false
+          visible: :all
         )
       end
+
       it 'has hide_title checkbox' do
-        expect(subject).to have_css('input#sul-embed-embed-title[data-embed-attr=hide_title][type=checkbox]', visible: false)
+        expect(subject).to have_css('input#sul-embed-embed-title[data-embed-attr=hide_title][type=checkbox]', visible: :all)
       end
     end
+
     it 'includes the content provided in the block' do
       expect(subject).to have_content('Added Panel Content')
     end
+
     it 'has hide embed checkbox' do
-      expect(subject).to have_css('input#sul-embed-embed[data-embed-attr=hide_embed][type=checkbox]', visible: false)
+      expect(subject).to have_css('input#sul-embed-embed[data-embed-attr=hide_embed][type=checkbox]', visible: :all)
     end
+
     it 'has iframe textarea' do
       # more specific tests in feature
-      expect(subject).to have_css('textarea#sul-embed-iframe-code', visible: false)
+      expect(subject).to have_css('textarea#sul-embed-iframe-code', visible: :all)
     end
   end
 
@@ -94,6 +102,7 @@ describe Embed::EmbedThisPanel do
 
       context 'when the fullheight flag is set' do
         before { expect(request).to receive(:fullheight?).and_return(true) }
+
         it 'is 100%' do
           iframe = subject.find('iframe')
           expect(iframe['height']).to eq '100%'

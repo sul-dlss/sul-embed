@@ -5,6 +5,8 @@ require 'rails_helper'
 describe Embed::MediaTag do
   include PurlFixtures
 
+  subject { Capybara.string(subject_klass.to_html) }
+
   let(:purl) { video_purl }
   let(:viewer) do
     double(
@@ -15,8 +17,6 @@ describe Embed::MediaTag do
   end
 
   let(:subject_klass) { described_class.new(viewer) }
-
-  subject { Capybara.string(subject_klass.to_html) }
 
   describe 'media tags' do
     before { stub_purl_response_with_fixture(purl) }
@@ -32,12 +32,12 @@ describe Embed::MediaTag do
     end
 
     it 'includes a data-src attribute for the dash player' do
-      expect(subject).to have_css('[data-src]', count: 3, visible: false)
+      expect(subject).to have_css('[data-src]', count: 3, visible: :all)
     end
 
     it 'includes a data attribute that includes the url to check the users auth status' do
-      expect(subject).to have_css('video[data-auth-url]', count: 3, visible: false)
-      auth_url = subject.all('video[data-auth-url]', visible: false).first['data-auth-url']
+      expect(subject).to have_css('video[data-auth-url]', count: 3, visible: :all)
+      auth_url = subject.all('video[data-auth-url]', visible: :all).first['data-auth-url']
       expect(auth_url).to eq(Settings.streaming.auth_url)
     end
 
@@ -49,12 +49,13 @@ describe Embed::MediaTag do
 
     context 'single video' do
       let(:purl) { single_video_purl }
+
       it 'includes a 100% height attribute' do
-        expect(subject).to have_css("video[height='100%']", visible: false)
+        expect(subject).to have_css("video[height='100%']", visible: :all)
       end
 
       it 'shows location restricted messages to the screen reader' do
-        expect(subject).to have_css('video[aria-labelledby="access-restricted-message-div-0"]', visible: false)
+        expect(subject).to have_css('video[aria-labelledby="access-restricted-message-div-0"]', visible: :all)
         expect(subject).to have_css('div#access-restricted-message-div-0')
       end
 
@@ -65,6 +66,7 @@ describe Embed::MediaTag do
 
     context 'single video open to the world' do
       let(:purl) { video_purl_unrestricted }
+
       it 'does not show any location restricted messages' do
         expect(subject).not_to have_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')
       end
@@ -74,16 +76,16 @@ describe Embed::MediaTag do
       let(:purl) { file_and_object_level_thumb_purl }
 
       it 'has the correct number of objects (4)' do
-        expect(subject).to have_css('[data-slider-object]', count: 4, visible: false)
+        expect(subject).to have_css('[data-slider-object]', count: 4, visible: :all)
       end
 
       it 'does not include object level thumbnails' do
-        expect(subject).to have_css('[data-file-label="audio.mp3"]', visible: false)
-        expect(subject).not_to have_css('[data-file-label="thumb.jp2"]', visible: false)
+        expect(subject).to have_css('[data-file-label="audio.mp3"]', visible: :all)
+        expect(subject).not_to have_css('[data-file-label="thumb.jp2"]', visible: :all)
       end
 
       it 'does not include file level thumbnails' do
-        expect(subject).not_to have_css('[data-file-label="audio_1.jp2"]', visible: false)
+        expect(subject).not_to have_css('[data-file-label="audio_1.jp2"]', visible: :all)
       end
 
       it 'includes the file level thumbnail data-attribute when present' do
@@ -99,6 +101,7 @@ describe Embed::MediaTag do
 
     context 'previewable files within media objects' do
       let(:purl) { video_purl_with_image }
+
       it 'are included as top level objects' do
         expect(subject).to have_css('div img.sul-embed-media-thumb')
       end
@@ -112,29 +115,33 @@ describe Embed::MediaTag do
 
     context 'video' do
       it 'renders a video tag in the provided document' do
-        expect(subject).to have_css('video', visible: false)
+        expect(subject).to have_css('video', visible: :all)
       end
     end
 
     describe 'poster' do
       context 'when a file level thumbnail is present' do
         let(:purl) { file_and_object_level_thumb_purl }
+
         it 'includes a poster attribute' do
-          expect(subject).to have_css('video[poster]', visible: false)
-          video = subject.find('video[poster]', visible: false)
+          expect(subject).to have_css('video[poster]', visible: :all)
+          video = subject.find('video[poster]', visible: :all)
           expect(video['poster']).to match(%r{/druid%2Fvideo_1/full/})
         end
       end
+
       context 'when the file-level thumbnail is downloadable' do
         let(:purl) { file_and_object_level_downloadable_thumb_purl }
+
         it 'uses a large thumbnail' do
-          video = subject.find('video[poster]', visible: false)
+          video = subject.find('video[poster]', visible: :all)
           expect(video['poster']).to match(%r{/full/!800,600/})
         end
       end
+
       context 'when a file level thumbnail is not present' do
         it 'does not include a poster attribute' do
-          expect(subject).to_not have_css('video[poster]', visible: false)
+          expect(subject).not_to have_css('video[poster]', visible: :all)
         end
       end
     end
@@ -143,7 +150,7 @@ describe Embed::MediaTag do
       let(:purl) { audio_purl }
 
       it 'renders an audo tag in the provided document' do
-        expect(subject).to have_css('audio', visible: false)
+        expect(subject).to have_css('audio', visible: :all)
       end
     end
   end
@@ -169,6 +176,7 @@ describe Embed::MediaTag do
         media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
         expect(media_wrapper).to have_css('[data-duration="1:02"]')
       end
+
       it 'leaves the duration empty when the resource file is missing duration' do
         resource_file = double(Embed::Purl::Resource::ResourceFile, label: 'ignored', duration: nil)
         media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
@@ -176,6 +184,7 @@ describe Embed::MediaTag do
       end
     end
     # TODO:  not sure if we're going to keep data-location-restricted as an attrib or just use element
+
     describe 'data-location-restricted attribute' do
       context 'stanford_only' do
         it 'true for location restricted files' do
@@ -190,6 +199,7 @@ describe Embed::MediaTag do
           expect(media_wrapper).to have_css('[data-location-restricted="false"]')
         end
       end
+
       context 'not stanford_only' do
         it 'true for location restricted files' do
           resource_file = double(Embed::Purl::Resource::ResourceFile, stanford_only?: false, location_restricted?: true, label: 'ignored', duration: nil)
@@ -208,10 +218,12 @@ describe Embed::MediaTag do
 
   describe 'private methods' do
     let(:file) { double('File', title: 'abc123.mp4') }
+
     describe '#enabled_streaming_sources' do
       before { stub_purl_response_with_fixture(purl) }
+
       it 'adds a source element for every enabled type' do
-        expect(subject).to have_css('source[type="application/x-mpegURL"]', visible: false)
+        expect(subject).to have_css('source[type="application/x-mpegURL"]', visible: :all)
       end
     end
 
@@ -224,7 +236,9 @@ describe Embed::MediaTag do
 
     describe '#previewable_element' do
       before { stub_purl_response_with_fixture(purl) }
+
       let(:previewable_element) { subject_klass.send(:previewable_element, double('file', label: 'abc123', title: 'abc123')) }
+
       it 'passes the square thumb url as a data attribute' do
         expect(previewable_element).to match(
           %r{data-thumbnail-url="https://stacks.*/iiif/.*abc123/square/75,75.*"}

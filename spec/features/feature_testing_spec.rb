@@ -14,12 +14,14 @@ describe 'feature testing of viewers', js: true do
       expect(page).to have_css('.sul-embed-body')
       expect(page).to have_css('.sul-embed-footer')
     end
+
     it 'hides the title when requested' do
       stub_purl_response_with_fixture(file_purl)
       visit_iframe_response('abc123', hide_title: true)
-      expect(page).to_not have_css('.sul-embed-header-title')
+      expect(page).not_to have_css('.sul-embed-header-title')
     end
   end
+
   describe 'file viewer' do
     it 'contains the file list' do
       stub_purl_response_with_fixture(file_purl)
@@ -35,6 +37,7 @@ describe 'feature testing of viewers', js: true do
         expect(page).to have_css('.sul-embed-download', text: '12.35 kB')
       end
     end
+
     it 'contains 4 files in file list' do
       stub_purl_response_with_fixture(multi_resource_multi_type_purl)
       visit_iframe_response

@@ -4,15 +4,15 @@ require 'rails_helper'
 
 describe Embed::Viewer::M3Viewer do
   include PurlFixtures
-  subject(:m3_viewer) { Embed::Viewer::M3Viewer.new(request) }
+  subject(:m3_viewer) { described_class.new(request) }
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:purl) { "#{Settings.purl_url}/abc123" }
 
   describe 'initialize' do
-    it 'should be an Embed::Viewer::M3Viewer' do
+    it 'is an Embed::Viewer::M3Viewer' do
       expect(request).to receive(:purl_object).and_return(nil)
-      expect(m3_viewer).to be_an Embed::Viewer::M3Viewer
+      expect(m3_viewer).to be_an described_class
     end
   end
 
@@ -65,7 +65,7 @@ describe Embed::Viewer::M3Viewer do
 
       it 'finds the requested canvas index in the IIIF manifest' do
         allow_any_instance_of(Embed::Purl).to receive(:manifest_json_response).and_return(manifest_json_response)
-        expect(m3_viewer.canvas_index).to eq nil
+        expect(m3_viewer.canvas_index).to be_nil
       end
     end
 
@@ -93,10 +93,11 @@ describe Embed::Viewer::M3Viewer do
   end
 
   describe '#show_attribution_panel?' do
-    let(:purl) { instance_double('Purl', collections: %w[abc 123]) }
+    let(:purl) { instance_double(Embed::Purl, collections: %w[abc 123]) }
+
     it 'based off of a purls collection being specified in settings' do
       expect(request).to receive(:purl_object).and_return(purl)
-      expect(m3_viewer.show_attribution_panel?).to eq true
+      expect(m3_viewer.show_attribution_panel?).to be true
     end
   end
 end

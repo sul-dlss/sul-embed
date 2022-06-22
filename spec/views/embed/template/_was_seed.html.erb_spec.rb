@@ -22,16 +22,16 @@ RSpec.describe 'embed/template/_was_seed' do
   it 'displays Was Seed viewer body' do
     render
     # visible false because we display:none the container until we've loaded the CSS.
-    expect(rendered).to have_css '.sul-embed-was-seed', visible: false
-    expect(rendered).to have_css '.sul-embed-was-seed-list', visible: false, count: 1
-    expect(rendered).to have_css '.sul-embed-was-seed-list-item', visible: false, count: 7
+    expect(rendered).to have_css '.sul-embed-was-seed', visible: :all
+    expect(rendered).to have_css '.sul-embed-was-seed-list', visible: :all, count: 1
+    expect(rendered).to have_css '.sul-embed-was-seed-list-item', visible: :all, count: 7
   end
 
   describe 'with hidden title' do
     it do
       allow(viewer).to receive(:display_header?).at_least(:once).and_return(false)
       render
-      expect(rendered).to_not have_css '.sul-embed-header', visible: false
+      expect(rendered).not_to have_css '.sul-embed-header', visible: :all
     end
   end
 end

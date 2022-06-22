@@ -5,16 +5,16 @@ require 'rails_helper'
 describe Embed::Viewer::Geo do
   include PurlFixtures
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
-  let(:geo_viewer) { Embed::Viewer::Geo.new(request) }
+  let(:geo_viewer) { described_class.new(request) }
 
   describe 'self.supported_types' do
-    it 'should return an array of supported types' do
-      expect(Embed::Viewer::Geo.supported_types).to eq [:geo]
+    it 'returns an array of supported types' do
+      expect(described_class.supported_types).to eq [:geo]
     end
   end
 
   describe '.external_url' do
-    it 'should build the external url based on settings and druid value' do
+    it 'builds the external url based on settings and druid value' do
       stub_request(request)
       expect(geo_viewer.external_url).to eq('https://earthworks.stanford.edu/catalog/stanford-abc123')
     end
@@ -37,8 +37,8 @@ describe Embed::Viewer::Geo do
       expect(geo_viewer.map_element_options).to include style: 'flex: 1'
       expect(geo_viewer.map_element_options).to include id: 'sul-embed-geo-map'
       expect(geo_viewer.map_element_options).to include 'data-bounding-box' => '[["38.298673", "-123.387626"], ["39.399103", "-122.528843"]]'
-      expect(geo_viewer.map_element_options).to_not include 'data-layers'
-      expect(geo_viewer.map_element_options).to_not include 'data-wms-url'
+      expect(geo_viewer.map_element_options).not_to include 'data-layers'
+      expect(geo_viewer.map_element_options).not_to include 'data-wms-url'
     end
   end
 end

@@ -6,17 +6,18 @@ describe Embed::Viewer::File do
   include PurlFixtures
   let(:purl_object) { double('purl_object') }
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
-  let(:file_viewer) { Embed::Viewer::File.new(request) }
+  let(:file_viewer) { described_class.new(request) }
+
   describe 'initialize' do
     it 'creates Embed::Viewer::File' do
       expect(request).to receive(:purl_object).and_return(nil)
-      expect(file_viewer).to be_an Embed::Viewer::File
+      expect(file_viewer).to be_an described_class
     end
   end
 
   describe 'self.supported_types' do
     it 'returns an array of supported types' do
-      expect(Embed::Viewer::File.supported_types).to eq [:file]
+      expect(described_class.supported_types).to eq [:file]
     end
   end
 
@@ -128,6 +129,7 @@ describe Embed::Viewer::File do
       expect(request).to receive(:purl_object).and_return(nil)
       expect(file_viewer.file_type_icon('application/null')).to eq 'sul-i-file-new-1'
     end
+
     it 'translated file icon for recognized mime type' do
       expect(request).to receive(:purl_object).and_return(nil)
       expect(file_viewer.file_type_icon('application/zip')).to eq 'sul-i-file-zipped'

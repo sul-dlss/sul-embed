@@ -25,10 +25,11 @@ RSpec.describe 'embed/header/_file' do
     before do
       allow(request).to receive(:hide_title?).at_least(:once).and_return(true)
     end
+
     it 'does not return the object title if the consumer requested to hide it' do
       render
-      expect(rendered).to_not have_css '.sul-embed-header-title'
-      expect(rendered).to_not have_css '.sul-embed-metadata-title'
+      expect(rendered).not_to have_css '.sul-embed-header-title'
+      expect(rendered).not_to have_css '.sul-embed-metadata-title'
     end
   end
 end
