@@ -10,7 +10,7 @@ describe('geo_viewer.js', () => {
     document.body.innerHTML = '<div id="sul-embed-geo-map" data-bounding-box=\'[["38.298673'
       + '", "-123.387626"], ["39.399103", "-122.528843"]]\'></div>';
     it('initializes map', () => {
-      GeoViewer.init();
+      GeoViewer.init({ renderer: L.canvas() });
     });
   });
 });
