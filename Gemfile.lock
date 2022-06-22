@@ -230,8 +230,6 @@ GEM
     nokogiri (1.13.6)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
-    nokogiri (1.13.6-x86_64-linux)
-      racc (~> 1.4)
     okcomputer (1.18.4)
     parallel (1.22.1)
     parser (3.1.2.0)
@@ -323,6 +321,8 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.7.0, < 2.0)
+    rubocop-rspec (2.11.1)
+      rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.3.2)
@@ -421,6 +421,7 @@ DEPENDENCIES
   rubocop (~> 1.0)
   rubocop-performance
   rubocop-rails
+  rubocop-rspec
   sassc-rails
   selenium-webdriver (!= 3.13.0)
   sprockets-rails

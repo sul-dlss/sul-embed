@@ -4,6 +4,7 @@ inherit_from:
 require:
   - rubocop-rails
   - rubocop-performance
+  - rubocop-rspec
 
 AllCops:
   NewCops: enable
@@ -41,3 +42,9 @@ Metrics/ParameterLists:
 Rails/OutputSafety:
   Exclude:
     - 'app/helpers/embed_helper.rb'
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
