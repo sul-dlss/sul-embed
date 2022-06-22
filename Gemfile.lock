@@ -423,7 +423,7 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   sassc-rails
-  selenium-webdriver (!= 3.13.0)
+  selenium-webdriver (~> 4.2)
   sprockets-rails
   sul_styles (~> 0.6)
   uglifier

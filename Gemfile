@@ -33,7 +33,7 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
 
-  gem 'selenium-webdriver', '!= 3.13.0'
+  gem 'selenium-webdriver', '~> 4.2'
   gem 'webdrivers'
 
   # Have jQuery local for testing
