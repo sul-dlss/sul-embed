@@ -16,13 +16,13 @@ describe 'metadata panel', js: true do
     expect(page).to have_css('.sul-embed-metadata-panel', visible: :hidden)
   end
 
-  xit 'has purl link, use and reproduction, and license text' do
+  it 'has purl link, use and reproduction, and license text' do
     stub_purl_response_with_fixture(file_purl)
     visit_iframe_response
     page.find('[data-sul-embed-toggle="sul-embed-metadata-panel"]', match: :first).click
-    expect(page).to have_css('dt', text: 'CITATION URL', visible: :all)
-    expect(page).to have_css('dt', text: 'USE AND REPRODUCTION', visible: :all)
-    expect(page).to have_css('dt', text: 'LICENSE', visible: :all)
+    expect(page).to have_css('dt', text: 'Citation URL', visible: :all)
+    expect(page).to have_css('dt', text: 'Use and reproduction', visible: :all)
+    expect(page).to have_css('dt', text: 'License', visible: :all)
     within '.sul-embed-metadata-panel' do
       expect(page).to have_css 'dd', text: 'You can use this.', visible: :all
     end
