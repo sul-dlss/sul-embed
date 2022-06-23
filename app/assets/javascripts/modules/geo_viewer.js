@@ -11,11 +11,11 @@
     };
 
     return {
-      init: function() {
+      init: function(options) {
         $el = jQuery('#sul-embed-geo-map');
         dataAttributes = $el.data();
 
-        map = L.map('sul-embed-geo-map').fitBounds(dataAttributes.boundingBox);
+        map = L.map('sul-embed-geo-map', options).fitBounds(dataAttributes.boundingBox);
 
         L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
           maxZoom: 19,
