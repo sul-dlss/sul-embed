@@ -6,19 +6,19 @@ describe Embed::Viewer::WasSeed do
   include PurlFixtures
   include WasTimeMapFixtures
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
-  let(:was_seed_viewer) { Embed::Viewer::WasSeed.new(request) }
+  let(:was_seed_viewer) { described_class.new(request) }
   let(:purl) { "#{Settings.purl_url}/abc123" }
 
   describe 'initialize' do
-    it 'should be an Embed::Viewer::WasSeed' do
+    it 'is an Embed::Viewer::WasSeed' do
       expect(request).to receive(:purl_object).and_return(nil)
-      expect(was_seed_viewer).to be_an Embed::Viewer::WasSeed
+      expect(was_seed_viewer).to be_an described_class
     end
   end
 
   describe 'self.supported_types' do
-    it 'should return an array of supported types' do
-      expect(Embed::Viewer::WasSeed.supported_types).to eq [:'webarchive-seed']
+    it 'returns an array of supported types' do
+      expect(described_class.supported_types).to eq [:'webarchive-seed']
     end
   end
 
@@ -66,7 +66,7 @@ describe Embed::Viewer::WasSeed do
   end
 
   describe '.external_url' do
-    it 'should build the external url based on wayback url as extracted from prul' do
+    it 'builds the external url based on wayback url as extracted from prul' do
       stub_purl_response_and_request(was_seed_purl, request)
       expect(was_seed_viewer.external_url).to eq('https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/')
     end

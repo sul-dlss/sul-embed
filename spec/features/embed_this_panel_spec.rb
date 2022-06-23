@@ -14,42 +14,48 @@ describe 'embed this panel', js: true do
 
   describe 'embed code' do
     let(:spec_fixture) { file_purl }
+
     it 'includes the allowfullscreen no-scrolling, no-border, and no margin/padding attributes' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*frameborder="0"/m)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*marginwidth="0"/m)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*marginheight="0"/m)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*scrolling="no"/m)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*allowfullscreen/m)
+      expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match(/<iframe.*frameborder="0"/m)
+      expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match(/<iframe.*marginwidth="0"/m)
+      expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match(/<iframe.*marginheight="0"/m)
+      expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match(/<iframe.*scrolling="no"/m)
+      expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match(/<iframe.*allowfullscreen/m)
     end
+
     it 'includes height and width attributes' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*height="190px"/m)
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match(/<iframe.*width="100%"/m)
+      expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match(/<iframe.*height="190px"/m)
+      expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match(/<iframe.*width="100%"/m)
     end
 
     it 'includes the viewer\'s iframe title' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
-      expect(page.find('.sul-embed-embed-this-panel textarea').value).to match('title="File viewer"')
+      expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match('title="File viewer"')
     end
   end
+
   describe 'file objects' do
     let(:spec_fixture) { file_purl }
+
     it 'are present after a user clicks the button' do
-      expect(page).to have_css('.sul-embed-embed-this-panel', visible: false)
+      expect(page).to have_css('.sul-embed-embed-this-panel', visible: :hidden)
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
-      expect(page).to have_css('.sul-embed-embed-this-panel', visible: true)
+      expect(page).to have_css('.sul-embed-embed-this-panel', visible: :all)
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
-      expect(page).to have_css('.sul-embed-embed-this-panel', visible: false)
+      expect(page).to have_css('.sul-embed-embed-this-panel', visible: :hidden)
     end
+
     it 'have the form elements for updating the embed code' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
-      expect(page).to have_css('.sul-embed-options-label', text: 'SELECT OPTIONS:')
+      expect(page.find('.sul-embed-options-label#select-options', visible: :all)).to have_content('SELECT OPTIONS:')
       expect(page).to have_css('input#sul-embed-embed-title[type="checkbox"]')
       expect(page).to have_css('input#sul-embed-embed-search[type="checkbox"]')
       expect(page).to have_css('input#sul-embed-embed[type="checkbox"]')
       expect(page).to have_css('textarea#sul-embed-iframe-code')
     end
+
     it 'update the textarea when the checkboxes are selected' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
       expect(page.find('.sul-embed-embed-this-panel textarea').value).not_to match(/&hide_search=true/)

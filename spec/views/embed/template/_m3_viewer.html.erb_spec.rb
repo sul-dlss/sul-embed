@@ -19,25 +19,25 @@ RSpec.describe 'embed/template/_m3_viewer' do
 
   it 'adds m3 html body for resources' do
     render
-    expect(rendered).to have_css '#sul-embed-m3', visible: false
+    expect(rendered).to have_css '#sul-embed-m3', visible: :all
   end
 
   describe 'with hidden title' do
     it do
       allow(viewer).to receive(:display_header?).at_least(:once).and_return(false)
       render
-      expect(rendered).to_not have_css '.sul-embed-header', visible: false
+      expect(rendered).not_to have_css '.sul-embed-header', visible: :all
     end
   end
 
   it 'passes along canvas index' do
     render
-    expect(rendered).to have_css '[data-canvas-index="3"]', visible: false
+    expect(rendered).to have_css '[data-canvas-index="3"]', visible: :all
   end
 
   it 'passes along seeded search queries' do
     render
-    expect(rendered).to have_css '[data-search="xyz"]', visible: false
-    expect(rendered).to have_css '[data-suggested-search="abc"]', visible: false
+    expect(rendered).to have_css '[data-search="xyz"]', visible: :all
+    expect(rendered).to have_css '[data-suggested-search="abc"]', visible: :all
   end
 end

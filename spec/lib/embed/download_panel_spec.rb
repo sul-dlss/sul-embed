@@ -16,7 +16,7 @@ describe Embed::DownloadPanel do
       expect(subject).to have_css(
         '.sul-embed-panel-header .sul-embed-panel-title',
         text: 'The Panel Title',
-        visible: false
+        visible: :all
       )
     end
   end

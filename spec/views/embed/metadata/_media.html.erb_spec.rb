@@ -18,15 +18,15 @@ RSpec.describe 'embed/metadata/_media' do
   end
 
   it 'includes a media accessibility note' do
-    expect(rendered).to have_css('dt', text: 'Media accessibility', visible: false)
+    expect(rendered).to have_css('dt', text: 'Media accessibility', visible: :all)
     expect(rendered).to have_css(
       'dd',
       text: /A transcript may be available in the Download panel/,
-      visible: false
+      visible: :all
     )
   end
 
   it 'links to the feedback address' do
-    expect(rendered).to have_css("a[href='mailto:#{Settings.purl_feedback_email}']", text: Settings.purl_feedback_email, visible: false)
+    expect(rendered).to have_css("a[href='mailto:#{Settings.purl_feedback_email}']", text: Settings.purl_feedback_email, visible: :all)
   end
 end

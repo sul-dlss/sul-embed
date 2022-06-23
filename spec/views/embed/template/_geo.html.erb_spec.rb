@@ -23,19 +23,19 @@ RSpec.describe 'embed/template/_geo' do
 
     # html = Capybara.string(geo_viewer.to_html)
     # visible false because we display:none the container until we've loaded the CSS.
-    expect(rendered).to have_css '.sul-embed-geo', visible: false
-    expect(rendered).to have_css '#sul-embed-geo-map', visible: false
-    expect(rendered).to have_css('#sul-embed-geo-map[style="flex: 1"]', visible: false)
-    expect(rendered).to have_css('#sul-embed-geo-map[data-bounding-box=\'[["-1.478794", "29.572742"], ["4.234077", "35.000308"]]\']', visible: false)
-    expect(rendered).to have_css('#sul-embed-geo-map[data-wms-url="https://geowebservices.stanford.edu/geoserver/wms/"]', visible: false)
-    expect(rendered).to have_css('#sul-embed-geo-map[data-layers="druid:12345"]', visible: false)
+    expect(rendered).to have_css '.sul-embed-geo', visible: :all
+    expect(rendered).to have_css '#sul-embed-geo-map', visible: :all
+    expect(rendered).to have_css('#sul-embed-geo-map[style="flex: 1"]', visible: :all)
+    expect(rendered).to have_css('#sul-embed-geo-map[data-bounding-box=\'[["-1.478794", "29.572742"], ["4.234077", "35.000308"]]\']', visible: :all)
+    expect(rendered).to have_css('#sul-embed-geo-map[data-wms-url="https://geowebservices.stanford.edu/geoserver/wms/"]', visible: :all)
+    expect(rendered).to have_css('#sul-embed-geo-map[data-layers="druid:12345"]', visible: :all)
   end
 
   describe 'with hidden title' do
     it do
       allow(viewer).to receive(:display_header?).at_least(:once).and_return(false)
       render
-      expect(rendered).to_not have_css '.sul-embed-header', visible: false
+      expect(rendered).not_to have_css '.sul-embed-header', visible: :all
     end
   end
 end

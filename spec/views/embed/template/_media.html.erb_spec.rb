@@ -20,7 +20,7 @@ RSpec.describe 'embed/template/_media' do
 
   it 'implements the MediaTag class appropriately and gets a video tag' do
     render
-    expect(rendered).to have_css('video', visible: false)
+    expect(rendered).to have_css('video', visible: :all)
   end
 
   describe 'media tag' do
@@ -28,7 +28,7 @@ RSpec.describe 'embed/template/_media' do
 
     it 'does not do URL escaping on sources' do
       render
-      source = Capybara.string(rendered).all('video source', visible: false).first
+      source = Capybara.string(rendered).all('video source', visible: :all).first
       expect(source['src']).not_to include('%20')
       expect(source['src']).not_to include('&amp;')
     end
@@ -38,7 +38,7 @@ RSpec.describe 'embed/template/_media' do
     it do
       allow(viewer).to receive(:display_header?).at_least(:once).and_return(false)
       render
-      expect(rendered).to_not have_css '.sul-embed-header', visible: false
+      expect(rendered).not_to have_css '.sul-embed-header', visible: :all
     end
   end
 end

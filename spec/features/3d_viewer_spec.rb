@@ -16,10 +16,10 @@ describe '3D Viewer', js: true do
   end
 
   it 'has working panels' do
-    expect(page).to have_css('.sul-embed-metadata-panel', visible: false)
+    expect(page).to have_css('.sul-embed-metadata-panel', visible: :all)
     within '.sul-embed-footer-toolbar' do
       first('button').click
     end
-    expect(page).to have_css('.sul-embed-metadata-panel', visible: true)
+    expect(page).to have_css('.sul-embed-metadata-panel', visible: :visible)
   end
 end

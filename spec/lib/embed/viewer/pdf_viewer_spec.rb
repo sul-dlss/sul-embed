@@ -36,6 +36,7 @@ describe Embed::Viewer::PdfViewer do
           druid: 'abc123'
         )
       end
+
       it { expect(pdf_viewer.all_documents_location_restricted?).to be true }
     end
 
@@ -49,6 +50,7 @@ describe Embed::Viewer::PdfViewer do
           druid: 'abc123'
         )
       end
+
       it { expect(pdf_viewer.all_documents_location_restricted?).to be false }
     end
   end

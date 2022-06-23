@@ -9,6 +9,7 @@ RSpec.describe 'embed/download/_media' do
   let(:object) { Embed::Purl.new('12345') }
   let(:viewer) { Embed::Viewer::Media.new(request) }
   let(:response) { video_purl }
+
   before do
     view.lookup_context.view_paths.push 'app/views/embed'
     allow(request).to receive(:purl_object).and_return(object)
@@ -22,30 +23,32 @@ RSpec.describe 'embed/download/_media' do
     render
     expect(rendered).to eq ''
   end
+
   context 'when downloadable files' do
     let(:response) { video_purl }
+
     before { render }
 
     it 'uses the label as the link text when present' do
-      expect(rendered).to have_css('li a', text: 'Download Transcript', visible: false)
-      expect(rendered).not_to have_css('li a', text: 'Download abc_123_script.pdf', visible: false)
+      expect(rendered).to have_css('li a', text: 'Download Transcript', visible: :all)
+      expect(rendered).not_to have_css('li a', text: 'Download abc_123_script.pdf', visible: :all)
     end
 
     it 'uses the file id as the link text when no label present' do
-      expect(rendered).to have_css('li a', text: 'Download abc_333.mp4', visible: false)
+      expect(rendered).to have_css('li a', text: 'Download abc_333.mp4', visible: :all)
     end
 
     it 'includes the file sizes when present' do
-      expect(rendered).to have_css('li', text: /\(\d+\.\d+ MB\)/, visible: false)
-      expect(rendered).to have_css('li', text: /\(\d+\.\d+ kB\)/, visible: false)
+      expect(rendered).to have_css('li', text: /\(\d+\.\d+ MB\)/, visible: :all)
+      expect(rendered).to have_css('li', text: /\(\d+\.\d+ kB\)/, visible: :all)
     end
 
     it 'includes attributes appropriate for _blank target download links' do
-      expect(rendered).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 3, visible: false)
+      expect(rendered).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 3, visible: :all)
     end
 
     it 'includes download=true param' do
-      expect(rendered).to have_css 'li a[href*="?download=true"]', count: 3, visible: false
+      expect(rendered).to have_css 'li a[href*="?download=true"]', count: 3, visible: :all
     end
 
     it 'includes downloadable files' do
@@ -64,9 +67,10 @@ RSpec.describe 'embed/download/_media' do
 
     context 'Stanford only' do
       let(:response) { stanford_restricted_file_purl }
+
       it 'has a span with a stanford-only s icon class (with screen-reader text)' do
-        expect(rendered).to have_css('.sul-embed-stanford-only-text', visible: false)
-        expect(rendered).to have_css('.sul-embed-text-hide', text: 'Stanford only', visible: false)
+        expect(rendered).to have_css('.sul-embed-stanford-only-text', visible: :all)
+        expect(rendered).to have_css('.sul-embed-text-hide', text: 'Stanford only', visible: :all)
       end
     end
 

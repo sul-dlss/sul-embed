@@ -9,6 +9,7 @@ RSpec.describe 'embed/download/_geo' do
   let(:object) { Embed::Purl.new('12345') }
   let(:viewer) { Embed::Viewer::Geo.new(request) }
   let(:response) { geo_purl_public }
+
   before do
     view.lookup_context.view_paths.push 'app/views/embed'
     allow(request).to receive(:purl_object).and_return(object)
@@ -26,27 +27,30 @@ RSpec.describe 'embed/download/_geo' do
         )
       )
     end
+
     it 'is empty' do
       expect(rendered).to eq ''
     end
   end
 
   it 'generates a file list when file has resources' do
-    expect(rendered).to have_css 'li', visible: false, count: 3
-    expect(rendered).to have_css 'a[href="https://stacks.stanford.edu/file/druid:12345/data.zip?download=true"]', visible: false
+    expect(rendered).to have_css 'li', visible: :all, count: 3
+    expect(rendered).to have_css 'a[href="https://stacks.stanford.edu/file/druid:12345/data.zip?download=true"]', visible: :all
   end
 
   context 'with stanford only' do
     let(:response) { stanford_restricted_multi_file_purl }
+
     it 'has the stanford-only class (with screen reader text)' do
-      expect(rendered).to have_css 'li .sul-embed-stanford-only-text .sul-embed-text-hide', text: 'Stanford only', visible: false
+      expect(rendered).to have_css 'li .sul-embed-stanford-only-text .sul-embed-text-hide', text: 'Stanford only', visible: :all
     end
   end
 
   context 'with location restrictions' do
     let(:response) { single_video_purl }
+
     it 'includes text to indicate that they are restricted' do
-      expect(rendered).to have_css 'li .sul-embed-location-restricted-text', text: '(Restricted)', visible: false
+      expect(rendered).to have_css 'li .sul-embed-location-restricted-text', text: '(Restricted)', visible: :all
     end
   end
 end

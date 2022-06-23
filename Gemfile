@@ -33,7 +33,7 @@ group :development, :test do
   gem 'rspec'
   gem 'rspec-rails'
 
-  gem 'selenium-webdriver', '!= 3.13.0'
+  gem 'selenium-webdriver', '~> 4.2'
   gem 'webdrivers'
 
   # Have jQuery local for testing
@@ -46,6 +46,7 @@ group :development, :test do
   gem 'rubocop', '~> 1.0'
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
 
   # for debugging
   gem 'listen'

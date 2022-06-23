@@ -6,6 +6,7 @@ describe Embed::WasTimeMap do
   include WasTimeMapFixtures
 
   subject { described_class.new('http://wayback.example.com/timemap/http://ennejah.info') }
+
   describe '#timemap' do
     context 'when HTTP is successful' do
       before do
@@ -31,6 +32,7 @@ describe Embed::WasTimeMap do
       end
     end
   end
+
   context 'when HTTP is not successful' do
     before do
       expect(Faraday).to receive(:get).and_return(double('response', success?: false))
