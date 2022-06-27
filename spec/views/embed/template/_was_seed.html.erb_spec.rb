@@ -11,9 +11,14 @@ RSpec.describe 'embed/template/_was_seed' do
   let(:viewer) { Embed::Viewer::WasSeed.new(request) }
 
   context 'with current timemap behavior' do
+    let(:fake_connection) do
+      instance_double(Faraday::Connection, get: double('response', body: timemap, success?: true))
+    end
+
     before do
       view.lookup_context.view_paths.push 'app/views/embed'
-      expect(Faraday).to receive(:get).and_return(double('response', body: timemap, success?: true))
+      allow_any_instance_of(Embed::WasTimeMap).to receive(:redirectable_connection).and_return(fake_connection)
+      expect(fake_connection).to receive(:get).once
       allow(request).to receive(:purl_object).and_return(object)
       allow(object).to receive(:response).and_return(was_seed_purl)
       allow(viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
@@ -38,9 +43,14 @@ RSpec.describe 'embed/template/_was_seed' do
   end
 
   context 'with new timemap behavior' do
+    let(:fake_connection) do
+      instance_double(Faraday::Connection, get: double('response', body: timemap_new, success?: true))
+    end
+
     before do
       view.lookup_context.view_paths.push 'app/views/embed'
-      expect(Faraday).to receive(:get).and_return(double('response', body: timemap_new, success?: true))
+      allow_any_instance_of(Embed::WasTimeMap).to receive(:redirectable_connection).and_return(fake_connection)
+      expect(fake_connection).to receive(:get).once
       allow(request).to receive(:purl_object).and_return(object)
       allow(object).to receive(:response).and_return(was_seed_purl)
       allow(viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')

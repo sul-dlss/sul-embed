@@ -8,9 +8,14 @@ describe Embed::WasTimeMap do
   subject { described_class.new('http://wayback.example.com/timemap/http://ennejah.info') }
 
   describe '#timemap' do
+    let(:fake_connection) do
+      instance_double(Faraday::Connection, get: double('response', body: timemap, success?: true))
+    end
+
     context 'when HTTP is successful' do
       before do
-        expect(Faraday).to receive(:get).and_return(double('response', body: timemap, success?: true))
+        allow_any_instance_of(described_class).to receive(:redirectable_connection).and_return(fake_connection)
+        expect(fake_connection).to receive(:get).once
       end
 
       it 'requests and parses timemap to an array' do
@@ -34,9 +39,14 @@ describe Embed::WasTimeMap do
   end
 
   describe '#timemap (new behavior)' do
+    let(:fake_connection) do
+      instance_double(Faraday::Connection, get: double('response', body: timemap_new, success?: true))
+    end
+
     context 'when HTTP is successful' do
       before do
-        expect(Faraday).to receive(:get).and_return(double('response', body: timemap_new, success?: true))
+        allow_any_instance_of(described_class).to receive(:redirectable_connection).and_return(fake_connection)
+        expect(fake_connection).to receive(:get).once
       end
 
       it 'requests and parses timemap to an array' do
@@ -61,8 +71,13 @@ describe Embed::WasTimeMap do
   end
 
   context 'when HTTP is not successful' do
+    let(:fake_connection) do
+      instance_double(Faraday::Connection, get: double('response', success?: false))
+    end
+
     before do
-      expect(Faraday).to receive(:get).and_return(double('response', success?: false))
+      allow_any_instance_of(described_class).to receive(:redirectable_connection).and_return(fake_connection)
+      expect(fake_connection).to receive(:get).once
     end
 
     it 'catches the exception and returns an empty array' do
