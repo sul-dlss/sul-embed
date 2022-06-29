@@ -2,10 +2,10 @@
 
 module Embed
   class WasTimeMap
-    attr_reader :timemap_url
+    attr_reader :timemap_connection
 
     def initialize(timemap_url)
-      @timemap_url = timemap_url
+      @timemap_connection = redirectable_connection(timemap_url)
     end
 
     def capture_list
@@ -15,7 +15,7 @@ module Embed
     def timemap
       @timemap ||=
         begin
-          response = Faraday.get(timemap_url)
+          response = timemap_connection.get
           raise ResourceNotAvailable unless response.success?
 
           response.body.split(",\n").map do |item|
@@ -26,6 +26,16 @@ module Embed
         rescue ResourceNotAvailable
           []
         end
+    end
+
+    private
+
+    def redirectable_connection(url)
+      Faraday.new(url: url) do |faraday|
+        faraday.use Faraday::FollowRedirects::Middleware
+
+        faraday.adapter Faraday.default_adapter
+      end
     end
 
     class ResourceNotAvailable < StandardError

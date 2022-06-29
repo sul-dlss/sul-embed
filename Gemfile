@@ -17,6 +17,7 @@ gem 'puma'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'faraday', '~> 2'
+gem 'faraday-follow_redirects'
 
 gem 'nokogiri', '>= 1.7.1'
 
