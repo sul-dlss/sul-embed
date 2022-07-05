@@ -115,7 +115,7 @@ RSpec.describe 'embed/template/_file' do
     it 'adds a generalized embargo message and no links are present' do
       expect(rendered).to have_css('.sul-embed-embargo-message', visible: :all, text: "Access is restricted until #{(1.month.from_now).strftime('%d-%b-%Y')}")
       # FIXME: this is a bad spec as it's not checking for visibility false
-      expect(rendered).not_to have_css('a')
+      expect(rendered).not_to have_link
     end
   end
 
