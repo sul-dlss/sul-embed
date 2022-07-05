@@ -48,3 +48,6 @@ RSpec/MultipleExpectations:
 
 RSpec/ExampleLength:
   Enabled: false
+
+RSpec/Capybara/SpecificMatcher:
+  Enabled: false
