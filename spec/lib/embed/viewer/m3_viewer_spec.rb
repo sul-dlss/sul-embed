@@ -92,6 +92,73 @@ describe Embed::Viewer::M3Viewer do
     end
   end
 
+  describe '#canvas_id' do
+    before do
+      allow_any_instance_of(Embed::Purl).to receive(:manifest_json_response).and_return(manifest_json_response)
+    end
+
+    context 'with an existing canvas id' do
+      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc', canvas_id: 'something') }
+      let(:manifest_json_response) do
+        {
+          sequences: [
+            {
+              canvases: [
+                { '@id' => 'something' },
+                { '@id' => 'else' }
+              ]
+            }
+          ]
+        }.to_json
+      end
+
+      it 'returns the canvas id' do
+        expect(m3_viewer.canvas_id).to eq 'something'
+      end
+    end
+
+    context 'with non-cocina canvas ids' do
+      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/gm059ft3590', canvas_id: 'https://purl.stanford.edu/gm059ft3590/iiif/canvas/gm059ft3590_1') }
+      let(:manifest_json_response) do
+        {
+          sequences: [
+            {
+              canvases: [
+                { '@id' => 'https://purl.stanford.edu/gm059ft3590/iiif/canvas/cocina-fileSet-gm059ft3590-gm059ft3590_1' },
+                { '@id' => 'https://purl.stanford.edu/gm059ft3590/iiif/canvas/cocina-fileSet-gm059ft3590-gm059ft3590_2' }
+              ]
+            }
+          ]
+        }.to_json
+      end
+
+      it 'rewrites the requested canvas ids to new-style cocina canvas ids' do
+        expect(m3_viewer.canvas_id).to eq 'https://purl.stanford.edu/gm059ft3590/iiif/canvas/cocina-fileSet-gm059ft3590-gm059ft3590_1'
+      end
+    end
+
+    context 'with a canvas id that does not exist' do
+      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', canvas_id: 'some/url/does/not/exist') }
+
+      let(:manifest_json_response) do
+        {
+          sequences: [
+            {
+              canvases: [
+                { '@id' => 'random url' },
+                { '@id' => 'some other url' }
+              ]
+            }
+          ]
+        }.to_json
+      end
+
+      it 'returns nil' do
+        expect(m3_viewer.canvas_id).to be_nil
+      end
+    end
+  end
+
   describe '#show_attribution_panel?' do
     let(:purl) { instance_double(Embed::Purl, collections: %w[abc 123]) }
 

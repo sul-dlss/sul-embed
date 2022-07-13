@@ -31,13 +31,54 @@ module Embed
         purl_object.rights.controlled_digital_lending?
       end
 
+      # We rewrite the provided canvas ids to:
+      # - ensure it exists in the manifest (if they don't, mirador puts the user into a weird initial state)
+      # - rewrite pre-cocina canvas ids to post-cocina canvas ids as appropriate
+      #        (to avoid breaking embeds that used to work)
+      # rubocop:disable Metrics/AbcSize
+      def canvas_id
+        return if request.canvas_id.blank?
+
+        if canvases.any? { |canvas| canvas['@id'] == request.canvas_id }
+          request.canvas_id
+        elsif request.canvas_id !~ /cocina-fileSet/ && cocinafied_canvases?
+          cocinafied_canvas_id
+        else
+          Honeybadger.notify(
+            "Unable to find requested canvas id '#{request.canvas_id}' in manifest for #{purl_object.druid}"
+          )
+
+          nil
+        end
+      end
+      # rubocop:enable Metrics/AbcSize
+
       def canvas_index
-        if request.canvas_id
-          canvases = manifest_json.fetch('sequences', []).map { |seq| seq['canvases'] }.first
-          canvases.index { |canvas| canvas['@id'] == request.canvas_id } || request.canvas_index
+        if canvas_id
+          canvases.index { |canvas| canvas['@id'] == canvas_id } || request.canvas_index
         else
           request.canvas_index
         end
+      end
+
+      private
+
+      def canvases
+        manifest_json.fetch('sequences', []).map { |seq| seq['canvases'] }.first
+      end
+
+      def cocinafied_canvases?
+        canvases.any? do |canvas|
+          canvas['@id'].include?('cocina-fileSet')
+        end
+      end
+
+      def cocinafied_canvas_id
+        base, _, resource_id = request.canvas_id.rpartition('/')
+
+        potential_canvas_id = base + "/cocina-fileSet-#{purl_object.druid}-#{resource_id}"
+
+        potential_canvas_id if canvases.any? { |canvas| canvas['@id'] == potential_canvas_id }
       end
     end
   end
