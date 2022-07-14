@@ -75,7 +75,7 @@ module Embed
                        "#{height}px"
                      end
       query_params = request.as_url_params.merge(version ? { _v: version } : {}).to_query
-      src = "#{Settings.embed_iframe_url}?url=#{Settings.purl_url}/#{druid}&#{query_params}"
+      src = "#{request.controller.iframe_url}?url=#{Settings.purl_url}/#{druid}&#{query_params}"
 
       <<~IFRAME
         <iframe src="#{src}" height="#{height_style}" width="#{width_style}" title="#{title}" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" allowfullscreen></iframe>

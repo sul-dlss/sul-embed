@@ -14,18 +14,6 @@ module Embed
         @purl_object = request.purl_object
       end
 
-      def asset_url(file)
-        "#{asset_host}#{ActionController::Base.helpers.asset_url(file)}"
-      end
-
-      def asset_host
-        if Rails.env.production?
-          Settings.static_assets_base
-        else
-          "//#{@request.rails_request.host_with_port}"
-        end
-      end
-
       def stacks_url
         "#{Settings.stacks_url}/file/druid:#{@purl_object.druid}"
       end

@@ -1,6 +1,6 @@
 <div class='sul-embed-body sul-embed-media'
      data-sul-embed-theme="<%= asset_url('media.css') %>"
-     data-sul-icons="<%= viewer.asset_url('sul_icons.css') %>">
+     data-sul-icons="<%= asset_url('sul_icons.css') %>">
   <%= Embed::MediaTag.new(viewer).to_html.html_safe %>
   <%= javascript_packs_with_chunks_tag('media') %>
 </div>
