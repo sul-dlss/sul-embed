@@ -39,7 +39,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 RSpec.configure(&:infer_spec_type_from_file_location!)
 
 def stub_purl_response_with_fixture(fixture)
-  expect_any_instance_of(Embed::Purl).to receive(:response).at_least(:once).and_return(fixture)
+  allow_any_instance_of(Embed::Purl).to receive(:response).and_return(fixture)
 end
 
 def stub_purl_response_and_request(fixture, request)

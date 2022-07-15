@@ -108,11 +108,11 @@ describe Embed::Request do
     end
   end
 
-  describe 'rails_request' do
-    let(:rails_request) { double('rails-request') }
+  describe 'controller' do
+    let(:controller) { double('controller') }
 
-    it 'includes the rails request (for generating asset URLs in viewer HTML)' do
-      expect(described_class.new({ url: purl }, rails_request).rails_request).to eq rails_request
+    it 'includes the controller (for generating URLs in viewer HTML)' do
+      expect(described_class.new({ url: purl }, controller).controller).to eq controller
     end
   end
 

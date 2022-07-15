@@ -3,11 +3,11 @@
 module Embed
   class Request
     include URLSchemes
-    attr_reader :params, :rails_request
+    attr_reader :params, :controller
 
-    def initialize(params, rails_request = nil)
+    def initialize(params, controller = nil)
       @params = params
-      @rails_request = rails_request
+      @controller = controller
     end
 
     def url
