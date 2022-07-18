@@ -5,7 +5,12 @@ require 'rails_helper'
 RSpec.describe 'embed/template/_media' do
   include PurlFixtures
 
-  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
+  let(:request) do
+    Embed::Request.new(
+      { url: 'http://purl.stanford.edu/abc123' },
+      controller
+    )
+  end
   let(:object) { Embed::Purl.new('12345') }
   let(:viewer) { Embed::Viewer::Media.new(request) }
   let(:response) { video_purl }

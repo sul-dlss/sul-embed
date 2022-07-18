@@ -5,7 +5,7 @@ require 'rails_helper'
 describe Embed::Viewer::File do
   include PurlFixtures
   let(:purl_object) { double('purl_object') }
-  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
+  let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }) }
   let(:file_viewer) { described_class.new(request) }
 
   describe 'initialize' do

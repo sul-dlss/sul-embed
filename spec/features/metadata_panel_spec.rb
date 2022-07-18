@@ -4,7 +4,13 @@ require 'rails_helper'
 
 describe 'metadata panel', js: true do
   include PurlFixtures
-  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
+
+  let(:request) do
+    Embed::Request.new(
+      { url: 'http://purl.stanford.edu/abc123' },
+      controller
+    )
+  end
 
   it 'is present after a user clicks the button' do
     stub_purl_response_with_fixture(file_purl)

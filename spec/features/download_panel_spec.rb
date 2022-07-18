@@ -4,7 +4,13 @@ require 'rails_helper'
 
 describe 'download panel', type: :feature, js: true do
   include PurlFixtures
-  let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/ab123cd4567') }
+
+  let(:request) do
+    Embed::Request.new(
+      { url: 'http://purl.stanford.edu/abc123' },
+      controller
+    )
+  end
 
   it 'not shown for file viewer and leaves correctly formatted filenames alone' do
     stub_purl_response_with_fixture(multi_file_purl)

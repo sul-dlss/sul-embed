@@ -6,7 +6,12 @@ RSpec.describe 'embed/template/_was_seed' do
   include PurlFixtures
   include WasTimeMapFixtures
 
-  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
+  let(:request) do
+    Embed::Request.new(
+      { url: 'http://purl.stanford.edu/abc123' },
+      controller
+    )
+  end
   let(:object) { Embed::Purl.new('12345') }
   let(:viewer) { Embed::Viewer::WasSeed.new(request) }
 
