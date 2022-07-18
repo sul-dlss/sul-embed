@@ -8,6 +8,8 @@ An [oEmbed](http://oembed.com/) provider for embedding resources from the Stanfo
 
 There is an embedded static page available at `/pages/sandbox` in your development and test environments. Make sure that you use the same host on the service input (first text field) as you are accessing the site from (e.g. localhost or 127.0.0.1).
 
+You'll also want to configure the `Settings.embed_iframe_url` to be the same host/port as you are accessing the site from to ensure that the iframe being embedded is pointing locally and not remotely (as is the default).
+
 ## oEmbed specification details
 
 URL scheme: `http://purl.stanford.edu/*`

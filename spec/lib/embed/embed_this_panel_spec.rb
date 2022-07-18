@@ -2,8 +2,7 @@
 
 require 'rails_helper'
 require 'embed/embed_this_panel'
-
-describe Embed::EmbedThisPanel, type: 'view' do
+describe Embed::EmbedThisPanel do
   subject do
     Capybara.string(
       described_class.new(viewer: viewer) do
@@ -12,7 +11,7 @@ describe Embed::EmbedThisPanel, type: 'view' do
     )
   end
 
-  let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }, controller) }
+  let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/abc123') }
   let(:viewer) do
     instance_double(
       Embed::Viewer::CommonViewer,
@@ -119,14 +118,11 @@ describe Embed::EmbedThisPanel, type: 'view' do
     describe 'the src' do
       let(:request) do
         Embed::Request.new(
-          {
-            url: 'https://purl.stanford.edu/abc123',
-            maxheight: '555',
-            maxwidth: '666',
-            hide_title: 'true',
-            hide_embed: 'true'
-          },
-          controller
+          url: 'https://purl.stanford.edu/abc123',
+          maxheight: '555',
+          maxwidth: '666',
+          hide_title: 'true',
+          hide_embed: 'true'
         )
       end
 

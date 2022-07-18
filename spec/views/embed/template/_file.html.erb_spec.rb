@@ -5,12 +5,7 @@ require 'rails_helper'
 RSpec.describe 'embed/template/_file' do
   include PurlFixtures
 
-  let(:request) do
-    Embed::Request.new(
-      { url: 'http://purl.stanford.edu/abc123' },
-      controller
-    )
-  end
+  let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:object) { Embed::Purl.new('12345') }
   let(:viewer) { Embed::Viewer::File.new(request) }
   let(:response) { file_purl }

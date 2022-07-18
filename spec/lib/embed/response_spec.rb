@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-describe Embed::Response, type: 'view' do
+describe Embed::Response do
   let(:viewer) { double('viewer') }
-  let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }, controller) }
+  let(:request) { double('request', as_url_params: {}) }
   let(:purl_object) { double('purl_object', druid: 'abc123') }
   let(:response) { described_class.new(request) }
 
@@ -44,7 +44,7 @@ describe Embed::Response, type: 'view' do
     end
 
     it 'is the iframe snippet pointing to the embed' do
-      expect(response.html).to match(%r{<iframe.*src="#{controller.iframe_url}.*".*></iframe>}m)
+      expect(response.html).to match(%r{<iframe.*src="https://embed\.stanford\.edu.*".*></iframe>}m)
     end
   end
 

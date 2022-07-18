@@ -13,7 +13,7 @@ describe 'embed sandbox page', js: true do
     visit_sandbox
     expect(page).not_to have_css('iframe')
     send_embed_response
-    expect(page).to have_css('iframe')
+    expect(page).to have_css("iframe[src^='#{Settings.embed_iframe_url}']")
   end
 
   it 'passes the customization URL parameters down to the iframe successfully' do

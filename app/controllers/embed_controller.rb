@@ -29,7 +29,7 @@ class EmbedController < ApplicationController
   end
 
   def embed_request
-    @embed_request ||= Embed::Request.new(params, self)
+    @embed_request ||= Embed::Request.new(params, request)
   end
 
   rescue_from Embed::Request::NoURLProvided do |e|
