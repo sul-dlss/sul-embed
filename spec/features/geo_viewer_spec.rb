@@ -70,8 +70,10 @@ describe 'geo viewer restricted', js: true do
       # find this svg element on the page.
       # We also need to explicitly wait for the JS to run.
       expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
+      # only count paths within .leaflet-overlay-pane for testing
+      # (page.body contains SVG logos we don't care to count)
       find '.leaflet-overlay-pane'
-      expect(Nokogiri::HTML.parse(page.body).css('path').length).to eq 1
+      expect(Nokogiri::HTML.parse(page.body).search('.leaflet-overlay-pane').css('path').length).to eq 1
     end
   end
 end
@@ -91,8 +93,10 @@ describe 'geo index map viewer', js: true do
       # We also need to explicitly wait for the JS to run.
       expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
       expect(page).to have_css '[data-index-map="https://stacks.stanford.edu/file/druid:ts545zc6250/index_map.json"]'
+      # only count paths within .leaflet-overlay-pane for testing
+      # (page.body contains SVG logos we don't care to count)
       find '.leaflet-overlay-pane'
-      expect(Nokogiri::HTML.parse(page.body).css('path').length).to eq 480
+      expect(Nokogiri::HTML.parse(page.body).search('.leaflet-overlay-pane').css('path').length).to eq 480
     end
   end
 end
