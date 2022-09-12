@@ -32,7 +32,7 @@ module Embed
         width: viewer.width,
         request: @request,
         title: viewer.iframe_title,
-        version: File.mtime(Rails.root).to_i
+        version: Rails.root.mtime.to_i
       )
     end
 
