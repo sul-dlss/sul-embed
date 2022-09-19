@@ -21,7 +21,7 @@ describe 'basic oembed functionality' do
     expect(page).to have_xpath '//html'
   end
 
-  it 'returns a response with require parameters (json)' do
+  xit 'returns a response with require parameters (json)' do
     # TODO: leaving this until we figure out the html encoding
   end
 end
