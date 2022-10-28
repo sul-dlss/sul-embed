@@ -27,7 +27,7 @@
                 <span class='sul-embed-disabled'><%= file.title %></span>
               <% else %>
                 <div class='sul-embed-media-heading'>
-                  <a href="<%= viewer.file_url(file.title) %>"
+                  <a href="<%= viewer.file_url(file.title, allow_literal_slashes: true) %>"
                      title="<%= viewer.tooltip_text(file) %>"
                      target='_blank'
                      rel='noopener noreferrer'><%= file.title %></a>
@@ -46,7 +46,7 @@
                     <%= viewer.pretty_filesize(file.size) %>
                   </span>
                 <% else %>
-                  <a href="<%= viewer.file_url(file.title) %>" target='_blank' rel='noopener noreferrer' download=''>
+                  <a href="<%= viewer.file_url(file.title, allow_literal_slashes: true) %>" target='_blank' rel='noopener noreferrer' download=''>
                     <span class='sul-embed-sr-only'>
                       Download item <%= file_count %>
                     </span>

@@ -45,8 +45,13 @@ describe Embed::Viewer::CommonViewer do
       expect(file_viewer.file_url('cool_file', download: true)).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file?download=true'
     end
 
-    it 'escapes special characters in the file' do
+    it 'escapes special characters in the file url' do
       expect(file_viewer.file_url('[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf')).to eq 'https://stacks.stanford.edu/file/druid:abc123/%5BDissertation%5D%20micro-TEC%20vfinal%20%28for%20submission%29-augmented.pdf'
+    end
+
+    it 'allows literal slashes in the file url' do
+      expect(file_viewer.file_url('path/to/[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf', allow_literal_slashes: true))
+        .to eq 'https://stacks.stanford.edu/file/druid:abc123/path/to/%5BDissertation%5D%20micro-TEC%20vfinal%20%28for%20submission%29-augmented.pdf'
     end
   end
 
