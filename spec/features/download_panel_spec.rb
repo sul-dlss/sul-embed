@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'download panel', type: :feature, js: true do
+describe 'download panel', js: true do
   include PurlFixtures
 
   let(:request) do

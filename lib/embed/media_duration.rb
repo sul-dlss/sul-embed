@@ -16,7 +16,7 @@ module Embed
         return ISODuration.new(raw_value).to_s if raw_value
       rescue ISO8601::Errors::UnknownPattern
         Honeybadger.notify(
-          "ResourceFile\#media duration ISO8601::Errors::UnknownPattern: '#{raw_value}'"
+          "ResourceFile#media duration ISO8601::Errors::UnknownPattern: '#{raw_value}'"
         )
         nil
       end
