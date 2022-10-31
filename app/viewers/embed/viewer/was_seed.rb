@@ -25,7 +25,7 @@ module Embed
           '//mods:url[@displayLabel="Archived website"]',
           'mods' => 'http://www.loc.gov/mods/v3'
         )&.text.tap do |url|
-          Honeybadger.notify("WasSeed\#archived_site_url blank for #{druid}") if url.blank?
+          Honeybadger.notify("WasSeed#archived_site_url blank for #{druid}") if url.blank?
         end
       end
 

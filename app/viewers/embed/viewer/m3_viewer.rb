@@ -64,7 +64,7 @@ module Embed
       private
 
       def canvases
-        manifest_json.fetch('sequences', []).map { |seq| seq['canvases'] }.first
+        manifest_json.fetch('sequences', []).pick('canvases')
       end
 
       def cocinafied_canvases?

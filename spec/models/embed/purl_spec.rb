@@ -492,7 +492,7 @@ describe Embed::Purl do
           expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
           expect(f).to receive(:xpath).with('./*[@duration]').and_return([audio_data_el])
           rf = Embed::Purl::Resource::ResourceFile.new(double('Resource'), f, double('Rights'))
-          expect(Honeybadger).to receive(:notify).with("ResourceFile\#media duration ISO8601::Errors::UnknownPattern: 'invalid'")
+          expect(Honeybadger).to receive(:notify).with("ResourceFile#media duration ISO8601::Errors::UnknownPattern: 'invalid'")
           expect(Embed::MediaDuration).to receive(:new).and_call_original
           expect(rf.duration).to be_nil
         end
