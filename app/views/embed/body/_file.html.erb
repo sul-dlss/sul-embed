@@ -9,8 +9,15 @@
     <% end %>
     <ul class='sul-embed-media-list'>
       <% file_count = 0 %>
+      <% containing_directories = viewer.purl_object.containing_directories %>
       <% viewer.purl_object.contents.each do |resource| %>
         <% resource.files.each do |file| %>
+          <% if containing_directories.include?(file.containing_directory) %>
+            <i class="sul-i-1x sul-i-arrow-down-8"> <%= file.containing_directory %></i>
+            <% containing_directories.delete(file.containing_directory) %>
+          <% elsif file.containing_directory.blank? %>
+            <i class="sul-i-1x sul-i-arrow-down-8"> .</i>
+          <% end %>
           <li class='sul-embed-media'>
             <div class='sul-embed-count sul-embed-pull-left'>
               <%= file_count += 1 %>
@@ -30,7 +37,7 @@
                   <a href="<%= viewer.file_url(file.title) %>"
                      title="<%= viewer.tooltip_text(file) %>"
                      target='_blank'
-                     rel='noopener noreferrer'><%= file.title %></a>
+                     rel='noopener noreferrer'><%= file.title(basename: true) %></a>
                   <%= render 'restrictions_text_for_file', file: file %>
                 </div>
               <% end %>

@@ -33,6 +33,13 @@ module Embed
       end
     end
 
+    def containing_directories
+      all_resource_files
+        .map(&:containing_directory)
+        .compact_blank
+        .uniq
+    end
+
     def rights
       @rights ||= ::Dor::RightsAuth.parse(rights_xml)
     end
@@ -229,8 +236,11 @@ module Embed
           title
         end
 
-        def title
-          @file.attributes['id'].try(:value)
+        def title(basename: false)
+          filename = @file.attributes['id'].try(:value)
+          return filename unless basename
+
+          filename.delete_prefix("#{containing_directory}/")
         end
 
         def primary?
@@ -283,6 +293,12 @@ module Embed
         def duration
           md = Embed::MediaDuration.new(@file.xpath('./*[@duration]').first) if @file.xpath('./*/@duration').present?
           md&.to_s
+        end
+
+        def containing_directory
+          title
+            .split('/')[...-1]
+            .join('/')
         end
 
         # unused (9/2016) - candidate for removal?
