@@ -8,23 +8,30 @@ An [oEmbed](http://oembed.com/) provider for embedding resources from the Stanfo
 
 There is an embedded static page available at `/pages/sandbox` in your development and test environments. Make sure that you use the same host on the service input (first text field) as you are accessing the site from (e.g. localhost or 127.0.0.1).
 
+To bring up a dev environment first you'll need to install Ruby and JavaScript dependencies. Note: NodeJS v14 and [yarn](https://yarnpkg.com/) must be installed:
+
+    bundle install
+    yarn install
+
+Then start up the Rails app in one terminal window:
+
+    bundle exec bin/rails server
+
+Then start the NodeJS process to make the JavaScript assets available:
+
+    bin/webpack-dev-server
+
+Now visit this URL in your browser!
+
+    http://localhost:3000/pages/sandbox
+
 ## oEmbed specification details
 
-URL scheme: `http://purl.stanford.edu/*`
+URL scheme: `https://purl.stanford.edu/*`
 
-API endpoint: `TBD`
+API endpoint: `https://embed.stanford.edu`
 
-Example: `TBD?url=http://purl.stanford.edu/zw200wd8767&format=json`
-
-## Installing JavaScript dependencies using Yarn
-
-Sul-Embed is starting to manage its JavaScript dependencies using [Yarn](https://yarnpkg.com/en/docs/install).
-
-To install needed JavaScript dependencies make sure to install them using:
-
-```sh
-$ yarn install
-```
+Example: `https://embed.stanford.edu/embed.json?url=http://purl.stanford.edu/zw200wd8767`
 
 ## Creating Viewers
 
