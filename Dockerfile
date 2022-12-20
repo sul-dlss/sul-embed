@@ -21,4 +21,4 @@ RUN gem install bundler
 
 RUN bundle
 
-CMD bin/webpack-dev-server
+CMD bin/webpacker-dev-server

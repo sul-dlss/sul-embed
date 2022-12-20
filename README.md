@@ -19,7 +19,7 @@ Then start up the Rails app in one terminal window:
 
 Then start the NodeJS process to make the JavaScript assets available:
 
-    bin/webpack-dev-server
+    bin/webpacker-dev-server
 
 Now visit this URL in your browser!
 
@@ -27,7 +27,7 @@ Now visit this URL in your browser!
 
 # Webpacker in Docker
 
-Since webpacker doesn't run on modern versions of node JS, you can use the provided docker container to run webpacker.
+You may also use the provided docker container to run the webpacker dev server.
 
 ```
 docker compose up webpacker

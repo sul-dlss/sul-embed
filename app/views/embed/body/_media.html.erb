@@ -2,5 +2,5 @@
      data-sul-embed-theme="<%= stylesheet_path('media.css') %>"
      data-sul-icons="<%= stylesheet_path('sul_icons.css') %>">
   <%= Embed::MediaTag.new(viewer).to_html.html_safe %>
-  <%= javascript_packs_with_chunks_tag('media') %>
+  <%= javascript_pack_tag('media') %>
 </div>
