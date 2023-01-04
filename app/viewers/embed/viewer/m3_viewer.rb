@@ -41,7 +41,7 @@ module Embed
 
         if canvases.any? { |canvas| canvas['@id'] == request.canvas_id }
           request.canvas_id
-        elsif request.canvas_id !~ /cocina-fileSet/ && cocinafied_canvases?
+        elsif cocinafied_canvases? && !request.canvas_id.include?('cocina-fileSet')
           cocinafied_canvas_id
         else
           Honeybadger.notify(
