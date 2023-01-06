@@ -38,12 +38,6 @@ group :development, :test do
   gem 'selenium-webdriver', '~> 4.2'
   gem 'webdrivers'
 
-  # Have jQuery local for testing
-  gem 'jquery-rails'
-
-  # Needed for deploying to dev/test
-  gem 'coffee-rails'
-
   # Linting/Styleguide Enforcement
   gem 'rubocop', '~> 1.0'
   gem 'rubocop-performance', require: false
