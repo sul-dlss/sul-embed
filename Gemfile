@@ -20,14 +20,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'faraday', '~> 2'
 gem 'faraday-follow_redirects'
 
-gem 'nokogiri', '>= 1.7.1'
-
-gem 'dor-rights-auth'
-
 gem 'config'
-gem 'deprecation'
-
+gem 'dor-rights-auth'
 gem 'iso8601' # to parse durations, since ActiveSupport::Duration doesn't get a parse method till rails 5
+gem 'nokogiri', '>= 1.7.1'
 
 group :development, :test do
   gem 'capybara'

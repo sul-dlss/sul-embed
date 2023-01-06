@@ -123,8 +123,6 @@ GEM
     crass (1.0.6)
     date (3.3.3)
     deep_merge (1.2.2)
-    deprecation (1.1.0)
-      activesupport
     diff-lcs (1.5.0)
     dlss-capistrano (4.3.1)
       capistrano (~> 3.0)
@@ -398,7 +396,6 @@ DEPENDENCIES
   codeclimate-test-reporter
   coffee-rails
   config
-  deprecation
   dlss-capistrano
   dor-rights-auth
   faraday (~> 2)
