@@ -25,6 +25,14 @@ Now visit this URL in your browser!
 
     http://localhost:3000/pages/sandbox
 
+# Webpacker in Docker
+
+Since webpacker doesn't run on modern versions of node JS, you can use the provided docker container to run webpacker.
+
+```
+docker compose webpacker
+```
+
 ## oEmbed specification details
 
 URL scheme: `https://purl.stanford.edu/*`

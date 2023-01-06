@@ -1,0 +1,14 @@
+# docker-compose.yml
+
+version: '3.2'
+
+services:
+  webpacker:
+    build: .
+    ports:
+    - '3035:3035'
+    environment:
+      RAILS_ENV: development
+      NODE_ENV: development
+    volumes:
+      - .:/usr/src/app
