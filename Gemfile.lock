@@ -339,8 +339,6 @@ GEM
     timeout (0.3.1)
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.0)
-      execjs (>= 0.3.0, < 3)
     unicode-display_width (2.4.2)
     webdrivers (5.2.0)
       nokogiri (~> 1.6)
@@ -399,7 +397,6 @@ DEPENDENCIES
   selenium-webdriver (~> 4.2)
   sprockets-rails
   sul_styles (~> 0.6)
-  uglifier
   webdrivers
   webpacker (~> 5.x)
 
