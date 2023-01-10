@@ -33,6 +33,14 @@ module Embed
       end
     end
 
+    def hierarchical_contents
+      @hierarchical_contents ||= Embed::HierarchicalContents.contents(contents)
+    end
+
+    def hierarchical?
+      @hierarchical ||= hierarchical_contents.files.length != contents.sum { |resource| resource.files.length }
+    end
+
     def rights
       @rights ||= ::Dor::RightsAuth.parse(rights_xml)
     end
@@ -169,149 +177,6 @@ module Embed
     class ResourceNotEmbeddable < StandardError
       def initialize(msg = 'The requested PURL resource was not embeddable.')
         super
-      end
-    end
-
-    class Resource
-      def initialize(resource, rights)
-        @resource = resource
-        @rights = rights
-      end
-
-      def sequence
-        @resource.attributes['sequence'].try(:value)
-      end
-
-      def type
-        @resource.attributes['type'].try(:value)
-      end
-
-      def description
-        @description ||= if (label_element = @resource.xpath('./label').try(:text)).present?
-                           label_element
-                         else
-                           @resource.xpath('./attr[@name="label"]').try(:text)
-                         end
-      end
-
-      def object_thumbnail?
-        @resource.attributes['thumb'].try(:value) == 'yes' || type == 'thumb'
-      end
-
-      def three_dimensional?
-        @resource.attributes['type']&.value == '3d'
-      end
-
-      def files
-        @files ||= @resource.xpath('./file').map do |file|
-          ResourceFile.new(self, file, @rights)
-        end
-      end
-
-      def primary_file
-        files.find(&:primary?)
-      end
-
-      def thumbnail
-        files.find(&:thumbnail?)
-      end
-
-      class ResourceFile
-        def initialize(resource, file, rights)
-          @resource = resource
-          @file = file
-          @rights = rights
-        end
-
-        def label
-          return resource.description if resource.description.present?
-
-          title
-        end
-
-        def title
-          @file.attributes['id'].try(:value)
-        end
-
-        def primary?
-          primary_types = Settings.primary_mimetypes[resource.type] || []
-          !thumbnail? && primary_types.include?(mimetype)
-        end
-
-        def thumbnail
-          resource.files.find(&:thumbnail?)
-        end
-
-        def thumbnail?
-          return true if resource.object_thumbnail?
-          return false unless image?
-
-          Settings.resource_types_that_contain_thumbnails.include?(resource.type)
-        end
-
-        def pdf?
-          mimetype == 'application/pdf'
-        end
-
-        def mimetype
-          @file.attributes['mimetype'].try(:value)
-        end
-
-        def previewable?
-          preview_types.include?(mimetype)
-        end
-
-        # unused (9/2016) - candidate for removal?
-        def image?
-          mimetype =~ %r{image/jp2}i
-        end
-
-        # @return [Integer]
-        def size
-          @file.attributes['size'].try(:value).to_i
-        end
-
-        # unused (9/2016) - candidate for removal?
-        def height
-          @file.xpath('./*/@height').first.try(:text) if @file.xpath('./*/@height').present?
-        end
-
-        # unused (9/2016) - candidate for removal?
-        def width
-          @file.xpath('./*/@width').first.try(:text) if @file.xpath('./*/@width').present?
-        end
-
-        def duration
-          md = Embed::MediaDuration.new(@file.xpath('./*[@duration]').first) if @file.xpath('./*/@duration').present?
-          md&.to_s
-        end
-
-        # unused (9/2016) - candidate for removal?
-        def location
-          @file.xpath('./location[@type="url"]').first.try(:text) if @file.xpath('./location[@type="url"]').present?
-        end
-
-        def stanford_only?
-          value, _rule = @rights.stanford_only_rights_for_file(title)
-
-          value
-        end
-
-        def location_restricted?
-          @rights.restricted_by_location?(title)
-        end
-
-        def world_downloadable?
-          @rights.world_downloadable_file?(@file.attributes['id'])
-        end
-
-        private
-
-        attr_reader :resource
-
-        def preview_types
-          ['image/jp2']
-        end
       end
     end
   end

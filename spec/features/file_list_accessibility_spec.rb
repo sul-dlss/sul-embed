@@ -12,7 +12,6 @@ describe 'file list accessibility', js: true do
     expect(page).to have_content "Preview\nitem 1"
     expect(page).to have_css 'a[aria-expanded="false"]'
     expect(page).to have_css 'div.sul-embed-preview[aria-hidden="true"]', visible: :all
-    expect(page).to have_css 'div.sul-embed-item-count[aria-live="polite"]'
     click_link 'Preview'
     expect(page).to have_css '.sul-embed-preview img[alt]', visible: :all
     expect(page).to have_content "Close preview\nitem 1"
