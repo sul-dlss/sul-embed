@@ -1,7 +1,7 @@
 @import 'common';
 @import 'modules/auth_link';
 @import 'modules/thumb_slider';
-@import 'video.js/video-js';
+@import 'video.js/dist/video-js.css';
 
 .#{$namespace}-media {
   display: flex;

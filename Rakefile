@@ -12,7 +12,10 @@ rescue LoadError
   # should only be here when gem group development and test aren't installed
 end
 
-task default: [:javascript_tests, :spec, :rubocop]
+# remove default rspec task
+task(:default).clear
+
+task default: ['test:prepare', :javascript_tests, :spec, :rubocop]
 
 task asset_paths: [:environment] do
   puts Rails.application.config.assets.paths

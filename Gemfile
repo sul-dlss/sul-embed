@@ -55,8 +55,6 @@ gem 'filesize'
 
 gem 'leaflet-rails'
 
-gem 'sul_styles', '~>0.6'
-
 gem 'handlebars_assets'
 
 gem 'newrelic_rpm', group: :production
@@ -65,3 +63,5 @@ gem 'newrelic_rpm', group: :production
 gem 'okcomputer'
 
 gem 'webpacker', '~> 5.x'
+
+gem 'cssbundling-rails', '~> 1.1'

@@ -1,6 +1,3 @@
-@import 'sul_variables';
-@import 'mixins';
-
 .#{$namespace}-auth-link {
   @include stanford-only-red;
   background-color: $sul-auth-link-background-color;

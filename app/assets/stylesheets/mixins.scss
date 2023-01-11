@@ -18,7 +18,7 @@
 }
 
 @mixin license-image($license) {
-  background: url('#{$asset_base}#{$license}') no-repeat left;
+  background: url('#{$license}') no-repeat left;
 }
 
 @mixin panel-list-style {
@@ -44,15 +44,15 @@
 }
 
 @mixin stanford-only($orientation: right, $icon-padding: 20px) {
-  background: url('#{$asset_base}<%= asset_url("stanford_s.png") %>') no-repeat $orientation;
-  background: url('#{$asset_base}<%= asset_url("stanford_s.svg") %>') no-repeat $orientation, none;
+  background: url('stanford_s.png') no-repeat $orientation;
+  background: url('stanford_s.svg') no-repeat $orientation, none;
   padding-#{$orientation}: $icon-padding;
 }
 
 @mixin stanford-only-red {
-  background: url('#{$asset_base}<%= asset_url("stanford_red_s.png") %>') no-repeat 5px;
+  background: url('stanford_red_s.png') no-repeat 5px;
 // TODO: need svg version
-//  background: url('#{$asset_base}<%= asset_url("stanford_red_s.svg") %>') no-repeat 5px, none;
+//  background: url('stanford_red_s.svg') no-repeat 5px, none;
 }
 
 @mixin transform($transforms) {
