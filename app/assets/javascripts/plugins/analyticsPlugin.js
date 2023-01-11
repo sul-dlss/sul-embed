@@ -7,7 +7,6 @@ import { getManifest, getCompanionWindow } from 'mirador/dist/es/src/state/selec
 function* onSetCanvas({ type, windowId, canvasId }) {
   const { id: manifestId } = yield select(getManifest, { windowId });
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: canvasId,
@@ -16,7 +15,6 @@ function* onSetCanvas({ type, windowId, canvasId }) {
 
 function* onAddResource({ type, manifestId }) {
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventCategory: manifestId,
     eventAction: type,
   }});
@@ -28,7 +26,6 @@ function* onAddCompanionWindow({ payload: { position, content }, type, windowId 
   const { id: manifestId } = yield select(getManifest, { windowId });
 
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: `${content}/${position}`,
@@ -42,7 +39,6 @@ function* onUpdateCompanionWindow({ id, payload: { position, content }, type, wi
   const { content: existingContent } = yield select(getCompanionWindow, { companionWindowId: id });
 
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: `${content || existingContent}/${position}`,
@@ -52,7 +48,6 @@ function* onUpdateCompanionWindow({ id, payload: { position, content }, type, wi
 
 function* onReceiveManifest({ manifestId, type }) {
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventCategory: manifestId,
     eventAction: type,
   }});
@@ -62,7 +57,6 @@ function* onRequestSearch({ query, type, windowId }) {
   const { id: manifestId } = yield select(getManifest, { windowId });
 
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: query,
@@ -71,7 +65,6 @@ function* onRequestSearch({ query, type, windowId }) {
 
 function* onAddWindow({ type, window: { canvasId, manifestId } }) {
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: canvasId,
@@ -82,7 +75,6 @@ function* onMaximizeWindow({ type, windowId }) {
   const { id: manifestId } = yield select(getManifest, { windowId });
 
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventCategory: manifestId,
     eventAction: type,
   }});
@@ -92,7 +84,6 @@ function* onSetWindowViewType({ type, viewType, windowId }) {
   const { id: manifestId } = yield select(getManifest, { windowId });
 
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: viewType,
@@ -103,7 +94,6 @@ function* onSelectAnnotation({ annotationId, type, windowId }) {
   const { id: manifestId } = yield select(getManifest, { windowId });
 
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: annotationId,
@@ -112,14 +102,12 @@ function* onSelectAnnotation({ annotationId, type, windowId }) {
 
 function* onSetWorkspaceAction({ type }) {
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventAction: type,
   }});
 }
 
 function* onSetWorkspaceActionLayout({ layout, type }) {
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventCategory: layout,
     eventAction: type,
   }});
@@ -133,7 +121,6 @@ function* onAddAuthRequest({ id, type, windowId }) {
   authTimes[id] = Date.now();
 
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: id,
@@ -145,7 +132,6 @@ function* onResetAuthState({ id, type }) {
   authTimes[id] = undefined;
 
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventAction: type,
     eventLabel: id,
     eventValue: sessionMinutes,
@@ -161,7 +147,6 @@ function* onTokenRequest({ type, authId }) {
   tokenRequests[authId] = (tokenRequests[authId] || 0) + 1;
 
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventAction: type,
     eventLabel: authId,
     eventValue: tokenRequests[authId],
@@ -177,16 +162,19 @@ function* onTokenFailure({ type, authId }) {
   }
 
   yield put({ type: 'mirador/analytics', payload: {
-    hitType: 'event',
     eventAction: type,
     eventCategory: newOrExpired,
     eventLabel: authId,
   }});
 }
 
-
-function* sendAnalyticsEvent({ payload }) {
-  window.ga && window.ga('send', payload);
+// This function sends events in the required format for GA4
+function* sendAnalyticsEvent({ payload: { eventAction, eventCategory, eventLabel, eventValue } }) {
+  window.gtag && window.gtag('event', eventAction, {
+    event_category: eventCategory,
+    event_label: eventLabel,
+    event_value: eventValue
+  });  
 }
 
 /** */

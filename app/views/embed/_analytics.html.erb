@@ -1,0 +1,12 @@
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-80J719XWE5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-80J719XWE5', {
+    'debug_mode': <%= Settings.analytics_debug %>,
+    <%# collection is a custom event parameter for getting an item's parent collection.
+    It is sent with every event if populated with a value %>
+    'collection': document.querySelector('link[rel="up"]')?.getAttribute('href')
+  });
+</script>
