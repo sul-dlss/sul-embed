@@ -1,7 +1,7 @@
 @import 'common';
 @import 'modules/bootstrap_media';
 @import 'vendor/tooltip';
-@import 'leaflet';
+@import 'leaflet/dist/leaflet';
 
 [data-wms-url] {
   cursor: crosshair;

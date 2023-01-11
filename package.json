@@ -12,7 +12,8 @@
     "url": "https://github.com/sul-dlss/sul-embed/issues"
   },
   "scripts": {
-    "test": "jest -c jest.config.js"
+    "test": "jest -c jest.config.js",
+    "build:css": "sass ./app/assets/stylesheets/file.scss:./app/assets/builds/file.css ./app/assets/stylesheets/geo.scss:./app/assets/builds/geo.css ./app/assets/stylesheets/m3.scss:./app/assets/builds/m3.css ./app/assets/stylesheets/media.scss:./app/assets/builds/media.css ./app/assets/stylesheets/pdf.scss:./app/assets/builds/pdf.css ./app/assets/stylesheets/virtex_3d.scss:./app/assets/builds/virtex_3d.css ./app/assets/stylesheets/was_seed.scss:./app/assets/builds/was_seed.css ./app/assets/stylesheets/sul_icons.scss:./app/assets/builds/sul_icons.css --no-source-map --load-path=node_modules --load-path=vendor/assets/javascripts"
   },
   "private": true,
   "homepage": "https://github.com/sul-dlss/sul-embed",
@@ -25,6 +26,7 @@
     "@rails/webpacker": "^5.4.3",
     "canvas": "^2.9.1",
     "fscreen": "^1.0.2",
+    "leaflet": "^1.9.3",
     "list.js": "1.1.1",
     "mirador": "^3.0.0-rc.7",
     "mirador-dl-plugin": "^0.13.0",
@@ -34,6 +36,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "sass": "^1.57.1",
     "three": "^0.112.1",
     "unfetch": "^4.1.0",
     "url-polyfill": "^1.1.5",
