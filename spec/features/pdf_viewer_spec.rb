@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'PDF Viewer', js: true do
+RSpec.describe 'PDF Viewer' do
   include PurlFixtures
   let(:purl) { pdf_document_purl }
 
@@ -12,18 +12,6 @@ RSpec.describe 'PDF Viewer', js: true do
   end
 
   it 'renders the PDF viewer for documents' do
-    expect(page).to have_css('.sul-embed-pdf #pdf-viewer')
-  end
-
-  it 'renders a loading spinner' do
-    expect(page).to have_css('.loading-spinner')
-  end
-
-  it 'has working panels' do
-    expect(page).to have_css('.sul-embed-metadata-panel', visible: :all)
-    within '.sul-embed-footer-toolbar' do
-      first('button').click
-    end
-    expect(page).to have_css('.sul-embed-metadata-panel', visible: :visible)
+    expect(page).to have_css('.sul-embed-body embed')
   end
 end
