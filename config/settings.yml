@@ -61,4 +61,6 @@ use_custom_pdf_viewer: true
 use_custom_3d_viewer: true
 collections_to_show_attribution:
   - dc876nn4469
-analytics_id:
+# Google Analytics will report in debug mode by default
+# in shared_configs for embed-prod, we set this value to 0  
+analytics_debug: true
