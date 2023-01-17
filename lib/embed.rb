@@ -2,7 +2,6 @@
 
 module Embed
   require 'constants'
-  require 'embed/url_schemes'
   require 'embed/request'
   require 'embed/response'
   require 'embed/stacks_media_stream'
