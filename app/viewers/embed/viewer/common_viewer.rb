@@ -34,11 +34,10 @@ module Embed
       # Creates a file url for stacks
       # @param [String] title
       # @param [Boolean] download
-      # @param [Boolean] allow_literal_slashes
       # @return [String]
-      def file_url(title, download: false, allow_literal_slashes: false)
-        title_parts = allow_literal_slashes ? title.split('/') : [title]
-        encoded_title = title_parts.map { |title_part| ERB::Util.url_encode(title_part) }.join('/')
+      def file_url(title, download: false)
+        # Allow literal slashes in the file URL (do not encode them)
+        encoded_title = title.split('/').map { |title_part| ERB::Util.url_encode(title_part) }.join('/')
         uri = URI.parse("#{stacks_url}/#{encoded_title}")
         uri.query = URI.encode_www_form(download: true) if download
         uri.to_s
