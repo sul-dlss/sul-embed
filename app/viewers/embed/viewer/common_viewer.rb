@@ -36,7 +36,9 @@ module Embed
       # @param [Boolean] download
       # @return [String]
       def file_url(title, download: false)
-        uri = URI.parse("#{stacks_url}/#{ERB::Util.url_encode(title)}")
+        # Allow literal slashes in the file URL (do not encode them)
+        encoded_title = title.split('/').map { |title_part| ERB::Util.url_encode(title_part) }.join('/')
+        uri = URI.parse("#{stacks_url}/#{encoded_title}")
         uri.query = URI.encode_www_form(download: true) if download
         uri.to_s
       end
