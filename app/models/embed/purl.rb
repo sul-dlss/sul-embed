@@ -266,8 +266,9 @@ module Embed
           mimetype =~ %r{image/jp2}i
         end
 
+        # @return [Integer]
         def size
-          @file.attributes['size'].try(:value)
+          @file.attributes['size'].try(:value).to_i
         end
 
         # unused (9/2016) - candidate for removal?

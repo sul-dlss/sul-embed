@@ -69,7 +69,7 @@ RSpec.describe 'embed/template/_file' do
     end
   end
 
-  context 'without file size' do
+  context 'when file size is zero' do
     let(:response) { image_no_size_purl }
 
     before { render }
