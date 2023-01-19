@@ -266,7 +266,7 @@ describe Embed::Purl do
         end
 
         it 'gets the size from the size attribute' do
-          expect(resource_file.size).to eq '12345'
+          expect(resource_file.size).to eq 12_345
         end
       end
 
