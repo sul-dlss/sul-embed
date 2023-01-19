@@ -38,6 +38,10 @@ module Embed
         end
       end
 
+      def size
+        files.sum(&:size)
+      end
+
       def primary_file
         files.find(&:primary?)
       end
