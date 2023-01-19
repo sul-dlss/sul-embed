@@ -2,7 +2,6 @@
 
 module Embed
   class Request
-    include URLSchemes
     attr_reader :params, :controller
 
     def initialize(params, controller = nil)
@@ -123,9 +122,10 @@ module Embed
     end
 
     def url_scheme_is_valid?
-      url_schemes.any? do |scheme|
-        url =~ scheme
-      end && url =~ %r{/\w+$}
+      uri = URI.parse(url)
+      uri.is_a?(URI::HTTP) && # true for http or https
+        uri.hostname == URI.parse(Settings.purl_url).hostname &&
+        uri.path.size > 1 # one would just be the root path (e.g. "/")
     end
 
     def validate_format
