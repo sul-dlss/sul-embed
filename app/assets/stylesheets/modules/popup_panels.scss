@@ -1,6 +1,3 @@
-@import 'sul_variables';
-@import 'mixins';
-
 .#{$namespace}-container {
   .#{$namespace}-panel-container {
     height: 0px;
@@ -124,43 +121,43 @@
 
   .#{$namespace}-license-by {
     @include license-base;
-    @include license-image('<%= asset_url("by.png") %>');
-    @include license-image('<%= asset_url("by.svg") %>');
+    @include license-image('by.png');
+    @include license-image('by.svg');
   }
 
   .#{$namespace}-license-by-sa {
     @include license-base;
-    @include license-image('<%= asset_url("by-sa.png") %>');
-    @include license-image('<%= asset_url("by-sa.svg") %>');
+    @include license-image('by-sa.png');
+    @include license-image('by-sa.svg');
   }
 
   .#{$namespace}-license-by-nd {
     @include license-base;
-    @include license-image('<%= asset_url("by-nd.png") %>');
-    @include license-image('<%= asset_url("by-nd.svg") %>');
+    @include license-image('by-nd.png');
+    @include license-image('by-nd.svg');
   }
 
   .#{$namespace}-license-by-nc {
     @include license-base;
-    @include license-image('<%= asset_url("by-nc.png") %>');
-    @include license-image('<%= asset_url("by-nc.svg") %>');
+    @include license-image('by-nc.png');
+    @include license-image('by-nc.svg');
   }
 
   .#{$namespace}-license-by-nc-sa {
     @include license-base;
-    @include license-image('<%= asset_url("by-nc-sa.png") %>');
-    @include license-image('<%= asset_url("by-nc-sa.svg") %>');
+    @include license-image('by-nc-sa.png');
+    @include license-image('by-nc-sa.svg');
   }
 
   .#{$namespace}-license-by-nc-nd {
     @include license-base;
-    @include license-image('<%= asset_url("by-nc-nd.png") %>');
-    @include license-image('<%= asset_url("by-nc-nd.svg") %>');
+    @include license-image('by-nc-nd.png');
+    @include license-image('by-nc-nd.svg');
   }
 
   .#{$namespace}-license-pdm {
     @include license-base;
-    @include license-image('<%= asset_url("pdm.png") %>');
-    @include license-image('<%= asset_url("pdm.svg") %>');
+    @include license-image('pdm.png');
+    @include license-image('pdm.svg');
   }
 }
