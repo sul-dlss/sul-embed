@@ -49,8 +49,6 @@ end
 # Use honeybadger for exception handling
 gem 'honeybadger'
 
-gem 'sassc-rails'
-
 gem 'filesize'
 
 gem 'leaflet-rails'
