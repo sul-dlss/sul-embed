@@ -15,7 +15,7 @@ To bring up a dev environment first you'll need to install Ruby and JavaScript d
 
 Then start up the Rails app in one terminal window:
 
-    bundle exec bin/rails server
+    bin/dev
 
 Then start the NodeJS process to make the JavaScript assets available:
 
