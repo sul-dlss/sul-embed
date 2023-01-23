@@ -7,7 +7,7 @@ describe 'was seed viewer public', js: true do
   include WasTimeMapFixtures
 
   let(:fake_connection) do
-    instance_double(Faraday::Connection, get: double('response', body: timemap, success?: true))
+    instance_double(Faraday::Connection, get: instance_double(Faraday::Response, body: timemap, success?: true))
   end
 
   before do

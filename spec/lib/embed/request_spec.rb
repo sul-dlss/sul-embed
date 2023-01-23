@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Embed::Request do
+RSpec.describe Embed::Request do
   let(:purl) { "#{Settings.purl_url}/abc123" }
 
   describe 'format' do
@@ -109,7 +109,7 @@ describe Embed::Request do
   end
 
   describe 'controller' do
-    let(:controller) { double('controller') }
+    let(:controller) { instance_double(EmbedController) }
 
     it 'includes the controller (for generating URLs in viewer HTML)' do
       expect(described_class.new({ url: purl }, controller).controller).to eq controller
@@ -117,7 +117,7 @@ describe Embed::Request do
   end
 
   describe 'purl_object' do
-    let(:object) { double('purl') }
+    let(:object) { instance_double(Embed::Purl) }
 
     it 'instantiates a Purl object w/ the object druid' do
       expect(Embed::Purl).to receive(:new).with('abc123').and_return(object)

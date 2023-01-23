@@ -2,19 +2,19 @@
 
 require 'rails_helper'
 
-describe Embed::Viewer::Virtex3dViewer do
+RSpec.describe Embed::Viewer::Virtex3dViewer do
   subject(:viewer) { described_class.new(request) }
 
   let(:purl) do
-    double(
+    instance_double(
       Embed::Purl,
       contents: [
-        double(three_dimensional?: true, files: [double(title: 'obj1.obj')])
+        instance_double(Embed::Purl::Resource, three_dimensional?: true, files: [instance_double(Embed::Purl::ResourceFile, title: 'obj1.obj')])
       ],
       druid: 'abc123'
     )
   end
-  let(:request) { double(Embed::Request, purl_object: purl) }
+  let(:request) { instance_double(Embed::Request, purl_object: purl) }
 
   describe '#three_dimensional_files' do
     it 'returns the full file URL for the PDFs in an object' do

@@ -2,20 +2,28 @@
 
 require 'rails_helper'
 
-describe Embed::Viewer::PdfViewer do
+RSpec.describe Embed::Viewer::PdfViewer do
   subject(:pdf_viewer) { described_class.new(request) }
 
   let(:purl) do
-    double(
+    instance_double(
       Embed::Purl,
       contents: [
-        double(type: 'file', files: [double(title: 'file-abc123.pdf'), double(title: 'file-xyz321.pdf')]),
-        double(type: 'document', files: [double(title: 'doc-abc123.pdf'), double(title: 'doc-xyz321.pdf')])
+        instance_double(Embed::Purl::Resource, type: 'file',
+                                               files: [
+                                                 instance_double(Embed::Purl::ResourceFile, title: 'file-abc123.pdf'),
+                                                 instance_double(Embed::Purl::ResourceFile, title: 'file-xyz321.pdf')
+                                               ]),
+        instance_double(Embed::Purl::Resource, type: 'document',
+                                               files: [
+                                                 instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf'),
+                                                 instance_double(Embed::Purl::ResourceFile, title: 'doc-xyz321.pdf')
+                                               ])
       ],
       druid: 'abc123'
     )
   end
-  let(:request) { double(Embed::Request, purl_object: purl) }
+  let(:request) { instance_double(Embed::Request, purl_object: purl) }
 
   describe '#pdf_files' do
     it 'returns the full file URL for the PDFs in an object' do
@@ -28,10 +36,10 @@ describe Embed::Viewer::PdfViewer do
   describe '#all_documents_location_restricted?' do
     context 'when all the files in the documents are location restricted' do
       let(:purl) do
-        double(
+        instance_double(
           Embed::Purl,
           contents: [
-            double(type: 'document', files: [double(title: 'doc-abc123.pdf', location_restricted?: true)])
+            instance_double(Embed::Purl::Resource, type: 'document', files: [instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', location_restricted?: true)])
           ],
           druid: 'abc123'
         )
@@ -42,10 +50,10 @@ describe Embed::Viewer::PdfViewer do
 
     context 'when all the files in the documents are not location restricted' do
       let(:purl) do
-        double(
+        instance_double(
           Embed::Purl,
           contents: [
-            double(type: 'document', files: [double(title: 'doc-abc123.pdf', location_restricted?: false)])
+            instance_double(Embed::Purl::Resource, type: 'document', files: [instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', location_restricted?: false)])
           ],
           druid: 'abc123'
         )

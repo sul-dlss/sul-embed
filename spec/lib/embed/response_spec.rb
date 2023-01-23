@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-describe Embed::Response, type: 'view' do
-  let(:viewer) { double('viewer') }
+RSpec.describe Embed::Response, type: 'view' do
+  let(:viewer) { instance_double(Embed::Viewer::CommonViewer) }
   let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }, controller) }
-  let(:purl_object) { double('purl_object', druid: 'abc123') }
+  let(:purl_object) { instance_double(Embed::Purl, druid: 'abc123') }
   let(:response) { described_class.new(request) }
 
   describe 'static attributes' do

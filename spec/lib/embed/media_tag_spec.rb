@@ -2,18 +2,15 @@
 
 require 'rails_helper'
 
-describe Embed::MediaTag do
+RSpec.describe Embed::MediaTag do
   include PurlFixtures
 
   subject { Capybara.string(subject_klass.to_html) }
 
   let(:purl) { video_purl }
   let(:viewer) do
-    double(
-      'MediaViewer',
-      purl_object: Embed::Purl.new('druid'),
-      body_height: '300'
-    )
+    instance_double(Embed::Viewer::Media,
+                    purl_object: Embed::Purl.new('druid'))
   end
 
   let(:subject_klass) { described_class.new(viewer) }
@@ -217,7 +214,7 @@ describe Embed::MediaTag do
   end
 
   describe 'private methods' do
-    let(:file) { double('File', title: 'abc123.mp4') }
+    let(:file) { instance_double(Embed::Purl::ResourceFile, title: 'abc123.mp4') }
 
     describe '#enabled_streaming_sources' do
       before { stub_purl_response_with_fixture(purl) }
@@ -237,7 +234,7 @@ describe Embed::MediaTag do
     describe '#previewable_element' do
       before { stub_purl_response_with_fixture(purl) }
 
-      let(:previewable_element) { subject_klass.send(:previewable_element, double('file', label: 'abc123', title: 'abc123')) }
+      let(:previewable_element) { subject_klass.send(:previewable_element, instance_double(Embed::Purl::ResourceFile, label: 'abc123', title: 'abc123')) }
 
       it 'passes the square thumb url as a data attribute' do
         expect(previewable_element).to match(
