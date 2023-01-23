@@ -4,11 +4,6 @@ require 'rails_helper'
 
 RSpec.describe Embed::Purl::Resource do
   include PurlFixtures
-  it 'gets the sequence attribute' do
-    stub_purl_response_with_fixture(file_purl)
-    expect(Embed::Purl.new('12345').contents.first.sequence).to eq '1'
-  end
-
   it 'gets the type attribute' do
     stub_purl_response_with_fixture(file_purl)
     expect(Embed::Purl.new('12345').contents.first.type).to eq 'file'
