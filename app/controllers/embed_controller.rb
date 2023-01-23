@@ -24,6 +24,8 @@ class EmbedController < ApplicationController
     render 'iframe'
   end
 
+  # Given a url to a manifest, render a mirador viewer.
+  #  (e.g. /iiif?url=https://purl.stanford.edu/fr426cg9537/iiif/manifest)
   def iiif
     @embed_request.validate! url_scheme: false, format: false
   end
