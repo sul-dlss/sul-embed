@@ -10,5 +10,6 @@ services:
     environment:
       RAILS_ENV: development
       NODE_ENV: development
+      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
     volumes:
       - .:/usr/src/app

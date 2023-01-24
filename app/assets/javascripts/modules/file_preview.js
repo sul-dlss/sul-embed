@@ -1,7 +1,6 @@
 // Module adds behavior to Preview/Close preview for file objects
 
-(function( global ) {
-  var Module = (function() {
+const FilePreview = (function() {
 
     return {
       init: function() {
@@ -53,8 +52,5 @@
         }
       }
     };
-  })();
-
-  global.FilePreview = Module;
-
-})( this );
+  })()
+export default FilePreview;

@@ -1,8 +1,8 @@
 // Module initializes file search functionality
+import List from 'list.js';
 
-(function( global ) {
-  var Module = (function() {
-
+export default (function() {
+   
     var mediaObjectList,
       itemCount = $(".sul-embed-item-count"),
       options = {
@@ -32,7 +32,3 @@
       }
     };
   })();
-
-  global.FileSearch = Module;
-
-})( this );
