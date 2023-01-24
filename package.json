@@ -32,6 +32,7 @@
     "mirador-dl-plugin": "^0.13.0",
     "mirador-image-tools": "^0.8.0",
     "mirador-share-plugin": "^0.11.0",
+    "nth-check": "^2.1.1",
     "pdfjs-dist": "2.3.200",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
