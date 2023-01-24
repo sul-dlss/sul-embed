@@ -1,4 +1,4 @@
-FROM ruby:2.7
+FROM ruby:3.1
 
 # Install nodejs
 RUN apt-get update -qq && apt-get install -y nodejs
@@ -17,7 +17,7 @@ ADD . /usr/src/app
 WORKDIR /usr/src/app
 
 # Install & run bundler
-RUN gem install bundler:'~> 2.3.0'
+RUN gem install bundler
 
 RUN bundle
 
