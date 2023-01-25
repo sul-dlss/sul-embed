@@ -36,6 +36,7 @@ body {
 
   .#{$namespace}-count {
     color: $sul-count-font-color;
+    width: 18px;
   }
 
   .#{$namespace}-square-image {
@@ -69,6 +70,79 @@ body {
       margin-left: 3px;
     }
   }
+
+  ul[role="tree"] {
+    // margin: 0;
+    padding-top: 10px;
+    // padding: 10px;
+    list-style: none;
+    // font-size: 120%;
+  }
+  
+  ul[role="tree"] li {
+    // margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [role="treeitem"] {
+    margin-top: 10px;
+  }
+
+  [role="treeitem"][aria-expanded="false"] + [role="group"] {
+    display: none;
+  }
+  
+  [role="treeitem"][aria-expanded="true"] + [role="group"] {
+    display: block;
+  }
+
+  [role="treeitem"][aria-expanded="false"] > ul {
+    display: none;
+  }
+  
+  [role="treeitem"][aria-expanded="true"] > ul {
+    display: block;
+  }
+
+  .#{$namespace}-treeitem {
+    display: flex;
+
+    .#{$namespace}-media-object {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+
+  [role="treeitem"][aria-expanded="false"] > .#{$namespace}-treeitem::before {
+    font-family: 'sul-icons';
+    content: '\f10b'; // sul-i-arrow-right-8 
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+    font-weight: 900;
+    width: 15px;
+  }
+  
+  [role="treeitem"][aria-expanded="true"] > .#{$namespace}-treeitem::before {
+    font-family: 'sul-icons';
+    content: '\f13e'; // sul-i-arrow-down-8 
+    display: inline-block;
+    padding-right: 3px;
+    vertical-align: middle;
+    font-weight: 900;
+    width: 15px;
+  }
+
+  ul.sul-embed-media-list {
+    margin-left: 0;
+    padding-left: 0;
+  }
+
+  ul {
+		margin-left: 0;
+		padding-left: 2em;
+	}
 }
 
 .#{$namespace}-embargo-message {

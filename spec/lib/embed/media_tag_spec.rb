@@ -158,13 +158,13 @@ describe Embed::MediaTag do
   describe '#media_wrapper' do
     describe 'data-stanford-only attribute' do
       it 'true for Stanford only files' do
-        resource_file = double(Embed::Purl::Resource::ResourceFile, stanford_only?: true, location_restricted?: false, label: 'ignored', duration: nil)
+        resource_file = instance_double(Embed::Purl::ResourceFile, stanford_only?: true, location_restricted?: false, label: 'ignored', duration: nil)
         media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
         expect(media_wrapper).to have_css('[data-stanford-only="true"]')
       end
 
       it 'false for public files' do
-        resource_file = double(Embed::Purl::Resource::ResourceFile, stanford_only?: false, location_restricted?: false, label: 'ignored', duration: nil)
+        resource_file = instance_double(Embed::Purl::ResourceFile, stanford_only?: false, location_restricted?: false, label: 'ignored', duration: nil)
         media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
         expect(media_wrapper).to have_css('[data-stanford-only="false"]')
       end
@@ -172,13 +172,13 @@ describe Embed::MediaTag do
 
     describe 'duration' do
       it 'sets the duration when the resource file has duration' do
-        resource_file = double(Embed::Purl::Resource::ResourceFile, label: 'ignored', duration: '1:02')
+        resource_file = instance_double(Embed::Purl::ResourceFile, label: 'ignored', duration: '1:02')
         media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
         expect(media_wrapper).to have_css('[data-duration="1:02"]')
       end
 
       it 'leaves the duration empty when the resource file is missing duration' do
-        resource_file = double(Embed::Purl::Resource::ResourceFile, label: 'ignored', duration: nil)
+        resource_file = instance_double(Embed::Purl::ResourceFile, label: 'ignored', duration: nil)
         media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
         expect(media_wrapper).to have_css('[data-duration=""]')
       end
@@ -188,13 +188,13 @@ describe Embed::MediaTag do
     describe 'data-location-restricted attribute' do
       context 'stanford_only' do
         it 'true for location restricted files' do
-          resource_file = double(Embed::Purl::Resource::ResourceFile, stanford_only?: true, location_restricted?: true, label: 'ignored', duration: nil)
+          resource_file = instance_double(Embed::Purl::ResourceFile, stanford_only?: true, location_restricted?: true, label: 'ignored', duration: nil)
           media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
           expect(media_wrapper).to have_css('[data-location-restricted="true"]')
         end
 
         it 'false for public files' do
-          resource_file = double(Embed::Purl::Resource::ResourceFile, stanford_only?: true, location_restricted?: false, label: 'ignored', duration: nil)
+          resource_file = instance_double(Embed::Purl::ResourceFile, stanford_only?: true, location_restricted?: false, label: 'ignored', duration: nil)
           media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
           expect(media_wrapper).to have_css('[data-location-restricted="false"]')
         end
@@ -202,13 +202,13 @@ describe Embed::MediaTag do
 
       context 'not stanford_only' do
         it 'true for location restricted files' do
-          resource_file = double(Embed::Purl::Resource::ResourceFile, stanford_only?: false, location_restricted?: true, label: 'ignored', duration: nil)
+          resource_file = instance_double(Embed::Purl::ResourceFile, stanford_only?: false, location_restricted?: true, label: 'ignored', duration: nil)
           media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
           expect(media_wrapper).to have_css('[data-location-restricted="true"]')
         end
 
         it 'false for public files' do
-          resource_file = double(Embed::Purl::Resource::ResourceFile, stanford_only?: false, location_restricted?: false, label: 'ignored', duration: nil)
+          resource_file = instance_double(Embed::Purl::ResourceFile, stanford_only?: false, location_restricted?: false, label: 'ignored', duration: nil)
           media_wrapper = Capybara.string(subject_klass.send(:media_wrapper, file: resource_file))
           expect(media_wrapper).to have_css('[data-location-restricted="false"]')
         end

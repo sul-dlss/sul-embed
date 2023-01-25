@@ -27,7 +27,6 @@
     "canvas": "^2.9.1",
     "fscreen": "^1.0.2",
     "leaflet": "^1.9.3",
-    "list.js": "1.1.1",
     "mirador": "^3.0.0-rc.7",
     "mirador-dl-plugin": "^0.13.0",
     "mirador-image-tools": "^0.8.0",
