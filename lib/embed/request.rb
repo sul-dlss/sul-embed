@@ -18,15 +18,13 @@ module Embed
     end
 
     def maxheight
-      return if params[:maxheight].to_i.zero?
-
-      params[:maxheight].to_i
+      height = params[:maxheight].to_i
+      height unless height.zero?
     end
 
     def maxwidth
-      return if params[:maxwidth].to_i.zero?
-
-      params[:maxwidth].to_i
+      width = params[:maxwidth].to_i
+      width unless width.zero?
     end
 
     # This is to support a legacy use
@@ -38,19 +36,19 @@ module Embed
     end
 
     def hide_title?
-      params[:hide_title] && params[:hide_title] == 'true'
+      params[:hide_title] == 'true'
     end
 
     def hide_embed_this?
-      params[:hide_embed] && params[:hide_embed] == 'true'
+      params[:hide_embed] == 'true'
     end
 
     def hide_download?
-      params[:hide_download] && params[:hide_download] == 'true'
+      params[:hide_download] == 'true'
     end
 
     def hide_search?
-      params[:hide_search] && params[:hide_search] == 'true'
+      params[:hide_search] == 'true'
     end
 
     def min_files_to_search
