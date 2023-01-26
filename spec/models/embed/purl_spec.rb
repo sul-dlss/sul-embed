@@ -181,7 +181,7 @@ describe Embed::Purl do
     end
   end
 
-  describe 'hierarchical_contents' do
+  describe '#hierarchical_contents' do
     let(:root_dir) { Embed::Purl::ResourceDir.new('', [], []) }
     let(:purl) { described_class.new('12345') }
 
@@ -193,6 +193,50 @@ describe Embed::Purl do
     it 'returns root ResourceDir' do
       expect(purl.hierarchical_contents).to be root_dir
       expect(Embed::HierarchicalContents).to have_received(:contents).with(purl.contents)
+    end
+  end
+
+  describe '#manifest_json_url' do
+    subject { purl.manifest_json_url }
+
+    let(:purl) { described_class.new('12345') }
+
+    it { is_expected.to eq 'https://purl.stanford.edu/12345/iiif/manifest' }
+  end
+
+  describe '#manifest_json_response' do
+    subject(:fetch) { purl.manifest_json_response }
+
+    let(:purl) { described_class.new('12345') }
+
+    context 'with a response' do
+      before do
+        allow_any_instance_of(Faraday::Connection).to receive(:get).and_return(response)
+      end
+
+      context 'when the status is success' do
+        let(:response) { instance_double(Faraday::Response, body: '{}', success?: true) }
+
+        it { is_expected.to eq '{}' }
+      end
+
+      context 'when the status is not success' do
+        let(:response) { instance_double(Faraday::Response, success?: false) }
+
+        it 'raises an error' do
+          expect { fetch }.to raise_error(Embed::Purl::ResourceNotAvailable)
+        end
+      end
+    end
+
+    context 'with a timeout' do
+      before do
+        allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(Faraday::ConnectionFailed.new(''))
+      end
+
+      it 'raises an error' do
+        expect { fetch }.to raise_error(Embed::Purl::ResourceNotAvailable)
+      end
     end
   end
 end

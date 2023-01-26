@@ -49,27 +49,4 @@ RSpec.describe Embed::Purl::Resource do
       expect(Embed::Purl.new('12345').contents.first.files.all?(Embed::Purl::ResourceFile)).to be true
     end
   end
-
-  describe '#manifest_json_url' do
-    it 'constructs a URL to a IIIF manifest' do
-      expect(Embed::Purl.new('12345').manifest_json_url).to eq 'https://purl.stanford.edu/12345/iiif/manifest'
-    end
-  end
-
-  describe '#manifest_json_response' do
-    it 'fetches the IIIF manifest' do
-      allow_any_instance_of(Faraday::Connection).to receive(:get).and_return(instance_double(Faraday::Response, body: '{}', success?: true))
-      expect(Embed::Purl.new('12345').manifest_json_response).to eq '{}'
-    end
-
-    it 'raises an application error on failure' do
-      allow_any_instance_of(Faraday::Connection).to receive(:get).and_return(instance_double(Faraday::Response, success?: false))
-      expect { Embed::Purl.new('12345').manifest_json_response }.to raise_error(Embed::Purl::ResourceNotAvailable)
-    end
-
-    it 'raises an application error on timeout' do
-      allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(Faraday::ConnectionFailed.new(''))
-      expect { Embed::Purl.new('12345').manifest_json_response }.to raise_error(Embed::Purl::ResourceNotAvailable)
-    end
-  end
 end
