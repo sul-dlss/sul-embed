@@ -99,6 +99,18 @@ describe Embed::Purl do
     end
   end
 
+  describe '#size' do
+    subject { purl.size }
+
+    before do
+      stub_purl_response_with_fixture(multi_file_purl)
+    end
+
+    let(:purl) { described_class.new('12345') }
+
+    it { is_expected.to eq 12_345 * 2 }
+  end
+
   describe '#downloadable_files' do
     it 'returns a flattened array of downloadable resource files' do
       stub_purl_response_with_fixture(multi_resource_multi_type_purl)

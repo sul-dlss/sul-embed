@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Embed
+  # rubocop:disable Metrics/ClassLength
   class Purl
     require 'embed/media_duration'
     require 'dor/rights_auth'
@@ -39,6 +40,10 @@ module Embed
 
     def hierarchical?
       @hierarchical ||= hierarchical_contents.files.length != contents.sum { |resource| resource.files.length }
+    end
+
+    def size
+      contents.sum(&:size)
     end
 
     def rights
@@ -167,6 +172,7 @@ module Embed
           nil
         end
     end
+    # rubocop:enable Metrics/ClassLength
 
     class ResourceNotAvailable < StandardError
       def initialize(msg = 'The requested PURL resource was not available')

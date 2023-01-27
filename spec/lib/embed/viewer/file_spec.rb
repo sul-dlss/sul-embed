@@ -40,7 +40,7 @@ describe Embed::Viewer::File do
       end
     end
 
-    context 'whne there is no requseted maxheight' do
+    context 'when there is no requested maxheight' do
       it 'is the default height' do
         expect(file_viewer.height).to eq 257 # 2 files + header
       end
@@ -134,5 +134,51 @@ describe Embed::Viewer::File do
       expect(request).to receive(:purl_object).and_return(nil)
       expect(file_viewer.file_type_icon('application/zip')).to eq 'sul-i-file-zipped'
     end
+  end
+
+  describe 'display_download_all?' do
+    subject { file_viewer.display_download_all? }
+
+    context 'when there are not many files and the size is low' do
+      before { stub_purl_response_with_fixture(multi_file_purl) }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when the files are too big' do
+      before { stub_purl_response_with_fixture(large_file_purl) }
+
+      it { is_expected.to be false }
+    end
+
+    context 'when there are too many files' do
+      before { stub_purl_response_with_fixture(many_file_purl) }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#any_stanford_only_files' do
+    subject { file_viewer.any_stanford_only_files? }
+
+    context 'when one or more files are stanford only' do
+      before { stub_purl_response_with_fixture(stanford_restricted_download_purl) }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when no files are stanford only' do
+      before { stub_purl_response_with_fixture(multi_resource_multi_type_purl) }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#download_url' do
+    subject { file_viewer.download_url }
+
+    before { stub_purl_response_with_fixture(file_purl) }
+
+    it { is_expected.to eq 'https://stacks.stanford.edu/object/abc123' }
   end
 end

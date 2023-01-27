@@ -1,0 +1,48 @@
+<div class='sul-embed-footer'>
+  <div class='sul-embed-footer-toolbar'>
+    <button class='sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-infomation-circle'
+      aria-expanded='false' aria-label='open metadata panel'
+      data-sul-embed-toggle='sul-embed-metadata-panel'></button>
+    <% unless viewer.request.hide_embed_this? %>
+      <button class='sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-share'
+        aria-expanded='false'
+        aria-label='open embed this panel'
+        data-sul-embed-toggle='sul-embed-embed-this-panel'></button>
+    <% end %>
+
+    <% if viewer.display_download_all? %>
+      <a id='sul-embed-footer-download-all' href='<%= viewer.download_url %>' target="_blank" rel="noopener noreferrer nofollow">
+        <button class='sul-embed-footer-tool sul-embed-btn sul-em bed-btn-toolbar sul-embed-btn-default sul-i-download-3' aria-label="download all files">
+          Download all <%= pluralize(viewer.purl_object.downloadable_files.length, "file") %>
+          (<%= viewer.pretty_filesize(viewer.purl_object.size) %>)
+          <% if viewer.any_stanford_only_files? %>
+            <span class="sul-embed-location-restricted-text sul-embed-stanford-only-text" aria-label="restricted to stanford">
+              <span class="sul-embed-text-hide"> Stanford only </span>
+            </span>
+          <% end %>
+        </button>
+      </a>
+    <% elsif viewer.purl_object.downloadable_files.length > 1 %>
+      <a rel="nofollow" href="mailto:sdr-contact@lists.stanford.edu?subject=Download%20SDR%20Object%20<%= viewer.purl_object.druid %>">
+        <button class='sul-embed-footer-tool sul-embed-btn sul-em bed-btn-toolbar sul-embed-btn-default sul-i-download-3' aria-label="Contact us to download files">
+          Contact us to download files.
+        </button>
+      </a>
+    <% end %>
+
+    <% if viewer.external_url.present? %>
+      <a class='sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-navigation-next-4'
+        href="<%= viewer.external_url.to_s %>" target='_parent'>
+        <span class='sul-embed-sr-only'><%= viewer.external_url_text %></span>
+      </a>
+    <% end %>
+
+    <% if viewer.fullscreen? %>
+      <button
+        aria-label="Full screen"
+        class="sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-expand-1 sul-fullscreen-button"
+        id="full-screen-button">
+      </button>
+    <% end %>
+  </div>
+</div>
