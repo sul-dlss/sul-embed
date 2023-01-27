@@ -1,4 +1,10 @@
 <div class='sul-embed-header'>
   <%= render 'title', viewer: viewer %>
-  <div class='sul-embed-item-count'><%= pluralize(viewer.purl_object.contents.length, 'item') %></div>
+  <div class='sul-embed-item-count' aria-live='polite'></div>
+  <% if viewer.display_file_search? %>
+    <div class='sul-embed-search'>
+      <label for='sul-embed-search-input' class='sul-embed-sr-only'>Search this list</label>
+      <input class='sul-embed-search-input' id='sul-embed-search-input' placeholder='Search this list' data-search-input="true">
+    </div>
+  <% end %>
 </div>

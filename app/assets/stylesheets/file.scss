@@ -23,6 +23,7 @@ body {
       border: 1px solid $sul-input-border;
       border-radius: 3px;
       width: 15em;
+      margin-left: 15px;
     }
   }
 
@@ -102,6 +103,14 @@ body {
   }
   
   [role="treeitem"][aria-expanded="true"] > ul {
+    display: block;
+  }
+
+  [role="treeitem"][aria-hidden="true"] {
+    display: none;
+  }
+
+  [role="treeitem"][aria-hidden="false"] {
     display: block;
   }
 

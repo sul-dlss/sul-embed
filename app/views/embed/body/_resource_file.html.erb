@@ -9,7 +9,7 @@
       <i class="sul-i-2x <%= viewer.file_type_icon(file.mimetype) %>"></i>
     <% end %>
   </div>
-  <div class='sul-embed-media-body'>
+  <div class='sul-embed-media-body' data-filepath="<%= file.title %>">
     <% if viewer.embargoed_to_world?(file) %>
       <span class='sul-embed-disabled'><%= file.hierarchical_title %></span>
     <% else %>
@@ -22,7 +22,7 @@
       </div>
     <% end %>
 
-    <div class='sul-embed-description'>
+    <div class='sul-embed-description' data-description='true'>
       <%= resource.description %>
     </div>
     <div class='sul-embed-download'>

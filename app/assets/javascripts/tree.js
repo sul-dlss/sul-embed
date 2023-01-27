@@ -12,20 +12,9 @@
 
 'use strict';
 
-/**
- * ARIA Treeview example
- *
- * @function onload
- * @description  after page has loaded initialize all treeitems based on the role=treeitem
- */
-
 window.addEventListener('load', function () {
-  var trees = document.querySelectorAll('[role="tree"]');
-
-  for (var i = 0; i < trees.length; i++) {
-    var t = new Tree(trees[i]);
-    t.init();
-  }
+  var treeNodes = document.querySelectorAll('[role="tree"]');
+  treeNodes.forEach((treeNode) => new Tree(treeNode).init());
 });
 
 /*
@@ -48,11 +37,13 @@ var Tree = function (node) {
   this.domNode = node;
 
   this.treeitems = [];
+  this.fileTreeitems = [];
   this.firstChars = [];
 
   this.firstTreeitem = null;
   this.lastTreeitem = null;
   this.selectedItem = null;
+  this.searchInput = null;
 };
 
 Tree.prototype.init = function () {
@@ -67,6 +58,7 @@ Tree.prototype.init = function () {
         ti.init();
         tree.treeitems.push(ti);
         tree.firstChars.push(ti.label.substring(0, 1).toLowerCase());
+        if(ti.isSearchable) tree.fileTreeitems.push(ti);
       }
 
       if (elem.firstElementChild) {
@@ -83,8 +75,10 @@ Tree.prototype.init = function () {
   }
 
   findTreeitems(this.domNode, this, false);
-
   this.updateVisibleTreeitems();
+  this.updateFileCount();
+  this.searchInput = document.querySelector('[data-search-input]')
+  if(this.searchInput) this.searchInput.addEventListener('keyup', this.updateSearch.bind(this));
 
   this.firstTreeitem.domNode.tabIndex = 0;
 };
@@ -216,6 +210,19 @@ Tree.prototype.updateVisibleTreeitems = function () {
   }
 };
 
+Tree.prototype.updateFileCount = function () {
+  const count = this.fileTreeitems.filter(fileTreeItem => fileTreeItem.isSearchVisible).length;
+  const count_text = `${count} ${count == 1 ? "item" : "items"}`;
+  document.querySelectorAll('.sul-embed-item-count').forEach((elem) => elem.innerHTML = count_text);
+};
+
+Tree.prototype.updateSearch = function () {
+  const search = this.searchInput.value.toLowerCase();
+  this.fileTreeitems.forEach(ti => ti.updateSearch(search));
+  this.updateFileCount();
+  this.treeitems.forEach(ti => ti.updateSearch(search));
+};
+
 Tree.prototype.setFocusByFirstCharacter = function (currentItem, char) {
   var start, index;
 
@@ -323,6 +330,10 @@ var Treeitem = function (node, treeObj, group) {
     RIGHT: 39,
     DOWN: 40,
   });
+
+  this.isSearchable = node.dataset.hierarchyType === 'file';
+  this.isSearchVisible = true;
+  this.searchText = null;
 };
 
 Treeitem.prototype.init = function () {
@@ -341,6 +352,12 @@ Treeitem.prototype.init = function () {
     this.domNode.addEventListener('mouseover', this.handleMouseOver.bind(this));
     this.domNode.addEventListener('mouseout', this.handleMouseOut.bind(this));
   }
+
+  if(this.isSearchable) {
+    const filepath = this.domNode.querySelector('[data-filepath]').dataset.filepath.toLowerCase();
+    const description = this.domNode.querySelector('[data-description]').textContent.toLowerCase();
+    this.searchText = [filepath, description].join('')
+  }
 };
 
 Treeitem.prototype.isExpanded = function () {
@@ -349,6 +366,17 @@ Treeitem.prototype.isExpanded = function () {
   }
 
   return false;
+};
+
+Treeitem.prototype.updateSearch = function (search) {
+  if(this.isSearchable && search != undefined) {    
+    this.isSearchVisible = this.searchText.includes(search);
+    this.domNode.setAttribute('aria-hidden', !this.isSearchVisible);
+  }
+  if(!this.isSearchable) {
+    const hasVisibleDescFiles = this.domNode.querySelectorAll('[data-hierarchy-type="file"][aria-hidden="false"]').length === 0
+    this.domNode.setAttribute('aria-hidden', hasVisibleDescFiles);  
+  }
 };
 
 /* EVENT HANDLERS */
