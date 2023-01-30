@@ -1,12 +1,12 @@
 // Module injects css into head of embeded page
 
 (function( global ) {
-  var Module = (function() {
+  const Module = (function() {
 
-    var linkHtml = '<link rel="stylesheet" href="{{stylesheetLink}}" type="text/css" />',
-        themeUrl = $("[data-sul-embed-theme]").data("sul-embed-theme"),
-        iconsUrl = $('[data-sul-icons]').data('sul-icons'),
-        pluginStylesheets = $('[data-plugin-styles]').data('plugin-styles') || '';
+    const linkHtml = '<link rel="stylesheet" href="{{stylesheetLink}}" type="text/css" />',
+        themeUrl = document.querySelector("[data-sul-embed-theme]").dataset.sulEmbedTheme,
+        iconsNode = document.querySelector('[data-sul-icons]'),
+        pluginStylesheets = document.querySelector('[data-plugin-styles]')?.dataset?.pluginStyles || '';
 
     return {
       appendToHead: function() {
@@ -17,8 +17,9 @@
       },
 
       injectFontIcons: function() {
-        if ( iconsUrl ) {
-          var htmlSnippet = linkHtml.replace('{{stylesheetLink}}', iconsUrl);
+        if ( iconsNode ) {
+          const iconsUrl = iconsNode.dataset.sulIcons
+          const htmlSnippet = linkHtml.replace('{{stylesheetLink}}', iconsUrl);
           $('head').append(htmlSnippet);
         }
       },

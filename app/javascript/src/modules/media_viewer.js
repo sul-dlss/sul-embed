@@ -56,33 +56,32 @@ export default (function() {
           cssClass = 'sul-i-file-video-3';
         }
 
-        var activeClass = '';
+        let activeClass = '';
         if (index === 0) {
           activeClass = 'active';
         }
 
-        var thumbClass = 'sul-embed-slider-thumb sul-embed-media-slider-thumb ';
-        var labelClass = 'sul-embed-thumb-label';
+        const thumbClass = 'sul-embed-slider-thumb sul-embed-media-slider-thumb ';
+        let labelClass = 'sul-embed-thumb-label';
         const isStanfordRestricted = mediaDiv.dataset.stanfordOnly === "true"
         if (isStanfordRestricted) {
           labelClass += ' sul-embed-thumb-stanford-only';
         }
 
-        var thumbnailIcon = '';
+        let thumbnailIcon = '';
         const thumbnailUrl = mediaDiv.dataset.thumbnailUrl
         if (thumbnailUrl !== '') {
-          thumbnailIcon = '<img class="sul-embed-media-square-icon" src="' + thumbnailUrl + '" />';
+          thumbnailIcon = `<img class="sul-embed-media-square-icon" src="${thumbnailUrl}" />`
         } else {
-          thumbnailIcon = '<i class="' + cssClass + '"></i>';
+          thumbnailIcon = `<i class="${cssClass}"></i>`
         }
 
         const isLocationRestricted = mediaDiv.dataset.locationRestricted === "true"
         const fileLabel = String(mediaDiv.dataset.fileLabel || '');
         const duration = String(mediaDiv.dataset.duration || '');
         thumbs.push(
-          '<li class="' + thumbClass + activeClass + '">' +
-            thumbnailIcon +
-            '<a class="' + labelClass + '" href="#">' +
+          `<li class="${thumbClass}${activeClass}">${thumbnailIcon}` +
+            `<a class="${labelClass}" href="#">` +
               stanfordOnlyScreenreaderText(isStanfordRestricted) +
               restrictedTextMarkup(isLocationRestricted) +
               truncateWithEllipsis(fileLabel, maxFileLabelLength(isLocationRestricted)) +
@@ -168,12 +167,12 @@ export default (function() {
         }
 
         if(data.status === 'success') {
-          updateMediaSrcWithToken(mediaObject, data.token);
-          initializeVideoJSPlayer(mediaObject);
+          updateMediaSrcWithToken($mediaObject, data.token);
+          initializeVideoJSPlayer($mediaObject);
         }
 
         if(typeof(completeCallback) === 'function') {
-          completeCallback(mediaObject, data);
+          completeCallback($mediaObject, data);
         }
       });
     }

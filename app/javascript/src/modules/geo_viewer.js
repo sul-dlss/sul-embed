@@ -1,20 +1,29 @@
 (function( global ) {
   'use strict';
-  var Module = (function() {
-    var dataAttributes;
-    var map;
-    var $el;
+  const Module = (function() {
+    let dataAttributes;
+    let boundingBox;
+    let map;
+    let $el;
 
-    var isDefined = function(object) {
+    const isDefined = function(object) {
        return typeof object !== 'undefined';
     };
 
     return {
       init: function(options) {
-        $el = jQuery('#sul-embed-geo-map');
-        dataAttributes = $el.data();
+        const el = document.getElementById('sul-embed-geo-map')
 
-        map = L.map('sul-embed-geo-map', options).fitBounds(dataAttributes.boundingBox);
+        dataAttributes = el.dataset;
+        // dataAttributes looks like this:
+        // {
+        //   "boundingBox": "[[\"-1.478794\", \"29.572742\"], [\"4.234077\", \"35.000308\"]]",
+        //   "wmsUrl": "https://geowebservices.stanford.edu/geoserver/wms/",
+        //   "layers": "druid:cz128vq0535"
+        // }
+        boundingBox = JSON.parse(dataAttributes.boundingBox)
+        $el = jQuery(el);
+        map = L.map('sul-embed-geo-map', options).fitBounds(boundingBox);
 
         L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
           maxZoom: 19,
@@ -74,7 +83,7 @@
           Module.setupFeatureInspection();
         } else {
           // Restricted layers
-          L.rectangle(dataAttributes.boundingBox, {color: '#0000FF', weight: 4})
+          L.rectangle(boundingBox, {color: '#0000FF', weight: 4})
             .addTo(map);
         }
       },
