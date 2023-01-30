@@ -32,7 +32,7 @@ module Embed
       end
 
       def min_files_to_search
-        (@request.min_files_to_search || 10).to_i
+        (@request.min_files_to_search || Settings.min_files_to_search_default).to_i
       end
 
       def display_file_search?

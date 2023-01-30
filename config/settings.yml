@@ -63,3 +63,4 @@ collections_to_show_attribution:
 # Google Analytics will report in debug mode by default
 # in shared_configs for embed-prod, we set this value to 0  
 analytics_debug: true
+min_files_to_search_default: 10
