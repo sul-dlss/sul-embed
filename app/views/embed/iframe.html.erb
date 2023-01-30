@@ -9,6 +9,6 @@
   </head>
   <%= render 'analytics' %>
   <body>
-    <%= render 'embed_response', embed_response: @embed_response %>
+    <%= render @embed_response.viewer.to_partial_path, viewer: @embed_response.viewer %>
   </body>
 </html>
