@@ -13,7 +13,7 @@ OkComputer::Registry.register 'ruby_version', OkComputer::RubyVersionCheck.new
 # TODO: add app version check when okcomputer works with cap 3 (see https://github.com/sportngin/okcomputer/pull/112)
 
 # note that purl home page is very resource heavy
-purl_url_to_check = Settings.purl_url + (Settings.purl_url.end_with?('/') ? '' : '/') + 'status'
+purl_url_to_check = "#{Settings.purl_url}/status"
 OkComputer::Registry.register 'purl_url', OkComputer::HttpCheck.new(purl_url_to_check)
 OkComputer::Registry.register 'stacks_url', OkComputer::HttpCheck.new(Settings.stacks_url)
 OkComputer.make_optional ['stacks_url']
