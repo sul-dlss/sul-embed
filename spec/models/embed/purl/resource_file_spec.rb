@@ -82,7 +82,7 @@ RSpec.describe Embed::Purl::ResourceFile do
   end
 
   describe '#thumbnail?' do
-    let(:resource) { double('Resource') }
+    let(:resource) { instance_double(Embed::Purl::Resource) }
     let(:file) { double('File') }
     let(:resource_file) { described_class.new(resource, file, double('Rights')) }
 

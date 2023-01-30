@@ -32,6 +32,7 @@ module Embed
         @resource.attributes['type']&.value == '3d'
       end
 
+      # @return [Array<ResourceFile>]
       def files
         @files ||= @resource.xpath('./file').map do |file|
           ResourceFile.new(self, file, @rights)
@@ -42,10 +43,12 @@ module Embed
         files.sum(&:size)
       end
 
+      # @return [ResourceFile]
       def primary_file
         files.find(&:primary?)
       end
 
+      # @return [ResourceFile]
       def thumbnail
         files.find(&:thumbnail?)
       end

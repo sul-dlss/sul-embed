@@ -2,10 +2,10 @@
 
 require 'rails_helper'
 
-describe Embed::ViewerFactory do
+RSpec.describe Embed::ViewerFactory do
   include PurlFixtures
 
-  let(:request) { double('EmbedRequest', purl_object: purl) }
+  let(:request) { instance_double(Embed::Request, purl_object: purl) }
   let(:purl) { Embed::Purl.new('ignored') }
   let(:instance) { described_class.new(request) }
 

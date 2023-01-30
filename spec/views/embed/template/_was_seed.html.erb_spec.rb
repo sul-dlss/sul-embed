@@ -17,7 +17,7 @@ RSpec.describe 'embed/template/_was_seed' do
 
   context 'with current timemap behavior' do
     let(:fake_connection) do
-      instance_double(Faraday::Connection, get: double('response', body: timemap, success?: true))
+      instance_double(Faraday::Connection, get: instance_double(Faraday::Response, body: timemap, success?: true))
     end
 
     before do
@@ -49,7 +49,7 @@ RSpec.describe 'embed/template/_was_seed' do
 
   context 'with new timemap behavior' do
     let(:fake_connection) do
-      instance_double(Faraday::Connection, get: double('response', body: timemap_new, success?: true))
+      instance_double(Faraday::Connection, get: instance_double(Faraday::Response, body: timemap_new, success?: true))
     end
 
     before do

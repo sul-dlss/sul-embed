@@ -9,7 +9,7 @@ describe Embed::WasTimeMap do
 
   describe '#timemap' do
     let(:fake_connection) do
-      instance_double(Faraday::Connection, get: double('response', body: timemap, success?: true))
+      instance_double(Faraday::Connection, get: instance_double(Faraday::Response, body: timemap, success?: true))
     end
 
     context 'when HTTP is successful' do
@@ -40,7 +40,7 @@ describe Embed::WasTimeMap do
 
   describe '#timemap (new behavior)' do
     let(:fake_connection) do
-      instance_double(Faraday::Connection, get: double('response', body: timemap_new, success?: true))
+      instance_double(Faraday::Connection, get: instance_double(Faraday::Response, body: timemap_new, success?: true))
     end
 
     context 'when HTTP is successful' do
@@ -72,7 +72,7 @@ describe Embed::WasTimeMap do
 
   context 'when HTTP is not successful' do
     let(:fake_connection) do
-      instance_double(Faraday::Connection, get: double('response', success?: false))
+      instance_double(Faraday::Connection, get: instance_double(Faraday::Response, success?: false))
     end
 
     before do

@@ -25,21 +25,26 @@ RSpec.describe Embed::Purl::Resource do
   end
 
   describe '#object_thumbnail?' do
-    let(:purl_resource) { double('Resource') }
+    subject { described_class.new(node, double('Rights')) }
 
-    it 'is true when type="thumb"' do
-      allow(purl_resource).to receive(:attributes).and_return('type' => double(value: 'thumb'))
-      expect(described_class.new(purl_resource, double('Rights'))).to be_object_thumbnail
+    let(:node) { instance_double(Nokogiri::XML::Node, attributes: attributes) }
+
+    context 'when type="thumb"' do
+      let(:attributes) { { 'type' => double(value: 'thumb') } }
+
+      it { is_expected.to be_object_thumbnail }
     end
 
-    it 'is true when thumb="yes"' do
-      allow(purl_resource).to receive(:attributes).and_return('thumb' => double(value: 'yes'))
-      expect(described_class.new(purl_resource, double('Rights'))).to be_object_thumbnail
+    context 'when thumb="yes"' do
+      let(:attributes) { { 'thumb' => double(value: 'yes') } }
+
+      it { is_expected.to be_object_thumbnail }
     end
 
-    it 'is false otherwise' do
-      allow(purl_resource).to receive(:attributes).and_return('type' => double(value: 'image'))
-      expect(described_class.new(purl_resource, double('Rights'))).not_to be_object_thumbnail
+    context 'when any other value' do
+      let(:attributes) { { 'type' => double(value: 'image') } }
+
+      it { is_expected.not_to be_object_thumbnail }
     end
   end
 
