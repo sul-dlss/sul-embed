@@ -51,8 +51,6 @@ gem 'honeybadger'
 
 gem 'filesize'
 
-gem 'leaflet-rails'
-
 gem 'handlebars_assets'
 
 gem 'newrelic_rpm', group: :production
