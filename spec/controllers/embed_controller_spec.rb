@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe EmbedController do
+RSpec.describe EmbedController do
   describe 'GET embed' do
     it 'has a 400 status code without url params' do
       get :get

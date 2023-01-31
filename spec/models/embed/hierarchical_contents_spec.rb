@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Embed::HierarchicalContents do
+RSpec.describe Embed::HierarchicalContents do
   include PurlFixtures
 
   describe '#contents' do

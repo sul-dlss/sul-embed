@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Embed::Mimetypes do
+RSpec.describe Embed::Mimetypes do
   let(:dummy_class) { Class.new { include Embed::Mimetypes }.new }
 
   describe '.pretty_mime' do

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Embed::Purl do
+RSpec.describe Embed::Purl do
   include PurlFixtures
   describe 'title' do
     before { stub_purl_response_with_fixture(file_purl) }

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'feature testing of viewers', js: true do
+RSpec.describe 'feature testing of viewers', js: true do
   include PurlFixtures
   describe 'basic functionality' do
     it 'makes purl embed request and embed' do
