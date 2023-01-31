@@ -12,6 +12,6 @@
         <%= render 'body/resource_dir', dir: viewer.purl_object.hierarchical_contents, viewer: viewer %>
       </li>
     </ul>
-    <script>;jQuery.ajax({url: "<%= asset_url('file.js') %>", cache: true, dataType: 'script'});</script>
+    <%= javascript_packs_with_chunks_tag('file') %>
   </div>
 </div>

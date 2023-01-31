@@ -31,5 +31,5 @@
       </div>
     </div>
   </div>
-  <script>;jQuery.ajax({url: "<%= asset_url('was_seed.js') %>", cache: true, dataType: 'script'});</script>
+  <%= javascript_packs_with_chunks_tag('was_seed') %>
 </div>
