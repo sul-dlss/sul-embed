@@ -175,8 +175,6 @@ GEM
       concurrent-ruby (~> 1.0)
     iso8601 (0.13.0)
     json (2.6.3)
-    leaflet-rails (1.9.2)
-      rails (>= 4.2.0)
     loofah (2.19.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -363,7 +361,6 @@ DEPENDENCIES
   high_voltage
   honeybadger
   iso8601
-  leaflet-rails
   newrelic_rpm
   nokogiri (>= 1.7.1)
   okcomputer
