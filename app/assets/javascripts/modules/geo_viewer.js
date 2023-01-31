@@ -100,8 +100,8 @@
         var data = e.target.feature.properties;
         var _this = this;
         $.when(thumbDeferred).done(function() {
-          const template = require('templates/index_map_info');
-          _this.openSidebarWithContent(template);
+          const template = require('../templates/index_map_info.hbs');
+          _this.openSidebarWithContent(template(data));
         });
 
         if (data.iiifUrl) {
@@ -170,10 +170,10 @@
           .attr('aria-hidden', false);
       },
       setupSidebar: function() {
-        const control = require('templates/geo_sidebar');
+        const template = require('../templates/geo_sidebar.hbs');
         L.control.custom({
           position: 'topright',
-          content: control,
+          content: template(),
           classes: '',
           events: {
             click: function(e) {
