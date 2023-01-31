@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Embed::Viewer::WasSeed do
+RSpec.describe Embed::Viewer::WasSeed do
   include PurlFixtures
   include WasTimeMapFixtures
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }

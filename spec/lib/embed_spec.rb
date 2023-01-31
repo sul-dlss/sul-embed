@@ -8,7 +8,7 @@ class TestViewerClass
   end
 end
 
-describe Embed do
+RSpec.describe Embed do
   describe 'registering viewers' do
     it 'has an array of registered_viewers' do
       expect(described_class.registered_viewers).to be_a(Array)

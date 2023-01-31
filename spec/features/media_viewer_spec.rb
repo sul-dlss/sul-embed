@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'media viewer', js: true do
+RSpec.describe 'media viewer', js: true do
   include PurlFixtures
   let(:purl) { video_purl }
   let(:stub_auth) { nil }

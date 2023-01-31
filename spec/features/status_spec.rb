@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'application and dependency monitoring' do
+RSpec.describe 'application and dependency monitoring' do
   it '/status checks if Rails app is running' do
     visit '/status'
     expect(page.status_code).to eq 200

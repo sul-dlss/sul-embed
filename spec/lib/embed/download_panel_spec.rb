@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 require 'embed/download_panel'
-describe Embed::DownloadPanel do
+RSpec.describe Embed::DownloadPanel do
   subject do
     Capybara.string(
       described_class.new(title: 'The Panel Title') do

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Embed::PrettyFilesize do
+RSpec.describe Embed::PrettyFilesize do
   let(:dummy_class) { Class.new { include Embed::PrettyFilesize }.new }
 
   describe '.pretty_file_size' do

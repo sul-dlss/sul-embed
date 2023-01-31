@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Embed::StacksMediaStream do
+RSpec.describe Embed::StacksMediaStream do
   let(:streaming_base_url) { Settings.stream.url }
 
   describe '#to_playlist_url' do

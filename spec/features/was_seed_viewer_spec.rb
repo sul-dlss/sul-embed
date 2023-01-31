@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'was seed viewer public', js: true do
+RSpec.describe 'was seed viewer public', js: true do
   include PurlFixtures
   include WasTimeMapFixtures
 

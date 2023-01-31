@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'basic oembed functionality' do
+RSpec.describe 'basic oembed functionality' do
   include PurlFixtures
   it 'returns a response with required parameters (xml)' do
     stub_purl_response_with_fixture(file_purl)

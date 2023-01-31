@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'embed/media_duration'
 
-describe Embed::MediaDuration do
+RSpec.describe Embed::MediaDuration do
   describe '#to_s' do
     context 'human-readable string for an iso8601 duration string' do
       { # raw value  =>  display value

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Embed::StacksImage do
+RSpec.describe Embed::StacksImage do
   subject do
     Class.new do
       extend Embed::StacksImage

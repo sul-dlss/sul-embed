@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Embed::Viewer::M3Viewer do
+RSpec.describe Embed::Viewer::M3Viewer do
   include PurlFixtures
   subject(:m3_viewer) { described_class.new(request) }
 

@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'embed/embed_this_panel'
 
-describe Embed::EmbedThisPanel, type: 'view' do
+RSpec.describe Embed::EmbedThisPanel, type: 'view' do
   subject do
     Capybara.string(
       described_class.new(viewer: viewer) do

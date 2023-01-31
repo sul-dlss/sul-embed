@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe Embed::WasTimeMap do
+RSpec.describe Embed::WasTimeMap do
   include WasTimeMapFixtures
 
   subject { described_class.new('http://wayback.example.com/timemap/http://ennejah.info') }
