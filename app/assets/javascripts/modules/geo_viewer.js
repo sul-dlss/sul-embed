@@ -1,4 +1,3 @@
-/* global HandlebarsTemplates */
 (function( global ) {
   'use strict';
   var Module = (function() {
@@ -101,8 +100,8 @@
         var data = e.target.feature.properties;
         var _this = this;
         $.when(thumbDeferred).done(function() {
-          var html = HandlebarsTemplates.index_map_info(data);
-          _this.openSidebarWithContent(html);
+          const template = require('templates/index_map_info');
+          _this.openSidebarWithContent(template);
         });
 
         if (data.iiifUrl) {
@@ -171,7 +170,7 @@
           .attr('aria-hidden', false);
       },
       setupSidebar: function() {
-        var control = HandlebarsTemplates.geo_sidebar();
+        const control = require('templates/geo_sidebar');
         L.control.custom({
           position: 'topright',
           content: control,

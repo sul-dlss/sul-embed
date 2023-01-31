@@ -52,8 +52,6 @@ gem 'honeybadger'
 
 gem 'filesize'
 
-gem 'handlebars_assets'
-
 gem 'newrelic_rpm', group: :production
 
 # Use okcomputer to monitor the application

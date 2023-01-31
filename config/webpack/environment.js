@@ -1,6 +1,7 @@
 const path = require('path');
 const { environment } = require('@rails/webpacker')
 const webpack = require('webpack');
+const handlebars = require('./loaders/handlebars')
 
 environment.config.merge({
   resolve: {
@@ -25,5 +26,7 @@ environment.plugins.prepend(
     }
   )
 )
+
+environment.loaders.prepend('handlebars', handlebars)
 
 module.exports = environment

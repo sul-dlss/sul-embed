@@ -158,7 +158,6 @@ GEM
       dry-schema (>= 1.12, < 2)
       zeitwerk (~> 2.6)
     erubi (1.12.0)
-    execjs (2.8.1)
     faraday (2.7.4)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -168,10 +167,6 @@ GEM
     filesize (0.2.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    handlebars_assets (0.23.9)
-      execjs (~> 2.0)
-      sprockets (>= 2.0.0)
-      tilt (>= 1.2)
     high_voltage (3.1.2)
     honeybadger (5.0.2)
     i18n (1.12.0)
@@ -324,7 +319,6 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     thor (1.2.1)
-    tilt (2.0.11)
     timeout (0.3.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -366,7 +360,6 @@ DEPENDENCIES
   faraday (~> 2)
   faraday-follow_redirects
   filesize
-  handlebars_assets
   high_voltage
   honeybadger
   iso8601
