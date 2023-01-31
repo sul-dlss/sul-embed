@@ -6,16 +6,16 @@
     return {
       init: function() {
         $('.sul-embed-container').each(function(){
-          FilePreview.addPreviewToggleBehavior($(this));
+          Module.addPreviewToggleBehavior($(this));
         });
       },
       addPreviewToggleBehavior: function(container) {
         $('[data-sul-embed-file-preview-toggle="true"]', container).each(function(){
           $('a', $(this)).click(function(e){ e.preventDefault(); });
           $(this).click(function(){
-            FilePreview.togglePreviewIcon($(this));
-            FilePreview.togglePreviewText($(this));
-            FilePreview.togglePreviewWindow($(this));
+            Module.togglePreviewIcon($(this));
+            Module.togglePreviewText($(this));
+            Module.togglePreviewWindow($(this));
           });
         });
       },
