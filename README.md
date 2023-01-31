@@ -30,7 +30,7 @@ Now visit this URL in your browser!
 Since webpacker doesn't run on modern versions of node JS, you can use the provided docker container to run webpacker.
 
 ```
-docker compose webpacker
+docker compose up webpacker
 ```
 
 ## oEmbed specification details
