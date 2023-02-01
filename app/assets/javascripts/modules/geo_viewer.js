@@ -1,4 +1,3 @@
-/* global HandlebarsTemplates */
 (function( global ) {
   'use strict';
   var Module = (function() {
@@ -101,8 +100,8 @@
         var data = e.target.feature.properties;
         var _this = this;
         $.when(thumbDeferred).done(function() {
-          var html = HandlebarsTemplates.index_map_info(data);
-          _this.openSidebarWithContent(html);
+          const template = require('../templates/index_map_info.hbs');
+          _this.openSidebarWithContent(template(data));
         });
 
         if (data.iiifUrl) {
@@ -171,10 +170,10 @@
           .attr('aria-hidden', false);
       },
       setupSidebar: function() {
-        var control = HandlebarsTemplates.geo_sidebar();
+        const template = require('../templates/geo_sidebar.hbs');
         L.control.custom({
           position: 'topright',
-          content: control,
+          content: template(),
           classes: '',
           events: {
             click: function(e) {
