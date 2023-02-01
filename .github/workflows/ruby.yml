@@ -22,9 +22,7 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 16
-    - name: Install xvfb
-      run: sudo apt-get install xvfb
     - name: Run tests
-      run: xvfb-run --auto-servernum bundle exec rake
+      run: bin/rake
       env:
         RAILS_ENV: test
