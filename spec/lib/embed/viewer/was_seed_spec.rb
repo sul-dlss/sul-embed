@@ -30,9 +30,59 @@ RSpec.describe Embed::Viewer::WasSeed do
   end
 
   describe '#archived_timemap_url' do
-    it 'parses a mods archived site' do
-      stub_purl_response_and_request(was_seed_purl, request)
-      expect(was_seed_viewer.archived_timemap_url).to eq 'https://swap.stanford.edu/timemap/http://naca.central.cranfield.ac.uk/'
+    subject { was_seed_viewer.archived_timemap_url }
+
+    context 'with a valid url' do
+      before do
+        stub_purl_response_and_request(was_seed_purl, request)
+      end
+
+      it { is_expected.to eq 'https://swap.stanford.edu/timemap/http://naca.central.cranfield.ac.uk/' }
+    end
+
+    context 'with invalid url' do
+      let(:invalid) do
+        <<~XML
+          <publicObject id="druid:gb089bd2251" published="2015-07-15T11:49:04-07:00">
+            <identityMetadata>
+              <sourceId source="sul">ARCHIVEIT-2361-naca.central.cranfield.ac.uk/</sourceId>
+              <objectId>druid:gb089bd2251</objectId>
+              <objectCreator>DOR</objectCreator>
+              <objectLabel>http://naca.central.cranfield.ac.uk/</objectLabel>
+              <objectType>item</objectType>
+              <otherId name="uuid">9b83e130-2b21-11e5-a344-0050569b52d5</otherId>
+              <tag>Remediated By : 4.21.2</tag>
+            </identityMetadata>
+            <contentMetadata type="webarchive-seed" id="druid:gb089bd2251">
+              <resource type="image" sequence="1">
+                 <file mimetype="image/jp2" id="thumbnail.jp2" size="21862">
+                    <imageData width="400" height="400" />
+                 </file>
+              </resource>
+            </contentMetadata>
+            <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:fedora="info:fedora/fedora-system:def/relations-external#" xmlns:fedora-model="info:fedora/fedora-system:def/model#" xmlns:hydra="http://projecthydra.org/ns/relations#">
+            <rdf:Description rdf:about="info:fedora/druid:gb089bd2251">
+               <fedora:isMemberOf rdf:resource="info:fedora/druid:mk656nf8485" />
+               <fedora:isMemberOfCollection rdf:resource="info:fedora/druid:mk656nf8485" />
+            </rdf:Description>
+            </rdf:RDF>
+            <mods xmlns="http://www.loc.gov/mods/v3">
+              <location>
+                <url displayLabel="Archived website">https://swap.stanford.edu/http://naca.central.cranfield.ac.uk/</url>
+              </location>
+            </mods>
+            <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+              <dc:identifier>https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/</dc:identifier>
+            </oai_dc:dc>
+          </publicObject>
+        XML
+      end
+
+      before do
+        stub_purl_response_and_request(invalid, request)
+      end
+
+      it { is_expected.to be_nil }
     end
   end
 

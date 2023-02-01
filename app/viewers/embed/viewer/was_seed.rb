@@ -30,7 +30,13 @@ module Embed
       end
 
       def archived_timemap_url
-        archived_site_url.sub('/*/', '/timemap/')
+        if archived_site_url.include?('/*/') # Not a valid timemap url
+          archived_site_url.sub('/*/', '/timemap/')
+        else
+          Honeybadger.notify('WasSeed#archived_timemap_url is malformed',
+                             context: { druid: druid, archived_site_url: archived_site_url })
+          nil
+        end
       end
 
       def shelved_thumb
