@@ -18,16 +18,10 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
-    - uses: actions/cache@v3
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    - uses: actions/setup-node@v3
       with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-gems-
-    - name: Bundle install
-      run: bundle config path vendor/bundle
-    - name: Install dependencies
-      run: bin/setup
+        node-version: 16
     - name: Install xvfb
       run: sudo apt-get install xvfb
     - name: Run tests
