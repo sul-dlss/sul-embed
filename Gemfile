@@ -57,6 +57,5 @@ gem 'newrelic_rpm', group: :production
 # Use okcomputer to monitor the application
 gem 'okcomputer'
 
-gem 'webpacker', '~> 5.x'
-
 gem 'cssbundling-rails', '~> 1.1'
+gem 'shakapacker', '~> 6.4'
