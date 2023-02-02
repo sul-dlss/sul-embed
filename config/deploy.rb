@@ -34,16 +34,3 @@ set :honeybadger_env, fetch(:stage)
 
 # update shared_configs before restarting app
 before 'deploy:restart', 'shared_configs:update'
-
-before "deploy:assets:precompile", "deploy:yarn_install"
-
-namespace :deploy do
-  desc 'Run rake yarn:install'
-  task :yarn_install do
-    on roles(:web) do
-      within release_path do
-        execute("cd #{release_path} && yarn install")
-      end
-    end
-  end
-end
