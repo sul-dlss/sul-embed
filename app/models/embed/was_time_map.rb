@@ -54,7 +54,7 @@ module Embed
       end
 
       def memento?
-        /memento/.match?(rel)
+        rel.include?('memento')
       end
 
       def self.from_line(line)
