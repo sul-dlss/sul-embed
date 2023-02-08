@@ -49,4 +49,24 @@ RSpec.describe Embed::Purl::Resource do
       expect(Embed::Purl.new('12345').contents.first.files.all?(Embed::Purl::ResourceFile)).to be true
     end
   end
+
+  describe '#vtt' do
+    let(:resource) { Embed::Purl.new('12345').contents.first }
+
+    context 'when it has a vtt transcript' do
+      subject { resource.vtt.title }
+
+      before { stub_purl_response_with_fixture(video_purl_with_vtt) }
+
+      it { is_expected.to eq 'abc_123_cap.vtt' }
+    end
+
+    context 'when it does not have a vtt transcript' do
+      subject { resource.vtt }
+
+      before { stub_purl_response_with_fixture(single_video_purl) }
+
+      it { is_expected.to be_nil }
+    end
+  end
 end

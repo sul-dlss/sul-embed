@@ -963,6 +963,32 @@ module PurlFixtures
     XML
   end
 
+  def video_purl_with_vtt
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the single video</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="media">
+          <resource sequence="1" id="abc123_1" type="video">
+            <file id="abc_123.mp4" mimetype="video/mp4" size="152000000"></file>
+            <file id="abc_123_cap.vtt" mimetype="text/plain" size="176218"></file>
+          </resource>
+        </contentMetadata>
+        <rightsMetadata>
+          <access type="read">
+            <machine>
+              <location>spec</location>
+            </machine>
+          </access>
+        </rightsMetadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+          <dc:title>title of video with vtt</dc:title>
+        </oai_dc>
+      </publicObject>
+    XML
+  end
+
   def video_purl
     <<-XML
       <publicObject>

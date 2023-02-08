@@ -10,7 +10,8 @@ RSpec.describe Embed::MediaTag do
   let(:purl) { video_purl }
   let(:viewer) do
     instance_double(Embed::Viewer::Media,
-                    purl_object: Embed::Purl.new('druid'))
+                    purl_object: Embed::Purl.new('druid'),
+                    stacks_url: '/file/druid')
   end
 
   let(:subject_klass) { described_class.new(viewer) }
@@ -228,6 +229,14 @@ RSpec.describe Embed::MediaTag do
       it 'gets the correct URL based on the passed in type' do
         expect(subject_klass.send(:streaming_url_for, file, :hls)).to match(%r{.*/playlist.m3u8$})
         expect(subject_klass.send(:streaming_url_for, file, :dash)).to match(%r{.*/manifest.mpd$})
+      end
+    end
+
+    describe '#transcript' do
+      before { stub_purl_response_with_fixture(video_purl_with_vtt) }
+
+      it 'has a track element' do
+        expect(subject).to have_css('track[src="/file/druid/abc_123_cap.vtt"]')
       end
     end
 

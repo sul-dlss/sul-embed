@@ -48,6 +48,11 @@ module Embed
       def thumbnail
         files.find(&:thumbnail?)
       end
+
+      # @return [ResourceFile]
+      def vtt
+        files.find(&:vtt?)
+      end
     end
   end
 end
