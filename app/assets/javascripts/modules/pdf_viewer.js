@@ -1,5 +1,5 @@
 'use strict';
-import PDFJSLib from 'pdfjs-dist/webpack';
+import * as PDFJSLib from 'pdfjs-dist/webpack';
 
 export default {
   viewer: function() { return $('#pdf-viewer'); },
@@ -23,7 +23,7 @@ export default {
 
     _this.pdfDoc.getPage(num).then(function(page) {
       _this.updateButtonState();
-      var viewport = page.getViewport(_this.scale);
+      var viewport = page.getViewport({ scale: _this.scale });
       _this.canvas().height = viewport.height;
       _this.canvas().width = viewport.width;
       // Render PDF page into canvas context
@@ -87,7 +87,6 @@ export default {
 
   init: function() {
     var _this = this;
-    PDFJSLib.GlobalWorkerOptions.workerSrc = _this.viewer().data('workerUrl');
     PDFJSLib.getDocument(_this.pdfUrl()).promise.then(function(pdfDoc_) {
       _this.loadingSpinner().remove();
       _this.pdfDoc = pdfDoc_;
