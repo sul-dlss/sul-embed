@@ -5,7 +5,6 @@ import { PopupPanels } from '../../assets/javascripts/modules/popup_panels';
 import GeoViewer from '../../assets/javascripts/modules/geo_viewer';
 import CommonViewerBehavior from '../../assets/javascripts/modules/common_viewer_behavior';
 
-import '../../assets/javascripts/vendor/tooltip';
 import 'leaflet';
 import '../../../vendor/assets/javascripts/Leaflet.Control.Custom';
 

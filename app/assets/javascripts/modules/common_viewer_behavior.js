@@ -6,18 +6,11 @@
 
     return {
       initializeViewer: function(callback) {
-        var _this = this;
         this.showViewer();
         $.when(viewerShown).done(function() {
-          _this.initializeTooltip();
           if (typeof callback !== 'undefined') {
             callback();
           }
-        });
-      },
-      initializeTooltip: function() {
-        $("[data-sul-embed-tooltip='true']").each(function() {
-          $(this).tooltip();
         });
       },
       showViewer: function() {

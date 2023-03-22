@@ -3,8 +3,6 @@ import CommonViewerBehavior from '../../assets/javascripts/modules/common_viewer
 import { PopupPanels } from '../../assets/javascripts/modules/popup_panels';
 import { EmbedThis } from '../../assets/javascripts/modules/embed_this';
 
-import '../../assets/javascripts/vendor/tooltip';
-
 document.addEventListener('DOMContentLoaded', () => {
   CssInjection.injectFontIcons();
   CssInjection.appendToHead();

@@ -5,8 +5,6 @@ import { DownloadAll } from '../../assets/javascripts/modules/download_all';
 import { FilePreview } from '../../assets/javascripts/modules/file_preview';
 import CommonViewerBehavior from '../../assets/javascripts/modules/common_viewer_behavior';
 
-import '../../assets/javascripts/vendor/tooltip';
-
 document.addEventListener('DOMContentLoaded', () => {
   CssInjection.injectFontIcons();
   CssInjection.appendToHead();
