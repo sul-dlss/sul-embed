@@ -233,7 +233,7 @@ RSpec.describe Embed::Purl do
       end
 
       context 'when the status is not success' do
-        let(:response) { instance_double(Faraday::Response, success?: false) }
+        let(:response) { instance_double(Faraday::Response, success?: false, status: 404) }
 
         it 'raises an error' do
           expect { fetch }.to raise_error(Embed::Purl::ResourceNotAvailable)

@@ -106,7 +106,7 @@ module Embed
       "#{Settings.purl_url}/#{druid}/iiif/manifest"
     end
 
-    def manifest_json_response
+    def manifest_json_response # rubocop:disable Metrics/MethodLength
       @manifest_json_response ||=
         begin
           conn = Faraday.new(url: manifest_json_url)
@@ -114,7 +114,10 @@ module Embed
             request.options.timeout = Settings.purl_read_timeout
             request.options.open_timeout = Settings.purl_conn_timeout
           end
-          raise ResourceNotAvailable unless response.success?
+          unless response.success?
+            raise ResourceNotAvailable,
+                  "Resource unavailable #{manifest_json_url} (status: #{response.status})"
+          end
 
           response.body
         rescue Faraday::ConnectionFailed, Faraday::TimeoutError
@@ -155,7 +158,7 @@ module Embed
       "#{Settings.purl_url}/#{@druid}.xml"
     end
 
-    def response
+    def response # rubocop:disable Metrics/MethodLength
       @response ||=
         begin
           conn = Faraday.new(url: purl_xml_url)
@@ -165,7 +168,10 @@ module Embed
             request.options.open_timeout = Settings.purl_conn_timeout
           end
 
-          raise ResourceNotAvailable unless response.success?
+          unless response.success?
+            raise ResourceNotAvailable,
+                  "Resource unavailable #{purl_xml_url} (status: #{response.status})"
+          end
 
           response.body
         rescue Faraday::ConnectionFailed, Faraday::TimeoutError
