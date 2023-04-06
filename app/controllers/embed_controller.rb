@@ -38,8 +38,8 @@ class EmbedController < ApplicationController
     render body: e.to_s, status: :bad_request
   end
 
-  rescue_from Embed::Purl::ResourceNotEmbeddable do |e|
-    render body: e.to_s, status: :bad_request
+  rescue_from Embed::Purl::ResourceNotEmbeddable do |_e|
+    render body: 'The requested PURL resource was not embeddable.', status: :bad_request
   end
 
   rescue_from Embed::Request::InvalidURLScheme do |e|
