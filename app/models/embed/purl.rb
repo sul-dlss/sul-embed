@@ -9,6 +9,7 @@ module Embed
              :world_downloadable_file?, :stanford_only_downloadable_file?, to: :rights
     attr_reader :druid
 
+    # @param [String] druid a druid without a namespace (e.g. "sx925dc9385")
     def initialize(druid)
       @druid = druid
     end
@@ -24,6 +25,7 @@ module Embed
       end
     end
 
+    # @returns [Bool] does this have any resources that can be embeded?
     def valid?
       contents.any?
     end
