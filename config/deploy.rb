@@ -2,8 +2,13 @@ set :application, 'embed'
 set :repo_url, 'https://github.com/sul-dlss/sul-embed.git'
 set :user, 'embed'
 
-# Default branch is :master
-ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call unless ENV['DEPLOY']
+# Default branch is :master so we need to update to main
+if ENV['DEPLOY']
+  set :branch, 'main'
+else
+  ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
+end
+
 
 # Default value for :scm is :git
 # set :scm, :git
