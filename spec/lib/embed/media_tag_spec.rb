@@ -236,7 +236,7 @@ RSpec.describe Embed::MediaTag do
       before { stub_purl_response_with_fixture(video_purl_with_vtt) }
 
       it 'has a track element' do
-        expect(subject).to have_css('track[src="/file/druid/abc_123_cap.vtt"]')
+        expect(subject).to have_css('track[src="/file/druid/abc_123_cap.webvtt"]')
       end
     end
 

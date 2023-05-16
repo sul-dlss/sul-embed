@@ -48,7 +48,7 @@ module Embed
       end
 
       def vtt?
-        mimetype == 'text/vtt' && title.end_with?('.vtt')
+        mimetype == 'text/vtt'
       end
 
       def pdf?

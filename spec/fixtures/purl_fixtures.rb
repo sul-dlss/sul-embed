@@ -972,7 +972,7 @@ module PurlFixtures
         <contentMetadata type="media">
           <resource sequence="1" id="abc123_1" type="video">
             <file id="abc_123.mp4" mimetype="video/mp4" size="152000000"></file>
-            <file id="abc_123_cap.vtt" mimetype="text/vtt" size="176218"></file>
+            <file id="abc_123_cap.webvtt" mimetype="text/vtt" size="176218"></file>
           </resource>
         </contentMetadata>
         <rightsMetadata>

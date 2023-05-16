@@ -58,7 +58,7 @@ RSpec.describe Embed::Purl::Resource do
 
       before { stub_purl_response_with_fixture(video_purl_with_vtt) }
 
-      it { is_expected.to eq 'abc_123_cap.vtt' }
+      it { is_expected.to eq 'abc_123_cap.webvtt' }
     end
 
     context 'when it does not have a vtt transcript' do
