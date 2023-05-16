@@ -276,4 +276,24 @@ RSpec.describe Embed::Purl::ResourceFile do
       end
     end
   end
+
+  describe '#vtt?' do
+    subject { file.vtt? }
+
+    context 'when it is a vtt transcript' do
+      let(:file) { Embed::Purl.new('12345').contents.first.files.second }
+
+      before { stub_purl_response_with_fixture(video_purl_with_vtt) }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when it is not a vtt transcript' do
+      let(:file) { Embed::Purl.new('12345').contents.first.files.first }
+
+      before { stub_purl_response_with_fixture(single_video_purl) }
+
+      it { is_expected.to be false }
+    end
+  end
 end

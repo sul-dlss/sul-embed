@@ -43,6 +43,14 @@ module Embed
         Settings.resource_types_that_contain_thumbnails.include?(resource.type)
       end
 
+      def vtt
+        resource.files.find(&:vtt?)
+      end
+
+      def vtt?
+        mimetype == 'text/vtt'
+      end
+
       def pdf?
         mimetype == 'application/pdf'
       end

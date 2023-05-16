@@ -4,6 +4,7 @@ module Embed
   # Utility class to handle generating HTML <video> and <audio> tags
   # Currently, MPEG-DASH is used at the <video> element level (in a data attribute to be picked up by javascript)
   # and HLS is used as a <source> within the <video> or <audio> tag.
+  # rubocop:disable Metrics/ClassLength
   class MediaTag
     SUPPORTED_MEDIA_TYPES = %i[audio video].freeze
 
@@ -51,6 +52,7 @@ module Embed
             class="sul-embed-media-file #{'sul-embed-many-media' if many_primary_files?}"
             height="100%">
             #{enabled_streaming_sources(file)}
+            #{transcript(file)}
           </#{type}>
         HTML
       end
@@ -89,6 +91,14 @@ module Embed
            type='#{streaming_settings_for(streaming_type)[:mimetype]}'>
         </source>"
       end.join
+    end
+
+    def transcript(file)
+      return unless file.vtt
+
+      <<~HTML
+        <track default src="#{viewer.stacks_url}/#{file.vtt.title}" />
+      HTML
     end
 
     def many_primary_files?
@@ -165,4 +175,5 @@ module Embed
       Settings.streaming.auth_url % attributes
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
