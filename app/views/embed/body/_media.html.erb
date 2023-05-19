@@ -1,6 +1,6 @@
 <div class='sul-embed-body sul-embed-media'
      data-sul-embed-theme="<%= stylesheet_path('media.css') %>"
      data-sul-icons="<%= stylesheet_path('sul_icons.css') %>">
-  <%= Embed::MediaTag.new(viewer).to_html.html_safe %>
+  <%= Embed::MediaTag.new(viewer, include_transcripts: Settings.enabled_features.transcripts || params[:transcripts] == 'true').to_html.html_safe %>
   <%= javascript_pack_tag('media') %>
 </div>
