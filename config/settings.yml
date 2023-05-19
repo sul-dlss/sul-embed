@@ -64,3 +64,5 @@ collections_to_show_attribution:
 # in shared_configs for embed-prod, we set this value to 0  
 analytics_debug: true
 min_files_to_search_default: 10
+enabled_features:
+  transcripts: false

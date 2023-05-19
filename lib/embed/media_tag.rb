@@ -12,8 +12,9 @@ module Embed
 
     attr_accessor :file_index
 
-    def initialize(viewer)
+    def initialize(viewer, include_transcripts: false)
       @viewer = viewer
+      @include_transcripts = include_transcripts
       @purl_document = viewer.purl_object
       @file_index = 0
     end
@@ -94,7 +95,7 @@ module Embed
     end
 
     def transcript(file)
-      return unless file.vtt
+      return unless @include_transcripts && file.vtt
 
       <<~HTML
         <track default src="#{viewer.stacks_url}/#{file.vtt.title}" />

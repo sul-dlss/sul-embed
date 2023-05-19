@@ -233,10 +233,24 @@ RSpec.describe Embed::MediaTag do
     end
 
     describe '#transcript' do
-      before { stub_purl_response_with_fixture(video_purl_with_vtt) }
+      context 'with transcripts enabled' do
+        before { stub_purl_response_with_fixture(video_purl_with_vtt) }
 
-      it 'has a track element' do
-        expect(subject).to have_css('track[src="/file/druid/abc_123_cap.webvtt"]')
+        let(:subject_klass) { described_class.new(viewer, include_transcripts: true) }
+
+        it 'has a track element' do
+          expect(subject).to have_css('track[src="/file/druid/abc_123_cap.webvtt"]')
+        end
+      end
+
+      context 'with transcripts disabled in settings (default)' do
+        before do
+          stub_purl_response_with_fixture(video_purl_with_vtt)
+        end
+
+        it 'does not have a track element' do
+          expect(subject).not_to have_css('track')
+        end
       end
     end
 
