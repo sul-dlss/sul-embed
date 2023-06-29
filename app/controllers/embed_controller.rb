@@ -31,7 +31,22 @@ class EmbedController < ApplicationController
   end
 
   def embed_request
-    @embed_request ||= Embed::Request.new(params, self)
+    @embed_request ||= Embed::Request.new(linted_params, self)
+  end
+
+  # NOTE: Both of these errors are handled automatically by ActionDispatch::ExceptionWrapper
+  # @raises [ActionController::ParameterMissing] if the url parameter is not provided
+  # @raises [ActionController::BadRequest] if the url parameter is not permitted
+  def linted_params
+    url = params.require(:url)
+    begin
+      URI.parse(url)
+    rescue URI::InvalidURIError
+      raise ActionController::BadRequest
+    end
+    params.permit(:url, :maxwidth, :maxheight, :format, :fullheight,
+                  :hide_title, :hide_embed, :hide_download, :hide_search, :min_files_to_search,
+                  :canvas_id, :canvas_index, :search, :suggested_search, :image_tools, :cdl_hold_record_id)
   end
 
   rescue_from Embed::Request::NoURLProvided do |e|
