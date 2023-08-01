@@ -109,11 +109,7 @@ module Embed
       # Each item is 67px tall w/ a base of 55px we determine heights by: (item count * 67px) + 55px
       def file_specific_height
         file_count = @purl_object.all_resource_files.count
-        items_to_account_for = if file_count >= 4
-                                 4
-                               else
-                                 file_count
-                               end
+        items_to_account_for = [file_count, 4].min
 
         55 + (items_to_account_for * 67)
       end

@@ -38,9 +38,7 @@ RSpec.describe Embed::Response, type: 'view' do
       expect(response).to receive(:viewer).at_least(:once).and_return(viewer)
       expect(request).to receive(:purl_object).and_return(purl_object)
       expect(request).to receive(:fullheight?).and_return(nil)
-      allow(viewer).to receive(:height).and_return('100')
-      allow(viewer).to receive(:width).and_return('100')
-      allow(viewer).to receive(:iframe_title).and_return('Kewl Viewer')
+      allow(viewer).to receive_messages(height: '100', width: '100', iframe_title: 'Kewl Viewer')
     end
 
     it 'is the iframe snippet pointing to the embed' do
@@ -54,9 +52,7 @@ RSpec.describe Embed::Response, type: 'view' do
       expect(request).to receive(:fullheight?).and_return(nil)
       expect(purl_object).to receive(:title).and_return('Purl Title')
       expect(response).to receive(:viewer).at_least(:once).and_return(viewer)
-      allow(viewer).to receive(:height).and_return('100')
-      allow(viewer).to receive(:width).and_return('100')
-      allow(viewer).to receive(:iframe_title).and_return('Kewl Viewer')
+      allow(viewer).to receive_messages(height: '100', width: '100', iframe_title: 'Kewl Viewer')
     end
 
     it 'provides a hash that conforms to the oEmbed SPEC' do

@@ -98,15 +98,13 @@ RSpec.describe Embed::Purl::ResourceFile do
     end
 
     it 'is true when the parent resource type is whitelisted as having file-level thumbnail behaviors (and it is an image)' do
-      allow(resource).to receive(:object_thumbnail?).and_return(false)
-      allow(resource).to receive(:type).and_return('video')
+      allow(resource).to receive_messages(object_thumbnail?: false, type: 'video')
       allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'image/jp2'))
       expect(resource_file).to be_thumbnail
     end
 
     it 'is false when the parent resource type is not whitelisted as having file-level thumbnail behaviors (even if it is an image)' do
-      allow(resource).to receive(:object_thumbnail?).and_return(false)
-      allow(resource).to receive(:type).and_return('book')
+      allow(resource).to receive_messages(object_thumbnail?: false, type: 'book')
       allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'image/jp2'))
       expect(resource_file).not_to be_thumbnail
     end
