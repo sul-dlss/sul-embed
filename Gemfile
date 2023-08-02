@@ -29,7 +29,6 @@ group :development, :test do
   gem 'rspec-rails'
 
   gem 'selenium-webdriver', '~> 4.2'
-  gem 'webdrivers'
 
   # Linting/Styleguide Enforcement
   gem 'rubocop', '1.53.1' # Pinned to work around https://github.com/rubocop/rubocop/issues/12022
