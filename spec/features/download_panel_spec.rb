@@ -28,21 +28,6 @@ RSpec.describe 'download panel', js: true do
     expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:ignored/%23Title%20of%20the%20PDF.pdf') # this file link had a # and spaces, encoding is needed
   end
 
-  describe 'toggle button' do
-    before do
-      stub_purl_response_with_fixture(geo_purl_public)
-      visit_iframe_response
-    end
-
-    skip 'should be present after a user clicks the button' do
-      expect(page).to have_css('.sul-embed-download-panel', visible: :all)
-      toggle_download_panel
-      expect(page).to have_css('.sul-embed-download-panel', visible: :visible)
-      expect(page).to have_css('.sul-embed-panel-item-label', text: '')
-      expect(page).to have_css('.sul-embed-download-list-item', visible: :visible, count: 6)
-    end
-  end
-
   describe 'hide download?' do
     before do
       stub_purl_response_with_fixture(geo_purl_public)

@@ -20,8 +20,4 @@ RSpec.describe 'basic oembed functionality' do
     expect(page).to have_xpath('//provider-name', text: 'SUL Embed Service')
     expect(page).to have_xpath '//html'
   end
-
-  xit 'returns a response with require parameters (json)' do
-    # TODO: leaving this until we figure out the html encoding
-  end
 end
