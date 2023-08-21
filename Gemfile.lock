@@ -204,7 +204,7 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     net-ssh (7.2.0)
-    newrelic_rpm (9.3.1)
+    newrelic_rpm (9.4.2)
     nio4r (2.5.9)
     nokogiri (1.15.4)
       mini_portile2 (~> 2.8.2)
@@ -217,7 +217,7 @@ GEM
       ast (~> 2.4.1)
       racc
     public_suffix (5.0.3)
-    puma (5.6.6)
+    puma (5.6.7)
       nio4r (~> 2.0)
     racc (1.7.1)
     rack (2.2.8)
@@ -256,7 +256,7 @@ GEM
     rainbow (3.1.1)
     rake (13.0.6)
     regexp_parser (2.8.1)
-    reline (0.3.7)
+    reline (0.3.8)
       io-console (~> 0.5)
     rexml (3.2.6)
     rspec (3.12.0)
