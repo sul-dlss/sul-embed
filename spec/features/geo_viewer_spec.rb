@@ -43,7 +43,7 @@ RSpec.describe 'geo viewer public', js: true do
     end
 
     it 'shows the sidebar with attribute information after map is clicked' do
-      page.driver.browser.action.move_to(find(:css, '#sul-embed-geo-map').native).click.perform
+      page.driver.browser.action.move_to(find_by_id('sul-embed-geo-map').native).click.perform
       using_wait_time 20 do
         expect(page).to have_css '.sul-embed-geo-sidebar-header h3', text: 'Features', visible: :all
         expect(page).to have_css '.sul-embed-geo-sidebar-content dt', text: 's_02_id', visible: :all
