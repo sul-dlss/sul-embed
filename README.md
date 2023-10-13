@@ -33,6 +33,8 @@ You may also use the provided docker container to run the webpacker dev server.
 docker compose up webpacker
 ```
 
+# Notes for developers
+
 ## oEmbed specification details
 
 URL scheme: `https://purl.stanford.edu/*`
@@ -83,6 +85,9 @@ The file that the class is defined in (or your preferred method) should register
 
     Embed.register_viewer(Embed::Viewer::DemoViewer) if Embed.respond_to?(:register_viewer)
 
+## SDR data models and their specifications
+
+See https://consul.stanford.edu/display/SDRdocs/Content+types+and+resource+types+in+SDR
 
 ### Linking in viewers
 
@@ -98,6 +103,7 @@ For links that are intended to navigate the users browser away from the current 
     => #<Embed::Request>
     $ viewer.new(request)
     => # your viewer instance
+
 
 ### Customizing the Embed Panel
 
