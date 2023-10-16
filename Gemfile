@@ -9,7 +9,7 @@ gem 'rails', '~> 7.0.8'
 gem 'sprockets-rails'
 
 # Use Puma as the app server
-gem 'puma', '~> 5.0' # avoid capybara errors until capybara release; see https://github.com/teamcapybara/capybara/pull/2530
+gem 'puma', '~> 6.0'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
