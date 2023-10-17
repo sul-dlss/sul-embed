@@ -6,7 +6,6 @@ module Embed
   require 'embed/response'
   require 'embed/stacks_media_stream'
 
-  require 'embed/download_panel'
   require 'embed/embed_this_panel'
   require 'embed/mimetypes'
   require 'embed/pretty_filesize'

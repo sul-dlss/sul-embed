@@ -29,6 +29,10 @@ Layout/LineLength:
   Exclude:
     - 'spec/**/*'
 
+Lint/MissingSuper:
+  Exclude:
+    - 'app/components/**/*'
+
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'

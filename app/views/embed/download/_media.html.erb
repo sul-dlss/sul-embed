@@ -1,5 +1,5 @@
 <% if viewer.show_download? %>
-  <%= download_panel do %>
+  <%= render DownloadPanelComponent.new do %>
     <div class='sul-embed-panel-body'>
       <ul class='sul-embed-download-list'>
         <% viewer.purl_object.downloadable_files.each do |file| %>

@@ -10,6 +10,8 @@ require 'fixtures/was_time_map_fixtures'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'selenium-webdriver'
+require 'view_component/test_helpers'
+require 'view_component/system_test_helpers'
 
 Capybara.javascript_driver = :selenium_chrome_headless
 
@@ -24,11 +26,16 @@ Capybara.default_max_wait_time = ENV['CI'] ? 30 : 10
 # option on the command line or in ~/.rspec, .rspec or `.rspec-local`.
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
-# Checks for pending migrations before tests are run.
-# If you are not using ActiveRecord, you can remove this line.
-# ActiveRecord::Migration.maintain_test_schema!
+RSpec.configure do |config|
+  # Checks for pending migrations before tests are run.
+  # If you are not using ActiveRecord, you can remove this line.
+  # ActiveRecord::Migration.maintain_test_schema!
+  config.infer_spec_type_from_file_location!
 
-RSpec.configure(&:infer_spec_type_from_file_location!)
+  config.include ViewComponent::TestHelpers, type: :component
+  config.include ViewComponent::SystemTestHelpers, type: :component
+  config.include Capybara::RSpecMatchers, type: :component
+end
 
 def stub_purl_response_with_fixture(fixture)
   allow_any_instance_of(Embed::Purl).to receive(:response).and_return(fixture)
