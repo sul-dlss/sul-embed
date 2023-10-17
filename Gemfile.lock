@@ -344,6 +344,10 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
+    view_component (3.6.0)
+      activesupport (>= 5.2.0, < 8.0)
+      concurrent-ruby (~> 1.0)
+      method_source (~> 1.0)
     websocket (1.2.10)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -389,6 +393,7 @@ DEPENDENCIES
   selenium-webdriver (~> 4.2)
   shakapacker (~> 7.0)
   sprockets-rails
+  view_component (~> 3.6)
 
 BUNDLED WITH
    2.3.24
