@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import * as L from 'leaflet-src.js.erb';
+import * as L from 'leaflet';
 
 // make jQuery globally available in tests as both "$" and "jQuery"
 global.jQuery = $;
