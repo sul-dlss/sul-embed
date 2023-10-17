@@ -21,5 +21,6 @@ module.exports = async () => {
       '<rootDir>/spec/javascripts/common_viewer/**/*.js',
       '<rootDir>/spec/javascripts/geo/**/*.js',
     ],
+    testEnvironment: 'jsdom',
   };
 };
