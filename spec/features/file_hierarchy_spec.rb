@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'file viewer with hierarchy', js: true do
+RSpec.describe 'file viewer with hierarchy', :js do
   include PurlFixtures
   it 'renders hierarchy' do
     stub_purl_response_with_fixture(hierarchical_file_purl)

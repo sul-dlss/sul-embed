@@ -40,7 +40,7 @@ module Embed
 
     def media_element(file, type)
       file_thumb = stacks_square_url(@purl_document.druid, file.thumbnail.title, size: '75') if file.thumbnail
-      media_wrapper(thumbnail: file_thumb, file: file) do
+      media_wrapper(thumbnail: file_thumb, file:) do
         <<~HTML
           #{access_restricted_overlay(file.try(:stanford_only?), file.try(:location_restricted?))}
           <#{type}
@@ -61,7 +61,7 @@ module Embed
 
     def previewable_element(file)
       thumb_url = stacks_square_url(@purl_document.druid, file.title, size: '75')
-      media_wrapper(thumbnail: thumb_url, file: file, scroll: true) do
+      media_wrapper(thumbnail: thumb_url, file:, scroll: true) do
         "<img
           src='#{stacks_thumb_url(@purl_document.druid, file.title)}'
           class='sul-embed-media-thumb #{'sul-embed-many-media' if many_primary_files?}'

@@ -27,7 +27,7 @@ RSpec.describe Embed::Viewer::M3Viewer do
 
     context 'with a canvas id' do
       let(:canvas_id) { "#{Settings.purl_url}/abc123/canvas/1" }
-      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', canvas_id: canvas_id) }
+      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', canvas_id:) }
       let(:manifest_json_response) do
         {
           sequences: [
@@ -49,7 +49,7 @@ RSpec.describe Embed::Viewer::M3Viewer do
 
     context 'with a canvas id that is not found in the manifest' do
       let(:canvas_id) { "#{Settings.purl_url}/abc123/canvas/1" }
-      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', canvas_id: canvas_id) }
+      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', canvas_id:) }
       let(:manifest_json_response) do
         {
           sequences: [
@@ -71,7 +71,7 @@ RSpec.describe Embed::Viewer::M3Viewer do
 
     context 'with a canvas index and a canvas id that is not found in the manifest' do
       let(:canvas_id) { "#{Settings.purl_url}/abc123/canvas/1" }
-      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', canvas_id: canvas_id, canvas_index: 15) }
+      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', canvas_id:, canvas_index: 15) }
       let(:manifest_json_response) do
         {
           sequences: [

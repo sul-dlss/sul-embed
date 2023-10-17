@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe '3D Viewer', js: true do
+RSpec.describe '3D Viewer', :js do
   include PurlFixtures
   let(:purl) { threeD_object_purl }
 

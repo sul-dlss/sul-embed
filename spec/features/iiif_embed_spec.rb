@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'IIIF Embed', js: true do
+RSpec.describe 'IIIF Embed', :js do
   it 'renders a Mirador3 Viewer' do
     visit iiif_path(url: 'https://purl.stanford.edu/fr426cg9537/iiif/manifest')
 

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'file viewer search bar', js: true do
+RSpec.describe 'file viewer search bar', :js do
   include PurlFixtures
 
   context 'when text is entered with a file list' do

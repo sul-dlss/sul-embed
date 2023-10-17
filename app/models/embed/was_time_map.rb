@@ -31,7 +31,7 @@ module Embed
     private
 
     def redirectable_connection(url)
-      Faraday.new(url: url) do |faraday|
+      Faraday.new(url:) do |faraday|
         faraday.use Faraday::FollowRedirects::Middleware
 
         faraday.adapter Faraday.default_adapter

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'PDF Viewer', js: true do
+RSpec.describe 'PDF Viewer', :js do
   include PurlFixtures
   let(:purl) { pdf_document_purl }
 

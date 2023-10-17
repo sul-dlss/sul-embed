@@ -38,13 +38,13 @@ module Embed
 
     def embed_hash
       {
-        type: type,
-        version: version,
-        provider_name: provider_name,
-        title: title,
-        height: height,
-        width: width,
-        html: html
+        type:,
+        version:,
+        provider_name:,
+        title:,
+        height:,
+        width:,
+        html:
       }
     end
 

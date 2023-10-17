@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'file list accessibility', js: true do
+RSpec.describe 'file list accessibility', :js do
   include PurlFixtures
   it 'page has relevant sr-only classes' do
     stub_purl_response_with_fixture(hybrid_object_purl)
