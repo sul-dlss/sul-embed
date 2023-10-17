@@ -34,7 +34,7 @@
     "handlebars": "^4.7.7",
     "handlebars-loader": "^1.7.3",
     "leaflet": "^1.9.3",
-    "mirador": "^3.0.0-rc.7",
+    "mirador": "^3.3.0",
     "mirador-dl-plugin": "^0.13.0",
     "mirador-image-tools": "^0.8.0",
     "mirador-share-plugin": "^0.11.0",
