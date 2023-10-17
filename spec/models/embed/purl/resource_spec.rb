@@ -22,7 +22,7 @@ RSpec.describe Embed::Purl::Resource do
   describe '#object_thumbnail?' do
     subject { described_class.new(node, double('Rights')) }
 
-    let(:node) { instance_double(Nokogiri::XML::Node, attributes: attributes) }
+    let(:node) { instance_double(Nokogiri::XML::Node, attributes:) }
 
     context 'when type="thumb"' do
       let(:attributes) { { 'type' => double(value: 'thumb') } }

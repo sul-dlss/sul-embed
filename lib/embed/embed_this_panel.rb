@@ -87,7 +87,7 @@ module Embed
     attr_reader :druid, :height, :width, :request, :purl_object_title, :panel_content, :iframe_title
 
     def iframe_html
-      self.class.iframe_html(druid: druid, height: height, width: width, request: request, title: iframe_title)
+      self.class.iframe_html(druid:, height:, width:, request:, title: iframe_title)
     end
   end
 end

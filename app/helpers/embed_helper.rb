@@ -2,7 +2,7 @@
 
 module EmbedHelper
   def download_panel(title: 'Download item', &block)
-    Embed::DownloadPanel.new(title: title) { capture(&block) }.to_html.html_safe
+    Embed::DownloadPanel.new(title:) { capture(&block) }.to_html.html_safe
   end
 
   def embed_panel(**args, &block)

@@ -34,7 +34,7 @@ module Embed
           archived_site_url.sub('/*/', '/timemap/')
         else
           Honeybadger.notify('WasSeed#archived_timemap_url is malformed',
-                             context: { druid: druid, archived_site_url: archived_site_url })
+                             context: { druid:, archived_site_url: })
           nil
         end
       end

@@ -6,7 +6,7 @@ require 'embed/embed_this_panel'
 RSpec.describe Embed::EmbedThisPanel, type: 'view' do
   subject do
     Capybara.string(
-      described_class.new(viewer: viewer) do
+      described_class.new(viewer:) do
         'Added Panel Content'
       end.to_html
     )
@@ -18,7 +18,7 @@ RSpec.describe Embed::EmbedThisPanel, type: 'view' do
       Embed::Viewer::CommonViewer,
       height: '555',
       width: '666',
-      request: request,
+      request:,
       iframe_title: 'File viewer',
       purl_object: instance_double(Embed::Purl, druid: 'oo000oo0000', title: 'The Object Title')
     )
@@ -26,15 +26,15 @@ RSpec.describe Embed::EmbedThisPanel, type: 'view' do
 
   context 'block param' do
     it 'instantiates without passing a block' do
-      expect { described_class.new(viewer: viewer) }.not_to raise_error
+      expect { described_class.new(viewer:) }.not_to raise_error
     end
 
     it 'instantiates with a nil block' do
-      expect { described_class.new(viewer: viewer) { nil } }.not_to raise_error
+      expect { described_class.new(viewer:) { nil } }.not_to raise_error
     end
 
     it 'instantiates with an empty string block' do
-      expect { described_class.new(viewer: viewer) { '' } }.not_to raise_error
+      expect { described_class.new(viewer:) { '' } }.not_to raise_error
     end
   end
 
@@ -88,7 +88,7 @@ RSpec.describe Embed::EmbedThisPanel, type: 'view' do
           druid: 'oo000oo0000',
           height: '555',
           width: '666',
-          request: request,
+          request:,
           title: 'Hello world',
           version: '123'
         )
