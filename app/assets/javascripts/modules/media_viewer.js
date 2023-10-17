@@ -63,22 +63,22 @@ export default (function() {
 
         var thumbClass = 'sul-embed-slider-thumb sul-embed-media-slider-thumb ';
         var labelClass = 'sul-embed-thumb-label';
-        var isStanfordRestricted = $(mediaDiv).data('stanford-only');
+        const isStanfordRestricted = mediaDiv.dataset.stanfordOnly === "true"
         if (isStanfordRestricted) {
           labelClass += ' sul-embed-thumb-stanford-only';
         }
 
         var thumbnailIcon = '';
-        var thumbnailUrl = $(mediaDiv).data('thumbnail-url');
+        const thumbnailUrl = mediaDiv.dataset.thumbnailUrl
         if (thumbnailUrl !== '') {
           thumbnailIcon = '<img class="sul-embed-media-square-icon" src="' + thumbnailUrl + '" />';
         } else {
           thumbnailIcon = '<i class="' + cssClass + '"></i>';
         }
 
-        var isLocationRestricted = $(mediaDiv).data('location-restricted');
-        var fileLabel = String($(mediaDiv).data('file-label') || '');
-        var duration = String($(mediaDiv).data('duration') || '');
+        const isLocationRestricted = mediaDiv.dataset.locationRestricted === "true"
+        const fileLabel = String(mediaDiv.dataset.fileLabel || '');
+        const duration = String(mediaDiv.dataset.duration || '');
         thumbs.push(
           '<li class="' + thumbClass + activeClass + '">' +
             thumbnailIcon +
@@ -146,12 +146,12 @@ export default (function() {
     }
 
     function authCheckForMediaObject(mediaObject, completeCallback) {
-      var authUrl = mediaObject.data('auth-url');
+      const authUrl = mediaObject.dataset.authUrl
       jQuery.ajax({url: authUrl, dataType: 'jsonp'}).done(function(data) {
         // present the auth link if it's stanford restricted and the user isn't logged in
         if(jQuery.inArray('stanford_restricted', data.status) > -1) {
           var wrapper = jQuery('<div data-auth-link="true" class="sul-embed-auth-link"></div>');
-          mediaObject.parents(sliderObjectSelector).append(
+          $(mediaObject).parents(sliderObjectSelector).append(
             wrapper.append(authLink(data.service, mediaObject))
           );
         }
@@ -159,7 +159,8 @@ export default (function() {
         // if the user authed successfully for the file, hide the restriction overlays
         var sliderSelector = '.sul-embed-media ' + sliderObjectSelector;
         var parentDiv = mediaObject.closest(sliderSelector);
-        var isRestricted = parentDiv.data('stanford-only') || parentDiv.data('location-restricted');
+        const isRestricted = parentDiv.dataset.stanfordOnly === "true" || 
+          parentDiv.dataset.locationRestricted === "true"
         if(isRestricted && data.status === 'success') {
           parentDiv.find(restrictedMessageSelector).hide();
           parentDiv.find('[data-auth-link]').hide();
@@ -200,9 +201,8 @@ export default (function() {
     }
 
     function authCheck() {
-      jQuery('.sul-embed-media [data-auth-url]').each(function(){
-        authCheckForMediaObject(jQuery(this));
-      });
+      document.querySelectorAll('.sul-embed-media [data-auth-url]').
+        forEach((mediaObject) => authCheckForMediaObject(mediaObject));
     }
 
     return {
