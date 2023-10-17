@@ -26,13 +26,8 @@ module Embed
     end
 
     def html
-      @html ||= Embed::EmbedThisPanel.iframe_html(
-        druid: @request.purl_object.druid,
-        height: viewer.height,
-        width: viewer.width,
-        request: @request,
-        title: viewer.iframe_title,
-        version: Rails.root.mtime.to_i
+      @html ||= ActionController::Base.new.render_to_string(
+        IframeComponent.new(viewer:, version: Rails.root.mtime.to_i)
       )
     end
 
