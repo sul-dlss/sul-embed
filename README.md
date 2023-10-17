@@ -107,7 +107,7 @@ See File viewers for an example.
 
 
 ### Adding a Download Panel
-Viewers can add their own download panel.  To do this, create a template in `app/views/embed/download`, to provide the HTML for the download panel.
+Viewers can add their own download panel.  To do this, create a component in `app/components/embed/download`, to provide the HTML for the download panel.
 
 In order to enable the download panel you need to provide a method in your viewer class.  This method lets the footer logic know that the viewer will provide a download panel and it should render the Download button.
 

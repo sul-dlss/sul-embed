@@ -3,6 +3,6 @@
   <%= render 'embed/body/pdf_viewer', viewer: viewer %>
   <%= render 'embed/metadata_panel', viewer: viewer %>
   <%= render 'embed/embed_this/generic', viewer: viewer %>
-  <%= render 'embed/download/pdf', viewer: viewer %>
+  <%= render Embed::Download::PdfComponent.new viewer: viewer %>
   <%= render 'embed/footer/generic', viewer: viewer %>
  </div>
