@@ -1,4 +1,4 @@
-const { webpackConfig: baseWebpackConfig, merge } = require('shakapacker')
+const { generateWebpackConfig, merge } = require('shakapacker')
 
 // See the shakacode/shakapacker README and docs directory for advice on customizing your webpackConfig.
 const options = {
@@ -12,4 +12,4 @@ const options = {
   }
 }
 
-module.exports = merge({}, baseWebpackConfig, options)
+module.exports = merge({}, generateWebpackConfig(), options)

@@ -57,4 +57,4 @@ gem 'newrelic_rpm', group: :production
 gem 'okcomputer'
 
 gem 'cssbundling-rails', '~> 1.1'
-gem 'shakapacker', '~> 6.4'
+gem 'shakapacker', '~> 7.0'

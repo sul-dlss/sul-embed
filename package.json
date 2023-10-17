@@ -43,7 +43,7 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "sass": "^1.57.1",
-    "shakapacker": "6.5.4",
+    "shakapacker": "7",
     "terser-webpack-plugin": "5",
     "three": "^0.125.0",
     "url-polyfill": "^1.1.12",
