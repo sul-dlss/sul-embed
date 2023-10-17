@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Response, type: 'view' do
-  let(:viewer) { instance_double(Embed::Viewer::CommonViewer) }
+  let(:viewer) { instance_double(Embed::Viewer::CommonViewer, request:, purl_object:) }
   let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }, controller) }
   let(:purl_object) { instance_double(Embed::Purl, druid: 'abc123') }
   let(:response) { described_class.new(request) }
@@ -36,7 +36,6 @@ RSpec.describe Embed::Response, type: 'view' do
   describe 'html' do
     before do
       expect(response).to receive(:viewer).at_least(:once).and_return(viewer)
-      expect(request).to receive(:purl_object).and_return(purl_object)
       expect(request).to receive(:fullheight?).and_return(nil)
       allow(viewer).to receive_messages(height: '100', width: '100', iframe_title: 'Kewl Viewer')
     end
