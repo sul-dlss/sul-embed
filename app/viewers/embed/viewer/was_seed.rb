@@ -6,8 +6,8 @@ module Embed
       include Embed::StacksImage
       delegate :druid, to: :@purl_object
 
-      def to_partial_path
-        'embed/template/was_seed'
+      def component
+        WasSeedComponent
       end
 
       def self.supported_types

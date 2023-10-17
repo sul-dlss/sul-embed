@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe 'embed/template/_was_seed' do
+RSpec.describe Embed::WasSeedComponent, type: :component do
   include PurlFixtures
   include WasTimeMapFixtures
 
   let(:request) do
     Embed::Request.new(
       { url: 'http://purl.stanford.edu/abc123' },
-      controller
+      vc_test_controller
     )
   end
   let(:object) { Embed::Purl.new('12345') }
@@ -21,28 +21,31 @@ RSpec.describe 'embed/template/_was_seed' do
     end
 
     before do
-      view.lookup_context.view_paths.push 'app/views/embed'
       allow_any_instance_of(Embed::WasTimeMap).to receive(:redirectable_connection).and_return(fake_connection)
       expect(fake_connection).to receive(:get).once
       allow(request).to receive(:purl_object).and_return(object)
       allow(object).to receive(:response).and_return(was_seed_purl)
       allow(viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
-      allow(view).to receive(:viewer).and_return(viewer)
+      render_inline(described_class.new(viewer:))
     end
 
     it 'displays Was Seed viewer body' do
-      render
       # visible false because we display:none the container until we've loaded the CSS.
-      expect(rendered).to have_css '.sul-embed-was-seed', visible: :all
-      expect(rendered).to have_css '.sul-embed-was-seed-list', visible: :all, count: 1
-      expect(rendered).to have_css '.sul-embed-was-seed-list-item', visible: :all, count: 7
+      expect(page).to have_css '.sul-embed-was-seed', visible: :all
+      expect(page).to have_css '.sul-embed-was-seed-list', visible: :all, count: 1
+      expect(page).to have_css '.sul-embed-was-seed-list-item', visible: :all, count: 7
     end
 
-    describe 'with hidden title' do
+    context 'with hidden title' do
+      let(:request) do
+        Embed::Request.new(
+          { url: 'http://purl.stanford.edu/abc123', hide_title: 'true' },
+          vc_test_controller
+        )
+      end
+
       it do
-        allow(viewer).to receive(:display_header?).at_least(:once).and_return(false)
-        render
-        expect(rendered).not_to have_css '.sul-embed-header', visible: :all
+        expect(page).not_to have_css '.sul-embed-header', visible: :all
       end
     end
   end
@@ -53,28 +56,31 @@ RSpec.describe 'embed/template/_was_seed' do
     end
 
     before do
-      view.lookup_context.view_paths.push 'app/views/embed'
       allow_any_instance_of(Embed::WasTimeMap).to receive(:redirectable_connection).and_return(fake_connection)
       expect(fake_connection).to receive(:get).once
       allow(request).to receive(:purl_object).and_return(object)
       allow(object).to receive(:response).and_return(was_seed_purl)
       allow(viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
-      allow(view).to receive(:viewer).and_return(viewer)
+      render_inline(described_class.new(viewer:))
     end
 
     it 'displays Was Seed viewer body' do
-      render
       # visible false because we display:none the container until we've loaded the CSS.
-      expect(rendered).to have_css '.sul-embed-was-seed', visible: :all
-      expect(rendered).to have_css '.sul-embed-was-seed-list', visible: :all, count: 1
-      expect(rendered).to have_css '.sul-embed-was-seed-list-item', visible: :all, count: 7
+      expect(page).to have_css '.sul-embed-was-seed', visible: :all
+      expect(page).to have_css '.sul-embed-was-seed-list', visible: :all, count: 1
+      expect(page).to have_css '.sul-embed-was-seed-list-item', visible: :all, count: 7
     end
 
-    describe 'with hidden title' do
+    context 'with hidden title' do
+      let(:request) do
+        Embed::Request.new(
+          { url: 'http://purl.stanford.edu/abc123', hide_title: 'true' },
+          vc_test_controller
+        )
+      end
+
       it do
-        allow(viewer).to receive(:display_header?).at_least(:once).and_return(false)
-        render
-        expect(rendered).not_to have_css '.sul-embed-header', visible: :all
+        expect(page).not_to have_css '.sul-embed-header', visible: :all
       end
     end
   end

@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe 'embed/template/_media' do
+RSpec.describe Embed::MediaComponent, type: :component do
   include PurlFixtures
 
   let(:request) do
     Embed::Request.new(
       { url: 'http://purl.stanford.edu/abc123' },
-      controller
+      vc_test_controller
     )
   end
   let(:object) { Embed::Purl.new('12345') }
@@ -16,34 +16,36 @@ RSpec.describe 'embed/template/_media' do
   let(:response) { video_purl }
 
   before do
-    view.lookup_context.view_paths.push 'app/views/embed'
     allow(request).to receive(:purl_object).and_return(object)
     allow(viewer).to receive(:asset_host).and_return('http://example.com/')
-    allow(view).to receive(:viewer).and_return(viewer)
     allow(object).to receive(:response).and_return(response)
+    render_inline(described_class.new(viewer:))
   end
 
   it 'implements the MediaTag class appropriately and gets a video tag' do
-    render
-    expect(rendered).to have_css('video', visible: :all)
+    expect(page).to have_css('video', visible: :all)
   end
 
   describe 'media tag' do
     let(:response) { video_with_spaces_in_filename_purl }
 
     it 'does not do URL escaping on sources' do
-      render
-      source = Capybara.string(rendered).all('video source', visible: :all).first
+      source = page.find_css('video source', visible: :all).first
       expect(source['src']).not_to include('%20')
       expect(source['src']).not_to include('&amp;')
     end
   end
 
-  describe 'with hidden title' do
+  context 'with hidden title' do
+    let(:request) do
+      Embed::Request.new(
+        { url: 'http://purl.stanford.edu/abc123', hide_title: 'true' },
+        vc_test_controller
+      )
+    end
+
     it do
-      allow(viewer).to receive(:display_header?).at_least(:once).and_return(false)
-      render
-      expect(rendered).not_to have_css '.sul-embed-header', visible: :all
+      expect(page).not_to have_css '.sul-embed-header', visible: :all
     end
   end
 end

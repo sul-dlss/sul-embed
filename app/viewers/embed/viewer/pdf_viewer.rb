@@ -3,8 +3,8 @@
 module Embed
   module Viewer
     class PdfViewer < CommonViewer
-      def to_partial_path
-        'embed/template/pdf_viewer'
+      def component
+        PdfComponent
       end
 
       def pdf_files

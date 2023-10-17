@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'embed/template/_m3_viewer' do
+RSpec.describe Embed::M3Component, type: :component do
   include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', canvas_index: 3, search: 'xyz', suggested_search: 'abc') }
@@ -10,34 +10,35 @@ RSpec.describe 'embed/template/_m3_viewer' do
   let(:viewer) { Embed::Viewer::M3Viewer.new(request) }
 
   before do
-    view.lookup_context.view_paths.push 'app/views/embed'
     allow(request).to receive(:purl_object).and_return(object)
     allow(viewer).to receive(:asset_host).and_return('http://example.com/')
-    allow(view).to receive(:viewer).and_return(viewer)
     allow(object).to receive(:response).and_return(image_purl)
+    render_inline(described_class.new(viewer:))
   end
 
   it 'adds m3 html body for resources' do
-    render
-    expect(rendered).to have_css '#sul-embed-m3', visible: :all
+    expect(page).to have_css '#sul-embed-m3', visible: :all
   end
 
-  describe 'with hidden title' do
+  context 'with hidden title' do
+    let(:request) do
+      Embed::Request.new(
+        { url: 'http://purl.stanford.edu/abc123', hide_title: 'true' },
+        vc_test_controller
+      )
+    end
+
     it do
-      allow(viewer).to receive(:display_header?).at_least(:once).and_return(false)
-      render
-      expect(rendered).not_to have_css '.sul-embed-header', visible: :all
+      expect(page).not_to have_css '.sul-embed-header', visible: :all
     end
   end
 
   it 'passes along canvas index' do
-    render
-    expect(rendered).to have_css '[data-canvas-index="3"]', visible: :all
+    expect(page).to have_css '[data-canvas-index="3"]', visible: :all
   end
 
   it 'passes along seeded search queries' do
-    render
-    expect(rendered).to have_css '[data-search="xyz"]', visible: :all
-    expect(rendered).to have_css '[data-suggested-search="abc"]', visible: :all
+    expect(page).to have_css '[data-search="xyz"]', visible: :all
+    expect(page).to have_css '[data-suggested-search="abc"]', visible: :all
   end
 end

@@ -1,0 +1,8 @@
+<div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
+  <%= render 'embed/header/virtex_3d_viewer', viewer: viewer if viewer.display_header? %>
+  <%= render 'embed/body/virtex_3d_viewer', viewer: viewer %>
+  <%= render 'embed/metadata_panel', viewer: viewer %>
+  <%= render 'embed/embed_this/generic', viewer: viewer %>
+  <%= render 'embed/download/virtex_3d', viewer: viewer %>
+  <%= render 'embed/footer/generic', viewer: viewer %>
+ </div>

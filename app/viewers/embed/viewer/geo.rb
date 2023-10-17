@@ -3,8 +3,8 @@
 module Embed
   module Viewer
     class Geo < CommonViewer
-      def to_partial_path
-        'embed/template/geo'
+      def component
+        GeoComponent
       end
 
       ##
