@@ -1,0 +1,8 @@
+<div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
+  <%= render 'embed/header/media', viewer: viewer if viewer.display_header? %>
+  <%= render 'embed/body/media', viewer: viewer %>
+  <%= render 'embed/metadata/media', viewer: viewer %>
+  <%= render 'embed/embed_this/generic', viewer: viewer %>
+  <%= render 'embed/download/media', viewer: viewer %>
+  <%= render 'embed/footer/generic', viewer: viewer %>
+ </div>

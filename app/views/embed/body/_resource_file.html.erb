@@ -18,7 +18,7 @@
             title="<%= viewer.tooltip_text(file) %>"
             target='_blank'
             rel='noopener noreferrer'><%= file.hierarchical_title %></a>
-        <%= render 'restrictions_text_for_file', file: file %>
+        <%= render 'embed/restrictions_text_for_file', file: file %>
       </div>
     <% end %>
 

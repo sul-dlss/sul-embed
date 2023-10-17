@@ -8,7 +8,7 @@
               <a href="<%= viewer.file_url(file.title, download: true) %>" title="<%= file.title %>" target='_blank' rel='noopener noreferrer'>
                 Download <%= file.title %>
               </a>
-              <%= render 'restrictions_text_for_file', file: file %>
+              <%= render 'embed/restrictions_text_for_file', file: file %>
             </li>
           <% end %>
         </ul>

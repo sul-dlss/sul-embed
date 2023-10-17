@@ -3,8 +3,8 @@
 module Embed
   module Viewer
     class Media < CommonViewer
-      def to_partial_path
-        'embed/template/media'
+      def component
+        MediaComponent
       end
 
       def self.supported_types

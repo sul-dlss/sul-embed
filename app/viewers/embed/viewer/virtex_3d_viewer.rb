@@ -3,8 +3,8 @@
 module Embed
   module Viewer
     class Virtex3dViewer < CommonViewer
-      def to_partial_path
-        'embed/template/virtex_3d_viewer'
+      def component
+        Virtex3dComponent
       end
 
       def three_dimensional_files

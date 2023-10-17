@@ -3,8 +3,8 @@
 module Embed
   module Viewer
     class File < CommonViewer
-      def to_partial_path
-        'embed/template/file'
+      def component
+        FileComponent
       end
 
       def height

@@ -9,7 +9,7 @@
     <% end %>
     <ul role='tree' class='sul-embed-media-list'>
       <li role="treeitem" aria-expanded="true" data-hierarchy-type="root">
-        <%= render 'body/resource_dir', dir: viewer.purl_object.hierarchical_contents, viewer: viewer %>
+        <%= render 'embed/body/resource_dir', dir: viewer.purl_object.hierarchical_contents, viewer: viewer %>
       </li>
     </ul>
     <%= javascript_pack_tag('file') %>

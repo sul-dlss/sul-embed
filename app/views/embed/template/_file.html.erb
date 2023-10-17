@@ -1,8 +1,0 @@
-<div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
-  <%= render 'header/file', viewer: viewer if viewer.display_header? %>
-  <%= render 'body/file', viewer: viewer %>
-  <%= render 'metadata_panel', viewer: viewer %>
-  <%= render 'embed_this/file', viewer: viewer %>
-  <%= render 'footer/file', viewer: viewer %>
-  <script src="<%= asset_url('tree.js') %>"></script>
-</div>
