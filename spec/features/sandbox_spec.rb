@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'embed sandbox page', js: true do
+RSpec.describe 'embed sandbox page', :js do
   include PurlFixtures
 
   before do

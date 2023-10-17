@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'metadata panel', js: true do
+RSpec.describe 'metadata panel', :js do
   include PurlFixtures
 
   let(:request) do

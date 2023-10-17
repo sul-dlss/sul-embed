@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'embed this panel', js: true do
+RSpec.describe 'embed this panel', :js do
   include PurlFixtures
 
   let(:iframe_options) { {} }

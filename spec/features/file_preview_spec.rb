@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'file preview', js: true do
+RSpec.describe 'file preview', :js do
   include PurlFixtures
   it 'displays a toggle-able section image preview' do
     stub_purl_response_with_fixture(hybrid_object_purl)

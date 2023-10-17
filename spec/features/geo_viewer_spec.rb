@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'geo viewer public', js: true do
+RSpec.describe 'geo viewer public', :js do
   include PurlFixtures
 
   before do
@@ -56,7 +56,7 @@ RSpec.describe 'geo viewer public', js: true do
   end
 end
 
-RSpec.describe 'geo viewer restricted', js: true do
+RSpec.describe 'geo viewer restricted', :js do
   include PurlFixtures
 
   before do
@@ -78,7 +78,7 @@ RSpec.describe 'geo viewer restricted', js: true do
   end
 end
 
-RSpec.describe 'geo index map viewer', js: true do
+RSpec.describe 'geo index map viewer', :js do
   include PurlFixtures
 
   before do
