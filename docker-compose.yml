@@ -3,13 +3,13 @@
 version: '3.2'
 
 services:
-  webpacker:
+  shakapacker:
     build: .
     ports:
     - '3035:3035'
     environment:
       RAILS_ENV: development
       NODE_ENV: development
-      WEBPACKER_DEV_SERVER_HOST: 0.0.0.0
+      SHAKAPACKER_DEV_SERVER_HOST: 0.0.0.0
     volumes:
       - .:/usr/src/app

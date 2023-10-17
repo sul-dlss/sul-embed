@@ -19,7 +19,7 @@ Then start up the Rails app in one terminal window:
 
 Then start the NodeJS process to make the JavaScript assets available:
 
-    bin/webpacker-dev-server
+    bin/shakapacker-dev-server
 
 Now visit this URL in your browser!
 
@@ -27,10 +27,10 @@ Now visit this URL in your browser!
 
 # Webpacker in Docker
 
-You may also use the provided docker container to run the webpacker dev server.
+You may also use the provided docker container to run the shakapacker dev server.
 
 ```
-docker compose up webpacker
+docker compose up shakapacker
 ```
 
 ## oEmbed specification details

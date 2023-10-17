@@ -21,4 +21,4 @@ RUN gem install bundler
 
 RUN bundle
 
-CMD bin/webpacker-dev-server
+CMD bin/shakapacker-dev-server
