@@ -4,14 +4,14 @@ import ThumbSlider from './thumb_slider.js';
 import videojs from 'video.js';
 
 export default (function() {
-    var restrictedMessageSelector = '[data-access-restricted-message]';
-    var sliderObjectSelector = '[data-slider-object]';
-    var restrictedText = '(Restricted)';
-    var MAX_FILE_LABEL_LENGTH = 45;
+    const restrictedMessageSelector = '[data-access-restricted-message]';
+    const sliderObjectSelector = '[data-slider-object]';
+    const restrictedText = '(Restricted)';
+    const MAX_FILE_LABEL_LENGTH = 45;
 
     function restrictedTextMarkup(isLocationRestricted) {
       if(isLocationRestricted) {
-        return '<span class="sul-embed-location-restricted-text">' + restrictedText + '</span> ';
+        return `<span class="sul-embed-location-restricted-text">${restrictedText}</span>`
       } else {
         return '';
       }
@@ -27,7 +27,7 @@ export default (function() {
 
     function durationMarkup(duration) {
       if(duration && duration.length > 0) {
-        return ' (' + duration + ')';
+        return ` (${duration})`
       } else {
         return '';
       }
@@ -45,30 +45,30 @@ export default (function() {
     }
 
     function thumbsForSlider() {
-      var thumbs = [];
-      const sliderSelector = '[data-behavior="legacy-media"] ' + sliderObjectSelector;
-      jQuery(sliderSelector).each(function(index, mediaDiv) {
-        var mediaObject = $(mediaDiv).find('audio, video');
-        var cssClass;
+      const thumbs = [];
+      const sliderSelector = `[data-behavior="legacy-media"] ${sliderObjectSelector}`
+      document.querySelectorAll(sliderSelector).forEach(function(mediaDiv, index) {
+        const mediaObject = $(mediaDiv).find('audio, video');
+        let cssClass;
         if(mediaObject.prop('tagName') === 'AUDIO') {
           cssClass = 'sul-i-file-music-1';
         } else {
           cssClass = 'sul-i-file-video-3';
         }
 
-        var activeClass = '';
+        let activeClass = '';
         if (index === 0) {
           activeClass = 'active';
         }
 
-        var thumbClass = 'sul-embed-slider-thumb sul-embed-media-slider-thumb ';
-        var labelClass = 'sul-embed-thumb-label';
+        const thumbClass = 'sul-embed-slider-thumb sul-embed-media-slider-thumb ';
+        let labelClass = 'sul-embed-thumb-label';
         const isStanfordRestricted = mediaDiv.dataset.stanfordOnly === "true"
         if (isStanfordRestricted) {
           labelClass += ' sul-embed-thumb-stanford-only';
         }
 
-        var thumbnailIcon = '';
+        let thumbnailIcon = '';
         const thumbnailUrl = mediaDiv.dataset.thumbnailUrl
         if (thumbnailUrl !== '') {
           thumbnailIcon = '<img class="sul-embed-media-square-icon" src="' + thumbnailUrl + '" />';
@@ -80,15 +80,13 @@ export default (function() {
         const fileLabel = String(mediaDiv.dataset.fileLabel || '');
         const duration = String(mediaDiv.dataset.duration || '');
         thumbs.push(
-          '<li class="' + thumbClass + activeClass + '">' +
-            thumbnailIcon +
-            '<a class="' + labelClass + '" href="#">' +
-              stanfordOnlyScreenreaderText(isStanfordRestricted) +
-              restrictedTextMarkup(isLocationRestricted) +
-              truncateWithEllipsis(fileLabel, maxFileLabelLength(isLocationRestricted)) +
-              durationMarkup(duration) +
-            '</a>' +
-          '</li>'
+          `<li class="${thumbClass}${activeClass}">${thumbnailIcon}
+            <a class="#{labelClass}" href="#">
+              ${stanfordOnlyScreenreaderText(isStanfordRestricted)}
+              ${restrictedTextMarkup(isLocationRestricted)}
+              ${truncateWithEllipsis(fileLabel, maxFileLabelLength(isLocationRestricted))}
+              ${durationMarkup(duration)}
+            </a></li>`
         );
       });
 
@@ -96,9 +94,9 @@ export default (function() {
     }
 
     function pauseAllMedia() {
-      const mediaObjects = jQuery('[data-behavior="legacy-media"]').find('.video-js');
-      mediaObjects.each(function() {
-        videojs(jQuery(this).attr('id')).pause();
+      const mediaObjects = document.querySelectorAll('[data-behavior="legacy-media"] .video-js')
+      mediaObjects.forEach(function(node) {
+        videojs(node.id).pause();
       });
     }
 
@@ -122,9 +120,9 @@ export default (function() {
       }
       const sources = mediaObject.querySelectorAll('source');
       sources.forEach(function(source){
-        let originalSrc = source.getAttribute('src');
+        const originalSrc = source.getAttribute('src');
         if(originalSrc.indexOf('stacks_token') < 0) {
-          source.setAttribute('src', originalSrc + '?stacks_token=' + token);
+          source.setAttribute('src', `${originalSrc}?stacks_token=${token}`);
         }
       });
     }
@@ -140,16 +138,15 @@ export default (function() {
       jQuery.ajax({url: authUrl, dataType: 'jsonp'}).done(function(data) {
         // present the auth link if it's stanford restricted and the user isn't logged in
         if(jQuery.inArray('stanford_restricted', data.status) > -1) {
-          console.log("Setup auth link")
-          var wrapper = jQuery('<div data-auth-link="true" class="sul-embed-auth-link"></div>');
+          const wrapper = jQuery('<div data-auth-link="true" class="sul-embed-auth-link"></div>');
           $(mediaObject).parents(sliderObjectSelector).append(
             wrapper.append(authLink(data.service, mediaObject))
           );
         }
 
         // if the user authed successfully for the file, hide the restriction overlays
-        var sliderSelector = '[data-behavior="legacy-media"] ' + sliderObjectSelector;
-        var parentDiv = mediaObject.closest(sliderSelector);
+        const sliderSelector = `[data-behavior="legacy-media"] ${sliderObjectSelector}`
+        const parentDiv = mediaObject.closest(sliderSelector);
         const isRestricted = parentDiv.dataset.stanfordOnly === "true" || 
           parentDiv.dataset.locationRestricted === "true"
         if (isRestricted && data.status === 'success') {
@@ -177,10 +174,10 @@ export default (function() {
         .text(loginService.label)
         .on('click', function(e) {
           e.preventDefault();
-          var windowReference = window.open(jQuery(this).prop('href'));
+          const windowReference = window.open(jQuery(this).prop('href'));
 
-          var start = Date.now();
-          var checkWindow = setInterval(function() {
+          const start = Date.now();
+          const checkWindow = setInterval(function() {
             if (!_timedOut(start, 30000) &&
               (!windowReference || !windowReference.closed)) return;
             authCheckForMediaObject(mediaObject, function(_, data) {
