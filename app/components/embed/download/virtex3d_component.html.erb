@@ -1,7 +1,5 @@
 <%= render DownloadPanelComponent.new do %>
-  <div class='sul-embed-panel-body'>
-    <ul class='sul-embed-download-list'>
-      <%= render Embed::Download::FileListItemComponent.with_collection(viewer.purl_object.downloadable_files) %>
-    </ul>
-  </div>
+  <ul class='sul-embed-download-list'>
+    <%= render Embed::Download::FileListItemComponent.with_collection(viewer.purl_object.downloadable_files) %>
+  </ul>
 <% end %>
