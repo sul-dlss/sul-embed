@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'embed/metadata/_media' do
+RSpec.describe Embed::Media::MetadataComponent, type: :component do
   include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
@@ -10,16 +10,14 @@ RSpec.describe 'embed/metadata/_media' do
   let(:viewer) { Embed::Viewer::Media.new(request) }
 
   before do
-    view.lookup_context.view_paths.push 'app/views/embed'
     allow(request).to receive(:purl_object).and_return(object)
     allow(object).to receive(:response).and_return(video_purl)
-    allow(view).to receive(:viewer).and_return(viewer)
-    render
+    render_inline(described_class.new(viewer:))
   end
 
   it 'includes a media accessibility note' do
-    expect(rendered).to have_css('dt', text: 'Media accessibility', visible: :all)
-    expect(rendered).to have_css(
+    expect(page).to have_css('dt', text: 'Media accessibility', visible: :all)
+    expect(page).to have_css(
       'dd',
       text: /A transcript may be available in the Download panel/,
       visible: :all
@@ -27,6 +25,6 @@ RSpec.describe 'embed/metadata/_media' do
   end
 
   it 'links to the feedback address' do
-    expect(rendered).to have_css("a[href='mailto:#{Settings.purl_feedback_email}']", text: Settings.purl_feedback_email, visible: :all)
+    expect(page).to have_css("a[href='mailto:#{Settings.purl_feedback_email}']", text: Settings.purl_feedback_email, visible: :all)
   end
 end
