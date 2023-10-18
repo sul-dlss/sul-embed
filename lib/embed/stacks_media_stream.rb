@@ -66,7 +66,7 @@ module Embed
     def druid_tree
       @druid_tree ||= begin
         match = druid.match(/^([a-z]{2})(\d{3})([a-z]{2})(\d{4})$/i)
-        File.join(match[1], match[2], match[3], match[4]) if match
+        ::File.join(match[1], match[2], match[3], match[4]) if match
       end
     end
 

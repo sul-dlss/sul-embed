@@ -1,5 +1,5 @@
 <div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
-  <%= render 'embed/header/file', viewer: viewer if viewer.display_header? %>
+  <%= render Embed::File::HeaderComponent.new viewer: viewer %>
   <%= render 'embed/body/file', viewer: viewer %>
   <%= render 'embed/metadata_panel', viewer: viewer %>
   <%= render 'embed/embed_this/file', viewer: viewer %>

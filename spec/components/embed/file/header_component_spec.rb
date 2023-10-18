@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'embed/header/_file' do
+RSpec.describe Embed::File::HeaderComponent, type: :component do
   include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
@@ -10,26 +10,26 @@ RSpec.describe 'embed/header/_file' do
   let(:viewer) { Embed::Viewer::File.new(request) }
 
   before do
-    view.lookup_context.view_paths.push 'app/views/embed'
     allow(request).to receive(:purl_object).and_return(object)
     allow(object).to receive(:response).and_return(file_purl)
-    allow(view).to receive(:viewer).and_return(viewer)
+    render_inline(described_class.new(viewer:))
   end
 
   it "returns the object's title" do
-    render
-    expect(rendered).to have_css '.sul-embed-header-title', text: 'File Title'
+    expect(page).to have_css '.sul-embed-header-title', text: 'File Title'
   end
 
-  context 'with hide_title' do
-    before do
-      allow(request).to receive(:hide_title?).at_least(:once).and_return(true)
+  context 'with hidden title' do
+    let(:request) do
+      Embed::Request.new(
+        { url: 'http://purl.stanford.edu/abc123', hide_title: 'true' },
+        vc_test_controller
+      )
     end
 
     it 'does not return the object title if the consumer requested to hide it' do
-      render
-      expect(rendered).not_to have_css '.sul-embed-header-title'
-      expect(rendered).not_to have_css '.sul-embed-metadata-title'
+      expect(page).not_to have_css '.sul-embed-header-title'
+      expect(page).not_to have_css '.sul-embed-metadata-title'
     end
   end
 end
