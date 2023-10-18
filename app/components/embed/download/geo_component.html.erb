@@ -1,18 +1,16 @@
 <% unless viewer.request.hide_download? %>
   <%= render DownloadPanelComponent.new do %>
-    <div class='sul-embed-panel-body'>
-      <% viewer.purl_object.contents.each do |resource| %>
-        <ul class='sul-embed-download-list'>
-          <% resource.files.each do |file| %>
-            <li>
-              <a href="<%= file.file_url(download: true) %>" title="<%= file.title %>" target='_blank' rel='noopener noreferrer'>
-                Download <%= file.title %>
-              </a>
-              <%= render 'embed/restrictions_text_for_file', file: file %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
-    </div>
- <% end %>
+    <% viewer.purl_object.contents.each do |resource| %>
+      <ul class='sul-embed-download-list'>
+        <% resource.files.each do |file| %>
+          <li>
+            <a href="<%= file.file_url(download: true) %>" title="<%= file.title %>" target='_blank' rel='noopener noreferrer'>
+              Download <%= file.title %>
+            </a>
+            <%= render 'embed/restrictions_text_for_file', file: file %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
 <% end %>
