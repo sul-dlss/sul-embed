@@ -14,7 +14,7 @@
       <span class='sul-embed-disabled'><%= file.hierarchical_title %></span>
     <% else %>
       <div class='sul-embed-media-heading'>
-        <a href="<%= viewer.file_url(file.title) %>"
+        <a href="<%= file.file_url %>"
             title="<%= viewer.tooltip_text(file) %>"
             target='_blank'
             rel='noopener noreferrer'><%= file.hierarchical_title %></a>
@@ -32,7 +32,7 @@
           <%= viewer.pretty_filesize(file.size) %>
         </span>
       <% else %>
-        <a href="<%= viewer.file_url(file.title) %>" target='_blank' rel='noopener noreferrer' download=''>
+        <a href="<%= file.file_url %>" target='_blank' rel='noopener noreferrer' download=''>
           <span class='sul-embed-sr-only'>
             Download item <%= file.index %>
           </span>

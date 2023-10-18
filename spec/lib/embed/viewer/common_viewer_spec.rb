@@ -36,25 +36,6 @@ RSpec.describe Embed::Viewer::CommonViewer do
     end
   end
 
-  describe '#file_url' do
-    it 'creates a stacks file url' do
-      expect(file_viewer.file_url('cool_file')).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file'
-    end
-
-    it 'adds a download param' do
-      expect(file_viewer.file_url('cool_file', download: true)).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file?download=true'
-    end
-
-    it 'escapes special characters in the file url' do
-      expect(file_viewer.file_url('[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf')).to eq 'https://stacks.stanford.edu/file/druid:abc123/%5BDissertation%5D%20micro-TEC%20vfinal%20%28for%20submission%29-augmented.pdf'
-    end
-
-    it 'allows literal slashes in the file url' do
-      expect(file_viewer.file_url('path/to/[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf'))
-        .to eq 'https://stacks.stanford.edu/file/druid:abc123/path/to/%5BDissertation%5D%20micro-TEC%20vfinal%20%28for%20submission%29-augmented.pdf'
-    end
-  end
-
   describe '#sul_pretty_date' do
     it 'parses a date into a standardized format' do
       expect(file_viewer.sul_pretty_date(Time.zone.now.to_s)).to match(/^\d{2}-\w{3}-\d{4}$/)

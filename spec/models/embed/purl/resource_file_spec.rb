@@ -26,6 +26,45 @@ RSpec.describe Embed::Purl::ResourceFile do
     end
   end
 
+  describe '#file_url' do
+    let(:file_node) do
+      Nokogiri::XML(<<~XML
+        <file size="12345" mimetype="image/jp2" id="#{file_name}"/>
+      XML
+                   ).root
+    end
+
+    let(:file_name) { 'cool_file' }
+
+    let(:resource) { instance_double(Embed::Purl::Resource, druid: 'abc123') }
+    let(:resource_file) { described_class.new(resource, file_node, nil) }
+
+    it 'creates a stacks file url' do
+      expect(resource_file.file_url).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file'
+    end
+
+    it 'adds a download param' do
+      expect(resource_file.file_url(download: true)).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file?download=true'
+    end
+
+    context 'when there are special characters in the file name' do
+      let(:file_name) { '[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf' }
+
+      it 'escapes them' do
+        expect(resource_file.file_url).to eq 'https://stacks.stanford.edu/file/druid:abc123/%5BDissertation%5D%20micro-TEC%20vfinal%20%28for%20submission%29-augmented.pdf'
+      end
+    end
+
+    context 'when there are literal slashes in the file name' do
+      let(:file_name) { 'path/to/[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf' }
+
+      it 'allows them' do
+        expect(resource_file.file_url)
+          .to eq 'https://stacks.stanford.edu/file/druid:abc123/path/to/%5BDissertation%5D%20micro-TEC%20vfinal%20%28for%20submission%29-augmented.pdf'
+      end
+    end
+  end
+
   describe '#hierarchical_title' do
     before { stub_purl_response_with_fixture(hierarchical_file_purl) }
 

@@ -97,9 +97,7 @@ module Embed
     def transcript(file)
       return unless @include_transcripts && file.vtt
 
-      <<~HTML
-        <track default src="#{viewer.stacks_url}/#{file.vtt.title}" />
-      HTML
+      "<track default src=\"#{file.vtt.file_url}\" />"
     end
 
     def many_primary_files?

@@ -20,7 +20,7 @@ RSpec.describe Embed::Purl::Resource do
   end
 
   describe '#object_thumbnail?' do
-    subject { described_class.new(node, double('Rights')) }
+    subject { described_class.new('bc123df4567', node, instance_double(Dor::RightsAuth)) }
 
     let(:node) { instance_double(Nokogiri::XML::Node, attributes:) }
 

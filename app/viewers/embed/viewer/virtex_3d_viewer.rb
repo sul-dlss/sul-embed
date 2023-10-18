@@ -8,9 +8,7 @@ module Embed
       end
 
       def three_dimensional_files
-        purl_object.contents.select(&:three_dimensional?).map(&:files).flatten.map(&:title).map do |filename|
-          "#{stacks_url}/#{filename}"
-        end
+        purl_object.contents.select(&:three_dimensional?).map(&:files).flatten.map(&:file_url)
       end
 
       def fullscreen?

@@ -8,9 +8,7 @@ module Embed
       end
 
       def pdf_files
-        document_resource_files.map(&:title).map do |filename|
-          "#{stacks_url}/#{filename}"
-        end
+        document_resource_files.map(&:file_url)
       end
 
       def self.supported_types

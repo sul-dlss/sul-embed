@@ -9,7 +9,8 @@ RSpec.describe Embed::Viewer::Virtex3dViewer do
     instance_double(
       Embed::Purl,
       contents: [
-        instance_double(Embed::Purl::Resource, three_dimensional?: true, files: [instance_double(Embed::Purl::ResourceFile, title: 'obj1.obj')])
+        instance_double(Embed::Purl::Resource, three_dimensional?: true,
+                                               files: [instance_double(Embed::Purl::ResourceFile, title: 'obj1.obj', file_url: '//file/druid:abc123/obj1.obj')])
       ],
       druid: 'abc123'
     )

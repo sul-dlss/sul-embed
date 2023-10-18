@@ -3,10 +3,16 @@
 module Embed
   class Purl
     class Resource
-      def initialize(resource, rights)
+      # @param [String] druid identifier without a namespace
+      # @param [Nokogiri::XML::Element] resource
+      # @param [Dor::RightsAuth] rights
+      def initialize(druid, resource, rights)
+        @druid = druid
         @resource = resource
         @rights = rights
       end
+
+      attr_reader :druid
 
       def type
         @resource.attributes['type'].try(:value)
