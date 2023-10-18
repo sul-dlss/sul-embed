@@ -1,7 +1,7 @@
 <div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
   <%= render 'embed/header/media', viewer: viewer if viewer.display_header? %>
   <%= render 'embed/body/media', viewer: viewer %>
-  <%= render 'embed/metadata/media', viewer: viewer %>
+  <%= render Embed::Media::MetadataComponent.new viewer: viewer %>
   <%= render 'embed/embed_this/generic', viewer: viewer %>
   <%= render Embed::Download::MediaComponent.new viewer: viewer %>
   <%= render Embed::FooterComponent.new viewer: viewer %>
