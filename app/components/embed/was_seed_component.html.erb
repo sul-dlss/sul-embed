@@ -3,5 +3,5 @@
   <%= render 'embed/body/was_seed', viewer: viewer %>
   <%= render 'embed/metadata_panel', viewer: viewer %>
   <%= render 'embed/embed_this/generic', viewer: viewer %>
-  <%= render 'embed/footer/generic', viewer: viewer %>
+  <%= render Embed::FooterComponent.new viewer: viewer %>
  </div>

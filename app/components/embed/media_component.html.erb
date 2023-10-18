@@ -4,5 +4,5 @@
   <%= render 'embed/metadata/media', viewer: viewer %>
   <%= render 'embed/embed_this/generic', viewer: viewer %>
   <%= render Embed::Download::MediaComponent.new viewer: viewer %>
-  <%= render 'embed/footer/generic', viewer: viewer %>
+  <%= render Embed::FooterComponent.new viewer: viewer %>
  </div>
