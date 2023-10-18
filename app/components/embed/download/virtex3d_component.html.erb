@@ -1,16 +1,7 @@
 <%= render DownloadPanelComponent.new do %>
   <div class='sul-embed-panel-body'>
     <ul class='sul-embed-download-list'>
-      <% viewer.purl_object.downloadable_files.each do |file| %>
-        <% file_size = "(#{viewer.pretty_filesize(file.size)})" if file.size %>
-        <li>
-          <a href='<%= file.file_url(download: true) %>' title='<%= file.title %>' target='_blank' rel='noopener noreferrer'>
-            Download <%= file.label %>
-          </a>
-          <%= render 'embed/restrictions_text_for_file', file: file %>
-          <%= file_size %>
-        </li>
-      <% end %>
+      <%= render Embed::Download::FileListItemComponent.with_collection(viewer.purl_object.downloadable_files) %>
     </ul>
   </div>
 <% end %>
