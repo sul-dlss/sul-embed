@@ -3,6 +3,9 @@
 module Embed
   class Purl
     class ResourceFile
+      # @param [Embed::Purl::Resource] resource
+      # @param [Nokogiri::XML::Element] file
+      # @param [Dor::RightsAuth] rights
       def initialize(resource, file, rights)
         @resource = resource
         @file = file
@@ -21,6 +24,22 @@ module Embed
 
       def title
         @file.attributes['id'].try(:value)
+      end
+
+      ##
+      # Creates a file url for stacks
+      # @param [Boolean] download
+      # @return [String]
+      def file_url(download: false)
+        # Allow literal slashes in the file URL (do not encode them)
+        encoded_title = title.split('/').map { |title_part| ERB::Util.url_encode(title_part) }.join('/')
+        uri = URI.parse("#{stacks_url}/#{encoded_title}")
+        uri.query = URI.encode_www_form(download: true) if download
+        uri.to_s
+      end
+
+      def stacks_url
+        "#{Settings.stacks_url}/file/druid:#{resource.druid}"
       end
 
       def hierarchical_title

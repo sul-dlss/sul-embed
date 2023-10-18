@@ -11,13 +11,13 @@ RSpec.describe Embed::Viewer::PdfViewer do
       contents: [
         instance_double(Embed::Purl::Resource, type: 'file',
                                                files: [
-                                                 instance_double(Embed::Purl::ResourceFile, title: 'file-abc123.pdf'),
-                                                 instance_double(Embed::Purl::ResourceFile, title: 'file-xyz321.pdf')
+                                                 instance_double(Embed::Purl::ResourceFile, title: 'file-abc123.pdf', file_url: '//one'),
+                                                 instance_double(Embed::Purl::ResourceFile, title: 'file-xyz321.pdf', file_url: '//two')
                                                ]),
         instance_double(Embed::Purl::Resource, type: 'document',
                                                files: [
-                                                 instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf'),
-                                                 instance_double(Embed::Purl::ResourceFile, title: 'doc-xyz321.pdf')
+                                                 instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', file_url: '//file/druid:abc123/doc-abc123.pdf'),
+                                                 instance_double(Embed::Purl::ResourceFile, title: 'doc-xyz321.pdf', file_url: '//file/druid:abc123/doc-xyz321.pdf')
                                                ])
       ],
       druid: 'abc123'

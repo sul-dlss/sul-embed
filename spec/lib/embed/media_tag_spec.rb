@@ -10,8 +10,7 @@ RSpec.describe Embed::MediaTag do
   let(:purl) { video_purl }
   let(:viewer) do
     instance_double(Embed::Viewer::Media,
-                    purl_object: Embed::Purl.new('druid'),
-                    stacks_url: '/file/druid')
+                    purl_object: Embed::Purl.new('bc123df4567'))
   end
 
   let(:subject_klass) { described_class.new(viewer) }
@@ -124,7 +123,7 @@ RSpec.describe Embed::MediaTag do
         it 'includes a poster attribute' do
           expect(subject).to have_css('video[poster]', visible: :all)
           video = subject.find('video[poster]', visible: :all)
-          expect(video['poster']).to match(%r{/druid%2Fvideo_1/full/})
+          expect(video['poster']).to match(%r{/bc123df4567%2Fvideo_1/full/})
         end
       end
 
@@ -239,7 +238,7 @@ RSpec.describe Embed::MediaTag do
         let(:subject_klass) { described_class.new(viewer, include_transcripts: true) }
 
         it 'has a track element' do
-          expect(subject).to have_css('track[src="/file/druid/abc_123_cap.webvtt"]')
+          expect(subject).to have_css('track[src="https://stacks.stanford.edu/file/druid:bc123df4567/abc_123_cap.webvtt"]')
         end
       end
 
