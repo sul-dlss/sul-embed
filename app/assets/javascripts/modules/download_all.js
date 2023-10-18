@@ -8,32 +8,21 @@
 // will also replace the <a> element in the DOM with the <button> which will
 // prevent further clicks on the <a> since it will no longer exist.
 
-(function(global) {
-  var Module = (function() {
-    return {
+export const initDownloadAll = function () {
+  const a = document.getElementById("sul-embed-footer-download-all");
+  if (a) {
+    a.addEventListener("click", (e) => this.download(e));
+  }
+};
 
-      init: function() {
-        const a = document.getElementById('sul-embed-footer-download-all');
-        if (a) {
-          a.addEventListener('click', e => this.download(e));
-        }
-      },
+const download = function (event) {
+  const el = event.target;
+  if (el.localName == "button") {
+    el.disabled = true;
+    el.innerText = " Initializing download...";
 
-      download: function(event) {
-        const el = event.target;
-        if (el.localName == 'button') {
-          el.disabled = true;
-          el.innerText = " Initializing download...";
-
-          // replace the anchor tag with the button to prevent further clicks
-          const a = el.parentElement;
-          a.replaceWith(el);
-        }
-      }
-
-    }
-  })();
-
-  global.DownloadAll = Module;
-
-})(this);
+    // replace the anchor tag with the button to prevent further clicks
+    const a = el.parentElement;
+    a.replaceWith(el);
+  }
+};

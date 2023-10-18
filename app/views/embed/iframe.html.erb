@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/<%= Settings.jquery_version %>/jquery.min.js'></script>
-    <script>
-      <%= 'if (window.jQuery) { jQuery.fx.off = true; }' if Rails.env.test? %>
-    </script>
-    <%= tag :link, rel: "up", href: Embed::Purl.new(@embed_response.request.purl_object.collections.first).purl_url if @embed_response && @embed_response.request.purl_object.collections.any? %>
+    <%= tag :link, rel: "up", href:
+    Embed::Purl.new(@embed_response.request.purl_object.collections.first).purl_url
+    if @embed_response && @embed_response.request.purl_object.collections.any?
+    %>
   </head>
   <%= render 'analytics' %>
   <body>

@@ -1,38 +1,33 @@
-// Module injects css into head of embeded page
+// Module injects css into head of embedded page
 
-(function( global ) {
-  var Module = (function() {
+import $ from "jquery";
 
-    var linkHtml = '<link rel="stylesheet" href="{{stylesheetLink}}" type="text/css" />',
-        themeUrl = $("[data-sul-embed-theme]").data("sul-embed-theme"),
-        iconsUrl = $('[data-sul-icons]').data('sul-icons'),
-        pluginStylesheets = $('[data-plugin-styles]').data('plugin-styles') || '';
+export const appendToHead = function () {
+  const themeUrl = $("[data-sul-embed-theme]").data("sul-embed-theme");
 
-    return {
-      appendToHead: function() {
-        if ( themeUrl ) {
-          htmlSnippet = linkHtml.replace("{{stylesheetLink}}", themeUrl);
-          $("head").append(htmlSnippet);
-        }
-      },
+  if (themeUrl) {
+    const htmlSnippet = linkHtml.replace("{{stylesheetLink}}", themeUrl);
+    $("head").append(htmlSnippet);
+  }
+};
 
-      injectFontIcons: function() {
-        if ( iconsUrl ) {
-          var htmlSnippet = linkHtml.replace('{{stylesheetLink}}', iconsUrl);
-          $('head').append(htmlSnippet);
-        }
-      },
+export const injectFontIcons = function () {
+  const iconsUrl = $("[data-sul-icons]").data("sul-icons");
 
-      injectPluginStyles: function() {        
-        $.each(pluginStylesheets.split(','), function(index, stylesheet) {
-          htmlSnippet = linkHtml.replace("{{stylesheetLink}}", stylesheet);
-          $("head").append(htmlSnippet);
-        });
-      }
+  if (iconsUrl) {
+    const htmlSnippet = linkHtml.replace("{{stylesheetLink}}", iconsUrl);
+    $("head").append(htmlSnippet);
+  }
+};
 
-    };
-  })();
+export const injectPluginStyles = function () {
+  const linkHtml =
+    '<link rel="stylesheet" href="{{stylesheetLink}}" type="text/css" />';
+  const pluginStylesheets =
+    $("[data-plugin-styles]").data("plugin-styles") || "";
 
-  global.CssInjection = Module;
-
-})( this );
+  $.each(pluginStylesheets.split(","), function (index, stylesheet) {
+    const htmlSnippet = linkHtml.replace("{{stylesheetLink}}", stylesheet);
+    $("head").append(htmlSnippet);
+  });
+};

@@ -1,51 +1,51 @@
 // Module adds popup panel behavior
 
-(function( global ) {
-  var Module = (function() {
-    var clickTarget;
-    var toggleElements;
-    return {
-      init: function() {
-        this.setupListeners();
-      },
-      setupListeners: function() {
-        var _this = this;
-        $("[data-sul-embed-toggle]").on("click", function() {
-          clickTarget = $(this);
-          toggleElements = $("." + clickTarget.data("sul-embed-toggle"));
-          _this.hideAllOtherPanels();
-          _this.toggleAriaAttributes();
-          _this.setMaxHeight();
-          toggleElements.slideToggle();
-        });
-      },
-      hideAllOtherPanels: function() {
-        $("[data-sul-embed-toggle]").each(function(){
-          if(clickTarget.data("sul-embed-toggle") != $(this).data('sul-embed-toggle')) {
-            $("." + $(this).data("sul-embed-toggle") + ':visible').hide();
-          }
-        });
-      },
-      setMaxHeight: function() {
-        if (toggleElements.length > 0) {
-          var footerHeight = $(".sul-embed-footer").height(),
-              totalHeight  = $(".sul-embed-container").height(),
-              metaHeight   = toggleElements.height();
-          toggleElements.css("maxHeight", totalHeight - footerHeight);
+import $ from "jquery";
+
+export default (function () {
+  let clickTarget;
+  let toggleElements;
+  return {
+    init: function () {
+      this.setupListeners();
+    },
+    setupListeners: function () {
+      const _this = this;
+      $("[data-sul-embed-toggle]").on("click", function () {
+        clickTarget = $(this);
+        toggleElements = $("." + clickTarget.data("sul-embed-toggle"));
+        _this.hideAllOtherPanels();
+        _this.toggleAriaAttributes();
+        _this.setMaxHeight();
+        toggleElements.slideToggle();
+      });
+    },
+    hideAllOtherPanels: function () {
+      $("[data-sul-embed-toggle]").each(function () {
+        if (
+          clickTarget.data("sul-embed-toggle") !=
+          $(this).data("sul-embed-toggle")
+        ) {
+          $("." + $(this).data("sul-embed-toggle") + ":visible").hide();
         }
-      },
-      toggleAriaAttributes: function() {
-        if(toggleElements.is(':visible')) {
-          clickTarget.attr('aria-expanded', 'false');
-          toggleElements.attr('aria-hidden', 'true');
-        }else{
-          clickTarget.attr('aria-expanded', 'true');
-          toggleElements.attr('aria-hidden', 'false');
-        }
+      });
+    },
+    setMaxHeight: function () {
+      if (toggleElements.length > 0) {
+        const footerHeight = $(".sul-embed-footer").height(),
+          totalHeight = $(".sul-embed-container").height(),
+          metaHeight = toggleElements.height();
+        toggleElements.css("maxHeight", totalHeight - footerHeight);
       }
-    };
-  })();
-
-  global.PopupPanels = Module;
-
-})( this );
+    },
+    toggleAriaAttributes: function () {
+      if (toggleElements.is(":visible")) {
+        clickTarget.attr("aria-expanded", "false");
+        toggleElements.attr("aria-hidden", "true");
+      } else {
+        clickTarget.attr("aria-expanded", "true");
+        toggleElements.attr("aria-hidden", "false");
+      }
+    },
+  };
+})();

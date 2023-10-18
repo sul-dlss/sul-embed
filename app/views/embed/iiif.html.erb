@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/<%= Settings.jquery_version %>/jquery.min.js'></script>
-    <script>
-      <%= 'if (window.jQuery) { jQuery.fx.off = true; }' if Rails.env.test? %>
-    </script>
     <style>
       #sul-embed-object {
         position: absolute;
@@ -17,21 +13,29 @@
   </head>
   <%= render 'analytics' %>
   <body>
-    <div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
-      <div class='sul-embed-body sul-embed-m3' style="max-height:100%;" data-sul-embed-theme="<%= stylesheet_path('m3.css') %>">
+    <div
+      class="sul-embed-container"
+      id="sul-embed-object"
+      style="display: none"
+    >
+      <div
+        class="sul-embed-body sul-embed-m3"
+        style="max-height: 100%"
+        data-sul-embed-theme="<%= stylesheet_path('m3.css') %>"
+      >
         <div
-          id='sul-embed-m3'
-          class='m3'
-          data-m3-uri='<%= @embed_request.url %>'
-          data-canvas-id='<%= @embed_request.canvas_id %>'
-          data-canvas-index='<%= @embed_request.canvas_index %>'
-          data-hide-title='<%= @embed_request.hide_title? %>'
-          data-show-attribution='false'
-          data-search='<%= @embed_request.search %>'
-          data-suggested-search='<%= @embed_request.suggested_search %>'
-          data-image-tools='<%= @embed_request.image_tools %>'
-          style='height:100%; width:100%'>
-        </div>
+          id="sul-embed-m3"
+          class="m3"
+          data-m3-uri="<%= @embed_request.url %>"
+          data-canvas-id="<%= @embed_request.canvas_id %>"
+          data-canvas-index="<%= @embed_request.canvas_index %>"
+          data-hide-title="<%= @embed_request.hide_title? %>"
+          data-show-attribution="false"
+          data-search="<%= @embed_request.search %>"
+          data-suggested-search="<%= @embed_request.suggested_search %>"
+          data-image-tools="<%= @embed_request.image_tools %>"
+          style="height: 100%; width: 100%"
+        ></div>
 
         <%= javascript_pack_tag('m3') %>
       </div>
