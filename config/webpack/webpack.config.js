@@ -1,7 +1,9 @@
 const { generateWebpackConfig, merge } = require('shakapacker')
 const webpack = require('webpack')
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
-// See the shakacode/shakapacker README and docs directory for advice on customizing your webpackConfig.
+const isDevelopment = process.env.NODE_ENV !== 'production';
+const baseWebpackConfig = generateWebpackConfig()
 const options = {
   resolve: {
       fallback: {
@@ -17,5 +19,14 @@ const options = {
     }),
   ],
 }
+if (baseWebpackConfig.devServer) {
+  options.plugins.push(
+    new ReactRefreshWebpackPlugin({
+      overlay: {
+        sockPort: baseWebpackConfig.devServer.port,
+      },
+    })
+  )
+}
 
-module.exports = merge({}, generateWebpackConfig(), options)
+module.exports = merge({}, baseWebpackConfig, options)
