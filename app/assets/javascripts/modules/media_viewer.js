@@ -120,12 +120,11 @@ export default (function() {
       if(token === undefined) {
         return;
       }
-      var sources = mediaObject.find('source');
-      jQuery.each(sources, function(){
-        var source = jQuery(this);
-        var originalSrc = source.attr('src');
+      const sources = mediaObject.querySelectorAll('source');
+      sources.forEach(function(source){
+        let originalSrc = source.getAttribute('src');
         if(originalSrc.indexOf('stacks_token') < 0) {
-          source.prop('src', originalSrc + '?stacks_token=' + token);
+          source.setAttribute('src', originalSrc + '?stacks_token=' + token);
         }
       });
     }
@@ -141,8 +140,8 @@ export default (function() {
     }
 
     function initializeVideoJSPlayer(mediaObject) {
-      mediaObject.addClass('video-js vjs-default-skin');
-      videojs(mediaObject.attr('id'), videoJsOptions(mediaObject));
+      mediaObject.classList.add('video-js', 'vjs-default-skin');
+      videojs(mediaObject.id, videoJsOptions(mediaObject));
     }
 
     function authCheckForMediaObject(mediaObject, completeCallback) {
