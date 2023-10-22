@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Embed::Response, type: 'view' do
   let(:viewer) { instance_double(Embed::Viewer::CommonViewer, request:, purl_object:) }
-  let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }, controller) }
+  let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }) }
   let(:purl_object) { instance_double(Embed::Purl, druid: 'abc123') }
   let(:response) { described_class.new(request) }
 
@@ -41,7 +41,7 @@ RSpec.describe Embed::Response, type: 'view' do
     end
 
     it 'is the iframe snippet pointing to the embed' do
-      expect(response.html).to match(%r{<iframe.*src="#{controller.iframe_url}.*".*></iframe>}m)
+      expect(response.html(controller)).to match(%r{<iframe.*src="#{controller.iframe_url}.*".*></iframe>}m)
     end
   end
 
@@ -55,7 +55,7 @@ RSpec.describe Embed::Response, type: 'view' do
     end
 
     it 'provides a hash that conforms to the oEmbed SPEC' do
-      embed_hash = response.embed_hash
+      embed_hash = response.embed_hash(controller)
       expect(embed_hash).to match(
         a_hash_including(
           type: 'rich',

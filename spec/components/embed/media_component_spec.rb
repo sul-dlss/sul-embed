@@ -6,10 +6,7 @@ RSpec.describe Embed::MediaComponent, type: :component do
   include PurlFixtures
 
   let(:request) do
-    Embed::Request.new(
-      { url: 'http://purl.stanford.edu/abc123' },
-      vc_test_controller
-    )
+    Embed::Request.new(url: 'http://purl.stanford.edu/abc123')
   end
   let(:object) { Embed::Purl.new('12345') }
   let(:viewer) { Embed::Viewer::Media.new(request) }
@@ -38,10 +35,7 @@ RSpec.describe Embed::MediaComponent, type: :component do
 
   context 'with hidden title' do
     let(:request) do
-      Embed::Request.new(
-        { url: 'http://purl.stanford.edu/abc123', hide_title: 'true' },
-        vc_test_controller
-      )
+      Embed::Request.new(url: 'http://purl.stanford.edu/abc123', hide_title: 'true')
     end
 
     it do

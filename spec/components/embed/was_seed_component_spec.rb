@@ -7,10 +7,7 @@ RSpec.describe Embed::WasSeedComponent, type: :component do
   include WasTimeMapFixtures
 
   let(:request) do
-    Embed::Request.new(
-      { url: 'http://purl.stanford.edu/abc123' },
-      vc_test_controller
-    )
+    Embed::Request.new(url: 'http://purl.stanford.edu/abc123')
   end
   let(:object) { Embed::Purl.new('12345') }
   let(:viewer) { Embed::Viewer::WasSeed.new(request) }
@@ -38,10 +35,7 @@ RSpec.describe Embed::WasSeedComponent, type: :component do
 
     context 'with hidden title' do
       let(:request) do
-        Embed::Request.new(
-          { url: 'http://purl.stanford.edu/abc123', hide_title: 'true' },
-          vc_test_controller
-        )
+        Embed::Request.new(url: 'http://purl.stanford.edu/abc123', hide_title: 'true')
       end
 
       it do
@@ -73,10 +67,7 @@ RSpec.describe Embed::WasSeedComponent, type: :component do
 
     context 'with hidden title' do
       let(:request) do
-        Embed::Request.new(
-          { url: 'http://purl.stanford.edu/abc123', hide_title: 'true' },
-          vc_test_controller
-        )
+        Embed::Request.new(url: 'http://purl.stanford.edu/abc123', hide_title: 'true')
       end
 
       it do

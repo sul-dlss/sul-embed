@@ -7,7 +7,7 @@ RSpec.describe EmbedPanelComponent, type: :component do
     render_inline(described_class.new(viewer:)) { 'Added Panel Content' }
   end
 
-  let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }, vc_test_controller) }
+  let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }) }
   let(:viewer) do
     instance_double(
       Embed::Viewer::CommonViewer,

@@ -22,10 +22,7 @@ RSpec.describe Embed::M3Component, type: :component do
 
   context 'with hidden title' do
     let(:request) do
-      Embed::Request.new(
-        { url: 'http://purl.stanford.edu/abc123', hide_title: 'true' },
-        vc_test_controller
-      )
+      Embed::Request.new(url: 'http://purl.stanford.edu/abc123', hide_title: 'true')
     end
 
     it do
