@@ -130,3 +130,28 @@
     }
   }
 }
+
+.media-component {
+  .media-component-body {
+    display: flex;
+    flex-grow: 1;
+    // height: 100%;
+
+    .sul-embed-media-wrapper {
+      audio {
+        min-width: 300px;
+        width: 100%;
+      }
+    }
+  }
+
+  .left-drawer {
+    width: 25cqw;
+    background-color: pink;
+  }
+
+  .right-drawer {
+    width: 25cqw;
+    background-color: orange;
+  }
+}
