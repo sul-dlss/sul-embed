@@ -3,13 +3,16 @@
 @import 'modules/thumb_slider';
 @import 'video.js/video-js';
 
+// NOTE: This is overriding bootstrap_media.css
 .#{$namespace}-media {
   display: flex;
   min-height: 175px;
   overflow-y: hidden !important;
   position: relative;
   text-align: center;
+}
 
+.legacy-media-component {
   audio {
     min-width: 300px;
     width: 100%;
@@ -23,107 +26,107 @@
       padding-bottom: $sul-media-index-height;
     }
   }
-}
 
-.#{$namespace}-media-wrapper {
-  display: inline-block;
-  height: 100%;
-  position: relative;
-  text-align: center;
-  width: 100%;
-}
-
-.#{$namespace}-media-access-restricted {
-  margin: 0 auto;
-  padding: 20px 25px;
-  width: 80%;
-
-  .line1 {
-    display: block;
-    font-size: 35px;
-    font-weight: 100;
-  }
-
-  .line2 {
-    display: block;
-    font-size: 24px;
-    font-weight: 100;
-  }
-}
-
-.#{$namespace}-media-slider-thumb {
-  height: 75px;
-  text-align: left;
-
-  &.active {
-    border: 1px solid $color-cardinal-red;
-  }
-
-  i {
-    color: $color-pantone-401;
-    float: left;
-    font-size: 75px;
-    line-height: 1;
-    margin-left: -6px;
-  }
-
-  .#{$namespace}-media-square-icon {
-    float: left;
-    margin-right: 5px;
-    width: auto;
-  }
-
-  .#{$namespace}-thumb-label {
-    float: right;
-    height: 75px;
-    overflow: hidden;
-    white-space: pre-wrap;
-    white-space: -moz-pre-wrap;
-    white-space: -pre-wrap;
-    white-space: -o-pre-wrap;
-    width: 100px;
-    word-wrap: break-word;
-  }
-
-  .#{$namespace}-thumb-stanford-only {
-    @include stanford-only;
-    background-position: left 4px;
-    padding-right: 0;
-    text-indent: 17px;
-  }
-
-}
-
-// VideoJS CSS overrides for responsive layout
-// See http://andreassauer.name/experimente/video-js/demo.html
-.video-js {
-  width: 100% !important;
-
-  &::after {
-    content: '.';
-    display: block;
-    height: 0;
-    margin: 0 0 0 -100%;
-    padding: 0;
-    padding-top: 40.1%;
+  .#{$namespace}-media-wrapper {
+    display: inline-block;
+    height: 100%;
     position: relative;
-    visibility: hidden;
+    text-align: center;
+    width: 100%;
   }
 
-  // Ensure fullscreen media is as large as possible.
-  &.vjs-fullscreen {
-    audio,
-    video {
-      height: 100% !important;
-      width: 100% !important;
+  .#{$namespace}-media-access-restricted {
+    margin: 0 auto;
+    padding: 20px 25px;
+    width: 80%;
+
+    .line1 {
+      display: block;
+      font-size: 35px;
+      font-weight: 100;
+    }
+
+    .line2 {
+      display: block;
+      font-size: 24px;
+      font-weight: 100;
     }
   }
 
-  .vjs-poster {
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
+  .#{$namespace}-media-slider-thumb {
+    height: 75px;
+    text-align: left;
+
+    &.active {
+      border: 1px solid $color-cardinal-red;
+    }
+
+    i {
+      color: $color-pantone-401;
+      float: left;
+      font-size: 75px;
+      line-height: 1;
+      margin-left: -6px;
+    }
+
+    .#{$namespace}-media-square-icon {
+      float: left;
+      margin-right: 5px;
+      width: auto;
+    }
+
+    .#{$namespace}-thumb-label {
+      float: right;
+      height: 75px;
+      overflow: hidden;
+      white-space: pre-wrap;
+      white-space: -moz-pre-wrap;
+      white-space: -pre-wrap;
+      white-space: -o-pre-wrap;
+      width: 100px;
+      word-wrap: break-word;
+    }
+
+    .#{$namespace}-thumb-stanford-only {
+      @include stanford-only;
+      background-position: left 4px;
+      padding-right: 0;
+      text-indent: 17px;
+    }
+
+  }
+
+  // VideoJS CSS overrides for responsive layout
+  // See http://andreassauer.name/experimente/video-js/demo.html
+  .video-js {
+    width: 100% !important;
+
+    &::after {
+      content: '.';
+      display: block;
+      height: 0;
+      margin: 0 0 0 -100%;
+      padding: 0;
+      padding-top: 40.1%;
+      position: relative;
+      visibility: hidden;
+    }
+
+    // Ensure fullscreen media is as large as possible.
+    &.vjs-fullscreen {
+      audio,
+      video {
+        height: 100% !important;
+        width: 100% !important;
+      }
+    }
+
+    .vjs-poster {
+      bottom: 0;
+      left: 0;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
   }
 }

@@ -46,7 +46,7 @@ export default (function() {
 
     function thumbsForSlider() {
       var thumbs = [];
-      var sliderSelector = '.sul-embed-media ' + sliderObjectSelector;
+      var sliderSelector = '[data-behavior="legacy-media"] ' + sliderObjectSelector;
       jQuery(sliderSelector).each(function(index, mediaDiv) {
         var mediaObject = $(mediaDiv).find('audio, video');
         var cssClass;
@@ -96,7 +96,7 @@ export default (function() {
     }
 
     function pauseAllMedia() {
-      var mediaObjects = jQuery('.sul-embed-media').find('.video-js');
+      var mediaObjects = jQuery('[data-behavior="legacy-media"]').find('.video-js');
       mediaObjects.each(function() {
         videojs(jQuery(this).attr('id')).pause();
       });
@@ -104,7 +104,7 @@ export default (function() {
 
     function setupThumbSlider() {
       ThumbSlider
-        .init('.sul-embed-media', { thumbClickCallback: pauseAllMedia })
+        .init('[data-behavior="legacy-media"]', { thumbClickCallback: pauseAllMedia })
         .addThumbnailsToSlider(thumbsForSlider());
     }
 
@@ -156,7 +156,7 @@ export default (function() {
         }
 
         // if the user authed successfully for the file, hide the restriction overlays
-        var sliderSelector = '.sul-embed-media ' + sliderObjectSelector;
+        var sliderSelector = '[data-behavior="legacy-media"] ' + sliderObjectSelector;
         var parentDiv = mediaObject.closest(sliderSelector);
         const isRestricted = parentDiv.dataset.stanfordOnly === "true" || 
           parentDiv.dataset.locationRestricted === "true"
@@ -200,7 +200,7 @@ export default (function() {
     }
 
     function authCheck() {
-      document.querySelectorAll('.sul-embed-media [data-auth-url]').
+      document.querySelectorAll('[data-behavior="legacy-media"] [data-auth-url]').
         forEach((mediaObject) => authCheckForMediaObject(mediaObject));
     }
 

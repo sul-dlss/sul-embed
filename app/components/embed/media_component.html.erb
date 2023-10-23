@@ -1,6 +1,7 @@
-<div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
+<div class="sul-embed-container legacy-media-component" id='sul-embed-object' style='display:none;'>
   <%= render 'embed/header/media', viewer: viewer if viewer.display_header? %>
   <div class='sul-embed-body sul-embed-media'
+     data-behavior="legacy-media"
      data-sul-embed-theme="<%= stylesheet_path('media.css') %>"
      data-sul-icons="<%= stylesheet_path('sul_icons.css') %>">
     <%= Embed::MediaTag.new(viewer, include_transcripts: Settings.enabled_features.transcripts || params[:transcripts] == 'true').to_html.html_safe %>
