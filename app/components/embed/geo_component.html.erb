@@ -1,6 +1,16 @@
 <div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
   <%= render 'embed/header/geo', viewer: viewer if viewer.display_header? %>
-  <%= render 'embed/body/geo', viewer: viewer %>
+  <div class='sul-embed-body sul-embed-geo'
+     data-sul-embed-theme="<%= stylesheet_path('geo.css') %>"
+     data-sul-icons="<%= stylesheet_path('sul_icons.css') %>">
+    <div id="sul-embed-geo-sidebar" class="" style="display: none;">
+    </div>
+    <%= content_tag :div, viewer.map_element_options do %>
+
+    <% end %>
+    <%= javascript_pack_tag('geo') %>
+  </div>
+
   <%= render 'embed/metadata_panel', viewer: viewer %>
   <%= render 'embed/embed_this/generic', viewer: viewer %>
   <%= render Embed::Download::GeoComponent.new viewer: viewer %>
