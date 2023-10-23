@@ -19,7 +19,7 @@ RSpec.describe Embed::MediaComponent, type: :component do
     render_inline(described_class.new(viewer:))
   end
 
-  it 'implements the MediaTag class appropriately and gets a video tag' do
+  it 'renders a video tag' do
     expect(page).to have_css('video', visible: :all)
   end
 
