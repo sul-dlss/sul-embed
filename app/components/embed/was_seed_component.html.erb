@@ -1,5 +1,5 @@
 <div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
-  <%= render 'embed/header/was_seed', viewer: viewer if viewer.display_header? %>
+  <%= render Embed::HeaderComponent.new viewer: viewer %>
   <div class='sul-embed-body sul-embed-was-seed-container'
       data-sul-embed-theme="<%= stylesheet_path('was_seed.css') %>"
       data-sul-icons="<%= stylesheet_path('sul_icons.css') %>">

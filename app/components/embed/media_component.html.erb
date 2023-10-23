@@ -1,5 +1,5 @@
 <div class="sul-embed-container legacy-media-component" id='sul-embed-object' style='display:none;'>
-  <%= render 'embed/header/media', viewer: viewer if viewer.display_header? %>
+  <%= render Embed::HeaderComponent.new viewer: viewer %>
   <div class='sul-embed-body sul-embed-media'
      data-behavior="legacy-media"
      data-sul-embed-theme="<%= stylesheet_path('media.css') %>"

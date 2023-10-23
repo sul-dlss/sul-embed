@@ -1,5 +1,5 @@
 <div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
-  <%= render 'embed/header/virtex_3d_viewer', viewer: viewer if viewer.display_header? %>
+  <%= render Embed::HeaderComponent.new viewer: viewer %>
   <div class="sul-embed-3d sul-embed-body">
     <div class="buttons">
       <button aria-label="Zoom in" class="zoom-in">+</button>
