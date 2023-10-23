@@ -1,6 +1,31 @@
 <div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
   <%= render 'embed/header/pdf_viewer', viewer: viewer if viewer.display_header? %>
-  <%= render 'embed/body/pdf_viewer', viewer: viewer %>
+  <% # removing 5 pixels from the body height to account for being embedded %>
+  <div class='sul-embed-body sul-embed-pdf'
+        data-sul-embed-theme="<%= stylesheet_path('pdf.css') %>"
+        data-sul-icons="<%= stylesheet_path('sul_icons.css') %>">
+    <button aria-label="Zoom in" class="button zoom-in">+</button>
+    <button aria-label="Zoom out" class="button zoom-out">-</button>
+    <button aria-label="Previous page" class="button prev-page">
+      <i class="sul-i-arrow-left-8"></i>
+    </button>
+    <button aria-label="Next page" class="button next-page">
+      <i class="sul-i-arrow-right-8"></i>
+    </button>
+    <div id="pdf-viewer" class="pdf-viewer"
+      data-pdf-url="<%= viewer.pdf_files.first %>"
+      data-location-restricted="<%= viewer.all_documents_location_restricted? %>"
+    >
+      <div class="loading-spinner"></div>
+      <canvas></canvas>
+      <button
+        aria-label="Exit full screen"
+        class="sul-embed-btn sul-i-close sul-close-fullscreen-button"
+        id="close-full-screen-button">
+      </button>
+    </div>
+    <%= javascript_pack_tag('pdf_viewer') %>
+  </div>
   <%= render 'embed/metadata_panel', viewer: viewer %>
   <%= render 'embed/embed_this/generic', viewer: viewer %>
   <%= render Embed::Download::PdfComponent.new viewer: viewer %>
