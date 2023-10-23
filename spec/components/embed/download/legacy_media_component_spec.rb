@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::Download::MediaComponent, type: :component do
+RSpec.describe Embed::Download::LegacyMediaComponent, type: :component do
   include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }

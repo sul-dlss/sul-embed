@@ -4,7 +4,8 @@ module Embed
   module Viewer
     class Media < CommonViewer
       def component
-        MediaComponent
+        # TODO: add a feature flag here
+        LegacyMediaComponent
       end
 
       def self.supported_types

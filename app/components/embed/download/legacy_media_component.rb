@@ -2,7 +2,7 @@
 
 module Embed
   module Download
-    class MediaComponent < ViewComponent::Base
+    class LegacyMediaComponent < ViewComponent::Base
       def initialize(viewer:)
         @viewer = viewer
       end
