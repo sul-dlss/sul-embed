@@ -108,14 +108,6 @@ RSpec.describe Embed::Request do
     end
   end
 
-  describe 'controller' do
-    let(:controller) { instance_double(EmbedController) }
-
-    it 'includes the controller (for generating URLs in viewer HTML)' do
-      expect(described_class.new({ url: purl }, controller).controller).to eq controller
-    end
-  end
-
   describe 'purl_object' do
     let(:object) { instance_double(Embed::Purl) }
 

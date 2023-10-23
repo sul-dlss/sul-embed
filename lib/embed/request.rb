@@ -2,11 +2,10 @@
 
 module Embed
   class Request
-    attr_reader :params, :controller
+    attr_reader :params
 
-    def initialize(params, controller = nil)
+    def initialize(params)
       @params = params
-      @controller = controller
     end
 
     def url

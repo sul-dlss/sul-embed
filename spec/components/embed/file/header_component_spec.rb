@@ -21,10 +21,7 @@ RSpec.describe Embed::File::HeaderComponent, type: :component do
 
   context 'with hidden title' do
     let(:request) do
-      Embed::Request.new(
-        { url: 'http://purl.stanford.edu/abc123', hide_title: 'true' },
-        vc_test_controller
-      )
+      Embed::Request.new(url: 'http://purl.stanford.edu/abc123', hide_title: 'true')
     end
 
     it 'does not return the object title if the consumer requested to hide it' do

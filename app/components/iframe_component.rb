@@ -20,7 +20,7 @@ class IframeComponent < ViewComponent::Base
 
   def src
     query_params = request.as_url_params.merge(version ? { _v: version } : {}).to_query
-    "#{request.controller.iframe_url}?url=#{Settings.purl_url}/#{druid}&#{query_params}"
+    "#{iframe_url}?url=#{Settings.purl_url}/#{druid}&#{query_params}"
   end
 
   def call

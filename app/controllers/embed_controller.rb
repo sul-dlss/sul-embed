@@ -10,9 +10,9 @@ class EmbedController < ApplicationController
     @embed_request.validate!
 
     if @embed_request.format.to_sym == :xml
-      render xml: Embed::Response.new(@embed_request).embed_hash.to_xml(root: 'oembed')
+      render xml: Embed::Response.new(@embed_request).embed_hash(self).to_xml(root: 'oembed')
     else
-      render json: Embed::Response.new(@embed_request).embed_hash
+      render json: Embed::Response.new(@embed_request).embed_hash(self)
     end
   end
 
@@ -31,7 +31,7 @@ class EmbedController < ApplicationController
   end
 
   def embed_request
-    @embed_request ||= Embed::Request.new(linted_params, self)
+    @embed_request ||= Embed::Request.new(linted_params)
   end
 
   # NOTE: Both of these errors are handled automatically by ActionDispatch::ExceptionWrapper

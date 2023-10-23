@@ -25,22 +25,21 @@ module Embed
       @request.purl_object.title
     end
 
-    def html
-      @html ||= ActionController::Base.new.render_to_string(
+    def html(controller)
+      @html ||= controller.render_to_string(
         IframeComponent.new(viewer:, version: Rails.root.mtime.to_i)
       )
     end
 
-    def embed_hash
+    def embed_hash(controller)
       {
         type:,
         version:,
         provider_name:,
         title:,
         height:,
-        width:,
-        html:
-      }
+        width:
+      }.merge(html: html(controller))
     end
 
     def viewer
