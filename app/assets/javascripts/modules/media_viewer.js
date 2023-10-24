@@ -161,8 +161,8 @@ export default (function() {
         const isRestricted = parentDiv.dataset.stanfordOnly === "true" || 
           parentDiv.dataset.locationRestricted === "true"
         if(isRestricted && data.status === 'success') {
-          parentDiv.find(restrictedMessageSelector).hide();
-          parentDiv.find('[data-auth-link]').hide();
+          parentDiv.querySelector(restrictedMessageSelector).hidden = true
+          parentDiv.querySelector('[data-auth-link]').hidden = true
         }
 
         if(data.status === 'success') {
