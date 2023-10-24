@@ -160,9 +160,11 @@ export default (function() {
         var parentDiv = mediaObject.closest(sliderSelector);
         const isRestricted = parentDiv.dataset.stanfordOnly === "true" || 
           parentDiv.dataset.locationRestricted === "true"
-        if(isRestricted && data.status === 'success') {
+        if (isRestricted && data.status === 'success') {
           parentDiv.querySelector(restrictedMessageSelector).hidden = true
-          parentDiv.querySelector('[data-auth-link]').hidden = true
+          const authLink = parentDiv.querySelector('[data-auth-link]')
+          if (authLink)
+            authLink.hidden = true
         }
 
         if(data.status === 'success') {
