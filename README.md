@@ -8,7 +8,7 @@ An [oEmbed](http://oembed.com/) provider for embedding resources from the Stanfo
 
 There is an embedded static page available at `/pages/sandbox` in your development and test environments. Make sure that you use the same host on the service input (first text field) as you are accessing the site from (e.g. localhost or 127.0.0.1).
 
-To bring up a dev environment first you'll need to install Ruby and JavaScript dependencies. Note: NodeJS v14 and [yarn](https://yarnpkg.com/) must be installed:
+To bring up a dev environment first you'll need to install Ruby and JavaScript dependencies. Note: NodeJS v18 and [yarn](https://yarnpkg.com/) must be installed:
 
     bundle install
     yarn install
