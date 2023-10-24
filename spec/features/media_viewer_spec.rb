@@ -50,6 +50,7 @@ RSpec.describe 'media viewer', :js do
       it 'hides the link' do
         expect(page).to have_css('.sul-embed-container', visible: :visible) # to wait for the viewer to load
         expect(page).not_to have_css('.sul-embed-auth-link a', visible: :visible)
+        expect(page).not_to have_content 'Restricted media cannot be played in your location.'
       end
     end
 
