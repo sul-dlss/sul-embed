@@ -42,12 +42,11 @@ Metrics/ParameterLists:
   Exclude:
     - 'spec/rails_helper.rb'
 
-Rails/OutputSafety:
-  Exclude:
-    - 'app/helpers/embed_helper.rb'
-
 RSpec/MultipleExpectations:
   Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 7
 
 RSpec/ExampleLength:
   Enabled: false

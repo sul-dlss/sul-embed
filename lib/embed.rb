@@ -9,7 +9,6 @@ module Embed
   require 'embed/mimetypes'
   require 'embed/pretty_filesize'
   require 'embed/stacks_image'
-  require 'embed/media_tag'
 
   mattr_accessor :registered_viewers do
     []
