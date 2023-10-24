@@ -1,10 +1,10 @@
 'use strict';
 
-import { CssInjection } from '../../assets/javascripts/modules/css_injection.js';
-import { EmbedThis } from '../../assets/javascripts/modules/embed_this.js';
-import { PopupPanels } from '../../assets/javascripts/modules/popup_panels.js';
-import CommonViewerBehavior from '../../assets/javascripts/modules/common_viewer_behavior.js';
-import MediaViewer from '../../assets/javascripts/modules/media_viewer.js';
+import { CssInjection } from '../src/modules/css_injection.js';
+import { EmbedThis } from '../src/modules/embed_this.js';
+import { PopupPanels } from '../src/modules/popup_panels.js';
+import CommonViewerBehavior from '../src/modules/common_viewer_behavior.js';
+import MediaViewer from '../src/modules/media_viewer.js';
 
 $(document).ready(function() {
   CssInjection.injectFontIcons();

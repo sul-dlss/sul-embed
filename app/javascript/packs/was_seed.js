@@ -1,7 +1,7 @@
-import { CssInjection } from '../../assets/javascripts/modules/css_injection';
-import CommonViewerBehavior from '../../assets/javascripts/modules/common_viewer_behavior';
-import { PopupPanels } from '../../assets/javascripts/modules/popup_panels';
-import { EmbedThis } from '../../assets/javascripts/modules/embed_this';
+import { CssInjection } from '../src/modules/css_injection';
+import CommonViewerBehavior from '../src/modules/common_viewer_behavior';
+import { PopupPanels } from '../src/modules/popup_panels';
+import { EmbedThis } from '../src/modules/embed_this';
 
 document.addEventListener('DOMContentLoaded', () => {
   CssInjection.injectFontIcons();
