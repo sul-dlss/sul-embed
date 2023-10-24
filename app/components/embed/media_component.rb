@@ -21,7 +21,7 @@ module Embed
       end
     end
 
-    def many_primary_files
+    def many_primary_files?
       primary_files_count > 1
     end
   end
