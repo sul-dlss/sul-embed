@@ -36,7 +36,7 @@ module Embed
       end
     end
 
-    def media_tag(file, type)
+    def media_tag(file, type) # rubocop:disable Metrics/MethodLength
       tag.send(type,
                id: "sul-embed-media-#{@resource_iteration.index}",
                data: {
@@ -45,6 +45,7 @@ module Embed
                },
                poster: poster_attribute(file),
                controls: 'controls',
+               crossorigin: 'anonymous',
                aria: { labelledby: "access-restricted-message-div-#{@resource_iteration.index}" },
                class: "sul-embed-media-file #{'sul-embed-many-media' if @many_primary_files}",
                height: '100%') do
