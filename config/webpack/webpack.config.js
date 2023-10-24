@@ -11,7 +11,17 @@ const options = {
       }
   },
   module: {
-    rules: [{ test: /\.hbs$/, loader: "handlebars-loader" }]
+    rules: [
+      { test: /\.hbs$/, loader: "handlebars-loader" },
+      {
+        test: /\.(jsx|js)$/,
+        // include: path.resolve(__dirname, 'src'),
+        exclude: /node_modules/,
+        use: [{
+          loader: 'babel-loader',
+        }]
+      }
+    ]
   },
   plugins: [
     new webpack.IgnorePlugin({

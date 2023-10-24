@@ -12,21 +12,11 @@ import { CssInjection } from '../src/modules/css_injection.js';
 import CommonViewerBehavior from '../src/modules/common_viewer_behavior.js';
 
 import { createRoot } from 'react-dom/client';
-
-import Button from '@mui/material/Button';
-
-export default function ButtonUsage() {
-  return <Button variant="contained">Hello world</Button>;
-}
-
-function NavigationBar() {
-  // TODO: Actually implement a navigation bar
-  return <h1>Hello from React!</h1>;
-}
+import App from '../../assets/javascripts/media_viewer/App'
 
 const domNode = document.querySelector('.media-component');
 const root = createRoot(domNode);
-root.render(<ButtonUsage />);
+root.render(<App />);
 
 
 $(document).ready(function() {
