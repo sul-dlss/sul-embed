@@ -14,11 +14,11 @@ import cdlAuthPlugin from '../plugins/cdlAuthPlugin';
 
 export default {
   init: function() {
-    var $el = jQuery('#sul-embed-m3');
-    var data = $el.data();
+    const el = document.getElementById('sul-embed-m3');
+    const data = el.dataset;
 
     // Determine which panel should be open
-    var sideBarPanel = 'info';
+    let sideBarPanel = 'info';
     if (data.search) {
       sideBarPanel = 'search';
     }

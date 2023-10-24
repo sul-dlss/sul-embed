@@ -13,7 +13,7 @@ require 'selenium-webdriver'
 require 'view_component/test_helpers'
 require 'view_component/system_test_helpers'
 
-Capybara.javascript_driver = :selenium_chrome_headless
+Capybara.javascript_driver = :selenium_chrome#_headless
 
 Capybara.default_max_wait_time = ENV['CI'] ? 30 : 10
 
