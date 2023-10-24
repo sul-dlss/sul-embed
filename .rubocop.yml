@@ -2,6 +2,7 @@ inherit_from:
   - .rubocop_todo.yml
 
 require:
+  - rubocop-capybara
   - rubocop-rails
   - rubocop-performance
   - rubocop-rspec
@@ -483,4 +484,6 @@ RSpec/MetadataStyle: # new in 2.24
 RSpec/SpecFilePathFormat: # new in 2.24
   Enabled: true
 RSpec/SpecFilePathSuffix: # new in 2.24
+  Enabled: true
+Style/SingleLineDoEndBlock: # new in 1.57
   Enabled: true

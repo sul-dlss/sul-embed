@@ -30,7 +30,7 @@ group :development, :test do
   gem 'selenium-webdriver', '~> 4.2'
 
   # Linting/Styleguide Enforcement
-  gem 'rubocop', '1.53.1' # Pinned to work around https://github.com/rubocop/rubocop/issues/12022
+  gem 'rubocop', '~> 1.53'
   gem 'rubocop-performance', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
