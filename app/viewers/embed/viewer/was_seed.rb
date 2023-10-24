@@ -3,7 +3,6 @@
 module Embed
   module Viewer
     class WasSeed < CommonViewer
-      include Embed::StacksImage
       delegate :druid, to: :@purl_object
 
       def component
