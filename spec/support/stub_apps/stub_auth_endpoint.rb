@@ -26,8 +26,10 @@ class StubAuthEndpoint
     self.response_json = stanford_restricted_json
   end
 
+  # This is kind of odd, but when it's success it's just a string, not an array.
+  # This comes from https://github.com/sul-dlss/stacks/blob/62d7b6771f084f9620638713a4e91c66e0b48027/app/controllers/media_controller.rb#L49-L60
   def self.success_json
-    { 'status' => ['success'], 'token' => 'abc123' }
+    { 'status' => 'success', 'token' => 'abc123' }
   end
 
   def self.location_restricted_json
