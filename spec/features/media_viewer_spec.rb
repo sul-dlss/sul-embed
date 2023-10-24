@@ -34,7 +34,7 @@ RSpec.describe 'media viewer', :js do
     end
   end
 
-  context 'single A/V file' do
+  context 'with a single A/V file' do
     let(:purl) { audio_purl }
 
     it 'does does not have the thumbnail slider panel' do
@@ -63,7 +63,7 @@ RSpec.describe 'media viewer', :js do
     end
   end
 
-  context 'multiple A/V files' do
+  context 'with multiple A/V files' do
     # The ajax request that displays the video does not fire in this context
     # so we are checking for a non-visible video in the first case (even though it should be visible)
     it 'has a toggle-able thumbnail slider panel' do
@@ -94,7 +94,7 @@ RSpec.describe 'media viewer', :js do
     end
   end
 
-  context 'a previewable file within a media object' do
+  context 'with a previewable file within a media object' do
     let(:purl) { video_purl_with_image }
 
     it 'includes a previewable image as a top level object' do
@@ -112,7 +112,7 @@ RSpec.describe 'media viewer', :js do
     end
   end
 
-  context 'a location restricted file within a media object' do
+  context 'with a location restricted file within a media object' do
     it 'displays the restricted text with the appropriate styling' do
       expect(page).not_to have_css('.sul-embed-thumb-slider', visible: :visible)
       page.find('.sul-embed-thumb-slider-open-close').click
@@ -123,7 +123,7 @@ RSpec.describe 'media viewer', :js do
     end
   end
 
-  context 'duration related info' do
+  context 'with duration related info' do
     it 'displays available duration in parens after the title (video)' do
       page.find('.sul-embed-thumb-slider-open-close').click
       expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'abc_123.mp4 (1:02:03)')
@@ -134,7 +134,7 @@ RSpec.describe 'media viewer', :js do
       expect(page).to have_css('.sul-embed-media-slider-thumb', text: /Second Video$/)
     end
 
-    context 'invalid duration format' do
+    context 'with invalid duration' do
       let(:purl) { invalid_video_duration_purl }
 
       it 'displays as if there were no duration in the purl xml' do
@@ -143,7 +143,7 @@ RSpec.describe 'media viewer', :js do
       end
     end
 
-    context 'audio' do
+    context 'with an audio' do
       let(:purl) { audio_purl_multiple }
 
       it 'displays available duration in parens after the title' do
@@ -158,7 +158,7 @@ RSpec.describe 'media viewer', :js do
     end
   end
 
-  context 'graceful display of long titles' do
+  context 'with long titles' do
     let(:purl) { long_label_purl }
 
     it 'truncates at 45 characters of combined restriction and title text' do

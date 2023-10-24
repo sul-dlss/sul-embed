@@ -54,7 +54,6 @@ RSpec/AnyInstance:
 # Prefixes: when, with, without
 RSpec/ContextWording:
   Exclude:
-    - 'spec/features/media_viewer_spec.rb'
     - 'spec/lib/embed/media_duration_spec.rb'
     - 'spec/lib/embed/pretty_filesize_spec.rb'
     - 'spec/lib/embed/stacks_media_stream_spec.rb'
