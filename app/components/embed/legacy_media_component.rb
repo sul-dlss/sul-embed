@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Embed
-  class MediaComponent < ViewComponent::Base
+  class LegacyMediaComponent < ViewComponent::Base
     def initialize(viewer:)
       @viewer = viewer
     end

@@ -46,7 +46,7 @@ export default (function() {
 
     function thumbsForSlider() {
       var thumbs = [];
-      var sliderSelector = '[data-behavior="legacy-media"] ' + sliderObjectSelector;
+      const sliderSelector = '[data-behavior="legacy-media"] ' + sliderObjectSelector;
       jQuery(sliderSelector).each(function(index, mediaDiv) {
         var mediaObject = $(mediaDiv).find('audio, video');
         var cssClass;
@@ -96,7 +96,7 @@ export default (function() {
     }
 
     function pauseAllMedia() {
-      var mediaObjects = jQuery('[data-behavior="legacy-media"]').find('.video-js');
+      const mediaObjects = jQuery('[data-behavior="legacy-media"]').find('.video-js');
       mediaObjects.each(function() {
         videojs(jQuery(this).attr('id')).pause();
       });
@@ -149,6 +149,7 @@ export default (function() {
       jQuery.ajax({url: authUrl, dataType: 'jsonp'}).done(function(data) {
         // present the auth link if it's stanford restricted and the user isn't logged in
         if(jQuery.inArray('stanford_restricted', data.status) > -1) {
+          console.log("Setup auth link")
           var wrapper = jQuery('<div data-auth-link="true" class="sul-embed-auth-link"></div>');
           $(mediaObject).parents(sliderObjectSelector).append(
             wrapper.append(authLink(data.service, mediaObject))

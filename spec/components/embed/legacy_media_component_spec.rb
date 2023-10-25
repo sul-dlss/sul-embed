@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::MediaComponent, type: :component do
+RSpec.describe Embed::LegacyMediaComponent, type: :component do
   include PurlFixtures
 
   let(:request) do

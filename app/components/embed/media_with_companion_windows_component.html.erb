@@ -15,7 +15,7 @@
     </div>
     <%= render Embed::Media::MetadataComponent.new viewer: viewer %>
     <%= render 'embed/embed_this/generic', viewer: viewer %>
-    <%= render Embed::Download::MediaComponent.new viewer: viewer %>
+    <%= render Embed::Download::LegacyMediaComponent.new viewer: viewer %>
     <div class="right-drawer">
       Right Drawer
     </div>
