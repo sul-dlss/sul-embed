@@ -74,8 +74,7 @@ module Embed
     def transcript(file)
       return unless @include_transcripts && file.vtt
 
-      tag.track(src: file.vtt.file_url, default: true, kind: 'captions',
-                srclang: 'en', label: 'English')
+      tag.track(src: file.vtt.file_url, kind: 'captions', srclang: 'en', label: 'English')
     end
 
     def poster_attribute(file)
