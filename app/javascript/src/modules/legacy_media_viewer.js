@@ -129,19 +129,9 @@ export default (function() {
       });
     }
 
-    function videoJsOptions(mediaObject) {
-      return {
-        html5: {
-          vhs: {
-            withCredentials: true
-          }
-        }
-      };
-    }
-
     function initializeVideoJSPlayer(mediaObject) {
       mediaObject.classList.add('video-js', 'vjs-default-skin');
-      videojs(mediaObject.id, videoJsOptions(mediaObject));
+      videojs(mediaObject.id);
     }
 
     function authCheckForMediaObject(mediaObject, completeCallback) {
