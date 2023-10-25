@@ -1,4 +1,4 @@
-const CommonViewerBehavior = require('../../../app/assets/javascripts/modules/common_viewer_behavior.js');
+const CommonViewerBehavior = require('../../../app/javascript/src/modules/common_viewer_behavior.js');
 
 let fakeFunction;
 describe('Common Viewer Behavior', () => {
