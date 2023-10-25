@@ -131,7 +131,8 @@ export default (function() {
 
     function initializeVideoJSPlayer(mediaObject) {
       mediaObject.classList.add('video-js', 'vjs-default-skin');
-      videojs(mediaObject.id);
+      const vjs = videojs(mediaObject.id);
+      vjs.removeChild('textTrackSettings')
     }
 
     function authCheckForMediaObject(mediaObject, completeCallback) {
