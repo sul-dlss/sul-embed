@@ -50,18 +50,9 @@ def stub_request(request)
   expect(request).to receive(:purl_object).and_return(Embed::Purl.new('12345'))
 end
 
-def visit_sandbox
-  visit page_path(id: 'sandbox')
-end
-
 def toggle_download_panel
   page.find('button[data-sul-embed-toggle="sul-embed-download-panel"]', visible: true)
   page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
-end
-
-def fill_in_default_sandbox_form(druid = 'ab123cd4567')
-  fill_in 'api-endpoint', with: embed_path
-  fill_in 'url-scheme', with: "http://purl.stanford.edu/#{druid}"
 end
 
 def visit_iframe_response(druid = 'ignored', min_files_to_search: nil, hide_search: nil, hide_title: nil, hide_download: nil, fullheight: nil)
@@ -74,9 +65,4 @@ def visit_iframe_response(druid = 'ignored', min_files_to_search: nil, hide_sear
     fullheight:
   )
   expect(page).to have_css('.sul-embed-container')
-end
-
-def send_embed_response
-  fill_in_default_sandbox_form
-  click_button 'Embed'
 end
