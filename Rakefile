@@ -22,5 +22,5 @@ task asset_paths: [:environment] do
 end
 
 task javascript_tests: [:environment] do
-  system 'yarn test'
+  exit(1) unless system 'yarn test'
 end
