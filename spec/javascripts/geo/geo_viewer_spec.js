@@ -1,4 +1,4 @@
-const GeoViewer = require('../../../app/assets/javascripts/modules/geo_viewer.js');
+const GeoViewer = require('../../../app/javascript/src/modules/geo_viewer.js');
 
 describe('geo_viewer.js', () => {
   describe('loads and makes available modules', () => {
