@@ -1,4 +1,7 @@
 .legacy-media-component {
+  @import 'modules/auth_link';
+  @import 'modules/thumb_slider';
+    
   audio {
     min-width: 300px;
     width: 100%;
