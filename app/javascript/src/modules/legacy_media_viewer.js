@@ -129,27 +129,10 @@ export default (function() {
       });
     }
 
-    function videoJsOptions(mediaObject) {
-      return {
-        children: [
-          'mediaLoader',
-          'posterImage',
-          'titleBar',
-          'textTrackDisplay',
-          'loadingSpinner',
-          'bigPlayButton',
-          'liveTracker',
-          'controlBar',
-          'errorDisplay',
-          // 'textTrackSettings',
-          'resizeManager'
-        ]
-      };
-    }
-
     function initializeVideoJSPlayer(mediaObject) {
       mediaObject.classList.add('video-js', 'vjs-default-skin');
-      videojs(mediaObject.id, videoJsOptions(mediaObject));
+      const vjs = videojs(mediaObject.id);
+      vjs.removeChild('textTrackSettings')
     }
 
     function authCheckForMediaObject(mediaObject, completeCallback) {
