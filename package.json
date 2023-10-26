@@ -47,7 +47,7 @@
     "terser-webpack-plugin": "5",
     "three": "^0.125.0",
     "url-polyfill": "^1.1.12",
-    "video.js": "^7.20.1",
+    "video.js": "^8.6.1",
     "virtex3d": "^0.4.0",
     "webpack": "5",
     "webpack-assets-manifest": "5",
