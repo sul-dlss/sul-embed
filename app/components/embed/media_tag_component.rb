@@ -41,7 +41,8 @@ module Embed
                id: "sul-embed-media-#{@resource_iteration.index}",
                data: {
                  src: streaming_url_for(file, :dash),
-                 auth_url: authentication_url(file)
+                 auth_url: authentication_url(file),
+                 media_target: 'mediaTag'
                },
                poster: poster_attribute(file),
                controls: 'controls',

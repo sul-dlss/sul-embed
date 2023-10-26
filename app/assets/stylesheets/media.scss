@@ -11,6 +11,41 @@
   text-align: center;
 }
 
+
+// VideoJS CSS overrides for responsive layout
+// See http://andreassauer.name/experimente/video-js/demo.html
+.video-js {
+  width: 100% !important;
+
+  &::after {
+    content: '.';
+    display: block;
+    height: 0;
+    margin: 0 0 0 -100%;
+    padding: 0;
+    padding-top: 40.1%;
+    position: relative;
+    visibility: hidden;
+  }
+
+  // Ensure fullscreen media is as large as possible.
+  &.vjs-fullscreen {
+    audio,
+    video {
+      height: 100% !important;
+      width: 100% !important;
+    }
+  }
+
+  .vjs-poster {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
 .media-component {
   header {
     border-top: 2px solid rgb(140, 21, 21);
@@ -53,6 +88,10 @@
     }
   }
 
+  .sul-embed-media-file {
+    height: 100%;
+  }
+  
   .button-label {
     width: 100%;
     display: flex;
@@ -76,6 +115,11 @@
     flex-grow: 1;
 
     .sul-embed-media-wrapper {
+      display: inline-block;
+      height: 100%;
+      position: relative;
+      text-align: center;
+      width: 100%;
       audio {
         min-width: 300px;
         width: 100%;

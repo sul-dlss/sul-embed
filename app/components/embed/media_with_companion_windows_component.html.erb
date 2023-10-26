@@ -8,8 +8,8 @@
     </nav>
   </header>
 
-  <div class="media-component-body">
-    <div class="left-drawer" data-controller="hello">
+  <div class="media-component-body" data-controller="media">
+    <div class="left-drawer">
       Left Drawer
     </div>
     <div class='sul-embed-body sul-embed-media'
@@ -23,7 +23,7 @@
     <%= render Embed::Media::MetadataComponent.new viewer: viewer %>
     <%= render 'embed/embed_this/generic', viewer: viewer %>
     <%= render Embed::Download::LegacyMediaComponent.new viewer: viewer %>
-    <div class="right-drawer">
+    <div class="right-drawer" data-media-target="rightDrawer">
       Right Drawer
     </div>
   </div>
