@@ -37,8 +37,14 @@ RSpec.configure do |config|
   config.include Capybara::RSpecMatchers, type: :component
 end
 
-def stub_purl_response_with_fixture(fixture)
-  allow_any_instance_of(Embed::Purl).to receive(:response).and_return(fixture)
+def stub_purl_response_with_fixture(fixture, etag: "W/\"#{Time.zone.now.to_f}\"", last_modified: Time.zone.now.rfc2822)
+  response = instance_double(Faraday::Response, body: fixture, headers: {
+                               'ETag' => etag,
+                               'Last-Modified' => last_modified
+                             }, success?: true)
+  connection = instance_double(Faraday::Connection, get: response)
+
+  allow(Faraday).to receive(:new).and_return(connection)
 end
 
 def stub_purl_response_and_request(fixture, request)

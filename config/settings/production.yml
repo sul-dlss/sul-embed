@@ -1,1 +1,0 @@
-cache_life: <%= 15.minutes.to_s %>
