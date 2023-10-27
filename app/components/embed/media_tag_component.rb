@@ -5,6 +5,8 @@ module Embed
     include StacksImage
     with_collection_parameter :resource
     SUPPORTED_MEDIA_TYPES = %i[audio video].freeze
+    MAX_WIDTH = 800
+    MAX_HEIGHT = 600
 
     def initialize(resource:, resource_iteration:, druid:, include_transcripts:, many_primary_files:)
       @resource = resource
@@ -82,10 +84,21 @@ module Embed
       return unless file.thumbnail
 
       if file.thumbnail.world_downloadable?
-        stacks_thumb_url(@druid, file.thumbnail.title, size: '!800,600')
+        width = stack_image_width(file.thumbnail)
+        height = stack_image_height(file.thumbnail)
+
+        stacks_thumb_url(@druid, file.thumbnail.title, size: "!#{width},#{height}")
       else
         stacks_thumb_url(@druid, file.thumbnail.title)
       end
+    end
+
+    def stack_image_width(thumbnail_file)
+      thumbnail_file.width.present? && thumbnail_file.width.to_i < MAX_WIDTH ? thumbnail_file.width : MAX_WIDTH
+    end
+
+    def stack_image_height(thumbnail_file)
+      thumbnail_file.height.present? && thumbnail_file.height.to_i < MAX_HEIGHT ? thumbnail_file.height : MAX_HEIGHT
     end
 
     def access_restricted_message(stanford_only, location_restricted)
