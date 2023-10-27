@@ -37,7 +37,7 @@ streaming:
     mimetype: 'application/dash+xml'
     protocol: 'https'
 stream:
-  url: sul-streaming-stage.stanford.edu/stacks/_definst_
+  url: sul-mediaserver.stanford.edu/stacks/_definst_
   # streaming media file extensions we support
   video:
     - mov

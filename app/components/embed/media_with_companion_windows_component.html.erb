@@ -1,6 +1,14 @@
 <div class="sul-embed-container media-component" id='sul-embed-object' style='display:none;'>
-  <%= render Embed::HeaderComponent.new viewer: viewer %>
-  <div class="media-component-body">
+  <header>
+    <nav aria-label="Window navigation">
+      <button>
+        <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg></span>
+      </button>
+      <h2 class=""><%= viewer.purl_object.title %></h2>
+    </nav>
+  </header>
+
+  <div class="media-component-body" data-controller="media">
     <div class="left-drawer">
       Left Drawer
     </div>
@@ -11,14 +19,14 @@
                                                     include_transcripts:,
                                                     druid:,
                                                     many_primary_files:) %>
-      <%= javascript_pack_tag('media') %>
     </div>
     <%= render Embed::Media::MetadataComponent.new viewer: viewer %>
     <%= render 'embed/embed_this/generic', viewer: viewer %>
     <%= render Embed::Download::LegacyMediaComponent.new viewer: viewer %>
-    <div class="right-drawer">
+    <div class="right-drawer" data-media-target="rightDrawer">
       Right Drawer
     </div>
   </div>
   <%= render Embed::FooterComponent.new viewer: viewer %>
  </div>
+ <%= javascript_pack_tag('media') %>
