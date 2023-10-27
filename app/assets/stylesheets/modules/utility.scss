@@ -7,54 +7,12 @@
 // Floats
 // -------------------------
 
-.#{$namespace}-clearfix {
-  @include clearfix();
-}
-.#{$namespace}-center-block {
-  @include center-block();
-}
-.#{$namespace}-pull-right {
-  float: right !important;
-}
 .#{$namespace}-pull-left {
   float: left !important;
 }
 
-
-// Toggling content
-// -------------------------
-
-// Note: Deprecated .hide in favor of .hidden or .sr-only (as appropriate) in v3.0.1
-.#{$namespace}-hide {
-  display: none !important;
-}
-.#{$namespace}-show {
-  display: block !important;
-}
-.#{$namespace}-invisible {
-  visibility: hidden;
-}
 .#{$namespace}-text-hide {
   @include text-hide();
-}
-
-
-// Hide from screenreaders and browsers
-//
-// Credit: HTML5 Boilerplate
-
-.#{$namespace}-hidden {
-  display: none !important;
-  visibility: hidden !important;
-}
-
-
-// For Affix plugin
-// -------------------------
-
-.#{$namespace}-affix {
-  position: fixed;
-  @include translate3d(0, 0, 0);
 }
 
 // https://github.com/twbs/bootstrap-sass/blob/d5625c907168b6311be122b99d89614e02448475/assets/stylesheets/bootstrap/_close.scss
@@ -98,22 +56,6 @@ button.#{$namespace}-close {
   overflow: hidden;
   clip: rect(0,0,0,0);
   border: 0;
-}
-
-// Use in conjunction with .sr-only to only display content when it's focused.
-// Useful for "Skip to main content" links; see http://www.w3.org/TR/2013/NOTE-WCAG20-TECHS-20130905/G1
-// Credit: HTML5 Boilerplate
-
-.#{$namespace}-sr-only-focusable {
-  &:active,
-  &:focus {
-    position: static;
-    width: auto;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    clip: auto;
-  }
 }
 
 // Stretched links
