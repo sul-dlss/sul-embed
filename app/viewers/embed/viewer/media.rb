@@ -4,7 +4,9 @@ module Embed
   module Viewer
     class Media < CommonViewer
       def component
-        # TODO: add a feature flag here
+        # Use the new component if they provide the feature flag
+        return MediaWithCompanionWindowsComponent if request.params[:new_component] == 'true'
+
         LegacyMediaComponent
       end
 
