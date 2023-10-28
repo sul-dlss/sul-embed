@@ -5,11 +5,14 @@
         <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg></span>
       </button>
       <h2 class=""><%= viewer.purl_object.title %></h2>
+      <button data-action="click->media#toggleRight">
+        <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg></span>
+      </button>
     </nav>
   </header>
 
   <div class="media-component-body" data-controller="media-tag">
-    <div class="left-drawer" data-media-target="leftDrawer">
+    <div class="left-drawer collapse" data-media-target="leftDrawer">
       <div class="inner">
         Left Drawer
       </div>
@@ -25,8 +28,10 @@
     <%= render Embed::Media::MetadataComponent.new viewer: viewer %>
     <%= render 'embed/embed_this/generic', viewer: viewer %>
     <%= render Embed::Download::LegacyMediaComponent.new viewer: viewer %>
-    <div class="right-drawer" data-media-target="rightDrawer">
-      Right Drawer
+    <div class="right-drawer collapse" data-media-target="rightDrawer">
+      <div class="inner">
+        Right Drawer
+      </div>
     </div>
   </div>
   <%= render Embed::FooterComponent.new viewer: viewer %>

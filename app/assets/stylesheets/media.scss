@@ -92,6 +92,7 @@
 
   .sul-embed-media-file {
     height: 100%;
+    max-width: 100%;
   }
   
   .button-label {
@@ -126,27 +127,31 @@
     }
   }
 
-  .left-drawer {
-    // background-color: pink;
+  --drawer-width: 25vw;
+
+  .collapse {
     width: 0px;
     overflow: hidden;
-
-    transition: width .25s ease-in-out;
-    border-right: 1px solid gray;
+    transition: flex-basis .25s ease-in-out;
+    flex-grow: 0;
+    flex-shrink: 0;
 
     .inner {
       // This avoids wrapping when animating.
-      width: 25cqw;
+      width: var(--drawer-width);
       padding: 1rem;
     }
 
     &.open {
-      width: 25cqw;
+      flex-basis: var(--drawer-width);
     }
   }
 
+  .left-drawer {
+    border-right: 1px solid gray;
+  }
+
   .right-drawer {
-    width: 25cqw;
-    background-color: orange;
+    border-left: 1px solid gray;
   }
 }
