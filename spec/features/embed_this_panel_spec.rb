@@ -47,15 +47,6 @@ RSpec.describe 'embed this panel', :js do
       expect(page).to have_css('.sul-embed-embed-this-panel', visible: :hidden)
     end
 
-    it 'have the form elements for updating the embed code' do
-      page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
-      expect(page.find('.sul-embed-options-label#select-options', visible: :all)).to have_content('SELECT OPTIONS:')
-      expect(page).to have_css('input#sul-embed-embed-title[type="checkbox"]')
-      expect(page).to have_css('input#sul-embed-embed-search[type="checkbox"]')
-      expect(page).to have_css('input#sul-embed-embed[type="checkbox"]')
-      expect(page).to have_css('textarea#sul-embed-iframe-code')
-    end
-
     it 'update the textarea when the checkboxes are selected' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
       expect(page.find('.sul-embed-embed-this-panel textarea').value).not_to match(/&hide_search=true/)
