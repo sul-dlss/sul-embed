@@ -14,7 +14,9 @@
   <div class="media-component-body" data-controller="media-tag">
     <div class="left-drawer collapse" data-media-target="leftDrawer">
       <div class="inner">
-        Left Drawer
+        <%= render 'embed/metadata/media_accessibility_note', viewer: viewer %>
+        Share stuff
+        <%= render EmbedThisFormComponent.new(viewer:) %>
       </div>
     </div>
     <div class='sul-embed-body sul-embed-media'
@@ -25,15 +27,17 @@
                                                     druid:,
                                                     many_primary_files:) %>
     </div>
-    <%= render Embed::Media::MetadataComponent.new viewer: viewer %>
     <%= render 'embed/embed_this/generic', viewer: viewer %>
     <%= render Embed::Download::LegacyMediaComponent.new viewer: viewer %>
     <div class="right-drawer collapse" data-media-target="rightDrawer">
       <div class="inner">
-        Right Drawer
+        <div class="downloads">
+          <ul class='sul-embed-download-list'>
+            <%= render Embed::Download::FileListItemComponent.with_collection(viewer.purl_object.downloadable_files) %>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
-  <%= render Embed::FooterComponent.new viewer: viewer %>
  </div>
  <%= javascript_pack_tag('media') %>
