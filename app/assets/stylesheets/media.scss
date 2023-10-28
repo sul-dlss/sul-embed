@@ -49,6 +49,8 @@
 .media-component {
   header {
     border-top: 2px solid rgb(140, 21, 21);
+    border-bottom: 1px solid gray;
+
     background-color: white;
     padding-left: 4px;
     padding-right: 4px;
@@ -100,14 +102,11 @@
   }
 
   .MuiSvgIcon-root {
-    fill: currentColor;
     width: 1em;
     height: 1em;
     display: inline-block;
     font-size: 1.5rem;
-    transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     flex-shrink: 0;
-    -moz-user-select: none;
   }
 
   .media-component-body {
@@ -128,8 +127,22 @@
   }
 
   .left-drawer {
-    width: 25cqw;
-    background-color: pink;
+    // background-color: pink;
+    width: 0px;
+    overflow: hidden;
+
+    transition: width .25s ease-in-out;
+    border-right: 1px solid gray;
+
+    .inner {
+      // This avoids wrapping when animating.
+      width: 25cqw;
+      padding: 1rem;
+    }
+
+    &.open {
+      width: 25cqw;
+    }
   }
 
   .right-drawer {

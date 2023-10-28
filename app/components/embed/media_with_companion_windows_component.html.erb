@@ -1,16 +1,18 @@
-<div class="sul-embed-container media-component" id='sul-embed-object' style='display:none;'>
+<div class="sul-embed-container media-component" id='sul-embed-object' style='display:none;' data-controller="media">
   <header>
     <nav aria-label="Window navigation">
-      <button>
+      <button data-action="click->media#toggleLeft">
         <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg></span>
       </button>
       <h2 class=""><%= viewer.purl_object.title %></h2>
     </nav>
   </header>
 
-  <div class="media-component-body" data-controller="media">
-    <div class="left-drawer">
-      Left Drawer
+  <div class="media-component-body" data-controller="media-tag">
+    <div class="left-drawer" data-media-target="leftDrawer">
+      <div class="inner">
+        Left Drawer
+      </div>
     </div>
     <div class='sul-embed-body sul-embed-media'
       data-sul-embed-theme="<%= stylesheet_path('media.css') %>"
