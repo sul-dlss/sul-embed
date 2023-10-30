@@ -47,8 +47,9 @@
 }
 
 .media-component {
+  --active-color: rgb(140, 21, 21);
   header {
-    border-top: 2px solid rgb(140, 21, 21);
+    border-top: 2px solid var(--active-color);
     border-bottom: 1px solid gray;
 
     background-color: white;
@@ -103,6 +104,7 @@
   }
 
   .MuiSvgIcon-root {
+    fill: currentColor;
     width: 1em;
     height: 1em;
     display: inline-block;
@@ -170,9 +172,14 @@
       button {
         background-color: transparent;
         border: 0;
+        border-right: 2px solid transparent;
         display: block;
         margin-bottom: 0.5rem;
         padding: 5px;
+        &.active {
+          border-right: 2px solid var(--active-color);
+          color: var(--active-color);
+        }
         &:hover {
           background-color: lightgray;
         }
