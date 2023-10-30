@@ -128,17 +128,19 @@
   }
 
   --drawer-width: 25vw;
+  --tab-width: 35px;
 
   .collapse {
     width: 0px;
     overflow: hidden;
-    transition: flex-basis .25s ease-in-out;
+    transition: flex-basis .5s ease-in-out;
     flex-grow: 0;
     flex-shrink: 0;
+    flex-basis: 0;
 
     .inner {
       // This avoids wrapping when animating.
-      width: var(--drawer-width);
+      width: calc(var(--drawer-width) + var(--tab-width));
       padding: 1rem;
     }
 
@@ -149,6 +151,31 @@
 
   .left-drawer {
     border-right: 1px solid gray;
+    display: flex;
+
+    .vertTabs {
+      flex-basis: var(--tab-width);
+      flex-shrink: 0;
+      height: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid gray;
+
+      button {
+        background-color: transparent;
+        border: 0;
+        display: block;
+        margin-bottom: 0.5rem;
+        padding: 5px;
+        &:hover {
+          background-color: lightgray;
+        }
+      }
+    }
   }
 
   .right-drawer {

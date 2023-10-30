@@ -13,6 +13,12 @@
 
   <div class="media-component-body" data-controller="media-tag">
     <div class="left-drawer collapse" data-media-target="leftDrawer">
+      <div class="vertTabs">
+        <button>
+          <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+        </button>
+        <button>X</button>
+      </div>
       <div class="inner">
         <%= render 'embed/metadata/media_accessibility_note', viewer: viewer %>
         Share stuff
