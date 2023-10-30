@@ -129,6 +129,7 @@
 
   --drawer-width: 25vw;
   --tab-width: 35px;
+  --drawer-content-padding: 1rem;
 
   .collapse {
     width: 0px;
@@ -140,8 +141,9 @@
 
     .inner {
       // This avoids wrapping when animating.
-      width: calc(var(--drawer-width) + var(--tab-width));
-      padding: 1rem;
+      flex-shrink: 0;
+      width: calc(var(--drawer-width) - var(--tab-width) - 2 * var(--drawer-content-padding));
+      padding: var(--drawer-content-padding);
     }
 
     &.open {
