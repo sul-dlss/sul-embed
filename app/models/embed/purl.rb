@@ -134,6 +134,17 @@ module Embed
       )&.map { |_name, value| value.gsub('info:fedora/druid:', '') } || []
     end
 
+    def etag
+      http_response&.headers&.fetch('ETag', nil)
+    end
+
+    def last_modified
+      header = http_response&.headers&.fetch('Last-Modified', nil)
+      return unless header
+
+      Time.rfc2822(header)
+    end
+
     private
 
     def mods_license
@@ -160,8 +171,8 @@ module Embed
       "#{Settings.purl_url}/#{@druid}.xml"
     end
 
-    def response # rubocop:disable Metrics/MethodLength
-      @response ||=
+    def http_response # rubocop:disable Metrics/MethodLength
+      @http_response ||=
         begin
           conn = Faraday.new(url: purl_xml_url)
 
@@ -175,12 +186,15 @@ module Embed
                   "Resource unavailable #{purl_xml_url} (status: #{response.status})"
           end
 
-          response.body
+          response
         rescue Faraday::ConnectionFailed, Faraday::TimeoutError
           nil
         end
     end
-    # rubocop:enable Metrics/ClassLength
+
+    def response
+      http_response&.body
+    end
 
     class ResourceNotAvailable < StandardError
       def initialize(msg = 'The requested PURL resource was not available')
@@ -194,4 +208,5 @@ module Embed
       end
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end
