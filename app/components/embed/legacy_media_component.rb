@@ -16,8 +16,12 @@ module Embed
     end
 
     def primary_files_count
-      purl_object.contents.count do |resource|
-        resource.primary_file.present?
+      resources_with_primary_file.count
+    end
+
+    def resources_with_primary_file
+      @resources_with_primary_file ||= purl_object.contents.select do |purl_resource|
+        purl_resource.primary_file.present?
       end
     end
 
