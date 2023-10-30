@@ -6,6 +6,7 @@ module Embed
     with_collection_parameter :resource
     SUPPORTED_MEDIA_TYPES = %i[audio video].freeze
 
+    # @param [Purl::Resource] resource This resource is expected to have a primary file.
     def initialize(resource:, resource_iteration:, druid:, include_transcripts:, many_primary_files:)
       @resource = resource
       @resource_iteration = resource_iteration
@@ -15,10 +16,6 @@ module Embed
     end
 
     delegate :primary_file, :type, to: :@resource
-
-    def render?
-      primary_file.present?
-    end
 
     def call
       if SUPPORTED_MEDIA_TYPES.include?(type.to_sym)

@@ -4,7 +4,7 @@
      data-behavior="legacy-media"
      data-sul-embed-theme="<%= stylesheet_path('media.css') %>"
      data-sul-icons="<%= stylesheet_path('sul_icons.css') %>">
-    <%= render Embed::MediaTagComponent.with_collection(purl_object.contents,
+    <%= render Embed::MediaTagComponent.with_collection(resources_with_primary_file,
                                                         include_transcripts:,
                                                         druid:,
                                                         many_primary_files:) %>
