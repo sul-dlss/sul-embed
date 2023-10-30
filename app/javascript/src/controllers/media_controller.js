@@ -1,31 +1,40 @@
 import { Controller } from "@hotwired/stimulus"
-import videojs from 'video.js';
-import validator from '../modules/validator.js'
-import mediaTagTokenWriter from '../modules/media_tag_token_writer.js'
 
 export default class extends Controller {
-  static targets = [ "mediaTag"]
-
+  static targets = [ "leftDrawer", "leftButton", "rightDrawer", "metadata", "share", "contents", "downloads" ]
   connect() {
-    const validators = this.mediaTagTargets
-      .map((mediaTag) => validator(mediaTag.dataset.authUrl, mediaTagTokenWriter(mediaTag)))
-    Promise.all(validators).then((values) => {
-      values.forEach((data) => this.afterValidate(data))
-    }).catch((err) => console.error(err))
+    this.metadataTarget.hidden = false
+  }
+  
+  toggleLeft() {
+    this.leftDrawerTarget.classList.toggle('open')
   }
 
-  afterValidate(data) {
-    // TODO: handle stanford_restricted auth link
-    // TODO: handle is restricted
-    if(data.status === 'success') {
-      this.initializeVideoJSPlayer()
-    }
+  displayDownloads() {
+    this.rightDrawerTarget.classList.add('open')
+    this.downloadsTarget.hidden = false
+    this.contentsTarget.hidden = true
   }
 
-  initializeVideoJSPlayer() {
-    this.mediaTagTargets.forEach((mediaTag) => {
-      mediaTag.classList.add('video-js', 'vjs-default-skin')
-      videojs(mediaTag.id).removeChild('textTrackSettings')
-    })
+  displayContents() {
+    this.rightDrawerTarget.classList.add('open')
+    this.downloadsTarget.hidden = true
+    this.contentsTarget.hidden = false
+  }
+
+  displayMetadata(evt) {
+    this.leftButtonTargets.forEach((target) => target.classList.remove('active'))
+    // The evt.target may be the SVG, so need to look for a button
+    evt.target.closest('button').classList.add('active')
+    this.metadataTarget.hidden = false
+    this.shareTarget.hidden = true
+  }
+
+  displayShare(evt) {
+    this.leftButtonTargets.forEach((target) => target.classList.remove('active'))
+    // The evt.target may be the SVG, so need to look for a button
+    evt.target.closest('button').classList.add('active')
+    this.metadataTarget.hidden = true
+    this.shareTarget.hidden = false
   }
 }

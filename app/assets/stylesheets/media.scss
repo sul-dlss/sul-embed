@@ -47,8 +47,11 @@
 }
 
 .media-component {
+  --active-color: rgb(140, 21, 21);
   header {
-    border-top: 2px solid rgb(140, 21, 21);
+    border-top: 2px solid var(--active-color);
+    border-bottom: 1px solid gray;
+
     background-color: white;
     padding-left: 4px;
     padding-right: 4px;
@@ -90,6 +93,7 @@
 
   .sul-embed-media-file {
     height: 100%;
+    max-width: 100%;
   }
   
   .button-label {
@@ -105,9 +109,7 @@
     height: 1em;
     display: inline-block;
     font-size: 1.5rem;
-    transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     flex-shrink: 0;
-    -moz-user-select: none;
   }
 
   .media-component-body {
@@ -127,13 +129,65 @@
     }
   }
 
+  --drawer-width: 25vw;
+  --tab-width: 35px;
+  --drawer-content-padding: 1rem;
+
+  .collapse {
+    width: 0px;
+    overflow: hidden;
+    transition: flex-basis .5s ease-in-out;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 0;
+
+    .inner {
+      // This avoids wrapping when animating.
+      flex-shrink: 0;
+      width: calc(var(--drawer-width) - var(--tab-width) - 2 * var(--drawer-content-padding));
+      padding: var(--drawer-content-padding);
+    }
+
+    &.open {
+      flex-basis: var(--drawer-width);
+    }
+  }
+
   .left-drawer {
-    width: 25cqw;
-    background-color: pink;
+    border-right: 1px solid gray;
+    display: flex;
+
+    .vertTabs {
+      flex-basis: var(--tab-width);
+      flex-shrink: 0;
+      height: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 1rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid gray;
+
+      button {
+        background-color: transparent;
+        border: 0;
+        border-right: 2px solid transparent;
+        display: block;
+        margin-bottom: 0.5rem;
+        padding: 5px;
+        &.active {
+          border-right: 2px solid var(--active-color);
+          color: var(--active-color);
+        }
+        &:hover {
+          background-color: lightgray;
+        }
+      }
+    }
   }
 
   .right-drawer {
-    width: 25cqw;
-    background-color: orange;
+    border-left: 1px solid gray;
   }
 }
