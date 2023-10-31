@@ -203,8 +203,26 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   context 'with audio' do
     let(:purl) { audio_purl }
 
-    it 'renders an audo tag in the provided document' do
+    it 'renders an audio tag in the provided document' do
       expect(page).to have_css('audio', visible: :all)
+    end
+
+    context 'when a file-level thumbnail is present' do
+      let(:purl) { audio_purl_with_thumbnail }
+
+      it 'includes a poster attribute pointing at the thumbnail' do
+        expect(page).to have_css('audio[poster]', visible: :all)
+        audio = page.find('audio[poster]', visible: :all)
+        expect(audio['poster']).to match(%r{/bc123df4567%2Fabc_123_thumb/full/})
+      end
+    end
+
+    context 'when a file level thumbnail is not present' do
+      it 'includes the default poster attribute' do
+        expect(page).to have_css('audio[poster]', visible: :all)
+        audio = page.find('audio[poster]', visible: :all)
+        expect(audio['poster']).to match(/waveform-audio-poster/)
+      end
     end
   end
 

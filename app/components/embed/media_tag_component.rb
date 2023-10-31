@@ -41,7 +41,7 @@ module Embed
                  auth_url: authentication_url(file),
                  media_tag_target: 'mediaTag'
                },
-               poster: poster_attribute(file),
+               poster: poster_url_for(file),
                controls: 'controls',
                crossorigin: 'anonymous',
                aria: { labelledby: "access-restricted-message-div-#{@resource_iteration.index}" },
@@ -73,16 +73,6 @@ module Embed
       return unless @include_transcripts && file.vtt
 
       tag.track(src: file.vtt.file_url, kind: 'captions', srclang: 'en', label: 'English')
-    end
-
-    def poster_attribute(file)
-      return unless file.thumbnail
-
-      if file.thumbnail.world_downloadable?
-        stacks_thumb_url(@druid, file.thumbnail.title, size: '!800,600')
-      else
-        stacks_thumb_url(@druid, file.thumbnail.title)
-      end
     end
 
     def access_restricted_message(stanford_only, location_restricted)
@@ -121,8 +111,12 @@ module Embed
       Settings.streaming[:source_types]
     end
 
+    def poster_url_for(file)
+      Embed::StacksMediaStream.new(druid: @druid, file:).to_thumbnail_url
+    end
+
     def streaming_url_for(file, type)
-      stacks_media_stream = Embed::StacksMediaStream.new(druid: @druid, file_name: file.title)
+      stacks_media_stream = Embed::StacksMediaStream.new(druid: @druid, file:)
       case type.to_sym
       when :hls
         stacks_media_stream.to_playlist_url

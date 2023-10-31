@@ -5,15 +5,17 @@
 # server for a given file w/i an object
 module Embed
   class StacksMediaStream
+    include StacksImage
+
     TYPE_TO_MANIFEST_FILE = {
       hls: '/playlist.m3u8',
       flash: '',
       dash: '/manifest.mpd'
     }.freeze
 
-    def initialize(druid:, file_name:)
+    def initialize(druid:, file:)
       @druid = druid
-      @file_name = file_name
+      @file = file
     end
 
     def to_playlist_url
@@ -24,12 +26,28 @@ module Embed
       streaming_url_for(:dash)
     end
 
+    def to_thumbnail_url
+      return default_audio_thumbnail unless file.thumbnail
+
+      if file.thumbnail.world_downloadable?
+        stacks_thumb_url(druid, file.thumbnail.title, size: '!800,600')
+      else
+        stacks_thumb_url(druid, file.thumbnail.title)
+      end
+    end
+
     private
 
-    attr_reader :druid, :file_name
+    attr_reader :druid, :file
+
+    def default_audio_thumbnail
+      return unless audio?
+
+      ActionController::Base.helpers.asset_url('waveform-audio-poster.svg')
+    end
 
     def streaming_url_for(type)
-      return unless file_name && streaming_file_prefix
+      return unless file.title && streaming_file_prefix
 
       protocol = streaming_protocol(type)
       suffix = TYPE_TO_MANIFEST_FILE[type]
@@ -56,7 +74,7 @@ module Embed
     end
 
     def file_extension
-      ::File.extname(file_name).delete('.')
+      ::File.extname(file.title).delete('.')
     end
 
     def streaming_base_url
@@ -71,7 +89,7 @@ module Embed
     end
 
     def streaming_url_file_segment
-      "#{streaming_file_prefix}:#{file_name}"
+      "#{streaming_file_prefix}:#{file.title}"
     end
 
     def streaming_protocol(type)
