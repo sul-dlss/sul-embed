@@ -189,5 +189,22 @@
 
   .right-drawer {
     border-left: 1px solid gray;
+
+    .sul-embed-media-slider-thumb {
+      list-style-type: none;
+      border: 1px solid gray;
+      margin-bottom: 0.5rem;
+      height: 75px;
+
+      a {
+        width: 100%;
+      }
+
+      .text {
+        display: inline-block;
+        padding: 0.25rem;
+        vertical-align: top;
+      }
+    }
   }
 }
