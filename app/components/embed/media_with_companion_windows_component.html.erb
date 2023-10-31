@@ -26,7 +26,7 @@
       </div>
       <div class="inner">
         <div data-media-target="metadata" hidden>
-          <%= render 'embed/metadata/media_accessibility_note', viewer: viewer %>
+          <%= render MetadataListComponent.new viewer: %>
         </div>
         <div data-media-target="share" hidden>
           <%= render EmbedThisFormComponent.new(viewer:) %>
