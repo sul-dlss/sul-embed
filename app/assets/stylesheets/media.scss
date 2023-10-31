@@ -133,6 +133,28 @@
   --tab-width: 35px;
   --drawer-content-padding: 1rem;
 
+  .authLinkWrapper {
+    align-items: center;
+    display: flex;
+    background-color: var(--active-color);
+    color: white;
+    padding: .5rem;
+    
+    .loginMessage {
+      margin-left: 1rem;
+    }
+
+    button { 
+      margin-left: 0.75rem;
+      background-color: white;
+      color: var(--active-color);
+      border: 0;
+      border-radius: 5px;
+      padding: 0.2rem 0.4rem;
+      text-transform: uppercase;
+    }
+  }
+
   .collapse {
     width: 0px;
     overflow: hidden;
