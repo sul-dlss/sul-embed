@@ -1200,6 +1200,27 @@ module PurlFixtures
     XML
   end
 
+  def audio_purl_with_thumbnail
+    <<-XML
+      <publicObject>
+        <identityMetadata>
+          <objectLabel>Title of the video</objectLabel>
+        </identityMetadata>
+        <contentMetadata type="media">
+          <resource sequence="1" id="abc123_1" type="audio">
+            <file id="abc_123.mp3" mimetype="audio/mpeg" size="770433"></file>
+            <file id="abc_123_thumb.jp2" mimetype="image/jp2" size="329964" publish="yes" shelve="yes" preserve="yes">
+              <imageData height="678" width="678"/>
+            </file>
+          </resource>
+        </contentMetadata>
+        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+          <dc:title>DC title of audio</dc:title>
+        </oai_dc>
+      </publicObject>
+    XML
+  end
+
   def audio_purl_multiple
     <<-XML
       <publicObject>
@@ -1279,7 +1300,6 @@ module PurlFixtures
       </publicObject>
     XML
   end
-
 
   def pdf_document_purl
     <<-XML
