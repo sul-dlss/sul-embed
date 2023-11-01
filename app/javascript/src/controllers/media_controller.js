@@ -10,16 +10,37 @@ export default class extends Controller {
     this.leftDrawerTarget.classList.toggle('open')
   }
 
-  displayDownloads() {
-    this.rightDrawerTarget.classList.add('open')
-    this.downloadsTarget.hidden = false
-    this.contentsTarget.hidden = true
+  toggleDownloads() {
+    if (this.downloadsTarget.hidden) {
+      this._openRightDrawer();
+      this.downloadsTarget.hidden = false
+      this.contentsTarget.hidden = true
+    } else {
+      this._closeRightDrawer()
+    }
   }
 
-  displayContents() {
+  toggleContents() {
+    if (this.contentsTarget.hidden) {
+      this._openRightDrawer();
+      this.downloadsTarget.hidden = true
+      this.contentsTarget.hidden = false
+    } else {
+      this._closeRightDrawer()
+    }
+  }
+
+  _openRightDrawer() {
     this.rightDrawerTarget.classList.add('open')
-    this.downloadsTarget.hidden = true
-    this.contentsTarget.hidden = false
+  }
+
+  _closeRightDrawer() {
+    this.rightDrawerTarget.classList.remove('open')
+    setTimeout(() => {
+      // Wait for drawer to close
+      this.downloadsTarget.hidden = true
+      this.contentsTarget.hidden = true
+    }, 500);
   }
 
   displayMetadata(evt) {
