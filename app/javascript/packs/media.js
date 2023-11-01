@@ -7,14 +7,12 @@ Stimulus.load(definitionsFromContext(context))
 
 
 import { CssInjection } from '../src/modules/css_injection.js';
-// import { EmbedThis } from '../src/modules/embed_this.js';
-// import { PopupPanels } from '../src/modules/popup_panels.js';
+import { EmbedThis } from '../src/modules/embed_this.js';
 import CommonViewerBehavior from '../src/modules/common_viewer_behavior.js';
 
 $(document).ready(function() {
   CssInjection.injectFontIcons();
   CssInjection.appendToHead();
   CommonViewerBehavior.initializeViewer();
-  // PopupPanels.init();
-  // EmbedThis.init();
+  EmbedThis.init();
 });
