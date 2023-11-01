@@ -1,12 +1,12 @@
 export default function(dataset, index, isAudio) {
     const cssClass = isAudio ? 'sul-i-file-music-1' : 'sul-i-file-video-3'
     const activeClass = index === 0 ? 'active' : ''
-    let labelClass = 'sul-embed-thumb-label'
+    let labelClass = 'text'
     const isStanfordRestricted = dataset.stanfordOnly === "true"
     let stanfordOnlyScreenreaderText = ''
     if (isStanfordRestricted) {
       labelClass += ' sul-embed-thumb-stanford-only';
-      stanfordOnlyScreenreaderText = '<span class="sul-embed-text-hide">Stanford only</span>'
+      stanfordOnlyScreenreaderText = '<span class="visually-hidden">Stanford only</span>'
     }
 
     let thumbnailIcon = '';
@@ -30,9 +30,9 @@ export default function(dataset, index, isAudio) {
     const duration = dataset.duration || '';
     // Note: the "position: relative" is required for the stretched-link style.
     return `<li class="sul-embed-media-slider-thumb ${activeClass}" data-controller="thumbnail" data-action="click->thumbnail#activate" data-thumbnail-index-param="${index}" style="position: relative;">
-        <a class="${labelClass} sul-embed-stretched-link" href="#">
+        <a class="sul-embed-stretched-link" href="#">
           ${thumbnailIcon}
-          <span class="text">
+          <span class="${labelClass}">
             ${stanfordOnlyScreenreaderText}${restrictedTextMarkup}
             ${truncateWithEllipsis(fileLabel, maxFileLabelLength)}
             ${durationMarkup(duration)}

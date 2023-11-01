@@ -245,6 +245,10 @@
   .right-drawer {
     border-left: 1px solid gray;
 
+    .visually-hidden {
+      @include visually-hidden;
+    }
+
     .sul-embed-media-slider-thumb {
       list-style-type: none;
       border: 1px solid gray;
@@ -255,9 +259,21 @@
         width: 100%;
       }
 
+      img { 
+        margin-right: 0.5rem;
+      }
+
+      .sul-embed-thumb-stanford-only {
+        @include stanford-only;
+        background-position: bottom left;
+        &.text {
+          height: calc(100% - 0.75rem); // positions .sul-embed-thumb-stanford-only
+        }
+      }
+
       .text {
         display: inline-block;
-        padding: 0.25rem;
+        margin-top: 0.25rem;
         vertical-align: top;
       }
     }
