@@ -174,13 +174,6 @@
     flex-shrink: 0;
     flex-basis: 0;
 
-    .inner {
-      // This avoids wrapping when animating.
-      flex-shrink: 0;
-      width: calc(var(--drawer-width) - var(--tab-width) - 2 * var(--drawer-content-padding));
-      padding: var(--drawer-content-padding);
-    }
-
     &.open {
       flex-basis: var(--drawer-width);
     }
@@ -221,6 +214,9 @@
 
     .inner {
       overflow-y: auto;
+      // This avoids wrapping when animating.
+      width: calc(var(--drawer-width) - var(--tab-width) - 2 * var(--drawer-content-padding));
+      padding: var(--drawer-content-padding);
     }
 
     #sul-embed-iframe-code {
@@ -255,6 +251,12 @@
       @include visually-hidden;
     }
 
+    .inner {
+      // This avoids wrapping when animating.
+      width: calc(var(--drawer-width) - 2 * var(--drawer-content-padding));
+      padding: var(--drawer-content-padding);
+    }
+
     .sul-embed-media-slider-thumb {
       list-style-type: none;
       border: 1px solid gray;
@@ -282,6 +284,7 @@
         display: inline-block;
         margin-top: 0.25rem;
         vertical-align: top;
+        width: 130px;
       }
     }
   }
