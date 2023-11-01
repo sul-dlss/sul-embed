@@ -87,7 +87,7 @@ export default {
 
   init: function() {
     var _this = this;
-    PDFJSLib.getDocument(_this.pdfUrl()).promise.then(function(pdfDoc_) {
+    PDFJSLib.getDocument({url: this.pdfUrl(), withCredentials: true}).promise.then(function(pdfDoc_) {
       _this.loadingSpinner().remove();
       _this.pdfDoc = pdfDoc_;
       _this.renderPage(_this.pageNum);
