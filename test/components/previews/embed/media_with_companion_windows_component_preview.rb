@@ -11,8 +11,14 @@ module Embed
       render(MediaWithCompanionWindowsComponent.new(viewer:))
     end
 
-    def with_video
+    def with_public_video
       embed_request = Embed::Request.new(url: 'https://purl.stanford.edu/gt507vy5436')
+      viewer = Embed::Viewer::Media.new(embed_request)
+      render(MediaWithCompanionWindowsComponent.new(viewer:))
+    end
+
+    def with_stanford_only_video
+      embed_request = Embed::Request.new(url: 'https://purl.stanford.edu/bb142ws0723')
       viewer = Embed::Viewer::Media.new(embed_request)
       render(MediaWithCompanionWindowsComponent.new(viewer:))
     end
