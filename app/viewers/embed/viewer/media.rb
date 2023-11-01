@@ -5,7 +5,7 @@ module Embed
     class Media < CommonViewer
       def component
         # Use the new component if they provide the feature flag
-        return MediaWithCompanionWindowsComponent if request.params[:new_component] == 'true'
+        return MediaWithCompanionWindowsComponent if use_new_component?
 
         LegacyMediaComponent
       end
@@ -26,6 +26,11 @@ module Embed
       end
 
       private
+
+      def use_new_component?
+        request.params[:new_component] == 'true' ||
+          Settings.enabled_features.new_component
+      end
 
       def default_height
         400
