@@ -9,6 +9,8 @@ module Embed
       @scroll = scroll
     end
 
+    # TODO: stanford_only and location_restricted moved to the media tag,
+    #       so they can be removed after we switch to the new component
     def call
       tag.div(style: "flex: 1 0 100%;#{' overflow-y: scroll' if @scroll}",
               data: {
