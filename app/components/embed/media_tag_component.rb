@@ -40,8 +40,16 @@ module Embed
       end
     end
 
+    def media_tag_name
+      safari_wants_audio_with_captions? ? 'video' : type
+    end
+
+    def safari_wants_audio_with_captions?
+      type == 'audio' && request.headers['User-Agent'].include?('Safari') && render_captions?
+    end
+
     def media_tag # rubocop:disable Metrics/MethodLength
-      tag.send(type,
+      tag.send(media_tag_name,
                id: "sul-embed-media-#{@resource_iteration.index}",
                data: {
                  src: streaming_url_for(:dash),
@@ -79,9 +87,13 @@ module Embed
     end
 
     def transcript
-      return unless @include_transcripts && file.vtt
+      return unless render_captions?
 
       tag.track(src: file.vtt.file_url, kind: 'captions', srclang: 'en', label: 'English')
+    end
+
+    def render_captions?
+      @include_transcripts && file.vtt
     end
 
     def access_restricted_message
