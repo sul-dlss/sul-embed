@@ -102,6 +102,24 @@
     }
   }
 
+  .header-background {
+    display: flex;
+    background: #f4f4f4;
+    padding-left: var(--drawer-content-padding);
+    justify-content: space-between;
+    height: var(--tab-height);
+    white-space: nowrap;
+
+    h3 {
+      align-self: center;
+      font-size: 0.937rem;
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      font-weight: 300;
+      line-height: 1.6em;
+      letter-spacing: 0.015em;
+    }
+  }
+
   .sul-embed-media-file {
     height: calc(100% - 54px);;
   }
@@ -141,7 +159,8 @@
   }
 
   --drawer-width: 25vw;
-  --tab-width: 35px;
+  --tab-width: 48px;
+  --tab-height: 48px;
   --drawer-content-padding: 1rem;
 
   .authLinkWrapper {
@@ -183,13 +202,11 @@
     border-right: 1px solid gray;
     display: flex;
 
-    .vertTabs {
+    .vert-tabs {
       background-color: var(--background-color);
       flex-basis: var(--tab-width);
       flex-shrink: 0;
       height: 100%;
-      margin-left: auto;
-      margin-right: auto;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -200,8 +217,9 @@
         border: 0;
         border-right: 2px solid transparent;
         color: var(--tab-text-color);
+        height: var(--tab-height);
         display: block;
-        padding: 12px;
+        padding-top: 4px;
         &.active {
           border-right: 2px solid var(--active-color);
           color: var(--active-color);
@@ -214,28 +232,34 @@
 
     .inner {
       overflow-y: auto;
-      // This avoids wrapping when animating.
-      width: calc(var(--drawer-width) - var(--tab-width) - 2 * var(--drawer-content-padding));
-      padding: var(--drawer-content-padding);
+      display: flex;
+      flex-direction: column;
+      section {
+        // This avoids wrapping when animating.
+        width: calc(var(--drawer-width) - var(--tab-width));
+      }
     }
 
     #sul-embed-iframe-code {
       width: 100%;
       height: 9rem;
     }
-    
-    .metadataList {
+
+    .sul-embed-embed-this-form, .metadataList, .rightsList {
       color: var(--text-color);
+      padding: var(--drawer-content-padding);
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    }
+    
+    .metadataList, .rightsList {
       dt {
         font-size: 0.878rem;
-        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
         font-weight: 500;
         line-height: 1.75em;
         letter-spacing: 0.02em;
       }
       dd {
         font-size: 1rem;
-        font-family: "Roboto", "Helvetica", "Arial", sans-serif;
         font-weight: 400;
         line-height: 1.6em;
         letter-spacing: 0em;
@@ -252,9 +276,13 @@
     }
 
     .inner {
-      // This avoids wrapping when animating.
-      width: calc(var(--drawer-width) - 2 * var(--drawer-content-padding));
-      padding: var(--drawer-content-padding);
+      section {
+        // This avoids wrapping when animating.
+        width: var(--drawer-width);
+        ul {
+          padding: var(--drawer-content-padding);
+        }
+      }
     }
 
     .sul-embed-media-slider-thumb {

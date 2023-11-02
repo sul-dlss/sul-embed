@@ -22,8 +22,8 @@
   </div>
 
   <div class="media-component-body">
-    <div class="left-drawer collapse" data-media-target="leftDrawer">
-      <nav class="vertTabs">
+    <aside class="left-drawer collapse" data-media-target="leftDrawer">
+      <nav class="vert-tabs">
         <button data-action="click->media#displayMetadata" data-media-target="leftButton" class="active">
           <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
         </button>
@@ -35,23 +35,29 @@
         </button>
       </nav>
       <div class="inner">
-        <div data-media-target="metadata" hidden>
-          <h3>About this item</h3>
+        <section data-media-target="metadata" hidden>
+          <div class="header-background">
+            <h3>About this item</h3>
+          </div>
 
           <%= render MetadataListComponent.new(viewer:) %>
-        </div>
-        <div data-media-target="rights" hidden>
-          <h3>Rights</h3>
+        </section>
+        <section data-media-target="rights" hidden>
+          <div class="header-background">
+            <h3>Rights</h3>
+          </div>
 
           <%= render RightsComponent.new(viewer:) %>
-        </div>
-        <div data-media-target="share" hidden>
-          <h3>Share</h3>
+        </section>
+        <section data-media-target="share" hidden>
+          <div class="header-background">
+            <h3>Share</h3>
+          </div>
 
           <%= render EmbedThisFormComponent.new(viewer:) %>
-        </div>
+        </section>
       </div>
-    </div>
+    </aside>
     <div class='sul-embed-body sul-embed-media'
       data-sul-embed-theme="<%= stylesheet_path('media.css') %>"
       data-sul-icons="<%= stylesheet_path('sul_icons.css') %>">
@@ -64,18 +70,22 @@
     <%= render Embed::Download::LegacyMediaComponent.new viewer: viewer %>
     <div class="right-drawer collapse" data-media-target="rightDrawer">
       <div class="inner">
-        <div data-media-target="contents" hidden>
-          <h3>Media Content</h3>
+        <section data-media-target="contents" hidden>
+          <div class="header-background">
+            <h3>Media Content</h3>
+          </div>
 
           <ul data-media-tag-target="list"></ul>
-        </div>
-        <div data-media-target="downloads" hidden>
-          <h3>Downloads</h3>
+        </section>
+        <section data-media-target="downloads" hidden>
+          <div class="header-background">
+            <h3>Downloads</h3>
+          </div>
 
           <ul class='sul-embed-download-list'>
             <%= render Embed::Download::FileListItemComponent.with_collection(viewer.purl_object.downloadable_files) %>
           </ul>
-        </div>
+        </section>
       </div>
     </div>
   </div>
