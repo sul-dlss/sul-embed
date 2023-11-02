@@ -3,6 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe 'IIIF Embed', :js do
+  before do
+    stub_request(:get, 'https://purl.stanford.edu/fr426cg9537.xml')
+      .to_return(status: 200, body: '', headers: {})
+  end
+
   it 'renders a Mirador3 Viewer' do
     visit iiif_path(url: 'https://purl.stanford.edu/fr426cg9537/iiif/manifest')
 

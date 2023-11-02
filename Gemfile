@@ -29,6 +29,8 @@ group :development, :test do
 
   gem 'selenium-webdriver', '~> 4.2'
 
+  gem 'webmock', '~> 3.19'
+
   # Linting/Styleguide Enforcement
   gem 'rubocop', '~> 1.53'
   gem 'rubocop-performance', require: false

@@ -95,21 +95,21 @@ RSpec.describe Embed::Viewer::WasSeed do
 
   describe 'format_memento_datetime' do
     it 'returns a formated memento datetime' do
-      stub_request(request)
+      stub_purl_request(request)
       expect(was_seed_viewer.format_memento_datetime('20121129060351')).to eq('29 November 2012')
     end
   end
 
   describe 'default_height' do
     it 'defaults to 353' do
-      stub_request(request)
+      stub_purl_request(request)
 
       expect(was_seed_viewer.send(:default_height)).to eq 420
     end
 
     it 'is smaller when the title is hidden' do
       expect(request).to receive(:hide_title?).and_return(true)
-      stub_request(request)
+      stub_purl_request(request)
 
       expect(was_seed_viewer.send(:default_height)).to eq 340
     end

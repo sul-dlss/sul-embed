@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: true)
+
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

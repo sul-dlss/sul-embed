@@ -14,14 +14,14 @@ RSpec.describe Embed::Viewer::CommonViewer do
 
   describe 'height/width' do
     it 'sets a default height and default width to nil (which can be overridden at the viewer level)' do
-      stub_request(request)
+      stub_purl_request(request)
       expect(file_viewer.send(:default_width)).to be_nil
     end
 
     it 'uses the incoming maxheight/maxwidth parameters from the request' do
       expect(request).to receive(:maxheight).at_least(:once).and_return(100)
       expect(request).to receive(:maxwidth).at_least(:once).and_return(200)
-      stub_request(request)
+      stub_purl_request(request)
       stub_purl_response_with_fixture(multi_file_purl)
       expect(file_viewer.height).to eq 100
       expect(file_viewer.width).to eq 200
