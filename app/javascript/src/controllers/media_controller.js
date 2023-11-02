@@ -1,11 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "leftDrawer", "leftButton", "rightDrawer", "metadata", "share", "contents", "downloads" ]
+  static targets = [ "leftDrawer", "leftButton", "rightDrawer", "metadata", "share", "contents", "downloads", "rights" ]
   connect() {
     this.metadataTarget.hidden = false
   }
-  
+
   toggleLeft() {
     this.leftDrawerTarget.classList.toggle('open')
   }
@@ -48,6 +48,16 @@ export default class extends Controller {
     // The evt.target may be the SVG, so need to look for a button
     evt.target.closest('button').classList.add('active')
     this.metadataTarget.hidden = false
+    this.rightsTarget.hidden = true
+    this.shareTarget.hidden = true
+  }
+
+  displayRights(evt) {
+    this.leftButtonTargets.forEach((target) => target.classList.remove('active'))
+    // The evt.target may be the SVG, so need to look for a button
+    evt.target.closest('button').classList.add('active')
+    this.metadataTarget.hidden = true
+    this.rightsTarget.hidden = false
     this.shareTarget.hidden = true
   }
 
@@ -56,6 +66,7 @@ export default class extends Controller {
     // The evt.target may be the SVG, so need to look for a button
     evt.target.closest('button').classList.add('active')
     this.metadataTarget.hidden = true
+    this.rightsTarget.hidden = true
     this.shareTarget.hidden = false
   }
 }
