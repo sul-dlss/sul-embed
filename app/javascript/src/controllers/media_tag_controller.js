@@ -47,10 +47,29 @@ export default class extends Controller {
   }
 
   initializeVideoJSPlayer() {
+    this.transformAudioToVideoForSafari()
     this.mediaTagTargets.forEach((mediaTag) => {
       mediaTag.classList.add('video-js', 'vjs-default-skin')
       videojs(mediaTag.id).removeChild('textTrackSettings')
     })
+  }
+
+  // Safari 16.6 and below don't render vtt tracks for audio, so change those to be video elements.
+  transformAudioToVideoForSafari() {
+    if (!navigator.userAgent.match(/Safari/i))
+      return
+    if (![...this.mediaTagTargets].some((mediaTag) => mediaTag.nodeName === "AUDIO" && mediaTag.querySelector('track')))
+      return
+
+    this.mediaTagTargets.forEach((audioTag) => {
+      if (audioTag.nodeName !== "AUDIO")
+        return
+      const videoTag = document.createElement('video');
+      [...audioTag.attributes].forEach( attr => videoTag.setAttribute(attr.nodeName, attr.nodeValue))
+      audioTag.childNodes.forEach(child => videoTag.appendChild(child))
+      audioTag.parentNode.replaceChild(videoTag, audioTag);
+    })
+
   }
 
   setupThumbnails() {
