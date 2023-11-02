@@ -193,7 +193,6 @@
       height: 100%;
       margin-left: auto;
       margin-right: auto;
-      padding-top: 1rem;
       text-align: center;
       display: flex;
       flex-direction: column;
@@ -205,8 +204,7 @@
         border-right: 2px solid transparent;
         color: var(--tab-text-color);
         display: block;
-        margin-bottom: 0.5rem;
-        padding: 5px;
+        padding: 12px;
         &.active {
           border-right: 2px solid var(--active-color);
           color: var(--active-color);
