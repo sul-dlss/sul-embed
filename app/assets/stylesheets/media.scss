@@ -55,6 +55,10 @@
   --tab-text-color: rgba(0, 0, 0, 0.54);
   --background-color: rgba(255, 255, 255);
 
+  .video-js .vjs-tech {
+    position: relative;
+  }
+
   header {
     border-top: 2px solid var(--active-color);
     border-bottom: 1px solid gray;
@@ -99,8 +103,7 @@
   }
 
   .sul-embed-media-file {
-    height: 100cqh;
-    max-width: 100%;
+    height: calc(100% - 54px);;
   }
   
   .button-label {
@@ -122,6 +125,7 @@
   .media-component-body {
     display: flex;
     flex-grow: 1;
+    height: 100%;
 
     .sul-embed-media-wrapper {
       display: inline-block;
@@ -215,6 +219,10 @@
           background-color: lightgray;
         }
       }
+    }
+
+    .inner {
+      overflow-y: auto;
     }
 
     #sul-embed-iframe-code {
