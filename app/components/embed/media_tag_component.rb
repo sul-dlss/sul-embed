@@ -7,53 +7,60 @@ module Embed
     SUPPORTED_MEDIA_TYPES = %i[audio video].freeze
 
     # @param [Purl::Resource] resource This resource is expected to have a primary file.
+    # @param [#index] resource_iteration Information about what part of the collection we are in
+    # @param [String] druid the object identifier
+    # @param [Bool] include_transcripts a feature flag about displaying VTT tracks
+    # @param [Bool] many_primary_files should we add the sul-embed-many-media class
     def initialize(resource:, resource_iteration:, druid:, include_transcripts:, many_primary_files:)
       @resource = resource
+      @file = resource.primary_file
       @resource_iteration = resource_iteration
       @druid = druid
       @include_transcripts = include_transcripts
       @many_primary_files = many_primary_files
     end
 
-    delegate :primary_file, :type, to: :@resource
+    attr_reader :file
+
+    delegate :type, to: :@resource
+    delegate :stanford_only?, :location_restricted?, to: :file
 
     def call
       if SUPPORTED_MEDIA_TYPES.include?(type.to_sym)
-        media_element(primary_file, type)
+        media_element
       else
-        previewable_element(primary_file)
+        previewable_element
       end
     end
 
-    def media_element(file, type)
+    def media_element
       file_thumb = stacks_square_url(@druid, file.thumbnail.title, size: '75') if file.thumbnail
       render MediaWrapperComponent.new(thumbnail: file_thumb, file:, file_index: @resource_iteration.index) do
-        access_restricted_overlay(file.try(:stanford_only?), file.try(:location_restricted?)) +
-          media_tag(file, type)
+        access_restricted_overlay + media_tag
       end
     end
 
-    def media_tag(file, type) # rubocop:disable Metrics/MethodLength
+    def media_tag # rubocop:disable Metrics/MethodLength
       tag.send(type,
                id: "sul-embed-media-#{@resource_iteration.index}",
                data: {
-                 src: streaming_url_for(file, :dash),
-                 auth_url: authentication_url(file),
-                 stanford_only: file.stanford_only?,
-                 location_restricted: file.location_restricted?,
+                 src: streaming_url_for(:dash),
+                 auth_url: authentication_url,
+                 stanford_only: stanford_only?,
+                 location_restricted: location_restricted?,
                  media_tag_target: 'mediaTag'
                },
-               poster: poster_url_for(file),
+               poster: poster_url_for,
                controls: 'controls',
                crossorigin: 'anonymous',
                aria: { labelledby: "access-restricted-message-div-#{@resource_iteration.index}" },
                class: "sul-embed-media-file #{'sul-embed-many-media' if @many_primary_files}",
                height: '100%') do
-        enabled_streaming_sources(file) + transcript(file)
+        enabled_streaming_sources + transcript
       end
     end
 
-    def previewable_element(file)
+    def previewable_element
       thumb_url = stacks_square_url(@druid, file.title, size: '75')
       render MediaWrapperComponent.new(thumbnail: thumb_url, file:, file_index: @resource_iteration.index,
                                        scroll: true) do
@@ -62,23 +69,23 @@ module Embed
       end
     end
 
-    def enabled_streaming_sources(file)
+    def enabled_streaming_sources
       safe_join(
         enabled_streaming_types.map do |streaming_type|
-          tag.source(src: streaming_url_for(file, streaming_type),
+          tag.source(src: streaming_url_for(streaming_type),
                      type: streaming_settings_for(streaming_type)[:mimetype])
         end
       )
     end
 
-    def transcript(file)
+    def transcript
       return unless @include_transcripts && file.vtt
 
       tag.track(src: file.vtt.file_url, kind: 'captions', srclang: 'en', label: 'English')
     end
 
-    def access_restricted_message(stanford_only, location_restricted)
-      if location_restricted && !stanford_only
+    def access_restricted_message
+      if location_restricted? && !stanford_only?
         <<~HTML
           <span class='line1'>Restricted media cannot be played in your location.</span>
           <span class='line2'>See Access conditions for more information.</span>
@@ -91,35 +98,35 @@ module Embed
       end
     end
 
-    def access_restricted_overlay(stanford_only, location_restricted)
-      return ''.html_safe unless stanford_only || location_restricted
+    def access_restricted_overlay
+      return ''.html_safe unless stanford_only? || location_restricted?
 
       # TODO: line1 and line1 spans should be populated by values returned from stacks
       html = <<~HTML
         <div class='sul-embed-media-access-restricted-container' data-access-restricted-message>
           <div class='sul-embed-media-access-restricted' id="access-restricted-message-div-#{@resource_iteration.index}">
-            #{access_restricted_message(stanford_only, location_restricted)}
+            #{access_restricted_message}
           </div>
         </div>
       HTML
       html.html_safe
     end
 
-    def streaming_settings_for(type)
-      Settings.streaming[type] || {}
+    def streaming_settings_for(streaming_type)
+      Settings.streaming[streaming_type] || {}
     end
 
     def enabled_streaming_types
       Settings.streaming[:source_types]
     end
 
-    def poster_url_for(file)
+    def poster_url_for
       Embed::StacksMediaStream.new(druid: @druid, file:).to_thumbnail_url
     end
 
-    def streaming_url_for(file, type)
+    def streaming_url_for(streaming_type)
       stacks_media_stream = Embed::StacksMediaStream.new(druid: @druid, file:)
-      case type.to_sym
+      case streaming_type.to_sym
       when :hls
         stacks_media_stream.to_playlist_url
       when :flash
@@ -129,7 +136,7 @@ module Embed
       end
     end
 
-    def authentication_url(file)
+    def authentication_url
       attributes = { host: Settings.stacks_url, druid: @druid, title: file.title }
       Settings.streaming.auth_url % attributes
     end
