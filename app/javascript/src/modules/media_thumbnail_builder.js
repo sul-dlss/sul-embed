@@ -9,10 +9,10 @@ export default function(dataset, index) {
     }
 
     let thumbnailIcon = '';
-    if (dataset.thumbnailUrl !== '') {
+    if (dataset.thumbnailUrl) {
       thumbnailIcon = `<img class="sul-embed-media-square-icon" src="${dataset.thumbnailUrl}" />`
     } else {
-      thumbnailIcon = `<i class="${dataset.defaultIcon}"></i>`
+      thumbnailIcon = `<i class="${dataset.defaultIcon} default-thumbnail-icon"></i>`
     }
 
     const isLocationRestricted = dataset.locationRestricted === "true"
