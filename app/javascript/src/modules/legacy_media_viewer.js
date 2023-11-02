@@ -48,13 +48,7 @@ export default (function() {
       var thumbs = [];
       const sliderSelector = '[data-behavior="legacy-media"] ' + sliderObjectSelector;
       jQuery(sliderSelector).each(function(index, mediaDiv) {
-        var mediaObject = $(mediaDiv).find('audio, video');
-        var cssClass;
-        if(mediaObject.prop('tagName') === 'AUDIO') {
-          cssClass = 'sul-i-file-music-1';
-        } else {
-          cssClass = 'sul-i-file-video-3';
-        }
+        const cssClass = mediaDiv.dataset.defaultIcon;
 
         var activeClass = '';
         if (index === 0) {

@@ -6,16 +6,35 @@ RSpec.describe Embed::MediaWrapperComponent, type: :component do
   subject(:render) do
     render_inline(
       described_class.new(
-        file:, file_index:, thumbnail:
+        file:, type:, file_index:, thumbnail:
       )
     )
   end
 
   let(:file_index) { 0 }
   let(:thumbnail) { '' }
+  let(:type) { 'audio' }
 
   before do
     render
+  end
+
+  describe 'data-default-icon attribute' do
+    let(:file) { instance_double(Embed::Purl::ResourceFile, stanford_only?: false, location_restricted?: false, label: 'ignored', duration: nil) }
+
+    context 'with audio' do
+      it 'renders the page' do
+        expect(page).to have_css('[data-default-icon="sul-i-file-music-1"]')
+      end
+    end
+
+    context 'with video' do
+      let(:type) { 'video' }
+
+      it 'renders the page' do
+        expect(page).to have_css('[data-default-icon="sul-i-file-video-3"]')
+      end
+    end
   end
 
   describe 'data-stanford-only attribute' do

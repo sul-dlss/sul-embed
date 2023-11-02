@@ -1,5 +1,4 @@
-export default function(dataset, index, isAudio) {
-    const cssClass = isAudio ? 'sul-i-file-music-1' : 'sul-i-file-video-3'
+export default function(dataset, index) {
     const activeClass = index === 0 ? 'active' : ''
     let labelClass = 'text'
     const isStanfordRestricted = dataset.stanfordOnly === "true"
@@ -13,7 +12,7 @@ export default function(dataset, index, isAudio) {
     if (dataset.thumbnailUrl !== '') {
       thumbnailIcon = `<img class="sul-embed-media-square-icon" src="${dataset.thumbnailUrl}" />`
     } else {
-      thumbnailIcon = `<i class="${cssClass}"></i>`
+      thumbnailIcon = `<i class="${dataset.defaultIcon}"></i>`
     }
 
     const isLocationRestricted = dataset.locationRestricted === "true"

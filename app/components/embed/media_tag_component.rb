@@ -35,7 +35,7 @@ module Embed
 
     def media_element
       file_thumb = stacks_square_url(@druid, file.thumbnail.title, size: '75') if file.thumbnail
-      render MediaWrapperComponent.new(thumbnail: file_thumb, file:, file_index: @resource_iteration.index) do
+      render MediaWrapperComponent.new(thumbnail: file_thumb, file:, type:, file_index: @resource_iteration.index) do
         access_restricted_overlay + media_tag
       end
     end
@@ -62,7 +62,7 @@ module Embed
 
     def previewable_element
       thumb_url = stacks_square_url(@druid, file.title, size: '75')
-      render MediaWrapperComponent.new(thumbnail: thumb_url, file:, file_index: @resource_iteration.index,
+      render MediaWrapperComponent.new(thumbnail: thumb_url, file:, type:, file_index: @resource_iteration.index,
                                        scroll: true) do
         tag.img(src: stacks_thumb_url(@druid, file.title),
                 class: "sul-embed-media-thumb #{'sul-embed-many-media' if @many_primary_files}")

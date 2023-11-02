@@ -54,10 +54,8 @@ export default class extends Controller {
   }
 
   setupThumbnails() {
-    const thumbnails = [...this.element.querySelectorAll('[data-slider-object]')].map((mediaDiv, index) => {
-      const isAudio = mediaDiv.querySelector('audio, video')?.tagName === 'AUDIO'
-      return buildThumbnail(mediaDiv.dataset, index, isAudio)
-    });
+    const thumbnails = [...this.element.querySelectorAll('[data-slider-object]')].
+      map((mediaDiv, index) => buildThumbnail(mediaDiv.dataset, index))
     this.listTarget.innerHTML = thumbnails.join('')
   }
 
