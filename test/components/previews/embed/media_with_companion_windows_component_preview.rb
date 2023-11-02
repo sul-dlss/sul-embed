@@ -6,7 +6,7 @@
 module Embed
   class MediaWithCompanionWindowsComponentPreview < ViewComponent::Preview
     def with_audio
-      embed_request = Embed::Request.new(url: 'https://purl.stanford.edu/bb169jj6514')
+      embed_request = Embed::Request.new(url: 'https://purl.stanford.edu/gj753wr1198')
       viewer = Embed::Viewer::Media.new(embed_request)
       render(MediaWithCompanionWindowsComponent.new(viewer:))
     end
