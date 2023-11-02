@@ -1,0 +1,16 @@
+<dl class="rightsList">
+  <% if use_and_reproduction.present? %>
+    <dt>Use and reproduction</dt>
+    <dd><%= use_and_reproduction %></dd>
+  <% end %>
+  <% if copyright.present? %>
+    <dt>Copyright</dt>
+    <dd><%= copyright %></dd>
+  <% end %>
+  <% if license.present? %>
+    <dt>License</dt>
+    <dd>
+      <%= license %>
+    </dd>
+  <% end %>
+</dl>
