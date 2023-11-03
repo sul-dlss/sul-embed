@@ -22,5 +22,11 @@ module Embed
       viewer = Embed::Viewer::Media.new(embed_request)
       render(MediaWithCompanionWindowsComponent.new(viewer:))
     end
+
+    def with_embargo
+      embed_request = Embed::Request.new(url: 'https://purl.stanford.edu/hy056tp9463')
+      viewer = Embed::Viewer::Media.new(embed_request)
+      render(MediaWithCompanionWindowsComponent.new(viewer:))
+    end
   end
 end
