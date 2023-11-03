@@ -5,7 +5,7 @@ import mediaTagTokenWriter from '../modules/media_tag_token_writer.js'
 import buildThumbnail from '../modules/media_thumbnail_builder.js'
 
 export default class extends Controller {
-  static targets = [ "mediaTag", "list", "authComponent", "loginButton"]
+  static targets = [ "mediaTag", "list", "stanfordAuthComponent", "locationAuthComponent", "loginButton"]
 
   connect() {
     // TODO: once we get rid of the legacy media viewer, we shuld remove this from MediaTagComponent
@@ -31,9 +31,11 @@ export default class extends Controller {
   // NOTE: result.authResponse.status can be a string or an array.
   afterValidate(result, completeCallback) {
     const status = result.authResponse.status
-    if(status.includes('stanford_restricted')) {
-      this.displayAuthLink(result.authResponse.service)
-    } else if(status === 'success') {
+    if (status.includes('stanford_restricted')) {
+      this.displayStanfordAuthLink(result.authResponse.service)
+    } else if (status.includes('location_restricted')) {
+      this.displayLocationAuthLink(result.authResponse.service)
+    } else if (status === 'success') {
       // If the item is restricted and the user has access, then remove the login banner.
       if (result.mediaContext.isRestricted)
         this.hideAuthLink()
@@ -59,13 +61,17 @@ export default class extends Controller {
     this.listTarget.innerHTML = thumbnails.join('')
   }
 
-  displayAuthLink(loginService) {
+  displayStanfordAuthLink(loginService) {
     this.loginButtonTarget.dataset.mediaTagLoginServiceParam = loginService['@id']
-    this.authComponentTarget.hidden = false
+    this.stanfordAuthComponentTarget.hidden = false
+  }
+
+  displayLocationAuthLink(_loginService) {
+    this.locationAuthComponentTarget.hidden = false
   }
 
   hideAuthLink() {
-    this.authComponentTarget.hidden = true
+    this.stanfordAuthComponentTarget.hidden = true
   }
 
   // Open the login window in a new window and then poll to see if the auth credentials are now active.
