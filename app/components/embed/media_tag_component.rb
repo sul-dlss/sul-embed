@@ -96,6 +96,7 @@ module Embed
       @include_transcripts && file.vtt
     end
 
+    # NOTE: This is only for the legacy media player. We can remove it when we switch to the new player.
     def access_restricted_message
       if location_restricted? && !stanford_only?
         <<~HTML
@@ -110,6 +111,7 @@ module Embed
       end
     end
 
+    # NOTE: This is only for the legacy media player. We can remove it when we switch to the new player.
     def access_restricted_overlay
       return ''.html_safe unless stanford_only? || location_restricted?
 
