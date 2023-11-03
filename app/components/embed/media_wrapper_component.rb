@@ -19,7 +19,7 @@ module Embed
                 location_restricted: @file.location_restricted?,
                 file_label: @file.label,
                 slider_object: @file_index,
-                thumbnail_url: @thumbnail,
+                thumbnail_url: @thumbnail.presence,
                 default_icon: @type == 'audio' ? 'sul-i-file-music-1' : 'sul-i-file-video-3',
                 duration: @file.duration
               }) do
