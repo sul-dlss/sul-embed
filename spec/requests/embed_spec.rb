@@ -3,15 +3,24 @@
 require 'rails_helper'
 
 RSpec.describe 'Embed requests' do
+  include PurlFixtures
+
   describe 'GET embed' do
     it 'has a 400 status code without url params' do
       get '/embed'
       expect(response).to have_http_status(:bad_request)
     end
 
-    it 'has a 400 status when a Purl that is not embeddable is requested' do
-      get '/embed', params: { url: 'http://purl.stanford.edu/tz959sb6952' }
-      expect(response).to have_http_status(:bad_request)
+    context 'when a Purl that is not embeddable is requested' do
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/tz959sb6952.xml')
+          .to_return(status: 200, body: '', headers: {})
+      end
+
+      it 'has a 400 status' do
+        get '/embed', params: { url: 'http://purl.stanford.edu/tz959sb6952' }
+        expect(response).to have_http_status(:bad_request)
+      end
     end
 
     it 'has a 404 status code without matched url scheme params' do
@@ -24,9 +33,16 @@ RSpec.describe 'Embed requests' do
       expect(response).to have_http_status(:not_found)
     end
 
-    it 'has a 404 status for a Purl object that does not exists' do
-      get '/embed', params: { url: 'http://purl.stanford.edu/abc123notanobject' }
-      expect(response).to have_http_status(:not_found)
+    context 'when requesting a Purl object that does not exists' do
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/abc123notanobject.xml')
+          .to_return(status: 404, body: '', headers: {})
+      end
+
+      it 'has a 404 status' do
+        get '/embed', params: { url: 'http://purl.stanford.edu/abc123notanobject' }
+        expect(response).to have_http_status(:not_found)
+      end
     end
 
     it 'has a 415 status code for an invalid format' do
@@ -34,9 +50,16 @@ RSpec.describe 'Embed requests' do
       expect(response).to have_http_status(:unsupported_media_type)
     end
 
-    it 'has a 200 status code for a matched url scheme param' do
-      get '/embed', params: { url: 'http://purl.stanford.edu/fn662rv4961' }
-      expect(response).to have_http_status(:ok)
+    context 'when the url scheme matches' do
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/fn662rv4961.xml')
+          .to_return(status: 200, body: file_purl, headers: {})
+      end
+
+      it 'has a 200 status code for a matched url scheme param' do
+        get '/embed', params: { url: 'http://purl.stanford.edu/fn662rv4961' }
+        expect(response).to have_http_status(:ok)
+      end
     end
   end
 
@@ -56,9 +79,16 @@ RSpec.describe 'Embed requests' do
       expect(response).to have_http_status(:not_found)
     end
 
-    it 'has a 404 status for a Purl object that does not exists' do
-      get '/iframe', params: { url: 'http://purl.stanford.edu/abc123notanobject' }
-      expect(response).to have_http_status(:not_found)
+    context 'when requesting a Purl object that does not exists' do
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/abc123notanobject.xml')
+          .to_return(status: 404, body: '', headers: {})
+      end
+
+      it 'has a 404 status' do
+        get '/iframe', params: { url: 'http://purl.stanford.edu/abc123notanobject' }
+        expect(response).to have_http_status(:not_found)
+      end
     end
 
     it 'has a 415 status code for an invalid format' do
@@ -66,14 +96,17 @@ RSpec.describe 'Embed requests' do
       expect(response).to have_http_status(:unsupported_media_type)
     end
 
-    it 'does not have an X-Frame-Options in the headers (so embedding in an iframe is allowed)' do
-      get '/iframe', params: { url: 'http://purl.stanford.edu/fn662rv4961' }
-      expect(response.headers['X-Frame-Options']).to be_nil
-    end
+    context 'when the object exists' do
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/fn662rv4961.xml')
+          .to_return(status: 200, body: file_purl, headers: {})
+      end
 
-    it 'returns HTML' do
-      get '/iframe', params: { url: 'http://purl.stanford.edu/fn662rv4961' }
-      expect(response).to have_http_status(:ok)
+      it 'does not have an X-Frame-Options in the headers (so embedding in an iframe is allowed)' do
+        get '/iframe', params: { url: 'http://purl.stanford.edu/fn662rv4961' }
+        expect(response).to have_http_status(:ok)
+        expect(response.headers['X-Frame-Options']).to be_nil
+      end
     end
   end
 end
