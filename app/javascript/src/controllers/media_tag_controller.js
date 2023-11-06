@@ -5,7 +5,9 @@ import mediaTagTokenWriter from '../modules/media_tag_token_writer.js'
 import buildThumbnail from '../modules/media_thumbnail_builder.js'
 
 export default class extends Controller {
-  static targets = [ "mediaTag", "list", "stanfordRestriction", "locationRestriction", "embargoRestriction", "loginButton"]
+  static targets = [ "mediaTag", "list", "stanfordRestriction", "locationRestriction",
+                     "embargoRestriction", "embargoAndStanfordRestriction", "stanfordLoginButton",
+                     "embargoLoginButton" ]
 
   connect() {
     // TODO: once we get rid of the legacy media viewer, we shuld remove this from MediaTagComponent
@@ -31,16 +33,19 @@ export default class extends Controller {
   // NOTE: result.authResponse.status can be a string or an array.
   afterValidate(result, completeCallback) {
     const status = result.authResponse.status
-    if (status.includes('stanford_restricted')) {
+    if (status.includes('embargoed')) { // Embargo check must come before stanford_restricted, because both can occur together
+      if (status.includes('stanford_restricted'))
+        this.displayEmbargoAndStanfordRestriction(result.authResponse.embargo, result.authResponse.service)
+      else
+        this.displayEmbargoRestriction(result.authResponse.embargo)
+    } else if (status.includes('stanford_restricted')) {
       this.displayStanfordRestriction(result.authResponse.service)
     } else if (status.includes('location_restricted')) {
       this.displayLocationRestriction(result.authResponse.service)
-    } else if (status.includes('embargoed')) {
-      this.displayEmbargoRestriction(result.authResponse.embargo)
     } else if (status === 'success') {
       // If the item is restricted and the user has access, then remove the login banner.
       if (result.mediaContext.isRestricted)
-        this.hideStanfordRestriction()
+        this.hideRestrictionsAfterSuccessfulLogin()
       
       this.initializeVideoJSPlayer()
     }
@@ -64,7 +69,7 @@ export default class extends Controller {
   }
 
   displayStanfordRestriction(loginService) {
-    this.loginButtonTarget.dataset.mediaTagLoginServiceParam = loginService['@id']
+    this.stanfordLoginButtonTarget.dataset.mediaTagLoginServiceParam = loginService['@id']
     this.stanfordRestrictionTarget.hidden = false
   }
 
@@ -73,14 +78,24 @@ export default class extends Controller {
   }
 
   displayEmbargoRestriction(embargo) {
-    const releaseDate = new Date(embargo.release_date)
-    const date = new Intl.DateTimeFormat().format(date)
-    this.embargoRestrictionTarget.querySelector('.loginMessage').innerText = `Access is restricted until ${date}`
+    this.embargoRestrictionTarget.querySelector('.loginMessage').innerText = `Access is restricted until ${this.formattedEmbargo(embargo)}`
     this.embargoRestrictionTarget.hidden = false
   }
 
-  hideStanfordRestriction() {
+  displayEmbargoAndStanfordRestriction(embargo, loginService) {
+    this.embargoAndStanfordRestrictionTarget.querySelector('.loginMessage').innerText = `Access is restricted to Stanford-affiliated patrons until ${this.formattedEmbargo(embargo)}`
+    this.embargoLoginButtonTarget.dataset.mediaTagLoginServiceParam = loginService['@id']
+    this.embargoAndStanfordRestrictionTarget.hidden = false
+  }
+
+  formattedEmbargo(embargo) {
+    const releaseDate = new Date(embargo.release_date)
+    return new Intl.DateTimeFormat().format(releaseDate)
+  }
+
+  hideRestrictionsAfterSuccessfulLogin() {
     this.stanfordRestrictionTarget.hidden = true
+    this.embargoAndStanfordRestrictionTarget.hidden = true
   }
 
   // Open the login window in a new window and then poll to see if the auth credentials are now active.
