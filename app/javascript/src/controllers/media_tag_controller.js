@@ -5,7 +5,7 @@ import mediaTagTokenWriter from '../modules/media_tag_token_writer.js'
 import buildThumbnail from '../modules/media_thumbnail_builder.js'
 
 export default class extends Controller {
-  static targets = [ "mediaTag", "list", "stanfordAuthComponent", "locationAuthComponent", "loginButton"]
+  static targets = [ "mediaTag", "list", "stanfordRestriction", "locationRestriction", "embargoRestriction", "loginButton"]
 
   connect() {
     // TODO: once we get rid of the legacy media viewer, we shuld remove this from MediaTagComponent
@@ -32,13 +32,15 @@ export default class extends Controller {
   afterValidate(result, completeCallback) {
     const status = result.authResponse.status
     if (status.includes('stanford_restricted')) {
-      this.displayStanfordAuthLink(result.authResponse.service)
+      this.displayStanfordRestriction(result.authResponse.service)
     } else if (status.includes('location_restricted')) {
-      this.displayLocationAuthLink(result.authResponse.service)
+      this.displayLocationRestriction(result.authResponse.service)
+    } else if (status.includes('embargoed')) {
+      this.displayEmbargoRestriction(result.authResponse.service)
     } else if (status === 'success') {
       // If the item is restricted and the user has access, then remove the login banner.
       if (result.mediaContext.isRestricted)
-        this.hideAuthLink()
+        this.hideStanfordRestriction()
       
       this.initializeVideoJSPlayer()
     }
@@ -61,17 +63,21 @@ export default class extends Controller {
     this.listTarget.innerHTML = thumbnails.join('')
   }
 
-  displayStanfordAuthLink(loginService) {
+  displayStanfordRestriction(loginService) {
     this.loginButtonTarget.dataset.mediaTagLoginServiceParam = loginService['@id']
-    this.stanfordAuthComponentTarget.hidden = false
+    this.stanfordRestrictionTarget.hidden = false
   }
 
-  displayLocationAuthLink(_loginService) {
-    this.locationAuthComponentTarget.hidden = false
+  displayLocationRestriction(_loginService) {
+    this.locationRestrictionTarget.hidden = false
   }
 
-  hideAuthLink() {
-    this.stanfordAuthComponentTarget.hidden = true
+  displayEmbargoRestriction(_loginService) {
+    this.embargoRestrictionTarget.hidden = false
+  }
+
+  hideStanfordRestriction() {
+    this.stanfordRestrictionTarget.hidden = true
   }
 
   // Open the login window in a new window and then poll to see if the auth credentials are now active.
