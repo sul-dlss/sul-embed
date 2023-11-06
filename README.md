@@ -25,6 +25,10 @@ Now visit this URL in your browser!
 
     http://localhost:3000/pages/sandbox
 
+**NOTE**: If you're doing development on the media player, the above link may get you little more than CORS errors, in which case you likely want to develop against ViewComponent previews:
+
+    http://localhost:3000/rails/view_components/
+
 # Notes for developers
 
 ## oEmbed specification details
