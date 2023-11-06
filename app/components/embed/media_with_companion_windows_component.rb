@@ -9,7 +9,7 @@ module Embed
     attr_reader :viewer
 
     delegate :purl_object, to: :viewer
-    delegate :druid, to: :purl_object
+    delegate :druid, :citation_only?, to: :purl_object
 
     def include_transcripts
       Settings.enabled_features.transcripts || params[:transcripts] == 'true'
