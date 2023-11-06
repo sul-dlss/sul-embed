@@ -13,25 +13,17 @@ To bring up a dev environment first you'll need to install Ruby and JavaScript d
     bundle install
     yarn install
 
-Then start up the Rails app in one terminal window:
+Then start up the Rails app (web server, debugger, CSS bundler, JS bundler) in one terminal window:
 
     bin/dev
 
-Then start the NodeJS process to make the JavaScript assets available:
+To debug, add one or more `debugger` statements to Ruby source code and then attach the debug clientr:
 
-    bin/shakapacker-dev-server
+    bundle exec rdbg -A
 
 Now visit this URL in your browser!
 
     http://localhost:3000/pages/sandbox
-
-# Webpacker in Docker
-
-You may also use the provided docker container to run the shakapacker dev server.
-
-```
-docker compose up shakapacker
-```
 
 # Notes for developers
 
