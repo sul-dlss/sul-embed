@@ -36,7 +36,7 @@ export default class extends Controller {
     } else if (status.includes('location_restricted')) {
       this.displayLocationRestriction(result.authResponse.service)
     } else if (status.includes('embargoed')) {
-      this.displayEmbargoRestriction(result.authResponse.service)
+      this.displayEmbargoRestriction(result.authResponse.embargo)
     } else if (status === 'success') {
       // If the item is restricted and the user has access, then remove the login banner.
       if (result.mediaContext.isRestricted)
@@ -72,7 +72,10 @@ export default class extends Controller {
     this.locationRestrictionTarget.hidden = false
   }
 
-  displayEmbargoRestriction(_loginService) {
+  displayEmbargoRestriction(embargo) {
+    const releaseDate = new Date(embargo.release_date)
+    const date = new Intl.DateTimeFormat().format(date)
+    this.embargoRestrictionTarget.querySelector('.loginMessage').innerText = `Access is restricted until ${date}`
     this.embargoRestrictionTarget.hidden = false
   }
 
