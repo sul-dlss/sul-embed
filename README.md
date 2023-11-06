@@ -19,7 +19,7 @@ Then start up the Rails app (web server, debugger, CSS bundler, JS bundler) in o
 
 To debug, add one or more `debugger` statements to Ruby source code and then attach the debug clientr:
 
-    bundle exec rdbg -A
+    bin/rdbg -A
 
 Now visit this URL in your browser!
 
