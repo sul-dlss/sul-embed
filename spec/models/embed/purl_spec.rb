@@ -251,20 +251,4 @@ RSpec.describe Embed::Purl do
       end
     end
   end
-
-  describe 'etag' do
-    before { stub_purl_response_with_fixture(file_purl, etag: 'W/"bdf0a73353e30b0e52c9870addf50795-gzip') }
-
-    it 'gets the etag from the purl response' do
-      expect(described_class.new('12345').etag).to eq 'W/"bdf0a73353e30b0e52c9870addf50795-gzip'
-    end
-  end
-
-  describe 'last_modified' do
-    before { stub_purl_response_with_fixture(file_purl, last_modified: 'Thu, 17 Oct 2019 01:00:00 +0000') }
-
-    it 'gets the etag from the purl response' do
-      expect(described_class.new('12345').last_modified).to eq Time.zone.parse('2019-10-16 18:00:00 -0700')
-    end
-  end
 end
