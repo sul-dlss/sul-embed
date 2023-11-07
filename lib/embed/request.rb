@@ -9,7 +9,7 @@ module Embed
     end
 
     def url
-      params[:url]&.delete_suffix('/iiif/manifest')
+      params[:url]
     end
 
     def format
