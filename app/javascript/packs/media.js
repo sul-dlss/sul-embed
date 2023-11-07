@@ -15,25 +15,4 @@ $(document).ready(function() {
   CssInjection.appendToHead();
   CommonViewerBehavior.initializeViewer();
   EmbedThis.init();
-
-  const tabs = document.querySelectorAll('[role="tab"]')
-
-  // Add a click event handler to each tab
-  tabs.forEach((tab) => {
-    tab.addEventListener("click", changeTabs);
-  });
 });
-
-function changeTabs(e) {
-  const target = e.target;
-  const parentButton = target.closest('[role="tab"]');
-  const tabList = target.closest('[role="tablist"]')
-
-  // Remove all current selected tabs
-  tabList
-    .querySelectorAll('[aria-selected="true"]')
-    .forEach((t) => t.setAttribute("aria-selected", false));
-
-  // Set this tab as selected
-  parentButton.setAttribute("aria-selected", true);
-}

@@ -44,29 +44,37 @@ export default class extends Controller {
   }
 
   displayMetadata(evt) {
-    this.leftButtonTargets.forEach((target) => target.classList.remove('active'))
-    // The evt.target may be the SVG, so need to look for a button
-    evt.target.closest('button').classList.add('active')
+    this.setLeftButtonActive(evt)
+
     this.metadataTarget.hidden = false
     this.rightsTarget.hidden = true
     this.shareTarget.hidden = true
   }
 
   displayRights(evt) {
-    this.leftButtonTargets.forEach((target) => target.classList.remove('active'))
-    // The evt.target may be the SVG, so need to look for a button
-    evt.target.closest('button').classList.add('active')
+    this.setLeftButtonActive(evt)
+
     this.metadataTarget.hidden = true
     this.rightsTarget.hidden = false
     this.shareTarget.hidden = true
   }
 
   displayShare(evt) {
-    this.leftButtonTargets.forEach((target) => target.classList.remove('active'))
-    // The evt.target may be the SVG, so need to look for a button
-    evt.target.closest('button').classList.add('active')
+    this.setLeftButtonActive(evt)
+
     this.metadataTarget.hidden = true
     this.rightsTarget.hidden = true
     this.shareTarget.hidden = false
+  }
+
+  setLeftButtonActive(evt) {
+    this.leftButtonTargets.forEach((button) => { 
+      button.classList.remove('active')
+      button.setAttribute("aria-selected", false);
+    })
+    // The evt.target may be the SVG, so need to look for a button
+    const button = evt.target.closest('button')
+    button.classList.add('active')
+    button.setAttribute("aria-selected", true);
   }
 }
