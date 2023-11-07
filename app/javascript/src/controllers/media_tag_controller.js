@@ -5,12 +5,10 @@ import mediaTagTokenWriter from '../modules/media_tag_token_writer.js'
 import buildThumbnail from '../modules/media_thumbnail_builder.js'
 
 export default class extends Controller {
-  static targets = [ "mediaTag", "list", "stanfordRestriction", "locationRestriction",
-                     "embargoRestriction", "embargoAndStanfordRestriction", "stanfordLoginButton",
-                     "embargoLoginButton" ]
+  static targets = [ "mediaTag", "list" ]
 
   connect() {
-    // TODO: once we get rid of the legacy media viewer, we shuld remove this from MediaTagComponent
+    // TODO: once we get rid of the legacy media viewer, we should remove this from MediaTagComponent
     //       and remove this line.
     this.element.querySelectorAll('[data-access-restricted-message]').forEach((elem) => elem.hidden = true)
 
@@ -32,22 +30,15 @@ export default class extends Controller {
 
   // NOTE: result.authResponse.status can be a string or an array.
   afterValidate(result, completeCallback) {
-    const status = result.authResponse.status
-    if (status.includes('embargoed')) { // Embargo check must come before stanford_restricted, because both can occur together
-      if (status.includes('stanford_restricted'))
-        this.displayEmbargoAndStanfordRestriction(result.authResponse.embargo, result.authResponse.service)
-      else
-        this.displayEmbargoRestriction(result.authResponse.embargo)
-    } else if (status.includes('stanford_restricted')) {
-      this.displayStanfordRestriction(result.authResponse.service)
-    } else if (status.includes('location_restricted')) {
-      this.displayLocationRestriction(result.authResponse.service)
-    } else if (status === 'success') {
-      // If the item is restricted and the user has access, then remove the login banner.
-      if (result.mediaContext.isRestricted)
-        this.hideRestrictionsAfterSuccessfulLogin()
-      
+    if (result.authResponse.status === 'success') {
       this.initializeVideoJSPlayer()
+      if (result.mediaContext.isRestricted) {
+        const event = new CustomEvent('auth-success')
+        window.dispatchEvent(event)
+      }
+    } else {
+      const event = new CustomEvent('auth-denied', { detail: result.authResponse })
+      window.dispatchEvent(event)
     }
 
     if(typeof(completeCallback) === 'function') {
@@ -66,36 +57,6 @@ export default class extends Controller {
     const thumbnails = [...this.element.querySelectorAll('[data-slider-object]')].
       map((mediaDiv, index) => buildThumbnail(mediaDiv.dataset, index))
     this.listTarget.innerHTML = thumbnails.join('')
-  }
-
-  displayStanfordRestriction(loginService) {
-    this.stanfordLoginButtonTarget.dataset.mediaTagLoginServiceParam = loginService['@id']
-    this.stanfordRestrictionTarget.hidden = false
-  }
-
-  displayLocationRestriction(_loginService) {
-    this.locationRestrictionTarget.hidden = false
-  }
-
-  displayEmbargoRestriction(embargo) {
-    this.embargoRestrictionTarget.querySelector('.loginMessage').innerText = `Access is restricted until ${this.formattedEmbargo(embargo)}`
-    this.embargoRestrictionTarget.hidden = false
-  }
-
-  displayEmbargoAndStanfordRestriction(embargo, loginService) {
-    this.embargoAndStanfordRestrictionTarget.querySelector('.loginMessage').innerText = `Access is restricted to Stanford-affiliated patrons until ${this.formattedEmbargo(embargo)}`
-    this.embargoLoginButtonTarget.dataset.mediaTagLoginServiceParam = loginService['@id']
-    this.embargoAndStanfordRestrictionTarget.hidden = false
-  }
-
-  formattedEmbargo(embargo) {
-    const releaseDate = new Date(embargo.release_date)
-    return new Intl.DateTimeFormat().format(releaseDate)
-  }
-
-  hideRestrictionsAfterSuccessfulLogin() {
-    this.stanfordRestrictionTarget.hidden = true
-    this.embargoAndStanfordRestrictionTarget.hidden = true
   }
 
   // Open the login window in a new window and then poll to see if the auth credentials are now active.
