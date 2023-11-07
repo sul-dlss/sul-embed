@@ -28,5 +28,11 @@ module Embed
       viewer = Embed::Viewer::Media.new(embed_request)
       render(MediaWithCompanionWindowsComponent.new(viewer:))
     end
+
+    def with_lots_of_files
+      embed_request = Embed::Request.new(url: 'https://purl.stanford.edu/wz015vw6759')
+      viewer = Embed::Viewer::Media.new(embed_request)
+      render(MediaWithCompanionWindowsComponent.new(viewer:))
+    end
   end
 end
