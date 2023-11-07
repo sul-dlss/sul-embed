@@ -32,7 +32,6 @@ class EmbedController < ApplicationController
   #  (e.g. /iiif?url=https://purl.stanford.edu/fr426cg9537/iiif/manifest)
   def iiif
     @embed_request.validate! url_scheme: false, format: false
-    fresh_when(last_modified: @embed_request.purl_object.last_modified, etag: @embed_request.purl_object.etag)
   end
 
   rescue_from Embed::Request::NoURLProvided do |e|
