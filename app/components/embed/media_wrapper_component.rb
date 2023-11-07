@@ -15,6 +15,8 @@ module Embed
     def call # rubocop:disable Metrics/MethodLength
       tag.div(style: "flex: 1 0 100%;#{' overflow-y: scroll' if @scroll}",
               data: {
+                controller: 'media-wrapper',
+                action: 'thumbnail-clicked@window->media-wrapper#toggleVisibility',
                 stanford_only: @file.stanford_only?,
                 location_restricted: @file.location_restricted?,
                 file_label: @file.label,
