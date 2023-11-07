@@ -30,6 +30,10 @@ Layout/LineLength:
   Exclude:
     - 'spec/**/*'
 
+Metrics/ClassLength:
+  Exclude:
+    - 'lib/embed/request.rb'
+
 Lint/MissingSuper:
   Exclude:
     - 'app/components/**/*'

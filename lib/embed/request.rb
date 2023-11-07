@@ -9,7 +9,7 @@ module Embed
     end
 
     def url
-      params[:url]&.delete_suffix('/iiif/manifest')
+      params[:url]
     end
 
     def format
@@ -55,10 +55,14 @@ module Embed
     end
 
     def object_druid
-      url[/\w*$/]
+      return unless url&.include? Settings.purl_url
+
+      url.match(%r{#{Settings.purl_url}/(\w+)/?})[1]
     end
 
     def purl_object
+      return unless object_druid
+
       @purl_object ||= Purl.new(object_druid)
     end
 
