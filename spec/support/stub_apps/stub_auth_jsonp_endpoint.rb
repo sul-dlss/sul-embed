@@ -2,15 +2,15 @@
 
 ##
 # A simple rack application to stub the
-# Stacks authentication check endpoint
-class StubAuthEndpoint
+# Stacks (JSONP) authentication check endpoint
+class StubAuthJsonpEndpoint
   cattr_accessor :response_json
-  def call(_env)
+  def call(env)
     self.class.set_success! if self.class.response_json.blank?
     [
       200,
       { 'content_type' => 'application/json' },
-      [self.class.response_json.to_json]
+      ["#{callback(env)}(#{self.class.response_json.to_json})"]
     ]
   end
 
@@ -44,5 +44,11 @@ class StubAuthEndpoint
         'label' => 'Login to play.'
       }
     }
+  end
+
+  private
+
+  def callback(env)
+    env['QUERY_STRING'][/callback=(.*)&/, 1]
   end
 end
