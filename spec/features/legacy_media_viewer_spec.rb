@@ -8,6 +8,7 @@ RSpec.describe 'The old media viewer', :js do
   let(:stub_auth) { nil }
 
   before do
+    allow(Settings.streaming).to receive(:auth_url).and_return('/test_auth_jsonp_endpoint')
     stub_auth
     stub_purl_response_with_fixture(purl)
     visit_iframe_response
@@ -45,7 +46,7 @@ RSpec.describe 'The old media viewer', :js do
 
   describe 'Stanford link' do
     context 'when the user can access the file' do
-      let(:stub_auth) { StubAuthEndpoint.set_success! }
+      let(:stub_auth) { StubAuthJsonpEndpoint.set_success! }
 
       it 'hides the link' do
         expect(page).to have_css('.sul-embed-container', visible: :visible) # to wait for the viewer to load
@@ -55,7 +56,7 @@ RSpec.describe 'The old media viewer', :js do
     end
 
     context 'when the user cannot access the file' do
-      let(:stub_auth) { StubAuthEndpoint.set_stanford! }
+      let(:stub_auth) { StubAuthJsonpEndpoint.set_stanford! }
 
       it 'shows the Stanford link' do
         expect(page).to have_css('.sul-embed-auth-link a', visible: :visible)

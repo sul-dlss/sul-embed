@@ -14,7 +14,10 @@ Rails.application.routes.draw do
   end
 
   if Rails.env.test?
-    require_relative Rails.root + 'spec' + 'support' + 'stub_apps' + 'stub_auth_endpoint.rb'
+    require_relative Rails.root.join('spec/support/stub_apps/stub_auth_endpoint')
+    require_relative Rails.root.join('spec/support/stub_apps/stub_auth_jsonp_endpoint')
+
     mount StubAuthEndpoint.new, at: '/test_auth_endpoint'
+    mount StubAuthJsonpEndpoint.new, at: '/test_auth_jsonp_endpoint'
   end
 end

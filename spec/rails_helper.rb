@@ -14,7 +14,7 @@ require 'view_component/test_helpers'
 require 'view_component/system_test_helpers'
 
 Capybara.javascript_driver = :selenium_chrome_headless
-
+Capybara.enable_aria_label = true
 Capybara.default_max_wait_time = ENV['CI'] ? 30 : 10
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
