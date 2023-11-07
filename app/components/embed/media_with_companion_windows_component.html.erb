@@ -8,6 +8,9 @@
       <button data-action="click->media#openModalComponentsPopover" aria-label="Share and Download" aria-controls="share_and_download">
         <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0,0H24V24H0Z" fill="none"></path><path d="M19,12v7H5V12H3v9H21V12Z"></path><path d="M11.741,8.178V5L17.3,10.562l-5.562,5.562V12.867c-3.973,0-6.754,1.271-8.741,4.052C3.795,12.946,6.178,8.973,11.741,8.178Z" transform="translate(4 -4)"></path></svg></svg>
       </button>
+      <button data-action="click->media#displayAccessibility" aria-label="Accessibility" aria-controls="accessibility">
+        <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"></path></svg></span>
+      </button>
     </nav>
   </header>
   
@@ -116,6 +119,7 @@
       </li>
     </ul>
   </dialog>
+
   <dialog class="modal-container" data-media-target="shareModal" id="share">
     <header class="modal-header">
       <h2>Share</h2>
@@ -127,6 +131,7 @@
       <button data-action="click->media#closeShareModal">Close</button>
     </form>
   </dialog>
+
   <dialog class="modal-container" data-media-target="downloadModal" id="download">
     <header class="modal-header">
       <h2>Download</h2>
@@ -147,5 +152,18 @@
       <button data-action="click->media#closeDownloadModal">Close</button>
     </form>
   </dialog>
+
+  <dialog class="modal-container" data-media-target="accessibility" id="accessibility">
+    <header>Accessibility</header>
+    <p>To request a transcript or other accommodation for this media item,
+      please send a request along with a link to this item to
+      <a href="mailto:purl-feedback@lists.stanford.edu">purl-feedback@lists.stanford.edu</a>.</p>
+
+    <p>OR click the Share & download icon to download a transcript.</p>
+    <form method="dialog">
+      <button>Close</button>
+    </form>
+  </dialog>
+
 </div>
 <%= javascript_pack_tag('media') %>

@@ -13,7 +13,6 @@ RSpec.describe MetadataListComponent, type: :component do
   end
 
   it 'renders something useful' do
-    expect(page).to have_content 'To request a transcript or other assistance'
     expect(page).to have_link 'purl.stanford.edu/gt507vy5436'
   end
 end
