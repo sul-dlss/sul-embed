@@ -35,7 +35,7 @@ export default {
         embedOption: {
           enabled: true,
           embedUrlReplacePattern: [
-            /.*\.edu\/(\w+)\/iiif\/manifest/,
+            /.*\.edu\/(\w+)\/iiif\d?\/manifest/,
             'https://embed.stanford.edu/iframe?url=https://purl.stanford.edu/$1',
           ],
         },
@@ -43,7 +43,7 @@ export default {
         shareLink: {
           enabled: true,
           manifestIdReplacePattern: [
-            /(purl.*.stanford.edu.*)\/iiif\/manifest(.json)?$/,
+            /(purl.*.stanford.edu.*)\/iiif\d?\/manifest(.json)?$/,
             '$1',
           ],
         },
