@@ -7,7 +7,7 @@ RSpec.describe 'was seed viewer public', :js do
   include WasTimeMapFixtures
 
   let(:fake_connection) do
-    instance_double(Faraday::Connection, get: instance_double(Faraday::Response, body: timemap, success?: true))
+    instance_double(Faraday::Connection, get: instance_double(Faraday::Response, body: timemap, success?: true, headers: []))
   end
 
   before do
