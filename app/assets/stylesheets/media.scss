@@ -59,12 +59,176 @@
     position: relative;
   }
 
+  .modal-container {
+    opacity: 1;
+    height: fit-content;
+    outline: 0;
+    flex-direction: column;
+    min-width: 25vw;
+    max-width: 20em;
+    max-height: calc(100% - 64px);
+    padding: 2rem;
+    margin: auto;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 5px 10px 5px gray;
+
+    &::backdrop {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    header {
+      color: var(--text-color);
+      font-weight: 400;
+      font-size: 18pt;
+      margin-bottom: 1rem;
+    }
+
+    .modal-subheader {
+      color: var(--text-color);
+      font-weight: 300;
+      font-size: 16pt;
+      margin-bottom: 1rem;
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    .sul-embed-options-label {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .sul-embed-embed-this-form, .sul-embed-downloads {
+      color: var(--text-color);
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+      margin-bottom: 1rem;
+    }
+
+    .sul-embed-downloads {
+      height: auto;
+      max-height: calc(100vh - 256px);
+      overflow-y: scroll;
+
+      ul {
+        list-style: none;
+
+        li {
+          margin-bottom: 1rem;
+          border-bottom: 1px solid lightgray;
+        }
+      }
+    }
+
+    #sul-embed-iframe-code {
+      width: 100%;
+      height: 9rem;
+    }
+
+    #sul-embed-purl-link {
+      width: 100%;
+      height: 2rem;
+    }
+
+    button {
+      margin-top: 1rem;
+      background-color: transparent;
+      border: none;
+      color: var(--active-color);
+      text-transform: uppercase;
+      float: right;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    .modal-header {
+      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    }
+  }
+
+  .modal-components-popover {
+    border: 0;
+    top: 49px;
+    left: calc(100% - 128px);
+    outline: 0;
+    position: absolute;
+    max-width: calc(100% - 32px);
+    min-width: 16px;
+    max-height: calc(100% - 96px);
+    min-height: 16px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);
+    border-radius: 8px;
+    background-color: #fff;
+
+    &::backdrop {
+      background-color: var(--background-color);;
+    }
+
+    ul {
+      padding-top: 8px;
+      padding-bottom: 8px;
+      outline: 0;
+      margin: 0;
+      position: relative;
+      list-style: none;
+
+      li {
+        display: flex;
+        position: relative;
+        text-align: left;
+        align-items: center;
+        justify-content: flex-start;
+        text-decoration: none;
+        vertical-align: middle;
+        width: auto;
+        overflow: hidden;
+        font-size: 1rem;
+        box-sizing: border-box;
+        min-height: 48px;
+        font-weight: 400;
+        line-height: 1.6em;
+        white-space: nowrap;
+        letter-spacing: 0em;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        padding-left: 16px;
+        padding-right: 16px;
+
+        &:hover {
+          cursor: pointer;
+          background-image: linear-gradient(rgb(0 0 0/10%) 0 0);
+        }
+
+        div {
+          list-style: none;
+        }
+
+        .modal-component-text {
+          flex: 1 1 auto;
+          min-width: 0;
+          margin-top: 4px;
+          margin-bottom: 4px;
+        }
+
+        .modal-component-icon {
+          display: inline-flex;
+          min-width: 32px;
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+
   header {
     border-top: 2px solid var(--active-color);
     border-bottom: 1px solid gray;
 
     background-color: var(--background-color);
-    padding-left: 4px;
+    padding-bottom: 4px;
     padding-right: 4px;
     display: flex;
     flex-direction: column;
@@ -240,12 +404,7 @@
       }
     }
 
-    #sul-embed-iframe-code {
-      width: 100%;
-      height: 9rem;
-    }
-
-    .sul-embed-embed-this-form, .metadataList, .rightsList {
+    .metadataList, .rightsList, .contentsList {
       color: var(--text-color);
       padding: var(--drawer-content-padding);
       font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -264,24 +423,6 @@
         line-height: 1.6em;
         letter-spacing: 0em;
         margin-bottom: 0.5em;
-      }
-    }
-  }
-
-  .right-drawer {
-    border-left: 1px solid gray;
-
-    .visually-hidden {
-      @include visually-hidden;
-    }
-
-    .inner {
-      section {
-        // This avoids wrapping when animating.
-        width: var(--drawer-width);
-        ul {
-          padding: var(--drawer-content-padding);
-        }
       }
     }
 

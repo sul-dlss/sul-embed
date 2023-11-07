@@ -15,7 +15,7 @@ RSpec.describe EmbedPanelComponent, type: :component do
       width: '666',
       request:,
       iframe_title: 'File viewer',
-      purl_object: instance_double(Embed::Purl, druid: 'oo000oo0000', title: 'The Object Title')
+      purl_object: instance_double(Embed::Purl, druid: 'oo000oo0000', title: 'The Object Title', purl_url: 'https://stanford.edu/')
     )
   end
 
