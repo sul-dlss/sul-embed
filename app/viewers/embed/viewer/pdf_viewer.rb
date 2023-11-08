@@ -7,6 +7,10 @@ module Embed
         PdfComponent
       end
 
+      def stylesheet
+        'pdf.css'
+      end
+
       def pdf_files
         document_resource_files.map(&:file_url)
       end

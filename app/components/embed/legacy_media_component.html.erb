@@ -1,9 +1,7 @@
 <div class="sul-embed-container legacy-media-component" id='sul-embed-object' style='display:none;'>
   <%= render Embed::HeaderComponent.new viewer: viewer %>
   <div class='sul-embed-body sul-embed-media'
-     data-behavior="legacy-media"
-     data-sul-embed-theme="<%= stylesheet_path('media.css') %>"
-     data-sul-icons="<%= stylesheet_path('sul_icons.css') %>">
+     data-behavior="legacy-media">
     <%= render Embed::MediaTagComponent.with_collection(resources_with_primary_file,
                                                         include_transcripts:,
                                                         druid:,

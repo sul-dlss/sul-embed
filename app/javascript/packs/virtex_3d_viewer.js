@@ -1,6 +1,5 @@
 'use strict';
 
-import { CssInjection } from '../src/modules/css_injection.js';
 import CommonViewerBehavior from '../src/modules/common_viewer_behavior.js';
 import { EmbedThis } from '../src/modules/embed_this.js';
 import { PopupPanels } from '../src/modules/popup_panels.js';
@@ -8,8 +7,6 @@ import Fullscreen from '../src/modules/fullscreen.js';
 import Virtex3DViewer from '../src/modules/virtex_3d_viewer.js';
 
 $(document).ready(function() {
-  CssInjection.injectFontIcons();
-  CssInjection.appendToHead();
   CommonViewerBehavior.initializeViewer(
     Virtex3DViewer.init
   );

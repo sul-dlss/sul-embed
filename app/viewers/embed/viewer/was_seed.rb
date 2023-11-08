@@ -13,6 +13,10 @@ module Embed
         [:'webarchive-seed']
       end
 
+      def stylesheet
+        'was_seed.css'
+      end
+
       def capture_list
         return [] if archived_timemap_url.blank?
 

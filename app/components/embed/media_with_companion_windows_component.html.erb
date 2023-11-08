@@ -87,9 +87,7 @@
         </section>
       </div>
     </aside>
-    <div class='sul-embed-body sul-embed-media'
-         data-sul-embed-theme="<%= stylesheet_path('media.css') %>"
-         data-sul-icons="<%= stylesheet_path('sul_icons.css') %>">
+    <div class='sul-embed-body sul-embed-media'>
       <%= render Embed::MediaTagComponent.with_collection(resources_with_primary_file,
                                                           include_transcripts:,
                                                           druid:,

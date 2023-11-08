@@ -7,6 +7,10 @@ module Embed
         Virtex3dComponent
       end
 
+      def stylesheet
+        'virtex_3d.css'
+      end
+
       def three_dimensional_files
         purl_object.contents.select(&:three_dimensional?).map(&:files).flatten.map(&:file_url)
       end
