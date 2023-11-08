@@ -49,7 +49,9 @@ module Embed
     end
 
     def rights
-      @rights ||= ::Dor::RightsAuth.parse(rights_xml)
+      # TODO: we have to pass `forindex=true` here so that we can subsequently call citation_only?
+      #       This is pretty slow.
+      @rights ||= ::Dor::RightsAuth.parse(rights_xml, true)
     end
 
     def use_and_reproduction
