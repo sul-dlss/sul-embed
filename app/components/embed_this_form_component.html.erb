@@ -1,33 +1,42 @@
 <div class='sul-embed-embed-this-form'>
-  <span class='sul-embed-options-label' id="select-options">Select options:</span>
-  <div class='sul-embed-section sul-embed-embed-title-section'>
-    <input
-      type='checkbox'
-      id='sul-embed-embed-title'
-      data-embed-attr='hide_title'
-      <%= 'checked' unless request.hide_title? %>
-    />
-    <label for='sul-embed-embed-title'>
-      title
-      <span class='sul-embed-embed-title'> (<%= purl_object_title %>)</span>
-    </label>
-  </div>
-  <%= content %>
-  <div class='sul-embed-section'>
-    <input
-      type='checkbox'
-      id='sul-embed-embed'
-      data-embed-attr='hide_embed'
-      <%= 'checked' unless request.hide_embed_this? %>
-    />
-    <label for='sul-embed-embed'>embed</label>
-  </div>
-  <div>
-    <div class='sul-embed-options-label'>
-      <label for='sul-embed-iframe-code'>Embed code:</label>
+  <section>
+    <h3 class='sul-embed-options-label modal-subheader'>
+      Share link
+    </h3>
+    <div class='sul-embed-section'>
+      <input type="text" name="sul-embed-purl-link" id='sul-embed-purl-link' value="<%= purl_url %>">
     </div>
+  </section>
+
+  <section>
+    <h3 class='sul-embed-options-label modal-subheader'>
+      <label for='sul-embed-iframe-code'>Embed</label>
+    </h3>
     <div class='sul-embed-section'>
       <textarea id='sul-embed-iframe-code' data-behavior='iframe-code'><%= render IframeComponent.new(viewer:) %></textarea>
     </div>
-  </div>
+    <h4 class='sul-embed-options-label' id="select-options">Select options:</h4>
+    <div class='sul-embed-section sul-embed-embed-title-section'>
+      <input
+        type='checkbox'
+        id='sul-embed-embed-title'
+        data-embed-attr='hide_title'
+      <%= 'checked' unless request.hide_title? %>
+      />
+      <label for='sul-embed-embed-title'>
+        title
+        <span class='sul-embed-embed-title'> (<%= purl_object_title %>)</span>
+      </label>
+    </div>
+    <%= content %>
+    <div class='sul-embed-section'>
+      <input
+        type='checkbox'
+        id='sul-embed-embed'
+        data-embed-attr='hide_embed'
+      <%= 'checked' unless request.hide_embed_this? %>
+      />
+      <label for='sul-embed-embed'>embed</label>
+    </div>
+  </section>
 </div>

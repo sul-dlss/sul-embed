@@ -7,6 +7,7 @@ class EmbedThisFormComponent < ViewComponent::Base
 
   delegate :request, :purl_object, to: :viewer
   delegate :title, to: :purl_object, prefix: true
+  delegate :purl_url, to: :purl_object
 
   attr_reader :viewer
 end
