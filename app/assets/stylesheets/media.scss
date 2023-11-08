@@ -48,7 +48,7 @@
 
 .media-component {
   --active-color: rgb(140, 21, 21);
-  --drawer-width: 300px;
+  --drawer-width: 305px;
   --tab-width: 48px;
   --tab-height: 48px;
   --drawer-content-padding: 1rem;
@@ -56,13 +56,14 @@
   --tab-text-color: rgba(0, 0, 0, 0.54);
   --background-color: rgba(255, 255, 255);
   --modal-border-radius: 8px;
+  --modal-max-width: 600px;
 
   .video-js .vjs-tech {
     position: relative;
   }
 
   .modal-container {
-    max-width: 600px;
+    max-width: var(--modal-max-width);
     width: calc(79vw);
     max-height: calc(79vh);
     padding: 2rem;
