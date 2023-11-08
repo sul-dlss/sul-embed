@@ -13,39 +13,27 @@ export default class extends Controller {
 
   openModalComponentsPopover() {
     this.modalComponentsPopoverTarget.showModal()
-    this.modalComponentsPopoverTarget.addEventListener('click', () => this.modalComponentsPopoverTarget.close())
   }
 
-  handleBackdropClicks(closeModal, event) {
-    const modal = event.target.closest('dialog').getBoundingClientRect()
-    const clickWithinDialog = (modal.top <= event.clientY && event.clientY <= modal.top + modal.height &&
-                               modal.left <= event.clientX && event.clientX <= modal.left + modal.width)
+  closePopover() {
+    this.modalComponentsPopoverTarget.close()
+  }
 
-    if (!clickWithinDialog) closeModal.bind(this)()
+  handleBackdropClicks(event) {
+    const modal = event.target.closest('dialog')
+    const rect = modal.getBoundingClientRect()
+    const clickWithinDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height &&
+                               rect.left <= event.clientX && event.clientX <= rect.left + rect.width)
+
+    if (!clickWithinDialog) modal.close()
   }
 
   openShareModal() {
-    this.shareModalTarget.style.display = "flex"
-    this.shareModalTarget.addEventListener('click', this.handleBackdropClicks.bind(this, this.closeShareModal))
     this.shareModalTarget.showModal()
   }
 
-  closeShareModal() {
-    this.shareModalTarget.style.display = "none"
-    this.shareModalTarget.removeEventListener('click', this.handleBackdropClicks.bind(this, this.closeShareModal))
-    this.shareModalTarget.close()
-  }
-
   openDownloadModal() {
-    this.downloadModalTarget.style.display = "flex"
-    this.downloadModalTarget.addEventListener('click', this.handleBackdropClicks.bind(this, this.closeDownloadModal))
     this.downloadModalTarget.showModal()
-  }
-
-  closeDownloadModal() {
-    this.downloadModalTarget.style.display = "none"
-    this.downloadModalTarget.removeEventListener('click', this.handleBackdropClicks.bind(this, this.closeDownloadModal))
-    this.downloadModalTarget.close()
   }
 
   displayMetadata(evt) {
