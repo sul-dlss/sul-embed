@@ -1,9 +1,7 @@
 <div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
   <%= render Embed::HeaderComponent.new viewer: viewer %>
   <% # removing 5 pixels from the body height to account for being embedded %>
-  <div class='sul-embed-body sul-embed-pdf'
-        data-sul-embed-theme="<%= stylesheet_path('pdf.css') %>"
-        data-sul-icons="<%= stylesheet_path('sul_icons.css') %>">
+  <div class='sul-embed-body sul-embed-pdf'>
     <button aria-label="Zoom in" class="button zoom-in">+</button>
     <button aria-label="Zoom out" class="button zoom-out">-</button>
     <button aria-label="Previous page" class="button prev-page">

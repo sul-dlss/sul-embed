@@ -1,8 +1,6 @@
 <div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
   <%= render Embed::HeaderComponent.new viewer: viewer %>
-  <div class='sul-embed-body sul-embed-geo'
-     data-sul-embed-theme="<%= stylesheet_path('geo.css') %>"
-     data-sul-icons="<%= stylesheet_path('sul_icons.css') %>">
+  <div class='sul-embed-body sul-embed-geo'>
     <div id="sul-embed-geo-sidebar" class="" style="display: none;">
     </div>
     <%= content_tag :div, viewer.map_element_options do %>

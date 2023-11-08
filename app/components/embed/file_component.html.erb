@@ -1,8 +1,6 @@
 <div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
   <%= render Embed::File::HeaderComponent.new viewer: viewer %>
-  <div class='sul-embed-body sul-embed-file'
-      data-sul-embed-theme="<%= stylesheet_path('file.css') %>"
-      data-sul-icons="<%= stylesheet_path('sul_icons.css') %>">
+  <div class='sul-embed-body sul-embed-file'>
     <div class='sul-embed-file-list'>
       <% if viewer.purl_object.embargoed? %>
         <div class='sul-embed-embargo-message'>

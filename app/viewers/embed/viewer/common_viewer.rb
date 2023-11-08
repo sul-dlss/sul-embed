@@ -26,6 +26,10 @@ module Embed
         nil
       end
 
+      def stylesheet
+        "#{purl_object.type}.css"
+      end
+
       ##
       # Checks to see if an item is embargoed to the world
       # @param [Embed::Purl::ResourceFile]
