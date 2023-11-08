@@ -5,7 +5,7 @@ module Embed
   class Purl
     require 'embed/media_duration'
     require 'dor/rights_auth'
-    delegate :embargoed?, :stanford_only_unrestricted?, :world_unrestricted?,
+    delegate :embargoed?, :citation_only?, :stanford_only_unrestricted?, :world_unrestricted?,
              :world_downloadable_file?, :stanford_only_downloadable_file?, to: :rights
     attr_reader :druid
 

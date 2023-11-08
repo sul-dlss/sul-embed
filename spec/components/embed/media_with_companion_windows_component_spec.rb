@@ -16,6 +16,7 @@ RSpec.describe Embed::MediaWithCompanionWindowsComponent, type: :component do
     instance_double(Embed::Purl,
                     title: 'foo',
                     purl_url: 'https://purl.stanford.edu/123',
+                    citation_only?: false,
                     use_and_reproduction: '',
                     copyright: '',
                     license: '',
@@ -28,5 +29,24 @@ RSpec.describe Embed::MediaWithCompanionWindowsComponent, type: :component do
     expect(page).to have_content 'Access is restricted to the reading room. See Access conditions for more information.'
     expect(page).to have_content 'Stanford users: log in to access all available features'
     expect(page).to have_content 'Access is restricted until the embargo has elapsed'
+  end
+
+  context 'when citation_only access' do
+    let(:purl_object) do
+      instance_double(Embed::Purl,
+                      title: 'foo',
+                      purl_url: 'https://purl.stanford.edu/123',
+                      citation_only?: true,
+                      use_and_reproduction: '',
+                      copyright: '',
+                      license: '',
+                      druid: '123',
+                      contents: [],
+                      downloadable_files: [])
+    end
+
+    it 'displays citation only message' do
+      expect(page).to have_content 'This media cannot be accessed online.'
+    end
   end
 end
