@@ -119,7 +119,7 @@
 
   <dialog class="modal-container" data-media-target="shareModal" data-action="click->media#handleBackdropClicks" id="share">
     <header class="modal-header">
-      <h2>Share</h2>
+      Share
     </header>
 
     <%= render EmbedThisFormComponent.new(viewer:) %>
@@ -131,7 +131,7 @@
 
   <dialog class="modal-container" data-media-target="downloadModal" data-action="click->media#handleBackdropClicks" id="download">
     <header class="modal-header">
-      <h2>Download</h2>
+      Download
     </header>
 
     <section class='sul-embed-downloads'>
@@ -146,11 +146,11 @@
     </section>
 
     <form method="dialog">
-      <button data-action="click->media#closeDownloadModal">Close</button>
+      <button>Close</button>
     </form>
   </dialog>
 
-  <dialog class="modal-container" data-media-target="accessibility" id="accessibility">
+  <dialog class="modal-container" data-media-target="accessibility" data-action="click->media#handleBackdropClicks" id="accessibility">
     <header>Accessibility</header>
     <p>To request a transcript or other accommodation for this media item,
       please send a request along with a link to this item to

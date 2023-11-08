@@ -48,29 +48,27 @@
 
 .media-component {
   --active-color: rgb(140, 21, 21);
-  --drawer-width: 25vw;
-  --tab-width: 35px;
+  --drawer-width: 300px;
+  --tab-width: 48px;
+  --tab-height: 48px;
   --drawer-content-padding: 1rem;
   --text-color: rgba(0, 0, 0, 0.87);
   --tab-text-color: rgba(0, 0, 0, 0.54);
   --background-color: rgba(255, 255, 255);
+  --modal-border-radius: 8px;
 
   .video-js .vjs-tech {
     position: relative;
   }
 
   .modal-container {
-    opacity: 1;
-    height: fit-content;
-    outline: 0;
-    flex-direction: column;
-    min-width: 25vw;
-    max-width: 20em;
-    max-height: calc(100% - 64px);
+    max-width: 600px;
+    width: calc(79vw);
+    max-height: calc(79vh);
     padding: 2rem;
     margin: auto;
     border: none;
-    border-radius: 1rem;
+    border-radius: var(--modal-border-radius);
     box-shadow: 5px 10px 5px gray;
 
     &::backdrop {
@@ -84,15 +82,8 @@
       margin-bottom: 1rem;
     }
 
-    .modal-subheader {
-      color: var(--text-color);
-      font-weight: 300;
-      font-size: 16pt;
+    &#accessibility p, section {
       margin-bottom: 1rem;
-    }
-
-    section {
-      margin-bottom: 2rem;
     }
 
     .sul-embed-options-label {
@@ -103,12 +94,10 @@
     .sul-embed-embed-this-form, .sul-embed-downloads {
       color: var(--text-color);
       font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-      margin-bottom: 1rem;
     }
 
     .sul-embed-downloads {
       height: auto;
-      max-height: calc(100vh - 256px);
       overflow-y: scroll;
 
       ul {
@@ -132,7 +121,6 @@
     }
 
     button {
-      margin-top: 1rem;
       background-color: transparent;
       border: none;
       color: var(--active-color);
@@ -150,21 +138,12 @@
   .modal-components-popover {
     border: 0;
     top: 49px;
-    left: calc(100% - 128px);
-    outline: 0;
-    position: absolute;
-    max-width: calc(100% - 32px);
-    min-width: 16px;
-    max-height: calc(100% - 96px);
-    min-height: 16px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    left: calc(100% - 180px);
     box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);
-    border-radius: 8px;
-    background-color: #fff;
+    border-radius: var(--modal-border-radius);
 
     &::backdrop {
-      background-color: var(--background-color);;
+      background-color: var(--background-color);
     }
 
     ul {
@@ -320,11 +299,6 @@
       }
     }
   }
-
-  --drawer-width: 25vw;
-  --tab-width: 48px;
-  --tab-height: 48px;
-  --drawer-content-padding: 1rem;
 
   .authLinkWrapper {
     align-items: center;
