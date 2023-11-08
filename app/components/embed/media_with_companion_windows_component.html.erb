@@ -10,31 +10,33 @@
       </button>
     </nav>
   </header>
-
-  <div data-media-tag-target="locationRestriction" hidden="true">
-    <div class="authLinkWrapper">
-      <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M22 4v-.5C22 2.12 20.88 1 19.5 1S17 2.12 17 3.5V4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h5c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zm-.8 0h-3.4v-.5c0-.94.76-1.7 1.7-1.7s1.7.76 1.7 1.7V4zm-2.28 8c.04.33.08.66.08 1 0 2.08-.8 3.97-2.1 5.39-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H7v-2h2c.55 0 1-.45 1-1V8h2c1.1 0 2-.9 2-2V3.46c-.95-.3-1.95-.46-3-.46C5.48 3 1 7.48 1 13s4.48 10 10 10 10-4.48 10-10c0-.34-.02-.67-.05-1h-2.03zM10 20.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L8 16v1c0 1.1.9 2 2 2v1.93z"></path></svg>
-      <p class="loginMessage">Access is restricted to the reading room. See Access conditions for more information.</p>
+  
+  <div data-controller="auth-restriction" data-action="auth-denied@window->auth-restriction#displayMessage auth-success@window->auth-restriction#hideMessage">
+    <div data-auth-restriction-target="locationRestriction" hidden="true">
+      <div class="authLinkWrapper">
+        <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M22 4v-.5C22 2.12 20.88 1 19.5 1S17 2.12 17 3.5V4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h5c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zm-.8 0h-3.4v-.5c0-.94.76-1.7 1.7-1.7s1.7.76 1.7 1.7V4zm-2.28 8c.04.33.08.66.08 1 0 2.08-.8 3.97-2.1 5.39-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H7v-2h2c.55 0 1-.45 1-1V8h2c1.1 0 2-.9 2-2V3.46c-.95-.3-1.95-.46-3-.46C5.48 3 1 7.48 1 13s4.48 10 10 10 10-4.48 10-10c0-.34-.02-.67-.05-1h-2.03zM10 20.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L8 16v1c0 1.1.9 2 2 2v1.93z"></path></svg>
+        <p class="loginMessage">Access is restricted to the reading room. See Access conditions for more information.</p>
+      </div>
     </div>
-  </div>
-  <div data-media-tag-target="stanfordRestriction" hidden="true">
-    <div class="authLinkWrapper">
-      <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8h-3V6.21c0-2.61-1.91-4.94-4.51-5.19C9.51.74 7 3.08 7 6v2H4v14h16V8zm-8 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"></path></svg>
-      <p class="loginMessage">Stanford users: log in to access all available features.</p>
-      <button data-media-tag-target="stanfordLoginButton" data-action="media-tag#logIn">Log in</button>
+    <div data-auth-restriction-target="stanfordRestriction" hidden="true">
+      <div class="authLinkWrapper">
+        <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8h-3V6.21c0-2.61-1.91-4.94-4.51-5.19C9.51.74 7 3.08 7 6v2H4v14h16V8zm-8 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"></path></svg>
+        <p class="loginMessage">Stanford users: log in to access all available features.</p>
+        <button data-auth-restriction-target="stanfordLoginButton" data-action="media-tag#logIn">Log in</button>
+      </div>
     </div>
-  </div>
-  <div data-media-tag-target="embargoRestriction" hidden="true">
-    <div class="authLinkWrapper">
-      <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="m14.5 14.2 2.9 1.7-.8 1.3L13 15v-5h1.5v4.2zM22 14c0 4.41-3.59 8-8 8-2.02 0-3.86-.76-5.27-2H4c-1.15 0-2-.85-2-2V9c0-1.12.89-1.96 2-2v-.5C4 4.01 6.01 2 8.5 2c2.34 0 4.24 1.79 4.46 4.08.34-.05.69-.08 1.04-.08 4.41 0 8 3.59 8 8zM6 7h5v-.74C10.88 4.99 9.8 4 8.5 4 7.12 4 6 5.12 6 6.5V7zm14 7c0-3.31-2.69-6-6-6s-6 2.69-6 6 2.69 6 6 6 6-2.69 6-6z"></path></svg>
-      <p class="loginMessage">Access is restricted until the embargo has elapsed</p>
+    <div data-auth-restriction-target="embargoRestriction" hidden="true">
+      <div class="authLinkWrapper">
+        <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="m14.5 14.2 2.9 1.7-.8 1.3L13 15v-5h1.5v4.2zM22 14c0 4.41-3.59 8-8 8-2.02 0-3.86-.76-5.27-2H4c-1.15 0-2-.85-2-2V9c0-1.12.89-1.96 2-2v-.5C4 4.01 6.01 2 8.5 2c2.34 0 4.24 1.79 4.46 4.08.34-.05.69-.08 1.04-.08 4.41 0 8 3.59 8 8zM6 7h5v-.74C10.88 4.99 9.8 4 8.5 4 7.12 4 6 5.12 6 6.5V7zm14 7c0-3.31-2.69-6-6-6s-6 2.69-6 6 2.69 6 6 6 6-2.69 6-6z"></path></svg>
+        <p class="loginMessage">Access is restricted until the embargo has elapsed</p>
+      </div>
     </div>
-  </div>
-  <div data-media-tag-target="embargoAndStanfordRestriction" hidden="true">
-    <div class="authLinkWrapper">
-      <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="m14.5 14.2 2.9 1.7-.8 1.3L13 15v-5h1.5v4.2zM22 14c0 4.41-3.59 8-8 8-2.02 0-3.86-.76-5.27-2H4c-1.15 0-2-.85-2-2V9c0-1.12.89-1.96 2-2v-.5C4 4.01 6.01 2 8.5 2c2.34 0 4.24 1.79 4.46 4.08.34-.05.69-.08 1.04-.08 4.41 0 8 3.59 8 8zM6 7h5v-.74C10.88 4.99 9.8 4 8.5 4 7.12 4 6 5.12 6 6.5V7zm14 7c0-3.31-2.69-6-6-6s-6 2.69-6 6 2.69 6 6 6 6-2.69 6-6z"></path></svg>
-      <p class="loginMessage">Stanford users: log in to access all available features.</p>
-      <button data-media-tag-target="embargoLoginButton" data-action="media-tag#logIn">Log in</button>
+    <div data-auth-restriction-target="embargoAndStanfordRestriction" hidden="true">
+      <div class="authLinkWrapper">
+        <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="m14.5 14.2 2.9 1.7-.8 1.3L13 15v-5h1.5v4.2zM22 14c0 4.41-3.59 8-8 8-2.02 0-3.86-.76-5.27-2H4c-1.15 0-2-.85-2-2V9c0-1.12.89-1.96 2-2v-.5C4 4.01 6.01 2 8.5 2c2.34 0 4.24 1.79 4.46 4.08.34-.05.69-.08 1.04-.08 4.41 0 8 3.59 8 8zM6 7h5v-.74C10.88 4.99 9.8 4 8.5 4 7.12 4 6 5.12 6 6.5V7zm14 7c0-3.31-2.69-6-6-6s-6 2.69-6 6 2.69 6 6 6 6-2.69 6-6z"></path></svg>
+        <p class="loginMessage">Stanford users: log in to access all available features.</p>
+        <button data-auth-restriction-target="embargoLoginButton" data-action="media-tag#logIn">Log in</button>
+      </div>
     </div>
   </div>
   <% if citation_only? %>
@@ -43,6 +45,7 @@
       <p class="loginMessage">This media cannot be accessed online. See access conditions for more information.</p>
     </div>
   <% end %>
+
 
 
   <div class="media-component-body">
