@@ -16,7 +16,8 @@ RSpec.describe Embed::MediaWithCompanionWindowsComponent, type: :component do
     instance_double(Embed::Purl,
                     title: 'foo',
                     purl_url: 'https://purl.stanford.edu/123',
-                    citation_only?: false,
+                    manifest_json_url: 'https://purl.stanford.edu/123/iiif/manifest',
+                    citation_only?: citation_only,
                     use_and_reproduction: '',
                     copyright: '',
                     license: '',
@@ -24,6 +25,7 @@ RSpec.describe Embed::MediaWithCompanionWindowsComponent, type: :component do
                     contents: [],
                     downloadable_files: [])
   end
+  let(:citation_only) { false }
 
   it 'displays the page' do
     # Accessabile dialog
@@ -38,18 +40,7 @@ RSpec.describe Embed::MediaWithCompanionWindowsComponent, type: :component do
   end
 
   context 'when citation_only access' do
-    let(:purl_object) do
-      instance_double(Embed::Purl,
-                      title: 'foo',
-                      purl_url: 'https://purl.stanford.edu/123',
-                      citation_only?: true,
-                      use_and_reproduction: '',
-                      copyright: '',
-                      license: '',
-                      druid: '123',
-                      contents: [],
-                      downloadable_files: [])
-    end
+    let(:citation_only) { true }
 
     it 'displays citation only message' do
       expect(page).to have_content 'This media cannot be accessed online.'
