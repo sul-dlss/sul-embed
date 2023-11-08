@@ -138,7 +138,6 @@
       color: var(--active-color);
       text-transform: uppercase;
       float: right;
-
       &:hover {
         text-decoration: underline;
       }
@@ -223,7 +222,7 @@
     }
   }
 
-  header {
+  &>header {
     border-top: 2px solid var(--active-color);
     border-bottom: 1px solid gray;
 

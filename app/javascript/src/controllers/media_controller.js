@@ -1,8 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ "leftDrawer", "leftButton", "metadata", "shareModal", "contents", "downloadModal", "rights", "modalComponentsPopover" ]
-
+  static targets = [ "leftDrawer", "leftButton", "metadata", "shareModal", "contents",
+                     "downloadModal", "rights", "accessibility", "modalComponentsPopover"]
   connect() {
     this.metadataTarget.hidden = false
   }
@@ -81,5 +81,9 @@ export default class extends Controller {
     const button = evt.target.closest('button')
     button.classList.add('active')
     button.setAttribute("aria-selected", true);
+  }
+
+  displayAccessibility() {
+    this.accessibilityTarget.showModal()
   }
 }
