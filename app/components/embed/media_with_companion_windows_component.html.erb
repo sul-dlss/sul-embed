@@ -69,8 +69,7 @@
           <div class="header-background">
             <h3>About this item</h3>
           </div>
-
-          <%= render MetadataListComponent.new(viewer:) %>
+          <dl data-controller="iiif-metadata" class="metadataList" data-iiif-metadata-url-value="<%= manifest_json_url %>"></dl>
         </section>
         <section id="media-content" data-media-target="contents" role="tabpanel" hidden>
           <div class="header-background">
