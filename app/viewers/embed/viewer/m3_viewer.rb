@@ -13,6 +13,10 @@ module Embed
         %i[image manuscript map book]
       end
 
+      def stylesheet
+        'm3.css'
+      end
+
       def manifest_json_url
         @purl_object.manifest_json_url
       end

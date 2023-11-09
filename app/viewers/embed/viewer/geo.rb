@@ -28,6 +28,10 @@ module Embed
         [:geo]
       end
 
+      def stylesheet
+        'geo.css'
+      end
+
       def self.show_download?
         true
       end
