@@ -54,8 +54,6 @@ module Embed
                data: {
                  src: streaming_url_for(:dash),
                  auth_url: authentication_url,
-                 stanford_only: stanford_only?,
-                 location_restricted: location_restricted?,
                  media_tag_target: 'mediaTag'
                },
                poster: poster_url_for,
