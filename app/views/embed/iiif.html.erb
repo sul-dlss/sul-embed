@@ -16,11 +16,12 @@
         bottom: 3px;
       }
     </style>
+    <%= stylesheet_link_tag 'm3.css' %>
   </head>
   <%= render 'analytics' %>
   <body>
     <div class="sul-embed-container" id='sul-embed-object' style='display:none;'>
-      <div class='sul-embed-body sul-embed-m3' style="max-height:100%;" data-sul-embed-theme="<%= stylesheet_path('m3.css') %>">
+      <div class='sul-embed-body sul-embed-m3' style="max-height:100%;">
         <div
           id='sul-embed-m3'
           class='m3'
