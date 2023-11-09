@@ -122,7 +122,7 @@
       Share
     </header>
 
-    <%= render EmbedThisFormComponent.new(viewer:) %>
+    <%= render Embed::Media::EmbedThisFormComponent.new(viewer:) %>
 
     <form method="dialog">
       <button data-action="click->media#closeShareModal">Close</button>
