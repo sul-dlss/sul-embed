@@ -1,10 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
+import { EmbedThis } from '../modules/embed_this.js';
 
 export default class extends Controller {
   static targets = [ "leftDrawer", "leftButton", "metadata", "shareModal", "contents",
                      "downloadModal", "rights", "accessibility", "modalComponentsPopover"]
   connect() {
+    this.element.style.display = ''
     this.metadataTarget.hidden = false
+    EmbedThis.init();
   }
 
   toggleLeft() {
