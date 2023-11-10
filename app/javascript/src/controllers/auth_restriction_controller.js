@@ -16,7 +16,7 @@ export default class extends Controller {
     } else if (status.includes('stanford_restricted')) {
       this.displayStanfordRestriction(authResponse.service)
     } else if (status.includes('location_restricted')) {
-      this.displayLocationRestriction(authResponse.service)
+      this.displayLocationRestriction(authResponse.location)
     }
   }
 
@@ -30,7 +30,8 @@ export default class extends Controller {
     this.stanfordRestrictionTarget.hidden = false
   }
 
-  displayLocationRestriction(_loginService) {
+  displayLocationRestriction(restrictionLocation) {
+    this.locationRestrictionTarget.querySelector('.loginMessage').innerText = `Access is restricted to the ${restrictionLocation.label}. See Access conditions for more information.`
     this.locationRestrictionTarget.hidden = false
   }
 
