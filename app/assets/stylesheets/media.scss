@@ -44,6 +44,13 @@
     right: 0;
     top: 0;
   }
+
+  // Style the CC button when they have captions enabled
+  // This won't work on Firefox unless enabled by layout.css.has-selector.enabled in about:config
+  // Other than this, there doesn't seem to be a way to style the state
+  .vjs-subs-caps-button:has(+ .vjs-menu > .vjs-menu-content > .vjs-selected.vjs-captions-menu-item) {
+    border-bottom: 2px solid red;
+  }
 }
 
 .media-component {
