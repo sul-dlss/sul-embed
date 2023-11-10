@@ -18,10 +18,7 @@ export default class extends Controller {
 
   validateMedia(completeCallback) {
     const validators = this.mediaTagTargets
-      .map((mediaTag) => {
-        const mediaContext = { isRestricted: mediaTag.dataset.stanfordOnly === "true" || mediaTag.dataset.locationRestricted === "true" }
-        return validator(mediaTag.dataset.authUrl, mediaTagTokenWriter(mediaTag), mediaContext)
-      })
+      .map((mediaTag) => validator(mediaTag.dataset.authUrl, mediaTagTokenWriter(mediaTag)))
     Promise.all(validators).then((values) => {
       values.forEach((result) => {
         return this.afterValidate(result, completeCallback)})
@@ -32,10 +29,8 @@ export default class extends Controller {
   afterValidate(result, completeCallback) {
     if (result.authResponse.status === 'success') {
       this.initializeVideoJSPlayer()
-      if (result.mediaContext.isRestricted) {
-        const event = new CustomEvent('auth-success')
-        window.dispatchEvent(event)
-      }
+      const event = new CustomEvent('auth-success')
+      window.dispatchEvent(event)
     } else {
       const event = new CustomEvent('auth-denied', { detail: result.authResponse })
       window.dispatchEvent(event)
