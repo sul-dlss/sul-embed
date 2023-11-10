@@ -306,6 +306,14 @@
         width: 100%;
       }
     }
+
+    .locked-media {
+      width: 100vw;
+      max-height: calc(100vh - 98px);
+      img {
+        height: 100%;
+      }
+    }
   }
 
   .authLinkWrapper {
