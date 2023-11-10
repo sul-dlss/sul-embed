@@ -154,57 +154,27 @@
       background-color: var(--background-color);
     }
 
-    ul {
-      padding-top: 8px;
-      padding-bottom: 8px;
-      outline: 0;
-      margin: 0;
-      position: relative;
-      list-style: none;
+    .modal-component-button {
+      border: 0;
+      background-color: var(--background-color);
+      display: block;
+      width: 100%;
+      padding: 1.2rem;
+      text-align: left;
 
-      li {
-        display: flex;
-        position: relative;
-        text-align: left;
-        align-items: center;
-        justify-content: flex-start;
-        text-decoration: none;
-        vertical-align: middle;
-        width: auto;
-        overflow: hidden;
+      .modal-component-label {
         font-size: 1rem;
-        box-sizing: border-box;
-        min-height: 48px;
-        font-weight: 400;
         line-height: 1.6em;
-        white-space: nowrap;
-        letter-spacing: 0em;
-        padding-top: 6px;
-        padding-bottom: 6px;
-        padding-left: 16px;
-        padding-right: 16px;
+      }
 
-        &:hover {
-          cursor: pointer;
-          background-image: linear-gradient(rgb(0 0 0/10%) 0 0);
-        }
+      .modal-component-icon {
+        min-width: 32px;
+        vertical-align: middle;
+      }
 
-        div {
-          list-style: none;
-        }
-
-        .modal-component-text {
-          flex: 1 1 auto;
-          min-width: 0;
-          margin-top: 4px;
-          margin-bottom: 4px;
-        }
-
-        .modal-component-icon {
-          display: inline-flex;
-          min-width: 32px;
-          flex-shrink: 0;
-        }
+      &:hover {
+        cursor: pointer;
+        background-image: linear-gradient(rgb(0 0 0/10%) 0 0);
       }
     }
   }
