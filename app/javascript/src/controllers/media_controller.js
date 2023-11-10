@@ -11,7 +11,16 @@ export default class extends Controller {
   }
 
   toggleLeft() {
-    this.leftDrawerTarget.classList.toggle('open')
+    const classList = this.leftDrawerTarget.classList
+    if (classList.contains('open')) {
+      classList.remove('open')
+      setTimeout(() => {
+        this.leftDrawerTarget.style.visibility = 'hidden' // remove from accessability tree
+      }, 1000)
+    } else {
+      this.leftDrawerTarget.style.visibility = ''
+      classList.add('open')
+    }
   }
 
   openModalComponentsPopover() {
