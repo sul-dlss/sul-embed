@@ -135,14 +135,18 @@
     </header>
 
     <section class='sul-embed-downloads'>
-      <h3 class='sul-embed-options-label modal-subheader'>
-        Files
-      </h3>
-      <div class='sul-embed-section'>
-        <ul>
-          <%= render Embed::Download::FileListItemComponent.with_collection(viewer.purl_object.downloadable_files) %>
-        </ul>
-      </div>
+      <% if downloadable_files.present? %>
+        <h3 class='sul-embed-options-label modal-subheader'>
+          Files
+        </h3>
+        <div class='sul-embed-section'>
+          <ul>
+            <%= render Embed::Download::FileListItemComponent.with_collection(downloadable_files) %>
+          </ul>
+        </div>
+      <% else %>
+        <p>No downloads available</p>
+      <% end %>
     </section>
 
     <form method="dialog">
