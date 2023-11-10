@@ -2,11 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe EmbedThisFormComponent, type: :component do
+RSpec.describe Embed::Media::EmbedThisFormComponent, type: :component do
   let(:request) do
     Embed::Request.new(url: 'http://purl.stanford.edu/abc123')
   end
-  let(:object) { instance_double(Embed::Purl, title: '', druid: '', all_resource_files: [], embargoed?: false) }
+  let(:object) do
+    instance_double(Embed::Purl, title: '', druid: '', all_resource_files: [], embargoed?: false, purl_url: 'https://stanford.edu/')
+  end
   let(:viewer) { Embed::Viewer::File.new(request) }
 
   before do
