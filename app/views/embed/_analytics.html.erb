@@ -16,3 +16,24 @@
   }
   gtag('config', 'G-80J719XWE5', args)
 </script>
+<% if Settings.metrics_api_url %>
+<script src="https://unpkg.com/ahoy.js@0.4.3"
+  integrity="sha384-s9X57Wbu8jIIErBMhudZJEAS1ZkelgbMI7/HUqsgjFBBm9IXyfbpKQ+ZoWUUvpgE"
+  crossorigin="anonymous"></script>
+<script>
+  // Set up Ahoy
+  ahoy.configure({
+    visitDuration: 60, // measured in minutes; this is Zenodo's default
+    cookieDomain: "stanford.edu",
+    urlPrefix: "<%= Settings.metrics_api_url %>",
+  });
+
+  // Send a view event with the object's DRUID so that it can be tracked
+  // Override the page and url with the location where the object was embedded
+  const embedUrl = new URL(new URLSearchParams(window.location.search).get('url'));
+  const url = new URL(document.referrer);
+  const druid = embedUrl.pathname.split('/').pop();
+  const page = url.pathname;
+  ahoy.trackView({ url, page, druid });
+</script>
+<% end %>
