@@ -11,7 +11,7 @@ RSpec.describe Embed::File::HeaderComponent, type: :component do
 
   before do
     allow(request).to receive(:purl_object).and_return(object)
-    allow(object).to receive(:response).and_return(file_purl)
+    allow(object).to receive(:response).and_return(file_purl_xml)
     render_inline(described_class.new(viewer:))
   end
 

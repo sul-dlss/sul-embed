@@ -12,7 +12,7 @@ RSpec.describe Embed::M3Component, type: :component do
   before do
     allow(request).to receive(:purl_object).and_return(object)
     allow(viewer).to receive(:asset_host).and_return('http://example.com/')
-    allow(object).to receive(:response).and_return(image_purl)
+    allow(object).to receive(:response).and_return(image_purl_xml)
     render_inline(described_class.new(viewer:))
   end
 

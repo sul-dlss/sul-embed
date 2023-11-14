@@ -18,7 +18,7 @@ module PurlFixtures
     XML
   end
 
-  def file_purl
+  def file_purl_xml
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -86,7 +86,7 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def image_purl
+  def image_purl_xml
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -118,7 +118,7 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def multi_file_purl
+  def multi_file_purl_xml
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -145,7 +145,7 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def hierarchical_file_purl
+  def hierarchical_file_purl_xml
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -172,7 +172,7 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def many_file_purl
+  def many_file_purl_xml
     files = (0..3001).map  { |file_num|
       <<-XML
         <resource sequence="1" type="file">
@@ -199,7 +199,7 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def large_file_purl
+  def large_file_purl_xml
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -344,7 +344,7 @@ module PurlFixtures
     XML
   end
 
-  def stanford_restricted_file_purl
+  def stanford_restricted_file_purl_xml
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -366,7 +366,8 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def stanford_no_download_restricted_file_purl
+
+  def stanford_no_download_restricted_file_purl_xml
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -388,7 +389,7 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def stanford_restricted_image_purl
+  def stanford_restricted_image_purl_xml
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -487,7 +488,7 @@ module PurlFixtures
   </access>
     XML
   end
-  def stanford_restricted_multi_file_purl
+  def stanford_restricted_multi_file_purl_xml
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -514,7 +515,7 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def embargoed_stanford_file_purl
+  def embargoed_stanford_file_purl_xml
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -537,7 +538,7 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def embargoed_file_purl
+  def embargoed_file_purl_xml
     <<-XML
       <publicObject>
         <identityMetadata>

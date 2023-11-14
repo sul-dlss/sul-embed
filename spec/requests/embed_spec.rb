@@ -53,7 +53,7 @@ RSpec.describe 'Embed requests' do
     context 'when the url scheme matches' do
       before do
         stub_request(:get, 'https://purl.stanford.edu/fn662rv4961.xml')
-          .to_return(status: 200, body: file_purl, headers: {})
+          .to_return(status: 200, body: file_purl_xml, headers: {})
       end
 
       it 'has a 200 status code for a matched url scheme param' do
@@ -99,7 +99,7 @@ RSpec.describe 'Embed requests' do
     context 'when the object exists' do
       before do
         stub_request(:get, 'https://purl.stanford.edu/fn662rv4961.xml')
-          .to_return(status: 200, body: file_purl, headers: {})
+          .to_return(status: 200, body: file_purl_xml, headers: {})
       end
 
       it 'does not have an X-Frame-Options in the headers (so embedding in an iframe is allowed)' do

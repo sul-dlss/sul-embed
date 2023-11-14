@@ -5,17 +5,17 @@ require 'rails_helper'
 RSpec.describe Embed::Purl::Resource do
   include PurlFixtures
   it 'gets the type attribute' do
-    stub_purl_xml_response_with_fixture(file_purl)
+    stub_purl_xml_response_with_fixture(file_purl_xml)
     expect(Embed::Purl.new('12345').contents.first.type).to eq 'file'
   end
 
   it 'gets the description from the label element' do
-    stub_purl_xml_response_with_fixture(file_purl)
+    stub_purl_xml_response_with_fixture(file_purl_xml)
     expect(Embed::Purl.new('12345').contents.first.description).to eq 'File1 Label'
   end
 
   it 'gets the description from the attr[name="label"] element' do
-    stub_purl_xml_response_with_fixture(multi_file_purl)
+    stub_purl_xml_response_with_fixture(multi_file_purl_xml)
     expect(Embed::Purl.new('12345').contents.first.description).to eq 'File1 Label'
   end
 
@@ -83,7 +83,7 @@ RSpec.describe Embed::Purl::Resource do
 
   describe 'files' do
     it 'returns an array of Purl::Resource::ResourceFile objects' do
-      stub_purl_xml_response_with_fixture(file_purl)
+      stub_purl_xml_response_with_fixture(file_purl_xml)
       expect(Embed::Purl.new('12345').contents.first.files.all?(Embed::Purl::ResourceFile)).to be true
     end
   end

@@ -21,7 +21,7 @@ RSpec.describe Embed::ViewerFactory do
     end
 
     context 'valid Purl object' do
-      before { stub_purl_xml_response_with_fixture(file_purl) }
+      before { stub_purl_xml_response_with_fixture(file_purl_xml) }
 
       it 'initializes successfully' do
         expect { subject }.not_to raise_error
@@ -32,7 +32,7 @@ RSpec.describe Embed::ViewerFactory do
   describe '#viewer' do
     subject { instance.viewer }
 
-    before { stub_purl_xml_response_with_fixture(image_purl) }
+    before { stub_purl_xml_response_with_fixture(image_purl_xml) }
 
     context 'when the request has a type' do
       it { is_expected.to be_a Embed::Viewer::M3Viewer }

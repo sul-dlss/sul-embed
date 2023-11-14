@@ -65,7 +65,7 @@ RSpec.describe Embed::Download::LegacyMediaComponent, type: :component do
     end
 
     context 'when rights are Stanford only' do
-      let(:response) { stanford_restricted_file_purl }
+      let(:response) { stanford_restricted_file_purl_xml }
 
       it 'has a span with a stanford-only s icon class (with screen-reader text)' do
         expect(page).to have_css('.sul-embed-stanford-only-text', visible: :all)
