@@ -22,7 +22,12 @@ jobs:
     - uses: actions/setup-node@v3
       with:
         node-version: 18
-    - name: Run tests
+    - name: Run tests (with XML)
       run: bin/rake
       env:
+        RAILS_ENV: test
+    - name: Run tests (with Cocina)
+      run: bin/rake
+      env:
+        SETTINGS__ENABLED_FEATURES__COCINA: true
         RAILS_ENV: test
