@@ -122,7 +122,7 @@
     <%= render Embed::Media::EmbedThisFormComponent.new(viewer:) %>
 
     <form method="dialog">
-      <button>Close</button>
+      <button data-action="click->media#openModalComponentsPopover">Close</button>
     </form>
   </dialog>
 
@@ -147,7 +147,7 @@
     </section>
 
     <form method="dialog">
-      <button>Close</button>
+      <button data-action="click->media#openModalComponentsPopover">Close</button>
     </form>
   </dialog>
 
