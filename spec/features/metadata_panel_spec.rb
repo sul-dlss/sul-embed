@@ -12,8 +12,12 @@ RSpec.describe 'metadata panel', :js do
     )
   end
 
+  before do
+    stub_request(:get, 'https://purl.stanford.edu/ignored.xml')
+      .to_return(status: 200, body: file_purl)
+  end
+
   it 'is present after a user clicks the button' do
-    stub_purl_response_with_fixture(file_purl)
     visit_iframe_response
     expect(page).to have_css('.sul-embed-metadata-panel', visible: :hidden)
     page.find('[data-sul-embed-toggle="sul-embed-metadata-panel"]', match: :first).click
@@ -23,7 +27,6 @@ RSpec.describe 'metadata panel', :js do
   end
 
   it 'has purl link, use and reproduction, and license text' do
-    stub_purl_response_with_fixture(file_purl)
     visit_iframe_response
     page.find('[data-sul-embed-toggle="sul-embed-metadata-panel"]', match: :first).click
     expect(page).to have_css('dt', text: 'Citation URL', visible: :all)

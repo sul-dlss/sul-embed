@@ -23,8 +23,12 @@ RSpec.describe Embed::Viewer::WasSeed do
   end
 
   describe '#archived_site_url' do
+    before do
+      stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+        .to_return(status: 200, body: was_seed_purl)
+    end
+
     it 'parses a mods archived site' do
-      stub_purl_response_and_request(was_seed_purl, request)
       expect(was_seed_viewer.archived_site_url).to eq 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/'
     end
   end
@@ -34,7 +38,8 @@ RSpec.describe Embed::Viewer::WasSeed do
 
     context 'with a valid url' do
       before do
-        stub_purl_response_and_request(was_seed_purl, request)
+        stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+          .to_return(status: 200, body: was_seed_purl)
       end
 
       it { is_expected.to eq 'https://swap.stanford.edu/timemap/http://naca.central.cranfield.ac.uk/' }
@@ -79,7 +84,8 @@ RSpec.describe Embed::Viewer::WasSeed do
       end
 
       before do
-        stub_purl_response_and_request(invalid, request)
+        stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+          .to_return(status: 200, body: invalid)
       end
 
       it { is_expected.to be_nil }
@@ -87,9 +93,13 @@ RSpec.describe Embed::Viewer::WasSeed do
   end
 
   describe '#shelved_thumb' do
+    before do
+      stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+        .to_return(status: 200, body: was_seed_purl)
+    end
+
     it 'parses a mods archived site' do
-      stub_purl_response_and_request(was_seed_purl, request)
-      expect(was_seed_viewer.shelved_thumb).to eq 'https://stacks.stanford.edu/image/iiif/12345%2Fthumbnail/full/200,/0/default.jpg'
+      expect(was_seed_viewer.shelved_thumb).to eq 'https://stacks.stanford.edu/image/iiif/abc123%2Fthumbnail/full/200,/0/default.jpg'
     end
   end
 
@@ -116,8 +126,12 @@ RSpec.describe Embed::Viewer::WasSeed do
   end
 
   describe '.external_url' do
-    it 'builds the external url based on wayback url as extracted from prul' do
-      stub_purl_response_and_request(was_seed_purl, request)
+    before do
+      stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+        .to_return(status: 200, body: was_seed_purl)
+    end
+
+    it 'builds the external url based on wayback url as extracted from purl' do
       expect(was_seed_viewer.external_url).to eq('https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/')
     end
   end

@@ -12,6 +12,11 @@ RSpec.describe Embed::Viewer::CommonViewer do
   let(:media_viewer) { Embed::Viewer::Media.new(request) }
   let(:was_seed_viewer) { Embed::Viewer::WasSeed.new(request) }
 
+  before do
+    stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+      .to_return(status: 200, body: multi_file_purl)
+  end
+
   describe 'height/width' do
     it 'sets a default height and default width to nil (which can be overridden at the viewer level)' do
       stub_purl_request(request)
@@ -22,7 +27,6 @@ RSpec.describe Embed::Viewer::CommonViewer do
       expect(request).to receive(:maxheight).at_least(:once).and_return(100)
       expect(request).to receive(:maxwidth).at_least(:once).and_return(200)
       stub_purl_request(request)
-      stub_purl_response_with_fixture(multi_file_purl)
       expect(file_viewer.height).to eq 100
       expect(file_viewer.width).to eq 200
     end

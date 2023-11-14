@@ -10,7 +10,8 @@ RSpec.describe 'The old media viewer', :js do
   before do
     allow(Settings.streaming).to receive(:auth_url).and_return('/test_auth_jsonp_endpoint')
     stub_auth
-    stub_purl_response_with_fixture(purl)
+    stub_request(:get, 'https://purl.stanford.edu/ignored.xml')
+      .to_return(status: 200, body: purl)
     visit_iframe_response
   end
 

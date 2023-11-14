@@ -6,7 +6,10 @@ RSpec.describe Embed::HierarchicalContents do
   include PurlFixtures
 
   describe '#contents' do
-    before { stub_purl_response_with_fixture(hierarchical_file_purl) }
+    before do
+      stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+        .to_return(status: 200, body: hierarchical_file_purl)
+    end
 
     let(:root_dir) { described_class.contents(resources) }
     let(:resources) { Embed::Purl.new('12345').contents }

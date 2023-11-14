@@ -20,7 +20,8 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   let(:many_primary_files) { false }
 
   before do
-    stub_purl_response_with_fixture(purl)
+    stub_request(:get, 'https://purl.stanford.edu/bc123df4567.xml')
+      .to_return(status: 200, body: purl)
     render
   end
 

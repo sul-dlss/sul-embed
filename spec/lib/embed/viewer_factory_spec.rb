@@ -13,7 +13,10 @@ RSpec.describe Embed::ViewerFactory do
     subject { instance }
 
     context 'invalid Purl object' do
-      before { stub_purl_response_with_fixture(empty_content_metadata_purl) }
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/ignored.xml')
+          .to_return(status: 200, body: empty_content_metadata_purl)
+      end
 
       it 'raises an error' do
         expect { subject }.to raise_error(Embed::Purl::ResourceNotEmbeddable)
@@ -21,7 +24,10 @@ RSpec.describe Embed::ViewerFactory do
     end
 
     context 'valid Purl object' do
-      before { stub_purl_response_with_fixture(file_purl) }
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/ignored.xml')
+          .to_return(status: 200, body: file_purl)
+      end
 
       it 'initializes successfully' do
         expect { subject }.not_to raise_error
@@ -32,7 +38,10 @@ RSpec.describe Embed::ViewerFactory do
   describe '#viewer' do
     subject { instance.viewer }
 
-    before { stub_purl_response_with_fixture(image_purl) }
+    before do
+      stub_request(:get, 'https://purl.stanford.edu/ignored.xml')
+        .to_return(status: 200, body: image_purl)
+    end
 
     context 'when the request has a type' do
       it { is_expected.to be_a Embed::Viewer::M3Viewer }

@@ -13,7 +13,8 @@ RSpec.describe 'was seed viewer public', :js do
   before do
     allow_any_instance_of(Embed::WasTimeMap).to receive(:redirectable_connection).and_return(fake_connection)
     expect(fake_connection).to receive(:get).once
-    stub_purl_response_with_fixture(was_seed_purl)
+    stub_request(:get, 'https://purl.stanford.edu/ignored.xml')
+      .to_return(status: 200, body: was_seed_purl)
     visit_iframe_response
   end
 

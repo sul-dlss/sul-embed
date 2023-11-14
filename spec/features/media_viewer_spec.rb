@@ -10,7 +10,8 @@ RSpec.describe 'Media viewer', :js do
   before do
     allow(Settings.enabled_features).to receive(:new_component).and_return(true)
     stub_auth
-    stub_purl_response_with_fixture(purl)
+    stub_request(:get, 'https://purl.stanford.edu/ignored.xml')
+      .to_return(status: 200, body: purl)
     visit_iframe_response
   end
 

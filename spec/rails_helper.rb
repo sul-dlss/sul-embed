@@ -37,15 +37,6 @@ RSpec.configure do |config|
   config.include Capybara::RSpecMatchers, type: :component
 end
 
-def stub_purl_response_with_fixture(fixture)
-  allow_any_instance_of(Embed::Purl).to receive(:response).and_return(fixture)
-end
-
-def stub_purl_response_and_request(fixture, request)
-  stub_purl_response_with_fixture(fixture)
-  stub_purl_request(request)
-end
-
 def stub_purl_request(request)
   expect(request).to receive(:purl_object).and_return(Embed::Purl.new('12345'))
 end

@@ -7,7 +7,8 @@ RSpec.describe 'file viewer search bar', :js do
 
   context 'when text is entered with a file list' do
     it 'limits shown files' do
-      stub_purl_response_with_fixture(file_purl)
+      stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+        .to_return(status: 200, body: file_purl)
       visit_iframe_response('abc123', min_files_to_search: 1)
       expect(page).to have_css('.sul-embed-count', count: 1)
       expect(page).to have_css '.sul-embed-item-count', text: '1 item'
@@ -21,7 +22,8 @@ RSpec.describe 'file viewer search bar', :js do
 
   context 'when text is entered with a hierarchical file list' do
     it 'hides empty directories' do
-      stub_purl_response_with_fixture(hierarchical_file_purl)
+      stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+        .to_return(status: 200, body: hierarchical_file_purl)
       visit_iframe_response('abc123', min_files_to_search: 1)
       expect(page).to have_css '.sul-embed-item-count', text: '2 items'
       expect(page).to have_content('dir1')
@@ -41,13 +43,15 @@ RSpec.describe 'file viewer search bar', :js do
 
   context 'when the number of files are beneath the threshold' do
     it 'does not display the search box' do
-      stub_purl_response_with_fixture(file_purl)
+      stub_request(:get, 'https://purl.stanford.edu/ignored.xml')
+        .to_return(status: 200, body: file_purl)
       visit_iframe_response
       expect(page).not_to have_css('.sul-embed-search-input')
     end
 
     it 'hides the search box when requested' do
-      stub_purl_response_with_fixture(file_purl)
+      stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+        .to_return(status: 200, body: file_purl)
       visit_iframe_response('abc123', hide_search: true)
       expect(page).not_to have_css('.sul-embed-search')
     end

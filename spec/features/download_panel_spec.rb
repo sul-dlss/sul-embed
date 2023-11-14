@@ -13,7 +13,8 @@ RSpec.describe 'download panel', :js do
   end
 
   it 'not shown for file viewer and leaves correctly formatted filenames alone' do
-    stub_purl_response_with_fixture(multi_file_purl)
+    stub_request(:get, 'https://purl.stanford.edu/ignored.xml')
+      .to_return(status: 200, body: multi_file_purl)
     visit_iframe_response
     expect(page).to have_css '.sul-embed-body.sul-embed-file'
     expect(page).not_to have_css '.sul-embed-download-panel'
@@ -22,7 +23,8 @@ RSpec.describe 'download panel', :js do
   end
 
   it 'correctly encodes a wonky filename with spaces and a special character' do
-    stub_purl_response_with_fixture(wonky_filename_purl)
+    stub_request(:get, 'https://purl.stanford.edu/ignored.xml')
+      .to_return(status: 200, body: wonky_filename_purl)
     visit_iframe_response
     link = page.find('.sul-embed-media-list a', match: :first)
     expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:ignored/%23Title%20of%20the%20PDF.pdf') # this file link had a # and spaces, encoding is needed
@@ -30,7 +32,8 @@ RSpec.describe 'download panel', :js do
 
   describe 'hide download?' do
     before do
-      stub_purl_response_with_fixture(geo_purl_public)
+      stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+        .to_return(status: 200, body: geo_purl_public)
     end
 
     it 'when selected should hide the button' do
@@ -46,7 +49,8 @@ RSpec.describe 'download panel', :js do
 
   describe 'download file count shows within download button' do
     it 'has the file count for multiple media files in the download panel' do
-      stub_purl_response_with_fixture(multi_media_purl)
+      stub_request(:get, 'https://purl.stanford.edu/ignored.xml')
+        .to_return(status: 200, body: multi_media_purl)
       visit_iframe_response
       expect(page).to have_css '.sul-embed-body.sul-embed-media' # so shows download count
       within '.sul-i-download-3' do
@@ -55,7 +59,8 @@ RSpec.describe 'download panel', :js do
     end
 
     it 'only counts downloadable files' do
-      stub_purl_response_with_fixture(world_restricted_download_purl)
+      stub_request(:get, 'https://purl.stanford.edu/ignored.xml')
+        .to_return(status: 200, body: world_restricted_download_purl)
       visit_iframe_response
       expect(page).to have_css '.sul-embed-body.sul-embed-media' # so shows download count
       within '.sul-i-download-3' do

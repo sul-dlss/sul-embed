@@ -5,7 +5,10 @@ require 'rails_helper'
 RSpec.describe Embed::Purl::ResourceFile do
   include PurlFixtures
   describe 'attributes' do
-    before { stub_purl_response_with_fixture(file_purl) }
+    before do
+      stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+        .to_return(status: 200, body: file_purl)
+    end
 
     let(:resource_file) { Embed::Purl.new('12345').contents.first.files.first }
 
@@ -66,7 +69,10 @@ RSpec.describe Embed::Purl::ResourceFile do
   end
 
   describe '#hierarchical_title' do
-    before { stub_purl_response_with_fixture(hierarchical_file_purl) }
+    before do
+      stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+        .to_return(status: 200, body: hierarchical_file_purl)
+    end
 
     let(:resource_file) { Embed::Purl.new('12345').hierarchical_contents.dirs.first.dirs.first.files.first }
 
@@ -151,24 +157,28 @@ RSpec.describe Embed::Purl::ResourceFile do
 
   describe 'previewable?' do
     it 'returns true if the mimetype of the file is previewable' do
-      stub_purl_response_with_fixture(image_purl)
+      stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+        .to_return(status: 200, body: image_purl)
       expect(Embed::Purl.new('12345').contents.first.files.first).to be_previewable
     end
 
     it 'returns false if the mimetype of the file is not previewable' do
-      stub_purl_response_with_fixture(file_purl)
+      stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+        .to_return(status: 200, body: file_purl)
       expect(Embed::Purl.new('12345').contents.first.files.first).not_to be_previewable
     end
   end
 
   describe 'image?' do
     it 'returns true if the mimetype of the file is an image' do
-      stub_purl_response_with_fixture(image_purl)
+      stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+        .to_return(status: 200, body: image_purl)
       expect(Embed::Purl.new('12345').contents.first.files.first).to be_image
     end
 
     it 'returns false if the mimetype of the file is not an image' do
-      stub_purl_response_with_fixture(file_purl)
+      stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+        .to_return(status: 200, body: file_purl)
       expect(Embed::Purl.new('12345').contents.first.files.first).not_to be_image
     end
   end
@@ -176,22 +186,26 @@ RSpec.describe Embed::Purl::ResourceFile do
   describe 'rights' do
     describe 'stanford_only?' do
       it 'identifies stanford_only objects' do
-        stub_purl_response_with_fixture(stanford_restricted_file_purl)
+        stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+          .to_return(status: 200, body: stanford_restricted_file_purl)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:stanford_only?)).to be true
       end
 
       it 'identifies stanford_only no-download objects' do
-        stub_purl_response_with_fixture(stanford_no_download_restricted_file_purl)
+        stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+          .to_return(status: 200, body: stanford_no_download_restricted_file_purl)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:stanford_only?)).to be true
       end
 
       it 'identifies world accessible objects as not stanford only' do
-        stub_purl_response_with_fixture(file_purl)
+        stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+          .to_return(status: 200, body: file_purl)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:stanford_only?)).to be false
       end
 
       it 'identifies file-level stanford_only rights' do
-        stub_purl_response_with_fixture(stanford_restricted_multi_file_purl)
+        stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+          .to_return(status: 200, body: stanford_restricted_multi_file_purl)
         contents = Embed::Purl.new('12345').contents
         first_file = contents.first.files.first
         last_file = contents.last.files.first
@@ -202,17 +216,20 @@ RSpec.describe Embed::Purl::ResourceFile do
 
     describe 'location_restricted?' do
       it 'identifies location restricted objects' do
-        stub_purl_response_with_fixture(single_video_purl)
+        stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+          .to_return(status: 200, body: single_video_purl)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:location_restricted?)).to be true
       end
 
       it 'identifies world accessible objects as not stanford only' do
-        stub_purl_response_with_fixture(file_purl)
+        stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+          .to_return(status: 200, body: file_purl)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:location_restricted?)).to be false
       end
 
       it 'identifies file-level location_restricted rights' do
-        stub_purl_response_with_fixture(video_purl)
+        stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+          .to_return(status: 200, body: video_purl)
         contents = Embed::Purl.new('12345').contents
         first_file = contents.first.files.first
         last_file = contents.last.files.first
@@ -223,24 +240,30 @@ RSpec.describe Embed::Purl::ResourceFile do
 
     describe 'world_downloadable?' do
       it 'is false for stanford-only objects' do
-        stub_purl_response_with_fixture(stanford_restricted_file_purl)
+        stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+          .to_return(status: 200, body: stanford_restricted_file_purl)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:world_downloadable?)).to be false
       end
 
       it 'is false for no-download objects' do
-        stub_purl_response_with_fixture(stanford_no_download_restricted_file_purl)
+        stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+          .to_return(status: 200, body: stanford_no_download_restricted_file_purl)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:world_downloadable?)).to be false
       end
 
       it 'is true for identify world accessible objects' do
-        stub_purl_response_with_fixture(file_purl)
+        stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+          .to_return(status: 200, body: file_purl)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:world_downloadable?)).to be true
       end
     end
   end
 
   describe 'image data' do
-    before { stub_purl_response_with_fixture(image_purl) }
+    before do
+      stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+        .to_return(status: 200, body: image_purl)
+    end
 
     let(:image) { Embed::Purl.new('12345').contents.first.files.first }
 
@@ -251,7 +274,10 @@ RSpec.describe Embed::Purl::ResourceFile do
   end
 
   describe 'file data' do
-    before { stub_purl_response_with_fixture(file_purl) }
+    before do
+      stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+        .to_return(status: 200, body: file_purl)
+    end
 
     let(:file) { Embed::Purl.new('12345').contents.first.files.first }
 
@@ -303,7 +329,10 @@ RSpec.describe Embed::Purl::ResourceFile do
 
   describe 'video_data' do
     context 'with valid videoData' do
-      before { stub_purl_response_with_fixture(multi_media_purl) }
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+          .to_return(status: 200, body: multi_media_purl)
+      end
 
       let(:video) { Embed::Purl.new('12345').contents.first.files.first }
 
@@ -320,7 +349,10 @@ RSpec.describe Embed::Purl::ResourceFile do
     context 'when it is a vtt transcript' do
       let(:file) { Embed::Purl.new('12345').contents.first.files.second }
 
-      before { stub_purl_response_with_fixture(video_purl_with_vtt) }
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+          .to_return(status: 200, body: video_purl_with_vtt)
+      end
 
       it { is_expected.to be true }
     end
@@ -328,7 +360,10 @@ RSpec.describe Embed::Purl::ResourceFile do
     context 'when it is not a vtt transcript' do
       let(:file) { Embed::Purl.new('12345').contents.first.files.first }
 
-      before { stub_purl_response_with_fixture(single_video_purl) }
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+          .to_return(status: 200, body: single_video_purl)
+      end
 
       it { is_expected.to be false }
     end

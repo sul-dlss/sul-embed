@@ -22,7 +22,10 @@ RSpec.describe Embed::Viewer::File do
   end
 
   describe 'height' do
-    before { stub_purl_response_with_fixture(multi_file_purl) }
+    before do
+      stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+        .to_return(status: 200, body: multi_file_purl)
+    end
 
     context 'when the requested maxheight is larger than the default height' do
       let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', maxheight: 600) }
@@ -54,19 +57,37 @@ RSpec.describe Embed::Viewer::File do
         expect(request).to receive(:hide_search?).at_least(:once).and_return(true)
       end
 
-      it 'defaults to 323' do
-        stub_purl_response_and_request(multi_resource_multi_type_purl, request)
-        expect(file_viewer.send(:default_height)).to eq 323
+      context 'with a multi resource type purl' do
+        before do
+          stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+            .to_return(status: 200, body: multi_resource_multi_type_purl)
+        end
+
+        it 'defaults to 323' do
+          expect(file_viewer.send(:default_height)).to eq 323
+        end
       end
 
-      it 'reduces the height based on the number of files in the object (1 file), but no lower than our min height' do
-        stub_purl_response_and_request(file_purl, request)
-        expect(file_viewer.send(:default_height)).to eq 189
+      context 'when there is one file' do
+        before do
+          stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+            .to_return(status: 200, body: file_purl)
+        end
+
+        it 'reduces the height based on the number of files in the object (1 file), but no lower than our min height' do
+          expect(file_viewer.send(:default_height)).to eq 189
+        end
       end
 
-      it 'reduces the height based on the number of files in the object (2 files)' do
-        stub_purl_response_and_request(image_purl, request)
-        expect(file_viewer.send(:default_height)).to eq 189
+      context 'when there are two files' do
+        before do
+          stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+            .to_return(status: 200, body: image_purl)
+        end
+
+        it 'reduces the height based on the number of files in the object (2 files)' do
+          expect(file_viewer.send(:default_height)).to eq 189
+        end
       end
     end
 
@@ -74,11 +95,11 @@ RSpec.describe Embed::Viewer::File do
       before do
         expect(request).to receive(:hide_title?).at_least(:once).and_return(true)
         expect(request).to receive(:hide_search?).at_least(:once).and_return(true)
+        stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+          .to_return(status: 200, body: embargoed_stanford_file_purl)
       end
 
       it 'adds 44 pixels to the height (to avoid unnecessary scroll)' do
-        stub_purl_response_and_request(embargoed_stanford_file_purl, request)
-
         expect(file_viewer.send(:default_height)).to eq 189 # minimum height
       end
     end
@@ -86,10 +107,11 @@ RSpec.describe Embed::Viewer::File do
     context 'when the title bar is present' do
       before do
         expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
+        stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+          .to_return(status: 200, body: file_purl)
       end
 
       it 'adds the necessary height' do
-        stub_purl_response_and_request(file_purl, request)
         expect(file_viewer.send(:default_height)).to eq 190
       end
     end
@@ -107,7 +129,8 @@ RSpec.describe Embed::Viewer::File do
 
     context 'when the title bar is hidden but a search is present' do
       before do
-        stub_purl_response_and_request(multi_resource_multi_type_purl, request)
+        stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+          .to_return(status: 200, body: multi_resource_multi_type_purl)
         expect(file_viewer).to receive(:min_files_to_search).and_return(3)
         expect(request).to receive(:hide_title?).at_least(:once).and_return(true)
       end
@@ -140,19 +163,28 @@ RSpec.describe Embed::Viewer::File do
     subject { file_viewer.display_download_all? }
 
     context 'when there are not many files and the size is low' do
-      before { stub_purl_response_with_fixture(multi_file_purl) }
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+          .to_return(status: 200, body: multi_file_purl)
+      end
 
       it { is_expected.to be true }
     end
 
     context 'when the files are too big' do
-      before { stub_purl_response_with_fixture(large_file_purl) }
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+          .to_return(status: 200, body: large_file_purl)
+      end
 
       it { is_expected.to be false }
     end
 
     context 'when there are too many files' do
-      before { stub_purl_response_with_fixture(many_file_purl) }
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+          .to_return(status: 200, body: many_file_purl)
+      end
 
       it { is_expected.to be false }
     end
@@ -162,13 +194,19 @@ RSpec.describe Embed::Viewer::File do
     subject { file_viewer.any_stanford_only_files? }
 
     context 'when one or more files are stanford only' do
-      before { stub_purl_response_with_fixture(stanford_restricted_download_purl) }
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+          .to_return(status: 200, body: stanford_restricted_download_purl)
+      end
 
       it { is_expected.to be true }
     end
 
     context 'when no files are stanford only' do
-      before { stub_purl_response_with_fixture(multi_resource_multi_type_purl) }
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+          .to_return(status: 200, body: multi_resource_multi_type_purl)
+      end
 
       it { is_expected.to be false }
     end
@@ -177,7 +215,10 @@ RSpec.describe Embed::Viewer::File do
   describe '#download_url' do
     subject { file_viewer.download_url }
 
-    before { stub_purl_response_with_fixture(file_purl) }
+    before do
+      stub_request(:get, 'https://purl.stanford.edu/abc123.xml')
+        .to_return(status: 200, body: file_purl)
+    end
 
     it { is_expected.to eq 'https://stacks.stanford.edu/object/abc123' }
   end

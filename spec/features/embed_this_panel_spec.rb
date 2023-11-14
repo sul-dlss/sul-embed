@@ -8,7 +8,8 @@ RSpec.describe 'embed this panel', :js do
   let(:iframe_options) { {} }
 
   before do
-    stub_purl_response_with_fixture(spec_fixture)
+    stub_request(:get, 'https://purl.stanford.edu/ab123cd4567.xml')
+      .to_return(status: 200, body: spec_fixture)
     visit_iframe_response('ab123cd4567', **iframe_options)
   end
 

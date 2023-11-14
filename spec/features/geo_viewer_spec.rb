@@ -6,7 +6,8 @@ RSpec.describe 'geo viewer public', :js do
   include PurlFixtures
 
   before do
-    stub_purl_response_with_fixture(geo_purl_public)
+    stub_request(:get, 'https://purl.stanford.edu/cz128vq0535.xml')
+      .to_return(status: 200, body: geo_purl_public)
     visit_iframe_response('cz128vq0535')
   end
 
@@ -60,7 +61,8 @@ RSpec.describe 'geo viewer restricted', :js do
   include PurlFixtures
 
   before do
-    stub_purl_response_with_fixture(geo_purl_restricted)
+    stub_request(:get, 'https://purl.stanford.edu/ignored.xml')
+      .to_return(status: 200, body: geo_purl_restricted)
     visit_iframe_response
   end
 
@@ -82,7 +84,8 @@ RSpec.describe 'geo index map viewer', :js do
   include PurlFixtures
 
   before do
-    stub_purl_response_with_fixture(geo_purl_index_map)
+    stub_request(:get, 'https://purl.stanford.edu/ts545zc6250.xml')
+      .to_return(status: 200, body: geo_purl_index_map)
     visit_iframe_response 'ts545zc6250'
   end
 
