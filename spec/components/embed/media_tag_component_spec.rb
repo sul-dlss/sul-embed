@@ -20,7 +20,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   let(:many_primary_files) { false }
 
   before do
-    stub_purl_response_with_fixture(purl)
+    stub_purl_xml_response_with_fixture(purl)
     render
   end
 

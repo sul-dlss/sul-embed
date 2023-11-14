@@ -5,17 +5,17 @@ require 'rails_helper'
 RSpec.describe Embed::Purl::Resource do
   include PurlFixtures
   it 'gets the type attribute' do
-    stub_purl_response_with_fixture(file_purl)
+    stub_purl_xml_response_with_fixture(file_purl)
     expect(Embed::Purl.new('12345').contents.first.type).to eq 'file'
   end
 
   it 'gets the description from the label element' do
-    stub_purl_response_with_fixture(file_purl)
+    stub_purl_xml_response_with_fixture(file_purl)
     expect(Embed::Purl.new('12345').contents.first.description).to eq 'File1 Label'
   end
 
   it 'gets the description from the attr[name="label"] element' do
-    stub_purl_response_with_fixture(multi_file_purl)
+    stub_purl_xml_response_with_fixture(multi_file_purl)
     expect(Embed::Purl.new('12345').contents.first.description).to eq 'File1 Label'
   end
 
@@ -45,7 +45,7 @@ RSpec.describe Embed::Purl::Resource do
 
   describe 'files' do
     it 'returns an array of Purl::Resource::ResourceFile objects' do
-      stub_purl_response_with_fixture(file_purl)
+      stub_purl_xml_response_with_fixture(file_purl)
       expect(Embed::Purl.new('12345').contents.first.files.all?(Embed::Purl::ResourceFile)).to be true
     end
   end
@@ -56,7 +56,7 @@ RSpec.describe Embed::Purl::Resource do
     context 'when it has a vtt transcript' do
       subject { resource.vtt.title }
 
-      before { stub_purl_response_with_fixture(video_purl_with_vtt) }
+      before { stub_purl_xml_response_with_fixture(video_purl_with_vtt) }
 
       it { is_expected.to eq 'abc_123_cap.webvtt' }
     end
@@ -64,7 +64,7 @@ RSpec.describe Embed::Purl::Resource do
     context 'when it does not have a vtt transcript' do
       subject { resource.vtt }
 
-      before { stub_purl_response_with_fixture(single_video_purl) }
+      before { stub_purl_xml_response_with_fixture(single_video_purl) }
 
       it { is_expected.to be_nil }
     end

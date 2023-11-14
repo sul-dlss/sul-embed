@@ -6,7 +6,7 @@ RSpec.describe 'geo viewer public', :js do
   include PurlFixtures
 
   before do
-    stub_purl_response_with_fixture(geo_purl_public)
+    stub_purl_xml_response_with_fixture(geo_purl_public)
     visit_iframe_response('cz128vq0535')
   end
 
@@ -60,7 +60,7 @@ RSpec.describe 'geo viewer restricted', :js do
   include PurlFixtures
 
   before do
-    stub_purl_response_with_fixture(geo_purl_restricted)
+    stub_purl_xml_response_with_fixture(geo_purl_restricted)
     visit_iframe_response
   end
 
@@ -82,7 +82,7 @@ RSpec.describe 'geo index map viewer', :js do
   include PurlFixtures
 
   before do
-    stub_purl_response_with_fixture(geo_purl_index_map)
+    stub_purl_xml_response_with_fixture(geo_purl_index_map)
     visit_iframe_response 'ts545zc6250'
   end
 
