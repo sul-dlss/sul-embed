@@ -19,6 +19,44 @@ RSpec.describe Embed::Purl::Resource do
     expect(Embed::Purl.new('12345').contents.first.description).to eq 'File1 Label'
   end
 
+  describe '#thumbnail' do
+    let(:resource) { described_class.new('12345', resource_element, instance_double(Dor::RightsAuth)) }
+
+    context 'when the resource has a thumbnail' do
+      let(:resource_element) do
+        Nokogiri::XML(
+          <<~XML
+            <resource sequence="1" type="file">
+              <file id="Non thumb" mimetype="image/tiff" size="2799535" />
+              <file id="The Thumb" mimetype="image/jp2" size="2799535" />
+            </resource>
+          XML
+        ).xpath('//resource').first
+      end
+
+      it 'is the thumbnail' do
+        expect(resource.thumbnail.title).to eq 'The Thumb'
+      end
+    end
+
+    context 'when the resource does not have a file specific thumbnail' do
+      let(:resource_element) do
+        Nokogiri::XML(
+          <<~XML
+            <resource sequence="1" type="file">
+              <file id="Non thumb" mimetype="image/tiff" size="2799535" />
+              <file id="Another non Thumb" mimetype="audio/aiff" size="2799535" />
+            </resource>
+          XML
+        ).xpath('//resource').first
+      end
+
+      it 'is nil' do
+        expect(resource.thumbnail).to be_nil
+      end
+    end
+  end
+
   describe '#object_thumbnail?' do
     subject { described_class.new('bc123df4567', node, instance_double(Dor::RightsAuth)) }
 

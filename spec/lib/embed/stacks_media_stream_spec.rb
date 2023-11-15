@@ -5,47 +5,9 @@ require 'rails_helper'
 RSpec.describe Embed::StacksMediaStream do
   subject(:stream) { described_class.new(druid: 'ab012cd3456', file:) }
 
-  let(:file) { instance_double(Embed::Purl::ResourceFile, title: media_filename, thumbnail:) }
+  let(:file) { instance_double(Embed::Purl::ResourceFile, title: media_filename) }
   let(:media_filename) { 'def.mp4' }
   let(:streaming_base_url) { Settings.stream.url }
-  let(:thumbnail) { instance_double(Embed::Purl::ResourceFile, title: 'thumb.jp2', world_downloadable?: world_downloadable) }
-  let(:world_downloadable) { true }
-
-  describe '#to_thumbnail_url' do
-    context 'when file has a world-downloadable thumbnail' do
-      it 'uses a high-resolution thumbnail' do
-        expect(stream.to_thumbnail_url).to match(%r{ab012cd3456%2Fthumb/full/!800,600})
-      end
-    end
-
-    context 'when file has a non-world-downloadable thumbnail' do
-      let(:world_downloadable) { false }
-
-      it 'uses a standard thumbnail' do
-        expect(stream.to_thumbnail_url).to match(%r{ab012cd3456%2Fthumb/full/!400,400})
-      end
-    end
-
-    context 'when file has no thumbnail' do
-      let(:thumbnail) { nil }
-
-      context 'when file is audio' do
-        let(:media_filename) { 'def.m4a' }
-
-        it 'uses the default audio thumbnail' do
-          expect(stream.to_thumbnail_url).to match(/waveform-audio-poster/)
-        end
-      end
-
-      context 'when file is not audio' do
-        let(:media_file) { 'def.mp4' }
-
-        it 'returns nil' do
-          expect(stream.to_thumbnail_url).to be_nil
-        end
-      end
-    end
-  end
 
   describe '#to_playlist_url' do
     context 'with mp4 video' do

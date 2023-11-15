@@ -33,9 +33,27 @@ module Embed
       end
     end
 
+    def thumbnail_url
+      stacks_square_url(@druid, @resource.thumbnail.title, size: '75') if @resource.thumbnail
+    end
+
+    def poster_url_for
+      return default_audio_thumbnail if type == 'audio' && !@resource.thumbnail
+      return unless @resource.thumbnail
+
+      if @resource.thumbnail.world_downloadable?
+        stacks_thumb_url(@druid, @resource.thumbnail.title, size: '!800,600')
+      else
+        stacks_thumb_url(@druid, @resource.thumbnail.title)
+      end
+    end
+
+    def default_audio_thumbnail
+      asset_url('waveform-audio-poster.svg')
+    end
+
     def media_element
-      file_thumb = stacks_square_url(@druid, file.thumbnail.title, size: '75') if file.thumbnail
-      render MediaWrapperComponent.new(thumbnail: file_thumb, file:, type:, file_index: @resource_iteration.index) do
+      render MediaWrapperComponent.new(thumbnail: thumbnail_url, file:, type:, file_index: @resource_iteration.index) do
         access_restricted_overlay + media_tag
       end
     end
@@ -130,10 +148,6 @@ module Embed
 
     def enabled_streaming_types
       Settings.streaming[:source_types]
-    end
-
-    def poster_url_for
-      Embed::StacksMediaStream.new(druid: @druid, file:).to_thumbnail_url
     end
 
     def streaming_url_for(streaming_type)

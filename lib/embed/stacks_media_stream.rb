@@ -26,25 +26,9 @@ module Embed
       streaming_url_for(:dash)
     end
 
-    def to_thumbnail_url
-      return default_audio_thumbnail unless file.thumbnail
-
-      if file.thumbnail.world_downloadable?
-        stacks_thumb_url(druid, file.thumbnail.title, size: '!800,600')
-      else
-        stacks_thumb_url(druid, file.thumbnail.title)
-      end
-    end
-
     private
 
     attr_reader :druid, :file
-
-    def default_audio_thumbnail
-      return unless audio?
-
-      ActionController::Base.helpers.asset_url('waveform-audio-poster.svg')
-    end
 
     def streaming_url_for(type)
       return unless file.title && streaming_file_prefix
@@ -63,14 +47,6 @@ module Embed
 
     def streaming_file_prefix
       Settings.streaming_prefix[file_extension]
-    end
-
-    def video?
-      Settings.stream.video.include? file_extension
-    end
-
-    def audio?
-      Settings.stream.audio.include? file_extension
     end
 
     def file_extension
