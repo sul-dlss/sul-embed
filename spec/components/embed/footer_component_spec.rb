@@ -18,7 +18,7 @@ RSpec.describe Embed::FooterComponent, type: :component do
   it "returns the object's footer" do
     expect(page).to have_css 'div.sul-embed-footer'
     expect(page).to have_css '[aria-label="open embed this panel"]'
-    expect(page).to have_css '[aria-label="open download panel"]'
+    expect(page).to have_css '[aria-label="2 files available for download"]'
   end
 
   describe 'fullscreen button' do

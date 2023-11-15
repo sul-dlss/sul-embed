@@ -49,8 +49,9 @@ RSpec.describe 'download panel', :js do
       stub_purl_xml_response_with_fixture(multi_media_purl)
       visit_iframe_response
       expect(page).to have_css '.sul-embed-body.sul-embed-media' # so shows download count
+      expect(page).to have_css 'button.sul-i-download-3[aria-label="2 files available for download"]'
       within '.sul-i-download-3' do
-        expect(page).to have_css '.sul-embed-download-count[aria-label="number of downloadable files"]', text: 2
+        expect(page).to have_css '.sul-embed-download-count', text: 2
       end
     end
 
@@ -58,8 +59,9 @@ RSpec.describe 'download panel', :js do
       stub_purl_xml_response_with_fixture(world_restricted_download_purl)
       visit_iframe_response
       expect(page).to have_css '.sul-embed-body.sul-embed-media' # so shows download count
+      expect(page).to have_css 'button.sul-i-download-3[aria-label="1 file available for download"]'
       within '.sul-i-download-3' do
-        expect(page).to have_css '.sul-embed-download-count[aria-label="number of downloadable files"]', text: 1
+        expect(page).to have_css '.sul-embed-download-count', text: 1
       end
     end
   end
