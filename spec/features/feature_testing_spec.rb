@@ -6,7 +6,7 @@ RSpec.describe 'feature testing of viewers', :js do
   include PurlFixtures
   describe 'basic functionality' do
     it 'makes purl embed request and embed' do
-      stub_purl_response_with_fixture(file_purl)
+      stub_purl_xml_response_with_fixture(file_purl)
       visit_iframe_response
       expect(page).to have_css('.sul-embed-container')
       expect(page).to have_css('.sul-embed-header')
@@ -16,7 +16,7 @@ RSpec.describe 'feature testing of viewers', :js do
     end
 
     it 'hides the title when requested' do
-      stub_purl_response_with_fixture(file_purl)
+      stub_purl_xml_response_with_fixture(file_purl)
       visit_iframe_response('abc123', hide_title: true)
       expect(page).not_to have_css('.sul-embed-header-title')
     end
@@ -24,7 +24,7 @@ RSpec.describe 'feature testing of viewers', :js do
 
   describe 'file viewer' do
     it 'contains the file list' do
-      stub_purl_response_with_fixture(file_purl)
+      stub_purl_xml_response_with_fixture(file_purl)
       visit_iframe_response
       expect(page).to have_css('.sul-embed-file-list')
       expect(page).to have_css('.sul-embed-media-list')
@@ -39,7 +39,7 @@ RSpec.describe 'feature testing of viewers', :js do
     end
 
     it 'contains 4 files in file list' do
-      stub_purl_response_with_fixture(multi_resource_multi_type_purl)
+      stub_purl_xml_response_with_fixture(multi_resource_multi_type_purl)
       visit_iframe_response
       expect(page).to have_css('.sul-embed-count', count: 4)
     end

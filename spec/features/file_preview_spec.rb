@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'file preview', :js do
   include PurlFixtures
   it 'displays a toggle-able section image preview' do
-    stub_purl_response_with_fixture(hybrid_object_purl)
+    stub_purl_xml_response_with_fixture(hybrid_object_purl)
     visit_iframe_response
     expect(page).not_to have_css('.sul-embed-preview', visible: :visible)
     expect(page).to have_css('.sul-embed-preview-toggle', count: 1, text: 'Preview')
@@ -16,7 +16,7 @@ RSpec.describe 'file preview', :js do
   end
 
   it 'displays sul-embed-square-image for file list icon' do
-    stub_purl_response_with_fixture(hybrid_object_purl)
+    stub_purl_xml_response_with_fixture(hybrid_object_purl)
     visit_iframe_response('ab123cd4567')
     click_link('Preview')
     expect(page).to have_css('.sul-embed-square-image', visible: :all)
@@ -24,7 +24,7 @@ RSpec.describe 'file preview', :js do
   end
 
   it 'has (hidden) thumb image' do
-    stub_purl_response_with_fixture(hybrid_object_purl)
+    stub_purl_xml_response_with_fixture(hybrid_object_purl)
     visit_iframe_response('ab123cd4567')
     click_link('Preview')
     expect(page).to have_css('.sul-embed-preview')

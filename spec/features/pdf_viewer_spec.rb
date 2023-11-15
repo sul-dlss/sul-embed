@@ -7,7 +7,7 @@ RSpec.describe 'PDF Viewer', :js do
   let(:purl) { pdf_document_purl }
 
   before do
-    stub_purl_response_with_fixture(purl)
+    stub_purl_xml_response_with_fixture(purl)
     visit_iframe_response
   end
 
