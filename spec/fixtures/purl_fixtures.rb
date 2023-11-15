@@ -316,36 +316,6 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def multi_image_purl
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Book as Images</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="image">
-          <resource id="image1" sequence="1" type="image">
-            <file id="bw662rg0319_00_0001.jp2" mimetype="image/jp2" size="3458791">
-              <imageData height="4442" width="3417"/>
-            </file>
-          </resource>
-          <resource id="image2" sequence="2" type="image">
-            <file id="bw662rg0319_00_0002.jp2" mimetype="image/jp2" size="2799535">
-              <imageData height="4442" width="3417"/>
-            </file>
-          </resource>
-          <resource id="image3" sequence="3" type="image">
-            <file id="bw662rg0319_00_0003.jp2" mimetype="image/jp2" size="2253773">
-              <imageData height="4442" width="3417"/>
-            </file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          #{access_read_world}
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
   def multi_media_purl
     <<-XML
       <publicObject>
@@ -373,35 +343,7 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def multi_resource_multi_media_purl
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Files and what not</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="media">
-          <resource sequence="1" type="file">
-            <attr name="label">Resource Label</attr>
-            <file size="12345" mimetype="application/pdf" id="Page1.pdf" />
-            <file size="12346" mimetype="application/pdf" id="Page2.pdf" />
-          </resource>
-          <resource sequence="1" id="abc123_1" type="video">
-            <file id="abc_123.mp4" mimetype="video/mp4" size="152000000"></file>
-          </resource>
-          <resource sequence="2" id="bb051hp9404_2" type="file">
-            <label>Image of media (1 of 1)</label>
-            <file id="bd786fy6312_img.jp2" mimetype="image/jp2" size="213147">
-              <imageData height="384" width="2896"/>
-            </file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          #{access_read_world}
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
+
   def stanford_restricted_file_purl
     <<-XML
       <publicObject>
@@ -874,64 +816,6 @@ module PurlFixtures
         </rightsMetadata>
         <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
           <dc:title>Writings - "How to Test a Good Trumpet," The Instrumentalist 31(8):57-58 (reprint, 2 pp.)</dc:title>
-          <dc:relation type="collection">Musical Acoustics Research Library collection, 1956-2007</dc:relation>
-        </oai_dc:dc>
-      </publicObject>
-    XML
-  end
-  def image_with_pdf_restricted_purl
-    <<-XML
-      <publicObject id="druid:bb112fp0199" published="2014-04-10T16:06:21-07:00">
-        <identityMetadata>
-          <sourceId source="sul">M1711_Series3_Box104_Folder19</sourceId>
-          <objectId>druid:bb112fp0199</objectId>
-          <objectCreator>DOR</objectCreator>
-          <objectLabel>Writings - "How to Test a Good Trumpet," The Instrumentalist 31(8):57-58 (reprint, 2 pp.)</objectLabel>
-          <objectType>item</objectType>
-          <adminPolicy>druid:wg541jt7173</adminPolicy>
-          <otherId name="uuid">b655a82e-fc3d-11e1-b443-0016034322e2</otherId>
-          <tag>Project : Musical Acoustics Research Library</tag>
-          <tag>Process : Content Type : Book (flipbook, ltr)</tag>
-          <tag>Project : Musical Acoustics Research Library</tag>
-        </identityMetadata>
-        <contentMetadata type="book" objectId="bb112fp0199">
-          <resource type="page" sequence="1" id="bb112fp0199_1">
-            <label>Page 1</label>
-            <file id="bb112fp0199_06_0001.pdf" mimetype="application/pdf" size="2365677">
-          </file>
-            <file id="bb112fp0199_00_0001.jp2" mimetype="image/jp2" size="3117394">
-              <imageData width="3629" height="4556"/>
-            </file>
-          </resource>
-          <resource type="page" sequence="2" id="bb112fp0199_2">
-            <label>Page 2</label>
-            <file id="bb112fp0199_06_0002.pdf" mimetype="application/pdf" size="2398016">
-          </file>
-            <file id="bb112fp0199_00_0002.jp2" mimetype="image/jp2" size="3117384">
-              <imageData width="3629" height="4556"/>
-            </file>
-          </resource>
-          <resource type="object" sequence="3" id="bb112fp0199_3">
-            <label>Object 1</label>
-            <file id="bb112fp0199_31_0000.pdf" mimetype="application/pdf">
-          </file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          <access type="read">
-            <machine>
-              <group>Stanford</group>
-            </machine>
-          </access>
-          <use>
-            <human type="useAndReproduction">Property rights reside with the repository. Literary rights reside with the creators of the documents or their heirs. To obtain permission to publish or reproduce, please contact the Special Collections Public Services Librarian at speccollref@stanford.edu.</human>
-            <human type="creativeCommons"/>
-            <machine type="creativeCommons"/>
-          </use>
-        </rightsMetadata>
-        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
-          <dc:title>Yolo</dc:title>
           <dc:relation type="collection">Musical Acoustics Research Library collection, 1956-2007</dc:relation>
         </oai_dc:dc>
       </publicObject>
