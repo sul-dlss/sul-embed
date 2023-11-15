@@ -96,25 +96,19 @@ RSpec.describe Embed::Purl::ResourceFile do
     let(:file) { double('File') }
     let(:resource_file) { described_class.new(resource, file, double('Rights')) }
 
-    it 'is true when the parent resource is an object level thumbnail' do
-      allow(resource).to receive(:object_thumbnail?).and_return(true)
-      expect(resource_file).to be_thumbnail
-    end
-
     it 'is false when the file is not an image' do
-      allow(resource).to receive(:object_thumbnail?).and_return(false)
       allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'not-an-image'))
       expect(resource_file).not_to be_thumbnail
     end
 
-    it 'is true when the parent resource type is whitelisted as having file-level thumbnail behaviors (and it is an image)' do
-      allow(resource).to receive_messages(object_thumbnail?: false, type: 'video')
+    it 'is true when the parent resource type is listed as having file-level thumbnail behaviors (and it is an image)' do
+      allow(resource).to receive_messages(type: 'video')
       allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'image/jp2'))
       expect(resource_file).to be_thumbnail
     end
 
-    it 'is false when the parent resource type is not whitelisted as having file-level thumbnail behaviors (even if it is an image)' do
-      allow(resource).to receive_messages(object_thumbnail?: false, type: 'book')
+    it 'is false when the parent resource type is not listed as having file-level thumbnail behaviors (even if it is an image)' do
+      allow(resource).to receive_messages(type: 'book')
       allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'image/jp2'))
       expect(resource_file).not_to be_thumbnail
     end

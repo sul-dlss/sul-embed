@@ -57,30 +57,6 @@ RSpec.describe Embed::Purl::Resource do
     end
   end
 
-  describe '#object_thumbnail?' do
-    subject { described_class.new('bc123df4567', node, instance_double(Dor::RightsAuth)) }
-
-    let(:node) { instance_double(Nokogiri::XML::Node, attributes:) }
-
-    context 'when type="thumb"' do
-      let(:attributes) { { 'type' => double(value: 'thumb') } }
-
-      it { is_expected.to be_object_thumbnail }
-    end
-
-    context 'when thumb="yes"' do
-      let(:attributes) { { 'thumb' => double(value: 'yes') } }
-
-      it { is_expected.to be_object_thumbnail }
-    end
-
-    context 'when any other value' do
-      let(:attributes) { { 'type' => double(value: 'image') } }
-
-      it { is_expected.not_to be_object_thumbnail }
-    end
-  end
-
   describe 'files' do
     it 'returns an array of Purl::Resource::ResourceFile objects' do
       stub_purl_xml_response_with_fixture(file_purl_xml)
