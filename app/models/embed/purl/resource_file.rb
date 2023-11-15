@@ -51,10 +51,6 @@ module Embed
         !thumbnail? && primary_types.include?(mimetype)
       end
 
-      def thumbnail
-        resource.files.find(&:thumbnail?)
-      end
-
       def thumbnail?
         return true if resource.object_thumbnail?
         return false unless image?

@@ -91,35 +91,6 @@ RSpec.describe Embed::Purl::ResourceFile do
     end
   end
 
-  describe '#thumbnail' do
-    let(:resource_with_thumb) do
-      instance_double(
-        Embed::Purl::Resource, files: [
-          instance_double(described_class, thumbnail?: false, title: 'Non thumb'),
-          instance_double(described_class, thumbnail?: true, title: 'The Thumb')
-        ]
-      )
-    end
-    let(:resource_without_thumb) do
-      instance_double(
-        Embed::Purl::Resource, files: [
-          instance_double(described_class, thumbnail?: false, title: 'Non thumb'),
-          instance_double(described_class, thumbnail?: false, title: 'Another Non Thumb')
-        ]
-      )
-    end
-
-    it 'is the thumbnail within the same resource' do
-      file = described_class.new(resource_with_thumb, double('File'), double('Rights'))
-      expect(file.thumbnail.title).to eq 'The Thumb'
-    end
-
-    it 'is nil when the resource does not have a file specific thumb' do
-      file = described_class.new(resource_without_thumb, double('File'), double('Rights'))
-      expect(file.thumbnail).to be_nil
-    end
-  end
-
   describe '#thumbnail?' do
     let(:resource) { instance_double(Embed::Purl::Resource) }
     let(:file) { double('File') }
