@@ -1,8 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["stanfordRestriction", "locationRestriction", "embargoRestriction",
-                    "embargoAndStanfordRestriction", "stanfordLoginButton", "embargoLoginButton"]
+  static targets = ["stanfordRestriction", "stanfordRestrictionMessage", "stanfordRestrictionNotLoggedInIcon",
+                    "stanfordRestrictionLoggedInIcon", "locationRestriction", "embargoRestriction", "embargoAndStanfordRestriction",
+                    "stanfordLoginButton", "embargoLoginButton"]
 
 
   displayMessage(event) {
@@ -21,7 +22,10 @@ export default class extends Controller {
   }
 
   hideMessage() {
-    this.stanfordRestrictionTarget.hidden = true
+    this.stanfordRestrictionMessageTarget.innerHTML = "Logged in."
+    this.stanfordLoginButtonTarget.hidden = true
+    this.stanfordRestrictionNotLoggedInIconTarget.style.visibility = "hidden";
+    this.stanfordRestrictionLoggedInIconTarget.style.visibility = "visible";
     this.embargoAndStanfordRestrictionTarget.hidden = true
   }
 
