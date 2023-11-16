@@ -64,10 +64,74 @@ RSpec.describe Embed::Purl::ResourceFile do
   end
 
   describe '#label' do
-    let(:resource_file) { described_class.new(label: 'The Resource Description') }
+    subject(:file) do
+      described_class.new(resource, resource_file_xml_element, double('rights'))
+    end
 
-    it 'is the resource description' do
-      expect(resource_file.label).to eq 'The Resource Description'
+    let(:multilingual) { false }
+    let(:resource) do
+      instance_double(Embed::Purl::Resource, description: resource_description, multilingual_captions?: multilingual)
+    end
+    let(:resource_description) { nil }
+    let(:resource_file_xml_element) do
+      instance_double(Nokogiri::XML::Element, attributes: { 'id' => double(value: 'The File ID') })
+    end
+
+    context 'when the file is a caption file and resource lacks multilingual captions' do
+      let(:resource_file_xml_element) do
+        instance_double(Nokogiri::XML::Element, attributes: {
+                          'id' => double(value: 'gj753wr1198_b_cap.vtt'),
+                          'role' => double(value: 'caption')
+                        })
+      end
+
+      it 'returns "Caption file"' do
+        expect(file.label).to eq 'Caption file'
+      end
+    end
+
+    context 'when the file is a caption file with a known language and resource has multilingual captions' do
+      let(:multilingual) { true }
+      let(:resource_file_xml_element) do
+        instance_double(Nokogiri::XML::Element, attributes: {
+                          'id' => double(value: 'gj753wr1198_b_cap.vtt'),
+                          'role' => double(value: 'caption'),
+                          'language' => double(value: 'en')
+                        })
+      end
+
+      it 'returns "English captions"' do
+        expect(file.label).to eq 'English captions'
+      end
+    end
+
+    context 'when the file is a caption file with an unknown language and resource has multilingual captions' do
+      let(:multilingual) { true }
+      let(:resource_file_xml_element) do
+        instance_double(Nokogiri::XML::Element, attributes: {
+                          'id' => double(value: 'gj753wr1198_b_cap.vtt'),
+                          'role' => double(value: 'caption'),
+                          'language' => double(value: 'hy-Latn-IT-arevela')
+                        })
+      end
+
+      it 'returns "Caption file"' do
+        expect(file.label).to eq 'Caption file'
+      end
+    end
+
+    context 'when the containing resource lacks a description' do
+      it 'returns the file ID' do
+        expect(file.label).to eq 'The File ID'
+      end
+    end
+
+    context 'when the containing resource has a description' do
+      let(:resource_description) { 'The Resource Description' }
+
+      it 'returns the resource description' do
+        expect(file.label).to eq 'The Resource Description'
+      end
     end
   end
 

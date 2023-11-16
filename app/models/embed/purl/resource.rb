@@ -48,6 +48,14 @@ module Embed
       def vtt
         files.find(&:vtt?)
       end
+
+      def multilingual_captions?
+        caption_files.count > 1 && caption_files.filter_map(&:language).uniq.count > 1
+      end
+
+      def caption_files
+        files.select(&:caption?)
+      end
     end
   end
 end

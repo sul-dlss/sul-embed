@@ -3,15 +3,14 @@
 module Embed
   class Purl
     class ResourceFile
+      FILE_LANGUAGE_CAPTION_LABELS = {
+        'en' => 'English captions',
+        'ru' => 'Russian captions'
+      }.freeze
+
       def initialize(attributes = {})
         self.attributes = attributes
         yield(self) if block_given?
-      end
-
-      def attributes=(hash)
-        hash.each do |key, value|
-          public_send("#{key}=", value)
-        end
       end
 
       attr_accessor :druid, :label, :filename, :mimetype, :size, :duration,
@@ -38,6 +37,11 @@ module Embed
         "#{Settings.stacks_url}/file/druid:#{@druid}"
       end
 
+      # def label
+      #   return caption_label if caption?
+      #   return resource.description if resource.description.present?
+      #   title
+
       def label_or_filename
         label.presence || filename
       end
@@ -56,6 +60,28 @@ module Embed
 
       def image?
         mimetype =~ %r{image/jp2}i
+      end
+
+      def caption?
+        role == 'caption'
+      end
+
+      def role
+        @file.attributes['role'].try(:value)
+      end
+
+      def caption_label
+        return default_caption_label unless resource.multilingual_captions?
+
+        FILE_LANGUAGE_CAPTION_LABELS.fetch(language, default_caption_label)
+      end
+
+      def default_caption_label
+        'Caption file'
+      end
+
+      def language
+        @file.attributes['language'].try(:value)
       end
     end
   end

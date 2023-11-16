@@ -60,6 +60,100 @@ RSpec.describe Embed::Purl::Resource do
     end
   end
 
+  describe '#multilingual_captions?' do
+    subject { described_class.new('12345', resource_element, instance_double(Dor::RightsAuth)) }
+
+    context 'when there are no caption files' do
+      let(:resource_element) do
+        Nokogiri::XML(
+          <<~XML
+            <resource sequence="1" type="file">
+              <file id="Non caption" mimetype="image/tiff" size="2799535" />
+              <file id="Another non caption" mimetype="audio/aiff" size="2799535" />
+            </resource>
+          XML
+        ).xpath('//resource').first
+      end
+
+      it { is_expected.not_to be_multilingual_captions }
+    end
+
+    context 'when there is one caption file' do
+      let(:resource_element) do
+        Nokogiri::XML(
+          <<~XML
+            <resource sequence="1" type="file">
+              <file id="Non caption" mimetype="image/tiff" size="2799535" />
+              <file id="caption" mimetype="text/vtt" size="2735" role="caption" />
+            </resource>
+          XML
+        ).xpath('//resource').first
+      end
+
+      it { is_expected.not_to be_multilingual_captions }
+    end
+
+    context 'when there are multiple caption files without languages' do
+      let(:resource_element) do
+        Nokogiri::XML(
+          <<~XML
+            <resource sequence="1" type="file">
+              <file id="caption" mimetype="text/vtt" size="2795" role="caption" />
+              <file id="another caption" mimetype="text/vtt" size="2735" role="caption" />
+            </resource>
+          XML
+        ).xpath('//resource').first
+      end
+
+      it { is_expected.not_to be_multilingual_captions }
+    end
+
+    context 'when there are multiple caption files with the same language' do
+      let(:resource_element) do
+        Nokogiri::XML(
+          <<~XML
+            <resource sequence="1" type="file">
+              <file id="caption" mimetype="text/vtt" size="2795" role="caption" language="en" />
+              <file id="another caption" mimetype="text/vtt" size="2735" role="caption" language="en" />
+            </resource>
+          XML
+        ).xpath('//resource').first
+      end
+
+      it { is_expected.not_to be_multilingual_captions }
+    end
+
+    context 'when there are multiple caption files with one language' do
+      let(:resource_element) do
+        Nokogiri::XML(
+          <<~XML
+            <resource sequence="1" type="file">
+              <file id="caption" mimetype="text/vtt" size="2795" role="caption" language="en" />
+              <file id="another caption" mimetype="text/vtt" size="2735" role="caption" />
+            </resource>
+          XML
+        ).xpath('//resource').first
+      end
+
+      it { is_expected.not_to be_multilingual_captions }
+    end
+
+    context 'when there are multiple caption files with different languages' do
+      let(:resource_element) do
+        Nokogiri::XML(
+          <<~XML
+            <resource sequence="1" type="file">
+              <file id="caption" mimetype="text/vtt" size="2795" role="caption" language="en" />
+              <file id="another caption" mimetype="text/vtt" size="2735" role="caption" language="ru" />
+            </resource>
+          XML
+        ).xpath('//resource').first
+      end
+
+      it { is_expected.to be_multilingual_captions }
+    end
+  end
+
   describe '#vtt' do
     context 'when it has a vtt transcript' do
       subject { resource.vtt.title }
