@@ -421,3 +421,29 @@
     }
   }
 }
+
+.video-js .vjs-text-track-settings {
+  background: white !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #000;
+  max-height: 375px;
+  max-width: 640px;
+  border-radius: var(--modal-border-radius);
+  box-shadow: 5px 10px 5px gray;
+  font-size: 1em;
+
+}
+
+.vjs-track-settings-controls button {
+  border: 1px solid black;
+  border-radius: var(--modal-border-radius);
+  font-size: 1.5em;
+  padding: 3px;
+}
+
+.vjs-text-track-settings legend {
+  color: #000;
+}
