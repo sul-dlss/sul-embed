@@ -10,7 +10,7 @@ RSpec.describe Embed::FileComponent, type: :component do
   end
   let(:object) { Embed::Purl.new('12345') }
   let(:viewer) { Embed::Viewer::File.new(request) }
-  let(:response) { file_purl }
+  let(:response) { file_purl_xml }
 
   before do
     allow(request).to receive(:purl_object).and_return(object)
@@ -60,7 +60,7 @@ RSpec.describe Embed::FileComponent, type: :component do
   end
 
   describe 'embargo/Stanford only' do
-    let(:response) { embargoed_stanford_file_purl }
+    let(:response) { embargoed_stanford_file_purl_xml }
 
     it 'adds a Stanford specific embargo message with links still present' do
       expect(page).to have_css('.sul-embed-embargo-message', visible: :all, text: "Access is restricted to Stanford-affiliated patrons until #{1.month.from_now.strftime('%d-%b-%Y')}")
@@ -77,7 +77,7 @@ RSpec.describe Embed::FileComponent, type: :component do
   end
 
   describe 'embargoed to world' do
-    let(:response) { embargoed_file_purl }
+    let(:response) { embargoed_file_purl_xml }
 
     it 'adds a generalized embargo message and no links are present' do
       expect(page).to have_css('.sul-embed-embargo-message', visible: :all, text: "Access is restricted until #{1.month.from_now.strftime('%d-%b-%Y')}")
