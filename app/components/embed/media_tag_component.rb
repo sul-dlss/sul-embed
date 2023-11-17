@@ -105,11 +105,11 @@ module Embed
     def transcript
       return unless render_captions?
 
-      tag.track(src: file.vtt.file_url, kind: 'captions', srclang: 'en', label: 'English')
+      tag.track(src: @resource.vtt.file_url, kind: 'captions', srclang: 'en', label: 'English')
     end
 
     def render_captions?
-      @include_transcripts && file.vtt
+      @include_transcripts && @resource.vtt
     end
 
     # NOTE: This is only for the legacy media player. We can remove it when we switch to the new player.
