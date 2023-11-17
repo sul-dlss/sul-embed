@@ -26,10 +26,6 @@ module Embed
                          end
       end
 
-      def object_thumbnail?
-        @resource.attributes['thumb'].try(:value) == 'yes' || type == 'thumb'
-      end
-
       def three_dimensional?
         @resource.attributes['type']&.value == '3d'
       end
@@ -56,7 +52,7 @@ module Embed
       end
 
       # @return [Array<ResourceFile>]
-      def vtt
+      def caption_files
         files.select(&:vtt?)
       end
     end

@@ -20,7 +20,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   let(:many_primary_files) { false }
 
   before do
-    stub_purl_response_with_fixture(purl)
+    stub_purl_xml_response_with_fixture(purl)
     render
   end
 
@@ -114,14 +114,9 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   end
 
   context 'with file and object level thumbnails' do
-    let(:purl) { file_and_object_level_thumb_purl }
+    let(:purl) { file_thumb_purl }
 
-    it 'does not include object level thumbnails' do
-      expect(page).to have_css('[data-file-label="audio.mp3"]', visible: :all)
-      expect(page).not_to have_css('[data-file-label="thumb.jp2"]', visible: :all)
-    end
-
-    it 'does not include file level thumbnails' do
+    it 'does not include thumbnails' do
       expect(page).not_to have_css('[data-file-label="audio_1.jp2"]', visible: :all)
     end
 
@@ -170,7 +165,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
 
   describe 'with a poster' do
     context 'when a file level thumbnail is present' do
-      let(:purl) { file_and_object_level_thumb_purl }
+      let(:purl) { file_thumb_purl }
       let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
       let(:resource) { Embed::Purl.new(druid).contents.second }
 
@@ -242,6 +237,15 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     it 'has track elements with multiple languages' do
       expect(page).to have_css('track[srclang="en"][label="English"]')
       expect(page).to have_css('track[srclang="ru"][label="Russian"]')
+    end
+  end
+
+  context 'with caption file which has no specified language' do
+    let(:purl) { video_purl_with_vtt_no_language }
+    let(:include_transcripts) { true }
+
+    it 'has track elements with multiple languages' do
+      expect(page).to have_css('track[srclang="en"][label="English"]')
     end
   end
 end

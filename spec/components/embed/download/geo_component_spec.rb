@@ -37,7 +37,7 @@ RSpec.describe Embed::Download::GeoComponent, type: :component do
   end
 
   context 'with stanford only' do
-    let(:response) { stanford_restricted_multi_file_purl }
+    let(:response) { stanford_restricted_multi_file_purl_xml }
 
     it 'has the stanford-only class (with screen reader text)' do
       expect(page).to have_css 'li .sul-embed-stanford-only-text .sul-embed-text-hide', text: 'Stanford only', visible: :all

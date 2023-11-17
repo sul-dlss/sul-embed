@@ -33,9 +33,27 @@ module Embed
       end
     end
 
+    def thumbnail_url
+      stacks_square_url(@druid, @resource.thumbnail.title, size: '75') if @resource.thumbnail
+    end
+
+    def poster_url_for
+      return default_audio_thumbnail if type == 'audio' && !@resource.thumbnail
+      return unless @resource.thumbnail
+
+      if @resource.thumbnail.world_downloadable?
+        stacks_thumb_url(@druid, @resource.thumbnail.title, size: '!800,600')
+      else
+        stacks_thumb_url(@druid, @resource.thumbnail.title)
+      end
+    end
+
+    def default_audio_thumbnail
+      asset_url('waveform-audio-poster.svg')
+    end
+
     def media_element
-      file_thumb = stacks_square_url(@druid, file.thumbnail.title, size: '75') if file.thumbnail
-      render MediaWrapperComponent.new(thumbnail: file_thumb, file:, type:, file_index: @resource_iteration.index) do
+      render MediaWrapperComponent.new(thumbnail: thumbnail_url, file:, type:, file_index: @resource_iteration.index) do
         access_restricted_overlay + media_tag
       end
     end
@@ -84,6 +102,7 @@ module Embed
       )
     end
 
+    # Generate the video caption elements
     def transcript
       return unless render_captions?
 
@@ -91,12 +110,18 @@ module Embed
       # We want to enable the user to select from any of these options.
       # We also want the different language options to be listed alphabetically.
       safe_join(
-        file.vtt.sort_by { |cfile| caption_language(cfile.language) }.map do |caption_file|
+        sort_caption_tracks(@resource.caption_files).map do |caption_file|
           lang_code = caption_file.language || 'en'
           lang_label = caption_language(lang_code)
           tag.track(src: caption_file.file_url, kind: 'captions', srclang: lang_code, label: lang_label)
         end
       )
+    end
+
+    # Sort the caption files by language label so we can display them in alphabetical order in the
+    # captions options list.
+    def sort_caption_tracks(caption_files)
+      caption_files.sort_by { |cfile| caption_language(cfile.language) }
     end
 
     def caption_language(language_code)
@@ -111,7 +136,7 @@ module Embed
     end
 
     def render_captions?
-      @include_transcripts && file.vtt
+      @include_transcripts && @resource.caption_files
     end
 
     # NOTE: This is only for the legacy media player. We can remove it when we switch to the new player.
@@ -150,10 +175,6 @@ module Embed
 
     def enabled_streaming_types
       Settings.streaming[:source_types]
-    end
-
-    def poster_url_for
-      Embed::StacksMediaStream.new(druid: @druid, file:).to_thumbnail_url
     end
 
     def streaming_url_for(streaming_type)

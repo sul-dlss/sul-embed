@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Embed::Purl::ResourceFile do
   include PurlFixtures
   describe 'attributes' do
-    before { stub_purl_response_with_fixture(file_purl) }
+    before { stub_purl_xml_response_with_fixture(file_purl_xml) }
 
     let(:resource_file) { Embed::Purl.new('12345').contents.first.files.first }
 
@@ -66,7 +66,7 @@ RSpec.describe Embed::Purl::ResourceFile do
   end
 
   describe '#hierarchical_title' do
-    before { stub_purl_response_with_fixture(hierarchical_file_purl) }
+    before { stub_purl_xml_response_with_fixture(hierarchical_file_purl_xml) }
 
     let(:resource_file) { Embed::Purl.new('12345').hierarchical_contents.dirs.first.dirs.first.files.first }
 
@@ -91,59 +91,24 @@ RSpec.describe Embed::Purl::ResourceFile do
     end
   end
 
-  describe '#thumbnail' do
-    let(:resource_with_thumb) do
-      instance_double(
-        Embed::Purl::Resource, files: [
-          instance_double(described_class, thumbnail?: false, title: 'Non thumb'),
-          instance_double(described_class, thumbnail?: true, title: 'The Thumb')
-        ]
-      )
-    end
-    let(:resource_without_thumb) do
-      instance_double(
-        Embed::Purl::Resource, files: [
-          instance_double(described_class, thumbnail?: false, title: 'Non thumb'),
-          instance_double(described_class, thumbnail?: false, title: 'Another Non Thumb')
-        ]
-      )
-    end
-
-    it 'is the thumbnail within the same resource' do
-      file = described_class.new(resource_with_thumb, double('File'), double('Rights'))
-      expect(file.thumbnail.title).to eq 'The Thumb'
-    end
-
-    it 'is nil when the resource does not have a file specific thumb' do
-      file = described_class.new(resource_without_thumb, double('File'), double('Rights'))
-      expect(file.thumbnail).to be_nil
-    end
-  end
-
   describe '#thumbnail?' do
     let(:resource) { instance_double(Embed::Purl::Resource) }
     let(:file) { double('File') }
     let(:resource_file) { described_class.new(resource, file, double('Rights')) }
 
-    it 'is true when the parent resource is an object level thumbnail' do
-      allow(resource).to receive(:object_thumbnail?).and_return(true)
-      expect(resource_file).to be_thumbnail
-    end
-
     it 'is false when the file is not an image' do
-      allow(resource).to receive(:object_thumbnail?).and_return(false)
       allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'not-an-image'))
       expect(resource_file).not_to be_thumbnail
     end
 
-    it 'is true when the parent resource type is whitelisted as having file-level thumbnail behaviors (and it is an image)' do
-      allow(resource).to receive_messages(object_thumbnail?: false, type: 'video')
+    it 'is true when the parent resource type is listed as having file-level thumbnail behaviors (and it is an image)' do
+      allow(resource).to receive_messages(type: 'video')
       allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'image/jp2'))
       expect(resource_file).to be_thumbnail
     end
 
-    it 'is false when the parent resource type is not whitelisted as having file-level thumbnail behaviors (even if it is an image)' do
-      allow(resource).to receive_messages(object_thumbnail?: false, type: 'book')
+    it 'is false when the parent resource type is not listed as having file-level thumbnail behaviors (even if it is an image)' do
+      allow(resource).to receive_messages(type: 'book')
       allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'image/jp2'))
       expect(resource_file).not_to be_thumbnail
     end
@@ -151,24 +116,24 @@ RSpec.describe Embed::Purl::ResourceFile do
 
   describe 'previewable?' do
     it 'returns true if the mimetype of the file is previewable' do
-      stub_purl_response_with_fixture(image_purl)
+      stub_purl_xml_response_with_fixture(image_purl_xml)
       expect(Embed::Purl.new('12345').contents.first.files.first).to be_previewable
     end
 
     it 'returns false if the mimetype of the file is not previewable' do
-      stub_purl_response_with_fixture(file_purl)
+      stub_purl_xml_response_with_fixture(file_purl_xml)
       expect(Embed::Purl.new('12345').contents.first.files.first).not_to be_previewable
     end
   end
 
   describe 'image?' do
     it 'returns true if the mimetype of the file is an image' do
-      stub_purl_response_with_fixture(image_purl)
+      stub_purl_xml_response_with_fixture(image_purl_xml)
       expect(Embed::Purl.new('12345').contents.first.files.first).to be_image
     end
 
     it 'returns false if the mimetype of the file is not an image' do
-      stub_purl_response_with_fixture(file_purl)
+      stub_purl_xml_response_with_fixture(file_purl_xml)
       expect(Embed::Purl.new('12345').contents.first.files.first).not_to be_image
     end
   end
@@ -176,22 +141,22 @@ RSpec.describe Embed::Purl::ResourceFile do
   describe 'rights' do
     describe 'stanford_only?' do
       it 'identifies stanford_only objects' do
-        stub_purl_response_with_fixture(stanford_restricted_file_purl)
+        stub_purl_xml_response_with_fixture(stanford_restricted_file_purl_xml)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:stanford_only?)).to be true
       end
 
       it 'identifies stanford_only no-download objects' do
-        stub_purl_response_with_fixture(stanford_no_download_restricted_file_purl)
+        stub_purl_xml_response_with_fixture(stanford_no_download_restricted_file_purl_xml)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:stanford_only?)).to be true
       end
 
       it 'identifies world accessible objects as not stanford only' do
-        stub_purl_response_with_fixture(file_purl)
+        stub_purl_xml_response_with_fixture(file_purl_xml)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:stanford_only?)).to be false
       end
 
       it 'identifies file-level stanford_only rights' do
-        stub_purl_response_with_fixture(stanford_restricted_multi_file_purl)
+        stub_purl_xml_response_with_fixture(stanford_restricted_multi_file_purl_xml)
         contents = Embed::Purl.new('12345').contents
         first_file = contents.first.files.first
         last_file = contents.last.files.first
@@ -202,17 +167,17 @@ RSpec.describe Embed::Purl::ResourceFile do
 
     describe 'location_restricted?' do
       it 'identifies location restricted objects' do
-        stub_purl_response_with_fixture(single_video_purl)
+        stub_purl_xml_response_with_fixture(single_video_purl)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:location_restricted?)).to be true
       end
 
       it 'identifies world accessible objects as not stanford only' do
-        stub_purl_response_with_fixture(file_purl)
+        stub_purl_xml_response_with_fixture(file_purl_xml)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:location_restricted?)).to be false
       end
 
       it 'identifies file-level location_restricted rights' do
-        stub_purl_response_with_fixture(video_purl)
+        stub_purl_xml_response_with_fixture(video_purl)
         contents = Embed::Purl.new('12345').contents
         first_file = contents.first.files.first
         last_file = contents.last.files.first
@@ -223,24 +188,24 @@ RSpec.describe Embed::Purl::ResourceFile do
 
     describe 'world_downloadable?' do
       it 'is false for stanford-only objects' do
-        stub_purl_response_with_fixture(stanford_restricted_file_purl)
+        stub_purl_xml_response_with_fixture(stanford_restricted_file_purl_xml)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:world_downloadable?)).to be false
       end
 
       it 'is false for no-download objects' do
-        stub_purl_response_with_fixture(stanford_no_download_restricted_file_purl)
+        stub_purl_xml_response_with_fixture(stanford_no_download_restricted_file_purl_xml)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:world_downloadable?)).to be false
       end
 
       it 'is true for identify world accessible objects' do
-        stub_purl_response_with_fixture(file_purl)
+        stub_purl_xml_response_with_fixture(file_purl_xml)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:world_downloadable?)).to be true
       end
     end
   end
 
   describe 'image data' do
-    before { stub_purl_response_with_fixture(image_purl) }
+    before { stub_purl_xml_response_with_fixture(image_purl_xml) }
 
     let(:image) { Embed::Purl.new('12345').contents.first.files.first }
 
@@ -251,7 +216,7 @@ RSpec.describe Embed::Purl::ResourceFile do
   end
 
   describe 'file data' do
-    before { stub_purl_response_with_fixture(file_purl) }
+    before { stub_purl_xml_response_with_fixture(file_purl_xml) }
 
     let(:file) { Embed::Purl.new('12345').contents.first.files.first }
 
@@ -303,7 +268,7 @@ RSpec.describe Embed::Purl::ResourceFile do
 
   describe 'video_data' do
     context 'with valid videoData' do
-      before { stub_purl_response_with_fixture(multi_media_purl) }
+      before { stub_purl_xml_response_with_fixture(multi_media_purl) }
 
       let(:video) { Embed::Purl.new('12345').contents.first.files.first }
 
@@ -320,7 +285,7 @@ RSpec.describe Embed::Purl::ResourceFile do
     context 'when it is a vtt transcript' do
       let(:file) { Embed::Purl.new('12345').contents.first.files.second }
 
-      before { stub_purl_response_with_fixture(video_purl_with_vtt) }
+      before { stub_purl_xml_response_with_fixture(video_purl_with_vtt) }
 
       it { is_expected.to be true }
     end
@@ -328,7 +293,7 @@ RSpec.describe Embed::Purl::ResourceFile do
     context 'when it is not a vtt transcript' do
       let(:file) { Embed::Purl.new('12345').contents.first.files.first }
 
-      before { stub_purl_response_with_fixture(single_video_purl) }
+      before { stub_purl_xml_response_with_fixture(single_video_purl) }
 
       it { is_expected.to be false }
     end

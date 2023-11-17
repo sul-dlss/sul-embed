@@ -6,7 +6,7 @@ RSpec.describe 'embed sandbox page', :js do
   include PurlFixtures
 
   before do
-    stub_purl_response_with_fixture(file_purl)
+    stub_purl_xml_response_with_fixture(file_purl_xml)
   end
 
   it 'returns the iframe output from the embed endpoint' do

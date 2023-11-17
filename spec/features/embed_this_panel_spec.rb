@@ -8,12 +8,12 @@ RSpec.describe 'embed this panel', :js do
   let(:iframe_options) { {} }
 
   before do
-    stub_purl_response_with_fixture(spec_fixture)
+    stub_purl_xml_response_with_fixture(spec_fixture)
     visit_iframe_response('ab123cd4567', **iframe_options)
   end
 
   describe 'embed code' do
-    let(:spec_fixture) { file_purl }
+    let(:spec_fixture) { file_purl_xml }
 
     it 'includes the allowfullscreen no-scrolling, no-border, and no margin/padding attributes' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
@@ -37,7 +37,7 @@ RSpec.describe 'embed this panel', :js do
   end
 
   describe 'file objects' do
-    let(:spec_fixture) { file_purl }
+    let(:spec_fixture) { file_purl_xml }
 
     it 'are present after a user clicks the button' do
       expect(page).to have_css('.sul-embed-embed-this-panel', visible: :hidden)
@@ -58,7 +58,7 @@ RSpec.describe 'embed this panel', :js do
   end
 
   describe 'Customization Options' do
-    let(:spec_fixture) { file_purl }
+    let(:spec_fixture) { file_purl_xml }
 
     context 'with an uncustomized request' do
       it 'defaults to having the option checked' do

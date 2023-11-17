@@ -22,7 +22,7 @@ RSpec.describe Embed::Viewer::CommonViewer do
       expect(request).to receive(:maxheight).at_least(:once).and_return(100)
       expect(request).to receive(:maxwidth).at_least(:once).and_return(200)
       stub_purl_request(request)
-      stub_purl_response_with_fixture(multi_file_purl)
+      stub_purl_xml_response_with_fixture(multi_file_purl_xml)
       expect(file_viewer.height).to eq 100
       expect(file_viewer.width).to eq 200
     end
@@ -62,15 +62,6 @@ RSpec.describe Embed::Viewer::CommonViewer do
                                         hide_download: 'true')
       geo_hide_viewer = Embed::Viewer::Geo.new(hide_request)
       expect(geo_hide_viewer).not_to be_show_download
-    end
-  end
-
-  describe '#show_download_count?' do
-    it 'true for non-image viewers' do
-      expect(file_viewer).to be_show_download_count
-      expect(geo_viewer).to be_show_download_count
-      expect(media_viewer).to be_show_download_count
-      expect(was_seed_viewer).to be_show_download_count
     end
   end
 
