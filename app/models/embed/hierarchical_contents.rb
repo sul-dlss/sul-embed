@@ -22,7 +22,7 @@ module Embed
     attr_reader :resources
 
     def file_contents
-      resources.map(&:files).flatten
+      resources.flat_map(&:files).map { |file| HierarchicalFile.new(file) }
     end
 
     def add_to_hierarchy(file, root_directory)

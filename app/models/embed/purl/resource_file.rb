@@ -3,28 +3,20 @@
 module Embed
   class Purl
     class ResourceFile
-      # @param [Embed::Purl::Resource] resource
-      # @param [Nokogiri::XML::Element] file
-      # @param [Dor::RightsAuth] rights
-      def initialize(resource, file, rights)
-        @resource = resource
-        @file = file
-        @rights = rights
-        @index = nil
+      def initialize(attributes = {})
+        self.attributes = attributes
+        yield(self) if block_given?
       end
 
-      attr_accessor :index
-      attr_reader :resource
-
-      def label
-        return resource.description if resource.description.present?
-
-        title
+      def attributes=(hash)
+        hash.each do |key, value|
+          public_send("#{key}=", value)
+        end
       end
 
-      def title
-        @file.attributes['id'].try(:value)
-      end
+      attr_accessor :druid, :label, :filename, :mimetype, :size, :duration, :rights
+
+      alias title filename
 
       ##
       # Creates a file url for stacks
@@ -39,19 +31,11 @@ module Embed
       end
 
       def stacks_url
-        "#{Settings.stacks_url}/file/druid:#{resource.druid}"
+        "#{Settings.stacks_url}/file/druid:#{@druid}"
       end
 
       def hierarchical_title
         title.split('/').last
-      end
-
-      def primary?
-        Array(Settings.primary_mimetypes[resource.type]).include?(mimetype)
-      end
-
-      def thumbnail?
-        image? && Settings.resource_types_that_contain_thumbnails.include?(resource.type)
       end
 
       def vtt?
@@ -67,42 +51,8 @@ module Embed
         mimetype == 'application/pdf'
       end
 
-      def mimetype
-        @file.attributes['mimetype'].try(:value)
-      end
-
-      def previewable?
-        preview_types.include?(mimetype)
-      end
-
-      # unused (9/2016) - candidate for removal?
       def image?
         mimetype =~ %r{image/jp2}i
-      end
-
-      # @return [Integer]
-      def size
-        @file.attributes['size'].try(:value).to_i
-      end
-
-      # unused (9/2016) - candidate for removal?
-      def height
-        @file.xpath('./*/@height').first.try(:text) if @file.xpath('./*/@height').present?
-      end
-
-      # unused (9/2016) - candidate for removal?
-      def width
-        @file.xpath('./*/@width').first.try(:text) if @file.xpath('./*/@width').present?
-      end
-
-      def duration
-        md = Embed::MediaDuration.new(@file.xpath('./*[@duration]').first) if @file.xpath('./*/@duration').present?
-        md&.to_s
-      end
-
-      # unused (9/2016) - candidate for removal?
-      def location
-        @file.xpath('./location[@type="url"]').first.try(:text) if @file.xpath('./location[@type="url"]').present?
       end
 
       def stanford_only?
@@ -116,13 +66,7 @@ module Embed
       end
 
       def world_downloadable?
-        @rights.world_downloadable_file?(@file.attributes['id'])
-      end
-
-      private
-
-      def preview_types
-        ['image/jp2']
+        @rights.world_downloadable_file?(title)
       end
     end
   end

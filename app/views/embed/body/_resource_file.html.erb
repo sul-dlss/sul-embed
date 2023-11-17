@@ -3,7 +3,7 @@
       <%= viewer.purl_object.hierarchical? ? raw('&nbsp;&nbsp;') : file.index %>
     </div>
   <div class='sul-embed-media-object sul-embed-pull-left'>
-    <% if file.previewable? %>
+    <% if file.image? %>
       <img class='sul-embed-square-image'  src="<%= viewer.stacks_square_url(viewer.purl_object.druid, file.title)%>"  alt=''>
     <% else %>
       <i class="sul-i-2x <%= viewer.file_type_icon(file.mimetype) %>"></i>
@@ -23,7 +23,7 @@
     <% end %>
 
     <div class='sul-embed-description' data-description='true'>
-      <%= resource.description %>
+      <%= file.label %>
     </div>
     <div class='sul-embed-download'>
       <i class='sul-i-download-3'></i>
@@ -41,7 +41,7 @@
       <% end %>
     </div>
 
-    <% if file.previewable? %>
+    <% if file.image? %>
       <span class='sul-embed-preview-toggle' data-sul-embed-file-preview-toggle='true'>
         <i class='sul-i-arrow-right-8'></i>
         <span class='sul-embed-preview-text'>
@@ -55,7 +55,7 @@
     <% end %>
 
   </div>
-  <% if file.previewable? %>
+  <% if file.image? %>
     <div style='display: none;' class='sul-embed-preview' data-sul-embed-file-preview-window='true' aria-hidden='true'>
       <img src="<%= viewer.stacks_thumb_url(viewer.purl_object.druid, file.title) %>" alt=''>
     </div>

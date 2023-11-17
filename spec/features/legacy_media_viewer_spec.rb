@@ -91,7 +91,7 @@ RSpec.describe 'The old media viewer', :js do
       expect(page).to have_css('.sul-embed-thumb-stanford-only', count: 1)
       expect(page).to have_css('.sul-embed-thumb-stanford-only', text: 'Second Video')
       expect(page).to have_css('.sul-embed-thumb-stanford-only .sul-embed-text-hide', text: 'Stanford only', count: 1)
-      expect(page).not_to have_css('.sul-embed-thumb-stanford-only', text: 'abc_123.mp4')
+      expect(page).not_to have_css('.sul-embed-thumb-stanford-only', text: 'First Video')
     end
   end
 
@@ -120,14 +120,14 @@ RSpec.describe 'The old media viewer', :js do
       expect(page).to have_css('.sul-embed-thumb-slider', visible: :visible)
 
       expect(page).to have_css('.sul-embed-location-restricted-text', text: '(Restricted)', count: 1)
-      expect(page).to have_css('.sul-embed-media-slider-thumb', text: '(Restricted) abc_123.mp4')
+      expect(page).to have_css('.sul-embed-media-slider-thumb', text: '(Restricted) First Video')
     end
   end
 
   context 'with duration related info' do
     it 'displays available duration in parens after the title (video)' do
       page.find('.sul-embed-thumb-slider-open-close').click
-      expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'abc_123.mp4 (1:02:03)')
+      expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'First Video (1:02:03)')
     end
 
     it 'displays no duration info after title when there is no duration we can interpret' do
@@ -140,7 +140,7 @@ RSpec.describe 'The old media viewer', :js do
 
       it 'displays as if there were no duration in the purl xml' do
         page.find('.sul-embed-thumb-slider-open-close').click
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'abc_123.mp4')
+        expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'First Video')
       end
     end
 
@@ -149,12 +149,12 @@ RSpec.describe 'The old media viewer', :js do
 
       it 'displays available duration in parens after the title' do
         page.find('.sul-embed-thumb-slider-open-close').click
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'abc_123.mp3 (0:43)')
+        expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'First Audio (0:43)')
       end
 
       it 'displays no duration info after title when there is no duration we can interpret' do
         page.find('.sul-embed-thumb-slider-open-close').click
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'abc_456.mp3')
+        expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'Second Audio')
       end
     end
   end

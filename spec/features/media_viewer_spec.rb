@@ -48,7 +48,7 @@ RSpec.describe 'Media viewer', :js do
 
         # One is restricted and has a duration
         expect(page).to have_css('.sul-embed-location-restricted-text', text: '(Restricted)')
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: '(Restricted) abc_123.mp4 (1:02:03)')
+        expect(page).to have_css('.sul-embed-media-slider-thumb', text: '(Restricted) First Video (1:02:03)')
         click_button 'Use and reproduction'
         expect(page).to have_content 'Rights'
       end
@@ -84,7 +84,7 @@ RSpec.describe 'Media viewer', :js do
       within 'aside.open' do
         click_button 'Content'
 
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: /abc_123.mp4$/)
+        expect(page).to have_css('.sul-embed-media-slider-thumb', text: /First Video$/)
       end
     end
   end
@@ -97,10 +97,10 @@ RSpec.describe 'Media viewer', :js do
       within 'aside.open' do
         click_button 'Content'
 
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'abc_123.mp3 (0:43)')
+        expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'First Audio (0:43)')
 
         # No duration
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: /abc_456.mp3$/)
+        expect(page).to have_css('.sul-embed-media-slider-thumb', text: /Second Audio$/)
       end
     end
   end

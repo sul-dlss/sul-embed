@@ -26,7 +26,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
 
   context 'with the first resource' do
     it 'includes the file label as a data attribute' do
-      expect(page).to have_css('[data-file-label="abc_123.mp4"]')
+      expect(page).to have_css('[data-file-label="First Video"]')
     end
 
     it 'includes a data attribute for the thumb-slider bar' do

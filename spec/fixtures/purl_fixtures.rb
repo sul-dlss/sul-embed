@@ -935,6 +935,7 @@ module PurlFixtures
         </identityMetadata>
         <contentMetadata type="media">
           <resource sequence="1" id="abc123_1" type="video">
+            <label>First Video</label>
             <file id="abc_123.mp4" mimetype="video/mp4" size="152000000">
               <videoData duration="P0DT1H2M3S" height="288" width="352"/>
             </file>
@@ -1035,11 +1036,13 @@ module PurlFixtures
         </identityMetadata>
         <contentMetadata type="media">
           <resource sequence="1" id="abc123_1" type="video">
+            <label>First Video</label>
             <file id="abc_123.mp4" mimetype="video/mp4" size="152000000">
               <videoData duration="PDDTMMS"/>
             </file>
           </resource>
           <resource sequence="2" id="abc321_1" type="video">
+            <label>Second Video</label>
             <file id="abc_321.mp4" mimetype="video/mp4" size="152000000">
               <videoData duration="PDDTMMS"/>
             </file>
@@ -1167,11 +1170,13 @@ module PurlFixtures
         </identityMetadata>
         <contentMetadata type="media">
           <resource sequence="1" id="abc123_1" type="audio">
+            <label>First Audio</label>
             <file id="abc_123.mp3" mimetype="audio/mpeg" size="770433">
               <audioData duration="PT43S"/>
             </file>
           </resource>
           <resource sequence="1" id="abc456_1" type="audio">
+            <label>Second Audio</label>
             <file id="abc_456.mp3" mimetype="audio/mpeg" size="770433"></file>
           </resource>
         </contentMetadata>

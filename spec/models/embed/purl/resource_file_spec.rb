@@ -27,17 +27,9 @@ RSpec.describe Embed::Purl::ResourceFile do
   end
 
   describe '#file_url' do
-    let(:file_node) do
-      Nokogiri::XML(<<~XML
-        <file size="12345" mimetype="image/jp2" id="#{file_name}"/>
-      XML
-                   ).root
-    end
-
-    let(:file_name) { 'cool_file' }
-
+    let(:filename) { 'cool_file' }
     let(:resource) { instance_double(Embed::Purl::Resource, druid: 'abc123') }
-    let(:resource_file) { described_class.new(resource, file_node, nil) }
+    let(:resource_file) { described_class.new(druid: 'abc123', filename:) }
 
     it 'creates a stacks file url' do
       expect(resource_file.file_url).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file'
@@ -48,7 +40,7 @@ RSpec.describe Embed::Purl::ResourceFile do
     end
 
     context 'when there are special characters in the file name' do
-      let(:file_name) { '[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf' }
+      let(:filename) { '[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf' }
 
       it 'escapes them' do
         expect(resource_file.file_url).to eq 'https://stacks.stanford.edu/file/druid:abc123/%5BDissertation%5D%20micro-TEC%20vfinal%20%28for%20submission%29-augmented.pdf'
@@ -56,7 +48,7 @@ RSpec.describe Embed::Purl::ResourceFile do
     end
 
     context 'when there are literal slashes in the file name' do
-      let(:file_name) { 'path/to/[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf' }
+      let(:filename) { 'path/to/[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf' }
 
       it 'allows them' do
         expect(resource_file.file_url)
@@ -76,53 +68,10 @@ RSpec.describe Embed::Purl::ResourceFile do
   end
 
   describe '#label' do
-    let(:resource) { instance_double(Embed::Purl::Resource, description: nil) }
-    let(:resource_with_description) { instance_double(Embed::Purl::Resource, description: 'The Resource Description') }
-    let(:resource_file) { instance_double(Nokogiri::XML::Element, attributes: { 'id' => double(value: 'The File ID') }) }
+    let(:resource_file) { described_class.new(label: 'The Resource Description') }
 
-    it 'is the resource description when available' do
-      file = described_class.new(resource_with_description, resource_file, double('rights'))
-      expect(file.label).to eq 'The Resource Description'
-    end
-
-    it 'is the file id when no resource description is available' do
-      file = described_class.new(resource, resource_file, double('rights'))
-      expect(file.label).to eq 'The File ID'
-    end
-  end
-
-  describe '#thumbnail?' do
-    let(:resource) { instance_double(Embed::Purl::Resource) }
-    let(:file) { double('File') }
-    let(:resource_file) { described_class.new(resource, file, double('Rights')) }
-
-    it 'is false when the file is not an image' do
-      allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'not-an-image'))
-      expect(resource_file).not_to be_thumbnail
-    end
-
-    it 'is true when the parent resource type is listed as having file-level thumbnail behaviors (and it is an image)' do
-      allow(resource).to receive_messages(type: 'video')
-      allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'image/jp2'))
-      expect(resource_file).to be_thumbnail
-    end
-
-    it 'is false when the parent resource type is not listed as having file-level thumbnail behaviors (even if it is an image)' do
-      allow(resource).to receive_messages(type: 'book')
-      allow(file).to receive(:attributes).and_return('mimetype' => double(value: 'image/jp2'))
-      expect(resource_file).not_to be_thumbnail
-    end
-  end
-
-  describe 'previewable?' do
-    it 'returns true if the mimetype of the file is previewable' do
-      stub_purl_xml_response_with_fixture(image_purl_xml)
-      expect(Embed::Purl.new('12345').contents.first.files.first).to be_previewable
-    end
-
-    it 'returns false if the mimetype of the file is not previewable' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
-      expect(Embed::Purl.new('12345').contents.first.files.first).not_to be_previewable
+    it 'is the resource description' do
+      expect(resource_file.label).to eq 'The Resource Description'
     end
   end
 
@@ -200,81 +149,6 @@ RSpec.describe Embed::Purl::ResourceFile do
       it 'is true for identify world accessible objects' do
         stub_purl_xml_response_with_fixture(file_purl_xml)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:world_downloadable?)).to be true
-      end
-    end
-  end
-
-  describe 'image data' do
-    before { stub_purl_xml_response_with_fixture(image_purl_xml) }
-
-    let(:image) { Embed::Purl.new('12345').contents.first.files.first }
-
-    it 'gets the image height and width for image objects' do
-      expect(image.height).to eq '6123'
-      expect(image.width).to eq '5321'
-    end
-  end
-
-  describe 'file data' do
-    before { stub_purl_xml_response_with_fixture(file_purl_xml) }
-
-    let(:file) { Embed::Purl.new('12345').contents.first.files.first }
-
-    it 'gets the location data when available' do
-      expect(file.location).to eq 'http://stacks.stanford.edu/file/druid:abc123/Title_of_the_PDF.pdf'
-    end
-  end
-
-  describe 'duration' do
-    it 'gets duration string from videoData' do
-      f = double('File')
-      video_data_el = Nokogiri::XML("<videoData duration='P0DT1H2M3S'/>").root
-      expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
-      expect(f).to receive(:xpath).with('./*[@duration]').and_return([video_data_el])
-      rf = described_class.new(double('Resource'), f, double('Rights'))
-      expect(Embed::MediaDuration).to receive(:new).and_call_original
-      expect(rf.duration).to eq '1:02:03'
-    end
-
-    it 'gets duration string from audioData' do
-      f = double('File')
-      audio_data_el = Nokogiri::XML("<audioData duration='PT43S'/>").root
-      expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
-      expect(f).to receive(:xpath).with('./*[@duration]').and_return([audio_data_el])
-      rf = described_class.new(double('Resource'), f, double('Rights'))
-      expect(Embed::MediaDuration).to receive(:new).and_call_original
-      expect(rf.duration).to eq '0:43'
-    end
-
-    it 'nil when missing media data element' do
-      f = double('File')
-      allow(f).to receive(:xpath)
-      rf = described_class.new(double('Resource'), f, double('Rights'))
-      expect(Embed::MediaDuration).not_to receive(:new)
-      expect(rf.duration).to be_nil
-    end
-
-    it 'invalid format returns nil and logs an error' do
-      f = double('File')
-      audio_data_el = Nokogiri::XML("<audioData duration='invalid'/>").root
-      expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
-      expect(f).to receive(:xpath).with('./*[@duration]').and_return([audio_data_el])
-      rf = described_class.new(double('Resource'), f, double('Rights'))
-      expect(Honeybadger).to receive(:notify).with("ResourceFile#media duration ISO8601::Errors::UnknownPattern: 'invalid'")
-      expect(Embed::MediaDuration).to receive(:new).and_call_original
-      expect(rf.duration).to be_nil
-    end
-  end
-
-  describe 'video_data' do
-    context 'with valid videoData' do
-      before { stub_purl_xml_response_with_fixture(multi_media_purl) }
-
-      let(:video) { Embed::Purl.new('12345').contents.first.files.first }
-
-      it 'gets the height and width for the video object' do
-        expect(video.height).to eq '288'
-        expect(video.width).to eq '352'
       end
     end
   end

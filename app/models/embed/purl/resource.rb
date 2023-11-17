@@ -15,15 +15,11 @@ module Embed
       attr_reader :druid
 
       def type
-        @resource.attributes['type'].try(:value)
+        @resource.attributes['type'].value
       end
 
       def description
-        @description ||= if (label_element = @resource.xpath('./label').try(:text)).present?
-                           label_element
-                         else
-                           @resource.xpath('./attr[@name="label"]').try(:text)
-                         end
+        @description ||= @resource.xpath('./label').text
       end
 
       def three_dimensional?
@@ -33,7 +29,7 @@ module Embed
       # @return [Array<ResourceFile>]
       def files
         @files ||= @resource.xpath('./file').map do |file|
-          ResourceFile.new(self, file, @rights)
+          FileXmlDeserializer.new(druid, description, file, @rights).deserialize
         end
       end
 
@@ -43,12 +39,18 @@ module Embed
 
       # @return [ResourceFile]
       def primary_file
-        files.find(&:primary?)
+        files.find { |file| primary_types.include?(file.mimetype) }
+      end
+
+      def primary_types
+        @primary_types ||= Array(Settings.primary_mimetypes[type])
       end
 
       # @return [ResourceFile]
       def thumbnail
-        files.find(&:thumbnail?)
+        return unless Settings.resource_types_that_contain_thumbnails.include?(type)
+
+        files.find(&:image?)
       end
 
       # @return [Array<ResourceFile>]
