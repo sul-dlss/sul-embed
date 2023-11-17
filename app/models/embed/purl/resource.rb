@@ -43,7 +43,11 @@ module Embed
 
       # @return [ResourceFile]
       def primary_file
-        files.find(&:primary?)
+        files.find { |file| primary_types.include?(file.mimetype) }
+      end
+
+      def primary_types
+        @primary_types ||= Array(Settings.primary_mimetypes[type])
       end
 
       # @return [ResourceFile]
