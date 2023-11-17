@@ -17,9 +17,7 @@ module Embed
       attr_reader :resource
 
       def label
-        return resource.description if resource.description.present?
-
-        title
+        resource.description
       end
 
       def title
