@@ -44,10 +44,6 @@ module Embed
         title.split('/').last
       end
 
-      def thumbnail?
-        image? && Settings.resource_types_that_contain_thumbnails.include?(resource.type)
-      end
-
       def vtt?
         mimetype == 'text/vtt'
       end
