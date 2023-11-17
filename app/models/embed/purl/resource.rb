@@ -48,7 +48,9 @@ module Embed
 
       # @return [ResourceFile]
       def thumbnail
-        files.find(&:thumbnail?)
+        return unless Settings.resource_types_that_contain_thumbnails.include?(type)
+
+        files.find(&:image?)
       end
 
       # @return [ResourceFile]
