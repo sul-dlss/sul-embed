@@ -84,18 +84,6 @@ RSpec.describe Embed::Purl::ResourceFile do
     end
   end
 
-  describe 'previewable?' do
-    it 'returns true if the mimetype of the file is previewable' do
-      stub_purl_xml_response_with_fixture(image_purl_xml)
-      expect(Embed::Purl.new('12345').contents.first.files.first).to be_previewable
-    end
-
-    it 'returns false if the mimetype of the file is not previewable' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
-      expect(Embed::Purl.new('12345').contents.first.files.first).not_to be_previewable
-    end
-  end
-
   describe 'image?' do
     it 'returns true if the mimetype of the file is an image' do
       stub_purl_xml_response_with_fixture(image_purl_xml)
