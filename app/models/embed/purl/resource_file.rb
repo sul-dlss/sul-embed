@@ -46,10 +46,6 @@ module Embed
         title.split('/').last
       end
 
-      def primary?
-        Array(Settings.primary_mimetypes[resource.type]).include?(mimetype)
-      end
-
       def thumbnail?
         image? && Settings.resource_types_that_contain_thumbnails.include?(resource.type)
       end
