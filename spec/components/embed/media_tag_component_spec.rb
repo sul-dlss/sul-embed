@@ -234,4 +234,14 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
       expect(page).to have_css('track[src="https://stacks.stanford.edu/file/druid:bc123df4567/abc_123_cap.webvtt"]')
     end
   end
+
+  context 'with multiple captions with different languages' do
+    let(:purl) { video_purl_with_multiple_vtt }
+    let(:include_transcripts) { true }
+
+    it 'has track elements with multiple languages' do
+      expect(page).to have_css('track[srclang="en"][label="English"]')
+      expect(page).to have_css('track[srclang="ru"][label="Russian"]')
+    end
+  end
 end

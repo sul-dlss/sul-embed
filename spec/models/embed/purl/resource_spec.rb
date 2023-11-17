@@ -54,7 +54,7 @@ RSpec.describe Embed::Purl::Resource do
     let(:resource) { Embed::Purl.new('12345').contents.first }
 
     context 'when it has a vtt transcript' do
-      subject { resource.vtt.title }
+      subject { resource.vtt[0].title }
 
       before { stub_purl_response_with_fixture(video_purl_with_vtt) }
 
@@ -62,7 +62,7 @@ RSpec.describe Embed::Purl::Resource do
     end
 
     context 'when it does not have a vtt transcript' do
-      subject { resource.vtt }
+      subject { resource.vtt[0] }
 
       before { stub_purl_response_with_fixture(single_video_purl) }
 

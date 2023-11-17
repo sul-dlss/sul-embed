@@ -62,12 +62,18 @@ module Embed
         Settings.resource_types_that_contain_thumbnails.include?(resource.type)
       end
 
+      # Returns array of VTT files
       def vtt
-        resource.files.find(&:vtt?)
+        resource.files.select(&:vtt?)
       end
 
       def vtt?
         mimetype == 'text/vtt'
+      end
+
+      # Returns language if specified by language tag
+      def language
+        @file.attributes['language'].try(:value)
       end
 
       def pdf?

@@ -55,9 +55,9 @@ module Embed
         files.find(&:thumbnail?)
       end
 
-      # @return [ResourceFile]
+      # @return [Array<ResourceFile>]
       def vtt
-        files.find(&:vtt?)
+        files.select(&:vtt?)
       end
     end
   end

@@ -87,7 +87,27 @@ module Embed
     def transcript
       return unless render_captions?
 
-      tag.track(src: file.vtt.file_url, kind: 'captions', srclang: 'en', label: 'English')
+      # A video clip may have multiple caption files in different languages.
+      # We want to enable the user to select from any of these options.
+      # We also want the different language options to be listed alphabetically.
+      safe_join(
+        file.vtt.sort_by { |cfile| caption_language(cfile.language) }.map do |caption_file|
+          lang_code = caption_file.language || 'en'
+          lang_label = caption_language(lang_code)
+          tag.track(src: caption_file.file_url, kind: 'captions', srclang: lang_code, label: lang_label)
+        end
+      )
+    end
+
+    def caption_language(language_code)
+      case language_code
+      when 'en'
+        'English'
+      when 'ru'
+        'Russian'
+      else
+        'Caption'
+      end
     end
 
     def render_captions?
