@@ -44,7 +44,7 @@ export default class extends Controller {
   initializeVideoJSPlayer() {
     this.mediaTagTargets.forEach((mediaTag) => {
       mediaTag.classList.add('video-js', 'vjs-default-skin')
-      videojs(mediaTag.id).removeChild('textTrackSettings')
+      videojs(mediaTag.id)
     })
   }
 
