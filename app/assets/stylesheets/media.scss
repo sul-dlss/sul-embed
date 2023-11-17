@@ -241,7 +241,7 @@
   }
 
   .sul-embed-media-file {
-    height: calc(100% - 54px);;
+    height: 100%;
   }
 
   .button-label {
@@ -263,7 +263,7 @@
   .media-component-body {
     display: flex;
     flex-grow: 1;
-    height: 100%;
+    max-height: calc(100vh - 58px);
 
     .sul-embed-media-wrapper {
       display: inline-block;
