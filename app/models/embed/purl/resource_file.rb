@@ -57,10 +57,6 @@ module Embed
         @file.attributes['mimetype'].try(:value)
       end
 
-      def previewable?
-        preview_types.include?(mimetype)
-      end
-
       def image?
         mimetype =~ %r{image/jp2}i
       end
@@ -87,12 +83,6 @@ module Embed
 
       def world_downloadable?
         @rights.world_downloadable_file?(@file.attributes['id'])
-      end
-
-      private
-
-      def preview_types
-        ['image/jp2']
       end
     end
   end
