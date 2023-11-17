@@ -27,17 +27,9 @@ RSpec.describe Embed::Purl::ResourceFile do
   end
 
   describe '#file_url' do
-    let(:file_node) do
-      Nokogiri::XML(<<~XML
-        <file size="12345" mimetype="image/jp2" id="#{file_name}"/>
-      XML
-                   ).root
-    end
-
-    let(:file_name) { 'cool_file' }
-
+    let(:filename) { 'cool_file' }
     let(:resource) { instance_double(Embed::Purl::Resource, druid: 'abc123') }
-    let(:resource_file) { described_class.new('abc123', 'desc', file_node, nil) }
+    let(:resource_file) { described_class.new(druid: 'abc123', filename:) }
 
     it 'creates a stacks file url' do
       expect(resource_file.file_url).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file'
@@ -48,7 +40,7 @@ RSpec.describe Embed::Purl::ResourceFile do
     end
 
     context 'when there are special characters in the file name' do
-      let(:file_name) { '[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf' }
+      let(:filename) { '[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf' }
 
       it 'escapes them' do
         expect(resource_file.file_url).to eq 'https://stacks.stanford.edu/file/druid:abc123/%5BDissertation%5D%20micro-TEC%20vfinal%20%28for%20submission%29-augmented.pdf'
@@ -56,7 +48,7 @@ RSpec.describe Embed::Purl::ResourceFile do
     end
 
     context 'when there are literal slashes in the file name' do
-      let(:file_name) { 'path/to/[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf' }
+      let(:filename) { 'path/to/[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf' }
 
       it 'allows them' do
         expect(resource_file.file_url)
@@ -76,11 +68,10 @@ RSpec.describe Embed::Purl::ResourceFile do
   end
 
   describe '#label' do
-    let(:resource_file) { instance_double(Nokogiri::XML::Element, attributes: { 'id' => double(value: 'The File ID') }) }
+    let(:resource_file) { described_class.new(label: 'The Resource Description') }
 
     it 'is the resource description' do
-      file = described_class.new('abc123', 'The Resource Description', resource_file, double('rights'))
-      expect(file.label).to eq 'The Resource Description'
+      expect(resource_file.label).to eq 'The Resource Description'
     end
   end
 
@@ -159,42 +150,6 @@ RSpec.describe Embed::Purl::ResourceFile do
         stub_purl_xml_response_with_fixture(file_purl_xml)
         expect(Embed::Purl.new('12345').contents.first.files.all?(&:world_downloadable?)).to be true
       end
-    end
-  end
-
-  describe 'duration' do
-    let(:rf) { described_class.new('123', 'desc', f, double('Rights')) }
-    let(:f) { double('File') }
-
-    it 'gets duration string from videoData' do
-      video_data_el = Nokogiri::XML("<videoData duration='P0DT1H2M3S'/>").root
-      expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
-      expect(f).to receive(:xpath).with('./*[@duration]').and_return([video_data_el])
-      expect(Embed::MediaDuration).to receive(:new).and_call_original
-      expect(rf.duration).to eq '1:02:03'
-    end
-
-    it 'gets duration string from audioData' do
-      audio_data_el = Nokogiri::XML("<audioData duration='PT43S'/>").root
-      expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
-      expect(f).to receive(:xpath).with('./*[@duration]').and_return([audio_data_el])
-      expect(Embed::MediaDuration).to receive(:new).and_call_original
-      expect(rf.duration).to eq '0:43'
-    end
-
-    it 'nil when missing media data element' do
-      allow(f).to receive(:xpath)
-      expect(Embed::MediaDuration).not_to receive(:new)
-      expect(rf.duration).to be_nil
-    end
-
-    it 'invalid format returns nil and logs an error' do
-      audio_data_el = Nokogiri::XML("<audioData duration='invalid'/>").root
-      expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
-      expect(f).to receive(:xpath).with('./*[@duration]').and_return([audio_data_el])
-      expect(Honeybadger).to receive(:notify).with("ResourceFile#media duration ISO8601::Errors::UnknownPattern: 'invalid'")
-      expect(Embed::MediaDuration).to receive(:new).and_call_original
-      expect(rf.duration).to be_nil
     end
   end
 
