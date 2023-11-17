@@ -11,9 +11,6 @@
     <% end %>
 
     <% if viewer.show_download? %>
-      <% file_count = viewer.purl_object.downloadable_files.length %>
-      <% download_file_label = 'No files available for download' %>
-      <% download_file_label = "#{file_count} #{'file'.pluralize(file_count)} available for download" if file_count > 0 %>
       <button
         class='sul-embed-footer-tool sul-embed-btn sul-em bed-btn-toolbar sul-embed-btn-default sul-i-download-3'
         aria-expanded='false' aria-label='<%= download_file_label %>'
