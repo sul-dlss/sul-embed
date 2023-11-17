@@ -14,7 +14,7 @@ module Embed
         end
       end
 
-      attr_accessor :druid, :label, :filename, :mimetype, :size, :duration, :rights
+      attr_accessor :druid, :label, :filename, :mimetype, :size, :duration, :rights, :language
 
       alias title filename
 
@@ -40,11 +40,6 @@ module Embed
 
       def vtt?
         mimetype == 'text/vtt'
-      end
-
-      # Returns language if specified by language tag
-      def language
-        @file.attributes['language'].try(:value)
       end
 
       def pdf?

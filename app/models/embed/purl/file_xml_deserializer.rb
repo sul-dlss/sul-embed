@@ -14,6 +14,7 @@ module Embed
         @rights = rights
       end
 
+      # rubocop:disable Metrics/AbcSize
       def deserialize
         ResourceFile.new(
           druid: @druid,
@@ -21,13 +22,15 @@ module Embed
           filename: @file.attributes['id'].value,
           mimetype: @file.attributes['mimetype']&.value,
           size: @file.attributes['size']&.value.to_i,
-          rights: @rights
+          rights: @rights,
+          language: @file.attributes['language']&.value
         ) do |file|
           if @file.xpath('./*/@duration').present?
             file.duration = Embed::MediaDuration.new(@file.xpath('./*[@duration]').first).to_s
           end
         end
       end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end

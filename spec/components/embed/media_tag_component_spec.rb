@@ -230,7 +230,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     end
   end
 
-  context 'with multiple captions with different languages' do
+  context 'with captions for multiple languages' do
     let(:purl) { video_purl_with_multiple_vtt }
     let(:include_transcripts) { true }
 
@@ -240,11 +240,11 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     end
   end
 
-  context 'with caption file which has no specified language' do
+  context 'with caption with no specified language' do
     let(:purl) { video_purl_with_vtt_no_language }
     let(:include_transcripts) { true }
 
-    it 'has track elements with multiple languages' do
+    it 'has a track element with code and label for English' do
       expect(page).to have_css('track[srclang="en"][label="English"]')
     end
   end
