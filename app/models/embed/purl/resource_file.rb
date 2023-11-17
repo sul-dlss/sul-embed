@@ -12,10 +12,7 @@ module Embed
         @description = description
         @file = file
         @rights = rights
-        @index = nil
       end
-
-      attr_accessor :index
 
       def label
         @description
