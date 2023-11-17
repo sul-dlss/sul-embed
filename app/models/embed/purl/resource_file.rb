@@ -77,7 +77,7 @@ module Embed
 
       # @return [Integer]
       def size
-        @file.attributes['size'].try(:value).to_i
+        @file.attributes['size']&.value.to_i
       end
 
       # unused (9/2016) - candidate for removal?
