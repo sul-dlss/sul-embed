@@ -15,7 +15,7 @@ module Embed
       attr_reader :druid
 
       def type
-        @resource.attributes['type'].try(:value)
+        @resource.attributes['type'].value
       end
 
       def description
