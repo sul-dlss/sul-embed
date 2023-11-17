@@ -15,7 +15,7 @@
 <ul role="group">
   <% dir.files.each do |child_file| %>
     <li role="treeitem" data-hierarchy-type="file">
-      <%= render 'embed/body/resource_file', file: child_file, viewer: viewer, resource: child_file.resource %>
+      <%= render 'embed/body/resource_file', file: child_file, viewer: viewer %>
     </li>
   <% end %>
   <% dir.dirs.each do |child_dir| %>

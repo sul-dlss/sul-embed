@@ -3,21 +3,22 @@
 module Embed
   class Purl
     class ResourceFile
-      # @param [Embed::Purl::Resource] resource
+      # @param [String] druid the identifier of the resource this file belongs to.
+      # @param [String] description the label for this file
       # @param [Nokogiri::XML::Element] file
       # @param [Dor::RightsAuth] rights
-      def initialize(resource, file, rights)
-        @resource = resource
+      def initialize(druid, description, file, rights)
+        @druid = druid
+        @description = description
         @file = file
         @rights = rights
         @index = nil
       end
 
       attr_accessor :index
-      attr_reader :resource
 
       def label
-        resource.description
+        @description
       end
 
       def title
@@ -37,7 +38,7 @@ module Embed
       end
 
       def stacks_url
-        "#{Settings.stacks_url}/file/druid:#{resource.druid}"
+        "#{Settings.stacks_url}/file/druid:#{@druid}"
       end
 
       def hierarchical_title

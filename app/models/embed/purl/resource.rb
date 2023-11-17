@@ -29,7 +29,7 @@ module Embed
       # @return [Array<ResourceFile>]
       def files
         @files ||= @resource.xpath('./file').map do |file|
-          ResourceFile.new(self, file, @rights)
+          ResourceFile.new(druid, description, file, @rights)
         end
       end
 

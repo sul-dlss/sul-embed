@@ -37,7 +37,7 @@ RSpec.describe Embed::Purl::ResourceFile do
     let(:file_name) { 'cool_file' }
 
     let(:resource) { instance_double(Embed::Purl::Resource, druid: 'abc123') }
-    let(:resource_file) { described_class.new(resource, file_node, nil) }
+    let(:resource_file) { described_class.new('abc123', 'desc', file_node, nil) }
 
     it 'creates a stacks file url' do
       expect(resource_file.file_url).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file'
@@ -76,12 +76,10 @@ RSpec.describe Embed::Purl::ResourceFile do
   end
 
   describe '#label' do
-    let(:resource) { instance_double(Embed::Purl::Resource, description: nil) }
-    let(:resource_with_description) { instance_double(Embed::Purl::Resource, description: 'The Resource Description') }
     let(:resource_file) { instance_double(Nokogiri::XML::Element, attributes: { 'id' => double(value: 'The File ID') }) }
 
     it 'is the resource description' do
-      file = described_class.new(resource_with_description, resource_file, double('rights'))
+      file = described_class.new('abc123', 'The Resource Description', resource_file, double('rights'))
       expect(file.label).to eq 'The Resource Description'
     end
   end
@@ -177,40 +175,35 @@ RSpec.describe Embed::Purl::ResourceFile do
   end
 
   describe 'duration' do
+    let(:rf) { described_class.new('123', 'desc', f, double('Rights')) }
+    let(:f) { double('File') }
+
     it 'gets duration string from videoData' do
-      f = double('File')
       video_data_el = Nokogiri::XML("<videoData duration='P0DT1H2M3S'/>").root
       expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
       expect(f).to receive(:xpath).with('./*[@duration]').and_return([video_data_el])
-      rf = described_class.new(double('Resource'), f, double('Rights'))
       expect(Embed::MediaDuration).to receive(:new).and_call_original
       expect(rf.duration).to eq '1:02:03'
     end
 
     it 'gets duration string from audioData' do
-      f = double('File')
       audio_data_el = Nokogiri::XML("<audioData duration='PT43S'/>").root
       expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
       expect(f).to receive(:xpath).with('./*[@duration]').and_return([audio_data_el])
-      rf = described_class.new(double('Resource'), f, double('Rights'))
       expect(Embed::MediaDuration).to receive(:new).and_call_original
       expect(rf.duration).to eq '0:43'
     end
 
     it 'nil when missing media data element' do
-      f = double('File')
       allow(f).to receive(:xpath)
-      rf = described_class.new(double('Resource'), f, double('Rights'))
       expect(Embed::MediaDuration).not_to receive(:new)
       expect(rf.duration).to be_nil
     end
 
     it 'invalid format returns nil and logs an error' do
-      f = double('File')
       audio_data_el = Nokogiri::XML("<audioData duration='invalid'/>").root
       expect(f).to receive(:xpath).with('./*/@duration').and_return(['something'])
       expect(f).to receive(:xpath).with('./*[@duration]').and_return([audio_data_el])
-      rf = described_class.new(double('Resource'), f, double('Rights'))
       expect(Honeybadger).to receive(:notify).with("ResourceFile#media duration ISO8601::Errors::UnknownPattern: 'invalid'")
       expect(Embed::MediaDuration).to receive(:new).and_call_original
       expect(rf.duration).to be_nil
