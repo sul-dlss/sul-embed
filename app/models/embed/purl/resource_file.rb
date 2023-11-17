@@ -70,7 +70,6 @@ module Embed
         preview_types.include?(mimetype)
       end
 
-      # unused (9/2016) - candidate for removal?
       def image?
         mimetype =~ %r{image/jp2}i
       end
@@ -80,24 +79,9 @@ module Embed
         @file.attributes['size'].try(:value).to_i
       end
 
-      # unused (9/2016) - candidate for removal?
-      def height
-        @file.xpath('./*/@height').first.try(:text) if @file.xpath('./*/@height').present?
-      end
-
-      # unused (9/2016) - candidate for removal?
-      def width
-        @file.xpath('./*/@width').first.try(:text) if @file.xpath('./*/@width').present?
-      end
-
       def duration
         md = Embed::MediaDuration.new(@file.xpath('./*[@duration]').first) if @file.xpath('./*/@duration').present?
         md&.to_s
-      end
-
-      # unused (9/2016) - candidate for removal?
-      def location
-        @file.xpath('./location[@type="url"]').first.try(:text) if @file.xpath('./location[@type="url"]').present?
       end
 
       def stanford_only?
