@@ -53,18 +53,8 @@ module Embed
         self.class.show_download? && !@request.hide_download?
       end
 
-      # Should the download file count be shown (when download toolbar is shown)?
-      def show_download_count?
-        self.class.show_download_count?
-      end
-
       def self.show_download?
         false
-      end
-
-      # default is to show the download file count (when download toolbar is shown)
-      def self.show_download_count?
-        true
       end
 
       def tooltip_text(file)

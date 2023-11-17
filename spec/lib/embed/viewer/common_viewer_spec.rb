@@ -65,15 +65,6 @@ RSpec.describe Embed::Viewer::CommonViewer do
     end
   end
 
-  describe '#show_download_count?' do
-    it 'true for non-image viewers' do
-      expect(file_viewer).to be_show_download_count
-      expect(geo_viewer).to be_show_download_count
-      expect(media_viewer).to be_show_download_count
-      expect(was_seed_viewer).to be_show_download_count
-    end
-  end
-
   describe '#iframe_title' do
     it 'determines the title from the class name' do
       expect(file_viewer.iframe_title).to eq 'File viewer'
