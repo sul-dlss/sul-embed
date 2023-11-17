@@ -16,7 +16,13 @@ RSpec.describe Embed::Purl::ResourceXmlDeserializer do
       ).xpath('//resource').first
     end
 
-    let(:resource) { described_class.new('abc123', resource_element, nil).deserialize }
+    let(:rights) do
+      instance_double(Dor::RightsAuth, stanford_only_rights_for_file: [false, nil],
+                                       restricted_by_location?: false,
+                                       world_downloadable_file?: true)
+    end
+
+    let(:resource) { described_class.new('abc123', resource_element, rights).deserialize }
 
     it 'creates a resource' do
       expect(resource.druid).to eq 'abc123'
