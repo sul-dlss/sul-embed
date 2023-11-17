@@ -3,24 +3,20 @@
 module Embed
   class Purl
     class ResourceFile
-      # @param [String] druid the identifier of the resource this file belongs to.
-      # @param [String] description the label for this file
-      # @param [Nokogiri::XML::Element] file
-      # @param [Dor::RightsAuth] rights
-      def initialize(druid, description, file, rights)
-        @druid = druid
-        @description = description
-        @file = file
-        @rights = rights
+      def initialize(attributes = {})
+        self.attributes = attributes
+        yield(self) if block_given?
       end
 
-      def label
-        @description
+      def attributes=(hash)
+        hash.each do |key, value|
+          public_send("#{key}=", value)
+        end
       end
 
-      def title
-        @file.attributes['id'].try(:value)
-      end
+      attr_accessor :druid, :label, :filename, :mimetype, :size, :duration, :rights
+
+      alias title filename
 
       ##
       # Creates a file url for stacks
@@ -50,22 +46,8 @@ module Embed
         mimetype == 'application/pdf'
       end
 
-      def mimetype
-        @file.attributes['mimetype'].try(:value)
-      end
-
       def image?
         mimetype =~ %r{image/jp2}i
-      end
-
-      # @return [Integer]
-      def size
-        @file.attributes['size']&.value.to_i
-      end
-
-      def duration
-        md = Embed::MediaDuration.new(@file.xpath('./*[@duration]').first) if @file.xpath('./*/@duration').present?
-        md&.to_s
       end
 
       def stanford_only?
@@ -79,7 +61,7 @@ module Embed
       end
 
       def world_downloadable?
-        @rights.world_downloadable_file?(@file.attributes['id'])
+        @rights.world_downloadable_file?(title)
       end
     end
   end
