@@ -32,7 +32,7 @@ module Embed
 
     def contents
       @contents ||= ng_xml.xpath('//contentMetadata/resource').map do |resource|
-        Purl::Resource.new(@druid, resource, rights)
+        ResourceXmlDeserializer.new(druid, resource, rights).deserialize
       end
     end
 

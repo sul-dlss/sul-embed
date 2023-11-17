@@ -20,35 +20,35 @@ RSpec.describe Embed::Purl::Resource do
   end
 
   describe '#thumbnail' do
-    let(:resource) { described_class.new('12345', resource_element, instance_double(Dor::RightsAuth)) }
+    let(:resource) do
+      described_class.new(
+        druid: '12345',
+        type: 'file',
+        description: 'great',
+        files: [
+          Embed::Purl::ResourceFile.new(filename: 'Non thumb', mimetype: 'image/tiff'),
+          Embed::Purl::ResourceFile.new(filename: 'The thumb', mimetype: 'image/jp2')
+        ]
+      )
+    end
 
     context 'when the resource has a thumbnail' do
-      let(:resource_element) do
-        Nokogiri::XML(
-          <<~XML
-            <resource sequence="1" type="file">
-              <file id="Non thumb" mimetype="image/tiff" size="2799535" />
-              <file id="The Thumb" mimetype="image/jp2" size="2799535" />
-            </resource>
-          XML
-        ).xpath('//resource').first
-      end
-
       it 'is the thumbnail' do
-        expect(resource.thumbnail.title).to eq 'The Thumb'
+        expect(resource.thumbnail.title).to eq 'The thumb'
       end
     end
 
     context 'when the resource does not have a file specific thumbnail' do
-      let(:resource_element) do
-        Nokogiri::XML(
-          <<~XML
-            <resource sequence="1" type="file">
-              <file id="Non thumb" mimetype="image/tiff" size="2799535" />
-              <file id="Another non Thumb" mimetype="audio/aiff" size="2799535" />
-            </resource>
-          XML
-        ).xpath('//resource').first
+      let(:resource) do
+        described_class.new(
+          druid: '12345',
+          type: 'file',
+          description: 'bland',
+          files: [
+            Embed::Purl::ResourceFile.new(filename: 'Non thumb', mimetype: 'image/tiff'),
+            Embed::Purl::ResourceFile.new(filename: 'Another non Thumb', mimetype: 'audio/aiff')
+          ]
+        )
       end
 
       it 'is nil' do
