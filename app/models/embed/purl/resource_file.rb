@@ -47,15 +47,11 @@ module Embed
       end
 
       def primary?
-        primary_types = Settings.primary_mimetypes[resource.type] || []
-        !thumbnail? && primary_types.include?(mimetype)
+        Array(Settings.primary_mimetypes[resource.type]).include?(mimetype)
       end
 
       def thumbnail?
-        return true if resource.object_thumbnail?
-        return false unless image?
-
-        Settings.resource_types_that_contain_thumbnails.include?(resource.type)
+        image? && Settings.resource_types_that_contain_thumbnails.include?(resource.type)
       end
 
       def vtt

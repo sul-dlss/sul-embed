@@ -1129,7 +1129,7 @@ module PurlFixtures
     XML
   end
 
-  def file_and_object_level_thumb_purl
+  def file_thumb_purl
     <<-XML
       <publicObject>
         <contentMetadata type="file">
@@ -1147,9 +1147,6 @@ module PurlFixtures
           </resource>
           <resource id="book_1" type="image">
             <file id="book1.jp2" mimetype="image/jp2" size="77041"></file>
-          </resource>
-          <resource id="thumb_1" type="thumb" thumb="yes">
-            <file id="thumb.jp2" mimetype="image/jp2" size="7722"></file>
           </resource>
         </contentMetadata>
       </publicObject>
