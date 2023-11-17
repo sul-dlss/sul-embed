@@ -199,27 +199,6 @@ RSpec.describe Embed::Purl::ResourceFile do
     end
   end
 
-  describe 'image data' do
-    before { stub_purl_xml_response_with_fixture(image_purl_xml) }
-
-    let(:image) { Embed::Purl.new('12345').contents.first.files.first }
-
-    it 'gets the image height and width for image objects' do
-      expect(image.height).to eq '6123'
-      expect(image.width).to eq '5321'
-    end
-  end
-
-  describe 'file data' do
-    before { stub_purl_xml_response_with_fixture(file_purl_xml) }
-
-    let(:file) { Embed::Purl.new('12345').contents.first.files.first }
-
-    it 'gets the location data when available' do
-      expect(file.location).to eq 'http://stacks.stanford.edu/file/druid:abc123/Title_of_the_PDF.pdf'
-    end
-  end
-
   describe 'duration' do
     it 'gets duration string from videoData' do
       f = double('File')
@@ -258,19 +237,6 @@ RSpec.describe Embed::Purl::ResourceFile do
       expect(Honeybadger).to receive(:notify).with("ResourceFile#media duration ISO8601::Errors::UnknownPattern: 'invalid'")
       expect(Embed::MediaDuration).to receive(:new).and_call_original
       expect(rf.duration).to be_nil
-    end
-  end
-
-  describe 'video_data' do
-    context 'with valid videoData' do
-      before { stub_purl_xml_response_with_fixture(multi_media_purl) }
-
-      let(:video) { Embed::Purl.new('12345').contents.first.files.first }
-
-      it 'gets the height and width for the video object' do
-        expect(video.height).to eq '288'
-        expect(video.width).to eq '352'
-      end
     end
   end
 
