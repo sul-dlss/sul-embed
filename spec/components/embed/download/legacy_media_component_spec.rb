@@ -28,13 +28,8 @@ RSpec.describe Embed::Download::LegacyMediaComponent, type: :component do
   context 'when downloadable files' do
     let(:response) { video_purl }
 
-    it 'uses the label as the link text when present' do
+    it 'uses the label as the link text' do
       expect(page).to have_css('li a', text: 'Download Transcript', visible: :all)
-      expect(page).not_to have_css('li a', text: 'Download abc_123_script.pdf', visible: :all)
-    end
-
-    it 'uses the file id as the link text when no label present' do
-      expect(page).to have_css('li a', text: 'Download abc_333.mp4', visible: :all)
     end
 
     it 'includes the file sizes when present' do

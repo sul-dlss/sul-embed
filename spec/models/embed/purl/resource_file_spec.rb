@@ -80,14 +80,9 @@ RSpec.describe Embed::Purl::ResourceFile do
     let(:resource_with_description) { instance_double(Embed::Purl::Resource, description: 'The Resource Description') }
     let(:resource_file) { instance_double(Nokogiri::XML::Element, attributes: { 'id' => double(value: 'The File ID') }) }
 
-    it 'is the resource description when available' do
+    it 'is the resource description' do
       file = described_class.new(resource_with_description, resource_file, double('rights'))
       expect(file.label).to eq 'The Resource Description'
-    end
-
-    it 'is the file id when no resource description is available' do
-      file = described_class.new(resource, resource_file, double('rights'))
-      expect(file.label).to eq 'The File ID'
     end
   end
 

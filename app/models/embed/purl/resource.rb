@@ -19,11 +19,7 @@ module Embed
       end
 
       def description
-        @description ||= if (label_element = @resource.xpath('./label').try(:text)).present?
-                           label_element
-                         else
-                           @resource.xpath('./attr[@name="label"]').try(:text)
-                         end
+        @description ||= @resource.xpath('./label').text
       end
 
       def three_dimensional?
