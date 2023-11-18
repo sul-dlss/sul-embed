@@ -24,7 +24,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     render
   end
 
-  context 'with the first resource' do
+  context 'with a location restricted video' do
     it 'includes the file label as a data attribute' do
       expect(page).to have_css('[data-file-label="First Video"]')
     end
@@ -48,9 +48,22 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
       auth_url = page.all('video[data-auth-url]', visible: :all).first['data-auth-url']
       expect(auth_url).to eq(Settings.streaming.auth_url)
     end
+
+    it 'includes a 100% height attribute' do
+      expect(page).to have_css("video[height='100%']", visible: :all)
+    end
+
+    it 'shows location restricted messages to the screen reader' do
+      expect(page).to have_css('video[aria-labelledby="access-restricted-message-div-0"]', visible: :all)
+      expect(page).to have_css('div#access-restricted-message-div-0')
+    end
+
+    it 'shows a location restricted message in place of the video' do
+      expect(page).to have_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')
+    end
   end
 
-  context 'with the second resource' do
+  context 'with a stanford only video' do
     let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
     let(:resource) { Embed::Purl.new(druid).contents.second }
 
@@ -73,7 +86,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     end
   end
 
-  context 'with the fourth resource' do
+  context 'with a world access video' do
     let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 3) }
     let(:resource) { Embed::Purl.new(druid).contents.fourth }
 
@@ -86,41 +99,23 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
       auth_url = page.all('video[data-auth-url]', visible: :all).first['data-auth-url']
       expect(auth_url).to eq(Settings.streaming.auth_url)
     end
-  end
-
-  context 'with a single video' do
-    let(:purl) { single_video_purl }
-
-    it 'includes a 100% height attribute' do
-      expect(page).to have_css("video[height='100%']", visible: :all)
-    end
-
-    it 'shows location restricted messages to the screen reader' do
-      expect(page).to have_css('video[aria-labelledby="access-restricted-message-div-0"]', visible: :all)
-      expect(page).to have_css('div#access-restricted-message-div-0')
-    end
-
-    it 'shows a location restricted message in place of the video' do
-      expect(page).to have_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')
-    end
-  end
-
-  context 'with a single video open to the world' do
-    let(:purl) { video_purl_unrestricted }
 
     it 'does not show any location restricted messages' do
       expect(page).not_to have_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')
     end
   end
 
-  context 'with file and object level thumbnails' do
+  context 'with thumbnails' do
     let(:purl) { file_thumb_purl }
 
-    it 'does not include thumbnails' do
-      expect(page).not_to have_css('[data-file-label="audio_1.jp2"]', visible: :all)
+    context 'with an audio resource' do
+      it 'includes the file level thumbnail data-attribute' do
+        object = page.find('[data-slider-object="0"]')
+        expect(object['data-thumbnail-url']).to match(%r{%2Faudio_1/square/75,75/})
+      end
     end
 
-    context 'with the second resource' do
+    context 'with a video resource' do
       let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
       let(:resource) { Embed::Purl.new(druid).contents.second }
 
@@ -130,18 +125,18 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
       end
     end
 
-    context 'with the third resource' do
+    context 'with a resource that has a jpg, but no jp2' do
       let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 2) }
       let(:resource) { Embed::Purl.new(druid).contents.third }
 
-      it 'does not mistakenly use secondary files like jpgs as thumbnails' do
+      it 'does not use secondary files like jpgs as thumbnails' do
         object = page.find('[data-slider-object="2"]')
         expect(object['data-thumbnail-url']).to be_blank
       end
     end
   end
 
-  context 'with previewable files within media objects' do
+  context 'with image files within media objects' do
     let(:purl) { video_purl_with_image }
     let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
     let(:resource) { Embed::Purl.new(druid).contents.second }
@@ -154,12 +149,6 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
       object = page.find('[data-slider-object="1"]')
 
       expect(object['style']).to include 'overflow-y: scroll'
-    end
-  end
-
-  context 'with video' do
-    it 'renders a video tag in the provided document' do
-      expect(page).to have_css('video', visible: :all)
     end
   end
 
