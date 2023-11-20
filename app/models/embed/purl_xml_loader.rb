@@ -28,8 +28,7 @@ module Embed
         citation_only:,
         stanford_only_unrestricted:,
         controlled_digital_lending:,
-        public:,
-        rights:
+        public:
       }
     end
 

@@ -3,7 +3,6 @@
 module Embed
   class Purl
     require 'embed/media_duration'
-    delegate :world_downloadable_file?, :stanford_only_downloadable_file?, to: :rights
 
     def initialize(attributes = {})
       self.attributes = attributes
@@ -17,7 +16,7 @@ module Embed
 
     attr_accessor :druid, :type, :title, :use_and_reproduction, :copyright, :contents, :collections,
                   :license, :envelope, :embargo_release_date, :archived_site_url, :external_url,
-                  :embargoed, :citation_only, :stanford_only_unrestricted, :public, :controlled_digital_lending, :rights
+                  :embargoed, :citation_only, :stanford_only_unrestricted, :public, :controlled_digital_lending
 
     alias embargoed? embargoed
     alias citation_only? citation_only
@@ -53,7 +52,7 @@ module Embed
 
     def downloadable_files
       all_resource_files.select do |rf|
-        world_downloadable_file?(rf.title) || stanford_only_downloadable_file?(rf.title)
+        rf.world_downloadable? || rf.stanford_only_downloadable?
       end
     end
 
