@@ -13,18 +13,17 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   end
 
   let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 0) }
-  let(:resource) { Embed::Purl.new(druid).contents.first }
   let(:druid) { 'bc123df4567' }
-  let(:purl) { video_purl }
   let(:include_transcripts) { false }
   let(:many_primary_files) { false }
 
   before do
-    stub_purl_xml_response_with_fixture(purl)
-    render
+    puts render
   end
 
   context 'with a location restricted video' do
+    let(:resource) { build(:resource, :video, files: [build(:resource_file, :video, :location_restricted)]) }
+
     it 'includes the file label as a data attribute' do
       expect(page).to have_css('[data-file-label="First Video"]')
     end
@@ -65,11 +64,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
 
   context 'with a stanford only video' do
     let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
-    let(:resource) { Embed::Purl.new(druid).contents.second }
-
-    it 'includes the file label as a data attribute' do
-      expect(page).to have_css('[data-file-label="Second Video"]')
-    end
+    let(:resource) { build(:resource, :video, files: [build(:resource_file, :video, :stanford_only)]) }
 
     it 'includes a data attribute for the thumb-slider bar' do
       expect(page).to have_css('[data-slider-object="1"]')
@@ -88,7 +83,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
 
   context 'with a world access video' do
     let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 3) }
-    let(:resource) { Embed::Purl.new(druid).contents.fourth }
+    let(:resource) { build(:resource, :video, files: [build(:resource_file, :video, :world_downloadable)]) }
 
     it 'includes a data-src attribute for the dash player' do
       expect(page).to have_css('[data-src]', visible: :all)
@@ -106,9 +101,9 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   end
 
   context 'with thumbnails' do
-    let(:purl) { file_thumb_purl }
-
     context 'with an audio resource' do
+      let(:resource) { build(:resource, :audio) }
+
       it 'includes the file level thumbnail data-attribute' do
         object = page.find('[data-slider-object="0"]')
         expect(object['data-thumbnail-url']).to match(%r{%2Faudio_1/square/75,75/})
@@ -116,37 +111,37 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     end
 
     context 'with a video resource' do
-      let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
-      let(:resource) { Embed::Purl.new(druid).contents.second }
+      let(:resource) { build(:resource, :video) }
 
       it 'includes the file level thumbnail data-attribute when present' do
-        object = page.find('[data-slider-object="1"]')
+        object = page.find('[data-slider-object="0"]')
         expect(object['data-thumbnail-url']).to match(%r{%2Fvideo_1/square/75,75/})
       end
     end
 
     context 'with a resource that has a jpg, but no jp2' do
-      let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 2) }
-      let(:resource) { Embed::Purl.new(druid).contents.third }
+      let(:resource) do
+        build(:resource, :video, files: [build(:resource_file, :video), build(:resource_file, :image, mimetype: 'image/jpeg')])
+      end
 
       it 'does not use secondary files like jpgs as thumbnails' do
-        object = page.find('[data-slider-object="2"]')
+        object = page.find('[data-slider-object="0"]')
         expect(object['data-thumbnail-url']).to be_blank
       end
     end
   end
 
   context 'with image files within media objects' do
-    let(:purl) { video_purl_with_image }
-    let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
-    let(:resource) { Embed::Purl.new(druid).contents.second }
+    let(:resource) do
+      build(:resource, :image, files: [build(:resource_file, :image)])
+    end
 
     it 'are included as top level objects' do
       expect(page).to have_css('div img.sul-embed-media-thumb')
     end
 
     it 'are scrollable' do
-      object = page.find('[data-slider-object="1"]')
+      object = page.find('[data-slider-object="0"]')
 
       expect(object['style']).to include 'overflow-y: scroll'
     end
@@ -154,9 +149,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
 
   describe 'with a poster' do
     context 'when a file level thumbnail is present' do
-      let(:purl) { file_thumb_purl }
-      let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
-      let(:resource) { Embed::Purl.new(druid).contents.second }
+      let(:resource) { build(:resource, :video) }
 
       it 'includes a poster attribute' do
         expect(page).to have_css('video[poster]', visible: :all)
@@ -166,10 +159,13 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     end
 
     context 'when the file-level thumbnail is downloadable' do
-      let(:purl) { file_and_object_level_downloadable_thumb_purl }
-
-      let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
-      let(:resource) { Embed::Purl.new(druid).contents.second }
+      let(:resource) do
+        build(:resource, :video,
+              files: [
+                build(:resource_file, :video),
+                build(:resource_file, :image, :world_downloadable, filename: 'video_1.jp2')
+              ])
+      end
 
       it 'uses a large thumbnail' do
         video = page.find('video[poster]', visible: :all)
@@ -178,6 +174,11 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     end
 
     context 'when a file level thumbnail is not present' do
+      let(:resource) do
+        build(:resource, :video,
+              files: [build(:resource_file, :video)])
+      end
+
       it 'does not include a poster attribute' do
         expect(page).not_to have_css('video[poster]', visible: :all)
       end
@@ -185,23 +186,27 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   end
 
   context 'with audio' do
-    let(:purl) { audio_purl }
+    let(:resource) { build(:resource, :audio) }
 
     it 'renders an audio tag in the provided document' do
       expect(page).to have_css('audio', visible: :all)
     end
 
     context 'when a file-level thumbnail is present' do
-      let(:purl) { audio_purl_with_thumbnail }
+      let(:resource) { build(:resource, :audio) }
 
       it 'includes a poster attribute pointing at the thumbnail' do
         expect(page).to have_css('audio[poster]', visible: :all)
         audio = page.find('audio[poster]', visible: :all)
-        expect(audio['poster']).to match(%r{/bc123df4567%2Fabc_123_thumb/full/})
+        expect(audio['poster']).to match(%r{/bc123df4567%2Faudio_1/full/})
       end
     end
 
     context 'when a file level thumbnail is not present' do
+      let(:resource) do
+        build(:resource, :audio, files: [build(:resource_file, :audio)])
+      end
+
       it 'includes the default poster attribute' do
         expect(page).to have_css('audio[poster]', visible: :all)
         audio = page.find('audio[poster]', visible: :all)
@@ -211,7 +216,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   end
 
   context 'with captions' do
-    let(:purl) { video_purl_with_vtt }
+    let(:resource) { build(:resource, :video) }
     let(:include_transcripts) { true }
 
     it 'has a track element' do

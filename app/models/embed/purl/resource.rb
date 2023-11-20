@@ -7,14 +7,18 @@ module Embed
       # @param [String] type the resource type
       # @param [String] description the resource description
       # @param [Array<ResourceFile>] files
-      def initialize(druid:, type:, description:, files: [])
-        @druid = druid
-        @type = type
-        @description = description
-        @files = files
+      def initialize(attributes = {})
+        @files = []
+        self.attributes = attributes
       end
 
-      attr_reader :druid, :type, :description, :files
+      def attributes=(hash)
+        hash.each do |key, value|
+          public_send("#{key}=", value)
+        end
+      end
+
+      attr_accessor :druid, :type, :description, :files
 
       def three_dimensional?
         type == '3d'
