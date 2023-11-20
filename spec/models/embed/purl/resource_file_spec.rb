@@ -75,6 +75,22 @@ RSpec.describe Embed::Purl::ResourceFile do
     end
   end
 
+  describe '#label_or_filename' do
+    subject { resource_file.label_or_filename }
+
+    context 'with a label' do
+      let(:resource_file) { described_class.new(label: 'The Resource Description') }
+
+      it { is_expected.to eq 'The Resource Description' }
+    end
+
+    context 'without a blank label' do
+      let(:resource_file) { described_class.new(label: '', filename: 'llama.mp3') }
+
+      it { is_expected.to eq 'llama.mp3' }
+    end
+  end
+
   describe 'image?' do
     it 'returns true if the mimetype of the file is an image' do
       stub_purl_xml_response_with_fixture(image_purl_xml)

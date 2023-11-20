@@ -19,7 +19,7 @@ module Embed
                 action: 'thumbnail-clicked@window->media-wrapper#toggleVisibility',
                 stanford_only: @file.stanford_only?,
                 location_restricted: @file.location_restricted?,
-                file_label: @file.label,
+                file_label: @file.label_or_filename,
                 slider_object: @file_index,
                 thumbnail_url: @thumbnail.presence,
                 default_icon: @type == 'audio' ? 'sul-i-file-music-1' : 'sul-i-file-video-3',

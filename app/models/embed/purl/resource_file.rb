@@ -38,6 +38,10 @@ module Embed
         "#{Settings.stacks_url}/file/druid:#{@druid}"
       end
 
+      def label_or_filename
+        label.presence || filename
+      end
+
       def hierarchical_title
         title.split('/').last
       end
