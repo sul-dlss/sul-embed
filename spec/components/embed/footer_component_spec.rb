@@ -10,8 +10,7 @@ RSpec.describe Embed::FooterComponent, type: :component do
   let(:viewer) { Embed::Viewer::Geo.new(request) }
 
   before do
-    allow(request).to receive(:purl_object).and_return(object)
-    allow(object).to receive(:response).and_return(image_purl_xml)
+    stub_purl_xml_response_with_fixture(image_purl_xml)
     render_inline(described_class.new(viewer:))
   end
 

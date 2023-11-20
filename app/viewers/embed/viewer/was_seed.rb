@@ -3,7 +3,7 @@
 module Embed
   module Viewer
     class WasSeed < CommonViewer
-      delegate :druid, :archived_site_url, :external_url, to: :@purl_object
+      delegate :druid, :external_url, to: :@purl_object
 
       def component
         WasSeedComponent
@@ -43,6 +43,12 @@ module Embed
 
       def external_url_text
         'View this in the Stanford Web Archive Portal'
+      end
+
+      def archived_site_url
+        @purl_object.archived_site_url.tap do |url|
+          Honeybadger.notify("WasSeed#archived_site_url blank for #{druid}") if url.blank?
+        end
       end
 
       private

@@ -9,7 +9,6 @@ RSpec.describe Embed::WasSeedComponent, type: :component do
   let(:request) do
     Embed::Request.new(url: 'http://purl.stanford.edu/abc123')
   end
-  let(:object) { Embed::Purl.find('12345') }
   let(:viewer) { Embed::Viewer::WasSeed.new(request) }
 
   context 'with current timemap behavior' do
@@ -20,8 +19,7 @@ RSpec.describe Embed::WasSeedComponent, type: :component do
     before do
       allow_any_instance_of(Embed::WasTimeMap).to receive(:redirectable_connection).and_return(fake_connection)
       expect(fake_connection).to receive(:get).once
-      allow(request).to receive(:purl_object).and_return(object)
-      allow(object).to receive(:response).and_return(was_seed_purl)
+      stub_purl_xml_response_with_fixture(was_seed_purl)
       allow(viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
       render_inline(described_class.new(viewer:))
     end
@@ -52,8 +50,7 @@ RSpec.describe Embed::WasSeedComponent, type: :component do
     before do
       allow_any_instance_of(Embed::WasTimeMap).to receive(:redirectable_connection).and_return(fake_connection)
       expect(fake_connection).to receive(:get).once
-      allow(request).to receive(:purl_object).and_return(object)
-      allow(object).to receive(:response).and_return(was_seed_purl)
+      stub_purl_xml_response_with_fixture(was_seed_purl)
       allow(viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
       render_inline(described_class.new(viewer:))
     end

@@ -9,6 +9,10 @@ RSpec.describe Embed::Viewer::M3Viewer do
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:purl) { "#{Settings.purl_url}/abc123" }
 
+  before do
+    stub_purl_request(request)
+  end
+
   describe 'initialize' do
     it 'is an Embed::Viewer::M3Viewer' do
       expect(request).to receive(:purl_object).and_return(nil)
@@ -95,6 +99,7 @@ RSpec.describe Embed::Viewer::M3Viewer do
   describe '#canvas_id' do
     before do
       allow_any_instance_of(Embed::Purl).to receive(:manifest_json_response).and_return(manifest_json_response)
+      allow_any_instance_of(Embed::Purl).to receive(:druid).and_return('gm059ft3590')
     end
 
     context 'with an existing canvas id' do

@@ -211,7 +211,7 @@ RSpec.describe Embed::Purl do
   describe '#manifest_json_url' do
     subject { purl.manifest_json_url }
 
-    let(:purl) { described_class.find('12345') }
+    let(:purl) { described_class.new({ druid: '12345' }) }
 
     it { is_expected.to eq 'https://purl.stanford.edu/12345/iiif/manifest' }
   end

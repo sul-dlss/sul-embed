@@ -18,7 +18,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   let(:many_primary_files) { false }
 
   before do
-    puts render
+    render
   end
 
   context 'with a location restricted video' do
@@ -124,6 +124,10 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
         build(:resource, :video, files: [build(:resource_file, :video), build(:resource_file, :image, mimetype: 'image/jpeg')])
       end
 
+      it 'does not use secondary files like jpgs as thumbnails' do
+        object = page.find('[data-slider-object="0"]')
+        expect(object['data-thumbnail-url']).to be_blank
+      end
     end
   end
 
@@ -160,7 +164,14 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
               files: [
                 build(:resource_file, :video),
                 build(:resource_file, :image, :world_downloadable, filename: 'video_1.jp2')
+              ])
       end
+
+      it 'uses a large thumbnail' do
+        video = page.find('video[poster]', visible: :all)
+        expect(video['poster']).to match(%r{/full/!800,600/})
+      end
+    end
 
     context 'when a file level thumbnail is not present' do
       let(:resource) do

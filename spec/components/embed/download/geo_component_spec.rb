@@ -6,14 +6,12 @@ RSpec.describe Embed::Download::GeoComponent, type: :component do
   include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
-  let(:object) { Embed::Purl.find('12345') }
   let(:viewer) { Embed::Viewer::Geo.new(request) }
   let(:response) { geo_purl_public }
 
   before do
-    allow(request).to receive(:purl_object).and_return(object)
+    stub_purl_xml_response_with_fixture(response)
     allow(viewer).to receive(:asset_host).and_return('http://example.com/')
-    allow(object).to receive(:response).and_return(response)
     render_inline(described_class.new(viewer:))
   end
 
@@ -33,7 +31,7 @@ RSpec.describe Embed::Download::GeoComponent, type: :component do
 
   it 'generates a file list when file has resources' do
     expect(page).to have_css 'li', visible: :all, count: 3
-    expect(page).to have_link href: 'https://stacks.stanford.edu/file/druid:12345/data.zip?download=true', visible: :all
+    expect(page).to have_link href: 'https://stacks.stanford.edu/file/druid:abc123/data.zip?download=true', visible: :all
   end
 
   context 'with stanford only' do

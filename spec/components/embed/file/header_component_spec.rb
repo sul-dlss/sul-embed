@@ -6,12 +6,10 @@ RSpec.describe Embed::File::HeaderComponent, type: :component do
   include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
-  let(:object) { Embed::Purl.find('12345') }
   let(:viewer) { Embed::Viewer::File.new(request) }
 
   before do
-    allow(request).to receive(:purl_object).and_return(object)
-    allow(object).to receive(:response).and_return(file_purl_xml)
+    stub_purl_xml_response_with_fixture(file_purl_xml)
     render_inline(described_class.new(viewer:))
   end
 
