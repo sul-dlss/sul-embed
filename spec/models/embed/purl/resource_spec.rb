@@ -14,11 +14,6 @@ RSpec.describe Embed::Purl::Resource do
     expect(Embed::Purl.new('12345').contents.first.description).to eq 'File1 Label'
   end
 
-  it 'gets the description from the attr[name="label"] element' do
-    stub_purl_xml_response_with_fixture(multi_file_purl_xml)
-    expect(Embed::Purl.new('12345').contents.first.description).to eq 'File1 Label'
-  end
-
   describe '#thumbnail' do
     let(:resource) do
       described_class.new(
