@@ -36,6 +36,7 @@ module Embed
         Embed::MediaDuration.new(@file.xpath('./*[@duration]').first).to_s
       end
 
+      # rubocop:disable Metrics/AbcSize
       def deserialize
         ResourceFile.new(
           druid: @druid,
@@ -51,6 +52,7 @@ module Embed
           file.duration = duration
         end
       end
+      # rubocop:enable Metrics/AbcSize
     end
   end
 end
