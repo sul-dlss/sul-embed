@@ -70,7 +70,8 @@ RSpec.describe 'Media viewer', :js do
       within 'aside.open' do
         click_button 'Content'
 
-        expect(page).to have_css('.sul-embed-media-square-icon')
+        # Setting blank alt text apparently makes the component invisible in copybara
+        expect(page).to have_css('.sul-embed-media-square-icon', visible: :all)
         expect(page).to have_content('Image of media (1 of 1)')
       end
     end

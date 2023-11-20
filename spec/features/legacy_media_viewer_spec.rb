@@ -108,7 +108,8 @@ RSpec.describe 'The old media viewer', :js do
       expect(page).to have_css('.sul-embed-thumb-slider')
       expect(page).to have_css('.sul-embed-thumb-slider', visible: :visible)
 
-      expect(page).to have_css('.sul-embed-media-square-icon')
+      # Setting blank alt text apparently makes the component invisible in copybara
+      expect(page).to have_css('.sul-embed-media-square-icon', visible: :all)
       expect(page).to have_css('.sul-embed-thumb-label', text: 'Image of media (1 of 1)')
     end
   end
