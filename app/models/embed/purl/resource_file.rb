@@ -14,9 +14,13 @@ module Embed
         end
       end
 
-      attr_accessor :druid, :label, :filename, :mimetype, :size, :duration, :rights, :language
+      attr_accessor :druid, :label, :filename, :mimetype, :size, :duration, :language,
+                    :world_downloadable, :stanford_only, :location_restricted
 
       alias title filename
+      alias world_downloadable? world_downloadable
+      alias stanford_only? stanford_only
+      alias location_restricted? location_restricted
 
       ##
       # Creates a file url for stacks
@@ -34,6 +38,10 @@ module Embed
         "#{Settings.stacks_url}/file/druid:#{@druid}"
       end
 
+      def label_or_filename
+        label.presence || filename
+      end
+
       def hierarchical_title
         title.split('/').last
       end
@@ -48,20 +56,6 @@ module Embed
 
       def image?
         mimetype =~ %r{image/jp2}i
-      end
-
-      def stanford_only?
-        value, _rule = @rights.stanford_only_rights_for_file(title)
-
-        value
-      end
-
-      def location_restricted?
-        @rights.restricted_by_location?(title)
-      end
-
-      def world_downloadable?
-        @rights.world_downloadable_file?(title)
       end
     end
   end

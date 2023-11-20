@@ -14,23 +14,44 @@ module Embed
         @rights = rights
       end
 
-      # rubocop:disable Metrics/AbcSize
+      def filename
+        @filename ||= @file.attributes['id'].value
+      end
+
+      def stanford_only
+        @rights.stanford_only_rights_for_file(filename).first
+      end
+
+      def location_restricted
+        @rights.restricted_by_location?(filename)
+      end
+
+      def world_downloadable
+        @rights.world_downloadable_file?(filename)
+      end
+
+      def duration
+        return if @file.xpath('./*/@duration').blank?
+
+        Embed::MediaDuration.new(@file.xpath('./*[@duration]').first).to_s
+      end
+
       def deserialize
         ResourceFile.new(
           druid: @druid,
           label: @description,
-          filename: @file.attributes['id'].value,
           mimetype: @file.attributes['mimetype']&.value,
           size: @file.attributes['size']&.value.to_i,
           rights: @rights,
           language: @file.attributes['language']&.value
+          filename:,
+          stanford_only:,
+          location_restricted:,
+          world_downloadable:
         ) do |file|
-          if @file.xpath('./*/@duration').present?
-            file.duration = Embed::MediaDuration.new(@file.xpath('./*[@duration]').first).to_s
-          end
+          file.duration = duration
         end
       end
-      # rubocop:enable Metrics/AbcSize
     end
   end
 end

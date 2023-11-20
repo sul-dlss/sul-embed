@@ -4,33 +4,20 @@ module Embed
   class Purl
     class Resource
       # @param [String] druid identifier without a namespace
-      # @param [Nokogiri::XML::Element] resource
-      # @param [Dor::RightsAuth] rights
-      def initialize(druid, resource, rights)
+      # @param [String] type the resource type
+      # @param [String] description the resource description
+      # @param [Array<ResourceFile>] files
+      def initialize(druid:, type:, description:, files: [])
         @druid = druid
-        @resource = resource
-        @rights = rights
+        @type = type
+        @description = description
+        @files = files
       end
 
-      attr_reader :druid
-
-      def type
-        @resource.attributes['type'].value
-      end
-
-      def description
-        @description ||= @resource.xpath('./label').text
-      end
+      attr_reader :druid, :type, :description, :files
 
       def three_dimensional?
-        @resource.attributes['type']&.value == '3d'
-      end
-
-      # @return [Array<ResourceFile>]
-      def files
-        @files ||= @resource.xpath('./file').map do |file|
-          FileXmlDeserializer.new(druid, description, file, @rights).deserialize
-        end
+        type == '3d'
       end
 
       def size

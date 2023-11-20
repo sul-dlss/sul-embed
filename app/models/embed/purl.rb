@@ -32,7 +32,7 @@ module Embed
 
     def contents
       @contents ||= ng_xml.xpath('//contentMetadata/resource').map do |resource|
-        Purl::Resource.new(@druid, resource, rights)
+        ResourceXmlDeserializer.new(druid, resource, rights).deserialize
       end
     end
 
@@ -70,10 +70,6 @@ module Embed
       return unless embargoed?
 
       @embargo_release_date ||= ng_xml.xpath('//rightsMetadata/access[@type="read"]/machine/embargoReleaseDate')&.text
-    end
-
-    def ng_xml
-      @ng_xml ||= Nokogiri::XML(response)
     end
 
     def all_resource_files
@@ -136,7 +132,24 @@ module Embed
       )&.map { |_name, value| value.gsub('info:fedora/druid:', '') } || []
     end
 
+    def archived_site_url
+      @archived_site_url ||= ng_xml.xpath(
+        '//mods:url[@displayLabel="Archived website"]',
+        'mods' => 'http://www.loc.gov/mods/v3'
+      )&.text.tap do |url|
+        Honeybadger.notify("Purl#archived_site_url blank for #{druid}") if url.blank?
+      end
+    end
+
+    def external_url
+      ng_xml.xpath('//dc:identifier', 'dc' => 'http://purl.org/dc/elements/1.1/').try(:text)
+    end
+
     private
+
+    def ng_xml
+      @ng_xml ||= Nokogiri::XML(response)
+    end
 
     def mods_license
       ng_xml

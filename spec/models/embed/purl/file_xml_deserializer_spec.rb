@@ -11,8 +11,13 @@ RSpec.describe Embed::Purl::FileXmlDeserializer do
         XML
       ).root
     end
+    let(:rights) do
+      instance_double(Dor::RightsAuth, stanford_only_rights_for_file: [false, nil],
+                                       restricted_by_location?: false,
+                                       world_downloadable_file?: true)
+    end
 
-    let(:resource_file) { described_class.new('abc123', 'desc', file_node, nil).deserialize }
+    let(:resource_file) { described_class.new('abc123', 'desc', file_node, rights).deserialize }
 
     it 'creates a resource file' do
       expect(resource_file.druid).to eq 'abc123'

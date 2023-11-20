@@ -978,33 +978,6 @@ module PurlFixtures
     XML
   end
 
-  def video_purl_unrestricted
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Title of a video with spaces in the file name</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="media">
-          <resource sequence="1" id="abc123_1" type="video">
-            <file id="A video title.mp4" mimetype="video/mp4" size="152000000">
-              <videoData duration="P0DT1H2M3S" height="288" width="352"/>
-            </file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          <access type="read">
-            <machine>
-              <world/>
-            </machine>
-          </access>
-        </rightsMetadata>
-        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
-          <dc:title>stupid dc title of video</dc:title>
-        </oai_dc>
-      </publicObject>
-    XML
-  end
-
   def video_with_spaces_in_filename_purl
     <<-XML
       <publicObject>
