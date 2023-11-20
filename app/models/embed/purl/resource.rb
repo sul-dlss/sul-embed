@@ -44,9 +44,9 @@ module Embed
         files.find(&:image?)
       end
 
-      # @return [ResourceFile]
-      def vtt
-        files.find(&:vtt?)
+      # @return [Array<ResourceFile>]
+      def caption_files
+        files.select(&:vtt?)
       end
     end
   end

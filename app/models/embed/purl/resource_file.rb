@@ -14,7 +14,7 @@ module Embed
         end
       end
 
-      attr_accessor :druid, :label, :filename, :mimetype, :size, :duration,
+      attr_accessor :druid, :label, :filename, :mimetype, :size, :duration, :language,
                     :world_downloadable, :stanford_only, :location_restricted
 
       alias title filename
