@@ -3,7 +3,7 @@
 module Embed
   module Viewer
     class WasSeed < CommonViewer
-      delegate :druid, to: :@purl_object
+      delegate :druid, :archived_site_url, :external_url, to: :@purl_object
 
       def component
         WasSeedComponent
@@ -23,15 +23,6 @@ module Embed
         @capture_list ||= Embed::WasTimeMap.new(archived_timemap_url).capture_list
       end
 
-      def archived_site_url
-        @archived_site_url ||= @purl_object.ng_xml.xpath(
-          '//mods:url[@displayLabel="Archived website"]',
-          'mods' => 'http://www.loc.gov/mods/v3'
-        )&.text.tap do |url|
-          Honeybadger.notify("WasSeed#archived_site_url blank for #{druid}") if url.blank?
-        end
-      end
-
       def archived_timemap_url
         if archived_site_url.include?('/*/') # Not a valid timemap url
           archived_site_url.sub('/*/', '/timemap/')
@@ -48,10 +39,6 @@ module Embed
 
       def format_memento_datetime(memento_datetime)
         I18n.l(Date.parse(memento_datetime), format: :sul_was_long) if memento_datetime.present?
-      end
-
-      def external_url
-        @purl_object.ng_xml.xpath('//dc:identifier', 'dc' => 'http://purl.org/dc/elements/1.1/').try(:text)
       end
 
       def external_url_text
