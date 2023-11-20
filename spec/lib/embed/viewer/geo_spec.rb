@@ -22,17 +22,19 @@ RSpec.describe Embed::Viewer::Geo do
 
   describe '#map_element_options' do
     it 'for public content' do
-      stub_purl_xml_response_and_request(geo_purl_public, request)
+      stub_purl_xml_response_with_fixture(geo_purl_public)
+
       expect(geo_viewer.map_element_options).to be_an Hash
       expect(geo_viewer.map_element_options).to include style: 'flex: 1'
       expect(geo_viewer.map_element_options).to include id: 'sul-embed-geo-map'
       expect(geo_viewer.map_element_options).to include 'data-bounding-box' => '[["-1.478794", "29.572742"], ["4.234077", "35.000308"]]'
       expect(geo_viewer.map_element_options).to include 'data-wms-url' => 'https://geowebservices.stanford.edu/geoserver/wms/'
-      expect(geo_viewer.map_element_options).to include 'data-layers' => 'druid:12345'
+      expect(geo_viewer.map_element_options).to include 'data-layers' => 'druid:abc123'
     end
 
     it 'for restricted content' do
-      stub_purl_xml_response_and_request(geo_purl_restricted, request)
+      stub_purl_xml_response_with_fixture(geo_purl_restricted)
+
       expect(geo_viewer.map_element_options).to be_an Hash
       expect(geo_viewer.map_element_options).to include style: 'flex: 1'
       expect(geo_viewer.map_element_options).to include id: 'sul-embed-geo-map'

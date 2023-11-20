@@ -6,19 +6,18 @@ RSpec.describe Embed::Download::LegacyMediaComponent, type: :component do
   include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
-  let(:object) { Embed::Purl.new('12345') }
   let(:viewer) { Embed::Viewer::Media.new(request) }
   let(:response) { video_purl }
 
   before do
-    allow(request).to receive(:purl_object).and_return(object)
-    # allow(viewer).to receive(:asset_host).and_return('http://example.com/')
-    allow(object).to receive(:response).and_return(response)
-    render_inline(described_class.new(viewer:))
+    stub_purl_xml_response_with_fixture(response)
   end
 
   context 'when show_download? is false' do
-    let(:object) { instance_double(Embed::Purl, downloadable_files: []) } # .new('12345') }
+    before do
+      allow_any_instance_of(Embed::Purl).to receive(:downloadable_files).and_return([]) # rubocop:disable RSpec/AnyInstance
+      render_inline(described_class.new(viewer:))
+    end
 
     it 'renders nothing' do
       expect(page).not_to have_css('body')
@@ -26,7 +25,9 @@ RSpec.describe Embed::Download::LegacyMediaComponent, type: :component do
   end
 
   context 'when downloadable files' do
-    let(:response) { video_purl }
+    before do
+      render_inline(described_class.new(viewer:))
+    end
 
     it 'uses the label as the link text' do
       expect(page).to have_css('li a', text: 'Download Transcript', visible: :all)

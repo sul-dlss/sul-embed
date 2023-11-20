@@ -39,16 +39,11 @@ RSpec.configure do |config|
 end
 
 def stub_purl_xml_response_with_fixture(fixture)
-  allow_any_instance_of(Embed::Purl).to receive(:response).and_return(fixture)
-end
-
-def stub_purl_xml_response_and_request(fixture, request)
-  stub_purl_xml_response_with_fixture(fixture)
-  stub_purl_request(request)
+  allow_any_instance_of(Embed::PurlXmlLoader).to receive(:response).and_return(fixture)
 end
 
 def stub_purl_request(request)
-  expect(request).to receive(:purl_object).and_return(Embed::Purl.new('12345'))
+  allow(request).to receive(:purl_object).and_return(Embed::Purl.new({ druid: '12345', collections: [], contents: [] }))
 end
 
 def toggle_download_panel
