@@ -7,7 +7,7 @@ RSpec.describe Embed::Purl::ResourceFile do
   describe 'attributes' do
     before { stub_purl_xml_response_with_fixture(file_purl_xml) }
 
-    let(:resource_file) { Embed::Purl.new('12345').contents.first.files.first }
+    let(:resource_file) { Embed::Purl.find('12345').contents.first.files.first }
 
     it 'gets the title from from the id attribute' do
       expect(resource_file.title).to eq 'Title of the PDF.pdf'
@@ -60,7 +60,7 @@ RSpec.describe Embed::Purl::ResourceFile do
   describe '#hierarchical_title' do
     before { stub_purl_xml_response_with_fixture(hierarchical_file_purl_xml) }
 
-    let(:resource_file) { Embed::Purl.new('12345').hierarchical_contents.dirs.first.dirs.first.files.first }
+    let(:resource_file) { Embed::Purl.find('12345').hierarchical_contents.dirs.first.dirs.first.files.first }
 
     it 'get the hierarchical title from the id attribute' do
       expect(resource_file.hierarchical_title).to eq 'Title_of_2_PDF.pdf'
@@ -94,12 +94,12 @@ RSpec.describe Embed::Purl::ResourceFile do
   describe 'image?' do
     it 'returns true if the mimetype of the file is an image' do
       stub_purl_xml_response_with_fixture(image_purl_xml)
-      expect(Embed::Purl.new('12345').contents.first.files.first).to be_image
+      expect(Embed::Purl.find('12345').contents.first.files.first).to be_image
     end
 
     it 'returns false if the mimetype of the file is not an image' do
       stub_purl_xml_response_with_fixture(file_purl_xml)
-      expect(Embed::Purl.new('12345').contents.first.files.first).not_to be_image
+      expect(Embed::Purl.find('12345').contents.first.files.first).not_to be_image
     end
   end
 
@@ -107,22 +107,22 @@ RSpec.describe Embed::Purl::ResourceFile do
     describe 'stanford_only?' do
       it 'identifies stanford_only objects' do
         stub_purl_xml_response_with_fixture(stanford_restricted_file_purl_xml)
-        expect(Embed::Purl.new('12345').contents.first.files.all?(&:stanford_only?)).to be true
+        expect(Embed::Purl.find('12345').contents.first.files.all?(&:stanford_only?)).to be true
       end
 
       it 'identifies stanford_only no-download objects' do
         stub_purl_xml_response_with_fixture(stanford_no_download_restricted_file_purl_xml)
-        expect(Embed::Purl.new('12345').contents.first.files.all?(&:stanford_only?)).to be true
+        expect(Embed::Purl.find('12345').contents.first.files.all?(&:stanford_only?)).to be true
       end
 
       it 'identifies world accessible objects as not stanford only' do
         stub_purl_xml_response_with_fixture(file_purl_xml)
-        expect(Embed::Purl.new('12345').contents.first.files.all?(&:stanford_only?)).to be false
+        expect(Embed::Purl.find('12345').contents.first.files.all?(&:stanford_only?)).to be false
       end
 
       it 'identifies file-level stanford_only rights' do
         stub_purl_xml_response_with_fixture(stanford_restricted_multi_file_purl_xml)
-        contents = Embed::Purl.new('12345').contents
+        contents = Embed::Purl.find('12345').contents
         first_file = contents.first.files.first
         last_file = contents.last.files.first
         expect(first_file).to be_stanford_only
@@ -133,17 +133,17 @@ RSpec.describe Embed::Purl::ResourceFile do
     describe 'location_restricted?' do
       it 'identifies location restricted objects' do
         stub_purl_xml_response_with_fixture(single_video_purl)
-        expect(Embed::Purl.new('12345').contents.first.files.all?(&:location_restricted?)).to be true
+        expect(Embed::Purl.find('12345').contents.first.files.all?(&:location_restricted?)).to be true
       end
 
       it 'identifies world accessible objects as not stanford only' do
         stub_purl_xml_response_with_fixture(file_purl_xml)
-        expect(Embed::Purl.new('12345').contents.first.files.all?(&:location_restricted?)).to be false
+        expect(Embed::Purl.find('12345').contents.first.files.all?(&:location_restricted?)).to be false
       end
 
       it 'identifies file-level location_restricted rights' do
         stub_purl_xml_response_with_fixture(video_purl)
-        contents = Embed::Purl.new('12345').contents
+        contents = Embed::Purl.find('12345').contents
         first_file = contents.first.files.first
         last_file = contents.last.files.first
         expect(first_file).to be_location_restricted
@@ -154,17 +154,17 @@ RSpec.describe Embed::Purl::ResourceFile do
     describe 'world_downloadable?' do
       it 'is false for stanford-only objects' do
         stub_purl_xml_response_with_fixture(stanford_restricted_file_purl_xml)
-        expect(Embed::Purl.new('12345').contents.first.files.all?(&:world_downloadable?)).to be false
+        expect(Embed::Purl.find('12345').contents.first.files.all?(&:world_downloadable?)).to be false
       end
 
       it 'is false for no-download objects' do
         stub_purl_xml_response_with_fixture(stanford_no_download_restricted_file_purl_xml)
-        expect(Embed::Purl.new('12345').contents.first.files.all?(&:world_downloadable?)).to be false
+        expect(Embed::Purl.find('12345').contents.first.files.all?(&:world_downloadable?)).to be false
       end
 
       it 'is true for identify world accessible objects' do
         stub_purl_xml_response_with_fixture(file_purl_xml)
-        expect(Embed::Purl.new('12345').contents.first.files.all?(&:world_downloadable?)).to be true
+        expect(Embed::Purl.find('12345').contents.first.files.all?(&:world_downloadable?)).to be true
       end
     end
   end
@@ -173,7 +173,7 @@ RSpec.describe Embed::Purl::ResourceFile do
     subject { file.vtt? }
 
     context 'when it is a vtt transcript' do
-      let(:file) { Embed::Purl.new('12345').contents.first.files.second }
+      let(:file) { Embed::Purl.find('12345').contents.first.files.second }
 
       before { stub_purl_xml_response_with_fixture(video_purl_with_vtt) }
 
@@ -181,7 +181,7 @@ RSpec.describe Embed::Purl::ResourceFile do
     end
 
     context 'when it is not a vtt transcript' do
-      let(:file) { Embed::Purl.new('12345').contents.first.files.first }
+      let(:file) { Embed::Purl.find('12345').contents.first.files.first }
 
       before { stub_purl_xml_response_with_fixture(single_video_purl) }
 

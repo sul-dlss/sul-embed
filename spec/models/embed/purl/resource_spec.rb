@@ -6,12 +6,12 @@ RSpec.describe Embed::Purl::Resource do
   include PurlFixtures
   it 'gets the type attribute' do
     stub_purl_xml_response_with_fixture(file_purl_xml)
-    expect(Embed::Purl.new('12345').contents.first.type).to eq 'file'
+    expect(Embed::Purl.find('12345').contents.first.type).to eq 'file'
   end
 
   it 'gets the description from the label element' do
     stub_purl_xml_response_with_fixture(file_purl_xml)
-    expect(Embed::Purl.new('12345').contents.first.description).to eq 'File1 Label'
+    expect(Embed::Purl.find('12345').contents.first.description).to eq 'File1 Label'
   end
 
   describe '#thumbnail' do
@@ -55,12 +55,12 @@ RSpec.describe Embed::Purl::Resource do
   describe 'files' do
     it 'returns an array of Purl::Resource::ResourceFile objects' do
       stub_purl_xml_response_with_fixture(file_purl_xml)
-      expect(Embed::Purl.new('12345').contents.first.files.all?(Embed::Purl::ResourceFile)).to be true
+      expect(Embed::Purl.find('12345').contents.first.files.all?(Embed::Purl::ResourceFile)).to be true
     end
   end
 
   describe '#vtt' do
-    let(:resource) { Embed::Purl.new('12345').contents.first }
+    let(:resource) { Embed::Purl.find('12345').contents.first }
 
     context 'when it has a vtt transcript' do
       subject { resource.vtt.title }

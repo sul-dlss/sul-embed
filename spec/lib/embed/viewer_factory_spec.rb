@@ -6,7 +6,7 @@ RSpec.describe Embed::ViewerFactory do
   include PurlFixtures
 
   let(:request) { instance_double(Embed::Request, purl_object: purl) }
-  let(:purl) { Embed::Purl.new('ignored') }
+  let(:purl) { Embed::Purl.find('ignored') }
   let(:instance) { described_class.new(request) }
 
   describe 'initialization' do

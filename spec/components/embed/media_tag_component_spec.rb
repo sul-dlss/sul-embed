@@ -13,7 +13,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   end
 
   let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 0) }
-  let(:resource) { Embed::Purl.new(druid).contents.first }
+  let(:resource) { Embed::Purl.find(druid).contents.first }
   let(:druid) { 'bc123df4567' }
   let(:purl) { video_purl }
   let(:include_transcripts) { false }
@@ -65,7 +65,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
 
   context 'with a stanford only video' do
     let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
-    let(:resource) { Embed::Purl.new(druid).contents.second }
+    let(:resource) { Embed::Purl.find(druid).contents.second }
 
     it 'includes the file label as a data attribute' do
       expect(page).to have_css('[data-file-label="Second Video"]')
@@ -88,7 +88,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
 
   context 'with a world access video' do
     let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 3) }
-    let(:resource) { Embed::Purl.new(druid).contents.fourth }
+    let(:resource) { Embed::Purl.find(druid).contents.fourth }
 
     it 'includes a data-src attribute for the dash player' do
       expect(page).to have_css('[data-src]', visible: :all)
@@ -117,7 +117,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
 
     context 'with a video resource' do
       let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
-      let(:resource) { Embed::Purl.new(druid).contents.second }
+      let(:resource) { Embed::Purl.find(druid).contents.second }
 
       it 'includes the file level thumbnail data-attribute when present' do
         object = page.find('[data-slider-object="1"]')
@@ -127,7 +127,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
 
     context 'with a resource that has a jpg, but no jp2' do
       let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 2) }
-      let(:resource) { Embed::Purl.new(druid).contents.third }
+      let(:resource) { Embed::Purl.find(druid).contents.third }
 
       it 'does not use secondary files like jpgs as thumbnails' do
         object = page.find('[data-slider-object="2"]')
@@ -139,7 +139,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   context 'with image files within media objects' do
     let(:purl) { video_purl_with_image }
     let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
-    let(:resource) { Embed::Purl.new(druid).contents.second }
+    let(:resource) { Embed::Purl.find(druid).contents.second }
 
     it 'are included as top level objects' do
       expect(page).to have_css('div img.sul-embed-media-thumb')
@@ -156,7 +156,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     context 'when a file level thumbnail is present' do
       let(:purl) { file_thumb_purl }
       let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
-      let(:resource) { Embed::Purl.new(druid).contents.second }
+      let(:resource) { Embed::Purl.find(druid).contents.second }
 
       it 'includes a poster attribute' do
         expect(page).to have_css('video[poster]', visible: :all)
@@ -169,7 +169,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
       let(:purl) { file_and_object_level_downloadable_thumb_purl }
 
       let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
-      let(:resource) { Embed::Purl.new(druid).contents.second }
+      let(:resource) { Embed::Purl.find(druid).contents.second }
 
       it 'uses a large thumbnail' do
         video = page.find('video[poster]', visible: :all)
