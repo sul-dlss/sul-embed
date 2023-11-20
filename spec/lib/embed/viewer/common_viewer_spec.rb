@@ -21,7 +21,6 @@ RSpec.describe Embed::Viewer::CommonViewer do
     it 'uses the incoming maxheight/maxwidth parameters from the request' do
       expect(request).to receive(:maxheight).at_least(:once).and_return(100)
       expect(request).to receive(:maxwidth).at_least(:once).and_return(200)
-      stub_purl_request(request)
       stub_purl_xml_response_with_fixture(multi_file_purl_xml)
       expect(file_viewer.height).to eq 100
       expect(file_viewer.width).to eq 200
@@ -37,6 +36,8 @@ RSpec.describe Embed::Viewer::CommonViewer do
   end
 
   describe '#sul_pretty_date' do
+    before { stub_purl_request(request) }
+
     it 'parses a date into a standardized format' do
       expect(file_viewer.sul_pretty_date(Time.zone.now.to_s)).to match(/^\d{2}-\w{3}-\d{4}$/)
     end
@@ -47,6 +48,8 @@ RSpec.describe Embed::Viewer::CommonViewer do
   end
 
   describe '#show_download?' do
+    before { stub_purl_request(request) }
+
     it 'false for file viewers' do
       expect(file_viewer).not_to be_show_download
     end
@@ -57,15 +60,19 @@ RSpec.describe Embed::Viewer::CommonViewer do
       expect(media_viewer).to be_show_download
     end
 
-    it 'false when hide_download is specified' do
-      hide_request = Embed::Request.new(url: 'http://purl.stanford.edu/abc123',
-                                        hide_download: 'true')
-      geo_hide_viewer = Embed::Viewer::Geo.new(hide_request)
-      expect(geo_hide_viewer).not_to be_show_download
+    context 'when hide_download is specified' do
+      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', hide_download: 'true') }
+
+      it 'false when hide_download is specified' do
+        geo_hide_viewer = Embed::Viewer::Geo.new(request)
+        expect(geo_hide_viewer).not_to be_show_download
+      end
     end
   end
 
   describe '#iframe_title' do
+    before { stub_purl_request(request) }
+
     it 'determines the title from the class name' do
       expect(file_viewer.iframe_title).to eq 'File viewer'
     end

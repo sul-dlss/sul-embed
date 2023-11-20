@@ -8,14 +8,13 @@ RSpec.describe Embed::LegacyMediaComponent, type: :component do
   let(:request) do
     Embed::Request.new(url: 'http://purl.stanford.edu/abc123')
   end
-  let(:object) { Embed::Purl.new('12345') }
+  let(:object) { Embed::Purl.find('12345') }
   let(:viewer) { Embed::Viewer::Media.new(request) }
   let(:response) { video_purl }
 
   before do
-    allow(request).to receive(:purl_object).and_return(object)
+    stub_purl_xml_response_with_fixture(video_purl)
     allow(viewer).to receive(:asset_host).and_return('http://example.com/')
-    allow(object).to receive(:response).and_return(response)
     render_inline(described_class.new(viewer:))
   end
 

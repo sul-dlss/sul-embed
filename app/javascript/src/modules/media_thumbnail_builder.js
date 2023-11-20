@@ -10,7 +10,7 @@ export default function(dataset, index) {
 
     let thumbnailIcon = '';
     if (dataset.thumbnailUrl) {
-      thumbnailIcon = `<img class="sul-embed-media-square-icon" src="${dataset.thumbnailUrl}" />`
+      thumbnailIcon = `<img class="sul-embed-media-square-icon" src="${dataset.thumbnailUrl}" alt="" />`
     } else {
       thumbnailIcon = `<i class="${dataset.defaultIcon} default-thumbnail-icon"></i>`
     }

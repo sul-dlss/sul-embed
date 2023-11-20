@@ -18,7 +18,7 @@
     </script>
     <%= stylesheet_link_tag @embed_response.viewer.stylesheet %>
     <%= stylesheet_link_tag 'sul_icons.css' %>
-    <%= tag :link, rel: "up", href: Embed::Purl.new(@embed_response.request.purl_object.collections.first).purl_url if @embed_response && @embed_response.request.purl_object.collections.any? %>
+    <%= tag :link, rel: "up", href: Embed::Purl.find(@embed_response.request.purl_object.collections.first).purl_url if @embed_response && @embed_response.request.purl_object.collections.any? %>
   </head>
   <%= render 'analytics' %>
   <body>

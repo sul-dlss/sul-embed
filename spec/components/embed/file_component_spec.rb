@@ -8,14 +8,12 @@ RSpec.describe Embed::FileComponent, type: :component do
   let(:request) do
     Embed::Request.new(url: 'http://purl.stanford.edu/abc123')
   end
-  let(:object) { Embed::Purl.new('12345') }
   let(:viewer) { Embed::Viewer::File.new(request) }
   let(:response) { file_purl_xml }
 
   before do
-    allow(request).to receive(:purl_object).and_return(object)
+    stub_purl_xml_response_with_fixture(response)
     allow(viewer).to receive(:asset_host).and_return('http://example.com/')
-    allow(object).to receive(:response).and_return(response)
     render_inline(described_class.new(viewer:))
   end
 
@@ -64,7 +62,7 @@ RSpec.describe Embed::FileComponent, type: :component do
 
     it 'adds a Stanford specific embargo message with links still present' do
       expect(page).to have_css('.sul-embed-embargo-message', visible: :all, text: "Access is restricted to Stanford-affiliated patrons until #{1.month.from_now.strftime('%d-%b-%Y')}")
-      expect(page).to have_css('.sul-embed-media-heading a[href="https://stacks.stanford.edu/file/druid:12345/Title%20of%20the%20PDF.pdf"]', visible: :all)
+      expect(page).to have_css('.sul-embed-media-heading a[href="https://stacks.stanford.edu/file/druid:abc123/Title%20of%20the%20PDF.pdf"]', visible: :all)
     end
 
     it 'includes an element with a stanford icon class (with screen reader text)' do

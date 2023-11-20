@@ -65,7 +65,7 @@ export default (function() {
         var thumbnailIcon = '';
         const thumbnailUrl = mediaDiv.dataset.thumbnailUrl
         if (thumbnailUrl !== '') {
-          thumbnailIcon = '<img class="sul-embed-media-square-icon" src="' + thumbnailUrl + '" />';
+          thumbnailIcon = '<img class="sul-embed-media-square-icon" src="' + thumbnailUrl + '" alt="" />';
         } else {
           thumbnailIcon = '<i class="' + cssClass + '"></i>';
         }

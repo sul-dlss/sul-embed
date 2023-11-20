@@ -18,7 +18,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   let(:many_primary_files) { false }
 
   before do
-    puts render
+    render
   end
 
   context 'with a location restricted video' do
