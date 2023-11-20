@@ -8,7 +8,7 @@ RSpec.describe Embed::FileComponent, type: :component do
   let(:request) do
     Embed::Request.new(url: 'http://purl.stanford.edu/abc123')
   end
-  let(:object) { Embed::Purl.new('12345') }
+  let(:object) { Embed::Purl.find('12345') }
   let(:viewer) { Embed::Viewer::File.new(request) }
   let(:response) { file_purl_xml }
 

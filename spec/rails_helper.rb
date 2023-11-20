@@ -48,7 +48,7 @@ def stub_purl_xml_response_and_request(fixture, request)
 end
 
 def stub_purl_request(request)
-  expect(request).to receive(:purl_object).and_return(Embed::Purl.new('12345'))
+  expect(request).to receive(:purl_object).and_return(Embed::Purl.find('12345'))
 end
 
 def toggle_download_panel

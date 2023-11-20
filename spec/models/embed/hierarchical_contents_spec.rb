@@ -9,7 +9,7 @@ RSpec.describe Embed::HierarchicalContents do
     before { stub_purl_xml_response_with_fixture(hierarchical_file_purl_xml) }
 
     let(:root_dir) { described_class.contents(resources) }
-    let(:resources) { Embed::Purl.new('12345').contents }
+    let(:resources) { Embed::Purl.find('12345').contents }
 
     it 'returns root ResourceDir' do
       expect(root_dir).to be_an Embed::Purl::ResourceDir

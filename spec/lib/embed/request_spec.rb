@@ -112,7 +112,7 @@ RSpec.describe Embed::Request do
     let(:object) { instance_double(Embed::Purl) }
 
     it 'instantiates a Purl object w/ the object druid' do
-      expect(Embed::Purl).to receive(:new).with('abc123').and_return(object)
+      expect(Embed::Purl).to receive(:find).with('abc123').and_return(object)
       expect(described_class.new(url: purl).purl_object).to be object
     end
   end

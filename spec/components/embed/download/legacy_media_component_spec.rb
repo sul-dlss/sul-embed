@@ -6,7 +6,7 @@ RSpec.describe Embed::Download::LegacyMediaComponent, type: :component do
   include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
-  let(:object) { Embed::Purl.new('12345') }
+  let(:object) { Embed::Purl.find('12345') }
   let(:viewer) { Embed::Viewer::Media.new(request) }
   let(:response) { video_purl }
 

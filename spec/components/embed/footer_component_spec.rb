@@ -6,7 +6,7 @@ RSpec.describe Embed::FooterComponent, type: :component do
   include PurlFixtures
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
-  let(:object) { Embed::Purl.new('12345') }
+  let(:object) { Embed::Purl.find('12345') }
   let(:viewer) { Embed::Viewer::Geo.new(request) }
 
   before do
