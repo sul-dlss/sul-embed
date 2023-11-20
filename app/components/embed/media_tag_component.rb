@@ -5,6 +5,16 @@ module Embed
     include StacksImage
     with_collection_parameter :resource
     SUPPORTED_MEDIA_TYPES = %i[audio video].freeze
+    # Hardcoding some language code to label mappings, based on the mappings we currently need.
+    # This approach should be revisited once we have more robust BCP 47 code to label mapping integrated.
+    FILE_LANGUAGE_CAPTION_LABELS = {
+      'en' => 'English',
+      'ru' => 'Russian',
+      'de' => 'German',
+      'et' => 'Estonian',
+      'lv' => 'Latvian',
+      'es' => 'Spanish'
+    }.freeze
 
     # @param [Purl::Resource] resource This resource is expected to have a primary file.
     # @param [#index] resource_iteration Information about what part of the collection we are in
@@ -125,14 +135,7 @@ module Embed
     end
 
     def caption_language(language_code)
-      case language_code
-      when 'en'
-        'English'
-      when 'ru'
-        'Russian'
-      else
-        'Caption'
-      end
+      FILE_LANGUAGE_CAPTION_LABELS.fetch(language_code, 'Caption')
     end
 
     def render_captions?
