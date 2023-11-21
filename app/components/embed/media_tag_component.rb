@@ -5,16 +5,6 @@ module Embed
     include StacksImage
     with_collection_parameter :resource
     SUPPORTED_MEDIA_TYPES = %i[audio video].freeze
-    # Hardcoding some language code to label mappings, based on the mappings we currently need.
-    # This approach should be revisited once we have more robust BCP 47 code to label mapping integrated.
-    FILE_LANGUAGE_CAPTION_LABELS = {
-      'en' => 'English',
-      'ru' => 'Russian',
-      'de' => 'German',
-      'et' => 'Estonian',
-      'lv' => 'Latvian',
-      'es' => 'Spanish'
-    }.freeze
 
     # @param [Purl::Resource] resource This resource is expected to have a primary file.
     # @param [#index] resource_iteration Information about what part of the collection we are in
@@ -86,7 +76,7 @@ module Embed
                crossorigin: 'anonymous',
                class: 'sul-embed-media-file',
                height: '100%') do
-        enabled_streaming_sources + transcript
+        enabled_streaming_sources + captions
       end
     end
 
@@ -109,33 +99,22 @@ module Embed
     end
 
     # Generate the video caption elements
-    def transcript
+    def captions
       return unless render_captions?
 
       # A video clip may have multiple caption files in different languages.
       # We want to enable the user to select from any of these options.
       # We also want the different language options to be listed alphabetically.
       safe_join(
-        sort_caption_tracks(@resource.caption_files).map do |caption_file|
-          lang_code = caption_file.language || 'en'
-          lang_label = caption_language(lang_code)
-          tag.track(src: caption_file.file_url, kind: 'captions', srclang: lang_code, label: lang_label)
+        @resource.caption_files.map do |caption_file|
+          tag.track(src: caption_file.file_url, kind: 'captions',
+                    srclang: caption_file.language_code, label: caption_file.language_label)
         end
       )
     end
 
-    # Sort the caption files by language label so we can display them in alphabetical order in the
-    # captions options list.
-    def sort_caption_tracks(caption_files)
-      caption_files.sort_by { |cfile| caption_language(cfile.language) }
-    end
-
-    def caption_language(language_code)
-      FILE_LANGUAGE_CAPTION_LABELS.fetch(language_code, 'Caption')
-    end
-
     def render_captions?
-      @include_transcripts && @resource.caption_files
+      @include_transcripts && @resource.caption_files.any?
     end
 
     def streaming_settings_for(streaming_type)

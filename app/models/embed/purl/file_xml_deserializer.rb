@@ -47,6 +47,7 @@ module Embed
           label: @description,
           mimetype: @file.attributes['mimetype']&.value,
           size: @file.attributes['size']&.value.to_i,
+          role: @file.attributes['role']&.value,
           language: @file.attributes['language']&.value,
           filename:,
           stanford_only:,

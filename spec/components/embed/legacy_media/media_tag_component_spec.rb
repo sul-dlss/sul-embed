@@ -220,15 +220,15 @@ RSpec.describe Embed::LegacyMedia::MediaTagComponent, type: :component do
     let(:include_transcripts) { true }
 
     it 'has a track element' do
-      expect(page).to have_css('track[src="https://stacks.stanford.edu/file/druid:bc123df4567/abc_123_cap.webvtt"]')
+      expect(page).to have_css('track[src="https://stacks.stanford.edu/file/druid:bc123df4567/abc_123_cap.vtt"]')
     end
   end
 
   context 'with captions for multiple languages' do
     let(:resource) do
       build(:resource, :video, files: [build(:resource_file, :video),
-                                       build(:resource_file, :vtt, language: 'en'),
-                                       build(:resource_file, :vtt, language: 'ru')])
+                                       build(:resource_file, :caption, language: 'en'),
+                                       build(:resource_file, :caption, language: 'ru')])
     end
 
     let(:include_transcripts) { true }
@@ -242,7 +242,7 @@ RSpec.describe Embed::LegacyMedia::MediaTagComponent, type: :component do
   context 'with caption with no specified language' do
     let(:resource) do
       build(:resource, :video, files: [build(:resource_file, :video),
-                                       build(:resource_file, :vtt)])
+                                       build(:resource_file, :caption)])
     end
     let(:include_transcripts) { true }
 

@@ -3,6 +3,18 @@
 module Embed
   class Purl
     class ResourceFile
+      NON_DOWNLOADABLE_ROLES = %w[thumbnail].freeze
+      # Hardcoding some language code to label mappings, based on the mappings we currently need.
+      # This approach should be revisited once we have more robust BCP 47 code to label mapping integrated.
+      FILE_LANGUAGE_CAPTION_LABELS = {
+        'en' => 'English',
+        'ru' => 'Russian',
+        'de' => 'German',
+        'et' => 'Estonian',
+        'lv' => 'Latvian',
+        'es' => 'Spanish'
+      }.freeze
+
       def initialize(attributes = {})
         self.attributes = attributes
         yield(self) if block_given?
@@ -14,7 +26,7 @@ module Embed
         end
       end
 
-      attr_accessor :druid, :label, :filename, :mimetype, :size, :duration, :language,
+      attr_accessor :druid, :label, :filename, :mimetype, :size, :duration, :language, :role,
                     :world_downloadable, :stanford_only, :location_restricted, :stanford_only_downloadable
 
       alias title filename
@@ -40,15 +52,34 @@ module Embed
       end
 
       def label_or_filename
+        return caption_label if caption?
+
         label.presence || filename
+      end
+
+      def language_label
+        FILE_LANGUAGE_CAPTION_LABELS.fetch(language_code, 'Unknown')
+      end
+
+      def caption_label
+        "#{language_label} captions"
+      end
+
+      def downloadable?
+        (world_downloadable? || stanford_only_downloadable?) &&
+          NON_DOWNLOADABLE_ROLES.exclude?(role)
+      end
+
+      def language_code
+        language.presence || 'en'
       end
 
       def hierarchical_title
         title.split('/').last
       end
 
-      def vtt?
-        mimetype == 'text/vtt'
+      def caption?
+        role == 'caption'
       end
 
       def pdf?
