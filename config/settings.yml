@@ -53,10 +53,7 @@ streaming_prefix:
   mpeg: 'mp4'
   m4a: 'mp4'
   mp3: 'mp3'
-# Any Embed::Viewer could be put here.
-image_viewer: Embed::Viewer::M3Viewer
-use_custom_pdf_viewer: true
-use_custom_3d_viewer: true
+
 collections_to_show_attribution:
   - dc876nn4469
 # Google Analytics will report in debug mode by default
