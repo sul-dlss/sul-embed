@@ -21,7 +21,7 @@ export default class extends Controller {
     }
   }
 
-  hideMessage() {
+  hideLoginPrompt() {
     this.stanfordRestrictionMessageTarget.innerHTML = "Logged in."
     this.stanfordLoginButtonTarget.hidden = true
     this.stanfordRestrictionNotLoggedInIconTarget.style.visibility = "hidden";
