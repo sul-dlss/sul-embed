@@ -2,8 +2,6 @@
 
 module Embed
   class Purl
-    require 'embed/media_duration'
-
     def initialize(attributes = {})
       self.attributes = attributes
     end
