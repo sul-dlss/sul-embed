@@ -15,12 +15,13 @@ module Embed
       end
 
       attr_accessor :druid, :label, :filename, :mimetype, :size, :duration, :language,
-                    :world_downloadable, :stanford_only, :location_restricted
+                    :world_downloadable, :stanford_only, :location_restricted, :stanford_only_downloadable
 
       alias title filename
       alias world_downloadable? world_downloadable
       alias stanford_only? stanford_only
       alias location_restricted? location_restricted
+      alias stanford_only_downloadable? stanford_only_downloadable
 
       ##
       # Creates a file url for stacks

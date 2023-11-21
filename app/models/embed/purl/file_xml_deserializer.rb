@@ -30,6 +30,10 @@ module Embed
         @rights.world_downloadable_file?(filename)
       end
 
+      def stanford_only_downloadable
+        @rights.stanford_only_downloadable_file?(filename)
+      end
+
       def duration
         return if @file.xpath('./*/@duration').blank?
 
@@ -47,7 +51,8 @@ module Embed
           filename:,
           stanford_only:,
           location_restricted:,
-          world_downloadable:
+          world_downloadable:,
+          stanford_only_downloadable:
         ) do |file|
           file.duration = duration
         end

@@ -19,7 +19,8 @@ RSpec.describe Embed::Purl::ResourceXmlDeserializer do
     let(:rights) do
       instance_double(Dor::RightsAuth, stanford_only_rights_for_file: [false, nil],
                                        restricted_by_location?: false,
-                                       world_downloadable_file?: true)
+                                       world_downloadable_file?: true,
+                                       stanford_only_downloadable_file?: false)
     end
 
     let(:resource) { described_class.new('abc123', resource_element, rights).deserialize }
