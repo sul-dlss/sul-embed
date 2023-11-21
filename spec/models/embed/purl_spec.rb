@@ -5,50 +5,54 @@ require 'rails_helper'
 RSpec.describe Embed::Purl do
   include PurlFixtures
   describe 'title' do
-    before { stub_purl_xml_response_with_fixture(file_purl_xml) }
+    let(:purl) { described_class.new(title: 'File Title') }
 
     it 'gets the objectLabel from the identityMetadata' do
-      expect(described_class.find('12345').title).to eq 'File Title'
+      expect(purl.title).to eq 'File Title'
     end
   end
 
   describe 'type' do
-    before { stub_purl_xml_response_with_fixture(file_purl_xml) }
+    let(:purl) { described_class.new(type: 'file') }
 
     it 'gets the type attribute from the content metadata' do
-      expect(described_class.find('12345').type).to eq 'file'
+      expect(purl.type).to eq 'file'
     end
   end
 
   describe 'embargoed?' do
-    it 'returns true when an item is embargoed' do
-      stub_purl_xml_response_with_fixture(embargoed_file_purl_xml)
-      expect(described_class.find('12345')).to be_embargoed
+    context 'when an item is embargoed' do
+      subject(:purl) { described_class.new(embargoed: true) }
+
+      it { is_expected.to be_embargoed }
     end
 
-    it 'returns false when an item is not embargoed' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
-      expect(described_class.find('12345')).not_to be_embargoed
+    context 'when an item is not embargoed' do
+      subject(:purl) { described_class.new(embargoed: false) }
+
+      it { is_expected.not_to be_embargoed }
     end
   end
 
-  describe '#world_unrestricted?' do
-    it 'without a world restriction' do
-      stub_purl_xml_response_with_fixture(image_purl_xml)
-      expect(described_class.find('12345')).to be_world_unrestricted
+  describe '#public?' do
+    context 'when an item is public' do
+      subject(:purl) { described_class.new(public: true) }
+
+      it { is_expected.to be_public }
     end
 
-    it 'when it has a world restriction' do
-      stub_purl_xml_response_with_fixture(stanford_restricted_image_purl_xml)
-      expect(described_class.find('12345')).not_to be_world_unrestricted
+    context 'when an item is not public' do
+      subject(:purl) { described_class.new(public: false) }
+
+      it { is_expected.not_to be_public }
     end
   end
 
   describe 'embargo_release_date' do
-    before { stub_purl_xml_response_with_fixture(embargoed_file_purl_xml) }
+    let(:purl) { described_class.new(embargo_release_date: '2053-12-21') }
 
     it 'returns the date in the embargo field' do
-      expect(described_class.find('12345').embargo_release_date).to match(/\d{4}-\d{2}-\d{2}/)
+      expect(purl.embargo_release_date).to match(/\d{4}-\d{2}-\d{2}/)
     end
   end
 

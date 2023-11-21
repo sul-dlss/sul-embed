@@ -32,7 +32,7 @@ module Embed
       end
 
       def cdl?
-        purl_object.rights.controlled_digital_lending?
+        purl_object.controlled_digital_lending?
       end
 
       # We rewrite the provided canvas ids to:

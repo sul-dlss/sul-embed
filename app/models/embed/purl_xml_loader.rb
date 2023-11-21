@@ -24,11 +24,36 @@ module Embed
         envelope:,
         archived_site_url:,
         external_url:,
+        embargoed:,
+        citation_only:,
+        stanford_only_unrestricted:,
+        controlled_digital_lending:,
+        public:,
         rights:
       }
     end
 
     private
+
+    def embargoed
+      rights.embargoed?
+    end
+
+    def citation_only
+      rights.citation_only?
+    end
+
+    def stanford_only_unrestricted
+      rights.stanford_only_unrestricted?
+    end
+
+    def controlled_digital_lending
+      rights.controlled_digital_lending?
+    end
+
+    def public
+      rights.world_unrestricted?
+    end
 
     def archived_site_url
       ng_xml.xpath(
