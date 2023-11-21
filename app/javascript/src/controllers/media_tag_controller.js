@@ -44,7 +44,11 @@ export default class extends Controller {
   initializeVideoJSPlayer() {
     this.mediaTagTargets.forEach((mediaTag) => {
       mediaTag.classList.add('video-js', 'vjs-default-skin')
-      videojs(mediaTag.id)
+      const player = videojs(mediaTag.id)
+      player.on('loadedmetadata', () => {
+        const event = new CustomEvent('media-loaded', { detail: player })
+        window.dispatchEvent(event)
+      })
     })
   }
 
