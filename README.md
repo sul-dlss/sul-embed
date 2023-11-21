@@ -17,7 +17,7 @@ Then start up the Rails app (web server, debugger, CSS bundler, JS bundler) in o
 
     bin/dev
 
-To debug, add one or more `debugger` statements to Ruby source code and then attach the debug clientr:
+To debug, add one or more `debugger` statements to Ruby source code and then attach the debug client:
 
     bin/rdbg -A
 
@@ -28,6 +28,26 @@ Now visit this URL in your browser!
 **NOTE**: If you're doing development on the media player, the above link may get you little more than CORS errors, in which case you likely want to develop against ViewComponent previews:
 
     http://localhost:3000/rails/view_components/
+    
+When developing viewers it can sometimes be helpful to load items using files served from the local development server instead of deployed PURL and Stacks servers. To do this you will want to create a `config/settings.local.yml` file with the following contents:
+
+```yaml
+purl_url: 'http://localhost:3000/'
+stacks_url: 'http://localhost:3000/'
+```
+
+Then you will need to place the "public XML" metadata for an object in the `public` directory `public/{druid}.xml` and the items stacks files in a directory `public/file/druid:{druid}`. For example, for a druid `bk914zc7842` you would have a `public` directory structure that looks something like:
+
+```
+public
+├── bk914zc7842.xml
+└── file
+    └── druid:bk914zc7842
+        ├── bk914zc7842_low.glb
+        ├── bk914zc7842_low.mtl
+        ├── bk914zc7842_low.obj
+        └── bk914zc7842_normal_low.jpg
+```
 
 # Notes for developers
 
