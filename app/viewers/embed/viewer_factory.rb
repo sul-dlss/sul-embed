@@ -2,7 +2,6 @@
 
 module Embed
   class ViewerFactory
-    delegate :height, :width, to: :viewer
     def initialize(request)
       @request = request
       raise Embed::Purl::ResourceNotEmbeddable unless request.purl_object.valid?
