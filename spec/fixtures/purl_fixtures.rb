@@ -553,7 +553,7 @@ module PurlFixtures
         <rightsMetadata>
           <access type="read">
             <machine>
-              <embargoReleaseDate>#{(Time.current + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
+              <embargoReleaseDate>2053-12-21</embargoReleaseDate>
               <none/>
             </machine>
           </access>
