@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::MediaTagComponent, type: :component do
+RSpec.describe Embed::LegacyMedia::MediaTagComponent, type: :component do
   include PurlFixtures
   subject(:render) do
     render_inline(
       described_class.new(
-        resource:, resource_iteration:, druid:, include_transcripts:
+        resource:, resource_iteration:, druid:, include_transcripts:, many_primary_files:
       )
     )
   end
@@ -15,6 +15,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 0) }
   let(:druid) { 'bc123df4567' }
   let(:include_transcripts) { false }
+  let(:many_primary_files) { false }
 
   before do
     render
@@ -49,6 +50,15 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
 
     it 'includes a 100% height attribute' do
       expect(page).to have_css("video[height='100%']", visible: :all)
+    end
+
+    it 'shows location restricted messages to the screen reader' do
+      expect(page).to have_css('video[aria-labelledby="access-restricted-message-div-0"]', visible: :all)
+      expect(page).to have_css('div#access-restricted-message-div-0')
+    end
+
+    it 'shows a location restricted message in place of the video' do
+      expect(page).to have_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')
     end
   end
 

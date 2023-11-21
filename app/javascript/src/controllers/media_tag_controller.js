@@ -8,10 +8,6 @@ export default class extends Controller {
   static targets = [ "mediaTag", "list" ]
 
   connect() {
-    // TODO: once we get rid of the legacy media viewer, we should remove this from MediaTagComponent
-    //       and remove this line.
-    this.element.querySelectorAll('[data-access-restricted-message]').forEach((elem) => elem.hidden = true)
-
     this.setupThumbnails()
     this.validateMedia()
   }

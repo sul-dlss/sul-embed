@@ -20,20 +20,17 @@ module Embed
     # @param [#index] resource_iteration Information about what part of the collection we are in
     # @param [String] druid the object identifier
     # @param [Bool] include_transcripts a feature flag about displaying VTT tracks
-    # @param [Bool] many_primary_files should we add the sul-embed-many-media class
-    def initialize(resource:, resource_iteration:, druid:, include_transcripts:, many_primary_files:)
+    def initialize(resource:, resource_iteration:, druid:, include_transcripts:)
       @resource = resource
       @file = resource.primary_file
       @resource_iteration = resource_iteration
       @druid = druid
       @include_transcripts = include_transcripts
-      @many_primary_files = many_primary_files
     end
 
     attr_reader :file
 
     delegate :type, to: :@resource
-    delegate :stanford_only?, :location_restricted?, to: :file
 
     def call
       if SUPPORTED_MEDIA_TYPES.include?(type.to_sym)
@@ -64,7 +61,7 @@ module Embed
 
     def media_element
       render MediaWrapperComponent.new(thumbnail: thumbnail_url, file:, type:, file_index: @resource_iteration.index) do
-        access_restricted_overlay + media_tag
+        media_tag
       end
     end
 
@@ -87,8 +84,7 @@ module Embed
                poster: poster_url_for,
                controls: 'controls',
                crossorigin: 'anonymous',
-               aria: { labelledby: "access-restricted-message-div-#{@resource_iteration.index}" },
-               class: "sul-embed-media-file #{'sul-embed-many-media' if @many_primary_files}",
+               class: 'sul-embed-media-file',
                height: '100%') do
         enabled_streaming_sources + transcript
       end
@@ -99,7 +95,7 @@ module Embed
       render MediaWrapperComponent.new(thumbnail: thumb_url, file:, type:, file_index: @resource_iteration.index,
                                        scroll: true) do
         tag.img(src: stacks_thumb_url(@druid, file.title),
-                class: "sul-embed-media-thumb #{'sul-embed-many-media' if @many_primary_files}")
+                class: 'sul-embed-media-thumb')
       end
     end
 
@@ -140,36 +136,6 @@ module Embed
 
     def render_captions?
       @include_transcripts && @resource.caption_files
-    end
-
-    # NOTE: This is only for the legacy media player. We can remove it when we switch to the new player.
-    def access_restricted_message
-      if location_restricted? && !stanford_only?
-        <<~HTML
-          <span class='line1'>Restricted media cannot be played in your location.</span>
-          <span class='line2'>See Access conditions for more information.</span>
-        HTML
-      else
-        <<~HTML
-          <span class='line1'>Limited access for<br>non-Stanford guests.</span>
-          <span class='line2'>See Access conditions for more information.</span>
-        HTML
-      end
-    end
-
-    # NOTE: This is only for the legacy media player. We can remove it when we switch to the new player.
-    def access_restricted_overlay
-      return ''.html_safe unless stanford_only? || location_restricted?
-
-      # TODO: line1 and line1 spans should be populated by values returned from stacks
-      html = <<~HTML
-        <div class='sul-embed-media-access-restricted-container' data-access-restricted-message>
-          <div class='sul-embed-media-access-restricted' id="access-restricted-message-div-#{@resource_iteration.index}">
-            #{access_restricted_message}
-          </div>
-        </div>
-      HTML
-      html.html_safe
     end
 
     def streaming_settings_for(streaming_type)

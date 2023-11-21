@@ -97,8 +97,7 @@
 
       <%= render Embed::MediaTagComponent.with_collection(resources_with_primary_file,
                                                           include_transcripts:,
-                                                          druid:,
-                                                          many_primary_files:) %>
+                                                          druid:) %>
     </div>
     <%= render 'embed/embed_this/generic', viewer: viewer %>
     <%= render Embed::Download::LegacyMediaComponent.new viewer: viewer %>
