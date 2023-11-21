@@ -15,12 +15,6 @@ RSpec.describe Embed::Viewer::File do
     end
   end
 
-  describe 'self.supported_types' do
-    it 'returns an array of supported types' do
-      expect(described_class.supported_types).to eq [:file]
-    end
-  end
-
   describe 'height' do
     before { stub_purl_xml_response_with_fixture(multi_file_purl_xml) }
 

@@ -59,51 +59,6 @@ API endpoint: `https://embed.stanford.edu`
 
 Example: `https://embed.stanford.edu/embed.json?url=http://purl.stanford.edu/zw200wd8767`
 
-## Creating Viewers
-
-You can create a viewer by implementing a class with a pretty simple API.
-
-The viewer class will be instantiated with an Embed::Request object. The `initialize` method is included in the `CommonViewer` parent class but can be overridden.
-
-    module Embed
-      class Viewer
-        class DemoViewer < CommonViewer
-        end
-      end
-    end
-
-
-The class must define a class method returning an array of which types it will support.  These types are derived from the type attribute from the contentMetadata.
-
-    module Embed
-      class Viewer
-        class DemoViewer < CommonViewer
-
-          def self.supported_types
-            [:demo_type]
-          end
-        end
-      end
-    end
-
-
-The file that the class is defined in (or your preferred method) should register itself as a view with the Embed module.
-
-    module Embed
-      class Viewer
-        class DemoViewer < CommonViewer
-          def self.supported_types
-            [:demo_type]
-          end
-        end
-      end
-    end
-
-    Embed.register_viewer(Embed::Viewer::DemoViewer) if Embed.respond_to?(:register_viewer)
-
-## SDR data models and their specifications
-
-See https://consul.stanford.edu/display/SDRdocs/Content+types+and+resource+types+in+SDR
 
 ### Linking in viewers
 

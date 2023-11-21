@@ -8,18 +8,6 @@ RSpec.describe Embed::Viewer::Media do
   let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/ignored') }
   let(:media_viewer) { described_class.new(request) }
 
-  describe 'Supported types' do
-    it 'is an empty array when Settings.enable_media_viewer? is false' do
-      expect(Settings).to receive(:enable_media_viewer?).and_return(false)
-      expect(described_class.supported_types).to eq([])
-    end
-
-    it 'is an array of only media when Settings.enable_media_viewer? is true' do
-      expect(Settings).to receive(:enable_media_viewer?).and_return(true)
-      expect(described_class.supported_types).to eq([:media])
-    end
-  end
-
   describe '#show_download?' do
     it 'false when downloadable file count is 0' do
       my_purl_obj = instance_double(Embed::Purl, downloadable_files: [])

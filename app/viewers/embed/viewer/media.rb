@@ -10,12 +10,6 @@ module Embed
         LegacyMediaComponent
       end
 
-      def self.supported_types
-        return [] unless ::Settings.enable_media_viewer?
-
-        [:media]
-      end
-
       # override CommonViewer instance method to ensure we do not show download panel when no downloadable files
       def show_download?
         super && @purl_object.downloadable_files.present?

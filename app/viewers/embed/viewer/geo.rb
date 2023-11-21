@@ -24,10 +24,6 @@ module Embed
         options
       end
 
-      def self.supported_types
-        [:geo]
-      end
-
       def stylesheet
         'geo.css'
       end
