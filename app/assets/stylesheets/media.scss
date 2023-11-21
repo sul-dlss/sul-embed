@@ -363,7 +363,7 @@
       }
     }
 
-    .metadataList, .rightsList, .contentsList {
+    .metadataList, .rightsList, .contentsList, .transcript {
       color: var(--text-color);
       padding: var(--drawer-content-padding);
       font-family: "Roboto", "Helvetica", "Arial", sans-serif;
@@ -382,6 +382,12 @@
         line-height: 1.6em;
         letter-spacing: 0em;
         margin-bottom: 0.5em;
+      }
+    }
+
+    .transcript {
+      .cue {
+        margin-bottom: 1em;
       }
     }
 

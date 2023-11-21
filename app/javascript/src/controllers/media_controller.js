@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import { EmbedThis } from '../modules/embed_this.js';
 
 export default class extends Controller {
-  static targets = [ "leftDrawer", "leftButton", "metadata", "shareModal", "contents",
+  static targets = [ "leftDrawer", "leftButton", "metadata", "shareModal", "contents", "transcript",
                      "downloadModal", "rights", "accessibility", "modalComponentsPopover"]
   connect() {
     this.element.style.display = ''
@@ -54,6 +54,8 @@ export default class extends Controller {
     this.metadataTarget.hidden = false
     this.contentsTarget.hidden = true
     this.rightsTarget.hidden = true
+    this.transcriptTarget.hidden = true
+
   }
 
   displayContents(evt) {
@@ -62,6 +64,7 @@ export default class extends Controller {
     this.metadataTarget.hidden = true
     this.contentsTarget.hidden = false
     this.rightsTarget.hidden = true
+    this.transcriptTarget.hidden = true
   }
 
   displayRights(evt) {
@@ -70,6 +73,16 @@ export default class extends Controller {
     this.metadataTarget.hidden = true
     this.contentsTarget.hidden = true
     this.rightsTarget.hidden = false
+    this.transcriptTarget.hidden = true
+  }
+
+  displayTranscript(evt) {
+    this.setLeftButtonActive(evt)
+
+    this.metadataTarget.hidden = true
+    this.contentsTarget.hidden = true
+    this.rightsTarget.hidden = true
+    this.transcriptTarget.hidden = false
   }
 
   setLeftButtonActive(evt) {
