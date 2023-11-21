@@ -23,10 +23,6 @@ module Embed
         true
       end
 
-      def self.supported_types
-        %i[3d]
-      end
-
       private
 
       def default_height

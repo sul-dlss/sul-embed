@@ -19,12 +19,6 @@ RSpec.describe Embed::Viewer::WasSeed do
     end
   end
 
-  describe 'self.supported_types' do
-    it 'returns an array of supported types' do
-      expect(described_class.supported_types).to eq [:'webarchive-seed']
-    end
-  end
-
   describe '#archived_site_url' do
     it 'parses a mods archived site' do
       expect(was_seed_viewer.archived_site_url).to eq 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/'

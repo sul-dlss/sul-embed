@@ -9,10 +9,6 @@ module Embed
         WasSeedComponent
       end
 
-      def self.supported_types
-        [:'webarchive-seed']
-      end
-
       def stylesheet
         'was_seed.css'
       end

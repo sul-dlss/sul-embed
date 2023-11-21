@@ -21,10 +21,6 @@ module Embed
         end
       end
 
-      def self.supported_types
-        [:file]
-      end
-
       def file_size_text(file_size)
         return pretty_filesize(file_size) unless file_size.zero?
 

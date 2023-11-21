@@ -9,10 +9,6 @@ module Embed
         M3Component
       end
 
-      def self.supported_types
-        %i[image manuscript map book]
-      end
-
       def stylesheet
         'm3.css'
       end

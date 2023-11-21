@@ -15,10 +15,6 @@ module Embed
         document_resource_files.map(&:file_url)
       end
 
-      def self.supported_types
-        %i[document]
-      end
-
       def self.show_download?
         true
       end

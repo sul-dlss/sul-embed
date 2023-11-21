@@ -7,12 +7,6 @@ RSpec.describe Embed::Viewer::Geo do
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:geo_viewer) { described_class.new(request) }
 
-  describe 'self.supported_types' do
-    it 'returns an array of supported types' do
-      expect(described_class.supported_types).to eq [:geo]
-    end
-  end
-
   describe '.external_url' do
     it 'builds the external url based on settings and druid value' do
       stub_purl_request(request)

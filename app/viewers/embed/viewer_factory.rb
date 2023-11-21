@@ -8,13 +8,28 @@ module Embed
     end
 
     def viewer
-      @viewer ||= registered_or_default_viewer.new(@request)
+      @viewer ||= viewer_class.new(@request)
     end
 
     private
 
-    def registered_or_default_viewer
-      registered_viewer(type: object_type) || default_viewer
+    def viewer_class # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
+      case @request.purl_object.type
+      when 'file'
+        Embed::Viewer::File
+      when 'geo'
+        Embed::Viewer::Geo
+      when 'image', 'manuscript', 'map', 'book'
+        Embed::Viewer::M3Viewer
+      when 'document'
+        Embed::Viewer::PdfViewer
+      when '3d'
+        Embed::Viewer::Virtex3dViewer
+      when 'media'
+        Settings.enable_media_viewer? ? Embed::Viewer::Media : Embed::Viewer::File
+      when 'webarchive-seed'
+        Embed::Viewer::WasSeed
+      end
     end
 
     # @return [Symbol] the type of object to display
