@@ -7,10 +7,10 @@ RSpec.describe Embed::Viewer::M3Viewer do
   subject(:m3_viewer) { described_class.new(request) }
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
-  let(:purl) { "#{Settings.purl_url}/abc123" }
+  let(:purl) { build(:purl) }
 
   before do
-    stub_purl_request(request)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
   end
 
   describe 'initialize' do
@@ -168,7 +168,6 @@ RSpec.describe Embed::Viewer::M3Viewer do
     let(:purl) { instance_double(Embed::Purl, collections: %w[abc 123]) }
 
     it 'based off of a purls collection being specified in settings' do
-      expect(request).to receive(:purl_object).and_return(purl)
       expect(m3_viewer.show_attribution_panel?).to be true
     end
   end

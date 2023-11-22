@@ -8,8 +8,13 @@ RSpec.describe Embed::Viewer::Geo do
   let(:geo_viewer) { described_class.new(request) }
 
   describe '.external_url' do
+    let(:purl) { build(:purl) }
+
+    before do
+      allow(Embed::Purl).to receive(:find).and_return(purl)
+    end
+
     it 'builds the external url based on settings and druid value' do
-      stub_purl_request(request)
       expect(geo_viewer.external_url).to eq('https://earthworks.stanford.edu/catalog/stanford-abc123')
     end
   end
