@@ -64,7 +64,7 @@ RSpec.describe 'Media viewer', :js do
     let(:purl) { video_purl_with_image }
 
     it 'includes a previewable image as a top level object' do
-      expect(page).to have_css('div .osd')
+      expect(page).to have_css('div .osd', visible: :hidden)
 
       click_button 'Display sidebar'
       within 'aside.open' do
