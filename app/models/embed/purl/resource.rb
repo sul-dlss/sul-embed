@@ -44,9 +44,12 @@ module Embed
         files.find(&:image?)
       end
 
+      # Sort the caption files by language label so we can display them in alphabetical order in the
+      # captions options list.
+      #
       # @return [Array<ResourceFile>]
       def caption_files
-        files.select(&:vtt?)
+        files.select(&:caption?).sort_by(&:language_code)
       end
     end
   end

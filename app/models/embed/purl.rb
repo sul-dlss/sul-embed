@@ -45,13 +45,11 @@ module Embed
     end
 
     def all_resource_files
-      contents.map(&:files).flatten
+      contents.flat_map(&:files)
     end
 
     def downloadable_files
-      all_resource_files.select do |rf|
-        rf.world_downloadable? || rf.stanford_only_downloadable?
-      end
+      all_resource_files.select(&:downloadable?)
     end
 
     def purl_url

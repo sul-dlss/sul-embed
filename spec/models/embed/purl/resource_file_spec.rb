@@ -151,16 +151,16 @@ RSpec.describe Embed::Purl::ResourceFile do
     end
   end
 
-  describe '#vtt?' do
-    subject { resource_file.vtt? }
+  describe '#caption?' do
+    subject { resource_file.caption? }
 
-    context 'when it is a vtt transcript' do
-      let(:resource_file) { build(:resource_file, :vtt) }
+    context 'when it is a caption file' do
+      let(:resource_file) { build(:resource_file, :caption) }
 
       it { is_expected.to be true }
     end
 
-    context 'when it is not a vtt transcript' do
+    context 'when it is not a caption file' do
       let(:resource_file) { build(:resource_file, :document) }
 
       it { is_expected.to be false }

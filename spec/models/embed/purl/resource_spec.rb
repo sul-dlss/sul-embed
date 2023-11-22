@@ -61,15 +61,15 @@ RSpec.describe Embed::Purl::Resource do
   end
 
   describe '#caption_files' do
-    context 'when it has a vtt transcript' do
+    context 'when it has a caption file' do
       subject { resource.caption_files[0].title }
 
       let(:resource) { build(:resource, :video) }
 
-      it { is_expected.to eq 'abc_123_cap.webvtt' }
+      it { is_expected.to eq 'abc_123_cap.vtt' }
     end
 
-    context 'when it does not have a vtt transcript' do
+    context 'when it does not have a caption file' do
       subject { resource.caption_files[0] }
 
       let(:resource) { build(:resource, :video, files: [build(:resource_file, :video)]) }

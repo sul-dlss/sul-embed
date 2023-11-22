@@ -36,10 +36,11 @@ FactoryBot.define do
       size { 152_000_000 }
     end
 
-    trait :vtt do
+    trait :caption do
       mimetype { 'text/vtt' }
-      filename { 'abc_123_cap.webvtt' }
+      filename { 'abc_123_cap.vtt' }
       size { 176_218 }
+      role { 'caption' }
     end
 
     trait :stanford_only do
