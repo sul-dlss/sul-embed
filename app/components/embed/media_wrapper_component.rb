@@ -2,10 +2,10 @@
 
 module Embed
   class MediaWrapperComponent < ViewComponent::Base
-    def initialize(file:, type:, file_index:, thumbnail:, scroll: false)
+    def initialize(file:, type:, resource_index:, thumbnail:, scroll: false)
       @file = file
       @type = type
-      @file_index = file_index
+      @resource_index = resource_index
       @thumbnail = thumbnail
       @scroll = scroll
     end
@@ -20,7 +20,7 @@ module Embed
                 stanford_only: @file.stanford_only?,
                 location_restricted: @file.location_restricted?,
                 file_label: @file.label_or_filename,
-                slider_object: @file_index,
+                slider_object: @resource_index,
                 thumbnail_url: @thumbnail.presence,
                 default_icon: @type == 'audio' ? 'sul-i-file-music-1' : 'sul-i-file-video-3',
                 duration: @file.duration

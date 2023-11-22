@@ -6,12 +6,12 @@ RSpec.describe Embed::MediaWrapperComponent, type: :component do
   subject(:render) do
     render_inline(
       described_class.new(
-        file:, type:, file_index:, thumbnail:
+        file:, type:, resource_index:, thumbnail:
       )
     )
   end
 
-  let(:file_index) { 0 }
+  let(:resource_index) { 0 }
   let(:thumbnail) { '' }
   let(:type) { 'audio' }
 

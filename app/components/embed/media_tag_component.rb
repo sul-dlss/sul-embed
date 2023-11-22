@@ -18,7 +18,7 @@ module Embed
       @include_transcripts = include_transcripts
     end
 
-    attr_reader :file
+    attr_reader :file, :druid
 
     delegate :type, to: :@resource
 
@@ -26,12 +26,12 @@ module Embed
       if SUPPORTED_MEDIA_TYPES.include?(type.to_sym)
         media_element
       else
-        previewable_element
+        render MediaPreviewImageComponent.new(druid:, file:, type:, resource_index: @resource_iteration.index)
       end
     end
 
     def thumbnail_url
-      stacks_square_url(@druid, @resource.thumbnail.title, size: '75') if @resource.thumbnail
+      stacks_square_url(druid, @resource.thumbnail.title, size: '75') if @resource.thumbnail
     end
 
     def poster_url_for
@@ -39,9 +39,9 @@ module Embed
       return unless @resource.thumbnail
 
       if @resource.thumbnail.world_downloadable?
-        stacks_thumb_url(@druid, @resource.thumbnail.title, size: '!800,600')
+        stacks_thumb_url(druid, @resource.thumbnail.title, size: '!800,600')
       else
-        stacks_thumb_url(@druid, @resource.thumbnail.title)
+        stacks_thumb_url(druid, @resource.thumbnail.title)
       end
     end
 
@@ -50,7 +50,8 @@ module Embed
     end
 
     def media_element
-      render MediaWrapperComponent.new(thumbnail: thumbnail_url, file:, type:, file_index: @resource_iteration.index) do
+      render MediaWrapperComponent.new(thumbnail: thumbnail_url, file:, type:,
+                                       resource_index: @resource_iteration.index) do
         media_tag
       end
     end
@@ -77,15 +78,6 @@ module Embed
                class: 'sul-embed-media-file',
                height: '100%') do
         enabled_streaming_sources + captions
-      end
-    end
-
-    def previewable_element
-      thumb_url = stacks_square_url(@druid, file.title, size: '75')
-      render MediaWrapperComponent.new(thumbnail: thumb_url, file:, type:, file_index: @resource_iteration.index,
-                                       scroll: true) do
-        tag.img(src: stacks_thumb_url(@druid, file.title),
-                class: 'sul-embed-media-thumb')
       end
     end
 
@@ -126,7 +118,7 @@ module Embed
     end
 
     def streaming_url_for(streaming_type)
-      stacks_media_stream = Embed::StacksMediaStream.new(druid: @druid, file:)
+      stacks_media_stream = Embed::StacksMediaStream.new(druid:, file:)
       case streaming_type.to_sym
       when :hls
         stacks_media_stream.to_playlist_url
@@ -138,7 +130,7 @@ module Embed
     end
 
     def authentication_url
-      attributes = { host: Settings.stacks_url, druid: @druid, title: file.title }
+      attributes = { host: Settings.stacks_url, druid:, title: file.title }
       Settings.streaming.auth_url % attributes
     end
   end

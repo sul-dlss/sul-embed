@@ -127,7 +127,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     end
 
     it 'are included as top level objects' do
-      expect(page).to have_css('div img.sul-embed-media-thumb')
+      expect(page).to have_css('div .osd')
     end
 
     it 'are scrollable' do
