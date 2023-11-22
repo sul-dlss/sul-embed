@@ -11,7 +11,6 @@ RSpec.describe Embed::Download::GeoComponent, type: :component do
 
   before do
     stub_purl_xml_response_with_fixture(response)
-    allow(viewer).to receive(:asset_host).and_return('http://example.com/')
     render_inline(described_class.new(viewer:))
   end
 
