@@ -55,8 +55,7 @@ module Bcp47
       end
 
       define_method("#{field}=") do |new_value|
-        current_value = public_send(field)
-        case current_value
+        case (current_value = public_send(field))
         when NilClass
           instance_variable_set("@#{field}", new_value)
         when String

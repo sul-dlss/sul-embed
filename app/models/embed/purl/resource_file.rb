@@ -4,16 +4,6 @@ module Embed
   class Purl
     class ResourceFile
       NON_DOWNLOADABLE_ROLES = %w[thumbnail].freeze
-      # Hardcoding some language code to label mappings, based on the mappings we currently need.
-      # This approach should be revisited once we have more robust BCP 47 code to label mapping integrated.
-      FILE_LANGUAGE_CAPTION_LABELS = {
-        'en' => 'English',
-        'ru' => 'Russian',
-        'de' => 'German',
-        'et' => 'Estonian',
-        'lv' => 'Latvian',
-        'es' => 'Spanish'
-      }.freeze
 
       def initialize(attributes = {})
         self.attributes = attributes
@@ -58,7 +48,7 @@ module Embed
       end
 
       def language_label
-        FILE_LANGUAGE_CAPTION_LABELS.fetch(language_code, 'Unknown')
+        Bcp47::Registry.resolve(language_code) || 'Unknown'
       end
 
       def caption_label

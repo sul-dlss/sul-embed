@@ -34,7 +34,7 @@ module Bcp47
       records.find(&:file_date).file_date
     end
 
-    def self.resolve(string) # rubocop:disable Metrics/MethodLength
+    def self.resolve(string) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       string
         .split(CODE_DELIMITER)
         .filter_map
