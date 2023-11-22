@@ -16,7 +16,7 @@ export default class extends Controller {
       classList.remove('open')
       setTimeout(() => {
         this.leftDrawerTarget.style.visibility = 'hidden' // remove from accessability tree
-      }, 1000)
+      }, 500)
     } else {
       this.leftDrawerTarget.style.visibility = ''
       classList.add('open')
