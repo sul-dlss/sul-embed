@@ -5,6 +5,16 @@ FactoryBot.define do
     druid { 'abc123' }
     contents { [build(:resource, :file)] }
 
+    trait :embargoed do
+      embargoed { true }
+      embargo_release_date { '2053-12-21' }
+    end
+
+    trait :embargoed_stanford do
+      embargoed
+      stanford_only_unrestricted { true }
+    end
+
     trait :was_seed do
       type { 'was-seed' }
       archived_site_url { 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/' }

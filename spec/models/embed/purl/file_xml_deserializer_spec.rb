@@ -78,5 +78,19 @@ RSpec.describe Embed::Purl::FileXmlDeserializer do
         expect(Honeybadger).to have_received(:notify).with("ResourceFile#media duration ISO8601::Errors::UnknownPattern: 'invalid'")
       end
     end
+
+    context 'when file size is empty' do
+      let(:file_node) do
+        Nokogiri::XML(
+          <<~XML
+            <file size="" mimetype="image/jp2" id="myvideo.mp4"/>
+          XML
+        ).root
+      end
+
+      it 'casts it to 0' do
+        expect(resource_file.size).to eq 0
+      end
+    end
   end
 end

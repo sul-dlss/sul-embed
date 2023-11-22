@@ -7,15 +7,16 @@ RSpec.describe Embed::Download::LegacyMediaComponent, type: :component do
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:viewer) { Embed::Viewer::Media.new(request) }
-  let(:response) { video_purl }
+  let(:purl) { build(:purl, contents: resources) }
+  let(:resources) { [] }
 
   before do
-    stub_purl_xml_response_with_fixture(response)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
   end
 
   context 'when show_download? is false' do
     before do
-      allow_any_instance_of(Embed::Purl).to receive(:downloadable_files).and_return([]) # rubocop:disable RSpec/AnyInstance
+      allow(purl).to receive(:downloadable_files).and_return([])
       render_inline(described_class.new(viewer:))
     end
 
@@ -24,7 +25,16 @@ RSpec.describe Embed::Download::LegacyMediaComponent, type: :component do
     end
   end
 
-  context 'when downloadable files' do
+  context 'when downloadable files are present' do
+    let(:resources) do
+      [
+        build(:resource, :video, files: [build(:resource_file, :video, :location_restricted, label: 'First Video')]),
+        build(:resource, :video, files: [build(:resource_file, :video, :stanford_only, label: 'Second Video')]),
+        build(:resource, :file, files: [build(:resource_file, :document, :world_downloadable, label: 'Transcript')]),
+        build(:resource, :video, files: [build(:resource_file, :video, :world_downloadable)])
+      ]
+    end
+
     before do
       render_inline(described_class.new(viewer:))
     end
@@ -61,7 +71,9 @@ RSpec.describe Embed::Download::LegacyMediaComponent, type: :component do
     end
 
     context 'when rights are Stanford only' do
-      let(:response) { stanford_restricted_file_purl_xml }
+      let(:resources) do
+        [build(:resource, :file, files: [build(:resource_file, :document, :stanford_only)])]
+      end
 
       it 'has a span with a stanford-only s icon class (with screen-reader text)' do
         expect(page).to have_css('.sul-embed-stanford-only-text', visible: :all)
@@ -70,7 +82,9 @@ RSpec.describe Embed::Download::LegacyMediaComponent, type: :component do
     end
 
     context 'when the resource is location restricted' do
-      let(:response) { single_video_purl }
+      let(:resources) do
+        [build(:resource, :video, files: [build(:resource_file, :video, :location_restricted)])]
+      end
 
       it 'not included in download panel' do
         expect(page).not_to have_css('body')

@@ -12,7 +12,7 @@ FactoryBot.define do
     trait :video do
       type { 'video' }
       description { 'First Video' }
-      files { [build(:resource_file, :video), build(:resource_file, :caption), build(:resource_file, :image, filename: 'video_1.jp2')] }
+      files { [build(:resource_file, :video, :world_downloadable), build(:resource_file, :caption, :world_downloadable), build(:resource_file, :image, :world_downloadable, filename: 'video_1.jp2')] }
     end
 
     trait :audio do
