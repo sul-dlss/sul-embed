@@ -9,8 +9,13 @@
   <% end %>
   <% if license.present? %>
     <dt>License</dt>
-    <dd>
-      <%= license %>
-    </dd>
+    <dd><%= license %></dd>
+  <% end %>
+  <% if no_rights_information_present? %>
+    <dt>Attribution</dt>
+    <dd><%= default_attribution %></dd>
   <% end %>
 </dl>
+<div class="logoContainer">
+  <%= image_tag stanford_libraries_logo_url, alt: "Stanford Libraries logo", role: "presentation", class: "attributionLogo" %>
+</div>
