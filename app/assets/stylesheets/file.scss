@@ -90,7 +90,7 @@ body {
     list-style: none;
     // font-size: 120%;
   }
-  
+
   ul[role="tree"] li {
     // margin: 0;
     padding: 0;
@@ -104,7 +104,7 @@ body {
   [role="treeitem"][aria-expanded="false"] + [role="group"] {
     display: none;
   }
-  
+
   [role="treeitem"][aria-expanded="true"] + [role="group"] {
     display: block;
   }
@@ -112,7 +112,7 @@ body {
   [role="treeitem"][aria-expanded="false"] > ul {
     display: none;
   }
-  
+
   [role="treeitem"][aria-expanded="true"] > ul {
     display: block;
   }
@@ -136,17 +136,17 @@ body {
 
   [role="treeitem"][aria-expanded="false"] > .#{$namespace}-treeitem::before {
     font-family: 'sul-icons';
-    content: '\f10b'; // sul-i-arrow-right-8 
+    content: '\f10b'; // sul-i-arrow-right-8
     display: inline-block;
     padding-right: 3px;
     vertical-align: middle;
     font-weight: 900;
     width: 15px;
   }
-  
+
   [role="treeitem"][aria-expanded="true"] > .#{$namespace}-treeitem::before {
     font-family: 'sul-icons';
-    content: '\f13e'; // sul-i-arrow-down-8 
+    content: '\f13e'; // sul-i-arrow-down-8
     display: inline-block;
     padding-right: 3px;
     vertical-align: middle;
@@ -171,8 +171,6 @@ body {
 
 .#{$namespace}-file-list {
   @include well-container;
-
-  min-height: 189px;
 }
 
 .#{$namespace}-media-list {
