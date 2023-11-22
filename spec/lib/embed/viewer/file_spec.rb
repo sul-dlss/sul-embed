@@ -8,9 +8,13 @@ RSpec.describe Embed::Viewer::File do
   let(:file_viewer) { described_class.new(request) }
 
   describe 'initialize' do
-    it 'creates Embed::Viewer::File' do
-      stub_purl_request(request)
+    let(:purl) { build(:purl) }
 
+    before do
+      allow(Embed::Purl).to receive(:find).and_return(purl)
+    end
+
+    it 'creates Embed::Viewer::File' do
       expect(file_viewer).to be_an described_class
     end
   end
@@ -91,8 +95,10 @@ RSpec.describe Embed::Viewer::File do
 
   describe 'header_height' do
     context 'when the title bar and search bar is hidden' do
+      let(:purl) { build(:purl) }
+
       before do
-        stub_purl_request(request)
+        allow(Embed::Purl).to receive(:find).and_return(purl)
         expect(request).to receive(:hide_title?).at_least(:once).and_return(true)
         expect(request).to receive(:hide_search?).at_least(:once).and_return(true)
       end
@@ -113,8 +119,10 @@ RSpec.describe Embed::Viewer::File do
     end
 
     context 'when the title bar is present' do
+      let(:purl) { build(:purl) }
+
       before do
-        stub_purl_request(request)
+        allow(Embed::Purl).to receive(:find).and_return(purl)
       end
 
       it 'is 68 because it will show the title + number of items' do
@@ -124,8 +132,10 @@ RSpec.describe Embed::Viewer::File do
   end
 
   describe 'file_type_icon' do
+    let(:purl) { build(:purl) }
+
     before do
-      stub_purl_request(request)
+      allow(Embed::Purl).to receive(:find).and_return(purl)
     end
 
     it 'default file icon if mimetype is not recognized' do

@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :purl, class: 'Embed::Purl' do
     druid { 'abc123' }
+    contents { [build(:resource, :file)] }
 
     trait :was_seed do
       type { 'was-seed' }

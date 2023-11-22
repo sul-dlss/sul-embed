@@ -42,10 +42,6 @@ def stub_purl_xml_response_with_fixture(fixture)
   allow_any_instance_of(Embed::PurlXmlLoader).to receive(:response).and_return(fixture)
 end
 
-def stub_purl_request(request)
-  allow(request).to receive(:purl_object).and_return(Embed::Purl.new({ druid: '12345', collections: [], contents: [] }))
-end
-
 def toggle_download_panel
   page.find('button[data-sul-embed-toggle="sul-embed-download-panel"]', visible: true)
   page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
