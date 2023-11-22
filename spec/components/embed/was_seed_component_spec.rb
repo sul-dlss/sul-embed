@@ -20,7 +20,6 @@ RSpec.describe Embed::WasSeedComponent, type: :component do
       allow_any_instance_of(Embed::WasTimeMap).to receive(:redirectable_connection).and_return(fake_connection)
       expect(fake_connection).to receive(:get).once
       stub_purl_xml_response_with_fixture(was_seed_purl)
-      allow(viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
       render_inline(described_class.new(viewer:))
     end
 
@@ -51,7 +50,6 @@ RSpec.describe Embed::WasSeedComponent, type: :component do
       allow_any_instance_of(Embed::WasTimeMap).to receive(:redirectable_connection).and_return(fake_connection)
       expect(fake_connection).to receive(:get).once
       stub_purl_xml_response_with_fixture(was_seed_purl)
-      allow(viewer).to receive(:asset_host).at_least(:twice).and_return('http://example.com/')
       render_inline(described_class.new(viewer:))
     end
 
