@@ -45,6 +45,7 @@ FactoryBot.define do
 
     trait :stanford_only do
       stanford_only { true }
+      stanford_only_downloadable { true }
     end
 
     trait :world_downloadable do

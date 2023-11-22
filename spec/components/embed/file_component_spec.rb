@@ -9,10 +9,11 @@ RSpec.describe Embed::FileComponent, type: :component do
     Embed::Request.new(url: 'http://purl.stanford.edu/abc123')
   end
   let(:viewer) { Embed::Viewer::File.new(request) }
-  let(:response) { file_purl_xml }
+  let(:purl) { build(:purl, contents: resources) }
+  let(:resources) { [build(:resource, :video, files: [build(:resource_file, :video, :stanford_only, label: 'Second Video')])] }
 
   before do
-    stub_purl_xml_response_with_fixture(response)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     render_inline(described_class.new(viewer:))
   end
 
@@ -25,8 +26,16 @@ RSpec.describe Embed::FileComponent, type: :component do
     expect(page).to have_css 'div.sul-embed-footer', visible: :all
   end
 
-  describe 'multi_resource_multi_type_purl' do
-    let(:response) { multi_resource_multi_type_purl }
+  context 'with multiple files' do
+    let(:resources) do
+      [
+        build(:resource, :file,
+              files: [
+                build(:resource_file, :document, size: 12_345),
+                build(:resource_file, :document, size: 12_346)
+              ])
+      ]
+    end
 
     it 'returns a table of files' do
       # visible :all because we display:none the container until we've loaded the CSS.
@@ -41,15 +50,9 @@ RSpec.describe Embed::FileComponent, type: :component do
   end
 
   context 'when file size is zero' do
-    let(:response) { image_no_size_purl }
-
-    it 'displays Download as the link text' do
-      expect(page).to have_css 'a[download]', visible: :all, text: /Download$/
+    let(:resources) do
+      [build(:resource, :image, files: [build(:resource_file, :image, size: 0)])]
     end
-  end
-
-  context 'with empty file size' do
-    let(:response) { image_empty_size_purl }
 
     it 'displays Download as the link text' do
       expect(page).to have_css 'a[download]', visible: :all, text: /Download$/
@@ -57,11 +60,12 @@ RSpec.describe Embed::FileComponent, type: :component do
   end
 
   describe 'embargo/Stanford only' do
-    let(:response) { embargoed_stanford_file_purl_xml }
+    let(:purl) { build(:purl, :embargoed_stanford, contents: resources) }
+    let(:resources) { [build(:resource, :file, files: [build(:resource_file, :document, :stanford_only, filename: 'Title of the PDF.pdf')])] }
 
     it 'adds a Stanford specific embargo message with links still present' do
-      expect(page).to have_css('.sul-embed-embargo-message', visible: :all, text: "Access is restricted to Stanford-affiliated patrons until #{1.month.from_now.strftime('%d-%b-%Y')}")
-      expect(page).to have_css('.sul-embed-media-heading a[href="https://stacks.stanford.edu/file/druid:abc123/Title%20of%20the%20PDF.pdf"]', visible: :all)
+      expect(page).to have_css('.sul-embed-embargo-message', visible: :all, text: 'Access is restricted to Stanford-affiliated patrons until 21-Dec-2053')
+      expect(page).to have_css('.sul-embed-media-heading a[href="https://stacks.stanford.edu/file/druid:bc123df4567/Title%20of%20the%20PDF.pdf"]', visible: :all)
     end
 
     it 'includes an element with a stanford icon class (with screen reader text)' do
@@ -74,7 +78,7 @@ RSpec.describe Embed::FileComponent, type: :component do
   end
 
   describe 'embargoed to world' do
-    let(:response) { embargoed_file_purl_xml }
+    let(:purl) { build(:purl, :embargoed, contents: resources) }
 
     it 'adds a generalized embargo message and no links are present' do
       expect(page).to have_css('.sul-embed-embargo-message', visible: :all, text: 'Access is restricted until 21-Dec-2053')
@@ -84,7 +88,7 @@ RSpec.describe Embed::FileComponent, type: :component do
   end
 
   describe 'location restricted' do
-    let(:response) { single_video_purl }
+    let(:resources) { [build(:resource, :video, files: [build(:resource_file, :video, :location_restricted, label: 'Second Video')])] }
 
     it 'includes text indicating the file is location restricted' do
       expect(page).to have_css('.sul-embed-media-heading .sul-embed-location-restricted-text', visible: :all, text: '(Restricted)')
