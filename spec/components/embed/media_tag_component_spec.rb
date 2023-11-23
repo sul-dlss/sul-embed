@@ -57,7 +57,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     let(:resource) { build(:resource, :video, files: [build(:resource_file, :video, :stanford_only)]) }
 
     it 'includes a data attribute for the thumb-slider bar' do
-      expect(page).to have_css('[data-slider-object="1"]')
+      expect(page).to have_css('[data-slider-object="1"]', visible: :hidden)
     end
 
     it 'includes a data-src attribute for the dash player' do
