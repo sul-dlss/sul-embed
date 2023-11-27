@@ -21,7 +21,7 @@ module Embed
         license:,
         use_and_reproduction:,
         embargo_release_date:,
-        envelope:,
+        bounding_box:,
         archived_site_url:,
         external_url:,
         embargoed:,
@@ -72,8 +72,11 @@ module Embed
       )&.map { |_name, value| value.gsub('info:fedora/druid:', '') } || []
     end
 
-    def envelope
-      ng_xml.at_xpath('//gml:Envelope', 'gml' => 'http://www.opengis.net/gml/3.2/')
+    def bounding_box
+      node = ng_xml.at_xpath('//gml:Envelope', 'gml' => 'http://www.opengis.net/gml/3.2/')
+      return unless node
+
+      Embed::Envelope.new(node).to_bounding_box
     end
 
     def embargo_release_date
