@@ -31,20 +31,5 @@ module Embed
         Embed::Viewer::WasSeed
       end
     end
-
-    # @return [Symbol] the type of object to display
-    def object_type
-      @request.purl_object.type.to_sym
-    end
-
-    def default_viewer
-      Embed::Viewer::File
-    end
-
-    def registered_viewer(type:)
-      @registered_viewer ||= Embed.registered_viewers.detect do |type_class|
-        type_class.supported_types.include?(type)
-      end
-    end
   end
 end
