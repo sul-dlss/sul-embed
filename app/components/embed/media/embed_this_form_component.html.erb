@@ -28,3 +28,10 @@
     </div>
   </fieldset>
 </div>
+
+<script>
+function copyToClipboard(component) {
+  const element = document.getElementById(component)
+  navigator.clipboard.writeText(element.value)
+}
+</script>
