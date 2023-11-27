@@ -15,10 +15,15 @@ RSpec.describe Embed::FooterComponent, type: :component do
     render_inline(described_class.new(viewer:))
   end
 
-  it "returns the object's footer" do
-    expect(page).to have_css 'div.sul-embed-footer'
-    expect(page).to have_css '[aria-label="open embed this panel"]'
-    expect(page).to have_css '[aria-label="2 files available for download"]'
+  context 'when there are two files available for download' do
+    let(:purl) { build(:purl, contents:) }
+    let(:contents) { [build(:resource, :image, files: [build(:resource_file, :world_downloadable), build(:resource_file, :world_downloadable)])] }
+
+    it "returns the object's footer" do
+      expect(page).to have_css 'div.sul-embed-footer'
+      expect(page).to have_css '[aria-label="open embed this panel"]'
+      expect(page).to have_css '[aria-label="2 files available for download"]'
+    end
   end
 
   describe 'fullscreen button' do
