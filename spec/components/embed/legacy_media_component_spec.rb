@@ -10,10 +10,10 @@ RSpec.describe Embed::LegacyMediaComponent, type: :component do
   end
   let(:object) { Embed::Purl.find('12345') }
   let(:viewer) { Embed::Viewer::Media.new(request) }
-  let(:response) { video_purl }
+  let(:purl) { build(:purl, :video) }
 
   before do
-    stub_purl_xml_response_with_fixture(video_purl)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     render_inline(described_class.new(viewer:))
   end
 
@@ -21,8 +21,10 @@ RSpec.describe Embed::LegacyMediaComponent, type: :component do
     expect(page).to have_css('video', visible: :all)
   end
 
-  describe 'media tag' do
-    let(:response) { video_with_spaces_in_filename_purl }
+  context 'with spaces in file names' do
+    let(:purl) { build(:purl, :video, contents:) }
+    let(:contents) { [build(:resource, :video, files:)] }
+    let(:files) { [build(:resource_file, :video, :world_downloadable, filename: 'A video title.mp4')] }
 
     it 'does not do URL escaping on sources' do
       source = page.find_css('video source', visible: :all).first

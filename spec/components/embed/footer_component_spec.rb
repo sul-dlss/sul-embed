@@ -8,9 +8,10 @@ RSpec.describe Embed::FooterComponent, type: :component do
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:object) { Embed::Purl.find('12345') }
   let(:viewer) { Embed::Viewer::Geo.new(request) }
+  let(:purl) { build(:purl) }
 
   before do
-    stub_purl_xml_response_with_fixture(image_purl_xml)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     render_inline(described_class.new(viewer:))
   end
 

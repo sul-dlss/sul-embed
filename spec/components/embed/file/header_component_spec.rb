@@ -8,8 +8,10 @@ RSpec.describe Embed::File::HeaderComponent, type: :component do
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:viewer) { Embed::Viewer::File.new(request) }
 
+  let(:purl) { build(:purl, title: 'File Title') }
+
   before do
-    stub_purl_xml_response_with_fixture(file_purl_xml)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     render_inline(described_class.new(viewer:))
   end
 
