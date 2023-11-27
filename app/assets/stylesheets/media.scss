@@ -262,6 +262,11 @@
     flex-shrink: 0;
   }
 
+  // First selector is for embargo. Last selector is other auth restrictions
+  .authLinkWrapper + .media-component-body, [data-controller="auth-restriction"]:has(.authLinkWrapper:not([hidden])) + .media-component-body {
+    max-height: calc(100vh - 88px); // Scroll height for metadata when the auth wrapper is displaying
+  }
+
   .media-component-body {
     display: flex;
     flex-grow: 1;
@@ -362,9 +367,9 @@
     }
 
     .inner {
-      overflow-y: auto;
       display: flex;
       flex-direction: column;
+      overflow: clip auto;
       section {
         // This avoids wrapping when animating.
         width: calc(var(--drawer-width) - var(--tab-width));
