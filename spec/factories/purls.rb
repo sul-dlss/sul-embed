@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :purl, class: 'Embed::Purl' do
     druid { 'abc123' }
     contents { [build(:resource, :file)] }
+    collections { [] }
 
     trait :embargoed do
       embargoed { true }
@@ -20,6 +21,11 @@ FactoryBot.define do
       archived_site_url { 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/' }
       external_url { 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/' }
       contents { [build(:resource, :image)] }
+    end
+
+    trait :video do
+      type { 'media' }
+      contents { [build(:resource, :video)] }
     end
   end
 end

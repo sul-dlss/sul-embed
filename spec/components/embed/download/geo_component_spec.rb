@@ -9,8 +9,11 @@ RSpec.describe Embed::Download::GeoComponent, type: :component do
   let(:viewer) { Embed::Viewer::Geo.new(request) }
   let(:response) { geo_purl_public }
 
+  let(:purl) { build(:purl, contents:) }
+  let(:contents) { [build(:resource, :file)] }
+
   before do
-    stub_purl_xml_response_with_fixture(response)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     render_inline(described_class.new(viewer:))
   end
 
@@ -18,7 +21,7 @@ RSpec.describe Embed::Download::GeoComponent, type: :component do
     let(:viewer) do
       Embed::Viewer::Geo.new(
         Embed::Request.new(
-          url: 'http://purl.stanford.edu/abc123', hide_download: 'true'
+          url: 'http://purl.stanford.edu/bc123df4567', hide_download: 'true'
         )
       )
     end
@@ -28,13 +31,18 @@ RSpec.describe Embed::Download::GeoComponent, type: :component do
     end
   end
 
-  it 'generates a file list when file has resources' do
-    expect(page).to have_css 'li', visible: :all, count: 3
-    expect(page).to have_link href: 'https://stacks.stanford.edu/file/druid:abc123/data.zip?download=true', visible: :all
+  context 'when the file has multiple resources' do
+    let(:contents) { [build(:resource, :file, files:), build(:resource, :file, files: [build(:resource_file)])] }
+    let(:files) { [build(:resource_file, :video, :world_downloadable, filename: 'data.zip'), build(:resource_file, :video, :world_downloadable, filename: 'data.zip')] }
+
+    it 'generates a file list' do
+      expect(page).to have_css 'li', visible: :all, count: 3
+      expect(page).to have_link href: 'https://stacks.stanford.edu/file/druid:bc123df4567/data.zip?download=true', visible: :all
+    end
   end
 
   context 'with stanford only' do
-    let(:response) { stanford_restricted_multi_file_purl_xml }
+    let(:contents) { [build(:resource, :file, files: [build(:resource_file, :stanford_only)])] }
 
     it 'has the stanford-only class (with screen reader text)' do
       expect(page).to have_css 'li .sul-embed-stanford-only-text .sul-embed-text-hide', text: 'Stanford only', visible: :all
@@ -42,7 +50,7 @@ RSpec.describe Embed::Download::GeoComponent, type: :component do
   end
 
   context 'with location restrictions' do
-    let(:response) { single_video_purl }
+    let(:contents) { [build(:resource, :file, files: [build(:resource_file, :location_restricted)])] }
 
     it 'includes text to indicate that they are restricted' do
       expect(page).to have_css 'li .sul-embed-location-restricted-text', text: '(Restricted)', visible: :all

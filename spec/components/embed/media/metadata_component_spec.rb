@@ -7,9 +7,10 @@ RSpec.describe Embed::Media::MetadataComponent, type: :component do
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:viewer) { Embed::Viewer::Media.new(request) }
+  let(:purl) { build(:purl) }
 
   before do
-    stub_purl_xml_response_with_fixture(video_purl)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     render_inline(described_class.new(viewer:))
   end
 
