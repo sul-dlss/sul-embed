@@ -406,7 +406,14 @@
 
     .transcript {
       .cue {
-        margin-bottom: 1em;
+        margin-bottom: 0.5em;
+        padding: 0.275em 0.185em;
+        border: 1px solid transparent;
+
+        &:hover {
+          border-color: darkgray;
+          background-color: lightgray;
+        }
       }
     }
 
