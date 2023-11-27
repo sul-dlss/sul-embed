@@ -38,14 +38,20 @@ export default class extends Controller {
   }
 
   initializeVideoJSPlayer() {
-    this.mediaTagTargets.forEach((mediaTag) => {
+    this.players = this.mediaTagTargets.map((mediaTag) => {
       mediaTag.classList.add('video-js', 'vjs-default-skin')
       const player = videojs(mediaTag.id)
       player.on('loadedmetadata', () => {
         const event = new CustomEvent('media-loaded', { detail: player })
         window.dispatchEvent(event)
       })
+      return player
     })
+  }
+
+  // Listen for events emitted by cue_controller.js to jump to a particular time
+  seek(event) {
+    this.players.forEach((player) => player.currentTime(event.detail))
   }
 
   setupThumbnails() {
