@@ -136,6 +136,7 @@
       float: right;
       &:hover {
         text-decoration: underline;
+        cursor: pointer;
       }
     }
     .modal-header {
@@ -205,6 +206,7 @@
 
         &:hover {
           background-color: lightgray;
+          cursor: pointer;
         }
       }
 
@@ -354,6 +356,7 @@
         }
         &:hover {
           background-color: lightgray;
+          cursor: pointer;
         }
       }
     }
