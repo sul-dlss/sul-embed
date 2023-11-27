@@ -31,5 +31,13 @@ RSpec.describe Embed::PurlXmlLoader do
                                   type: 'webarchive-seed', collections: ['mk656nf8485'] })
       end
     end
+
+    context 'with an envelope' do
+      let(:xml) { geo_purl_public }
+
+      it 'creates a bounding_box' do
+        expect(data).to include({ bounding_box: [['-1.478794', '29.572742'], ['4.234077', '35.000308']] })
+      end
+    end
   end
 end

@@ -139,27 +139,6 @@ RSpec.describe Embed::Purl do
     end
   end
 
-  describe '#bounding_box' do
-    before { stub_purl_xml_response_with_fixture(geo_purl_public) }
-
-    it 'creates an Envelope and calls #to_bounding_box on it' do
-      expect_any_instance_of(Embed::Envelope).to receive(:to_bounding_box)
-      described_class.find('12345').bounding_box
-    end
-  end
-
-  describe '#envelope' do
-    it 'selects the envelope element' do
-      stub_purl_xml_response_with_fixture(geo_purl_public)
-      expect(described_class.find('12345').envelope).to be_an Nokogiri::XML::Element
-    end
-
-    it 'without an envelope present' do
-      stub_purl_xml_response_with_fixture(image_purl_xml)
-      expect(described_class.find('12345').envelope).to be_nil
-    end
-  end
-
   describe 'license' do
     it 'returns cc license if present' do
       stub_purl_xml_response_with_fixture(file_purl_xml)

@@ -13,7 +13,7 @@ module Embed
     end
 
     attr_accessor :druid, :type, :title, :use_and_reproduction, :copyright, :contents, :collections,
-                  :license, :envelope, :embargo_release_date, :archived_site_url, :external_url,
+                  :license, :bounding_box, :embargo_release_date, :archived_site_url, :external_url,
                   :embargoed, :citation_only, :stanford_only_unrestricted, :public, :controlled_digital_lending
 
     alias embargoed? embargoed
@@ -54,10 +54,6 @@ module Embed
 
     def purl_url
       "#{Settings.purl_url}/#{@druid}"
-    end
-
-    def bounding_box
-      Embed::Envelope.new(envelope).to_bounding_box
     end
 
     def manifest_json_url
