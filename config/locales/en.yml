@@ -40,3 +40,7 @@ en:
       title: '3-D object viewer'
     was_seed:
       title: 'File viewer'
+  download_files:
+    zero: 'No file available for download'
+    one: '1 file available for download'
+    other: '%{count} files available for download'

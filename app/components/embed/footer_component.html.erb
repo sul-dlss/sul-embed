@@ -13,12 +13,10 @@
     <% if viewer.show_download? %>
       <button
         class='sul-embed-footer-tool sul-embed-btn sul-em bed-btn-toolbar sul-embed-btn-default sul-i-download-3'
-        aria-expanded='false' aria-label='open download panel'
+        aria-expanded='false' aria-label='<%= download_file_label %>'
         data-sul-embed-toggle='sul-embed-download-panel'>
-        <% file_count = viewer.purl_object.downloadable_files.length %>
         <% if file_count > 0 %>
-          <span class='sul-embed-footer-tool sul-embed-download-count'
-                   aria-label='number of downloadable files'><%= file_count %></span>
+          <span class='sul-embed-footer-tool sul-embed-download-count'><%= file_count %></span>
         <% end %>
       </button>
     <% end %>
