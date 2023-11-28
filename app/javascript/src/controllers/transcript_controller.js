@@ -8,7 +8,10 @@ export default class extends Controller {
   static targets = [ ]
 
   load(evt) {
-    const track = evt.detail.textTracks_.tracks_.find((track) => track.kind === 'captions' )
+    const tracks = evt.detail.textTracks_.tracks_
+    if (!tracks)
+      return
+    const track = tracks.find((track) => track.kind === 'captions' )
     const cues = track.cues.cues_.map((cue) => `<p class="cue" data-controller="cue" data-action="click->cue#jump" data-cue-id="${cue.id}" data-cue-start-value="${cue.startTime}" data-cue-end-value="${cue.endTime}">${cue.text}</p>`)
     this.element.innerHTML = cues.join('')
   }
