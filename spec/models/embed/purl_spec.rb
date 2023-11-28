@@ -74,25 +74,6 @@ RSpec.describe Embed::Purl do
     end
   end
 
-  describe '#collections' do
-    it 'formats a list of collection druids' do
-      stub_purl_xml_response_with_fixture(was_seed_purl)
-      expect(described_class.find('12345').collections).to eq ['mk656nf8485']
-    end
-
-    it 'is empty when no collection is present in xml' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
-      expect(described_class.find('12345').collections).to eq []
-    end
-  end
-
-  describe 'contents' do
-    it 'returns an array of resources' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
-      expect(described_class.find('12345').contents.all?(Embed::Purl::Resource)).to be true
-    end
-  end
-
   describe 'all_resource_files' do
     it 'returns a flattened array of resource files' do
       stub_purl_xml_response_with_fixture(multi_resource_multi_type_purl)
@@ -136,18 +117,6 @@ RSpec.describe Embed::Purl do
       purl_obj = described_class.find('5678')
       expect(purl_obj.all_resource_files.count).to eq 3
       expect(purl_obj.downloadable_files.count).to eq 2
-    end
-  end
-
-  describe 'public?' do
-    it 'returns true if the object is publicly accessible' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
-      expect(described_class.find('12345')).to be_public
-    end
-
-    it 'returns false if the object is Stanford Only' do
-      stub_purl_xml_response_with_fixture(stanford_restricted_file_purl_xml)
-      expect(described_class.find('12345')).not_to be_public
     end
   end
 
