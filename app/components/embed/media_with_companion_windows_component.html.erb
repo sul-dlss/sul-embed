@@ -110,8 +110,6 @@
                                                           include_transcripts:,
                                                           druid:) %>
     </div>
-    <%= render 'embed/embed_this/generic', viewer: viewer %>
-    <%= render Embed::Download::LegacyMediaComponent.new viewer: viewer %>
   </div>
   <dialog class="modal-components-popover" data-media-target="modalComponentsPopover" data-action="click->media#closePopover" id="share_and_download">
     <button class="modal-component-button" data-action="click->media#openShareModal" aria-label="Share" aria-controls="share" tabindex="0">
@@ -124,8 +122,8 @@
     </button>
   </dialog>
 
-  <dialog class="modal-container" data-media-target="shareModal" data-action="click->media#handleBackdropClicks" id="share">
-    <header class="modal-header">
+  <dialog aria-labelledby="share-modal-header" class="modal-container" data-media-target="shareModal" data-action="click->media#handleBackdropClicks" id="share">
+    <header class="modal-header" id="share-modal-header">
       Share
     </header>
 
@@ -136,8 +134,8 @@
     </form>
   </dialog>
 
-  <dialog class="modal-container" data-media-target="downloadModal" data-action="click->media#handleBackdropClicks" id="download">
-    <header class="modal-header">
+  <dialog aria-labelledby="download-modal-header" class="modal-container" data-media-target="downloadModal" data-action="click->media#handleBackdropClicks" id="download">
+    <header class="modal-header" id="download-modal-header">
       Download
     </header>
 
