@@ -152,7 +152,7 @@
     border-radius: var(--modal-border-radius);
 
     &::backdrop {
-      background-color: var(--background-color);
+      background-color: transparent;
     }
 
     .modal-component-button {
