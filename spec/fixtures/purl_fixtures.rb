@@ -161,44 +161,7 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def image_no_size_purl
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>image without size</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="image">
-          <resource sequence="1" type="image">
-            <attr name="label">Resource Label</attr>
-            <file mimetype="application/png" id="Page1.png" />
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          #{access_read_world}
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
-  def image_empty_size_purl
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>image empty size</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="image">
-          <resource sequence="1" type="image">
-            <attr name="label">Resource Label</attr>
-            <file size="" mimetype="application/png" id="Page1.png" />
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          #{access_read_world}
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
+
   def multi_resource_multi_type_purl
     <<-XML
       <publicObject>
@@ -281,53 +244,6 @@ module PurlFixtures
     XML
   end
 
-  def stanford_no_download_restricted_file_purl_xml
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Title of the object</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="file">
-          <resource sequence="1" type="file">
-            <attr name="label">PDF1</attr>
-            <file size="12345" mimetype="application/pdf" id="Title_of_the_PDF.pdf" />
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          <access type="read">
-            <machine>
-              <group rule="no-download">stanford</group>
-            </machine>
-          </access>
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
-  def stanford_restricted_image_purl_xml
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Title of the object</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="image">
-          <resource sequence="1" type="image">
-            <label>Image1</label>
-            <file size="12345" mimetype="image/jp2" id="image_001.jp2">
-              <imageData height="8423" width="6321" />
-            </file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          <access type="read">
-            <machine>
-              <group>stanford</group>
-              <world rule="no-download"/>
-            </machine>
-          </access>
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
   def world_restricted_download_purl
     <<-XML
       <publicObject>
@@ -402,33 +318,7 @@ module PurlFixtures
   </access>
     XML
   end
-  def stanford_restricted_multi_file_purl_xml
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Title of the object</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="file">
-          <resource sequence="1" type="file">
-            <attr name="label">PDF1</attr>
-            <file size="12345" mimetype="application/pdf" id="Title_of_the_PDF.pdf" />
-          </resource>
-          <resource sequence="2" type="file">
-            <attr name="label">PDF2</attr>
-            <file size="12346" mimetype="application/pdf" id="Title_of_the_other_PDF.pdf" />
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          <access type="read">
-            <file>Title_of_the_PDF.pdf</file>
-            <machine>
-              <group>stanford</group>
-            </machine>
-          </access>
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
+
   def embargoed_stanford_file_purl_xml
     <<-XML
       <publicObject>
@@ -682,60 +572,6 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def image_with_pdf_purl
-    <<-XML
-      <publicObject id="druid:bb112fp0199" published="2014-04-10T16:06:21-07:00">
-        <identityMetadata>
-          <sourceId source="sul">M1711_Series3_Box104_Folder19</sourceId>
-          <objectId>druid:bb112fp0199</objectId>
-          <objectCreator>DOR</objectCreator>
-          <objectLabel>Writings - "How to Test a Good Trumpet," The Instrumentalist 31(8):57-58 (reprint, 2 pp.)</objectLabel>
-          <objectType>item</objectType>
-          <adminPolicy>druid:wg541jt7173</adminPolicy>
-          <otherId name="uuid">b655a82e-fc3d-11e1-b443-0016034322e2</otherId>
-          <tag>Project : Musical Acoustics Research Library</tag>
-          <tag>Process : Content Type : Book (flipbook, ltr)</tag>
-          <tag>Project : Musical Acoustics Research Library</tag>
-        </identityMetadata>
-        <contentMetadata type="book" objectId="bb112fp0199">
-          <resource type="page" sequence="1" id="bb112fp0199_1">
-            <label>Page 1</label>
-            <file id="bb112fp0199_06_0001.pdf" mimetype="application/pdf" size="2365677">
-          </file>
-            <file id="bb112fp0199_00_0001.jp2" mimetype="image/jp2" size="3117394">
-              <imageData width="3629" height="4556"/>
-            </file>
-          </resource>
-          <resource type="page" sequence="2" id="bb112fp0199_2">
-            <label>Page 2</label>
-            <file id="bb112fp0199_06_0002.pdf" mimetype="application/pdf" size="2398016">
-          </file>
-            <file id="bb112fp0199_00_0002.jp2" mimetype="image/jp2" size="3117384">
-              <imageData width="3629" height="4556"/>
-            </file>
-          </resource>
-          <resource type="object" sequence="3" id="bb112fp0199_3">
-            <label>Object 1</label>
-            <file id="bb112fp0199_31_0000.pdf" mimetype="application/pdf" size="4761613">
-          </file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          #{access_read_world}
-          <use>
-            <human type="useAndReproduction">Property rights reside with the repository. Literary rights reside with the creators of the documents or their heirs. To obtain permission to publish or reproduce, please contact the Special Collections Public Services Librarian at speccollref@stanford.edu.</human>
-            <human type="creativeCommons"/>
-            <machine type="creativeCommons"/>
-          </use>
-        </rightsMetadata>
-        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
-          <dc:title>Writings - "How to Test a Good Trumpet," The Instrumentalist 31(8):57-58 (reprint, 2 pp.)</dc:title>
-          <dc:relation type="collection">Musical Acoustics Research Library collection, 1956-2007</dc:relation>
-        </oai_dc:dc>
-      </publicObject>
-    XML
-  end
 
   def single_video_purl
     <<-XML
@@ -926,27 +762,6 @@ module PurlFixtures
     XML
   end
 
-  def audio_purl_with_thumbnail
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Title of the video</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="media">
-          <resource sequence="1" id="abc123_1" type="audio">
-            <file id="abc_123.mp3" mimetype="audio/mpeg" size="770433"></file>
-            <file id="abc_123_thumb.jp2" mimetype="image/jp2" size="329964" publish="yes" shelve="yes" preserve="yes">
-              <imageData height="678" width="678"/>
-            </file>
-          </resource>
-        </contentMetadata>
-        <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
-          <dc:title>DC title of audio</dc:title>
-        </oai_dc>
-      </publicObject>
-    XML
-  end
-
   def audio_purl_multiple
     <<-XML
       <publicObject>
@@ -968,60 +783,6 @@ module PurlFixtures
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/">
           <dc:title>DC title of audio</dc:title>
         </oai_dc>
-      </publicObject>
-    XML
-  end
-
-  def file_thumb_purl
-    <<-XML
-      <publicObject>
-        <contentMetadata type="file">
-          <resource id="audio_1" type="audio">
-            <file id="audio.mp3" mimetype="audio/mpeg" size="77033"></file>
-            <file id="audio_1.jp2" mimetype="image/jp2" size="42"></file>
-          </resource>
-          <resource id="video_1" type="video">
-            <file id="video.mp4" mimetype="video/mp4" size="77023"></file>
-            <file id="video_1.jp2" mimetype="image/jp2" size="42"></file>
-          </resource>
-          <resource id="video_2" type="video">
-            <file id="video2.mp4" mimetype="video/mp4" size="77023"></file>
-            <file id="video2.jpg" mimetype="image/jpg" size="1234"></file>
-          </resource>
-          <resource id="book_1" type="image">
-            <file id="book1.jp2" mimetype="image/jp2" size="77041"></file>
-          </resource>
-        </contentMetadata>
-      </publicObject>
-    XML
-  end
-
-  def file_and_object_level_downloadable_thumb_purl
-    <<-XML
-      <publicObject>
-        <contentMetadata type="file">
-          <resource id="audio_1" type="audio">
-            <file id="audio.mp3" mimetype="audio/mpeg" size="77033"></file>
-            <file id="audio_1.jp2" mimetype="image/jp2" size="42"></file>
-          </resource>
-          <resource id="video_1" type="video">
-            <file id="video.mp4" mimetype="video/mp4" size="77023"></file>
-            <file id="video_1.jp2" mimetype="image/jp2" size="42"></file>
-          </resource>
-          <resource id="video_2" type="video">
-            <file id="video2.mp4" mimetype="video/mp4" size="77023"></file>
-            <file id="video2.jpg" mimetype="image/jpg" size="1234"></file>
-          </resource>
-          <resource id="book_1" type="image">
-            <file id="book1.jp2" mimetype="image/jp2" size="77041"></file>
-          </resource>
-          <resource id="thumb_1" type="thumb" thumb="yes">
-            <file id="thumb.jp2" mimetype="image/jp2" size="7722"></file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_read_world}
-        </rightsMetadata>
       </publicObject>
     XML
   end
