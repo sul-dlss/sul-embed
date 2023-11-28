@@ -21,5 +21,6 @@ RSpec.describe Embed::Media::EmbedThisFormComponent, type: :component do
     expect(page).to have_css('input#sul-embed-embed-title[type="checkbox"]')
     expect(page).to have_css('input#sul-embed-embed[type="checkbox"]')
     expect(page).to have_css('textarea#sul-embed-iframe-code')
+    expect(page).to have_css('button.copy-to-clipboard')
   end
 end

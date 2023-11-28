@@ -118,7 +118,7 @@
       input[type="text"], textarea {
         margin-bottom: 1rem;
         padding: .375rem .75rem;
-        width: 100%;
+        width: calc(100% - 2rem);
       }
 
       fieldset {
