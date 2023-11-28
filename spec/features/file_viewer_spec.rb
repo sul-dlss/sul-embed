@@ -23,11 +23,10 @@ RSpec.describe 'File viewer', :js do
       expect(page).to have_css('.sul-embed-body')
       expect(page).to have_css('.sul-embed-footer')
       expect(page).to have_css('.sul-embed-file-list')
-      expect(page).to have_css('.sul-embed-media-list')
 
-      expect(page).to have_css('.sul-embed-media-heading a', text: 'Title of the PDF.pdf')
-      expect(page).to have_css('.sul-embed-description', text: 'File1 Label')
-      expect(page).to have_css('.sul-embed-download', text: '12.34 kB')
+      expect(page).to have_css('tr[data-tree-role="leaf"] a', text: 'Download')
+      expect(page).to have_css('*[data-tree-role="label"]', text: 'File1 Label')
+      expect(page).to have_css('td', text: '12.34 kB')
     end
 
     context 'when the object has multiple files' do
@@ -40,8 +39,7 @@ RSpec.describe 'File viewer', :js do
       end
 
       it 'contains 4 files in file list' do
-        expect(page).to have_css 'img.sul-embed-square-image[alt]', visible: :all
-        expect(page).to have_css('.sul-embed-count', count: 4)
+        expect(page).to have_css('tr[data-tree-role="leaf"]', count: 4)
       end
     end
   end
