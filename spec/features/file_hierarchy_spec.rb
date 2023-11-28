@@ -3,9 +3,19 @@
 require 'rails_helper'
 
 RSpec.describe 'file viewer with hierarchy', :js do
-  include PurlFixtures
+  let(:contents) do
+    [
+      build(:resource, files: [build(:resource_file, filename: 'Title_of_the_PDF.pdf')]),
+      build(:resource, files: [build(:resource_file, filename: 'dir1/dir2/Title_of_2_PDF.pdf')])
+    ]
+  end
+  let(:purl) { build(:purl, :file, contents:) }
+
+  before do
+    allow(Embed::Purl).to receive(:find).and_return(purl)
+  end
+
   it 'renders hierarchy' do
-    stub_purl_xml_response_with_fixture(hierarchical_file_purl_xml)
     visit_iframe_response
     expect(page).to have_content('2 items')
     # There are 2 files

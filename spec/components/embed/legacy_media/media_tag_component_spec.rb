@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::LegacyMedia::MediaTagComponent, type: :component do
-  include PurlFixtures
   subject(:render) do
     render_inline(
       described_class.new(

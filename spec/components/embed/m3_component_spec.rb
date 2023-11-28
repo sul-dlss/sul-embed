@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::M3Component, type: :component do
-  include PurlFixtures
-
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', canvas_index: 3, search: 'xyz', suggested_search: 'abc') }
   let(:viewer) { Embed::Viewer::M3Viewer.new(request) }
   let(:purl) { build(:purl) }

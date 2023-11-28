@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Viewer::CommonViewer do
-  include PurlFixtures
-
   let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }) }
 
   let(:file_viewer) { Embed::Viewer::File.new(request) }
