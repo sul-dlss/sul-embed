@@ -3,7 +3,9 @@
   <% # removing 5 pixels from the body height to account for being embedded %>
   <div class='sul-embed-body sul-embed-pdf'>
     <%= javascript_pack_tag('pdf_viewer') %>
-    <embed src="<%= viewer.pdf_files.first %>" type="application/pdf" style="height: 100vh; width: 100%">
+    <object data="<%= viewer.pdf_files.first %>" type="application/pdf" style="height: 100vh; width: 100%">
+      <p>Your browser does not support viewing PDFs.  Please <a href="<%= viewer.pdf_files.first %>">download the file</a> to view it.</p>
+    </object>
   </div>
   <%= render 'embed/metadata_panel', viewer: viewer %>
   <%= render 'embed/embed_this/generic', viewer: viewer %>
