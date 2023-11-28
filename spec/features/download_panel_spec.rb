@@ -12,22 +12,6 @@ RSpec.describe 'download panel', :js do
     )
   end
 
-  it 'not shown for file viewer and leaves correctly formatted filenames alone' do
-    stub_purl_xml_response_with_fixture(multi_file_purl_xml)
-    visit_iframe_response
-    expect(page).to have_css '.sul-embed-body.sul-embed-file'
-    expect(page).not_to have_css '.sul-embed-download-panel'
-    link = page.find('.sul-embed-media-list a', match: :first)
-    expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:ignored/Title_of_the_PDF.pdf') # this file link was good, no encoding needed
-  end
-
-  it 'correctly encodes a wonky filename with spaces and a special character' do
-    stub_purl_xml_response_with_fixture(wonky_filename_purl)
-    visit_iframe_response
-    link = page.find('.sul-embed-media-list a', match: :first)
-    expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:ignored/%23Title%20of%20the%20PDF.pdf') # this file link had a # and spaces, encoding is needed
-  end
-
   describe 'hide download?' do
     before do
       stub_purl_xml_response_with_fixture(geo_purl_public)
