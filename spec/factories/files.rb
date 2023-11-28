@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :resource_file, class: 'Embed::Purl::ResourceFile' do
     druid { 'bc123df4567' }
     filename { 'data.zip' }
+    size { 0 }
 
     trait :document do
       mimetype { 'application/pdf' }
