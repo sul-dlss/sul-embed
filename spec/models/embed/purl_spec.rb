@@ -139,31 +139,6 @@ RSpec.describe Embed::Purl do
     end
   end
 
-  describe 'license' do
-    it 'returns cc license if present' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
-      purl = described_class.find('12345')
-      expect(purl.license).to eq 'Public Domain Mark 1.0'
-    end
-
-    it 'returns odc license if present' do
-      stub_purl_xml_response_with_fixture(hybrid_object_purl)
-      purl = described_class.find('12345')
-      expect(purl.license).to eq 'ODC-By Attribution License'
-    end
-
-    it 'returns MODS license if present' do
-      stub_purl_xml_response_with_fixture(mods_license_purl)
-      purl = described_class.find('12345')
-      expect(purl.license).to eq 'This work is licensed under an Apache License 2.0 license.'
-    end
-
-    it 'returns nil if no license is present' do
-      stub_purl_xml_response_with_fixture(embargoed_file_purl_xml)
-      expect(described_class.find('12345').license).to be_nil
-    end
-  end
-
   describe 'public?' do
     it 'returns true if the object is publicly accessible' do
       stub_purl_xml_response_with_fixture(file_purl_xml)

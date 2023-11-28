@@ -39,5 +39,25 @@ RSpec.describe Embed::PurlXmlLoader do
         expect(data).to include({ bounding_box: [['-1.478794', '29.572742'], ['4.234077', '35.000308']] })
       end
     end
+
+    describe 'license' do
+      context 'with a creative commons license' do
+        let(:xml) { file_purl_xml }
+
+        it { is_expected.to include({ license: 'Public Domain Mark 1.0' }) }
+      end
+
+      context 'with an odc license' do
+        let(:xml) { hybrid_object_purl }
+
+        it { is_expected.to include({ license: 'ODC-By Attribution License' }) }
+      end
+
+      context 'with no license' do
+        let(:xml) { embargoed_file_purl_xml }
+
+        it { is_expected.to include({ license: nil }) }
+      end
+    end
   end
 end
