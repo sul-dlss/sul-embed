@@ -66,6 +66,24 @@ The rich HTML payload that is supplied via the oEmbed API is an iframe. This mea
 
 For links that are intended to navigate the users browser away from the current page (e.g. the links to Memento/GeoBlacklight/etc.) then `target="_parent"` should be used to give the link the default browser behavior. [More about link targets](http://www.w3schools.com/tags/att_a_target.asp).
 
+
+## Developing the media player locally
+
+In order to do local development we need to circumvent the need for stacks and a media player.  The first can be done by running a local version of stacks via docker.  You can then configure your local app to point at that container via:
+```
+SETTINGS__STACKS_URL="http://localhost:3001/" bin/dev
+```
+
+Then we'll pull some files local so we don't need a media server:
+```
+mkdir public/stream && curl https://file-examples.com/storage/fe19e15eac6560f8c936c41/2017/04/file_example_MP4_480_1_5MG.mp4 -o public/stream/file_example_MP4_480_1_5MG.mp4
+```
+
+and a sample vtt
+```
+curl https://stacks.stanford.edu/file/druid:gt507vy5436/gt507vy5436_cap.vtt -o public/gt507vy5436_cap.vtt
+```​
+
 ## Updating language tags
 
 sul-embed uses the IANA language subtag registry to resolve user-provided file language codes (e.g., 'en-US') onto user-friendly labels (e.g., "English"), primarily for captions in the media player. This file lives on the web and changes every so often. We cache this file in `vendor/data/language-subtag-registry`, and it can be updated via `rake update_language_tags`.

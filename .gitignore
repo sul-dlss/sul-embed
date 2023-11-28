@@ -33,6 +33,8 @@ coverage
 /public/assets
 /public/packs
 /public/packs-test
+/public/stream
+/public/gt507vy5436_cap.vtt
 /node_modules
 /yarn-error.log
 yarn-debug.log*
