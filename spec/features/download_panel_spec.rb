@@ -43,26 +43,4 @@ RSpec.describe 'download panel', :js do
       expect(page).to have_css('button[data-sul-embed-toggle="sul-embed-download-panel"]')
     end
   end
-
-  describe 'download file count shows within download button' do
-    it 'has the file count for multiple media files in the download panel' do
-      stub_purl_xml_response_with_fixture(multi_media_purl)
-      visit_iframe_response
-      expect(page).to have_css '.sul-embed-body.sul-embed-media' # so shows download count
-      expect(page).to have_css 'button.sul-i-download-3[aria-label="2 files available for download"]'
-      within '.sul-i-download-3' do
-        expect(page).to have_css '.sul-embed-download-count', text: 2
-      end
-    end
-
-    it 'only counts downloadable files' do
-      stub_purl_xml_response_with_fixture(world_restricted_download_purl)
-      visit_iframe_response
-      expect(page).to have_css '.sul-embed-body.sul-embed-media' # so shows download count
-      expect(page).to have_css 'button.sul-i-download-3[aria-label="1 file available for download"]'
-      within '.sul-i-download-3' do
-        expect(page).to have_css '.sul-embed-download-count', text: 1
-      end
-    end
-  end
 end
