@@ -37,8 +37,12 @@ FactoryBot.define do
       contents { [build(:resource, :file, files: [build(:resource_file, filename: 'data.zip'), build(:resource_file, filename: 'data_EPSG_4326.zip')]), build(:resource, :image)] }
     end
 
-    trait :video do
+    trait :media do
       type { 'media' }
+    end
+
+    trait :video do
+      media
       contents { [build(:resource, :video)] }
     end
   end

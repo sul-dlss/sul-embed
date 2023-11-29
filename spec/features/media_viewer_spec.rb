@@ -3,14 +3,20 @@
 require 'rails_helper'
 
 RSpec.describe 'Media viewer', :js do
-  include PurlFixtures
-  let(:purl) { video_purl }
+  let(:purl) do
+    build(:purl, :video, contents: [
+            build(:resource, :video, files: [build(:resource_file, :video, :location_restricted, label: 'First Video', duration: '1:02:03')]),
+            build(:resource, :video, files: [build(:resource_file, :video, :stanford_only, label: 'Second Video')]),
+            build(:resource, :file),
+            build(:resource, :video, files: [build(:resource_file, :video, :world_downloadable)])
+          ])
+  end
   let(:stub_auth) { nil }
 
   before do
     allow(Settings.enabled_features).to receive(:new_component).and_return(true)
     stub_auth
-    stub_purl_xml_response_with_fixture(purl)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     visit_iframe_response
   end
 
@@ -61,7 +67,13 @@ RSpec.describe 'Media viewer', :js do
   end
 
   context 'with a previewable file within a media object' do
-    let(:purl) { video_purl_with_image }
+    let(:purl) do
+      build(:purl, :video,
+            contents: [
+              build(:resource, :video),
+              build(:resource, :image, files: [build(:resource_file, :image, label: 'Image of media (1 of 1)')])
+            ])
+    end
 
     it 'includes a previewable image as a top level object' do
       expect(page).to have_css('div .osd', visible: :hidden)
@@ -77,10 +89,14 @@ RSpec.describe 'Media viewer', :js do
     end
   end
 
-  context 'with invalid duration' do
-    let(:purl) { invalid_video_duration_purl }
+  context 'when duration is not present' do
+    let(:purl) do
+      build(:purl, :video, contents: [
+              build(:resource, :video, files: [build(:resource_file, :video, label: 'First Video', duration: nil)])
+            ])
+    end
 
-    it 'displays as if there were no duration in the purl xml' do
+    it 'displays as if there were no duration' do
       click_button 'Display sidebar'
       within 'aside.open' do
         click_button 'Content'
@@ -91,7 +107,12 @@ RSpec.describe 'Media viewer', :js do
   end
 
   context 'with an audio' do
-    let(:purl) { audio_purl_multiple }
+    let(:purl) do
+      build(:purl, :media, contents: [
+              build(:resource, :audio, files: [build(:resource_file, :audio, label: 'First Audio', duration: '0:43')]),
+              build(:resource, :audio, files: [build(:resource_file, :audio, label: 'Second Audio', duration: nil)])
+            ])
+    end
 
     it 'displays available duration in parens after the title' do
       click_button 'Display sidebar'
@@ -107,7 +128,16 @@ RSpec.describe 'Media viewer', :js do
   end
 
   context 'with long titles' do
-    let(:purl) { long_label_purl }
+    let(:purl) do
+      build(:purl, :video, contents: [
+              build(:resource, :video, files: [
+                      build(:resource_file, :video, :location_restricted,
+                            label: 'The First Video Has An Overly Long Title, With More Words Than Can Practically Be Displayed',
+                            duration: '1:02:03')
+                    ]),
+              build(:resource, :video, files: [build(:resource_file, :video, label: '2nd Video Has A Long Title, But Not Too Long')])
+            ])
+    end
 
     it 'truncates at 45 characters of combined restriction and title text' do
       click_button 'Display sidebar'

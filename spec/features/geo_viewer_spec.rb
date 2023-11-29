@@ -90,7 +90,6 @@ RSpec.describe 'geo viewer', :js do
     end
 
     before do
-      # stub_purl_xml_response_with_fixture(geo_purl_index_map)
       visit_iframe_response 'ts545zc6250'
     end
 
