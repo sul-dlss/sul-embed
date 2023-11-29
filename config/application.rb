@@ -13,7 +13,6 @@ require "action_controller/railtie"
 require "action_view/railtie"
 # require "action_cable/engine"
 require "rails/test_unit/railtie"
-require "rails-html-sanitizer"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -31,9 +30,6 @@ module SulEmbed
 
     config.view_component.default_preview_layout = "component_preview"
 
-    # allow model-viewer web component to be used in views (and not stripped)
-    config.action_view.sanitized_allowed_tags = Rails::Html::SafeListSanitizer.allowed_tags.add('model-viewer')
-    config.action_view.sanitized_allowed_attributes = Rails::Html::SafeListSanitizer.allowed_attributes.merge(['auto-rotate', 'camera-controls', 'ar-modes'])
 
     # Configuration for the application, engines, and railties goes here.
     #
