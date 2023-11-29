@@ -5,7 +5,7 @@ export default class extends Controller {
   static targets = [ "leftDrawer", "leftButton", "metadata", "shareModal", "contents", "transcript",
                      "downloadModal", "rights", "accessibility", "modalComponentsPopover"]
   connect() {
-    this.element.style.display = ''
+    this.element.hidden = false
     this.metadataTarget.hidden = false
     EmbedThis.init();
   }
