@@ -24,3 +24,9 @@ end
 task javascript_tests: [:environment] do
   exit(1) unless system 'yarn test'
 end
+
+task :update_language_tags do
+  File.open(Settings.language_subtag_registry.path, 'w') do |file|
+    file.write(Faraday.get(Settings.language_subtag_registry.url).body)
+  end
+end

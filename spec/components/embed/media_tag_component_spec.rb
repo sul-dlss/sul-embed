@@ -199,32 +199,32 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     it 'has a track element' do
       expect(page).to have_css('track[src="https://stacks.stanford.edu/file/druid:bc123df4567/abc_123_cap.vtt"]')
     end
-  end
 
-  context 'with captions for multiple languages' do
-    let(:resource) do
-      build(:resource, :video, files: [build(:resource_file, :video),
-                                       build(:resource_file, :caption, language: 'en'),
-                                       build(:resource_file, :caption, language: 'ru')])
+    context 'with captions for multiple languages' do
+      let(:resource) do
+        build(:resource, :video, files: [build(:resource_file, :video),
+                                         build(:resource_file, :caption, language: 'en'),
+                                         build(:resource_file, :caption, language: 'ru')])
+      end
+
+      let(:include_transcripts) { true }
+
+      it 'has track elements with multiple languages' do
+        expect(page).to have_css('track[srclang="en"][label="English"]')
+        expect(page).to have_css('track[srclang="ru"][label="Russian"]')
+      end
     end
 
-    let(:include_transcripts) { true }
+    context 'with caption with no specified language' do
+      let(:resource) do
+        build(:resource, :video, files: [build(:resource_file, :video),
+                                         build(:resource_file, :caption)])
+      end
+      let(:include_transcripts) { true }
 
-    it 'has track elements with multiple languages' do
-      expect(page).to have_css('track[srclang="en"][label="English"]')
-      expect(page).to have_css('track[srclang="ru"][label="Russian"]')
-    end
-  end
-
-  context 'with caption with no specified language' do
-    let(:resource) do
-      build(:resource, :video, files: [build(:resource_file, :video),
-                                       build(:resource_file, :caption)])
-    end
-    let(:include_transcripts) { true }
-
-    it 'has a track element with code and label for English' do
-      expect(page).to have_css('track[srclang="en"][label="English"]')
+      it 'has a track element with code and label for English' do
+        expect(page).to have_css('track[srclang="en"][label="English"]')
+      end
     end
   end
 end
