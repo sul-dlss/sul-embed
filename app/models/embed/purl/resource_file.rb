@@ -82,6 +82,10 @@ module Embed
         role == 'caption'
       end
 
+      def transcript?
+        role == 'transcription'
+      end
+
       def pdf?
         mimetype == 'application/pdf'
       end

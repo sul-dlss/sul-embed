@@ -166,4 +166,20 @@ RSpec.describe Embed::Purl::ResourceFile do
       it { is_expected.to be false }
     end
   end
+
+  describe '#transcript?' do
+    subject { resource_file.transcript? }
+
+    context 'when it is a transcription file' do
+      let(:resource_file) { build(:resource_file, :transcript) }
+
+      it { is_expected.to be true }
+    end
+
+    context 'when it is not a transcription file' do
+      let(:resource_file) { build(:resource_file, :caption) }
+
+      it { is_expected.to be false }
+    end
+  end
 end

@@ -45,6 +45,13 @@ FactoryBot.define do
       role { 'caption' }
     end
 
+    trait :transcript do
+      mimetype { 'application/pdf' }
+      filename { 'abc_123_transcript.pdf' }
+      size { 176_218 }
+      role { 'transcription' }
+    end
+
     trait :stanford_only do
       stanford_only { true }
       stanford_only_downloadable { true }
