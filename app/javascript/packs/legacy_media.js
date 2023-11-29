@@ -1,6 +1,6 @@
 'use strict';
 
-import { EmbedThis } from '../src/modules/embed_this.js';
+import EmbedThis from '../src/modules/embed_this';
 import { PopupPanels } from '../src/modules/popup_panels.js';
 import CommonViewerBehavior from '../src/modules/common_viewer_behavior.js';
 import LegacyMediaViewer from '../src/modules/legacy_media_viewer.js';

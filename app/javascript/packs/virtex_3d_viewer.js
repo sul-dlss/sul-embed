@@ -1,7 +1,7 @@
 'use strict';
 
 import CommonViewerBehavior from '../src/modules/common_viewer_behavior.js';
-import { EmbedThis } from '../src/modules/embed_this.js';
+import EmbedThis from '../src/modules/embed_this';
 import { PopupPanels } from '../src/modules/popup_panels.js';
 import Fullscreen from '../src/modules/fullscreen.js';
 import Virtex3DViewer from '../src/modules/virtex_3d_viewer.js';
