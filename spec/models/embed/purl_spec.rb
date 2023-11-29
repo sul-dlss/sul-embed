@@ -151,11 +151,11 @@ RSpec.describe Embed::Purl do
 
     context 'when some of the files are transcripts' do
       let(:purl) do
-        described_class.new(contents: [build(:resource, files: [build(:resource_file, :transcript), build(:resource_file, :transcript)])])
+        described_class.new(contents: [build(:resource, files: [build(:resource_file, :transcript, :world_downloadable), build(:resource_file, :transcript)])])
       end
 
-      it 'returns only transcript files' do
-        expect(df.count).to eq 2
+      it 'returns only the downloadable transcript file' do
+        expect(df.count).to eq 1
       end
     end
   end

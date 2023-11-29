@@ -53,7 +53,7 @@ module Embed
     end
 
     def transcript_files
-      all_resource_files.select(&:transcript?)
+      downloadable_files.select(&:transcript?)
     end
 
     def purl_url

@@ -51,11 +51,6 @@ module Embed
       def caption_files
         files.select(&:caption?).sort_by(&:language_code)
       end
-
-      # @return [Array<ResourceFile>]
-      def transcript_files
-        files.select(&:transcript?).sort_by(&:language_code)
-      end
     end
   end
 end
