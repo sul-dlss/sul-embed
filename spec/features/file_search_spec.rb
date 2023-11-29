@@ -20,8 +20,19 @@ RSpec.describe 'file viewer search bar', :js do
   end
 
   context 'when text is entered with a hierarchical file list' do
+    let(:contents) do
+      [
+        build(:resource, files: [build(:resource_file, filename: 'Title_of_the_PDF.pdf')]),
+        build(:resource, files: [build(:resource_file, filename: 'dir1/dir2/Title_of_2_PDF.pdf')])
+      ]
+    end
+    let(:purl) { build(:purl, :file, contents:) }
+
+    before do
+      allow(Embed::Purl).to receive(:find).and_return(purl)
+    end
+
     it 'hides empty directories' do
-      stub_purl_xml_response_with_fixture(hierarchical_file_purl_xml)
       visit_iframe_response('abc123', min_files_to_search: 1)
       expect(page).to have_css '.sul-embed-item-count', text: '2 items'
       expect(page).to have_content('dir1')

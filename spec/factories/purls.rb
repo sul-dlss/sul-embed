@@ -16,6 +16,11 @@ FactoryBot.define do
       stanford_only_unrestricted { true }
     end
 
+    trait :file do
+      type { 'file' }
+      contents { [build(:resource, :file)] }
+    end
+
     trait :was_seed do
       type { 'was-seed' }
       archived_site_url { 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/' }

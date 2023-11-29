@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Viewer::Media do
-  include PurlFixtures
-
   let(:request) { Embed::Request.new(url: 'https://purl.stanford.edu/ignored') }
   let(:media_viewer) { described_class.new(request) }
 

@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Purl do
-  include PurlFixtures
   describe 'title' do
     let(:purl) { described_class.new(title: 'File Title') }
 

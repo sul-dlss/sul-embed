@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Download::LegacyMediaComponent, type: :component do
-  include PurlFixtures
-
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:viewer) { Embed::Viewer::Media.new(request) }
   let(:purl) { build(:purl, contents: resources) }

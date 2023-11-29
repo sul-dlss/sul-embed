@@ -86,34 +86,6 @@ module PurlFixtures
     XML
   end
 
-  def hierarchical_file_purl_xml
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Files files files</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="file">
-          <resource sequence="1" type="file">
-            <label>File1 Label</label>
-            <file size="12345" mimetype="application/pdf" id="Title_of_the_PDF.pdf">
-              <location type="url">http://stacks.stanford.edu/file/druid:abc123/Title_of_the_PDF.pdf</location>
-            </file>
-          </resource>
-          <resource sequence="2" type="file">
-            <label>File2 Label</label>
-            <file size="12345" mimetype="application/pdf" id="dir1/dir2/Title_of_2_PDF.pdf">
-              <location type="url">http://stacks.stanford.edu/file/druid:abc123/dir1/dir2/Title_of_2_PDF.pdf</location>
-            </file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          #{access_read_world}
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
-
   def multi_resource_multi_type_purl
     <<-XML
       <publicObject>
