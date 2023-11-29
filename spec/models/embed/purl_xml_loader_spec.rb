@@ -58,7 +58,7 @@ RSpec.describe Embed::PurlXmlLoader do
       end
 
       context 'with an odc license' do
-        let(:xml) { hybrid_object_purl }
+        let(:xml) { odc_license_xml }
 
         it { is_expected.to include({ license: 'ODC-By Attribution License' }) }
       end
