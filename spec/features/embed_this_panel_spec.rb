@@ -3,18 +3,18 @@
 require 'rails_helper'
 
 RSpec.describe 'embed this panel', :js do
-  include PurlFixtures
-
   let(:iframe_options) { {} }
+  let(:purl) do
+    build(:purl, :file,
+          contents: [build(:resource, files: [build(:resource_file, :document, label: 'File1 Label')])])
+  end
 
   before do
-    stub_purl_xml_response_with_fixture(spec_fixture)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     visit_iframe_response('ab123cd4567', **iframe_options)
   end
 
   describe 'embed code' do
-    let(:spec_fixture) { file_purl_xml }
-
     it 'includes the allowfullscreen no-scrolling, no-border, and no margin/padding attributes' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
       expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match(/<iframe.*frameborder="0"/m)
@@ -37,8 +37,6 @@ RSpec.describe 'embed this panel', :js do
   end
 
   describe 'file objects' do
-    let(:spec_fixture) { file_purl_xml }
-
     it 'are present after a user clicks the button' do
       expect(page).to have_css('.sul-embed-embed-this-panel', visible: :hidden)
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
@@ -58,8 +56,6 @@ RSpec.describe 'embed this panel', :js do
   end
 
   describe 'Customization Options' do
-    let(:spec_fixture) { file_purl_xml }
-
     context 'with an uncustomized request' do
       it 'defaults to having the option checked' do
         page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click

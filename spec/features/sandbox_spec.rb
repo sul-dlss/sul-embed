@@ -3,36 +3,24 @@
 require 'rails_helper'
 
 RSpec.describe 'embed sandbox page', :js do
-  include PurlFixtures
-
-  before do
-    stub_purl_xml_response_with_fixture(file_purl_xml)
+  let(:purl) do
+    build(:purl, :file, contents: [build(:resource, files: [build(:resource_file, :document, label: 'File1 Label')])])
   end
 
-  it 'returns the iframe output from the embed endpoint' do
+  before do
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     visit page_path(id: 'sandbox')
-
-    expect(page).not_to have_css('iframe')
-    fill_in_default_sandbox_form
-    click_button 'Embed'
-    expect(page).to have_css('iframe')
   end
 
   it 'passes the customization URL parameters down to the iframe successfully' do
-    visit page_path(id: 'sandbox')
-
     expect(page).not_to have_css('iframe')
     check('hide-title')
     check('hide-search')
-    fill_in_default_sandbox_form
+    fill_in 'api-endpoint', with: embed_path
+    fill_in 'url-scheme', with: 'http://purl.stanford.edu/abc123'
     click_button 'Embed'
     iframe_src = page.find('iframe')['src']
     expect(iframe_src).to match(/hide_title=true/)
     expect(iframe_src).to match(/hide_search=true/)
-  end
-
-  def fill_in_default_sandbox_form(druid = 'ab123cd4567')
-    fill_in 'api-endpoint', with: embed_path
-    fill_in 'url-scheme', with: "http://purl.stanford.edu/#{druid}"
   end
 end

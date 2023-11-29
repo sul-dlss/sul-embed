@@ -5,6 +5,8 @@ require 'rails_helper'
 RSpec.describe Embed::PurlXmlLoader do
   include PurlFixtures
 
+  # TODO: Embed::Purl::ResourceNotAvailable
+
   subject(:data) { described_class.load('12345') }
 
   describe 'load' do

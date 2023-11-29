@@ -18,6 +18,7 @@ FactoryBot.define do
 
     trait :file do
       type { 'file' }
+      title { 'Title of the object' }
       contents { [build(:resource, :file)] }
     end
 

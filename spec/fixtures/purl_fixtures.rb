@@ -86,38 +86,6 @@ module PurlFixtures
     XML
   end
 
-  def multi_resource_multi_type_purl
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Files and what not</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="file">
-          <resource sequence="1" type="file">
-            <attr name="label">Resource Label</attr>
-            <file size="12345" mimetype="application/pdf" id="Page1.pdf" />
-            <file size="12346" mimetype="application/pdf" id="Page2.pdf" />
-          </resource>
-          <resource id="media1" sequence="2" type="bar">
-            <label>mp4-normal</label>
-            <file id="JessieSaysNo.mp4" mimetype="video/mp4" size="190916">
-              <videoData height="288" width="352"/>
-            </file>
-          </resource>
-          <resource id="image2" sequence="3" type="foo">
-            <file id="bw662rg0319_00_0002.jp2" mimetype="image/jp2" size="2799535">
-              <imageData height="4442" width="3417"/>
-            </file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          #{access_read_world}
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
-
   def stanford_restricted_file_purl_xml
     <<-XML
       <publicObject>
