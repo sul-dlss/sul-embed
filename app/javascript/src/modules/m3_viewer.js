@@ -14,15 +14,19 @@ import cdlAuthPlugin from '../plugins/cdlAuthPlugin';
 
 export default {
   init: function() {
-    var $el = jQuery('#sul-embed-m3');
-    var data = $el.data();
+    const el = document.getElementById('sul-embed-m3');
+    const data = el.dataset;
+    const showAttribution = (data.showAttribution === 'true')
+    const hideWindowTitle = (data.hideTitle === 'true')
+    const imageTools = (data.imageTools === 'true')
+    const cdl = (data.cdl === 'true')
 
     // Determine which panel should be open
     var sideBarPanel = 'info';
-    if (data.search) {
+    if (data.search.length > 0) {
       sideBarPanel = 'search';
     }
-    if (data.showAttribution) {
+    if (showAttribution) {
       sideBarPanel = 'attribution';
     }
 
@@ -77,7 +81,7 @@ export default {
         loadedManifest: data.m3Uri,
         canvasIndex: Number(data.canvasIndex),
         canvasId: data.canvasId,
-        ...(data.cdl && {
+        ...(cdl && {
           cdl: {
             cdlHoldRecordId: data.cdlHoldRecordId && data.cdlHoldRecordId.toString(),
           }
@@ -89,13 +93,13 @@ export default {
         allowMaximize: false,
         authNewWindowCenter: 'screen',
         sideBarPanel,
-        hideWindowTitle: (data.hideTitle === true),
+        hideWindowTitle: hideWindowTitle,
         panels: {
           annotations: true,
           layers: true,
           search: true,
         },
-        sideBarOpen: (data.showAttribution === true || data.search.length > 0),
+        sideBarOpen: (showAttribution || data.search.length > 0),
         imageToolsEnabled: true,
         imageToolsOpen: false,
         views: [
@@ -107,17 +111,17 @@ export default {
       },
       workspace: {
         showZoomControls: true,
-        type: data.imageTools ? 'mosaic' : 'single',
+        type: imageTools ? 'mosaic' : 'single',
       },
       workspaceControlPanel: {
         enabled: false,
       }
     }, [
-      ...((data.cdl && cdlAuthPlugin) || []),
-      ...((data.imageTools && miradorImageToolsPlugin) || []),
-      (!data.cdl && shareMenuPlugin),
+      ...((cdl && cdlAuthPlugin) || []),
+      ...((imageTools && miradorImageToolsPlugin) || []),
+      (!cdl && shareMenuPlugin),
       miradorZoomBugPlugin,
-      ...((data.imageTools && embedModePlugin) || []),
+      ...((imageTools && embedModePlugin) || []),
       {
         ...miradorSharePlugin,
         target: 'WindowTopBarShareMenu',
