@@ -52,6 +52,10 @@ module Embed
       all_resource_files.select(&:downloadable?)
     end
 
+    def transcript_files
+      all_resource_files.select(&:transcript?)
+    end
+
     def purl_url
       "#{Settings.purl_url}/#{@druid}"
     end

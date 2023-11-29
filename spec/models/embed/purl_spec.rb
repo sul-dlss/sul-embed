@@ -146,6 +146,20 @@ RSpec.describe Embed::Purl do
     end
   end
 
+  describe '#transcript_files' do
+    subject(:df) { purl.transcript_files }
+
+    context 'when some of the files are transcripts' do
+      let(:purl) do
+        described_class.new(contents: [build(:resource, files: [build(:resource_file, :transcript), build(:resource_file, :transcript)])])
+      end
+
+      it 'returns only transcript files' do
+        expect(df.count).to eq 2
+      end
+    end
+  end
+
   describe '#hierarchical_contents' do
     let(:root_dir) { Embed::Purl::ResourceDir.new('', [], []) }
     let(:purl) { described_class.new }
