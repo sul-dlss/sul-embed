@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Purl::ResourceFile do
-  include PurlFixtures
   describe 'attributes' do
     let(:resource_file) { build(:resource_file, :document) }
 

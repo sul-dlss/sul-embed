@@ -4,7 +4,7 @@
     </div>
   <div class='sul-embed-media-object sul-embed-pull-left'>
     <% if file.image? %>
-      <img class='sul-embed-square-image'  src="<%= viewer.stacks_square_url(viewer.purl_object.druid, file.title)%>"  alt=''>
+      <img class='sul-embed-square-image' src="<%= viewer.stacks_square_url(viewer.purl_object.druid, file.title)%>"  alt=''>
     <% else %>
       <i class="sul-i-2x <%= viewer.file_type_icon(file.mimetype) %>"></i>
     <% end %>
@@ -40,24 +40,5 @@
         </a>
       <% end %>
     </div>
-
-    <% if file.image? %>
-      <span class='sul-embed-preview-toggle' data-sul-embed-file-preview-toggle='true'>
-        <i class='sul-i-arrow-right-8'></i>
-        <span class='sul-embed-preview-text'>
-          <a href='#' data-sul-embed-file-preview-toggle-text='true' aria-expanded='false'>
-            Preview
-            <span class='sul-embed-sr-only'> item <%= file.index %>
-            </span>
-          </a>
-        </span>
-      </span>
-    <% end %>
-
   </div>
-  <% if file.image? %>
-    <div style='display: none;' class='sul-embed-preview' data-sul-embed-file-preview-window='true' aria-hidden='true'>
-      <img src="<%= viewer.stacks_thumb_url(viewer.purl_object.druid, file.title) %>" alt=''>
-    </div>
-  <% end %>
 </div>

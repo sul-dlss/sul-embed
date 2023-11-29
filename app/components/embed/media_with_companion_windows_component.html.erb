@@ -1,4 +1,4 @@
-<div class="sul-embed-container media-component" id='sul-embed-object' style='display:none;' data-controller="media media-tag" data-action="media-seek@window->media-tag#seek">
+<div class="sul-embed-container media-component" id='sul-embed-object' hidden data-controller="media media-tag" data-action="media-seek@window->media-tag#seek">
   <header>
     <nav aria-label="Window navigation">
       <button data-action="click->media#toggleLeft" aria-label="Display sidebar" aria-controls="left-drawer">
@@ -52,7 +52,7 @@
 
 
   <div class="media-component-body">
-    <aside class="left-drawer collapse" data-media-target="leftDrawer" id="left-drawer" aria-label="Sidebar" style="visibility: hidden">
+    <aside class="left-drawer collapse" data-controller="transcript" data-media-target="leftDrawer" id="left-drawer" aria-label="Sidebar" style="visibility: hidden">
       <nav class="vert-tabs" role="tablist">
         <button data-action="click->media#displayMetadata" data-media-target="leftButton" class="active" aria-label="About this item" aria-controls="about" aria-selected="true" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
@@ -60,7 +60,7 @@
         <button data-action="click->media#displayContents" data-media-target="leftButton"  aria-label="Content" aria-controls="media-content" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"></path></svg>
         </button>
-        <button data-action="click->media#displayTranscript" data-media-target="leftButton"  aria-label="Transcript" aria-controls="media-content" role="tab">
+        <button data-action="click->media#displayTranscript transcript#load" data-media-target="leftButton"  aria-label="Transcript" aria-controls="media-content" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg>
         </button>
         <button data-action="click->media#displayRights" data-media-target="leftButton" aria-label="Use and reproduction" aria-controls="rights" role="tab">
@@ -86,7 +86,9 @@
           <div class="header-background">
             <h3>Transcript</h3>
           </div>
-          <div class="transcript" data-controller="transcript" data-action="media-loaded@window->transcript#load"></div>
+          <div class="transcript" data-action="media-loaded@window->transcript#persistPlayer">
+            <div data-transcript-target="outlet"></div>
+          </div>
         </section>
 
         <section id="rights" data-media-target="rights" role="tabpanel" hidden>
@@ -110,8 +112,6 @@
                                                           include_transcripts:,
                                                           druid:) %>
     </div>
-    <%= render 'embed/embed_this/generic', viewer: viewer %>
-    <%= render Embed::Download::LegacyMediaComponent.new viewer: viewer %>
   </div>
   <dialog class="modal-components-popover" data-media-target="modalComponentsPopover" data-action="click->media#closePopover" id="share_and_download">
     <button class="modal-component-button" data-action="click->media#openShareModal" aria-label="Share" aria-controls="share" tabindex="0">
@@ -124,8 +124,8 @@
     </button>
   </dialog>
 
-  <dialog class="modal-container" data-media-target="shareModal" data-action="click->media#handleBackdropClicks" id="share">
-    <header class="modal-header">
+  <dialog aria-labelledby="share-modal-header" class="modal-container" data-media-target="shareModal" data-action="click->media#handleBackdropClicks" id="share">
+    <header class="modal-header" id="share-modal-header">
       Share
     </header>
 
@@ -136,8 +136,8 @@
     </form>
   </dialog>
 
-  <dialog class="modal-container" data-media-target="downloadModal" data-action="click->media#handleBackdropClicks" id="download">
-    <header class="modal-header">
+  <dialog aria-labelledby="download-modal-header" class="modal-container" data-media-target="downloadModal" data-action="click->media#handleBackdropClicks" id="download">
+    <header class="modal-header" id="download-modal-header">
       Download
     </header>
 
@@ -146,11 +146,9 @@
         <h3 class='sul-embed-options-label modal-subheader'>
           Files
         </h3>
-        <div class='sul-embed-section'>
-          <ul>
-            <%= render Embed::Download::FileListItemComponent.with_collection(downloadable_files) %>
-          </ul>
-        </div>
+        <ul>
+          <%= render Embed::Download::FileListItemComponent.with_collection(downloadable_files) %>
+        </ul>
       <% else %>
         <p>No downloads available</p>
       <% end %>

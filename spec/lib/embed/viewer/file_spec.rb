@@ -3,24 +3,27 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Viewer::File do
-  include PurlFixtures
   let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }) }
   let(:file_viewer) { described_class.new(request) }
+  let(:purl) { build(:purl) }
+
+  before do
+    allow(Embed::Purl).to receive(:find).and_return(purl)
+  end
 
   describe 'initialize' do
-    let(:purl) { build(:purl) }
-
-    before do
-      allow(Embed::Purl).to receive(:find).and_return(purl)
-    end
-
     it 'creates Embed::Viewer::File' do
       expect(file_viewer).to be_an described_class
     end
   end
 
   describe 'height' do
-    before { stub_purl_xml_response_with_fixture(multi_file_purl_xml) }
+    let(:purl) do
+      build(:purl, contents: [
+              build(:resource, :file, files: [build(:resource_file)]),
+              build(:resource, :file, files: [build(:resource_file)])
+            ])
+    end
 
     context 'when the requested maxheight is larger than the default height' do
       let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', maxheight: 600) }
@@ -52,19 +55,42 @@ RSpec.describe Embed::Viewer::File do
         expect(request).to receive(:hide_search?).at_least(:once).and_return(true)
       end
 
-      it 'defaults to 323' do
-        stub_purl_xml_response_with_fixture(multi_resource_multi_type_purl)
-        expect(file_viewer.send(:default_height)).to eq 323
+      context 'with four files' do
+        let(:purl) do
+          build(:purl, contents: [
+                  build(:resource, :file, files: [build(:resource_file)]),
+                  build(:resource, :file, files: [build(:resource_file)]),
+                  build(:resource, :file, files: [build(:resource_file)]),
+                  build(:resource, :file, files: [build(:resource_file)])
+                ])
+        end
+
+        it 'defaults to 323' do
+          expect(file_viewer.send(:default_height)).to eq 323
+        end
       end
 
-      it 'reduces the height based on the number of files in the object (1 file), but no lower than our min height' do
-        stub_purl_xml_response_with_fixture(file_purl_xml)
-        expect(file_viewer.send(:default_height)).to eq 189
+      context 'with one file' do
+        let(:purl) do
+          build(:purl, contents: [build(:resource, :file, files: [build(:resource_file)])])
+        end
+
+        it 'reduces the height based on the number of files in the object, but no lower than our min height' do
+          expect(file_viewer.send(:default_height)).to eq 189
+        end
       end
 
-      it 'reduces the height based on the number of files in the object (2 files)' do
-        stub_purl_xml_response_with_fixture(image_purl_xml)
-        expect(file_viewer.send(:default_height)).to eq 189
+      context 'with two files' do
+        let(:purl) do
+          build(:purl, contents: [
+                  build(:resource, :file, files: [build(:resource_file)]),
+                  build(:resource, :file, files: [build(:resource_file)])
+                ])
+        end
+
+        it 'reduces the height based on the number of files in the object' do
+          expect(file_viewer.send(:default_height)).to eq 189
+        end
       end
     end
 
@@ -75,8 +101,6 @@ RSpec.describe Embed::Viewer::File do
       end
 
       it 'adds 44 pixels to the height (to avoid unnecessary scroll)' do
-        stub_purl_xml_response_with_fixture(embargoed_stanford_file_purl_xml)
-
         expect(file_viewer.send(:default_height)).to eq 189 # minimum height
       end
     end
@@ -86,8 +110,9 @@ RSpec.describe Embed::Viewer::File do
         expect(request).to receive(:hide_title?).at_least(:once).and_return(false)
       end
 
+      let(:purl) { build(:purl, contents: [build(:resource, files: [build(:resource_file)])]) }
+
       it 'adds the necessary height' do
-        stub_purl_xml_response_with_fixture(file_purl_xml)
         expect(file_viewer.send(:default_height)).to eq 190
       end
     end
@@ -95,10 +120,7 @@ RSpec.describe Embed::Viewer::File do
 
   describe 'header_height' do
     context 'when the title bar and search bar is hidden' do
-      let(:purl) { build(:purl) }
-
       before do
-        allow(Embed::Purl).to receive(:find).and_return(purl)
         expect(request).to receive(:hide_title?).at_least(:once).and_return(true)
         expect(request).to receive(:hide_search?).at_least(:once).and_return(true)
       end
@@ -107,8 +129,16 @@ RSpec.describe Embed::Viewer::File do
     end
 
     context 'when the title bar is hidden but a search is present' do
+      let(:purl) do
+        build(:purl, contents: [
+                build(:resource, :file, files: [build(:resource_file)]),
+                build(:resource, :file, files: [build(:resource_file)]),
+                build(:resource, :file, files: [build(:resource_file)]),
+                build(:resource, :file, files: [build(:resource_file)])
+              ])
+      end
+
       before do
-        stub_purl_xml_response_with_fixture(multi_resource_multi_type_purl)
         expect(file_viewer).to receive(:min_files_to_search).and_return(3)
         expect(request).to receive(:hide_title?).at_least(:once).and_return(true)
       end
@@ -119,12 +149,6 @@ RSpec.describe Embed::Viewer::File do
     end
 
     context 'when the title bar is present' do
-      let(:purl) { build(:purl) }
-
-      before do
-        allow(Embed::Purl).to receive(:find).and_return(purl)
-      end
-
       it 'is 68 because it will show the title + number of items' do
         expect(file_viewer.send(:header_height)).to eq 68
       end
@@ -132,12 +156,6 @@ RSpec.describe Embed::Viewer::File do
   end
 
   describe 'file_type_icon' do
-    let(:purl) { build(:purl) }
-
-    before do
-      allow(Embed::Purl).to receive(:find).and_return(purl)
-    end
-
     it 'default file icon if mimetype is not recognized' do
       expect(file_viewer.file_type_icon('application/null')).to eq 'sul-i-file-new-1'
     end
@@ -151,19 +169,34 @@ RSpec.describe Embed::Viewer::File do
     subject { file_viewer.display_download_all? }
 
     context 'when there are not many files and the size is low' do
-      before { stub_purl_xml_response_with_fixture(multi_file_purl_xml) }
+      let(:purl) do
+        build(:purl, contents: [
+                build(:resource, :file, files: [build(:resource_file, :world_downloadable)]),
+                build(:resource, :file, files: [build(:resource_file, :world_downloadable)]),
+                build(:resource, :file, files: [build(:resource_file, :world_downloadable)]),
+                build(:resource, :file, files: [build(:resource_file, :world_downloadable)])
+              ])
+      end
 
       it { is_expected.to be true }
     end
 
     context 'when the files are too big' do
-      before { stub_purl_xml_response_with_fixture(large_file_purl_xml) }
+      let(:purl) do
+        build(:purl, contents: [
+                build(:resource, :file, files: [build(:resource_file, :world_downloadable, size: 10_737_418_241)])
+              ])
+      end
 
       it { is_expected.to be false }
     end
 
     context 'when there are too many files' do
-      before { stub_purl_xml_response_with_fixture(many_file_purl_xml) }
+      let(:purl) do
+        build(:purl, contents: [
+                build(:resource, :file, files: 1.upto(3001).map { build(:resource_file, :world_downloadable) })
+              ])
+      end
 
       it { is_expected.to be false }
     end
@@ -172,14 +205,24 @@ RSpec.describe Embed::Viewer::File do
   describe '#any_stanford_only_files' do
     subject { file_viewer.any_stanford_only_files? }
 
+    before do
+      allow(Embed::Purl).to receive(:find).and_return(purl)
+    end
+
+    let(:purl) { build(:purl) }
+
     context 'when one or more files are stanford only' do
-      before { stub_purl_xml_response_with_fixture(stanford_restricted_download_purl) }
+      let(:purl) do
+        build(:purl, contents: [build(:resource, :file, files: [build(:resource_file, :stanford_only)])])
+      end
 
       it { is_expected.to be true }
     end
 
     context 'when no files are stanford only' do
-      before { stub_purl_xml_response_with_fixture(multi_resource_multi_type_purl) }
+      let(:purl) do
+        build(:purl, contents: [build(:resource, :file, files: [build(:resource_file)])])
+      end
 
       it { is_expected.to be false }
     end
@@ -187,8 +230,6 @@ RSpec.describe Embed::Viewer::File do
 
   describe '#download_url' do
     subject { file_viewer.download_url }
-
-    before { stub_purl_xml_response_with_fixture(file_purl_xml) }
 
     it { is_expected.to eq 'https://stacks.stanford.edu/object/abc123' }
   end

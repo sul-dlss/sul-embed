@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::WasSeedComponent, type: :component do
-  include PurlFixtures
   include WasTimeMapFixtures
 
   let(:request) do

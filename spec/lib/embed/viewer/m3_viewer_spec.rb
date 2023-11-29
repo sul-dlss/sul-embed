@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Viewer::M3Viewer do
-  include PurlFixtures
   subject(:m3_viewer) { described_class.new(request) }
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }

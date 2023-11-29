@@ -66,32 +66,6 @@ The rich HTML payload that is supplied via the oEmbed API is an iframe. This mea
 
 For links that are intended to navigate the users browser away from the current page (e.g. the links to Memento/GeoBlacklight/etc.) then `target="_parent"` should be used to give the link the default browser behavior. [More about link targets](http://www.w3schools.com/tags/att_a_target.asp).
 
-## Console Example
-
-    $ viewer = Embed.registered_viewers.first
-    => Embed::DemoViewer
-    $ request = Embed::Request.new({url: 'http://purl.stanford.edu/bb112fp0199'})
-    => #<Embed::Request>
-    $ viewer.new(request)
-    => # your viewer instance
-
-
-## Customizing the Embed Panel
-
-Viewers can customize the embed panel.  To do this, create a template in `app/views/embed/embed-this`, to provide the HTML for the embed panel.
-
-See File viewers for an example.
-
-
-## Adding a Download Panel
-Viewers can add their own download panel.  To do this, create a component in `app/components/embed/download`, to provide the HTML for the download panel.
-
-In order to enable the download panel you need to provide a method in your viewer class.  This method lets the footer logic know that the viewer will provide a download panel and it should render the Download button.
-
-    def show_download?
-      true
-    end
-
 ## Updating language tags
 
 sul-embed uses the IANA language subtag registry to resolve user-provided file language codes (e.g., 'en-US') onto user-friendly labels (e.g., "English"), primarily for captions in the media player. This file lives on the web and changes every so often. We cache this file in `vendor/data/language-subtag-registry`, and it can be updated via `rake update_language_tags`.

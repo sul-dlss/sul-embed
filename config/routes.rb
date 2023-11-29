@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   get 'iframe' => 'embed#iframe'
 
+  # For viewing external resources with Mirador (e.g. http://embed.stanford.edu/iiif?url=https://dcollections.lib.keio.ac.jp/sites/default/files/iiif/ICP/132X-26-1/manifest.json)
   get 'iiif' => 'embed#iiif'
 
   if Rails.env.production?

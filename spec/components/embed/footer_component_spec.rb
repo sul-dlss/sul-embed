@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::FooterComponent, type: :component do
-  include PurlFixtures
-
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:object) { Embed::Purl.find('12345') }
   let(:viewer) { Embed::Viewer::Geo.new(request) }
@@ -23,6 +21,7 @@ RSpec.describe Embed::FooterComponent, type: :component do
       expect(page).to have_css 'div.sul-embed-footer'
       expect(page).to have_css '[aria-label="open embed this panel"]'
       expect(page).to have_css '[aria-label="2 files available for download"]'
+      expect(page).to have_css '.sul-embed-download-count', text: 2
     end
   end
 

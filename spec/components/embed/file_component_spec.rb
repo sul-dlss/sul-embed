@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::FileComponent, type: :component do
-  include PurlFixtures
-
   let(:request) do
     Embed::Request.new(url: 'http://purl.stanford.edu/abc123')
   end
@@ -103,6 +101,30 @@ RSpec.describe Embed::FileComponent, type: :component do
     it do
       allow(viewer).to receive(:display_header?).at_least(:once).and_return(false)
       expect(page).not_to have_css '.sul-embed-header', visible: :all
+    end
+  end
+
+  describe 'media list' do
+    let(:resources) { [build(:resource, :video, files: [build(:resource_file, :video, filename:)])] }
+
+    context 'with a normal filename' do
+      let(:filename) { 'Title_of_the_PDF.pdf' }
+
+      it 'leaves correctly formatted filenames alone' do
+        expect(page).to have_css '.sul-embed-body.sul-embed-file', visible: :all
+        link = page.find('.sul-embed-media-list a', match: :first, visible: :all)
+        expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:bc123df4567/Title_of_the_PDF.pdf')
+      end
+    end
+
+    context 'with a wonky filename' do
+      let(:filename) { '#Title of the PDF.pdf' }
+
+      it 'encodes them' do
+        expect(page).to have_css '.sul-embed-body.sul-embed-file', visible: :all
+        link = page.find('.sul-embed-media-list a', match: :first, visible: :all)
+        expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:bc123df4567/%23Title%20of%20the%20PDF.pdf')
+      end
     end
   end
 end

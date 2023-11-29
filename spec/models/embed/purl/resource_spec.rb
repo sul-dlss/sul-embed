@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Purl::Resource do
-  include PurlFixtures
   let(:resource) do
     build(:resource, :file)
   end
@@ -62,7 +61,7 @@ RSpec.describe Embed::Purl::Resource do
 
   describe '#caption_files' do
     context 'when it has a caption file' do
-      subject { resource.caption_files[0].title }
+      subject { resource.caption_files.first.title }
 
       let(:resource) { build(:resource, :video) }
 
@@ -70,13 +69,11 @@ RSpec.describe Embed::Purl::Resource do
     end
 
     context 'when it does not have a caption file' do
-      subject { resource.caption_files[0] }
+      subject { resource.caption_files }
 
       let(:resource) { build(:resource, :video, files: [build(:resource_file, :video)]) }
 
-      before { stub_purl_xml_response_with_fixture(single_video_purl) }
-
-      it { is_expected.to be_nil }
+      it { is_expected.to be_empty }
     end
   end
 end

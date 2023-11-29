@@ -13,36 +13,14 @@ RSpec.describe Embed::Media::EmbedThisFormComponent, type: :component do
 
   before do
     allow(request).to receive(:purl_object).and_return(object)
+    render_inline(described_class.new(viewer:))
   end
 
-  context 'without any content' do
-    before do
-      render_inline(described_class.new(viewer:))
-    end
-
-    it 'has the form elements for updating the embed code' do
-      expect(page.find('.sul-embed-options-label#select-options')).to have_content('Select options:')
-      expect(page).to have_css('input#sul-embed-embed-title[type="checkbox"]')
-      expect(page).to have_css('input#sul-embed-embed[type="checkbox"]')
-      expect(page).to have_css('textarea#sul-embed-iframe-code')
-    end
-  end
-
-  context 'with content' do
-    before do
-      with_controller_class EmbedController do
-        render_inline(described_class.new(viewer:)) do
-          vc_test_controller.helpers.tag :input, type: 'checkbox', id: 'sul-embed-embed-search'
-        end
-      end
-    end
-
-    it 'has the form elements for updating the embed code' do
-      expect(page.find('.sul-embed-options-label#select-options')).to have_content('Select options:')
-      expect(page).to have_css('input#sul-embed-embed-title[type="checkbox"]')
-      expect(page).to have_css('input#sul-embed-embed-search[type="checkbox"]')
-      expect(page).to have_css('input#sul-embed-embed[type="checkbox"]')
-      expect(page).to have_css('textarea#sul-embed-iframe-code')
-    end
+  it 'has the form elements for updating the embed code' do
+    expect(page).to have_content('Select options:')
+    expect(page).to have_css('input#sul-embed-embed-title[type="checkbox"]')
+    expect(page).to have_css('input#sul-embed-embed[type="checkbox"]')
+    expect(page).to have_css('textarea#sul-embed-iframe-code')
+    expect(page).to have_css('button.copy-to-clipboard')
   end
 end

@@ -65,6 +65,10 @@
   --modal-border-radius: 8px;
   --modal-max-width: 600px;
 
+  * {
+    box-sizing: border-box;
+  }
+
   .video-js .vjs-tech {
     position: relative;
   }
@@ -101,7 +105,29 @@
 
     .sul-embed-embed-this-form, .sul-embed-downloads {
       color: var(--text-color);
-      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+    }
+
+    .sul-embed-embed-this-form {
+      .form-label, legend {
+        display: inline-block;
+        font-size: 12pt;
+        font-weight: 600;
+        margin: 0.5em 0;
+      }
+
+      input[type="text"], textarea {
+        margin-bottom: 1rem;
+        padding: .375rem .75rem;
+        width: calc(100% - 2rem);
+      }
+
+      fieldset {
+        border: none;
+      }
+
+      #sul-embed-iframe-code {
+        height: 7rem;
+      }
     }
 
     .sul-embed-downloads {
@@ -118,16 +144,6 @@
       }
     }
 
-    #sul-embed-iframe-code {
-      width: 100%;
-      height: 9rem;
-    }
-
-    #sul-embed-purl-link {
-      width: 100%;
-      height: 2rem;
-    }
-
     button {
       background-color: transparent;
       border: none;
@@ -138,9 +154,7 @@
         text-decoration: underline;
         cursor: pointer;
       }
-    }
-    .modal-header {
-      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+
     }
   }
 
@@ -152,7 +166,7 @@
     border-radius: var(--modal-border-radius);
 
     &::backdrop {
-      background-color: var(--background-color);
+      background-color: transparent;
     }
 
     .modal-component-button {
@@ -235,7 +249,6 @@
     h3 {
       align-self: center;
       font-size: 0.937rem;
-      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
       font-weight: 300;
       line-height: 1.6em;
       letter-spacing: 0.015em;
@@ -379,7 +392,6 @@
     .metadataList, .rightsList, .contentsList, .transcript {
       color: var(--text-color);
       padding: var(--drawer-content-padding);
-      font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     }
 
     .logoContainer {
@@ -418,6 +430,7 @@
         &:hover {
           border-color: darkgray;
           background-color: lightgray;
+          cursor: pointer;
         }
       }
     }

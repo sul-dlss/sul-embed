@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Download::GeoComponent, type: :component do
-  include PurlFixtures
-
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:viewer) { Embed::Viewer::Geo.new(request) }
   let(:response) { geo_purl_public }

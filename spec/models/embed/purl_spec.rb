@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Purl do
-  include PurlFixtures
   describe 'title' do
     let(:purl) { described_class.new(title: 'File Title') }
 
@@ -58,47 +57,33 @@ RSpec.describe Embed::Purl do
 
   describe 'valid?' do
     context 'with empty content metadata' do
-      before { stub_purl_xml_response_with_fixture(empty_content_metadata_purl) }
+      let(:purl) { described_class.new(contents: []) }
 
       it 'is false' do
-        expect(described_class.find('12345')).not_to be_valid
+        expect(purl).not_to be_valid
       end
     end
 
     context 'with content metadata' do
-      before { stub_purl_xml_response_with_fixture(file_purl_xml) }
+      let(:purl) { described_class.new(contents: [build(:resource)]) }
 
       it 'is true' do
-        expect(described_class.find('12345')).to be_valid
+        expect(purl).to be_valid
       end
     end
   end
 
-  describe '#collections' do
-    it 'formats a list of collection druids' do
-      stub_purl_xml_response_with_fixture(was_seed_purl)
-      expect(described_class.find('12345').collections).to eq ['mk656nf8485']
-    end
-
-    it 'is empty when no collection is present in xml' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
-      expect(described_class.find('12345').collections).to eq []
-    end
-  end
-
-  describe 'contents' do
-    it 'returns an array of resources' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
-      expect(described_class.find('12345').contents.all?(Embed::Purl::Resource)).to be true
-    end
-  end
-
   describe 'all_resource_files' do
+    let(:purl) do
+      described_class.new(contents: [
+                            build(:resource, files: [build(:resource_file, :image), build(:resource_file, :image)]),
+                            build(:resource, files: [build(:resource_file, :image), build(:resource_file, :image)])
+                          ])
+    end
+
     it 'returns a flattened array of resource files' do
-      stub_purl_xml_response_with_fixture(multi_resource_multi_type_purl)
-      df = described_class.find('12345').all_resource_files
-      expect(df).to be_an_instance_of Array
-      expect(df.first).to be_an_instance_of Embed::Purl::ResourceFile
+      df = purl.all_resource_files
+      expect(df).to all(be_a Embed::Purl::ResourceFile)
       expect(df.count).to eq 4
     end
   end
@@ -106,82 +91,65 @@ RSpec.describe Embed::Purl do
   describe '#size' do
     subject { purl.size }
 
-    before do
-      stub_purl_xml_response_with_fixture(multi_file_purl_xml)
+    let(:purl) do
+      described_class.new(contents: [
+                            build(:resource, files: [build(:resource_file, :image)]),
+                            build(:resource, files: [build(:resource_file, :image)])
+                          ])
     end
-
-    let(:purl) { described_class.find('12345') }
 
     it { is_expected.to eq 12_345 * 2 }
   end
 
   describe '#downloadable_files' do
-    it 'returns a flattened array of downloadable resource files' do
-      stub_purl_xml_response_with_fixture(multi_resource_multi_type_purl)
-      df = described_class.find('12345').downloadable_files
-      expect(df).to be_an_instance_of Array
-      expect(df.first).to be_an_instance_of Embed::Purl::ResourceFile
-      expect(df.count).to eq 4
+    subject(:df) { purl.downloadable_files }
+
+    context 'when there are many resources with many files' do
+      let(:purl) do
+        described_class.new(contents: [
+                              build(:resource, files: [build(:resource_file, :world_downloadable), build(:resource_file, :world_downloadable)]),
+                              build(:resource, files: [build(:resource_file, :world_downloadable), build(:resource_file, :world_downloadable)])
+                            ])
+      end
+
+      it 'returns a flattened array of downloadable resource files' do
+        expect(df).to all(be_a Embed::Purl::ResourceFile)
+        expect(df.count).to eq 4
+      end
     end
 
-    it 'returns only downloadable files (world)' do
-      stub_purl_xml_response_with_fixture(world_restricted_download_purl)
-      purl_obj = described_class.find('12345')
-      expect(purl_obj.all_resource_files.count).to eq 3
-      expect(purl_obj.downloadable_files.count).to eq 1
+    context 'when some of the files are no-download' do
+      let(:purl) do
+        described_class.new(contents: [
+                              build(:resource, files: [build(:resource_file), build(:resource_file, :world_downloadable)]),
+                              build(:resource, files: [build(:resource_file), build(:resource_file)])
+                            ])
+      end
+
+      it 'returns only downloadable files (world)' do
+        expect(df.count).to eq 1
+      end
     end
 
-    it 'returns only downloadable files (stanford)' do
-      stub_purl_xml_response_with_fixture(stanford_restricted_download_purl)
-      purl_obj = described_class.find('5678')
-      expect(purl_obj.all_resource_files.count).to eq 3
-      expect(purl_obj.downloadable_files.count).to eq 2
-    end
-  end
+    context 'when some of the files are stanford only' do
+      let(:purl) do
+        described_class.new(contents: [
+                              build(:resource, files: [build(:resource_file), build(:resource_file, :stanford_only)]),
+                              build(:resource, files: [build(:resource_file, :stanford_only)])
+                            ])
+      end
 
-  describe 'license' do
-    it 'returns cc license if present' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
-      purl = described_class.find('12345')
-      expect(purl.license).to eq 'Public Domain Mark 1.0'
-    end
-
-    it 'returns odc license if present' do
-      stub_purl_xml_response_with_fixture(hybrid_object_purl)
-      purl = described_class.find('12345')
-      expect(purl.license).to eq 'ODC-By Attribution License'
-    end
-
-    it 'returns MODS license if present' do
-      stub_purl_xml_response_with_fixture(mods_license_purl)
-      purl = described_class.find('12345')
-      expect(purl.license).to eq 'This work is licensed under an Apache License 2.0 license.'
-    end
-
-    it 'returns nil if no license is present' do
-      stub_purl_xml_response_with_fixture(embargoed_file_purl_xml)
-      expect(described_class.find('12345').license).to be_nil
-    end
-  end
-
-  describe 'public?' do
-    it 'returns true if the object is publicly accessible' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
-      expect(described_class.find('12345')).to be_public
-    end
-
-    it 'returns false if the object is Stanford Only' do
-      stub_purl_xml_response_with_fixture(stanford_restricted_file_purl_xml)
-      expect(described_class.find('12345')).not_to be_public
+      it 'returns stanford only files' do
+        expect(df.count).to eq 2
+      end
     end
   end
 
   describe '#hierarchical_contents' do
     let(:root_dir) { Embed::Purl::ResourceDir.new('', [], []) }
-    let(:purl) { described_class.find('12345') }
+    let(:purl) { described_class.new }
 
     before do
-      stub_purl_xml_response_with_fixture(hierarchical_file_purl_xml)
       allow(Embed::HierarchicalContents).to receive(:contents).and_return(root_dir)
     end
 

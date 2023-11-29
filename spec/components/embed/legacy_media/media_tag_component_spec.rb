@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::LegacyMedia::MediaTagComponent, type: :component do
-  include PurlFixtures
   subject(:render) do
     render_inline(
       described_class.new(
@@ -38,10 +37,6 @@ RSpec.describe Embed::LegacyMedia::MediaTagComponent, type: :component do
       expect(object['style']).not_to match(/overflow.*scroll/)
     end
 
-    it 'includes a data-src attribute for the dash player' do
-      expect(page).to have_css('[data-src]', visible: :all)
-    end
-
     it 'includes a data attribute that includes the url to check the users auth status' do
       expect(page).to have_css('video[data-auth-url]', visible: :all)
       auth_url = page.all('video[data-auth-url]', visible: :all).first['data-auth-url']
@@ -70,10 +65,6 @@ RSpec.describe Embed::LegacyMedia::MediaTagComponent, type: :component do
       expect(page).to have_css('[data-slider-object="1"]', visible: :hidden)
     end
 
-    it 'includes a data-src attribute for the dash player' do
-      expect(page).to have_css('[data-src]', visible: :all)
-    end
-
     it 'includes a data attribute that includes the url to check the users auth status' do
       expect(page).to have_css('video[data-auth-url]', visible: :all)
       auth_url = page.all('video[data-auth-url]', visible: :all).first['data-auth-url']
@@ -84,10 +75,6 @@ RSpec.describe Embed::LegacyMedia::MediaTagComponent, type: :component do
   context 'with a world access video' do
     let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 3) }
     let(:resource) { build(:resource, :video, files: [build(:resource_file, :video, :world_downloadable)]) }
-
-    it 'includes a data-src attribute for the dash player' do
-      expect(page).to have_css('[data-src]', visible: :all)
-    end
 
     it 'includes a data attribute that includes the url to check the users auth status' do
       expect(page).to have_css('video[data-auth-url]', visible: :all)
