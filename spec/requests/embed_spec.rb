@@ -6,9 +6,11 @@ RSpec.describe 'Embed requests' do
   include PurlFixtures
 
   describe 'GET embed' do
-    it 'has a 400 status code without url params' do
-      get '/embed'
-      expect(response).to have_http_status(:bad_request)
+    context 'without url params' do
+      it 'has a 400 status code' do
+        get '/embed'
+        expect(response).to have_http_status(:bad_request)
+      end
     end
 
     context 'when a Purl that is not embeddable is requested' do
@@ -23,14 +25,18 @@ RSpec.describe 'Embed requests' do
       end
     end
 
-    it 'has a 404 status code without matched url scheme params' do
-      get '/embed', params: { url: 'http://www.example.com' }
-      expect(response).to have_http_status(:not_found)
+    context 'without matched url scheme params' do
+      it 'has a 404 status code' do
+        get '/embed', params: { url: 'http://www.example.com' }
+        expect(response).to have_http_status(:not_found)
+      end
     end
 
-    it 'has a 404 status code without a druid in the URL' do
-      get '/embed', params: { url: 'http://purl.stanford.edu/' }
-      expect(response).to have_http_status(:not_found)
+    context 'without a druid in the URL' do
+      it 'has a 404 status code' do
+        get '/embed', params: { url: 'http://purl.stanford.edu/' }
+        expect(response).to have_http_status(:not_found)
+      end
     end
 
     context 'when requesting a Purl object that does not exists' do
@@ -50,7 +56,7 @@ RSpec.describe 'Embed requests' do
       expect(response).to have_http_status(:unsupported_media_type)
     end
 
-    context 'when the url scheme matches' do
+    context 'with a valid request (json)' do
       before do
         stub_request(:get, 'https://purl.stanford.edu/fn662rv4961.xml')
           .to_return(status: 200, body: file_purl_xml, headers: {})
@@ -59,6 +65,25 @@ RSpec.describe 'Embed requests' do
       it 'has a 200 status code for a matched url scheme param' do
         get '/embed', params: { url: 'http://purl.stanford.edu/fn662rv4961' }
         expect(response).to have_http_status(:ok)
+        expect(response.parsed_body).to include({ 'title' => 'File Title',
+                                                  'type' => 'rich', 'version' => '1.0',
+                                                  'provider_name' => 'SUL Embed Service' })
+      end
+    end
+
+    context 'with a valid request (xml)' do
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/fn662rv4961.xml')
+          .to_return(status: 200, body: file_purl_xml, headers: {})
+      end
+
+      it 'has a 200 status code for a matched url scheme param' do
+        get '/embed.xml', params: { url: 'http://purl.stanford.edu/fn662rv4961' }
+        expect(response).to have_http_status(:ok)
+        xml = Hash.from_xml(response.parsed_body)
+        expect(xml.fetch('oembed')).to include({ 'title' => 'File Title',
+                                                 'type' => 'rich', 'version' => '1.0',
+                                                 'provider_name' => 'SUL Embed Service' })
       end
     end
   end
