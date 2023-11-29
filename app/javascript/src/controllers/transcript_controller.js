@@ -20,8 +20,14 @@ export default class extends Controller {
     if (!tracks)
       return
     const track = tracks.find((track) => track.kind === 'captions' )
-    const cues = track.cues.cues_.map((cue) => `<p class="cue" data-controller="cue" data-action="click->cue#jump" data-cue-id="${cue.id}" data-cue-start-value="${cue.startTime}" data-cue-end-value="${cue.endTime}">${cue.text}</p>`)
+    const cues = track.cues.cues_.map((cue) => this.buildCue(cue))
     this.outletTarget.innerHTML = cues.join('')
     this.loaded = true
+  }
+
+  buildCue(cue) {
+    const htmlClass = cue.text.startsWith('<v ') ? 'cue-new-speaker cue' : 'cue'
+    const text = cue.text.replace(/<[^>]*>/g, '')
+    return `<span class="${htmlClass}" data-controller="cue" data-action="click->cue#jump" data-cue-id="${cue.id}" data-cue-start-value="${cue.startTime}" data-cue-end-value="${cue.endTime}">${text}</span>`
   }
 }
