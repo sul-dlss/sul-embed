@@ -333,6 +333,14 @@
       padding: 0.2rem 0.4rem;
       text-transform: uppercase;
     }
+
+    button.dismissButton {
+      padding: 0rem;
+
+      svg {
+        font-size: 0.85rem;
+      }
+    }
   }
 
   .collapse {
