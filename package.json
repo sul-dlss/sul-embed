@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "jest -c jest.config.js",
-    "build:css": "sass ./app/assets/stylesheets/file.scss:./app/assets/builds/file.css ./app/assets/stylesheets/geo.scss:./app/assets/builds/geo.css ./app/assets/stylesheets/m3.scss:./app/assets/builds/m3.css ./app/assets/stylesheets/media.scss:./app/assets/builds/media.css ./app/assets/stylesheets/pdf.scss:./app/assets/builds/pdf.css ./app/assets/stylesheets/virtex_3d.scss:./app/assets/builds/virtex_3d.css ./app/assets/stylesheets/was_seed.scss:./app/assets/builds/was_seed.css ./app/assets/stylesheets/sul_icons.scss:./app/assets/builds/sul_icons.css --no-source-map --load-path=node_modules --load-path=vendor/assets/javascripts"
+    "build:css": "sass ./app/assets/stylesheets/file.scss:./app/assets/builds/file.css ./app/assets/stylesheets/geo.scss:./app/assets/builds/geo.css ./app/assets/stylesheets/m3.scss:./app/assets/builds/m3.css ./app/assets/stylesheets/media.scss:./app/assets/builds/media.css ./app/assets/stylesheets/pdf.scss:./app/assets/builds/pdf.css ./app/assets/stylesheets/model.scss:./app/assets/builds/model.css ./app/assets/stylesheets/was_seed.scss:./app/assets/builds/was_seed.css ./app/assets/stylesheets/sul_icons.scss:./app/assets/builds/sul_icons.css --no-source-map --load-path=node_modules --load-path=vendor/assets/javascripts"
   },
   "private": true,
   "dependencies": {

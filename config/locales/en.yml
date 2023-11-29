@@ -36,7 +36,7 @@ en:
       title: 'Media viewer'
     pdf_viewer:
       title: 'PDF viewer'
-    virtex3_d_viewer:
+    model_viewer:
       title: '3-D object viewer'
     was_seed:
       title: 'File viewer'

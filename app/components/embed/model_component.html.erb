@@ -14,10 +14,10 @@
       id="close-full-screen-button">
     </button>
   </div>
-  <%= javascript_pack_tag('virtex_3d_viewer') %>
+  <%= javascript_pack_tag('model_viewer') %>
 
   <%= render 'embed/metadata_panel', viewer: viewer %>
   <%= render 'embed/embed_this/generic', viewer: viewer %>
-  <%= render Embed::Download::Virtex3dComponent.new viewer: viewer %>
+  <%= render Embed::Download::ModelComponent.new viewer: viewer %>
   <%= render Embed::FooterComponent.new viewer: viewer %>
  </div>
