@@ -1,8 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 import videojs from 'video.js';
-import validator from '../modules/validator.js'
-import mediaTagTokenWriter from '../modules/media_tag_token_writer.js'
-import buildThumbnail from '../modules/media_thumbnail_builder.js'
+import validator from 'src/modules/validator'
+import mediaTagTokenWriter from 'src/modules/media_tag_token_writer'
+import buildThumbnail from 'src/modules/media_thumbnail_builder'
 
 export default class extends Controller {
   static targets = [ "mediaTag", "list" ]

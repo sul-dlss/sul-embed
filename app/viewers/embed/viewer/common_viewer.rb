@@ -69,6 +69,10 @@ module Embed
         false
       end
 
+      def importmap
+        nil
+      end
+
       ##
       # Not a great method name here as sometimes the header is still displayed,
       # even if the title is hidden.

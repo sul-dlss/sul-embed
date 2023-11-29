@@ -62,3 +62,7 @@ gem 'cssbundling-rails', '~> 1.1'
 gem 'shakapacker', '~> 7.0'
 
 gem 'view_component', '~> 3.6'
+
+gem 'importmap-rails', '~> 1.2'
+
+gem 'stimulus-rails', '~> 1.3'
