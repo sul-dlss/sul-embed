@@ -4,7 +4,7 @@
     </div>
   <div class='sul-embed-media-object sul-embed-pull-left'>
     <% if file.image? %>
-      <img class='sul-embed-square-image'  src="<%= viewer.stacks_square_url(viewer.purl_object.druid, file.title)%>"  alt=''>
+      <img class='sul-embed-square-image' src="<%= viewer.stacks_square_url(viewer.purl_object.druid, file.title)%>"  alt=''>
     <% else %>
       <i class="sul-i-2x <%= viewer.file_type_icon(file.mimetype) %>"></i>
     <% end %>

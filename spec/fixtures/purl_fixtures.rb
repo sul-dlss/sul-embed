@@ -192,7 +192,7 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def hybrid_object_purl
+  def odc_license_xml
     <<-XML
       <publicObject>
         <identityMetadata>
@@ -202,10 +202,6 @@ module PurlFixtures
           <resource sequence="1" type="image">
             <label>File1 Label</label>
             <file size="12345" mimetype="image/jp2" id="tn629pk3948_img_1.jp2" />
-          </resource>
-          <resource sequence="1" type="file">
-            <label>File1 Label</label>
-            <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf" />
           </resource>
         </contentMetadata>
         <rightsMetadata>
