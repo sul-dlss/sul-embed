@@ -85,33 +85,7 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def multi_file_purl_xml
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Files files files</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="file">
-          <resource sequence="1" type="file">
-            <label>File1 Label</label>
-            <file size="12345" mimetype="application/pdf" id="Title_of_the_PDF.pdf">
-              <location type="url">http://stacks.stanford.edu/file/druid:abc123/Title_of_the_PDF.pdf</location>
-            </file>
-          </resource>
-          <resource sequence="2" type="file">
-            <label>File2 Label</label>
-            <file size="12345" mimetype="application/pdf" id="Title_of_2_PDF.pdf">
-              <location type="url">http://stacks.stanford.edu/file/druid:abc123/Title_of_2_PDF.pdf</location>
-            </file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          #{access_read_world}
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
+
   def hierarchical_file_purl_xml
     <<-XML
       <publicObject>
@@ -171,33 +145,6 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def multi_media_purl
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Multiple Videos in same contentMetadata</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="media">
-          <resource id="media1" sequence="1" type="video">
-            <label>mp4-normal</label>
-            <file id="JessieSaysNo.mp4" mimetype="video/mp4" size="190916">
-              <videoData duration="P0DT1H2M3S" height="288" width="352"/>
-            </file>
-          </resource>
-          <resource id="media2" sequence="2" type="video">
-            <label>mp4-slow</label>
-            <file id="JessieSaysNo-Slow.mp4" mimetype="video/mp4" size="738559">
-              <videoData duration="P0DT1H2M3S" height="288" width="352"/>
-            </file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          #{access_read_world}
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
 
   def stanford_restricted_file_purl_xml
     <<-XML
@@ -222,104 +169,6 @@ module PurlFixtures
     XML
   end
 
-  def world_restricted_download_purl
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Title of the object</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="media">
-          <resource sequence="1" id="zr649jg5679_1" type="video">
-            <label>Tape 1</label>
-            <file id="zr649jg5679_em_sl.mp4" mimetype="video/mp4" size="1755489213" />
-            <file id="zr649jg5679_thumb.jp2" mimetype="image/jp2" size="253270">
-              <imageData width="640" height="480"/>
-            </file>
-          </resource>
-          <resource sequence="2" id="zr649jg5679_2" type="file">
-              <label>Transcript</label>
-              <file id="zr649jg5679_script.pdf" mimetype="application/pdf" size="248915" />
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          <access type="read">
-            <machine>
-              <world rule="no-download"/>
-            </machine>
-          </access>
-          <access type="read">
-            <file>zr649jg5679_script.pdf</file>
-            <machine>
-              <world/>
-            </machine>
-          </access>
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
-  def stanford_restricted_download_purl
-    <<-XML
-    <publicObject>
-      <identityMetadata>
-        <objectLabel>Title of the object</objectLabel>
-      </identityMetadata>
-      <contentMetadata type="media">
-        <resource sequence="1" id="zr649jg5679_1" type="video">
-          <label>Tape 1</label>
-          <file id="no-download.mp4" mimetype="video/mp4" size="1755489213" />
-          <file id="download-ok.jp2" mimetype="image/jp2" size="253270">
-            <imageData width="640" height="480"/>
-          </file>
-        </resource>
-        <resource sequence="2" id="zr649jg5679_2" type="file">
-            <label>Transcript</label>
-            <file id="download-ok.pdf" mimetype="application/pdf" size="248915" />
-        </resource>
-      </contentMetadata>
-      <rightsMetadata>
-        #{access_discover_world}
-        <access type="read">
-          <machine>
-            <group rule="no-download">stanford</group>
-          </machine>
-        </access>
-        <access type="read">
-          <file>download-ok.jp2</file>
-          <file>download-ok.pdf</file>
-          <machine>
-            <group >stanford</group>
-          </machine>
-        </access>
-      </rightsMetadata>
-    </publicObject>
-  </access>
-    XML
-  end
-
-  def embargoed_stanford_file_purl_xml
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Title of the object</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="file">
-        <resource sequence="1" type="file">
-          <label>Resource Label</label>
-          <file size="12345" mimetype="application/pdf" id="Title of the PDF.pdf" />
-        </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          <access type="read">
-            <machine>
-              <embargoReleaseDate>#{(Time.current + 1.month).strftime('%Y-%m-%d')}</embargoReleaseDate>
-              <group>stanford</group>
-            </machine>
-          </access>
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
   def embargoed_file_purl_xml
     <<-XML
       <publicObject>
@@ -784,42 +633,6 @@ module PurlFixtures
         <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
           <dc:title>PDF Title</dc:title>
         </oai_dc:dc>
-      </publicObject>
-    XML
-  end
-
-  def threeD_object_purl
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>3D Object Title</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="3d">
-        <resource sequence="1" type="file">
-          <file id="some-derivative.ply" mimetype="" size="1234"></file>
-        </resource>
-          <resource sequence="2" type="3d">
-            <file id="theobj-file.obj" mimetype="text/plain" size="54321"></file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          #{access_read_world}
-        </rightsMetadata>
-        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
-          <dc:title>3D Object Title</dc:title>
-        </oai_dc:dc>
-      </publicObject>
-    XML
-  end
-
-  def empty_content_metadata_purl
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Title of the blank content object</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="file"></contentMetadata>
       </publicObject>
     XML
   end

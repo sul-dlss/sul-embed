@@ -3,11 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe '3D Viewer', :js do
-  include PurlFixtures
-  let(:purl) { threeD_object_purl }
+  let(:purl) { build(:purl, type: '3d') }
 
   before do
-    stub_purl_xml_response_with_fixture(purl)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     visit_iframe_response
   end
 
