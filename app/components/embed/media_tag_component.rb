@@ -68,7 +68,6 @@ module Embed
       tag.send(media_tag_name,
                id: "sul-embed-media-#{@resource_iteration.index}",
                data: {
-                 src: streaming_url_for(:dash),
                  auth_url: authentication_url,
                  media_tag_target: 'mediaTag'
                },
