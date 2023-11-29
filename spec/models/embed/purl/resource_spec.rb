@@ -76,4 +76,22 @@ RSpec.describe Embed::Purl::Resource do
       it { is_expected.to be_empty }
     end
   end
+
+  describe '#transcript_files' do
+    context 'when it has a transcript file' do
+      subject { resource.transcript_files.first.title }
+
+      let(:resource) { build(:resource, :video) }
+
+      it { is_expected.to eq 'abc_123_transcript.pdf' }
+    end
+
+    context 'when it does not have a caption file' do
+      subject { resource.transcript_files }
+
+      let(:resource) { build(:resource, :video, files: [build(:resource_file, :video)]) }
+
+      it { is_expected.to be_empty }
+    end
+  end
 end
