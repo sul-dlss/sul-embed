@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import EmbedThis from '../modules/embed_this';
+import EmbedThis from 'src/modules/embed_this';
 
 export default class extends Controller {
   static targets = [ "leftDrawer", "leftButton", "metadata", "shareModal", "contents", "transcript",

@@ -10,6 +10,10 @@ module Embed
         LegacyMediaComponent
       end
 
+      def importmap
+        'media' if use_new_component?
+      end
+
       # override CommonViewer instance method to ensure we do not show download panel when no downloadable files
       def show_download?
         super && @purl_object.downloadable_files.present?
