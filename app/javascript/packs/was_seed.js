@@ -1,4 +1,4 @@
-import { PopupPanels } from '../src/modules/popup_panels';
+import PopupPanels from '../src/modules/popup_panels';
 import EmbedThis from '../src/modules/embed_this';
 
 document.addEventListener('DOMContentLoaded', () => {
