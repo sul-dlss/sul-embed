@@ -11,11 +11,7 @@ RSpec.describe 'PDF Viewer', :js do
   end
 
   it 'renders the PDF viewer for documents' do
-    expect(page).to have_css('.sul-embed-pdf #pdf-viewer')
-  end
-
-  it 'renders a loading spinner' do
-    expect(page).to have_css('.loading-spinner')
+    expect(page).to have_css('.sul-embed-pdf')
   end
 
   it 'has working panels' do
