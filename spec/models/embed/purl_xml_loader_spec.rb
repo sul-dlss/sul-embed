@@ -46,7 +46,7 @@ RSpec.describe Embed::PurlXmlLoader do
       let(:xml) { geo_purl_public }
 
       it 'creates a bounding_box' do
-        expect(data).to include({ bounding_box: [['-1.478794', '29.572742'], ['4.234077', '35.000308']] })
+        expect(data).to include({ bounding_box: [['38.298673', '-123.387626'], ['39.399103', '-122.528843']] })
       end
     end
 

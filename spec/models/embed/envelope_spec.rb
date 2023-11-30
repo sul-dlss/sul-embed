@@ -14,9 +14,24 @@ RSpec.describe Embed::Envelope do
   end
 
   describe '#to_bounding_box' do
+    let(:ng_xml) do
+      Nokogiri::XML(<<~XML
+          <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://purl.stanford.edu/cz128vq0535">
+          <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">application/x-esri-shapefile; format=Shapefile</dc:format>
+          <dc:type xmlns:dc="http://purl.org/dc/elements/1.1/">Dataset#Polygon</dc:type>
+          <gml:boundedBy xmlns:gml="http://www.opengis.net/gml/3.2/">
+            <gml:Envelope gml:srsName="EPSG:4326">
+              <gml:lowerCorner>29.572742 -1.478794</gml:lowerCorner>
+              <gml:upperCorner>35.000308 4.234077</gml:upperCorner>
+            </gml:Envelope>
+          </gml:boundedBy>
+          <dc:coverage xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:resource="http://sws.geonames.org/226074/about.rdf" dc:language="eng" dc:title="Uganda" />
+        </rdf:Description>
+      XML
+                   )
+    end
     let(:envelope) do
-      described_class.new(Nokogiri::XML(geo_purl_public)
-        .at_xpath('//gml:Envelope', 'gml' => 'http://www.opengis.net/gml/3.2/'))
+      described_class.new(ng_xml.at_xpath('//gml:Envelope', 'gml' => 'http://www.opengis.net/gml/3.2/'))
     end
     let(:no_envelope) { described_class.new(nil) }
 

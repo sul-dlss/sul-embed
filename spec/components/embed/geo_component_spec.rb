@@ -9,9 +9,11 @@ RSpec.describe Embed::GeoComponent, type: :component do
     Embed::Request.new(url: 'http://purl.stanford.edu/abc123')
   end
   let(:viewer) { Embed::Viewer::Geo.new(request) }
+  let(:purl) { build(:purl, :geo) }
 
   before do
-    stub_purl_xml_response_with_fixture(geo_purl_public)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
+
     render_inline(described_class.new(viewer:))
   end
 
@@ -22,7 +24,7 @@ RSpec.describe Embed::GeoComponent, type: :component do
     expect(page).to have_css('#sul-embed-geo-map[style="flex: 1"]', visible: :all)
     expect(page).to have_css('#sul-embed-geo-map[data-bounding-box=\'[["-1.478794", "29.572742"], ["4.234077", "35.000308"]]\']', visible: :all)
     expect(page).to have_css('#sul-embed-geo-map[data-wms-url="https://geowebservices.stanford.edu/geoserver/wms/"]', visible: :all)
-    expect(page).to have_css('#sul-embed-geo-map[data-layers="druid:abc123"]', visible: :all)
+    expect(page).to have_css('#sul-embed-geo-map[data-layers="druid:cz128vq0535"]', visible: :all)
   end
 
   context 'with hidden title' do
