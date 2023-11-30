@@ -22,7 +22,7 @@ FactoryBot.define do
     end
 
     trait :was_seed do
-      type { 'was-seed' }
+      type { 'webarchive-seed' }
       archived_site_url { 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/' }
       external_url { 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/' }
       contents { [build(:resource, :image)] }
