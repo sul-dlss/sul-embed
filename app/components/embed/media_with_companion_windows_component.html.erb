@@ -161,7 +161,7 @@
 
   <dialog class="modal-container" data-media-target="accessibility" data-action="click->media#handleBackdropClicks" id="accessibility">
     <header>Accessibility</header>
-    <% if transcript_files.present? %>
+    <% if downloadable_transcript_files? %>
       <p>A transcript is available for download. Click the share & download icon to download a transcript.</p>
     <% else %>
       <p>To request a transcript or other accommodation for this media item,

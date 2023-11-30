@@ -146,8 +146,8 @@ RSpec.describe Embed::Purl do
     end
   end
 
-  describe '#transcript_files' do
-    subject(:df) { purl.transcript_files }
+  describe '#downloadable_transcript_files?' do
+    subject(:df) { purl.downloadable_transcript_files? }
 
     context 'when some of the files are transcripts' do
       let(:purl) do
@@ -155,7 +155,7 @@ RSpec.describe Embed::Purl do
       end
 
       it 'returns only the downloadable transcript file' do
-        expect(df.count).to eq 1
+        expect(df).to be true
       end
     end
   end

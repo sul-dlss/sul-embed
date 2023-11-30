@@ -24,7 +24,7 @@ RSpec.describe Embed::MediaWithCompanionWindowsComponent, type: :component do
                     druid: '123',
                     contents: [],
                     downloadable_files: [],
-                    transcript_files: [])
+                    downloadable_transcript_files?: false)
   end
   let(:citation_only) { false }
 
