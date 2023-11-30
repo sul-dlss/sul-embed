@@ -3,17 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe 'was seed viewer public', :js do
-  include PurlFixtures
   include WasTimeMapFixtures
 
   let(:fake_connection) do
     instance_double(Faraday::Connection, get: instance_double(Faraday::Response, body: timemap, success?: true))
   end
+  let(:purl) { build(:purl, :was_seed, druid: 'ignored', contents: [build(:resource, :image, files: [build(:resource_file, :image, filename: 'thumbnail.jp2')])]) }
 
   before do
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     allow_any_instance_of(Embed::WasTimeMap).to receive(:redirectable_connection).and_return(fake_connection)
     expect(fake_connection).to receive(:get).once
-    stub_purl_xml_response_with_fixture(was_seed_purl)
     visit_iframe_response
   end
 
