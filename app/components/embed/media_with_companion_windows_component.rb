@@ -9,7 +9,8 @@ module Embed
     attr_reader :viewer
 
     delegate :purl_object, to: :viewer
-    delegate :druid, :citation_only?, :manifest_json_url, :downloadable_files, to: :purl_object
+    delegate :citation_only?, :downloadable_files, :downloadable_transcript_files?,
+             :druid, :manifest_json_url, to: :purl_object
 
     def include_transcripts
       Settings.enabled_features.transcripts || params[:transcripts] == 'true'
