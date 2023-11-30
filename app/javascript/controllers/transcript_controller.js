@@ -28,6 +28,11 @@ export default class extends Controller {
   buildCue(cue) {
     const htmlClass = cue.text.startsWith('<v ') ? 'cue-new-speaker cue' : 'cue'
     const text = cue.text.replace(/<[^>]*>/g, '')
-    return `<span class="${htmlClass}" data-controller="cue" data-action="click->cue#jump" data-cue-id="${cue.id}" data-cue-start-value="${cue.startTime}" data-cue-end-value="${cue.endTime}">${text}</span>`
+    // NOTE: We're explicitly not using anchors or buttons for this, even though it would make it unnecessary to have keybinding here.
+    //       This is because we don't want to clutter the interactive elements view in the screen-reader with thousands of
+    //       items that they need to step through.
+    return `<span class="${htmlClass}" data-controller="cue" data-action="click->cue#jump keydown.enter->cue#jump"
+      tabindex="0"
+      data-cue-id="${cue.id}" data-cue-start-value="${cue.startTime}" data-cue-end-value="${cue.endTime}">${text}</span>`
   }
 }
