@@ -3,14 +3,22 @@
 require 'rails_helper'
 
 RSpec.describe 'The old media viewer', :js do
-  include PurlFixtures
-  let(:purl) { video_purl }
+  let(:purl) do
+    build(:purl, :video,
+          title: 'stupid dc title of video',
+          contents: [
+            build(:resource, :video, files: [build(:resource_file, :video, :location_restricted, label: 'First Video', duration: '1:02:03')]),
+            build(:resource, :video, files: [build(:resource_file, :video, :stanford_only, label: 'Second Video')]),
+            build(:resource, :file, files: [build(:resource_file, :document, :world_downloadable)]),
+            build(:resource, :video, files: [build(:resource_file, :video, :world_downloadable)])
+          ])
+  end
   let(:stub_auth) { nil }
 
   before do
     allow(Settings.streaming).to receive(:auth_url).and_return('/test_auth_jsonp_endpoint')
     stub_auth
-    stub_purl_xml_response_with_fixture(purl)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     visit_iframe_response
   end
 
@@ -36,7 +44,11 @@ RSpec.describe 'The old media viewer', :js do
   end
 
   context 'with a single A/V file' do
-    let(:purl) { audio_purl }
+    let(:purl) do
+      build(:purl, :media, contents: [
+              build(:resource, :audio, files: [build(:resource_file, :audio, label: 'First Audio', duration: '0:43')])
+            ])
+    end
 
     it 'does does not have the thumbnail slider panel' do
       expect(page).to have_css('.sul-embed-container', visible: :visible) # to wait for the viewer to load
@@ -96,7 +108,13 @@ RSpec.describe 'The old media viewer', :js do
   end
 
   context 'with a previewable file within a media object' do
-    let(:purl) { video_purl_with_image }
+    let(:purl) do
+      build(:purl, :video,
+            contents: [
+              build(:resource, :video),
+              build(:resource, :image, files: [build(:resource_file, :image, label: 'Image of media (1 of 1)')])
+            ])
+    end
 
     it 'includes a previewable image as a top level object' do
       expect(page).to have_css('div img.sul-embed-media-thumb', visible: :all)
@@ -136,17 +154,27 @@ RSpec.describe 'The old media viewer', :js do
       expect(page).to have_css('.sul-embed-media-slider-thumb', text: /Second Video$/)
     end
 
-    context 'with invalid duration' do
-      let(:purl) { invalid_video_duration_purl }
+    context 'when duration is not present' do
+      let(:purl) do
+        build(:purl, :video, contents: [
+                build(:resource, :video, files: [build(:resource_file, :video, label: 'First Video', duration: nil)]),
+                build(:resource, :video, files: [build(:resource_file, :video, label: 'Second Video', duration: nil)])
+              ])
+      end
 
-      it 'displays as if there were no duration in the purl xml' do
+      it 'displays as if there were no duration' do
         page.find('.sul-embed-thumb-slider-open-close').click
         expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'First Video')
       end
     end
 
     context 'with an audio' do
-      let(:purl) { audio_purl_multiple }
+      let(:purl) do
+        build(:purl, :media, contents: [
+                build(:resource, :audio, files: [build(:resource_file, :audio, label: 'First Audio', duration: '0:43')]),
+                build(:resource, :audio, files: [build(:resource_file, :audio, label: 'Second Audio', duration: nil)])
+              ])
+      end
 
       it 'displays available duration in parens after the title' do
         page.find('.sul-embed-thumb-slider-open-close').click
@@ -161,7 +189,16 @@ RSpec.describe 'The old media viewer', :js do
   end
 
   context 'with long titles' do
-    let(:purl) { long_label_purl }
+    let(:purl) do
+      build(:purl, :video, contents: [
+              build(:resource, :video, files: [
+                      build(:resource_file, :video, :location_restricted,
+                            label: 'The First Video Has An Overly Long Title, With More Words Than Can Practically Be Displayed',
+                            duration: '1:02:03')
+                    ]),
+              build(:resource, :video, files: [build(:resource_file, :video, label: '2nd Video Has A Long Title, But Not Too Long')])
+            ])
+    end
 
     it 'truncates at 45 characters of combined restriction and title text' do
       page.find('.sul-embed-thumb-slider-open-close').click
