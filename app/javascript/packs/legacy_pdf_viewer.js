@@ -3,7 +3,7 @@
 'use strict';
 
 import EmbedThis from '../src/modules/embed_this.js';
-import { PopupPanels } from '../src/modules/popup_panels.js';
+import PopupPanels from '../src/modules/popup_panels';
 import PDFViewer from '../src/modules/pdf_viewer.js';
 import Fullscreen from '../src/modules/fullscreen.js';
 
