@@ -277,8 +277,7 @@
     flex-shrink: 0;
   }
 
-  // First selector is for embargo. Last selector is other auth restrictions
-  .authLinkWrapper + .media-component-body, [data-controller="auth-restriction"]:has(.authLinkWrapper:not([hidden])) + .media-component-body {
+  [data-controller="auth-restriction"]:not([hidden]) + .media-component-body {
     max-height: calc(100vh - 100px); // Scroll height for metadata when the auth wrapper is displaying
   }
 
