@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Envelope do
-  include PurlFixtures
   describe '#initialize' do
     let(:envelope_object) { described_class.new('test') }
 

@@ -3,11 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe 'PDF Viewer', :js do
-  include PurlFixtures
-  let(:purl) { pdf_document_purl }
+  let(:purl) { build(:purl, :document) }
 
   before do
-    stub_purl_xml_response_with_fixture(purl)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     visit_iframe_response
   end
 

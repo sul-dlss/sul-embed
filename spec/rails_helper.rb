@@ -38,15 +38,6 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 end
 
-def stub_purl_xml_response_with_fixture(fixture)
-  allow_any_instance_of(Embed::PurlXmlLoader).to receive(:response).and_return(fixture)
-end
-
-def toggle_download_panel
-  page.find('button[data-sul-embed-toggle="sul-embed-download-panel"]', visible: true)
-  page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
-end
-
 def visit_iframe_response(druid = 'ignored', min_files_to_search: nil, hide_search: nil, hide_title: nil, hide_download: nil, fullheight: nil)
   visit iframe_path(
     url: "#{Settings.purl_url}/#{druid}",

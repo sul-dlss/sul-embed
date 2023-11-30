@@ -36,7 +36,10 @@ RSpec.describe 'The old media viewer', :js do
 
     it 'renders a download panel' do
       expect(page).to have_css('.sul-embed-download-panel', visible: :all)
-      toggle_download_panel
+
+      page.find('button[data-sul-embed-toggle="sul-embed-download-panel"]', visible: true)
+      page.find('[data-sul-embed-toggle="sul-embed-download-panel"]', match: :first).click
+
       expect(page).to have_css('.sul-embed-download-panel', visible: :visible)
       expect(page).to have_css('ul.sul-embed-download-list', count: 1)
       expect(page).to have_css('.sul-embed-download-list li a', visible: :visible, count: 3, text: /^Download/)
