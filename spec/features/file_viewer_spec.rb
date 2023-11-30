@@ -3,11 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'File viewer', :js do
-  include PurlFixtures
-  let(:fixture) { file_purl_xml }
+  let(:purl) do
+    build(:purl, :file, contents: [build(:resource, files: [build(:resource_file, :document, label: 'File1 Label')])])
+  end
 
   before do
-    stub_purl_xml_response_with_fixture(fixture)
+    allow(Embed::Purl).to receive(:find).and_return(purl)
   end
 
   context 'with no options' do
@@ -30,7 +31,13 @@ RSpec.describe 'File viewer', :js do
     end
 
     context 'when the object has multiple files' do
-      let(:fixture) { multi_resource_multi_type_purl }
+      let(:purl) do
+        build(:purl, :file, contents: [
+                build(:resource, :file, files: [build(:resource_file), build(:resource_file)]),
+                build(:resource, :image),
+                build(:resource, :file, files: [build(:resource_file)])
+              ])
+      end
 
       it 'contains 4 files in file list' do
         expect(page).to have_css 'img.sul-embed-square-image[alt]', visible: :all

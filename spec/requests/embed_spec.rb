@@ -3,7 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe 'Embed requests' do
-  include PurlFixtures
+  let(:purl) do
+    build(:purl, :file, title: 'File Title',
+                        contents: [build(:resource, files: [build(:resource_file, :document, label: 'File1 Label')])])
+  end
+
+  before do
+    allow(Embed::Purl).to receive(:find).and_return(purl)
+  end
 
   describe 'GET embed' do
     context 'without url params' do
@@ -14,9 +21,8 @@ RSpec.describe 'Embed requests' do
     end
 
     context 'when a Purl that is not embeddable is requested' do
-      before do
-        stub_request(:get, 'https://purl.stanford.edu/tz959sb6952.xml')
-          .to_return(status: 200, body: '', headers: {})
+      let(:purl) do
+        build(:purl, contents: [])
       end
 
       it 'has a 400 status' do
@@ -41,8 +47,7 @@ RSpec.describe 'Embed requests' do
 
     context 'when requesting a Purl object that does not exists' do
       before do
-        stub_request(:get, 'https://purl.stanford.edu/abc123notanobject.xml')
-          .to_return(status: 404, body: '', headers: {})
+        allow(Embed::Purl).to receive(:find).and_raise(Embed::Purl::ResourceNotAvailable)
       end
 
       it 'has a 404 status' do
@@ -57,11 +62,6 @@ RSpec.describe 'Embed requests' do
     end
 
     context 'with a valid request (json)' do
-      before do
-        stub_request(:get, 'https://purl.stanford.edu/fn662rv4961.xml')
-          .to_return(status: 200, body: file_purl_xml, headers: {})
-      end
-
       it 'has a 200 status code for a matched url scheme param' do
         get '/embed', params: { url: 'http://purl.stanford.edu/fn662rv4961' }
         expect(response).to have_http_status(:ok)
@@ -72,11 +72,6 @@ RSpec.describe 'Embed requests' do
     end
 
     context 'with a valid request (xml)' do
-      before do
-        stub_request(:get, 'https://purl.stanford.edu/fn662rv4961.xml')
-          .to_return(status: 200, body: file_purl_xml, headers: {})
-      end
-
       it 'has a 200 status code for a matched url scheme param' do
         get '/embed.xml', params: { url: 'http://purl.stanford.edu/fn662rv4961' }
         expect(response).to have_http_status(:ok)
@@ -106,8 +101,7 @@ RSpec.describe 'Embed requests' do
 
     context 'when requesting a Purl object that does not exists' do
       before do
-        stub_request(:get, 'https://purl.stanford.edu/abc123notanobject.xml')
-          .to_return(status: 404, body: '', headers: {})
+        allow(Embed::Purl).to receive(:find).and_raise(Embed::Purl::ResourceNotAvailable)
       end
 
       it 'has a 404 status' do
@@ -122,11 +116,6 @@ RSpec.describe 'Embed requests' do
     end
 
     context 'when the object exists' do
-      before do
-        stub_request(:get, 'https://purl.stanford.edu/fn662rv4961.xml')
-          .to_return(status: 200, body: file_purl_xml, headers: {})
-      end
-
       it 'does not have an X-Frame-Options in the headers (so embedding in an iframe is allowed)' do
         get '/iframe', params: { url: 'http://purl.stanford.edu/fn662rv4961' }
         expect(response).to have_http_status(:ok)

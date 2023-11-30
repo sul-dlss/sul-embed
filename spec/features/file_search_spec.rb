@@ -3,11 +3,17 @@
 require 'rails_helper'
 
 RSpec.describe 'file viewer search bar', :js do
-  include PurlFixtures
+  let(:purl) do
+    build(:purl, :file,
+          contents: [build(:resource, files: [build(:resource_file, :document, label: 'File1 Label')])])
+  end
+
+  before do
+    allow(Embed::Purl).to receive(:find).and_return(purl)
+  end
 
   context 'when text is entered with a file list' do
     it 'limits shown files' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
       visit_iframe_response('abc123', min_files_to_search: 1)
       expect(page).to have_css('.sul-embed-count', count: 1)
       expect(page).to have_css '.sul-embed-item-count', text: '1 item'
@@ -27,10 +33,6 @@ RSpec.describe 'file viewer search bar', :js do
       ]
     end
     let(:purl) { build(:purl, :file, contents:) }
-
-    before do
-      allow(Embed::Purl).to receive(:find).and_return(purl)
-    end
 
     it 'hides empty directories' do
       visit_iframe_response('abc123', min_files_to_search: 1)
@@ -52,13 +54,11 @@ RSpec.describe 'file viewer search bar', :js do
 
   context 'when the number of files are beneath the threshold' do
     it 'does not display the search box' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
       visit_iframe_response
       expect(page).not_to have_css('.sul-embed-search-input')
     end
 
     it 'hides the search box when requested' do
-      stub_purl_xml_response_with_fixture(file_purl_xml)
       visit_iframe_response('abc123', hide_search: true)
       expect(page).not_to have_css('.sul-embed-search')
     end

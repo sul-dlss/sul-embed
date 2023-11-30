@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe 'metadata panel', :js do
-  include PurlFixtures
-
   let(:request) do
     Embed::Request.new(
       { url: 'http://purl.stanford.edu/abc123' },
@@ -12,9 +10,19 @@ RSpec.describe 'metadata panel', :js do
     )
   end
 
-  it 'is present after a user clicks the button' do
-    stub_purl_xml_response_with_fixture(file_purl_xml)
+  let(:purl) do
+    build(:purl, :file,
+          contents: [build(:resource, files: [build(:resource_file, :document, label: 'File1 Label')])],
+          use_and_reproduction: 'You can use this.',
+          license: 'Public Domain Mark 1.0')
+  end
+
+  before do
+    allow(Embed::Purl).to receive(:find).and_return(purl)
     visit_iframe_response
+  end
+
+  it 'is present after a user clicks the button' do
     expect(page).to have_css('.sul-embed-metadata-panel', visible: :hidden)
     page.find('[data-sul-embed-toggle="sul-embed-metadata-panel"]', match: :first).click
     expect(page).to have_css('.sul-embed-metadata-panel', visible: :all)
@@ -23,8 +31,6 @@ RSpec.describe 'metadata panel', :js do
   end
 
   it 'has purl link, use and reproduction, and license text' do
-    stub_purl_xml_response_with_fixture(file_purl_xml)
-    visit_iframe_response
     page.find('[data-sul-embed-toggle="sul-embed-metadata-panel"]', match: :first).click
     expect(page).to have_css('dt', text: 'Citation URL', visible: :all)
     expect(page).to have_css('dt', text: 'Use and reproduction', visible: :all)
