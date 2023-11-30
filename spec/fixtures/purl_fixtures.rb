@@ -53,39 +53,6 @@ module PurlFixtures
     XML
   end
 
-  def image_purl_xml
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>Title of the image</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="image">
-          <resource sequence="1" type="image">
-            <label>Image1</label>
-            <file size="12345" mimetype="image/jp2" id="image_001.jp2">
-              <imageData height="6123" width="5321" />
-            </file>
-          </resource>
-          <resource sequence="2" type="image">
-            <label>Image2</label>
-            <file size="23456" mimetype="image/jp2" id="image_002.jp2">
-              <imageData height="7246" width="6123" />
-            </file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          #{access_read_world}
-          <copyright>
-            <human type="copyright">
-              Copyright © 1976 The Board of Trustees of the Leland Stanford Junior University. All rights reserved.
-            </human>
-          </copyright>
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
-
   def stanford_restricted_file_purl_xml
     <<-XML
       <publicObject>
@@ -226,29 +193,6 @@ module PurlFixtures
         </mods>
         <oai_dc:dc xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
           <dc:identifier>https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/</dc:identifier>
-        </oai_dc:dc>
-      </publicObject>
-    XML
-  end
-
-  def pdf_document_purl
-    <<-XML
-      <publicObject>
-        <identityMetadata>
-          <objectLabel>PDF Title</objectLabel>
-        </identityMetadata>
-        <contentMetadata type="document">
-          <resource sequence="1" type="document">
-            <label>PDF Label</label>
-            <file id="TheNameOfThe.pdf" mimetype="application/pdf" size="12345"></file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          #{access_read_world}
-        </rightsMetadata>
-        <oai_dc:dc xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:srw_dc="info:srw/schema/1/dc-schema" xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
-          <dc:title>PDF Title</dc:title>
         </oai_dc:dc>
       </publicObject>
     XML

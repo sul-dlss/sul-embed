@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Viewer::Geo do
-  include PurlFixtures
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:geo_viewer) { described_class.new(request) }
   let(:purl) { build(:purl) }

@@ -22,6 +22,12 @@ FactoryBot.define do
       contents { [build(:resource, :file)] }
     end
 
+    trait :document do
+      type { 'document' }
+      title { 'Title of the object' }
+      contents { [build(:resource, :document)] }
+    end
+
     trait :was_seed do
       type { 'webarchive-seed' }
       archived_site_url { 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/' }

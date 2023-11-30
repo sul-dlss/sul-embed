@@ -10,7 +10,7 @@ RSpec.describe Embed::PurlXmlLoader do
   subject(:data) { described_class.load('12345') }
 
   describe 'load' do
-    before { stub_purl_xml_response_with_fixture(xml) }
+    before { allow_any_instance_of(described_class).to receive(:response).and_return(xml) }
 
     context 'with a public purl with file type' do
       let(:xml) { file_purl_xml }

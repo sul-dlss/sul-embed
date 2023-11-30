@@ -9,6 +9,12 @@ FactoryBot.define do
       description { 'File1 Label' }
     end
 
+    trait :document do
+      type { 'document' }
+      description { 'File1 Label' }
+      files { [build(:resource_file, :document)] }
+    end
+
     trait :video do
       type { 'video' }
       description { 'First Video' }
