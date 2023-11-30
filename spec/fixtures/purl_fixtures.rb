@@ -195,24 +195,8 @@ module PurlFixtures
         <contentMetadata objectId="cz128vq0535" type="geo">
           <resource id="cz128vq0535_1" sequence="1" type="object">
             <label>Data</label>
-            <file id="data.zip" mimetype="application/zip" size="7988069" role="master">
-              <geoData>
-                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://purl.stanford.edu/cz128vq0535">
-                  <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">application/x-esri-shapefile; format=Shapefile</dc:format>
-                  <dc:type xmlns:dc="http://purl.org/dc/elements/1.1/">Dataset#Polygon</dc:type>
-                  <gml:boundedBy xmlns:gml="http://www.opengis.net/gml/3.2/">
-                    <gml:Envelope gml:srsName="EPSG:4326">
-                      <gml:lowerCorner>29.572742 -1.478794</gml:lowerCorner>
-                      <gml:upperCorner>35.000308 4.234077</gml:upperCorner>
-                    </gml:Envelope>
-                  </gml:boundedBy>
-                  <dc:coverage xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:resource="http://sws.geonames.org/226074/about.rdf" dc:language="eng" dc:title="Uganda" />
-                </rdf:Description>
-              </geoData>
-            </file>
-            <file id="data_EPSG_4326.zip" mimetype="application/zip" size="7878575" role="derivative">
-              <geoData srsName="EPSG:4326" />
-            </file>
+            <file id="data.zip" mimetype="application/zip" size="7988069" role="master"></file>
+            <file id="data_EPSG_4326.zip" mimetype="application/zip" size="7878575" role="derivative"></file>
           </resource>
           <resource id="cz128vq0535_2" sequence="2" type="preview">
             <label>Preview</label>
@@ -241,96 +225,7 @@ module PurlFixtures
       </publicObject>
     XML
   end
-  def geo_purl_index_map
-    <<-XML
-      <publicObject id="druid:ts545zc6250" published="2018-09-10T12:43:23Z" publishVersion="dor-services/5.31.1">
-        <identityMetadata>
-          <sourceId source="branner">topo_index_JMM_B14_J59.shp</sourceId>
-          <objectId>druid:ts545zc6250</objectId>
-        </identityMetadata>
-        <contentMetadata objectId="ts545zc6250" type="geo">
-          <resource id="ts545zc6250_1" sequence="1" type="object">
-            <label>Data</label>
-            <file id="data.zip" mimetype="application/zip" size="103504" role="master">
-              <geoData>
-                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://purl.stanford.edu/ts545zc6250">
-                  <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">application/x-esri-shapefile; format=Shapefile</dc:format>
-                  <dc:type xmlns:dc="http://purl.org/dc/elements/1.1/">Dataset#Polygon</dc:type>
-                  <gml:boundedBy xmlns:gml="http://www.opengis.net/gml/3.2/">
-                    <gml:Envelope gml:srsName="EPSG:4326">
-                      <gml:lowerCorner>124.0 38.0</gml:lowerCorner>
-                      <gml:upperCorner>130.0 42.666667</gml:upperCorner>
-                    </gml:Envelope>
-                  </gml:boundedBy>
-                  <dc:coverage xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:resource="" dc:language="eng" dc:title="Korea (North)" />
-                </rdf:Description>
-              </geoData>
-            </file>
-            <file id="data_EPSG_4326.zip" mimetype="application/zip" size="25807" role="derivative">
-              <geoData srsName="EPSG:4326" />
-            </file>
-            <file id="index_map.json" mimetype="application/json" size="411978" role="master" />
-          </resource>
-          <resource id="ts545zc6250_2" sequence="2" type="preview">
-            <label>Preview</label>
-            <file id="preview.jpg" mimetype="image/jpeg" size="80392" role="master">
-              <imageData width="769" height="984" />
-            </file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_read_world}
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
-  def geo_purl_restricted
-    <<-XML
-      <publicObject id="druid:fp756wn9369" published="2015-02-04T20:03:27-08:00">
-        <identityMetadata>
-          <sourceId source="branner">rr_1100kgrdu.shp</sourceId>
-          <objectId>druid:fp756wn9369</objectId>
-        </identityMetadata>
-        <contentMetadata objectId="fp756wn9369" type="geo">
-          <resource id="fp756wn9369_1" sequence="1" type="object">
-            <label>Data</label>
-            <file id="data.zip" mimetype="application/zip" size="127368" role="master">
-              <geoData>
-                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://purl.stanford.edu/fp756wn9369">
-                  <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/">application/x-esri-shapefile; format=Shapefile</dc:format>
-                  <dc:type xmlns:dc="http://purl.org/dc/elements/1.1/">Dataset#Polygon</dc:type>
-                  <gml:boundedBy xmlns:gml="http://www.opengis.net/gml/3.2/">
-                    <gml:Envelope gml:srsName="EPSG:4326">
-                      <gml:lowerCorner>-123.387626 38.298673</gml:lowerCorner>
-                      <gml:upperCorner>-122.528843 39.399103</gml:upperCorner>
-                    </gml:Envelope>
-                  </gml:boundedBy>
-                </rdf:Description>
-              </geoData>
-            </file>
-          </resource>
-        </contentMetadata>
-        <rightsMetadata>
-          #{access_discover_world}
-          <access type="read">
-            <machine>
-              <group>Stanford</group>
-            </machine>
-          </access>
-          <use>
-            <human type="useAndReproduction">
-              These data are licensed by Stanford Libraries and are available to Stanford University affiliates only. Affiliates are limited to current faculty, staff and students. These data may not be reproduced or used for any purpose without permission. For more information please contact brannerlibrary@stanford.edu.
-            </human>
-            <human type="creativeCommons"/>
-            <machine type="creativeCommons"/>
-          </use>
-          <copyright>
-            <human>Copyright ownership resides with the originator.</human>
-          </copyright>
-        </rightsMetadata>
-      </publicObject>
-    XML
-  end
+
   def was_seed_purl
     <<-XML
       <publicObject id="druid:gb089bd2251" published="2015-07-15T11:49:04-07:00">
