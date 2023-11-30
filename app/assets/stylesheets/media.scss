@@ -60,7 +60,8 @@
   --tab-height: 48px;
   --drawer-content-padding: 1rem;
   --text-color: rgba(0, 0, 0, 0.87);
-  --tab-text-color: rgba(0, 0, 0, 0.54);
+  --button-color: #454545;
+  --button-hover-bg-color: #9494947a;
   --background-color: rgba(255, 255, 255);
   --modal-border-radius: 8px;
   --modal-max-width: 600px;
@@ -217,9 +218,10 @@
         border: none;
         border-radius: 50%;
         padding: 12px;
+        color: var(--button-color);
 
         &:hover {
-          background-color: lightgray;
+          background-color: var(--button-hover-bg-color);
           cursor: pointer;
         }
       }
@@ -364,7 +366,7 @@
         background-color: transparent;
         border: 0;
         border-right: 2px solid transparent;
-        color: var(--tab-text-color);
+        color: var(--button-color);
         height: var(--tab-height);
         display: block;
         padding-top: 4px;
@@ -373,7 +375,7 @@
           color: var(--active-color);
         }
         &:hover {
-          background-color: lightgray;
+          background-color: var(--button-hover-bg-color);
           cursor: pointer;
         }
       }
