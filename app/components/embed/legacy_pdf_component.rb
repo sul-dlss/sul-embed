@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # NOTE: When we decide we no longer need the LegacyPdfComponent, this component can be removed, along with:
 #  1. The "pdfjs-dist" package in package.json
 #  2. The entire app/javascript/src/modules/pdf_viewer.js file
