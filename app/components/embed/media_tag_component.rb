@@ -46,7 +46,7 @@ module Embed
     end
 
     def default_audio_thumbnail
-      asset_url('waveform-audio-poster.svg')
+      asset_url('waveform-audio-poster.png')
     end
 
     def media_element
