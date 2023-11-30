@@ -62,7 +62,7 @@ RSpec.describe Embed::LegacyMedia::MediaTagComponent, type: :component do
     let(:resource) { build(:resource, :video, files: [build(:resource_file, :video, :stanford_only)]) }
 
     it 'includes a data attribute for the thumb-slider bar' do
-      expect(page).to have_css('[data-slider-object="1"]', visible: :hidden)
+      expect(page).to have_css('[data-slider-object="1"]')
     end
 
     it 'includes a data attribute that includes the url to check the users auth status' do
