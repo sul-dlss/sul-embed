@@ -9,6 +9,10 @@ module Embed
         WasSeedComponent
       end
 
+      def importmap
+        'webarchive'
+      end
+
       def stylesheet
         'was_seed.css'
       end
