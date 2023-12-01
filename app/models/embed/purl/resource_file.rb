@@ -7,7 +7,6 @@ module Embed
 
       def initialize(attributes = {})
         self.attributes = attributes
-        yield(self) if block_given?
       end
 
       def attributes=(hash)
@@ -16,7 +15,7 @@ module Embed
         end
       end
 
-      attr_accessor :druid, :label, :filename, :mimetype, :size, :duration, :language, :role,
+      attr_accessor :druid, :label, :filename, :mimetype, :size, :language, :role,
                     :world_downloadable, :stanford_only, :location_restricted, :stanford_only_downloadable
 
       alias title filename

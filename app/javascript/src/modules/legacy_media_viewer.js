@@ -25,14 +25,6 @@ export default (function() {
       }
     }
 
-    function durationMarkup(duration) {
-      if(duration && duration.length > 0) {
-        return ' (' + duration + ')';
-      } else {
-        return '';
-      }
-    }
-
     function maxFileLabelLength(isLocationRestricted) {
       if(isLocationRestricted)
         return MAX_FILE_LABEL_LENGTH - restrictedText.length;
@@ -72,7 +64,6 @@ export default (function() {
 
         const isLocationRestricted = mediaDiv.dataset.locationRestricted === "true"
         const fileLabel = String(mediaDiv.dataset.fileLabel || '');
-        const duration = String(mediaDiv.dataset.duration || '');
         thumbs.push(
           '<li class="' + thumbClass + activeClass + '">' +
             thumbnailIcon +
@@ -80,7 +71,6 @@ export default (function() {
               stanfordOnlyScreenreaderText(isStanfordRestricted) +
               restrictedTextMarkup(isLocationRestricted) +
               truncateWithEllipsis(fileLabel, maxFileLabelLength(isLocationRestricted)) +
-              durationMarkup(duration) +
             '</a>' +
           '</li>'
         );
