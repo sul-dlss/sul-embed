@@ -277,7 +277,8 @@
     flex-shrink: 0;
   }
 
-  [data-controller="auth-restriction"]:not([hidden]) + .media-component-body {
+  // Second selector is for citation-only banner. First selector is for all the other auth restrictions.
+  [data-controller="auth-restriction"]:not([hidden]) + .media-component-body, .authLinkWrapper + .media-component-body {
     max-height: calc(100vh - 100px); // Scroll height for metadata when the auth wrapper is displaying
   }
 
