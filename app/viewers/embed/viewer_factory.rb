@@ -24,7 +24,7 @@ module Embed
       when 'document'
         Embed::Viewer::PdfViewer
       when '3d'
-        Embed::Viewer::Virtex3dViewer
+        Embed::Viewer::ModelViewer
       when 'media'
         Settings.enable_media_viewer? ? Embed::Viewer::Media : Embed::Viewer::File
       when 'webarchive-seed'

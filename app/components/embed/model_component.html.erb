@@ -5,11 +5,8 @@
       <button aria-label="Zoom in" class="zoom-in">+</button>
       <button aria-label="Zoom out" class="zoom-out">-</button>
     </div>
-    <div
-      id="virtex-3d-viewer"
-      class="virtex"
-      data-three-dimensional-file="<%= viewer.three_dimensional_files.first %>"
-    >
+    <div id="3d-viewer">
+      <model-viewer auto-rotate camera-controls ar-modes="webxr scene-viewer quick-look" src="<%= viewer.three_dimensional_files.first %>"></model-viewer>
     </div>
     <button
       aria-label="Exit full screen"
@@ -17,10 +14,10 @@
       id="close-full-screen-button">
     </button>
   </div>
-  <%= javascript_pack_tag('virtex_3d_viewer') %>
+  <%= javascript_pack_tag('model_viewer') %>
 
   <%= render 'embed/metadata_panel', viewer: viewer %>
   <%= render 'embed/embed_this/generic', viewer: viewer %>
-  <%= render Embed::Download::Virtex3dComponent.new viewer: viewer %>
+  <%= render Embed::Download::ModelComponent.new viewer: viewer %>
   <%= render Embed::FooterComponent.new viewer: viewer %>
  </div>
