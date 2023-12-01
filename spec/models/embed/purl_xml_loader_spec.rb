@@ -40,7 +40,6 @@ RSpec.describe Embed::PurlXmlLoader do
 
       it 'finds the data' do
         expect(data).to include({ archived_site_url: 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/',
-                                  external_url: 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/',
                                   type: 'webarchive-seed', collections: ['mk656nf8485'] })
       end
     end

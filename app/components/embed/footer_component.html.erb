@@ -21,10 +21,10 @@
       </button>
     <% end %>
 
-    <% if viewer.external_url.present? %>
+    <% if external_url.present? %>
       <a class='sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-navigation-next-4'
-        href="<%= viewer.external_url.to_s %>" target='_parent'>
-        <span class='sul-embed-sr-only'><%= viewer.external_url_text %></span>
+        href="<%= external_url %>" target='_parent'>
+        <span class='sul-embed-sr-only'><%= external_url_text %></span>
       </a>
     <% end %>
 

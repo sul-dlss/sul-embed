@@ -8,6 +8,8 @@ module Embed
 
     attr_reader :viewer
 
+    delegate :external_url_text, :external_url, to: :viewer
+
     def file_count
       @viewer.purl_object.downloadable_files.length
     end
