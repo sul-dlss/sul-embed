@@ -184,7 +184,7 @@ RSpec.describe Embed::Purl do
   describe '#manifest_json_response' do
     subject(:fetch) { purl.manifest_json_response }
 
-    let(:purl) { described_class.find('12345') }
+    let(:purl) { described_class.new({ druid: '12345' }) }
 
     context 'with a response' do
       before do

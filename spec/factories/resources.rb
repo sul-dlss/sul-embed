@@ -5,7 +5,7 @@ FactoryBot.define do
     druid { 'abc123' }
 
     trait :file do
-      type { 'file' } # NOTE: "object" in cocina
+      type { 'file' }
       description { 'File1 Label' }
     end
 
