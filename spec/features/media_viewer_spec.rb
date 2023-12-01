@@ -116,7 +116,7 @@ RSpec.describe 'Media viewer', :js do
 
     it 'displays available duration in parens after the title' do
       click_button 'Display sidebar'
-      within 'aside.open' do
+      within 'aside' do
         click_button 'Content'
 
         expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'First Audio (0:43)')
@@ -141,7 +141,7 @@ RSpec.describe 'Media viewer', :js do
 
     it 'truncates at 45 characters of combined restriction and title text' do
       click_button 'Display sidebar'
-      within 'aside.open' do
+      within 'aside' do
         click_button 'Content'
         expect(page).to have_css('.sul-embed-media-slider-thumb', text: /^\(Restricted\) The First Video Has An Overly Lo… \(1:02:03\)$/)
 
