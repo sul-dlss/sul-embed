@@ -19,8 +19,7 @@ module Embed
                   file_label: @file.label_or_filename,
                   slider_object: @resource_index,
                   thumbnail_url: @thumbnail.presence,
-                  default_icon: @type == 'audio' ? 'sul-i-file-music-1' : 'sul-i-file-video-3',
-                  duration: @file.duration
+                  default_icon: @type == 'audio' ? 'sul-i-file-music-1' : 'sul-i-file-video-3'
                 }) do
           tag.div class: 'sul-embed-media-wrapper' do
             content

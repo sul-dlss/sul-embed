@@ -17,7 +17,6 @@ gem 'faraday-follow_redirects'
 
 gem 'config'
 gem 'dor-rights-auth'
-gem 'iso8601' # to parse durations, since ActiveSupport::Duration doesn't get a parse method till rails 5
 gem 'nokogiri', '>= 1.7.1'
 
 group :development, :test do

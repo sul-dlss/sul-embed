@@ -202,7 +202,6 @@ GEM
     irb (1.9.1)
       rdoc
       reline (>= 0.3.8)
-    iso8601 (0.13.0)
     json (2.6.3)
     language_server-protocol (3.17.0.3)
     loofah (2.22.0)
@@ -419,7 +418,6 @@ DEPENDENCIES
   high_voltage
   honeybadger
   importmap-rails (~> 1.2)
-  iso8601
   newrelic_rpm
   nokogiri (>= 1.7.1)
   okcomputer

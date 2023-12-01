@@ -34,12 +34,6 @@ module Embed
         @rights.stanford_only_downloadable_file?(filename)
       end
 
-      def duration
-        return if @file.xpath('./*/@duration').blank?
-
-        Embed::MediaDuration.new(@file.xpath('./*[@duration]').first).to_s
-      end
-
       # rubocop:disable Metrics/AbcSize
       def deserialize
         ResourceFile.new(
@@ -54,9 +48,7 @@ module Embed
           location_restricted:,
           world_downloadable:,
           stanford_only_downloadable:
-        ) do |file|
-          file.duration = duration
-        end
+        )
       end
       # rubocop:enable Metrics/AbcSize
     end
