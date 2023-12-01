@@ -25,6 +25,11 @@ module Embed
       @request.purl_object.title
     end
 
+    # indicates if the embed viewer overall is checking object rights and showing login flow as neded
+    def check_authorization?
+      @request.purl_object.type != 'media'  # media has it's own specific authorization flow
+    end
+
     def html(controller)
       @html ||= controller.render_to_string(
         IframeComponent.new(viewer:, version: Rails.root.mtime.to_i)
