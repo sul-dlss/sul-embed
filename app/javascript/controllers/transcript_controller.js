@@ -5,7 +5,7 @@ import videojs from 'video.js';
 // native player when it initializes.  This depends on the media_tag_controller.js emitting a custom media-loaded
 // event.
 export default class extends Controller {
-  static targets = [ "outlet" ]
+  static targets = [ "outlet", "button" ]
 
   // When the media-loaded event occurs, store the handle to the player
   persistPlayer(evt) {
@@ -22,6 +22,7 @@ export default class extends Controller {
     const track = tracks.find((track) => track.kind === 'captions' )
     const cues = track.cues.cues_.map((cue) => this.buildCue(cue))
     this.outletTarget.innerHTML = cues.join('')
+    this.revealButton()
     this.loaded = true
   }
 
@@ -34,5 +35,10 @@ export default class extends Controller {
     return `<span class="${htmlClass}" data-controller="cue" data-action="click->cue#jump keydown.enter->cue#jump"
       tabindex="0"
       data-cue-id="${cue.id}" data-cue-start-value="${cue.startTime}" data-cue-end-value="${cue.endTime}">${text}</span>`
+  }
+
+  // Reveal the button to display the transcript if there is a transcript.
+  revealButton() {
+    this.buttonTarget.hidden = false
   }
 }

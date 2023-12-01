@@ -1,7 +1,7 @@
-<div class="sul-embed-container media-component" id='sul-embed-object' hidden data-controller="media media-tag" data-action="media-seek@window->media-tag#seek">
+<div class="sul-embed-container media-component" id='sul-embed-object' hidden data-controller="media media-tag transcript" data-action="media-seek@window->media-tag#seek">
   <header>
     <nav aria-label="Window navigation">
-      <button data-action="click->media#toggleLeft" aria-label="Display sidebar" aria-controls="left-drawer">
+      <button data-action="click->media#toggleLeft transcript#load" aria-label="Display sidebar" aria-controls="left-drawer">
         <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg></span>
       </button>
       <h2 class=""><%= viewer.purl_object.title %></h2>
@@ -49,10 +49,8 @@
     </div>
   <% end %>
 
-
-
   <div class="media-component-body">
-    <aside class="left-drawer collapse" data-controller="transcript" data-media-target="leftDrawer" id="left-drawer" aria-label="Sidebar" style="visibility: hidden">
+    <aside class="left-drawer collapse" data-media-target="leftDrawer" id="left-drawer" aria-label="Sidebar" style="visibility: hidden">
       <nav class="vert-tabs" role="tablist">
         <button data-action="click->media#displayMetadata" data-media-target="leftButton" class="active" aria-label="About this item" aria-controls="about" aria-selected="true" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
@@ -60,7 +58,7 @@
         <button data-action="click->media#displayContents" data-media-target="leftButton"  aria-label="Content" aria-controls="media-content" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"></path></svg>
         </button>
-        <button data-action="click->media#displayTranscript transcript#load" data-media-target="leftButton"  aria-label="Transcript" aria-controls="media-content" role="tab">
+        <button data-action="click->media#displayTranscript" data-transcript-target="button" data-media-target="leftButton"  aria-label="Transcript" aria-controls="media-content" role="tab" hidden>
           <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg>
         </button>
         <button data-action="click->media#displayRights" data-media-target="leftButton" aria-label="Use and reproduction" aria-controls="rights" role="tab">
