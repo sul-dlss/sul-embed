@@ -30,3 +30,15 @@ task :update_language_tags do
     file.write(Faraday.get(Settings.language_subtag_registry.url).body)
   end
 end
+
+task :stackify, [:bare_druid] => :environment do |_task, args|
+  exit(1) unless Rails.env.development?
+
+  bare_druid = args[:bare_druid]
+  druid_path = DruidTools::StacksDruid.new(bare_druid, Settings.stacks_storage_root).path
+  `mkdir -p #{druid_path}`
+  Embed::Purl.find(bare_druid).downloadable_files.each do |resource_file|
+    puts "Downloading #{resource_file.filename} to #{druid_path}/#{resource_file.filename}"
+    `curl https://stacks.stanford.edu/file/#{bare_druid}/#{resource_file.filename} -o #{druid_path}/#{resource_file.filename}`
+  end
+end

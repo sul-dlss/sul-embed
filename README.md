@@ -69,20 +69,21 @@ For links that are intended to navigate the users browser away from the current 
 
 ## Developing the media player locally
 
-In order to do local development we need to circumvent the need for stacks and a media player.  The first can be done by running a local version of stacks via docker.  You can then configure your local app to point at that container via:
+First, identify an object in production that looks like it will work for your development purposes (e.g., a public video with captions, a Stanford-only audio with a transcript, etc.), and set up a ViewComponent preview for it unless it's already got one. Then we'll pull its files locally, so we don't need to hit a media server or a deployed instance:
+
 ```
-SETTINGS__STACKS_URL="http://localhost:3001/" bin/dev
+bin/rake stackify[gt507vy5436]
 ```
 
-Then we'll pull some files local so we don't need a media server:
-```
-mkdir public/stream && curl https://file-examples.com/storage/fe19e15eac6560f8c936c41/2017/04/file_example_MP4_480_1_5MG.mp4 -o public/stream/file_example_MP4_480_1_5MG.mp4
+Then, make sure you have an updated `stacks` checkout in a sibling directory to your `sul-embed` checkout. To run a local instance of stacks (from the sibling directory) via docker:
+
+```shell
+DOCKER_STACKS=true SETTINGS__STACKS_URL="http://localhost:3001" bin/dev
 ```
 
-and a sample vtt
-```
-curl https://stacks.stanford.edu/file/druid:gt507vy5436/gt507vy5436_cap.vtt -o public/gt507vy5436_cap.vtt
-```​
+Finally, use the ViewComponent preview you identified earlier to do your development.
+
+NOTE: We can dispense with the sibling directory jazz if we decide to publish the Stacks docker image.
 
 ## Updating language tags
 

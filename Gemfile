@@ -23,6 +23,7 @@ gem 'nokogiri', '>= 1.7.1'
 group :development, :test do
   gem 'capybara'
   gem 'debug', platforms: %i[mri]
+  gem 'druid-tools'
   gem 'factory_bot_rails', '~> 6.4'
   gem 'high_voltage'
   gem 'rspec'

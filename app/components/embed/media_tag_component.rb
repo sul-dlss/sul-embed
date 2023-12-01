@@ -81,8 +81,6 @@ module Embed
     end
 
     def enabled_streaming_sources
-      return tag.source(src: '/stream/file_example_MP4_480_1_5MG.mp4', type: 'video/mp4') if Rails.env.development?
-
       safe_join(
         enabled_streaming_types.map do |streaming_type|
           tag.source(src: streaming_url_for(streaming_type),
@@ -93,8 +91,6 @@ module Embed
 
     # Generate the video caption elements
     def captions
-      return tag.track(src: '/gt507vy5436_cap.vtt', kind: 'captions', srclang: 'en', label: 'English') if Rails.env.development?
-
       return unless render_captions?
 
       # A video clip may have multiple caption files in different languages.
@@ -113,6 +109,9 @@ module Embed
     end
 
     def streaming_settings_for(streaming_type)
+      # Return the media file's MIME type in dev, as we're circumventing the need for a streaming server
+      return { mimetype: file.mimetype } if Rails.env.development?
+
       Settings.streaming[streaming_type] || {}
     end
 

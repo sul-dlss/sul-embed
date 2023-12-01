@@ -5,4 +5,11 @@ if ! gem list foreman -i --silent; then
   gem install foreman
 fi
 
-exec foreman start -f Procfile.dev "$@"
+# If the DOCKER_STACKS env variable is empty, do not spin up stacks via Procfile.dev
+if [ -z $DOCKER_STACKS ]; then
+    foreman_args=--formation="stacks=0,all=1"
+else
+    foreman_args=--formation="all=1"
+fi
+
+exec foreman start -f Procfile.dev $foreman_args "$@"
