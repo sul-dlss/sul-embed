@@ -5,12 +5,13 @@ require 'rails_helper'
 RSpec.describe Embed::PurlXmlLoader do
   include PurlFixtures
 
-  # TODO: Embed::Purl::ResourceNotAvailable
-
   subject(:data) { described_class.load('12345') }
 
-  describe 'load' do
-    before { allow_any_instance_of(described_class).to receive(:response).and_return(xml) }
+  context 'when the response from Purl returns successfully' do
+    before do
+      stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+        .to_return(status: 200, body: xml, headers: {})
+    end
 
     context 'with a public purl with file type' do
       let(:xml) { file_purl_xml }
@@ -88,6 +89,17 @@ RSpec.describe Embed::PurlXmlLoader do
           expect(data).to include({ collections: [] })
         end
       end
+    end
+  end
+
+  context 'when the response from Purl is not successfull' do
+    before do
+      stub_request(:get, 'https://purl.stanford.edu/12345.xml')
+        .to_return(status: 404, body: '', headers: {})
+    end
+
+    it 'raises an error' do
+      expect { data }.to raise_error Embed::Purl::ResourceNotAvailable
     end
   end
 end
