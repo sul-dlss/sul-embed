@@ -23,6 +23,9 @@ export default class extends Controller {
     const cues = track.cues.cues_.map((cue) => this.buildCue(cue))
     this.outletTarget.innerHTML = cues.join('')
     this.loaded = true
+    this.cueStartTimes = track.cues.cues_.map((cue) => cue.startTime)
+    this.minStartTime = Math.min.apply(Math, this.cueStartTimes)
+    this.maxStartTime = Math.max.apply(Math, this.cueStartTimes)
   }
 
   buildCue(cue) {
@@ -30,4 +33,21 @@ export default class extends Controller {
     const text = cue.text.replace(/<[^>]*>/g, '')
     return `<span class="${htmlClass}" data-controller="cue" data-action="click->cue#jump" data-cue-id="${cue.id}" data-cue-start-value="${cue.startTime}" data-cue-end-value="${cue.endTime}">${text}</span>`
   }
+
+  scrollPlayer(evt) {
+    if(this.loaded && evt.detail >= this.minStartTime && evt.detail <= this.maxStartTime) {
+      const startTime = this.maxStartCueTime(evt.detail)
+      for (let elem of this.outletTarget.querySelectorAll('span.cue')) {
+        elem.classList.remove('highlight')
+      }
+      const cueElement = this.outletTarget.querySelector('[data-cue-start-value="' + startTime + '"]')
+      cueElement.scrollIntoView()
+      cueElement.classList.add('highlight')
+    }
+  }
+
+  maxStartCueTime(transcriptTime) {
+    return Math.max.apply(Math, this.cueStartTimes.filter(function(x){return x <= transcriptTime}))
+  }
+
 }
