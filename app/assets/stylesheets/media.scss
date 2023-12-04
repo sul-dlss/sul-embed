@@ -470,15 +470,20 @@
       }
     }
 
-    .default-thumbnail-icon {
-      font-size: 64px;
-    }
+    --slider-thumb-height: 75px;
 
     .sul-embed-media-slider-thumb {
       list-style-type: none;
       border: 1px solid gray;
       margin-bottom: 0.5rem;
-      height: 75px;
+      height: var(--slider-thumb-height);
+
+      .default-thumbnail-icon {
+        font-size: calc(var(--slider-thumb-height) - 2px);
+        &::before {
+          vertical-align: text-top;
+        }
+      }
 
       a {
         // Override the common link styles
