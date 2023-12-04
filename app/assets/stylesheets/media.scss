@@ -380,6 +380,10 @@
       }
     }
 
+    .visually-hidden {
+      @include visually-hidden;
+    }
+
     .inner {
       display: flex;
       flex-direction: column;
