@@ -33,6 +33,7 @@ coverage
 /public/assets
 /public/packs
 /public/packs-test
+/public/file
 /node_modules
 /yarn-error.log
 yarn-debug.log*

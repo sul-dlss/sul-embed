@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-# Access this preview at:
-# http://localhost:3000/rails/view_components/embed/media_with_companion_windows_component/with_default_title
-
+# Access these previews at:
+# http://localhost:3000/rails/view_components/embed/media_with_companion_windows_component
 module Embed
   class MediaWithCompanionWindowsComponentPreview < ViewComponent::Preview
     def with_audio

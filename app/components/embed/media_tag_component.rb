@@ -109,6 +109,9 @@ module Embed
     end
 
     def streaming_settings_for(streaming_type)
+      # Return the media file's MIME type in dev, as we're circumventing the need for a streaming server
+      return { mimetype: file.mimetype } if Rails.env.development?
+
       Settings.streaming[streaming_type] || {}
     end
 

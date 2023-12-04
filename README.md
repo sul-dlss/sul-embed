@@ -66,6 +66,25 @@ The rich HTML payload that is supplied via the oEmbed API is an iframe. This mea
 
 For links that are intended to navigate the users browser away from the current page (e.g. the links to Memento/GeoBlacklight/etc.) then `target="_parent"` should be used to give the link the default browser behavior. [More about link targets](http://www.w3schools.com/tags/att_a_target.asp).
 
+
+## Developing the media player locally
+
+First, identify an object in production that looks like it will work for your development purposes (e.g., a public video with captions, a Stanford-only audio with a transcript, etc.), and set up a ViewComponent preview for it unless it's already got one. Then we'll pull its files locally, so we don't need to hit a media server or a deployed instance:
+
+```
+bin/rake stackify[gt507vy5436]
+```
+
+Then, make sure you have an updated `stacks` checkout in a sibling directory to your `sul-embed` checkout. To run a local instance of stacks (from the sibling directory) via docker:
+
+```shell
+DOCKER_STACKS=true SETTINGS__STACKS_URL="http://localhost:3001" bin/dev
+```
+
+Finally, use the ViewComponent preview you identified earlier to do your development.
+
+NOTE: We can dispense with the sibling directory jazz if we decide to publish the Stacks docker image.
+
 ## Updating language tags
 
 sul-embed uses the IANA language subtag registry to resolve user-provided file language codes (e.g., 'en-US') onto user-friendly labels (e.g., "English"), primarily for captions in the media player. This file lives on the web and changes every so often. We cache this file in `vendor/data/language-subtag-registry`, and it can be updated via `rake update_language_tags`.

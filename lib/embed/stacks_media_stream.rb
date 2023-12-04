@@ -33,6 +33,9 @@ module Embed
     def streaming_url_for(type)
       return unless file.title && streaming_file_prefix
 
+      # Use the Stacks URL to "stream" media in dev, as we're circumventing the need for a streaming server
+      return "#{Settings.stacks_url}/file/#{druid}/#{file.filename}" if Rails.env.development?
+
       protocol = streaming_protocol(type)
       suffix = TYPE_TO_MANIFEST_FILE[type]
       delimiter = streaming_url_delimiter(type)
