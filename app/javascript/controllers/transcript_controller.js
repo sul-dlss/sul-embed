@@ -16,14 +16,20 @@ export default class extends Controller {
   load() {
     if (this.loaded)
       return
-    const tracks = this.player.textTracks_.tracks_
-    if (!tracks)
-      return
-    const track = tracks.find((track) => track.kind === 'captions' )
-    const cues = track.cues.cues_.map((cue) => this.buildCue(cue))
+    const cues = this.textTrackCues().map((cue) => this.buildCue(cue))
     this.outletTarget.innerHTML = cues.join('')
     this.revealButton()
     this.loaded = true
+  }
+
+  textTrackCues() {
+    const tracks = this.player.textTracks_.tracks_
+    if (!tracks)
+      return []
+    const track = tracks.find((track) => track.kind === 'captions' )
+    if (!track)
+      return []
+    return track.cues.cues_
   }
 
   buildCue(cue) {
