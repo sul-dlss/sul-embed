@@ -38,19 +38,21 @@ export default class extends Controller {
   }
 
   scrollPlayer(evt) {
-    if(this.loaded && this.autoscrollTarget.checked && evt.detail >= this.minStartTime && evt.detail <= this.lastCueEndTime) {
+    if (!this.loaded || !this.autoscrollTarget.checked)
+      return
+
+    if(evt.detail >= this.minStartTime && evt.detail <= this.lastCueEndTime) {
       // Retrieve the last cue start time less than or equal to the current video time
       const startTime = this.maxStartCueTime(evt.detail)
       // Find the cue element in the transcript that corresponds to this start time
-      const cueElement = this.outletTarget.querySelector('[data-cue-start-value="' + startTime + '"]')
+      const cueElement = this.outletTarget.querySelector(`[data-cue-start-value="${startTime}"]`)
       // Scroll the transcript window to the cue for this video
       cueElement.scrollIntoView()
       // Apply CSS highlighting to the cue for this video time
       this.highlightCue(cueElement)
     }
-    //After we reach the end time of the last transcript, remove all the highlighting
-    if(this.loaded && this.autoscrollTarget.checked && evt.detail > this.lastCueEndTime) {
-      //Remove all highlighting
+    else if(evt.detail > this.lastCueEndTime) {
+      //After we reach the end time of the last transcript, remove all the highlighting
       this.removeAllCueHighlights()
     }
   }

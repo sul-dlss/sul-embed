@@ -389,7 +389,7 @@
       }
     }
 
-    .metadataList, .rightsList, .contentsList, .transcript, .autoscroll {
+    .metadataList, .rightsList, .contentsList, .transcript {
       color: var(--text-color);
       padding: var(--drawer-content-padding);
     }
@@ -440,17 +440,14 @@
       .highlight {
         background-color: rgb(243, 249, 255);
         font-weight: bold;
-        border-color: rgb(131, 193, 250);
-        border-style: solid;
-        border-radius: 5px;
+        border: 1px solid rgb(131, 193, 250);
+        border-radius: 0.25rem;
       }
     }
 
     .autoscroll {
-      padding-left: calc(var(--drawer-content-padding) / 2); 
-      padding-right: calc(var(--drawer-content-padding) / 2);
-      padding-bottom: 0px;
-      padding-top: calc(var(--drawer-content-padding) / 2);
+      --half-padding: calc(var(--drawer-content-padding) / 2);
+      padding: var(--half-padding) var(--half-padding) 0 var(--half-padding)
     }
 
     .default-thumbnail-icon {
