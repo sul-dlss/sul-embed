@@ -69,9 +69,9 @@ export default class extends Controller {
   }
 
   removeAllCueHighlights() {
-    for (let elem of this.outletTarget.querySelectorAll('span.cue')) {
+    this.outletTarget.querySelectorAll('span.cue').forEach(function(elem) {
       elem.classList.remove('highlight')
-    }
+    })
   }
 
   toggleAutoscroll() {
