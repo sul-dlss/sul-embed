@@ -26,6 +26,6 @@ class IframeComponent < ViewComponent::Base
   def call
     tag.iframe(src:, height: height_style, width: width_style, title: iframe_title,
                frameborder: 0, marginwidth: 0, marginheight: 0, scrolling: 'no', allowfullscreen: true,
-               allow: 'clipboard-read')
+               allow: 'clipboard-write')
   end
 end
