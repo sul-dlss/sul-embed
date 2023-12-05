@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Embed
-  class Virtex3dComponent < ViewComponent::Base
+  class ModelComponent < ViewComponent::Base
     def initialize(viewer:)
       @viewer = viewer
     end

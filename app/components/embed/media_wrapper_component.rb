@@ -22,8 +22,7 @@ module Embed
                 file_label: @file.label_or_filename,
                 slider_object: @resource_index,
                 thumbnail_url: @thumbnail.presence,
-                default_icon: @type == 'audio' ? 'sul-i-file-music-1' : 'sul-i-file-video-3',
-                duration: @file.duration
+                default_icon: @type == 'audio' ? 'sul-i-file-music-1' : 'sul-i-file-video-3'
               },
               # When rendering this component, show only the first media wrapper component
               hidden: !@resource_index.zero?) do

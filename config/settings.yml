@@ -62,6 +62,8 @@ analytics_debug: true
 min_files_to_search_default: 10
 enabled_features:
   transcripts: false
+  legacy_pdf_viewer: true # true shows the PDF.js based PDF viewer, false uses <object> tag for browser PDF rendering
+  cocina: false
 language_subtag_registry:
   path: vendor/data/language-subtag-registry
   url: 'https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry'

@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Media viewer', :js do
   let(:purl) do
     build(:purl, :video, contents: [
-            build(:resource, :video, files: [build(:resource_file, :video, :location_restricted, label: 'First Video', duration: '1:02:03')]),
+            build(:resource, :video, files: [build(:resource_file, :video, :location_restricted, label: 'First Video')]),
             build(:resource, :video, files: [build(:resource_file, :video, :stanford_only, label: 'Second Video')]),
             build(:resource, :file),
             build(:resource, :video, files: [build(:resource_file, :video, :world_downloadable)])
@@ -49,12 +49,12 @@ RSpec.describe 'Media viewer', :js do
         expect(page).to have_content 'Media Content'
         expect(page).to have_css('.sul-embed-media-slider-thumb', count: 3)
 
-        # It indicates that one of the files is Stanford only and has no duration
+        # It indicates that one of the files is Stanford only
         expect(page).to have_css('.sul-embed-thumb-stanford-only', text: /Second Video$/)
 
-        # One is restricted and has a duration
+        # One is restricted
         expect(page).to have_css('.sul-embed-location-restricted-text', text: '(Restricted)')
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: '(Restricted) First Video (1:02:03)')
+        expect(page).to have_css('.sul-embed-media-slider-thumb', text: '(Restricted) First Video')
         click_button 'Use and reproduction'
         expect(page).to have_content 'Rights'
       end
@@ -89,51 +89,12 @@ RSpec.describe 'Media viewer', :js do
     end
   end
 
-  context 'when duration is not present' do
-    let(:purl) do
-      build(:purl, :video, contents: [
-              build(:resource, :video, files: [build(:resource_file, :video, label: 'First Video', duration: nil)])
-            ])
-    end
-
-    it 'displays as if there were no duration' do
-      click_button 'Display sidebar'
-      within 'aside.open' do
-        click_button 'Content'
-
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: /First Video$/)
-      end
-    end
-  end
-
-  context 'with an audio' do
-    let(:purl) do
-      build(:purl, :media, contents: [
-              build(:resource, :audio, files: [build(:resource_file, :audio, label: 'First Audio', duration: '0:43')]),
-              build(:resource, :audio, files: [build(:resource_file, :audio, label: 'Second Audio', duration: nil)])
-            ])
-    end
-
-    it 'displays available duration in parens after the title' do
-      click_button 'Display sidebar'
-      within 'aside.open' do
-        click_button 'Content'
-
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: 'First Audio (0:43)')
-
-        # No duration
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: /Second Audio$/)
-      end
-    end
-  end
-
   context 'with long titles' do
     let(:purl) do
       build(:purl, :video, contents: [
               build(:resource, :video, files: [
                       build(:resource_file, :video, :location_restricted,
-                            label: 'The First Video Has An Overly Long Title, With More Words Than Can Practically Be Displayed',
-                            duration: '1:02:03')
+                            label: 'The First Video Has An Overly Long Title, With More Words Than Can Practically Be Displayed')
                     ]),
               build(:resource, :video, files: [build(:resource_file, :video, label: '2nd Video Has A Long Title, But Not Too Long')])
             ])
@@ -141,9 +102,9 @@ RSpec.describe 'Media viewer', :js do
 
     it 'truncates at 45 characters of combined restriction and title text' do
       click_button 'Display sidebar'
-      within 'aside.open' do
+      within 'aside' do
         click_button 'Content'
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: /^\(Restricted\) The First Video Has An Overly Lo… \(1:02:03\)$/)
+        expect(page).to have_css('.sul-embed-media-slider-thumb', text: /^\(Restricted\) The First Video Has An Overly Lo…$/)
 
         # displays the whole title if it is under the length limit
         expect(page).to have_css('.sul-embed-media-slider-thumb', text: /^2nd Video Has A Long Title, But Not Too Long$/)

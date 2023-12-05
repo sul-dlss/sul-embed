@@ -1,0 +1,15 @@
+version: '3.6'
+
+services:
+  stacks:
+    build: ../stacks/
+    ports:
+      - 3001:3000
+    volumes:
+      - ./public/file:/stacks
+    environment:
+      SECRET_KEY_BASE: 'e55fb68eb0f1f4f82fbb56eafeebf1c134518fd466d1c3d01b2bfd3d6b5cd9347b4c15eecb3bdc0e4c5bc226dba626a23bb7b9ddb14f709638571f910002f639'
+      RAILS_LOG_TO_STDOUT: 'true'
+      REMOTE_USER: blalbrit@stanford.edu
+      SETTINGS__CORS__ALLOW_ORIGIN_URL: 'http://localhost:3000'
+    tty: true

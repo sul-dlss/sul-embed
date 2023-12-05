@@ -24,7 +24,11 @@ module Embed
 
     # @param [String] druid a druid without a namespace (e.g. "sx925dc9385")
     def self.find(druid)
-      new(PurlXmlLoader.load(druid))
+      new(loader.load(druid))
+    end
+
+    def self.loader
+      Settings.enabled_features.cocina ? PurlJsonLoader : PurlXmlLoader
     end
 
     # @returns [Bool] does this have any resources that can be embeded?
@@ -50,6 +54,10 @@ module Embed
 
     def downloadable_files
       all_resource_files.select(&:downloadable?)
+    end
+
+    def downloadable_transcript_files?
+      downloadable_files.any?(&:transcript?)
     end
 
     def purl_url

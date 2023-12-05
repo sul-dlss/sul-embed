@@ -1,0 +1,4 @@
+stacks_storage_root: "public/file"
+enabled_features:
+  new_component: true
+  transcripts: true

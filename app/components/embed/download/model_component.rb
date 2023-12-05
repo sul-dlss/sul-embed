@@ -2,7 +2,7 @@
 
 module Embed
   module Download
-    class Virtex3dComponent < ViewComponent::Base
+    class ModelComponent < ViewComponent::Base
       def initialize(viewer:)
         @viewer = viewer
       end

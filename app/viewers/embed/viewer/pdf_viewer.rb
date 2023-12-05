@@ -4,6 +4,9 @@ module Embed
   module Viewer
     class PdfViewer < CommonViewer
       def component
+        # Use the new object tag PDF compotent if feature flag provided
+        return LegacyPdfComponent if Settings.enabled_features.legacy_pdf_viewer
+
         PdfComponent
       end
 

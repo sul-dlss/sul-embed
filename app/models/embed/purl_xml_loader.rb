@@ -23,7 +23,6 @@ module Embed
         embargo_release_date:,
         bounding_box:,
         archived_site_url:,
-        external_url:,
         embargoed:,
         citation_only:,
         stanford_only_unrestricted:,
@@ -59,10 +58,6 @@ module Embed
         '//mods:url[@displayLabel="Archived website"]',
         'mods' => 'http://www.loc.gov/mods/v3'
       )&.text
-    end
-
-    def external_url
-      ng_xml.xpath('//dc:identifier', 'dc' => 'http://purl.org/dc/elements/1.1/').try(:text)
     end
 
     def collections

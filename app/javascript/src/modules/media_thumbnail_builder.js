@@ -26,7 +26,6 @@ export default function(dataset, index) {
     }
 
     const fileLabel = dataset.fileLabel || '';
-    const duration = dataset.duration || '';
     // Note: the "position: relative" is required for the stretched-link style.
     return `<li class="sul-embed-media-slider-thumb ${activeClass}" data-controller="thumbnail" data-action="click->thumbnail#activate" data-thumbnail-index-param="${index}" style="position: relative;" aria-controls="sul-embed-body" role="tab">
         <a class="sul-embed-stretched-link" href="#">
@@ -34,7 +33,6 @@ export default function(dataset, index) {
           <span class="${labelClass}">
             ${stanfordOnlyScreenreaderText}${restrictedTextMarkup}
             ${truncateWithEllipsis(fileLabel, maxFileLabelLength)}
-            ${durationMarkup(duration)}
           </span>
         </a>
       </li>`
@@ -43,12 +41,4 @@ export default function(dataset, index) {
 
 function truncateWithEllipsis(text, maxLen) {
   return text.substr(0, maxLen - 1) + (text.length > maxLen ? '&hellip;' : '');
-}
-
-function durationMarkup(duration) {
-  if(duration && duration.length > 0) {
-    return ` (${duration})`
-  } else {
-    return '';
-  }
 }

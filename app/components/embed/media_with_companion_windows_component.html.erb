@@ -1,12 +1,12 @@
-<div class="sul-embed-container media-component" id='sul-embed-object' hidden data-controller="media media-tag" data-action="media-seek@window->media-tag#seek">
+<div class="sul-embed-container media-component" id='sul-embed-object' hidden data-controller="media media-tag transcript" data-action="media-seek@window->media-tag#seek">
   <header>
     <nav aria-label="Window navigation">
-      <button data-action="click->media#toggleLeft" aria-label="Display sidebar" aria-controls="left-drawer">
+      <button data-action="click->media#toggleLeft transcript#load" aria-label="Display sidebar" aria-controls="left-drawer">
         <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg></span>
       </button>
       <h2 class=""><%= viewer.purl_object.title %></h2>
       <button data-action="click->media#openModalComponentsPopover" aria-label="Share and Download" aria-controls="share_and_download">
-        <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0,0H24V24H0Z" fill="none"></path><path d="M19,12v7H5V12H3v9H21V12Z"></path><path d="M11.741,8.178V5L17.3,10.562l-5.562,5.562V12.867c-3.973,0-6.754,1.271-8.741,4.052C3.795,12.946,6.178,8.973,11.741,8.178Z" transform="translate(4 -4)"></path></svg></svg>
+        <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0,0H24V24H0Z" fill="none"></path><path d="M19,12v7H5V12H3v9H21V12Z"></path><path d="M11.741,8.178V5L17.3,10.562l-5.562,5.562V12.867c-3.973,0-6.754,1.271-8.741,4.052C3.795,12.946,6.178,8.973,11.741,8.178Z" transform="translate(4 -4)"></path></svg></svg></span>
       </button>
       <button data-action="click->media#displayAccessibility" aria-label="Accessibility" aria-controls="accessibility">
         <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"></path></svg></span>
@@ -14,7 +14,7 @@
     </nav>
   </header>
 
-  <div data-controller="auth-restriction" data-action="auth-denied@window->auth-restriction#displayMessage auth-success@window->auth-restriction#hideMessage">
+  <div data-controller="auth-restriction" data-action="auth-denied@window->auth-restriction#displayMessage auth-stanford-restricted@window->auth-restriction#displayStanfordRestriction auth-success@window->auth-restriction#hideLoginPrompt" hidden="true">
     <div data-auth-restriction-target="locationRestriction" hidden="true">
       <div class="authLinkWrapper">
         <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M22 4v-.5C22 2.12 20.88 1 19.5 1S17 2.12 17 3.5V4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h5c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zm-.8 0h-3.4v-.5c0-.94.76-1.7 1.7-1.7s1.7.76 1.7 1.7V4zm-2.28 8c.04.33.08.66.08 1 0 2.08-.8 3.97-2.1 5.39-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H7v-2h2c.55 0 1-.45 1-1V8h2c1.1 0 2-.9 2-2V3.46c-.95-.3-1.95-.46-3-.46C5.48 3 1 7.48 1 13s4.48 10 10 10 10-4.48 10-10c0-.34-.02-.67-.05-1h-2.03zM10 20.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L8 16v1c0 1.1.9 2 2 2v1.93z"></path></svg>
@@ -23,9 +23,15 @@
     </div>
     <div data-auth-restriction-target="stanfordRestriction" hidden="true">
       <div class="authLinkWrapper">
-        <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 8h-3V6.21c0-2.61-1.91-4.94-4.51-5.19C9.51.74 7 3.08 7 6v2H4v14h16V8zm-8 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"></path></svg>
-        <p class="loginMessage">Stanford users: log in to access all available features.</p>
+        <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+          <path data-auth-restriction-target="stanfordRestrictionNotLoggedInIcon" d="M20 8h-3V6.21c0-2.61-1.91-4.94-4.51-5.19C9.51.74 7 3.08 7 6v2H4v14h16V8zm-8 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"></path>
+          <path data-auth-restriction-target="stanfordRestrictionLoggedInIcon" style="visibility: hidden" d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h1.9c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"></path>
+        </svg>
+        <p class="loginMessage" data-auth-restriction-target="stanfordRestrictionMessage">Stanford users: log in to access all available features.</p>
         <button data-auth-restriction-target="stanfordLoginButton" data-action="media-tag#logIn">Log in</button>
+        <button class="dismissButton" hidden="true" data-auth-restriction-target="stanfordRestrictionDismissButton" data-action="auth-restriction#hideAuthRestrictionMessages">
+          <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
       </div>
     </div>
     <div data-auth-restriction-target="embargoRestriction" hidden="true">
@@ -49,10 +55,8 @@
     </div>
   <% end %>
 
-
-
   <div class="media-component-body">
-    <aside class="left-drawer collapse" data-controller="transcript" data-media-target="leftDrawer" id="left-drawer" aria-label="Sidebar" style="visibility: hidden">
+    <aside class="left-drawer collapse" data-media-target="leftDrawer" id="left-drawer" aria-label="Sidebar" style="visibility: hidden">
       <nav class="vert-tabs" role="tablist">
         <button data-action="click->media#displayMetadata" data-media-target="leftButton" class="active" aria-label="About this item" aria-controls="about" aria-selected="true" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
@@ -60,7 +64,7 @@
         <button data-action="click->media#displayContents" data-media-target="leftButton"  aria-label="Content" aria-controls="media-content" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"></path></svg>
         </button>
-        <button data-action="click->media#displayTranscript transcript#load" data-media-target="leftButton"  aria-label="Transcript" aria-controls="media-content" role="tab">
+        <button data-action="click->media#displayTranscript" data-transcript-target="button" data-media-target="leftButton"  aria-label="Transcript" aria-controls="media-content" role="tab" hidden>
           <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg>
         </button>
         <button data-action="click->media#displayRights" data-media-target="leftButton" aria-label="Use and reproduction" aria-controls="rights" role="tab">
@@ -170,11 +174,13 @@
 
   <dialog class="modal-container" data-media-target="accessibility" data-action="click->media#handleBackdropClicks" id="accessibility">
     <header>Accessibility</header>
-    <p>To request a transcript or other accommodation for this media item,
-      please send a request along with a link to this item to
-      <a href="mailto:purl-feedback@lists.stanford.edu">purl-feedback@lists.stanford.edu</a>.</p>
-
-    <p>A transcript may be available for download. Click the share & download icon to see if a download is available.</p>
+    <% if downloadable_transcript_files? %>
+      <p>A transcript is available for download. Click the share & download icon to download a transcript.</p>
+    <% else %>
+      <p>To request a transcript or other accommodation for this media item,
+        please send a request along with a link to this item to
+        <a href="mailto:purl-feedback@lists.stanford.edu">purl-feedback@lists.stanford.edu</a>.</p>
+    <% end %>
     <form method="dialog">
       <button>Close</button>
     </form>

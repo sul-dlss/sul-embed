@@ -9,18 +9,6 @@
   padding: 7px;
 }
 
-@mixin license-base {
-  display: inline-block;
-  height: 15px;
-  margin-bottom: 0;
-  margin-right: 6px;
-  width: 80px;
-}
-
-@mixin license-image($license) {
-  background: url('#{$license}') no-repeat left;
-}
-
 @mixin panel-list-style {
   list-style: none;
   padding-left: 8px;

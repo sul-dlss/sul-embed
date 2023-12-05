@@ -145,6 +145,20 @@ RSpec.describe Embed::Purl do
     end
   end
 
+  describe '#downloadable_transcript_files?' do
+    subject(:df) { purl.downloadable_transcript_files? }
+
+    context 'when some of the files are transcripts' do
+      let(:purl) do
+        described_class.new(contents: [build(:resource, files: [build(:resource_file, :transcript, :world_downloadable), build(:resource_file, :transcript)])])
+      end
+
+      it 'returns only the downloadable transcript file' do
+        expect(df).to be true
+      end
+    end
+  end
+
   describe '#hierarchical_contents' do
     let(:root_dir) { Embed::Purl::ResourceDir.new('', [], []) }
     let(:purl) { described_class.new }
@@ -170,7 +184,7 @@ RSpec.describe Embed::Purl do
   describe '#manifest_json_response' do
     subject(:fetch) { purl.manifest_json_response }
 
-    let(:purl) { described_class.find('12345') }
+    let(:purl) { described_class.new({ druid: '12345' }) }
 
     context 'with a response' do
       before do

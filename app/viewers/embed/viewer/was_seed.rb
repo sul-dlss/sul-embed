@@ -3,10 +3,14 @@
 module Embed
   module Viewer
     class WasSeed < CommonViewer
-      delegate :druid, :external_url, to: :@purl_object
+      delegate :druid, to: :@purl_object
 
       def component
         WasSeedComponent
+      end
+
+      def importmap
+        'webarchive'
       end
 
       def stylesheet
@@ -35,6 +39,10 @@ module Embed
 
       def format_memento_datetime(memento_datetime)
         I18n.l(Date.parse(memento_datetime), format: :sul_was_long) if memento_datetime.present?
+      end
+
+      def external_url
+        @purl_object.archived_site_url
       end
 
       def external_url_text

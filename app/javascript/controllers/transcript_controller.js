@@ -5,7 +5,7 @@ import videojs from 'video.js';
 // native player when it initializes.  This depends on the media_tag_controller.js emitting a custom media-loaded
 // event.
 export default class extends Controller {
-  static targets = [ "outlet", "autoscroll" ]
+  static targets = [ "outlet", "autoscroll", "button" ]
 
   // When the media-loaded event occurs, store the handle to the player
   persistPlayer(evt) {
@@ -16,31 +16,60 @@ export default class extends Controller {
   load() {
     if (this.loaded)
       return
+    const cues = this.textTrackCues().map((cue) => this.buildCue(cue))
+    this.outletTarget.innerHTML = cues.join('')
+    this.revealButton()
+    this.loaded = true
+    this.setupTranscriptScroll()
+  }
+
+  textTrackCues() {
     const tracks = this.player.textTracks_.tracks_
     if (!tracks)
-      return
+      return []
     const track = tracks.find((track) => track.kind === 'captions' )
-    const cues = track.cues.cues_.map((cue) => this.buildCue(cue))
-    this.outletTarget.innerHTML = cues.join('')
-    this.loaded = true
-    //Retrieve all the start times for the various cues for this transcript
-    this.cueStartTimes = track.cues.cues_.map((cue) => cue.startTime)
-    // Transcript scroll and highlighting should begin after the first speaking cue starts
-    this.minStartTime = Math.min.apply(Math, this.cueStartTimes)
-    // The transcript highlight should continue only until the last cue end time
-    this.lastCueEndTime = Math.max.apply(Math, track.cues.cues_.map((cue) => cue.endTime))
+    if (!track)
+      return []
+    return track.cues.cues_
   }
 
   buildCue(cue) {
     const htmlClass = cue.text.startsWith('<v ') ? 'cue-new-speaker cue' : 'cue'
     const text = cue.text.replace(/<[^>]*>/g, '')
-    return `<span class="${htmlClass}" data-controller="cue" data-action="click->cue#jump" data-cue-id="${cue.id}" data-cue-start-value="${cue.startTime}" data-cue-end-value="${cue.endTime}">${text}</span>`
+    // NOTE: We're explicitly not using anchors or buttons for this, even though it would make it unnecessary to have keybinding here.
+    //       This is because we don't want to clutter the interactive elements view in the screen-reader with thousands of
+    //       items that they need to step through.
+    return `<span class="${htmlClass}" data-controller="cue" data-action="click->cue#jump keydown.enter->cue#jump"
+      tabindex="0"
+      data-cue-id="${cue.id}" data-cue-start-value="${cue.startTime}" data-cue-end-value="${cue.endTime}">${text}</span>`
+  }
+
+  // Reveal the button to display the transcript if there is a transcript.
+  revealButton() {
+    this.buttonTarget.hidden = false
+  }
+
+  setupTranscriptScroll() {
+    const cues = this.textTrackCues()
+    this.minStartTime = 0
+    this.lastCueEndTime = 0
+    if (cues.length > 0) {
+      //Retrieve all the start times for the various cues for this transcript
+      this.cueStartTimes = cues.map((cue) => cue.startTime)
+      // Transcript scroll and highlighting should begin after the first speaking cue starts
+      this.minStartTime = Math.min.apply(Math, this.cueStartTimes)
+      // The transcript highlight should continue only until the last cue end time
+      this.lastCueEndTime = Math.max.apply(Math, cues.map((cue) => cue.endTime))
+    }
   }
 
   scrollPlayer(evt) {
-    if (!this.loaded || !this.autoscrollTarget.checked)
+    // For transcript scroll to take effect, the companion window should be showing the transcript
+    // and the autoscroll button should be checked and there must be cues present within the transcript
+    if (!this.loaded || !this.autoscrollTarget.checked || (this.textTrackCues().length == 0))
       return
 
+    // this.minStartTime and this.lastCueEndTime represent the starting and end point of all cues
     if(evt.detail >= this.minStartTime && evt.detail <= this.lastCueEndTime) {
       // Retrieve the last cue start time less than or equal to the current video time
       const startTime = this.maxStartCueTime(evt.detail)

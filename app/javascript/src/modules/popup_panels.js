@@ -1,15 +1,13 @@
 // Module adds popup panel behavior
 
-(function( global ) {
-  var Module = (function() {
-    var clickTarget;
-    var toggleElements;
+const PopupPanels = (function() {
+    let clickTarget, toggleElements
     return {
       init: function() {
         this.setupListeners();
       },
       setupListeners: function() {
-        var _this = this;
+        const _this = this;
         $("[data-sul-embed-toggle]").on("click", function() {
           clickTarget = $(this);
           toggleElements = $("." + clickTarget.data("sul-embed-toggle"));
@@ -44,8 +42,6 @@
         }
       }
     };
-  })();
+})();
 
-  global.PopupPanels = Module;
-
-})( this );
+export default PopupPanels

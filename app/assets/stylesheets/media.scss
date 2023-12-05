@@ -51,6 +51,32 @@
   .vjs-subs-caps-button:has(+ .vjs-menu > .vjs-menu-content > .vjs-selected.vjs-captions-menu-item) {
     border-bottom: 2px solid red;
   }
+
+  .vjs-text-track-settings {
+    background: white !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #000;
+    height: 70vh;
+    max-width: 640px;
+    border-radius: var(--modal-border-radius);
+    box-shadow: 5px 10px 5px gray;
+    font-size: 1em;
+
+    legend {
+      color: #000;
+    }
+
+    .vjs-track-settings-controls button {
+      color: var(--active-color);
+      background-image: none;
+      font-size: 1.2em;
+      padding: 3px;
+      text-transform: uppercase;
+    }
+  }
 }
 
 .media-component {
@@ -60,7 +86,8 @@
   --tab-height: 48px;
   --drawer-content-padding: 1rem;
   --text-color: rgba(0, 0, 0, 0.87);
-  --tab-text-color: rgba(0, 0, 0, 0.54);
+  --button-color: #454545;
+  --button-hover-bg-color: #9494947a;
   --background-color: rgba(255, 255, 255);
   --modal-border-radius: 8px;
   --modal-max-width: 600px;
@@ -217,9 +244,10 @@
         border: none;
         border-radius: 50%;
         padding: 12px;
+        color: var(--button-color);
 
         &:hover {
-          background-color: lightgray;
+          background-color: var(--button-hover-bg-color);
           cursor: pointer;
         }
       }
@@ -275,9 +303,9 @@
     flex-shrink: 0;
   }
 
-  // First selector is for embargo. Last selector is other auth restrictions
-  .authLinkWrapper + .media-component-body, [data-controller="auth-restriction"]:has(.authLinkWrapper:not([hidden])) + .media-component-body {
-    max-height: calc(100vh - 88px); // Scroll height for metadata when the auth wrapper is displaying
+  // Second selector is for citation-only banner. First selector is for all the other auth restrictions.
+  [data-controller="auth-restriction"]:not([hidden]) + .media-component-body, .authLinkWrapper + .media-component-body {
+    max-height: calc(100vh - 100px); // Scroll height for metadata when the auth wrapper is displaying
   }
 
   .media-component-body {
@@ -331,6 +359,14 @@
       padding: 0.2rem 0.4rem;
       text-transform: uppercase;
     }
+
+    button.dismissButton {
+      padding: 0rem;
+
+      svg {
+        font-size: 0.85rem;
+      }
+    }
   }
 
   .collapse {
@@ -364,19 +400,22 @@
         background-color: transparent;
         border: 0;
         border-right: 2px solid transparent;
-        color: var(--tab-text-color);
+        color: var(--button-color);
         height: var(--tab-height);
-        display: block;
         padding-top: 4px;
         &.active {
           border-right: 2px solid var(--active-color);
           color: var(--active-color);
         }
         &:hover {
-          background-color: lightgray;
+          background-color: var(--button-hover-bg-color);
           cursor: pointer;
         }
       }
+    }
+
+    .visually-hidden {
+      @include visually-hidden;
     }
 
     .inner {
@@ -450,15 +489,20 @@
       padding: var(--half-padding) var(--half-padding) 0 var(--half-padding)
     }
 
-    .default-thumbnail-icon {
-      font-size: 64px;
-    }
+    --slider-thumb-height: 75px;
 
     .sul-embed-media-slider-thumb {
       list-style-type: none;
       border: 1px solid gray;
       margin-bottom: 0.5rem;
-      height: 75px;
+      height: var(--slider-thumb-height);
+
+      .default-thumbnail-icon {
+        font-size: calc(var(--slider-thumb-height) - 2px);
+        &::before {
+          vertical-align: text-top;
+        }
+      }
 
       a {
         // Override the common link styles
@@ -485,30 +529,4 @@
       }
     }
   }
-}
-
-.video-js .vjs-text-track-settings {
-  background: white !important;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #000;
-  max-height: 375px;
-  max-width: 640px;
-  border-radius: var(--modal-border-radius);
-  box-shadow: 5px 10px 5px gray;
-  font-size: 1em;
-
-}
-
-.vjs-track-settings-controls button {
-  border: 1px solid black;
-  border-radius: var(--modal-border-radius);
-  font-size: 1.5em;
-  padding: 3px;
-}
-
-.vjs-text-track-settings legend {
-  color: #000;
 }

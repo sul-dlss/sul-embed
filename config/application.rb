@@ -29,7 +29,8 @@ module SulEmbed
     config.autoload_lib(ignore: %w(assets tasks))
 
     config.view_component.default_preview_layout = "component_preview"
-    
+
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

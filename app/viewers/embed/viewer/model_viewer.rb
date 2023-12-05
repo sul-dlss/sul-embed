@@ -2,13 +2,13 @@
 
 module Embed
   module Viewer
-    class Virtex3dViewer < CommonViewer
+    class ModelViewer < CommonViewer
       def component
-        Virtex3dComponent
+        ModelComponent
       end
 
       def stylesheet
-        'virtex_3d.css'
+        'model.css'
       end
 
       def three_dimensional_files

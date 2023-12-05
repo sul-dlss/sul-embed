@@ -11,7 +11,7 @@ RSpec.describe '3D Viewer', :js do
   end
 
   it 'renders the 3D viewer for 3D objects' do
-    expect(page).to have_css('.sul-embed-3d #virtex-3d-viewer')
+    expect(page).to have_css('.sul-embed-3d model-viewer')
   end
 
   it 'has working panels' do
