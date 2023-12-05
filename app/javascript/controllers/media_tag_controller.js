@@ -25,8 +25,9 @@ export default class extends Controller {
   afterValidate(result, completeCallback) {
     if (result.authResponse.status === 'success') {
       this.initializeVideoJSPlayer()
-      const event = new CustomEvent('auth-success')
-      window.dispatchEvent(event)
+      if (result.authResponse.access_restrictions.stanford_restricted === true)
+        window.dispatchEvent(new CustomEvent('auth-stanford-restricted'))
+      window.dispatchEvent(new CustomEvent('auth-success'))
     } else {
       const event = new CustomEvent('auth-denied', { detail: result.authResponse })
       window.dispatchEvent(event)

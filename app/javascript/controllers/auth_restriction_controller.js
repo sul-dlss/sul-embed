@@ -1,8 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["stanfordRestriction", "locationRestriction", "embargoRestriction",
-                    "embargoAndStanfordRestriction", "stanfordLoginButton", "embargoLoginButton"]
+  static targets = ["stanfordRestriction", "stanfordRestrictionMessage", "stanfordRestrictionNotLoggedInIcon",
+                    "stanfordRestrictionLoggedInIcon", "stanfordRestrictionDismissButton", "stanfordLoginButton",
+                    "locationRestriction", "embargoRestriction", "embargoAndStanfordRestriction",
+                    "embargoLoginButton"]
 
 
   displayMessage(event) {
@@ -20,27 +22,39 @@ export default class extends Controller {
     }
   }
 
-  hideMessage() {
-    this.stanfordRestrictionTarget.hidden = true
+  hideLoginPrompt() {
+    this.stanfordRestrictionMessageTarget.innerHTML = "Logged in."
+    this.stanfordLoginButtonTarget.hidden = true
+    this.stanfordRestrictionNotLoggedInIconTarget.style.visibility = "hidden";
+    this.stanfordRestrictionLoggedInIconTarget.style.visibility = "visible";
     this.embargoAndStanfordRestrictionTarget.hidden = true
+    this.stanfordRestrictionDismissButtonTarget.hidden = false
+  }
+
+  hideAuthRestrictionMessages() {
+    this.element.hidden = true
   }
 
   displayStanfordRestriction(loginService) {
+    this.element.hidden = false
     this.stanfordLoginButtonTarget.dataset.mediaTagLoginServiceParam = loginService['@id']
     this.stanfordRestrictionTarget.hidden = false
   }
 
   displayLocationRestriction(restrictionLocation) {
+    this.element.hidden = false
     this.locationRestrictionTarget.querySelector('.loginMessage').innerText = `Access is restricted to the ${restrictionLocation.label}. See Access conditions for more information.`
     this.locationRestrictionTarget.hidden = false
   }
 
   displayEmbargoRestriction(embargo) {
+    this.element.hidden = false
     this.embargoRestrictionTarget.querySelector('.loginMessage').innerText = `Access is restricted until ${this.formattedEmbargo(embargo)}`
     this.embargoRestrictionTarget.hidden = false
   }
 
   displayEmbargoAndStanfordRestriction(embargo, loginService) {
+    this.element.hidden = false
     this.embargoAndStanfordRestrictionTarget.querySelector('.loginMessage').innerText = `Access is restricted to Stanford-affiliated patrons until ${this.formattedEmbargo(embargo)}`
     this.embargoLoginButtonTarget.dataset.mediaTagLoginServiceParam = loginService['@id']
     this.embargoAndStanfordRestrictionTarget.hidden = false

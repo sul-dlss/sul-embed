@@ -303,9 +303,9 @@
     flex-shrink: 0;
   }
 
-  // First selector is for embargo. Last selector is other auth restrictions
-  .authLinkWrapper + .media-component-body, [data-controller="auth-restriction"]:has(.authLinkWrapper:not([hidden])) + .media-component-body {
-    max-height: calc(100vh - 88px); // Scroll height for metadata when the auth wrapper is displaying
+  // Second selector is for citation-only banner. First selector is for all the other auth restrictions.
+  [data-controller="auth-restriction"]:not([hidden]) + .media-component-body, .authLinkWrapper + .media-component-body {
+    max-height: calc(100vh - 100px); // Scroll height for metadata when the auth wrapper is displaying
   }
 
   .media-component-body {
@@ -358,6 +358,14 @@
       border-radius: 5px;
       padding: 0.2rem 0.4rem;
       text-transform: uppercase;
+    }
+
+    button.dismissButton {
+      padding: 0rem;
+
+      svg {
+        font-size: 0.85rem;
+      }
     }
   }
 
