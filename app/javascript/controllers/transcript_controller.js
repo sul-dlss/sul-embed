@@ -5,7 +5,7 @@ import videojs from 'video.js';
 // native player when it initializes.  This depends on the media_tag_controller.js emitting a custom media-loaded
 // event.
 export default class extends Controller {
-  static targets = [ "outlet" ]
+  static targets = [ "outlet", "autoscroll" ]
 
   // When the media-loaded event occurs, store the handle to the player
   persistPlayer(evt) {
@@ -23,9 +23,12 @@ export default class extends Controller {
     const cues = track.cues.cues_.map((cue) => this.buildCue(cue))
     this.outletTarget.innerHTML = cues.join('')
     this.loaded = true
+    //Retrieve all the start times for the various cues for this transcript
     this.cueStartTimes = track.cues.cues_.map((cue) => cue.startTime)
+    // Transcript scroll and highlighting should begin after the first speaking cue starts
     this.minStartTime = Math.min.apply(Math, this.cueStartTimes)
-    this.maxStartTime = Math.max.apply(Math, this.cueStartTimes)
+    // The transcript highlight should continue only until the last cue end time
+    this.lastCueEndTime = Math.max.apply(Math, track.cues.cues_.map((cue) => cue.endTime))
   }
 
   buildCue(cue) {
@@ -35,14 +38,20 @@ export default class extends Controller {
   }
 
   scrollPlayer(evt) {
-    if(this.loaded && evt.detail >= this.minStartTime && evt.detail <= this.maxStartTime) {
+    if(this.loaded && this.autoscrollTarget.checked && evt.detail >= this.minStartTime && evt.detail <= this.lastCueEndTime) {
+      // Retrieve the last cue start time less than or equal to the current video time
       const startTime = this.maxStartCueTime(evt.detail)
-      for (let elem of this.outletTarget.querySelectorAll('span.cue')) {
-        elem.classList.remove('highlight')
-      }
+      // Find the cue element in the transcript that corresponds to this start time
       const cueElement = this.outletTarget.querySelector('[data-cue-start-value="' + startTime + '"]')
+      // Scroll the transcript window to the cue for this video
       cueElement.scrollIntoView()
-      cueElement.classList.add('highlight')
+      // Apply CSS highlighting to the cue for this video time
+      this.highlightCue(cueElement)
+    }
+    //After we reach the end time of the last transcript, remove all the highlighting
+    if(this.loaded && this.autoscrollTarget.checked && evt.detail > this.lastCueEndTime) {
+      //Remove all highlighting
+      this.removeAllCueHighlights()
     }
   }
 
@@ -50,4 +59,22 @@ export default class extends Controller {
     return Math.max.apply(Math, this.cueStartTimes.filter(function(x){return x <= transcriptTime}))
   }
 
+  highlightCue(cueElement) {
+    // Remove highlighting from all the other cue elements
+    this.removeAllCueHighlights()
+    //Add highlight class to the current cue element
+    cueElement.classList.add('highlight')
+  }
+
+  removeAllCueHighlights() {
+    for (let elem of this.outletTarget.querySelectorAll('span.cue')) {
+      elem.classList.remove('highlight')
+    }
+  }
+
+  toggleAutoscroll() {
+    if(! this.autoscrollTarget.checked) {
+      this.removeAllCueHighlights()
+    }
+  }
 }
