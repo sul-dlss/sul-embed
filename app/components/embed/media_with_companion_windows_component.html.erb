@@ -115,7 +115,7 @@
       <div data-controller="locked-audio-poster" data-action="auth-success@window->locked-audio-poster#hide auth-denied@window->locked-audio-poster#show" tabindex="-1" role="presentation" style="display: none; flex: 1 0 100%;">
         <picture class="locked-media">
           <%# The explicitly empty alt is preferred here, since this image merely adds visual decoration. %>
-          <%= image_tag 'waveform-audio-poster.svg', loading: 'lazy', alt: '' %>
+          <%= image_tag 'waveform-audio-poster.svg', id: 'audio-poster', loading: 'lazy', alt: '' %>
         </picture>
       </div>
 
