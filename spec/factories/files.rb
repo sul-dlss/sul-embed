@@ -52,6 +52,13 @@ FactoryBot.define do
       role { 'transcription' }
     end
 
+    trait :model_3d do
+      druid { 'qf794pv6287' }
+      mimetype { 'model/gltf-binary' }
+      filename { 'abc_123.glb' }
+      size { 176_218 }
+    end
+
     trait :stanford_only do
       stanford_only { true }
       stanford_only_downloadable { true }

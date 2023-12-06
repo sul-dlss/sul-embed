@@ -27,13 +27,5 @@
     cookies: false, // use anonymity sets instead
     urlPrefix: "<%= Settings.metrics_api_url %>",
   });
-
-  // Send a view event with the object's DRUID so that it can be tracked
-  // Override the page and url with the location where the object was embedded
-  const embedUrl = new URL(new URLSearchParams(window.location.search).get('url'));
-  const url = new URL(document.referrer);
-  const druid = embedUrl.pathname.split('/').pop();
-  const page = url.pathname;
-  ahoy.trackView({ url, page, druid });
 </script>
 <% end %>

@@ -53,5 +53,12 @@ FactoryBot.define do
       media
       contents { [build(:resource, :video)] }
     end
+
+    trait :model_3d do
+      type { '3d' }
+      druid { 'qf794pv6287' }
+      title { 'Title of the object' }
+      contents { [build(:resource, :file, files: [build(:resource_file, :model_3d)])] }
+    end
   end
 end
