@@ -22,15 +22,13 @@
     <%= tag :link, rel: "up", href: Embed::Purl.find(@embed_response.request.purl_object.collections.first).purl_url if @embed_response && @embed_response.request.purl_object.collections.any? %>
   </head>
   <body>
-     <% if @embed_response.check_authorization? %>
-       <span>Content type: <%= @embed_response.request.purl_object.type %> | </span>
-       <% if @embed_response.request.citation_only? # this is first, but also shouldn't render embed %>
-        <span>This content cannot be accessed online. See access conditions for more information.</span>
-       <% elsif @embed_response.request.embargoed? # this comes first, as it supercedes any other restrictions (though never shows, since embargoed stuff is citation only?) %>
-        <span>Restriction: embargoed until <%= @embed_response.request.purl_object.embargo_release_date %></span>
-       <% elsif @embed_response.request.stanford_only_unrestricted? %>
-         <span>Restriction: Stanford only</span>
-       <% end %>
+    <span>Content type: <%= @embed_response.request.purl_object.type %> | </span>
+    <% if @embed_response.request.citation_only? # this is first, but also shouldn't render embed %>
+    <span>This content cannot be accessed online. See access conditions for more information.</span>
+    <% elsif @embed_response.request.embargoed? # this comes first, as it supercedes any other restrictions (though never shows, since embargoed stuff is citation only?) %>
+    <span>Restriction: embargoed until <%= @embed_response.request.purl_object.embargo_release_date %></span>
+    <% elsif @embed_response.request.stanford_only_unrestricted? %>
+      <span>Restriction: Stanford only</span>
     <% end %>
     <%= render @embed_response.viewer.component.new(viewer: @embed_response.viewer) %>
     <%= render 'analytics' %>
