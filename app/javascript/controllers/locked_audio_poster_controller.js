@@ -9,12 +9,12 @@ export default class extends Controller {
       if (poster_path)
         document.getElementById('audio-poster').setAttribute('src', poster_path)
 
-      this.element.style.display = 'flex'
+      this.element.hidden = false
     }
   }
 
   hide() {
-    this.element.style.display = 'none'
+    this.element.hidden = true
   }
 
   isAudio() {
