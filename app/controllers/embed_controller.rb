@@ -3,11 +3,14 @@
 class EmbedController < ApplicationController
   append_view_path Rails.root.join('app/views/embed')
   before_action :embed_request
-  before_action :set_cache
+  before_action :set_cache, only: %i[iiif]
+  before_action :fix_etag_header, only: %i[get iframe]
   before_action :allow_iframe, only: %i[iiif iframe]
 
   def get
     @embed_request.validate!
+
+    return unless stale?(last_modified: @embed_request.purl_object.last_modified, etag: @embed_request.purl_object.etag)
 
     if @embed_request.format.to_sym == :xml
       render xml: Embed::Response.new(@embed_request).embed_hash(self).to_xml(root: 'oembed')
@@ -19,6 +22,9 @@ class EmbedController < ApplicationController
   def iframe
     # Trigger purl object validation (will raise Embed::Purl::ResourceNotAvailable)
     @embed_request.validate!
+
+    return unless stale?(last_modified: @embed_request.purl_object.last_modified, etag: @embed_request.purl_object.etag)
+
     @embed_response = Embed::Response.new(@embed_request)
     render 'iframe'
   end
@@ -79,5 +85,10 @@ class EmbedController < ApplicationController
 
   def allow_iframe
     response.headers.delete('X-Frame-Options')
+  end
+
+  def fix_etag_header
+    # Apache adds -gzip to the etag header, which causes the request appear stale.
+    request.headers['HTTP_IF_NONE_MATCH'].sub!('-gzip', '') if request.if_none_match
   end
 end

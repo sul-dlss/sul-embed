@@ -2,7 +2,9 @@
 
 module Embed
   class Purl
-    def initialize(attributes = {})
+    def initialize(etag: nil, last_modified: nil, **attributes)
+      @etag = etag
+      @last_modified = last_modified
       self.attributes = attributes
     end
 
@@ -14,7 +16,8 @@ module Embed
 
     attr_accessor :druid, :type, :title, :use_and_reproduction, :copyright, :contents, :collections,
                   :license, :bounding_box, :embargo_release_date, :archived_site_url, :external_url,
-                  :embargoed, :citation_only, :stanford_only_unrestricted, :public, :controlled_digital_lending
+                  :embargoed, :citation_only, :stanford_only_unrestricted, :public, :controlled_digital_lending,
+                  :etag, :last_modified
 
     alias embargoed? embargoed
     alias citation_only? citation_only
@@ -24,10 +27,11 @@ module Embed
 
     # @param [String] druid a druid without a namespace (e.g. "sx925dc9385")
     def self.find(druid)
-      new(loader.load(druid))
+      loader = loader_class.new(druid)
+      new(etag: loader.etag, last_modified: loader.last_modified, **loader.load)
     end
 
-    def self.loader
+    def self.loader_class
       Settings.enabled_features.cocina ? PurlJsonLoader : PurlXmlLoader
     end
 

@@ -5,6 +5,8 @@ FactoryBot.define do
     druid { 'abc123' }
     contents { [build(:resource, :file)] }
     collections { [] }
+    etag { "W/\"#{Time.zone.now.to_f}\"" }
+    last_modified { Time.zone.now }
 
     trait :embargoed do
       embargoed { true }
