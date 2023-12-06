@@ -16,13 +16,18 @@ export default class extends Controller {
   load() {
     if (this.loaded)
       return
-    const cues = this.textTrackCues().map((cue) => this.buildCue(cue))
+    const sourceCues = this.textTrackCues()
+    if (sourceCues.length === 0)
+      return
+    const cues = sourceCues.map((cue) => this.buildCue(cue))
     this.outletTarget.innerHTML = cues.join('')
     this.revealButton()
     this.loaded = true
   }
 
   textTrackCues() {
+    if (!this.player) // VideoJS hasn't initialized (probably because the user has no access)
+      return []
     const tracks = this.player.textTracks_.tracks_
     if (!tracks)
       return []
