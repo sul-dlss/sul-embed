@@ -21,8 +21,8 @@
     <%= stylesheet_link_tag 'sul_icons.css' %>
     <%= tag :link, rel: "up", href: Embed::Purl.find(@embed_response.request.purl_object.collections.first).purl_url if @embed_response && @embed_response.request.purl_object.collections.any? %>
   </head>
-  <%= render 'analytics' %>
   <body>
     <%= render @embed_response.viewer.component.new(viewer: @embed_response.viewer) %>
+    <%= render 'analytics' %>
   </body>
 </html>

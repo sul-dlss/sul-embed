@@ -4,18 +4,11 @@
   {{/if}}
   <div>
     {{#if thumbnailUrl}}
-      {{#if websiteUrl}}
-        <a href="{{websiteUrl}}">
-          <img src="{{thumbnailUrl}}" style="max-width: 100%; height: auto;">
-        </a>
-      {{else}}
-        <img src="{{thumbnailUrl}}">
-      {{/if}}
+        <img src="{{thumbnailUrl}}" style="max-width: 100%; height: auto;" alt="">
     {{/if}}
     <dl>
       {{#if websiteUrl}}
-        <dt>Website</dt>
-        <dd><a href="{{websiteUrl}}">{{websiteUrl}}</a></dd>
+        <a href="{{websiteUrl}}">View this map</a>
       {{/if}}
       {{#if downloadUrl}}
         <dt>Download</dt>

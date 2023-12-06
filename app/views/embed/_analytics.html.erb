@@ -24,7 +24,7 @@
   // Set up Ahoy
   ahoy.configure({
     visitDuration: 60, // measured in minutes; this is Zenodo's default
-    cookieDomain: "stanford.edu",
+    cookies: false, // use anonymity sets instead
     urlPrefix: "<%= Settings.metrics_api_url %>",
   });
 

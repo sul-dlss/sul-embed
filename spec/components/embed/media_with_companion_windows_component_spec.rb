@@ -44,7 +44,7 @@ RSpec.describe Embed::MediaWithCompanionWindowsComponent, type: :component do
     let(:citation_only) { true }
 
     it 'displays citation only message' do
-      expect(page).to have_content 'This media cannot be accessed online.'
+      expect(page).to have_content 'This item cannot be accessed online.'
     end
   end
 end
