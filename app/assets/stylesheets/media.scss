@@ -361,7 +361,13 @@
     }
 
     button.dismissButton {
-      padding: 0rem;
+      padding: 0.2rem 0.4rem;
+      cursor: pointer;
+      margin-left: 0.75rem;
+      background-color: white;
+      color: var(--active-color);
+      border: 0;
+      border-radius: 5px;
 
       svg {
         font-size: 0.85rem;
