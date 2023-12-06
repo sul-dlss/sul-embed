@@ -428,7 +428,7 @@
       }
     }
 
-    .metadataList, .rightsList, .contentsList, .transcript {
+    .metadataList, .rightsList, .contentsList, .transcript, .autoscroll {
       color: var(--text-color);
       padding: var(--drawer-content-padding);
     }
@@ -482,11 +482,6 @@
         border: 1px solid rgb(131, 193, 250);
         border-radius: 0.25rem;
       }
-    }
-
-    .autoscroll {
-      --half-padding: calc(var(--drawer-content-padding) / 2);
-      padding: var(--half-padding) var(--half-padding) 0 var(--half-padding)
     }
 
     --slider-thumb-height: 75px;

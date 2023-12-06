@@ -76,7 +76,9 @@ export default class extends Controller {
       // Find the cue element in the transcript that corresponds to this start time
       const cueElement = this.outletTarget.querySelector(`[data-cue-start-value="${startTime}"]`)
       // Scroll the transcript window to the cue for this video
-      cueElement.scrollIntoView()
+      // These options have the element scroll to the nearest visible container position without scrolling
+      // the page itself further up or down
+      cueElement.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'nearest'})
       // Apply CSS highlighting to the cue for this video time
       this.highlightCue(cueElement)
     }
