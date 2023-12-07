@@ -465,6 +465,8 @@
     }
 
     .transcript {
+      --highlight-background-color:  rgb(243, 249, 255);
+      --highlight-border-color: rgb(131, 193, 250);
       .cue {
         border: 1px solid transparent;
         padding-right: 2px;
@@ -484,9 +486,9 @@
         }
       }
       .highlight {
-        background-color: rgb(243, 249, 255);
+        background-color: var(--highlight-background-color);
         font-weight: bold;
-        border: 1px solid rgb(131, 193, 250);
+        border: 1px solid var(--highlight-border-color);
         border-radius: 0.25rem;
       }
     }

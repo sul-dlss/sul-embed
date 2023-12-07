@@ -54,7 +54,7 @@ export default class extends Controller {
     this.minStartTime = 0
     this.lastCueEndTime = 0
     if (cues.length > 0) {
-      //Retrieve all the start times for the various cues for this transcript
+      // Retrieve all the start times for the various cues for this transcript
       this.cueStartTimes = cues.map((cue) => cue.startTime)
       // Transcript scroll and highlighting should begin after the first speaking cue starts
       this.minStartTime = Math.min.apply(Math, this.cueStartTimes)
@@ -89,7 +89,7 @@ export default class extends Controller {
   }
 
   maxStartCueTime(transcriptTime) {
-    return Math.max.apply(Math, this.cueStartTimes.filter(function(x){return x <= transcriptTime}))
+    return Math.max.apply(Math, this.cueStartTimes.filter((x) => x <= transcriptTime))
   }
 
   highlightCue(cueElement) {
@@ -100,9 +100,9 @@ export default class extends Controller {
   }
 
   removeAllCueHighlights() {
-    this.outletTarget.querySelectorAll('span.cue').forEach(function(elem) {
+    this.outletTarget.querySelectorAll('span.cue').forEach((elem) =>
       elem.classList.remove('highlight')
-    })
+    )
   }
 
   toggleAutoscroll() {
