@@ -38,12 +38,11 @@ RSpec.describe Embed::FileComponent, type: :component do
     it 'returns a table of files' do
       # visible :all because we display:none the container until we've loaded the CSS.
       expect(page).to have_css '.sul-embed-file-list', visible: :all
-      expect(page).to have_css 'a[download]', visible: :all, text: '12.35 kB'
+      expect(page).to have_css 'a[download]', visible: :all, text: 'Download'
     end
 
     it 'have the appropriate attributes for being _blank' do
-      expect(page).to have_css('.sul-embed-media-heading a[target="_blank"][rel="noopener noreferrer"]', visible: :all)
-      expect(page).to have_css('.sul-embed-download a[target="_blank"][rel="noopener noreferrer"]', visible: :all)
+      expect(page).to have_css('td[role="gridcell"] a[target="_blank"][rel="noopener noreferrer"]', visible: :all)
     end
   end
 
@@ -63,12 +62,12 @@ RSpec.describe Embed::FileComponent, type: :component do
 
     it 'adds a Stanford specific embargo message with links still present' do
       expect(page).to have_css('.sul-embed-embargo-message', visible: :all, text: 'Access is restricted to Stanford-affiliated patrons until 21-Dec-2053')
-      expect(page).to have_css('.sul-embed-media-heading a[href="https://stacks.stanford.edu/file/druid:bc123df4567/Title%20of%20the%20PDF.pdf"]', visible: :all)
+      expect(page).to have_css('tr[data-tree-role="leaf"] a[href="https://stacks.stanford.edu/file/druid:bc123df4567/Title%20of%20the%20PDF.pdf"]', visible: :all)
     end
 
     it 'includes an element with a stanford icon class (with screen reader text)' do
       expect(page).to have_css(
-        '.sul-embed-media-heading .sul-embed-stanford-only-text .sul-embed-text-hide',
+        'tr[data-tree-role="leaf"] .sul-embed-stanford-only-text .sul-embed-text-hide',
         visible: :all,
         text: 'Stanford only'
       )
@@ -89,7 +88,7 @@ RSpec.describe Embed::FileComponent, type: :component do
     let(:resources) { [build(:resource, :video, files: [build(:resource_file, :video, :location_restricted, label: 'Second Video')])] }
 
     it 'includes text indicating the file is location restricted' do
-      expect(page).to have_css('.sul-embed-media-heading .sul-embed-location-restricted-text', visible: :all, text: '(Restricted)')
+      expect(page).to have_css('tr[data-tree-role="leaf"] .sul-embed-location-restricted-text', visible: :all, text: '(Restricted)')
     end
   end
 
@@ -112,7 +111,7 @@ RSpec.describe Embed::FileComponent, type: :component do
 
       it 'leaves correctly formatted filenames alone' do
         expect(page).to have_css '.sul-embed-body.sul-embed-file', visible: :all
-        link = page.find('.sul-embed-media-list a', match: :first, visible: :all)
+        link = page.find('tr[data-tree-role="leaf"] a', match: :first, visible: :all)
         expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:bc123df4567/Title_of_the_PDF.pdf')
       end
     end
@@ -122,7 +121,7 @@ RSpec.describe Embed::FileComponent, type: :component do
 
       it 'encodes them' do
         expect(page).to have_css '.sul-embed-body.sul-embed-file', visible: :all
-        link = page.find('.sul-embed-media-list a', match: :first, visible: :all)
+        link = page.find('tr[data-tree-role="leaf"] a', match: :first, visible: :all)
         expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:bc123df4567/%23Title%20of%20the%20PDF.pdf')
       end
     end

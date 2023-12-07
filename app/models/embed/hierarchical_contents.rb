@@ -13,7 +13,6 @@ module Embed
     def contents
       Purl::ResourceDir.new('', [], []).tap do |root_dir|
         file_contents.each { |file| add_to_hierarchy(file, root_dir) }
-        add_index(root_dir, 0)
       end
     end
 
@@ -22,7 +21,7 @@ module Embed
     attr_reader :resources
 
     def file_contents
-      resources.flat_map(&:files).map { |file| HierarchicalFile.new(file) }
+      resources.flat_map(&:files)
     end
 
     def add_to_hierarchy(file, root_directory)
@@ -46,19 +45,6 @@ module Embed
       return child_directory if paths.empty?
 
       directory_for(paths, child_directory)
-    end
-
-    def add_index(directory, index)
-      directory.files.each do |file|
-        index += 1
-        file.index = index
-      end
-
-      directory.dirs.each do |dir|
-        index = add_index(dir, index)
-      end
-
-      index
     end
   end
 end

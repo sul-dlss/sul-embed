@@ -7,6 +7,10 @@ module Embed
         FileComponent
       end
 
+      def importmap
+        'file'
+      end
+
       def height
         return default_height if @request.maxheight.to_i > default_height
 

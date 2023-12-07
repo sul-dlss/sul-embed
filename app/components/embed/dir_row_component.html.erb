@@ -1,0 +1,15 @@
+<% if title.present? %>
+  <tr role="row" aria-level="<%= level %>" aria-posinset="<%= pos_in_set %>" aria-setsize="<%= set_size %>" aria-expanded="true" tabindex="0" data-action="click->tree#toggle" data-tree-role="branch">
+    <td role="gridcell" style="<%= first_td_style %>">
+      <i class="sul-i-2x sul-i-file-zipped" style="margin-right: 3px;"></i><%= title %>
+    </td>
+    <td role="gridcell"></td>
+    <td role="gridcell"></td>
+  </tr>
+<% end %>
+<% dirs.each_with_index do |dir, index| %>
+  <%= render Embed::DirRowComponent.new(viewer: viewer, dir: dir, pos_in_set: index + 1, set_size: child_set_size, level: level + 1)%>
+<% end %>
+<% files.each_with_index do |file, index| %>
+  <%= render Embed::FileRowComponent.new(viewer: viewer, file: file, pos_in_set: dirs.size + index + 1, set_size: child_set_size, level: level + 1)%>
+<% end %>

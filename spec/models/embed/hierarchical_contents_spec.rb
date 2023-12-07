@@ -17,9 +17,8 @@ RSpec.describe Embed::HierarchicalContents do
       expect(root_dir.title).to eq ''
       expect(root_dir.files.count).to eq 1
       file1 = root_dir.files.first
-      expect(file1).to be_an Embed::HierarchicalFile
+      expect(file1).to be_an Embed::Purl::ResourceFile
       expect(file1.title).to eq 'Title_of_the_PDF.pdf'
-      expect(file1.index).to eq 1
       expect(root_dir.dirs.count).to eq 1
       dir1 = root_dir.dirs.first
       expect(dir1.title).to eq 'dir1'

@@ -17,21 +17,18 @@ RSpec.describe 'file viewer with hierarchy', :js do
 
   it 'renders hierarchy' do
     visit_iframe_response
-    expect(page).to have_content('2 items')
+    expect(page).to have_content('2 files')
     # There are 2 files
-    expect(page).to have_css('.sul-embed-media', count: 2)
+    expect(page).to have_css('tr[data-tree-role="leaf"]', count: 2)
     # There are 2 directories
-    expect(page).to have_css('.sul-embed-treeitem', count: 2)
+    expect(page).to have_css('tr[data-tree-role="branch"]', count: 2)
     # One of the files is nested
-    expect(page).to have_css('[role="treeitem"] [role="treeitem"] [role="treeitem"] .sul-embed-media', count: 1)
-    # Does not render indexes
-    all('.sul-embed-count').each do |count_elem|
-      expect(count_elem).not_to have_content('1')
-    end
+    expect(page).to have_css('tr[data-tree-role="branch"] + tr[data-tree-role="branch"] + tr[data-tree-role="leaf"]', count: 1)
 
-    all('[role="treeitem"]')[3].click
-    expect(page).to have_css('.sul-embed-media', count: 1)
-    all('[role="treeitem"][aria-expanded="false"]').first.click
-    expect(page).to have_css('.sul-embed-media', count: 2)
+    expect(page).to have_css('tr[data-tree-role="leaf"]', count: 2)
+    all('tr[aria-expanded="true"]').last.click
+    expect(page).to have_css('tr[data-tree-role="leaf"]', count: 1)
+    all('tr[data-tree-role="branch"][aria-expanded="false"]').first.click
+    expect(page).to have_css('tr[data-tree-role="leaf"]', count: 2)
   end
 end
