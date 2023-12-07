@@ -46,7 +46,7 @@ RSpec.describe 'Media viewer', :js do
       within 'aside.open' do
         expect(page).to have_content 'About this item'
         click_button 'Content'
-        expect(page).to have_content 'Media Content'
+        expect(page).to have_content 'Media content'
         expect(page).to have_css('.sul-embed-media-slider-thumb', count: 3)
 
         # It indicates that one of the files is Stanford only
