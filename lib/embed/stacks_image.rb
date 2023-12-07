@@ -9,8 +9,8 @@ module Embed
       "#{stacks_image_url(druid, file_name)}/full/#{size}/0/default.jpg"
     end
 
-    def stacks_square_url(druid, file_name, size: 100)
-      "#{stacks_image_url(druid, file_name)}/square/#{size},#{size}/0/default.jpg"
+    def stacks_square_url(druid, file_name, size: '100,100')
+      "#{stacks_image_url(druid, file_name)}/square/#{size}/0/default.jpg"
     end
 
     def stacks_image_url(druid, file_name)

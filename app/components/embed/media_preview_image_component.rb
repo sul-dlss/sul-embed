@@ -19,7 +19,8 @@ module Embed
     attr_reader :resource_index, :druid, :file, :type
 
     def call
-      thumb_url = stacks_square_url(druid, file.title, size: '75')
+      # the 74,73 size accounts for the additional pixel size returned by the image server 
+      thumb_url = stacks_square_url(druid, file.title, size: '74,73')
       render MediaWrapperComponent.new(thumbnail: thumb_url, file:, type:, resource_index:, scroll: true) do
         tag.div(class: 'osd', id: "openseadragon-#{resource_index}",
                 data: { controller: 'osd', osd_url_value:, osd_nav_images_value: })
