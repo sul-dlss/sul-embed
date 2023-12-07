@@ -112,6 +112,13 @@
         </picture>
       </div>
 
+      <div data-controller="locked-audio-poster" data-action="auth-success@window->locked-audio-poster#hide auth-denied@window->locked-audio-poster#show" tabindex="-1" role="presentation" style="flex: 1 0 100%;" hidden>
+        <picture class="locked-media">
+          <%# The explicitly empty alt is preferred here, since this image merely adds visual decoration. %>
+          <%= image_tag 'waveform-audio-poster.svg', loading: 'lazy', alt: '', data: { locked_audio_poster_target: 'poster' } %>
+        </picture>
+      </div>
+
       <%= render Embed::MediaTagComponent.with_collection(resources_with_primary_file,
                                                           include_transcripts:,
                                                           druid:) %>
