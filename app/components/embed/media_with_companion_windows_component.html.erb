@@ -90,7 +90,11 @@
           <div class="header-background">
             <h3>Transcript</h3>
           </div>
-          <div class="transcript" data-action="media-loaded@window->transcript#persistPlayer">
+          <div class="autoscroll header-background">
+              <label for="autoscroll">Autoscroll</label>
+              <input data-transcript-target="autoscroll" data-action="transcript#toggleAutoscroll" type="checkbox" class="form-check-input" id="autoscroll" checked>
+          </div>
+          <div class="transcript" data-action="media-loaded@window->transcript#persistPlayer time-update@window->transcript#scrollPlayer">
             <div data-transcript-target="outlet"></div>
           </div>
         </section>

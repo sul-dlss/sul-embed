@@ -46,6 +46,11 @@ export default class extends Controller {
         const event = new CustomEvent('media-loaded', { detail: player })
         window.dispatchEvent(event)
       })
+      player.on('timeupdate', () => {
+        const timestamp = player.currentTime()
+        const event = new CustomEvent('time-update', { detail: timestamp })
+        window.dispatchEvent(event)
+      })
       return player
     })
   }

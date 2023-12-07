@@ -432,7 +432,7 @@
       }
     }
 
-    .metadataList, .rightsList, .contentsList, .transcript {
+    .metadataList, .rightsList, .contentsList, .transcript, .autoscroll {
       color: var(--text-color);
       padding: var(--drawer-content-padding);
     }
@@ -465,10 +465,15 @@
     }
 
     .transcript {
+      --highlight-background-color:  rgb(243, 249, 255);
+      --highlight-border-color: rgb(131, 193, 250);
       .cue {
         border: 1px solid transparent;
         padding-right: 2px;
         line-height: 16pt;
+        // For cue-new-speaker, transcript scroll needs to scroll up more
+        // This behavior is also alright for regular cue elements
+        scroll-margin-bottom: 5rem;
 
         &:hover {
           background-color: rgba(0, 0, 0, 0.15);
@@ -479,6 +484,12 @@
           display: block;
           margin-top: 1rem;
         }
+      }
+      .highlight {
+        background-color: var(--highlight-background-color);
+        font-weight: bold;
+        border: 1px solid var(--highlight-border-color);
+        border-radius: 0.25rem;
       }
     }
 
