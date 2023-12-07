@@ -4,15 +4,15 @@ export default class extends Controller {
   // Display the lock if the video tag doesn't have a poster
   show() {
     if (!this.hasPoster())
-      this.element.style.display = 'flex'
+      this.element.hidden = false
   }
 
   hide() {
-    this.element.style.display = 'none'
+    this.element.hidden = true
   }
 
   hasPoster() {
-    const tags = document.querySelectorAll('video,audio')
+    const tags = document.querySelectorAll('video')
     return [...tags].some((tag) => tag.getAttribute('poster'))
   }
 }
