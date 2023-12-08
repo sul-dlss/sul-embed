@@ -276,7 +276,7 @@
 
     h3 {
       align-self: center;
-      font-size: 0.937rem;
+      font-size: 1rem;
       font-weight: 300;
       line-height: 1.6em;
       letter-spacing: 0.015em;
@@ -426,15 +426,29 @@
       display: flex;
       flex-direction: column;
       overflow: clip auto;
+
       section {
         // This avoids wrapping when animating.
         width: calc(var(--drawer-width) - var(--tab-width));
       }
     }
 
-    .metadataList, .rightsList, .contentsList, .transcript, .autoscroll {
+    .metadataList, .rightsList, .contentsList, .transcript, .transcript-controls {
       color: var(--text-color);
       padding: var(--drawer-content-padding);
+    }
+
+    .transcript-controls {
+      font-size: 0.8rem;
+
+      input {
+        margin-left: 0.6rem;
+      }
+
+      input, select {
+        margin-right: 0.6rem;
+        vertical-align: middle;
+      }
     }
 
     .logoContainer {

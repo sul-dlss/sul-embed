@@ -24,6 +24,10 @@ module Embed
       render_media_viewer_for(url: 'https://purl.stanford.edu/wz015vw6759')
     end
 
+    def with_multilingual_captions
+      render_media_viewer_for(url: 'https://purl.stanford.edu/dq301jn4140')
+    end
+
     private
 
     def render_media_viewer_for(url:)

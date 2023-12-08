@@ -5,7 +5,7 @@ import videojs from 'video.js';
 // native player when it initializes.  This depends on the media_tag_controller.js emitting a custom media-loaded
 // event.
 export default class extends Controller {
-  static targets = [ "outlet", "autoscroll", "button" ]
+  static targets = [ "outlet", "autoscroll", "button", "captionLanguageSelect" ]
 
   // When the media-loaded event occurs, store the handle to the player
   persistPlayer(evt) {
@@ -16,21 +16,63 @@ export default class extends Controller {
   load() {
     if (this.loaded)
       return
-    const cues = this.textTrackCues().map((cue) => this.buildCue(cue))
-    this.outletTarget.innerHTML = cues.join('')
     this.revealButton()
+    this.setupTranscriptLanguageSwitching()
+    this.renderCues()
     this.loaded = true
-    this.setupTranscriptScroll()
   }
 
-  textTrackCues() {
-    const tracks = this.player.textTracks_.tracks_
-    if (!tracks)
-      return []
-    const track = tracks.find((track) => track.kind === 'captions' )
-    if (!track)
-      return []
-    return track.cues.cues_
+  get captionTracks() {
+    const tracks = this.player.textTracks_?.tracks_
+    if (!tracks) return []
+
+    return tracks.filter(track => track.kind === 'captions')
+  }
+
+  get cuesByLanguage() {
+    const cues = {}
+    if (this.captionTracks.length == 0) return cues
+
+    this.captionTracks.forEach(track => {
+      const list = track.cues.cues_
+      const cueStartTimes = list.length === 0 ? undefined : list.map((cue) => cue.startTime)
+
+      cues[track.language] = {
+        list,
+        cueStartTimes,
+        minStartTime: list.length === 0 ? 0 : Math.min.apply(Math, cueStartTimes),
+        lastCueEndTime: list.length === 0 ? 0 : Math.max.apply(Math, list.map((cue) => cue.endTime)),
+        asHtml: list.map((cue) => this.buildCue(cue)).join('')
+      }
+    })
+
+    return cues
+  }
+
+  currentCues() {
+    return this.selectedLanguage ?
+      this.cuesByLanguage[this.selectedLanguage] :
+      Object.values(this.cuesByLanguage)[0]
+  }
+
+  renderCues() {
+    this.outletTarget.innerHTML = this.currentCues().asHtml
+  }
+
+  selectLanguage(evt) {
+    this.selectedLanguage = evt.target.value
+    this.renderCues()
+  }
+
+  setupTranscriptLanguageSwitching() {
+    if (this.captionTracks.length == 0) return
+
+    this.captionTracks.forEach(track => {
+      this.captionLanguageSelectTarget.insertAdjacentHTML(
+        'beforeend',
+        `<option value="${track.language}">${track.label}</option>`
+      )
+    })
   }
 
   buildCue(cue) {
@@ -49,30 +91,18 @@ export default class extends Controller {
     this.buttonTarget.hidden = false
   }
 
-  setupTranscriptScroll() {
-    const cues = this.textTrackCues()
-    this.minStartTime = 0
-    this.lastCueEndTime = 0
-    if (cues.length > 0) {
-      // Retrieve all the start times for the various cues for this transcript
-      this.cueStartTimes = cues.map((cue) => cue.startTime)
-      // Transcript scroll and highlighting should begin after the first speaking cue starts
-      this.minStartTime = Math.min.apply(Math, this.cueStartTimes)
-      // The transcript highlight should continue only until the last cue end time
-      this.lastCueEndTime = Math.max.apply(Math, cues.map((cue) => cue.endTime))
-    }
-  }
-
   scrollPlayer(evt) {
+    const cues = this.currentCues()
+
     // For transcript scroll to take effect, the companion window should be showing the transcript
     // and the autoscroll button should be checked and there must be cues present within the transcript
-    if (!this.loaded || !this.autoscrollTarget.checked || (this.textTrackCues().length == 0))
+    if (!this.loaded || !this.autoscrollTarget.checked || (cues.list.length == 0))
       return
 
     // this.minStartTime and this.lastCueEndTime represent the starting and end point of all cues
-    if(evt.detail >= this.minStartTime && evt.detail <= this.lastCueEndTime) {
+    if (evt.detail >= cues.minStartTime && evt.detail <= cues.lastCueEndTime) {
       // Retrieve the last cue start time less than or equal to the current video time
-      const startTime = this.maxStartCueTime(evt.detail)
+      const startTime = Math.max.apply(Math, cues.cueStartTimes.filter(x => x <= evt.detail))
       // Find the cue element in the transcript that corresponds to this start time
       const cueElement = this.outletTarget.querySelector(`[data-cue-start-value="${startTime}"]`)
       // Scroll the transcript window to the cue for this video
@@ -82,14 +112,10 @@ export default class extends Controller {
       // Apply CSS highlighting to the cue for this video time
       this.highlightCue(cueElement)
     }
-    else if(evt.detail > this.lastCueEndTime) {
+    else if (evt.detail > cues.lastCueEndTime) {
       //After we reach the end time of the last transcript, remove all the highlighting
       this.removeAllCueHighlights()
     }
-  }
-
-  maxStartCueTime(transcriptTime) {
-    return Math.max.apply(Math, this.cueStartTimes.filter((x) => x <= transcriptTime))
   }
 
   highlightCue(cueElement) {
@@ -100,13 +126,13 @@ export default class extends Controller {
   }
 
   removeAllCueHighlights() {
-    this.outletTarget.querySelectorAll('span.cue').forEach((elem) =>
+    this.outletTarget.querySelectorAll('span.cue').forEach(elem => {
       elem.classList.remove('highlight')
-    )
+    })
   }
 
   toggleAutoscroll() {
-    if(! this.autoscrollTarget.checked) {
+    if (!this.autoscrollTarget.checked) {
       this.removeAllCueHighlights()
     }
   }

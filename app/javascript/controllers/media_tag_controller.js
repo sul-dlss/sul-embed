@@ -45,11 +45,18 @@ export default class extends Controller {
       player.on('loadedmetadata', () => {
         const event = new CustomEvent('media-loaded', { detail: player })
         window.dispatchEvent(event)
-      })
-      player.on('timeupdate', () => {
-        const timestamp = player.currentTime()
-        const event = new CustomEvent('time-update', { detail: timestamp })
-        window.dispatchEvent(event)
+
+        // Stop the `loadedmetadata` event and don't bother listening for
+        // `timeupdate` events until after `loadedmetadata` fires completes.
+        // Why? If we don't, `timeupdate` will be triggered before the video
+        // (and its captions) are fully present, and we use the custom
+        // `time-update` event to scroll the transcript panel.
+        player.off('loadedmetadata')
+        player.on('timeupdate', () => {
+          const timestamp = player.currentTime()
+          const event = new CustomEvent('time-update', { detail: timestamp })
+          window.dispatchEvent(event)
+        })
       })
       return player
     })
