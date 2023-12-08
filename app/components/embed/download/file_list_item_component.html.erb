@@ -1,6 +1,6 @@
 <li>
-  <a href='<%= url %>' title='<%= file.title %>' target='_blank' rel='noopener noreferrer'>
-    Download <%= file.label_or_filename %>
+  <a href='<%= url %>' target='_blank' rel='noopener noreferrer'>
+    Download <%= download_label %>
   </a>
   <%= render 'embed/restrictions_text_for_file', file: file %>
   <%= file_size %>
