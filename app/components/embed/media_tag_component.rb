@@ -31,7 +31,7 @@ module Embed
     end
 
     def thumbnail_url
-      # the 74,73 size accounts for the additional pixel size returned by the image server 
+      # the 74,73 size accounts for the additional pixel size returned by the image server
       stacks_square_url(druid, @resource.thumbnail.title, size: '74,73') if @resource.thumbnail
     end
 

@@ -485,9 +485,15 @@
       border: 1px solid gray;
       margin-bottom: 0.5rem;
       height: var(--slider-thumb-height);
+      text-align: center;
 
       .default-thumbnail-icon {
+        display: inline-block;
         font-size: calc(var(--slider-thumb-height) - 2px);
+        width: 75px;
+        margin-right: .5rem;
+        padding-left: .3rem;
+
         &::before {
           vertical-align: text-top;
         }
@@ -515,6 +521,7 @@
         margin-top: 0.25rem;
         vertical-align: top;
         width: 130px;
+        text-align: left;
       }
     }
   }
