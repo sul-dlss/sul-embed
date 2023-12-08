@@ -91,12 +91,12 @@ export default class extends Controller {
     this.buttonTarget.hidden = false
   }
 
-  scrollPlayer(evt) {
+  highlightCue(evt) {
     const cues = this.currentCues()
 
-    // For transcript scroll to take effect, the companion window should be showing the transcript
-    // and the autoscroll button should be checked and there must be cues present within the transcript
-    if (!this.loaded || !this.autoscrollTarget.checked || (cues.list.length == 0))
+    // For transcript cue highlighting to take effect, the companion window should be showing the transcript
+    // and there must be cues present within the transcript.
+    if (!this.loaded || (cues.list.length === 0))
       return
 
     // this.minStartTime and this.lastCueEndTime represent the starting and end point of all cues
@@ -105,12 +105,16 @@ export default class extends Controller {
       const startTime = Math.max.apply(Math, cues.cueStartTimes.filter(x => x <= evt.detail))
       // Find the cue element in the transcript that corresponds to this start time
       const cueElement = this.outletTarget.querySelector(`[data-cue-start-value="${startTime}"]`)
+      // Remove highlighting from all the other cue elements
+      this.removeAllCueHighlights()
+      // Apply CSS highlighting to the cue for this video time
+      cueElement.classList.add('highlight')
+
       // Scroll the transcript window to the cue for this video
       // These options have the element scroll to the nearest visible container position without scrolling
       // the page itself further up or down
-      cueElement.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'nearest'})
-      // Apply CSS highlighting to the cue for this video time
-      this.highlightCue(cueElement)
+      if (this.autoscrollTarget.checked)
+        cueElement.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'nearest'})
     }
     else if (evt.detail > cues.lastCueEndTime) {
       //After we reach the end time of the last transcript, remove all the highlighting
@@ -118,22 +122,9 @@ export default class extends Controller {
     }
   }
 
-  highlightCue(cueElement) {
-    // Remove highlighting from all the other cue elements
-    this.removeAllCueHighlights()
-    //Add highlight class to the current cue element
-    cueElement.classList.add('highlight')
-  }
-
   removeAllCueHighlights() {
     this.outletTarget.querySelectorAll('span.cue').forEach(elem => {
       elem.classList.remove('highlight')
     })
-  }
-
-  toggleAutoscroll() {
-    if (!this.autoscrollTarget.checked) {
-      this.removeAllCueHighlights()
-    }
   }
 }
