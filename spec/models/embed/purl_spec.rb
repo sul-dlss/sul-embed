@@ -176,7 +176,7 @@ RSpec.describe Embed::Purl do
   describe '#manifest_json_url' do
     subject { purl.manifest_json_url }
 
-    let(:purl) { described_class.new({ druid: '12345' }) }
+    let(:purl) { described_class.new(druid: '12345') }
 
     it { is_expected.to eq 'https://purl.stanford.edu/12345/iiif/manifest' }
   end
@@ -184,7 +184,7 @@ RSpec.describe Embed::Purl do
   describe '#manifest_json_response' do
     subject(:fetch) { purl.manifest_json_response }
 
-    let(:purl) { described_class.new({ druid: '12345' }) }
+    let(:purl) { described_class.new(druid: '12345') }
 
     context 'with a response' do
       before do

@@ -68,6 +68,7 @@ RSpec.describe 'Embed requests' do
         expect(response.parsed_body).to include({ 'title' => 'File Title',
                                                   'type' => 'rich', 'version' => '1.0',
                                                   'provider_name' => 'SUL Embed Service' })
+        expect(response.headers.keys).to include('etag', 'last-modified')
       end
     end
 
@@ -120,6 +121,7 @@ RSpec.describe 'Embed requests' do
         get '/iframe', params: { url: 'http://purl.stanford.edu/fn662rv4961' }
         expect(response).to have_http_status(:ok)
         expect(response.headers['X-Frame-Options']).to be_nil
+        expect(response.headers.keys).to include('etag', 'last-modified')
       end
     end
   end

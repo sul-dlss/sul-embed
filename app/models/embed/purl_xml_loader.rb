@@ -6,10 +6,6 @@ module Embed
       @druid = druid
     end
 
-    def self.load(druid)
-      new(druid).load
-    end
-
     def load # rubocop:disable Metrics/MethodLength
       {
         druid: @druid,
@@ -29,6 +25,17 @@ module Embed
         controlled_digital_lending:,
         public:
       }
+    end
+
+    def etag
+      http_response&.headers&.fetch('ETag', nil)
+    end
+
+    def last_modified
+      header = http_response&.headers&.fetch('Last-Modified', nil)
+      return unless header
+
+      Time.rfc2822(header)
     end
 
     private
@@ -141,22 +148,26 @@ module Embed
       "#{Settings.purl_url}/#{@druid}.xml"
     end
 
-    def response # rubocop:disable Metrics/MethodLength
+    def http_response
+      @http_response ||= begin
+        conn = Faraday.new(url: purl_xml_url)
+
+        conn.get do |request|
+          request.options.timeout = Settings.purl_read_timeout
+          request.options.open_timeout = Settings.purl_conn_timeout
+        end
+      end
+    end
+
+    def response
       @response ||=
         begin
-          conn = Faraday.new(url: purl_xml_url)
-
-          response = conn.get do |request|
-            request.options.timeout = Settings.purl_read_timeout
-            request.options.open_timeout = Settings.purl_conn_timeout
-          end
-
-          unless response.success?
+          unless http_response.success?
             raise Purl::ResourceNotAvailable,
-                  "Resource unavailable #{purl_xml_url} (status: #{response.status})"
+                  "Resource unavailable #{purl_xml_url} (status: #{http_response.status})"
           end
 
-          response.body
+          http_response.body
         rescue Faraday::ConnectionFailed, Faraday::TimeoutError
           nil
         end
