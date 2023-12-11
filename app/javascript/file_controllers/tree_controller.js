@@ -222,6 +222,7 @@ export default class extends Controller {
   }
 
   updateCount() {
+    if(!this.hasCountTarget) return
     const count = this.countTarget.textContent = this.tableTarget.querySelectorAll('tbody > tr[data-tree-role="leaf"]:not(.search-hidden)').length
     if (count == 1) {
       this.countTarget.textContent = '1 file'
