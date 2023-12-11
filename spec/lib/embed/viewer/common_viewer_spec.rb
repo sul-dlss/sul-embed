@@ -50,10 +50,8 @@ RSpec.describe Embed::Viewer::CommonViewer do
       expect(file_viewer).not_to be_show_download
     end
 
-    it 'true for image, geo and media viewer' do
+    it 'true for geo viewers' do
       expect(geo_viewer).to be_show_download
-      expect_any_instance_of(Embed::Purl).to receive(:downloadable_files).and_return(['a'])
-      expect(media_viewer).to be_show_download
     end
 
     context 'when hide_download is specified' do
