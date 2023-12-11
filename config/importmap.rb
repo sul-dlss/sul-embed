@@ -4,6 +4,8 @@ pin "media", preload: true
 pin "webarchive", preload: true
 pin "file", preload: true
 pin "document", preload: true
+pin "3d", preload: true
+
 pin "@hotwired/stimulus", to: "stimulus.min.js", preload: true
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js", preload: true
 pin_all_from "app/javascript/controllers", under: "controllers"
@@ -37,3 +39,13 @@ pin "url-toolkit", to: "https://ga.jspm.io/npm:url-toolkit@2.2.5/src/url-toolkit
 pin "videojs-vtt.js", to: "https://ga.jspm.io/npm:videojs-vtt.js@0.15.5/lib/browser-index.js"
 pin "openseadragon", to: "https://ga.jspm.io/npm:openseadragon@4.1.0/build/openseadragon/openseadragon.js"
 pin "fscreen", to: "https://ga.jspm.io/npm:fscreen@1.2.0/dist/fscreen.cjs.js"
+pin "@google/model-viewer", to: "https://ga.jspm.io/npm:@google/model-viewer@3.3.0/lib/model-viewer.js"
+pin "@lit/reactive-element", to: "https://ga.jspm.io/npm:@lit/reactive-element@1.6.3/reactive-element.js"
+pin "@lit/reactive-element/decorators/", to: "https://ga.jspm.io/npm:@lit/reactive-element@1.6.3/decorators/"
+pin "lit", to: "https://ga.jspm.io/npm:lit@2.8.0/index.js"
+pin "lit-element/lit-element.js", to: "https://ga.jspm.io/npm:lit-element@3.3.3/lit-element.js"
+pin "lit-html", to: "https://ga.jspm.io/npm:lit-html@2.8.0/lit-html.js"
+pin "lit-html/is-server.js", to: "https://ga.jspm.io/npm:lit-html@2.8.0/is-server.js"
+pin "lit/decorators.js", to: "https://ga.jspm.io/npm:lit@2.8.0/decorators.js"
+pin "three", to: "https://ga.jspm.io/npm:three@0.157.0/build/three.module.js"
+pin "three/", to: "https://ga.jspm.io/npm:three@0.157.0/"
