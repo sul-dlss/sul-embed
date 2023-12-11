@@ -3,6 +3,7 @@
 pin "media", preload: true
 pin "webarchive", preload: true
 pin "file", preload: true
+pin "document", preload: true
 pin "@hotwired/stimulus", to: "stimulus.min.js", preload: true
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js", preload: true
 pin_all_from "app/javascript/controllers", under: "controllers"
@@ -35,3 +36,4 @@ pin "safe-json-parse/tuple", to: "https://ga.jspm.io/npm:safe-json-parse@4.0.0/t
 pin "url-toolkit", to: "https://ga.jspm.io/npm:url-toolkit@2.2.5/src/url-toolkit.js"
 pin "videojs-vtt.js", to: "https://ga.jspm.io/npm:videojs-vtt.js@0.15.5/lib/browser-index.js"
 pin "openseadragon", to: "https://ga.jspm.io/npm:openseadragon@4.1.0/build/openseadragon/openseadragon.js"
+pin "fscreen", to: "https://ga.jspm.io/npm:fscreen@1.2.0/dist/fscreen.cjs.js"
