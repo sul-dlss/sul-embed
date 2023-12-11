@@ -10,6 +10,10 @@ module Embed
         PdfComponent
       end
 
+      def importmap
+        'document' unless Settings.enabled_features.legacy_pdf_viewer
+      end
+
       def stylesheet
         'pdf.css'
       end

@@ -4,6 +4,8 @@
 # http://localhost:3000/rails/view_components/embed/media_with_companion_windows_component
 module Embed
   class MediaWithCompanionWindowsComponentPreview < ViewComponent::Preview
+    layout 'preview/media'
+
     def with_audio
       render_media_viewer_for(url: 'https://purl.stanford.edu/gj753wr1198')
     end
