@@ -35,7 +35,7 @@ module Embed
       end
 
       def thumbnail_url
-        stacks_square_url(@druid, @resource.thumbnail.title, size: '75') if @resource.thumbnail
+        stacks_square_url(@druid, @resource.thumbnail.title, size: '75,75') if @resource.thumbnail
       end
 
       def poster_url_for
@@ -85,7 +85,7 @@ module Embed
       end
 
       def previewable_element
-        thumb_url = stacks_square_url(@druid, file.title, size: '75')
+        thumb_url = stacks_square_url(@druid, file.title, size: '75,75')
         render MediaWrapperComponent.new(thumbnail: thumb_url, file:, type:, resource_index: @resource_iteration.index,
                                          scroll: true) do
           tag.img(src: stacks_thumb_url(@druid, file.title),

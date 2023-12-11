@@ -37,7 +37,7 @@ RSpec.describe Embed::StacksImage do
     end
 
     it 'accpets an optional size parameter' do
-      expect(subject.stacks_square_url('abc123', 'filename.jpg', size: 50)).to match(%r{square/50,50/})
+      expect(subject.stacks_square_url('abc123', 'filename.jpg', size: '50,50')).to match(%r{square/50,50/})
     end
 
     it 'escapes special characters in the image file name' do

@@ -83,7 +83,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
 
       it 'includes the file level thumbnail data-attribute' do
         object = page.find('[data-slider-object="0"]')
-        expect(object['data-thumbnail-url']).to match(%r{%2Faudio_1/square/75,75/})
+        expect(object['data-thumbnail-url']).to match(%r{%2Faudio_1/square/74,73/})
       end
     end
 
@@ -92,7 +92,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
 
       it 'includes the file level thumbnail data-attribute when present' do
         object = page.find('[data-slider-object="0"]')
-        expect(object['data-thumbnail-url']).to match(%r{%2Fvideo_1/square/75,75/})
+        expect(object['data-thumbnail-url']).to match(%r{%2Fvideo_1/square/74,73/})
       end
     end
 
