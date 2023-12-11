@@ -286,6 +286,19 @@
       line-height: 1.6em;
       letter-spacing: 0.015em;
     }
+
+    &.transcript-controls {
+      font-size: 0.8rem;
+
+      input {
+        margin-left: 0.6rem;
+      }
+
+      input, select {
+        margin-right: 0.6rem;
+        vertical-align: middle;
+      }
+    }
   }
 
   .sul-embed-media-file {
@@ -441,24 +454,11 @@
       }
     }
 
-    .metadataList, .rightsList, .contentsList, .transcript, .transcript-controls {
+    .metadataList, .rightsList, .contentsList, .transcript {
       color: var(--text-color);
       flex-shrink: 1;
       overflow: hidden auto;
       padding: var(--drawer-content-padding);
-    }
-
-    .transcript-controls {
-      font-size: 0.8rem;
-
-      input {
-        margin-left: 0.6rem;
-      }
-
-      input, select {
-        margin-right: 0.6rem;
-        vertical-align: middle;
-      }
     }
 
     .logoContainer {
