@@ -96,6 +96,10 @@
     box-sizing: border-box;
   }
 
+  [hidden] {
+    display: none !important;
+  }
+
   .video-js .vjs-tech {
     position: relative;
   }
@@ -267,8 +271,9 @@
   }
 
   .header-background {
-    display: flex;
     background: #f4f4f4;
+    display: flex;
+    flex-shrink: 0;
     padding-left: var(--drawer-content-padding);
     justify-content: space-between;
     height: var(--tab-height);
@@ -311,7 +316,7 @@
   .media-component-body {
     display: flex;
     flex-grow: 1;
-    max-height: calc(100vh - 58px);
+    max-height: calc(100vh - 55px);
 
     .sul-embed-media-wrapper {
       display: inline-block;
@@ -430,11 +435,16 @@
       section {
         // This avoids wrapping when animating.
         width: calc(var(--drawer-width) - var(--tab-width));
+        display: flex;
+        flex-direction: column;
+        height: 100%;
       }
     }
 
     .metadataList, .rightsList, .contentsList, .transcript, .transcript-controls {
       color: var(--text-color);
+      flex-shrink: 1;
+      overflow: hidden auto;
       padding: var(--drawer-content-padding);
     }
 
