@@ -7,6 +7,10 @@ module Embed
         ModelComponent
       end
 
+      def importmap
+        '3d'
+      end
+
       def stylesheet
         'model.css'
       end
