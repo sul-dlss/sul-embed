@@ -14,7 +14,7 @@ export default class extends Controller {
 
   // We can't load right away, because the VTT tracks may not have been parsed yet. So we wait until this panel is revealed.
   load() {
-    if (this.loaded)
+    if (this.loaded || !this.currentCues())
       return
     this.revealButton()
     this.setupTranscriptLanguageSwitching()
@@ -34,6 +34,9 @@ export default class extends Controller {
     if (this.captionTracks.length == 0) return cues
 
     this.captionTracks.forEach(track => {
+      if (!track.cues)
+        return
+
       const list = track.cues.cues_
       const cueStartTimes = list.length === 0 ? undefined : list.map((cue) => cue.startTime)
 

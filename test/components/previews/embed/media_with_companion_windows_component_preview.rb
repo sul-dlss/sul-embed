@@ -28,6 +28,10 @@ module Embed
       render_media_viewer_for(url: 'https://purl.stanford.edu/dq301jn4140')
     end
 
+    def without_captions
+      render_media_viewer_for(url: 'https://purl.stanford.edu/dp324gw4986')
+    end
+
     private
 
     def render_media_viewer_for(url:)
