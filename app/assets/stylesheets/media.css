@@ -107,8 +107,8 @@ body {
 
   .modal-container {
     max-width: var(--modal-max-width);
-    width: calc(79vw);
-    max-height: calc(79vh);
+    width: 79vw;
+    max-height: 79vh;
     padding: 2rem;
     margin: auto;
     border: none;
