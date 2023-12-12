@@ -26,17 +26,13 @@ export default class extends Controller {
     const tracks = this.player.textTracks_?.tracks_
     if (!tracks) return []
 
-    return tracks.filter(track => track.kind === 'captions')
+    return tracks.filter(track => track.kind === 'captions' && track.cues?.cues_)
   }
 
   get cuesByLanguage() {
     const cues = {}
-    if (this.captionTracks.length == 0) return cues
 
     this.captionTracks.forEach(track => {
-      if (!track.cues)
-        return
-
       const list = track.cues.cues_
       const cueStartTimes = list.length === 0 ? undefined : list.map((cue) => cue.startTime)
 
@@ -68,8 +64,6 @@ export default class extends Controller {
   }
 
   setupTranscriptLanguageSwitching() {
-    if (this.captionTracks.length == 0) return
-
     this.captionTracks.forEach(track => {
       this.captionLanguageSelectTarget.insertAdjacentHTML(
         'beforeend',
