@@ -52,6 +52,11 @@ export default class extends Controller {
     return cues
   }
 
+  // This is called when a selectstart event is fired within the transcript
+  stopScroll() {
+    this.autoscrollTarget.checked = false
+  }
+
   currentCues() {
     return this.selectedLanguage ?
       this.cuesByLanguage[this.selectedLanguage] :
