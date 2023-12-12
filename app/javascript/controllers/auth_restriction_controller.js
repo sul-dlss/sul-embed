@@ -43,7 +43,7 @@ export default class extends Controller {
 
   displayLocationRestriction(restrictionLocation) {
     this.element.hidden = false
-    this.locationRestrictionTarget.querySelector('.loginMessage').innerText = `Access is restricted to the ${restrictionLocation.label} reading room. See Access conditions for more information.`
+    this.locationRestrictionTarget.querySelector('.loginMessage').innerText = `Access is restricted to the ${restrictionLocation.label}. See Access conditions for more information.`
     this.locationRestrictionTarget.hidden = false
   }
 
