@@ -1,16 +1,6 @@
 @import 'common';
 @import 'video.js/dist/video-js';
 
-// NOTE: This is overriding bootstrap_media.css
-.#{$namespace}-media {
-  display: flex;
-  min-height: 175px;
-  overflow-y: hidden !important;
-  position: relative;
-  text-align: center;
-}
-
-
 // VideoJS CSS overrides for responsive layout
 // See http://andreassauer.name/experimente/video-js/demo.html
 .video-js {
@@ -330,6 +320,10 @@
     flex-grow: 1;
     max-height: calc(100vh - 55px);
 
+    .sul-embed-body {
+      display: flex;
+    }
+
     .sul-embed-media-wrapper {
       display: inline-block;
       height: 100%;
@@ -435,8 +429,15 @@
       }
     }
 
+    // From https://www.a11yproject.com/posts/how-to-hide-content/
     .visually-hidden {
-      @include visually-hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
     }
 
     .inner {
@@ -546,8 +547,9 @@
       }
 
       .sul-embed-thumb-stanford-only {
-        @include stanford-only;
+        background: url('stanford_s.svg') no-repeat;
         background-position: bottom left;
+        padding-right: 20px;
         &.text {
           height: calc(100% - 0.75rem); // positions .sul-embed-thumb-stanford-only
         }
