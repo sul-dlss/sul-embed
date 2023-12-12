@@ -1,4 +1,7 @@
-@import 'common';
+body {
+  margin: 0;
+  padding: 0;
+}
 
 // VideoJS CSS overrides for responsive layout
 // See http://andreassauer.name/experimente/video-js/demo.html
@@ -70,15 +73,25 @@
 .media-component {
   --active-color: rgb(140, 21, 21);
   --drawer-width: 305px;
+  --font-size-base: 14px;
   --tab-width: 48px;
   --tab-height: 48px;
   --drawer-content-padding: 1rem;
   --text-color: rgba(0, 0, 0, 0.87);
+  --border-color: #5f574f;
   --button-color: #454545;
   --button-hover-bg-color: #9494947a;
   --background-color: rgba(255, 255, 255);
+  --header-size: 62.65px; // depends on the line-height of the header > nav > h2
   --modal-border-radius: 8px;
   --modal-max-width: 600px;
+  
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
+  font-size: var(--font-size-base);
+  height: 100vh;
 
   * {
     box-sizing: border-box;
@@ -291,6 +304,7 @@
 
   .sul-embed-media-file {
     height: 100%;
+    width: 100%;
   }
 
   .button-label {
@@ -317,12 +331,13 @@
   .media-component-body {
     display: flex;
     flex-grow: 1;
-    max-height: calc(100vh - 55px);
+    max-height: calc(100vh - var(--header-size));
 
-    .sul-embed-body {
+    .sul-embed-media {
       display: flex;
+      flex: 1 1 auto;
     }
-
+  
     .sul-embed-media-wrapper {
       display: inline-block;
       height: 100%;
@@ -484,6 +499,7 @@
         line-height: 1.6em;
         letter-spacing: 0em;
         margin-bottom: 0.5em;
+        margin-left: 0;
       }
     }
 
