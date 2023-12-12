@@ -4,8 +4,6 @@ module Embed
   class Request
     attr_reader :params
 
-    delegate :stanford_only_unrestricted?, :embargoed?, :controlled_digital_lending?, :citation_only?, to: :purl_object
-
     def initialize(params)
       @params = params
     end

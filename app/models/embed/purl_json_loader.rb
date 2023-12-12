@@ -25,6 +25,7 @@ module Embed
         archived_site_url:,
         embargoed:,
         stanford_only_unrestricted:,
+        stanford_only_no_download:,
         controlled_digital_lending:,
         public:
       }
@@ -49,6 +50,10 @@ module Embed
 
     def stanford_only_unrestricted
       json.dig('access', 'download') == 'stanford'
+    end
+
+    def stanford_only_no_download
+      json.dig('access', 'download') == 'none' && json.dig('access', 'view') == 'stanford'
     end
 
     def controlled_digital_lending
