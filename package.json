@@ -46,7 +46,6 @@
     "shakapacker": "7",
     "terser-webpack-plugin": "5",
     "url-polyfill": "^1.1.12",
-    "video.js": "^8.6.1",
     "webpack": "5",
     "webpack-assets-manifest": "5",
     "webpack-cli": "4",
