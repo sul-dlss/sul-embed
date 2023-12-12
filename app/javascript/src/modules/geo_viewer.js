@@ -95,13 +95,32 @@
         }
         return style;
       },
+      indexMapInfo(data) {
+        let output = '<div class="index-map-info">'
+        if (data.title)
+          output = output.concat(`<h3>${data.title}</h3>`)
+        output = output.concat("<div>")
+        if (data.thumbnailUrl)
+          output = output.concat(`<img src="${data.thumbnailUrl}" style="max-width: 100%; height: auto;" alt="">`)        
+        output = output.concat("<dl>")
+        if (data.websiteUrl)
+          output = output.concat(`<a href="${data.websiteUrl}">View this map</a>`)      
+        if (data.downloadUrl)
+          output = output.concat(`<dt>Download</dt><dd><a href="${data.downloadUrl}">${data.downloadUrl}</a></dd>`)
+        if (data.recordIdentifier)
+          output = output.concat(`<dt>Record Identifier</dt><dd><a href="${data.recordIdentifier}">${data.recordIdentifier}</a></dd>`)   
+        if (data.label)
+          output = output.concat(`<dt>Label</dt><dd>${data.label}</dd>`)   
+        if (data.note)
+          output = output.concat(`<dt>Note</dt><dd>${data.note}</dd>`)   
+        return output.concat("</dl></div></div>")
+      },
       indexMapInspection: function(e) {
         var thumbDeferred = $.Deferred();
         var data = e.target.feature.properties;
         var _this = this;
         $.when(thumbDeferred).done(function() {
-          const template = require('../templates/index_map_info.hbs');
-          _this.openSidebarWithContent(template(data));
+          _this.openSidebarWithContent(_this.indexMapInfo(data));
         });
 
         if (data.iiifUrl) {
@@ -169,11 +188,19 @@
           .css({'height': map.getSize().y - 90})
           .attr('aria-hidden', false);
       },
+      geoSidebar: function() {
+        return `<div class="sul-embed-geo-sidebar">
+                  <div class="sul-embed-geo-sidebar-header">
+                    <h3>Features</h3>
+                    <i class="sul-i-arrow-up-8"></i>
+                  </div>
+                  <div class="sul-embed-geo-sidebar-content">Click the map to inspect features.</div>
+                </div>`
+      },
       setupSidebar: function() {
-        const template = require('../templates/geo_sidebar.hbs');
         L.control.custom({
           position: 'topright',
-          content: template(),
+          content: this.geoSidebar(),
           classes: '',
           events: {
             click: function(e) {
