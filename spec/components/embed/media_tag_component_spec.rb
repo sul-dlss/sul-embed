@@ -116,12 +116,6 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     it 'are included as top level objects' do
       expect(page).to have_css('div .osd')
     end
-
-    it 'are scrollable' do
-      object = page.find('[data-slider-object="0"]')
-
-      expect(object['style']).to include 'overflow-y: scroll'
-    end
   end
 
   describe 'with a poster' do

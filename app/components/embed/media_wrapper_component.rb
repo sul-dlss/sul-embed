@@ -2,18 +2,17 @@
 
 module Embed
   class MediaWrapperComponent < ViewComponent::Base
-    def initialize(file:, type:, resource_index:, thumbnail:, scroll: false)
+    def initialize(file:, type:, resource_index:, thumbnail:)
       @file = file
       @type = type
       @resource_index = resource_index
       @thumbnail = thumbnail
-      @scroll = scroll
     end
 
     # TODO: stanford_only and location_restricted moved to the media tag,
     #       so they can be removed after we switch to the new component
     def call # rubocop:disable Metrics/MethodLength
-      tag.div(style: "flex: 1 0 100%;#{' overflow-y: scroll' if @scroll}",
+      tag.div(style: 'flex: 1 0 100%;',
               data: {
                 controller: 'media-wrapper',
                 action: 'thumbnail-clicked@window->media-wrapper#toggleVisibility',
