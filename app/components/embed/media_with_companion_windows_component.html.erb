@@ -1,4 +1,4 @@
-<div class="sul-embed-container media-component" id='sul-embed-object' hidden data-controller="media media-tag transcript" data-action="media-seek@window->media-tag#seek">
+<div class="sul-embed-container media-component" id='sul-embed-object' hidden data-controller="media media-tag transcript" data-media-tag-iiif-manifest-value="<%= iiif_v3_manifest_url %>" data-action="media-seek@window->media-tag#seek">
   <header>
     <nav aria-label="Window navigation">
       <button data-action="click->media#toggleLeft transcript#load" aria-label="Display sidebar" aria-controls="left-drawer">
@@ -76,7 +76,7 @@
           <div class="header-background">
             <h3>About this item</h3>
           </div>
-          <dl data-controller="iiif-metadata" class="metadataList" data-iiif-metadata-url-value="<%= manifest_json_url %>"></dl>
+          <dl data-controller="iiif-metadata" class="metadataList" data-action="iiif-manifest-received@window->iiif-metadata#drawMetadata"></dl>
         </section>
 
         <section id="media-content" data-media-target="contents" role="tabpanel" hidden>

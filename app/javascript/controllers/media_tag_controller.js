@@ -6,10 +6,26 @@ import buildThumbnail from 'src/modules/media_thumbnail_builder'
 
 export default class extends Controller {
   static targets = [ "mediaTag", "list" ]
+  static values = {
+    iiifManifest: String
+  }
 
   connect() {
+    this.fetchIiifManifest()
     this.setupThumbnails()
     this.validateMedia()
+  }
+
+  fetchIiifManifest() {
+    fetch(this.iiifManifestValue)
+      .then((response) => response.json())
+      .then((json) => this.dispatchManifestEvent(json))
+      .catch((err) => console.error(err))
+  }
+
+  dispatchManifestEvent(json) {
+    const event = new CustomEvent('iiif-manifest-received', { detail: json })
+    window.dispatchEvent(event)  
   }
 
   validateMedia(completeCallback) {
