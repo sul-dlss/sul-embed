@@ -429,8 +429,15 @@
       }
     }
 
+    // From https://www.a11yproject.com/posts/how-to-hide-content/
     .visually-hidden {
-      @include visually-hidden;
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
     }
 
     .inner {
@@ -540,8 +547,9 @@
       }
 
       .sul-embed-thumb-stanford-only {
-        @include stanford-only;
+        background: url('stanford_s.svg') no-repeat;
         background-position: bottom left;
+        padding-right: 20px;
         &.text {
           height: calc(100% - 0.75rem); // positions .sul-embed-thumb-stanford-only
         }
