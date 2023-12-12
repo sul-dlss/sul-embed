@@ -15,11 +15,12 @@ module Embed
       tag.div(style: 'flex: 1 0 100%;',
               data: {
                 controller: 'media-wrapper',
+                media_wrapper_index_value: @resource_index,
                 action: 'thumbnail-clicked@window->media-wrapper#toggleVisibility',
                 stanford_only: @file.stanford_only?,
                 location_restricted: @file.location_restricted?,
                 file_label: @file.label_or_filename,
-                slider_object: @resource_index,
+                media_tag_target: 'mediaWrapper',
                 thumbnail_url: @thumbnail.presence,
                 default_icon: @type == 'audio' ? 'sul-i-file-music-1' : 'sul-i-file-video-3'
               },

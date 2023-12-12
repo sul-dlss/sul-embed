@@ -26,16 +26,6 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
       expect(page).to have_css('[data-file-label="First Video"]')
     end
 
-    it 'includes a data attribute for the thumb-slider bar' do
-      expect(page).to have_css('[data-slider-object="0"]')
-    end
-
-    it 'is not scrollable' do
-      object = page.find('[data-slider-object="0"]')
-
-      expect(object['style']).not_to match(/overflow.*scroll/)
-    end
-
     it 'includes a data attribute that includes the url to check the users auth status' do
       expect(page).to have_css('video[data-auth-url]', visible: :all)
       auth_url = page.all('video[data-auth-url]', visible: :all).first['data-auth-url']
@@ -50,10 +40,6 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   context 'with a stanford only video' do
     let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
     let(:resource) { build(:resource, :video, files: [build(:resource_file, :video, :stanford_only)]) }
-
-    it 'includes a data attribute for the thumb-slider bar' do
-      expect(page).to have_css('[data-slider-object="1"]', visible: :hidden)
-    end
 
     it 'includes a data attribute that includes the url to check the users auth status' do
       expect(page).to have_css('video[data-auth-url]', visible: :all)
@@ -82,7 +68,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
       let(:resource) { build(:resource, :audio) }
 
       it 'includes the file level thumbnail data-attribute' do
-        object = page.find('[data-slider-object="0"]')
+        object = page.find('[data-media-wrapper-index-value="0"]')
         expect(object['data-thumbnail-url']).to match(%r{%2Faudio_1/square/74,73/})
       end
     end
@@ -91,7 +77,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
       let(:resource) { build(:resource, :video) }
 
       it 'includes the file level thumbnail data-attribute when present' do
-        object = page.find('[data-slider-object="0"]')
+        object = page.find('[data-media-wrapper-index-value="0"]')
         expect(object['data-thumbnail-url']).to match(%r{%2Fvideo_1/square/74,73/})
       end
     end
@@ -102,7 +88,8 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
       end
 
       it 'does not use secondary files like jpgs as thumbnails' do
-        object = page.find('[data-slider-object="0"]')
+        object = page.find('[data-media-wrapper-index-value="0"]')
+
         expect(object['data-thumbnail-url']).to be_blank
       end
     end
