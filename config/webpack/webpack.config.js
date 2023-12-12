@@ -10,9 +10,6 @@ const options = {
         url: false
       }
   },
-  module: {
-    rules: [{ test: /\.hbs$/, loader: "handlebars-loader" }]
-  },
   plugins: [
     new webpack.IgnorePlugin({
       resourceRegExp: /@blueprintjs\/(core|icons)/, // ignore optional UI framework dependencies
