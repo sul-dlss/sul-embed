@@ -47,14 +47,14 @@ RSpec.describe 'Media viewer', :js do
         expect(page).to have_content 'About this item'
         click_button 'Content'
         expect(page).to have_content 'Media content'
-        expect(page).to have_css('.sul-embed-media-slider-thumb', count: 3)
+        expect(page).to have_css('.media-thumb', count: 3)
 
         # It indicates that one of the files is Stanford only
         expect(page).to have_css('.sul-embed-thumb-stanford-only', text: /Second Video$/)
 
         # One is restricted
         expect(page).to have_css('.sul-embed-location-restricted-text', text: '(Restricted)')
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: '(Restricted) First Video')
+        expect(page).to have_css('.media-thumb', text: '(Restricted) First Video')
         click_button 'Use and reproduction'
         expect(page).to have_content 'Rights'
       end
@@ -104,10 +104,10 @@ RSpec.describe 'Media viewer', :js do
       click_button 'Display sidebar'
       within 'aside' do
         click_button 'Content'
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: /^\(Restricted\) The First Video Has An Overly Lo…$/)
+        expect(page).to have_css('.media-thumb', text: /^\(Restricted\) The First Video Has An Overly Lo…$/)
 
         # displays the whole title if it is under the length limit
-        expect(page).to have_css('.sul-embed-media-slider-thumb', text: /^2nd Video Has A Long Title, But Not Too Long$/)
+        expect(page).to have_css('.media-thumb', text: /^2nd Video Has A Long Title, But Not Too Long$/)
       end
     end
   end
