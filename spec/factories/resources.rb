@@ -15,6 +15,12 @@ FactoryBot.define do
       files { [build(:resource_file, :document)] }
     end
 
+    trait :document_no_download do
+      type { 'document' }
+      description { 'File1 Label' }
+      files { [build(:resource_file, :document, :no_download)] }
+    end
+
     trait :video do
       type { 'video' }
       description { 'First Video' }

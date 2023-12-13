@@ -21,7 +21,6 @@ module Embed
         archived_site_url:,
         embargoed:,
         stanford_only_unrestricted:,
-        no_download:,
         controlled_digital_lending:,
         public:
       }
@@ -46,10 +45,6 @@ module Embed
 
     def stanford_only_unrestricted
       rights.stanford_only_unrestricted?
-    end
-
-    def no_download
-      !rights.world_downloadable?
     end
 
     def controlled_digital_lending

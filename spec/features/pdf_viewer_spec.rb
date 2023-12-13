@@ -25,7 +25,7 @@ RSpec.describe 'PDF Viewer', :js do
   end
 
   context 'when no download' do
-    let(:purl) { build(:purl, :no_download, :document) }
+    let(:purl) { build(:purl, :document_no_download) }
 
     it 'renders the PDF viewer for documents with restriction message' do
       expect(page).to have_css('.sul-embed-pdf')
