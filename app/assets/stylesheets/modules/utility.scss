@@ -12,7 +12,14 @@
 }
 
 .#{$namespace}-text-hide {
-  @include text-hide();
+  // From https://www.a11yproject.com/posts/how-to-hide-content/
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
 // https://github.com/twbs/bootstrap-sass/blob/d5625c907168b6311be122b99d89614e02448475/assets/stylesheets/bootstrap/_close.scss
@@ -24,14 +31,14 @@
   line-height: 1;
   color: $close-color;
   text-shadow: $close-text-shadow;
-  @include opacity(.2);
+  opacity: .2;
 
   &:hover,
   &:focus {
     color: $close-color;
     text-decoration: none;
     cursor: pointer;
-    @include opacity(.5);
+    opacity: .5;
   }
 
   // [converter] extracted button& to button.close
