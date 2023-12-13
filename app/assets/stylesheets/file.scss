@@ -56,13 +56,6 @@ body {
   color: $sul-restricted-text-color;
 }
 
-.#{$namespace}-file-list {
-  @include well-content;
-
-  min-height: 189px;
-  padding: 0px;
-}
-
 /* Collapse/expand icons */
 .#{$namespace}-treegrid {
   width: 100%;
