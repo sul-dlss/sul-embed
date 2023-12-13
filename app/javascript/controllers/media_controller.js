@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import EmbedThis from 'src/modules/embed_this';
 
 export default class extends Controller {
-  static targets = [ "leftDrawer", "leftButton", "metadata", "shareModal", "contents", "transcript",
+  static targets = [ "leftDrawer", "leftButton", "metadata", "shareButton", "shareModal", "contents", "transcript",
                      "downloadModal", "rights", "accessibility", "modalComponentsPopover"]
   connect() {
     this.element.hidden = false
@@ -29,6 +29,16 @@ export default class extends Controller {
 
   closePopover() {
     this.modalComponentsPopoverTarget.close()
+  }
+
+  closeModal() {
+    this.downloadModalTarget.close()
+    this.shareModalTarget.close()
+
+    // After closing the modal, we need to put the focus back to the button that launched the
+    // original interaction.  We need to do this because the immediately preceeding action was
+    //  on the popover, which has already been closed.
+    this.shareButtonTarget.focus()
   }
 
   handleBackdropClicks(event) {
