@@ -5,7 +5,7 @@ import mediaTagTokenWriter from 'src/modules/media_tag_token_writer'
 import buildThumbnail from 'src/modules/media_thumbnail_builder'
 
 export default class extends Controller {
-  static targets = [ "mediaTag", "list" ]
+  static targets = [ "mediaTag", "mediaWrapper", "list" ]
   static values = {
     iiifManifest: String
   }
@@ -84,7 +84,7 @@ export default class extends Controller {
   }
 
   setupThumbnails() {
-    const thumbnails = [...this.element.querySelectorAll('[data-slider-object]')].
+    const thumbnails = this.mediaWrapperTargets.
       map((mediaDiv, index) => buildThumbnail(mediaDiv.dataset, index))
     this.listTarget.innerHTML = thumbnails.join('')
   }

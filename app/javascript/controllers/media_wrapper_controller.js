@@ -3,10 +3,14 @@ import videojs from 'video.js';
 
 export default class extends Controller {
   static targets = [ ]
+  static values = {
+    index: Number
+  }
+
 
   toggleVisibility(event) {
     const index =  event.detail.index
-    this.element.hidden = this.element.dataset.sliderObject !== String(index)
+    this.element.hidden = this.indexValue !== index
     this.pauseAllMedia();
   }
 
