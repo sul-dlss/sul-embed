@@ -531,18 +531,18 @@ body {
       }
     }
 
-    --slider-thumb-height: 75px;
+    --thumb-height: 75px;
 
-    .sul-embed-media-slider-thumb {
+    .media-thumb {
       list-style-type: none;
       border: 1px solid gray;
       margin-bottom: 0.5rem;
-      height: var(--slider-thumb-height);
+      height: var(--thumb-height);
       text-align: center;
 
       .default-thumbnail-icon {
         display: inline-block;
-        font-size: calc(var(--slider-thumb-height) - 2px);
+        font-size: calc(var(--thumb-height) - 2px);
         width: 75px;
         margin-right: .5rem;
         padding-left: .3rem;
