@@ -3,14 +3,6 @@
 // Utility classes
 // --------------------------------------------------
 
-
-// Floats
-// -------------------------
-
-.#{$namespace}-pull-left {
-  float: left !important;
-}
-
 .#{$namespace}-text-hide {
   @include text-hide();
 }
