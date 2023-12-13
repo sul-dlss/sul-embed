@@ -37,7 +37,6 @@ RSpec.describe Embed::FileComponent, type: :component do
 
     it 'returns a table of files' do
       # visible :all because we display:none the container until we've loaded the CSS.
-      expect(page).to have_css '.sul-embed-file-list', visible: :all
       expect(page).to have_css 'a[download]', visible: :all, text: 'Download'
     end
 

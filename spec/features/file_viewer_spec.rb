@@ -22,7 +22,6 @@ RSpec.describe 'File viewer', :js do
       expect(page).to have_css('.sul-embed-header-title')
       expect(page).to have_css('.sul-embed-body')
       expect(page).to have_css('.sul-embed-footer')
-      expect(page).to have_css('.sul-embed-file-list')
 
       expect(page).to have_css('tr[data-tree-role="leaf"] a', text: 'Download')
       expect(page).to have_css('*[data-tree-role="label"]', text: 'File1 Label')
