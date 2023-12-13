@@ -2,8 +2,7 @@
 @import 'common';
 
 .#{$namespace}-was-seed-content {
-  @include well-content;
-  background: $white-color;
+  padding: 10px;
 }
 
 .#{$namespace}-was-seed-row {
@@ -27,6 +26,10 @@
 
 .#{$namespace}-was-seed-captures {
   padding-top: 6px;
+  h1 {
+    font-size: 1.5rem;
+    font-weight: $sul-header-weight;
+  }
 }
 
 
@@ -63,14 +66,5 @@
     font-size: 24px;
     margin-right: 8px;
     vertical-align: middle;
-  }
-}
-
-.#{$namespace}-was-seed-container {
-  @include well-container;
-
-  h1 {
-    font-size: 1.5rem;
-    font-weight: $sul-header-weight;
   }
 }
