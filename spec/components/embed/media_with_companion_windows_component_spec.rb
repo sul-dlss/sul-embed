@@ -17,7 +17,6 @@ RSpec.describe Embed::MediaWithCompanionWindowsComponent, type: :component do
                     title: 'foo',
                     purl_url: 'https://purl.stanford.edu/123',
                     manifest_json_url: 'https://purl.stanford.edu/123/iiif/manifest',
-                    citation_only?: citation_only,
                     use_and_reproduction: '',
                     copyright: '',
                     license: '',
@@ -26,7 +25,6 @@ RSpec.describe Embed::MediaWithCompanionWindowsComponent, type: :component do
                     downloadable_files: [],
                     downloadable_transcript_files?: false)
   end
-  let(:citation_only) { false }
 
   it 'displays the page' do
     # Accessabile dialog
@@ -38,13 +36,5 @@ RSpec.describe Embed::MediaWithCompanionWindowsComponent, type: :component do
     expect(page).to have_content 'Access is restricted to the reading room. See Access conditions for more information.'
     expect(page).to have_content 'Stanford users: log in to access all available features'
     expect(page).to have_content 'Access is restricted until the embargo has elapsed'
-  end
-
-  context 'when citation_only access' do
-    let(:citation_only) { true }
-
-    it 'displays citation only message' do
-      expect(page).to have_content 'This item cannot be accessed online.'
-    end
   end
 end

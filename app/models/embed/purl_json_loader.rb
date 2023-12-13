@@ -24,7 +24,6 @@ module Embed
         bounding_box:,
         archived_site_url:,
         embargoed:,
-        citation_only:,
         stanford_only_unrestricted:,
         controlled_digital_lending:,
         public:
@@ -46,10 +45,6 @@ module Embed
 
     def embargoed
       json.dig('access', 'embargo').present?
-    end
-
-    def citation_only
-      json.dig('access', 'view') == 'citation-only'
     end
 
     def stanford_only_unrestricted

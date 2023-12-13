@@ -9,7 +9,7 @@ module Embed
     attr_reader :viewer
 
     delegate :purl_object, to: :viewer
-    delegate :citation_only?, :downloadable_files, :downloadable_transcript_files?,
+    delegate :downloadable_files, :downloadable_transcript_files?,
              :druid, to: :purl_object
 
     def include_transcripts

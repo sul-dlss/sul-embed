@@ -27,7 +27,7 @@ RSpec.describe Embed::PurlJsonLoader do
       context 'with a stanford only purl with file type' do
         let(:json) { stanford_restricted_file_purl_json }
 
-        it { is_expected.to include({ type: 'file', embargoed: false, public: false, stanford_only_unrestricted: true, citation_only: false }) }
+        it { is_expected.to include({ type: 'file', embargoed: false, public: false, stanford_only_unrestricted: true }) }
       end
 
       context 'with an embargoed purl with file type' do
