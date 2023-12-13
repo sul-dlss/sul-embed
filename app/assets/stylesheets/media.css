@@ -3,8 +3,8 @@ body {
   padding: 0;
 }
 
-// VideoJS CSS overrides for responsive layout
-// See http://andreassauer.name/experimente/video-js/demo.html
+/* VideoJS CSS overrides for responsive layout
+   See http://andreassauer.name/experimente/video-js/demo.html */
 .video-js {
   width: 100% !important;
 
@@ -19,7 +19,7 @@ body {
     visibility: hidden;
   }
 
-  // Ensure fullscreen media is as large as possible.
+  /* Ensure fullscreen media is as large as possible. */
   &.vjs-fullscreen {
     audio,
     video {
@@ -36,9 +36,9 @@ body {
     top: 0;
   }
 
-  // Style the CC button when they have captions enabled
-  // This won't work on Firefox unless enabled by layout.css.has-selector.enabled in about:config
-  // Other than this, there doesn't seem to be a way to style the state
+  /* Style the CC button when they have captions enabled
+     This won't work on Firefox unless enabled by layout.css.has-selector.enabled in about:config
+     Other than this, there doesn't seem to be a way to style the state */
   .vjs-subs-caps-button:has(+ .vjs-menu > .vjs-menu-content > .vjs-selected.vjs-captions-menu-item) {
     border-bottom: 2px solid red;
   }
@@ -82,7 +82,7 @@ body {
   --button-color: #454545;
   --button-hover-bg-color: #9494947a;
   --background-color: rgba(255, 255, 255);
-  --header-size: 62.65px; // depends on the line-height of the header > nav > h2
+  --header-size: 62.65px; /* depends on the line-height of the header > nav > h2 */
   --modal-border-radius: 8px;
   --modal-max-width: 600px;
   
@@ -323,9 +323,9 @@ body {
     flex-shrink: 0;
   }
 
-  // Second selector is for citation-only banner. First selector is for all the other auth restrictions.
+  /* Second selector is for citation-only banner. First selector is for all the other auth restrictions. */
   [data-controller="auth-restriction"]:not([hidden]) + .media-component-body, .authLinkWrapper + .media-component-body {
-    max-height: calc(100vh - 100px); // Scroll height for metadata when the auth wrapper is displaying
+    max-height: calc(100vh - 100px); /* Scroll height for metadata when the auth wrapper is displaying */
   }
 
   .media-component-body {
@@ -443,7 +443,7 @@ body {
       }
     }
 
-    // From https://www.a11yproject.com/posts/how-to-hide-content/
+    /* From https://www.a11yproject.com/posts/how-to-hide-content/ */
     .visually-hidden {
       clip: rect(0 0 0 0);
       clip-path: inset(50%);
@@ -460,7 +460,7 @@ body {
       overflow: clip auto;
 
       section {
-        // This avoids wrapping when animating.
+        /* This avoids wrapping when animating. */
         width: calc(var(--drawer-width) - var(--tab-width));
         display: flex;
         flex-direction: column;
@@ -510,8 +510,8 @@ body {
         border: 1px solid transparent;
         padding-right: 2px;
         line-height: 16pt;
-        // For cue-new-speaker, transcript scroll needs to scroll up more
-        // This behavior is also alright for regular cue elements
+        /* For cue-new-speaker, transcript scroll needs to scroll up more
+           This behavior is also alright for regular cue elements */
         scroll-margin-bottom: 5rem;
 
         &:hover {
@@ -553,7 +553,7 @@ body {
       }
 
       a {
-        // Override the common link styles
+        /* Override the common link styles */
         border-bottom: none;
       }
 
@@ -566,7 +566,7 @@ body {
         background-position: bottom left;
         padding-right: 20px;
         &.text {
-          height: calc(100% - 0.75rem); // positions .sul-embed-thumb-stanford-only
+          height: calc(100% - 0.75rem); /* positions .sul-embed-thumb-stanford-only */
         }
       }
 
