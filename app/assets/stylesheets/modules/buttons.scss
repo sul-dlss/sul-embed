@@ -1,55 +1,88 @@
 .#{$namespace}-container {
-  
-  .#{$namespace}-btn {
+  // .btn classes from https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.css
+  .btn {
+    --bs-btn-padding-x: 0.75rem;
+    --bs-btn-padding-y: 0.375rem;
+    --bs-btn-font-family: ;
+    --bs-btn-font-size: 1rem;
+    --bs-btn-font-weight: 400;
+    --bs-btn-line-height: 1.5;
+    --bs-btn-color: #212529;
+    --bs-btn-bg: transparent;
+    --bs-btn-border-width: 1px;
+    --bs-btn-border-color: transparent;
+    --bs-btn-border-radius: 0.375rem;
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 1px 1px rgba(0, 0, 0, 0.075);
+    --bs-btn-disabled-opacity: 0.65;
+    --bs-btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--bs-btn-focus-shadow-rgb), .5);
     display: inline-block;
-    margin-bottom: 0; // For input.btn
-    font-weight: $btn-font-weight;
+    padding: var(--bs-btn-padding-y) var(--bs-btn-padding-x);
+    font-family: var(--bs-btn-font-family);
+    font-size: var(--bs-btn-font-size);
+    font-weight: var(--bs-btn-font-weight);
+    line-height: var(--bs-btn-line-height);
+    color: var(--bs-btn-color);
     text-align: center;
+    text-decoration: none;
     vertical-align: middle;
     cursor: pointer;
-    background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
-    border: none;
-    white-space: nowrap;
-    @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $border-radius-base);
+    -webkit-user-select: none;
+    -moz-user-select: none;
     user-select: none;
-
-    &,
-    &:active,
-    &.active {
-      &:focus {
-        // Default
-        outline: thin dotted;
-        // WebKit
-        outline: 5px auto -webkit-focus-ring-color;
-        outline-offset: -2px;
-      }
-    }
-
-    &:hover,
-    &:focus {
-      border: none;
-      color: $btn-default-color;
-      text-decoration: none;
-    }
-
-    &:active,
-    &.active {
-      outline: 0;
-      background-image: none;
-    }
-
-    &.disabled,
-    &[disabled],
-    fieldset[disabled] & {
-      cursor: not-allowed;
-      pointer-events: none; // Future-proof disabling of clicks
-      opacity: .65;
-      box-shadow: none;
+    border: var(--bs-btn-border-width) solid var(--bs-btn-border-color);
+    border-radius: var(--bs-btn-border-radius);
+    background-color: var(--bs-btn-bg);
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .btn {
+      transition: none;
     }
   }
+  .btn:hover {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+  }
+  .btn-check + .btn:hover {
+    color: var(--bs-btn-color);
+    background-color: var(--bs-btn-bg);
+    border-color: var(--bs-btn-border-color);
+  }
+  .btn:focus-visible {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
+    outline: 0;
+    box-shadow: var(--bs-btn-focus-box-shadow);
+  }
+  .btn-check:focus-visible + .btn {
+    border-color: var(--bs-btn-hover-border-color);
+    outline: 0;
+    box-shadow: var(--bs-btn-focus-box-shadow);
+  }
+  .btn-check:checked + .btn, :not(.btn-check) + .btn:active, .btn:first-child:active, .btn.active, .btn.show {
+    color: var(--bs-btn-active-color);
+    background-color: var(--bs-btn-active-bg);
+    border-color: var(--bs-btn-active-border-color);
+  }
+  .btn-check:checked + .btn:focus-visible, :not(.btn-check) + .btn:active:focus-visible, .btn:first-child:active:focus-visible, .btn.active:focus-visible, .btn.show:focus-visible {
+    box-shadow: var(--bs-btn-focus-box-shadow);
+  }
+  .btn:disabled, .btn.disabled, fieldset:disabled .btn {
+    color: var(--bs-btn-disabled-color);
+    pointer-events: none;
+    background-color: var(--bs-btn-disabled-bg);
+    border-color: var(--bs-btn-disabled-border-color);
+    opacity: var(--bs-btn-disabled-opacity);
+  }
 
-  .#{$namespace}-btn-toolbar {
-    @include button-variant($sul-button-color, $sul-button-bg, $sul-button-border-color);
-    @include button-size(0, 6px, 1.3em, $line-height-base, 0);
+  .btn-toolbar {
+    --bs-btn-color: #{$sul-button-color};
+    --bs-btn-bg: #{$sul-button-bg};
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-bg: #433e38;
+    --bs-btn-hover-border-color: transparent;
   }
 }
