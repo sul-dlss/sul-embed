@@ -20,11 +20,6 @@
   border-radius: $radius;
 }
 
-@mixin well-container {
-  background-color: $sul-background;
-  padding: 10px;
-}
-
 @mixin well-content {
   @include shadow(2);
   background-color: $white-color;
