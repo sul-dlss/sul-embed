@@ -37,12 +37,6 @@
   padding-#{$orientation}: $icon-padding;
 }
 
-@mixin stanford-only-red {
-  background: url('stanford_red_s.png') no-repeat 5px;
-// TODO: need svg version
-//  background: url('stanford_red_s.svg') no-repeat 5px, none;
-}
-
 @mixin transform($transforms) {
   -webkit-transform: $transforms;
   -moz-transform: $transforms;
