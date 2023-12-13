@@ -47,11 +47,9 @@
       box-shadow: none;
     }
   }
-  .#{$namespace}-btn-default {
-    @include button-variant($sul-button-color, $sul-button-bg, $sul-button-border-color);
-  }
-  
+
   .#{$namespace}-btn-toolbar {
+    @include button-variant($sul-button-color, $sul-button-bg, $sul-button-border-color);
     @include button-size(0, 6px, 1.3em, $line-height-base, 0);
   }
 }
