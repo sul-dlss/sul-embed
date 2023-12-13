@@ -12,7 +12,7 @@
 
     <% if viewer.display_download_all? %>
       <a id='sul-embed-footer-download-all' href='<%= viewer.download_url %>' target="_blank" rel="noopener noreferrer nofollow" data-controller="download" data-action="click->download#download">
-        <button class='sul-embed-footer-tool sul-embed-btn sul-em bed-btn-toolbar sul-embed-btn-default sul-i-download-3' aria-label="download all files">
+        <button class='sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-download-3' aria-label="download all files">
           Download all <%= pluralize(viewer.purl_object.downloadable_files.length, "file") %>
           (<%= viewer.pretty_filesize(viewer.purl_object.size) %>)
           <% if viewer.any_stanford_only_files? %>
@@ -24,7 +24,7 @@
       </a>
     <% elsif viewer.purl_object.downloadable_files.length > 1 %>
       <a rel="nofollow" href="mailto:sdr-contact@lists.stanford.edu?subject=Download%20SDR%20Object%20<%= viewer.purl_object.druid %>">
-        <button class='sul-embed-footer-tool sul-embed-btn sul-em bed-btn-toolbar sul-embed-btn-default sul-i-download-3' aria-label="Contact us to download files">
+        <button class='sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-embed-btn-default sul-i-download-3' aria-label="Contact us to download files">
           Need help downloading? Contact us.
         </button>
       </a>
