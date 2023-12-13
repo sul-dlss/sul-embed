@@ -1,10 +1,10 @@
 <div class='sul-embed-footer'>
   <div class='sul-embed-footer-toolbar'>
-    <button class='sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-i-infomation-circle'
+    <button class='sul-embed-footer-tool btn btn-toolbar sul-i-infomation-circle'
       aria-expanded='false' aria-label='open metadata panel'
       data-sul-embed-toggle='sul-embed-metadata-panel'></button>
     <% unless viewer.request.hide_embed_this? %>
-      <button class='sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-i-share'
+      <button class='sul-embed-footer-tool btn btn-toolbar sul-i-share'
         aria-expanded='false'
         aria-label='open embed this panel'
         data-sul-embed-toggle= 'sul-embed-embed-this-panel'></button>
@@ -12,7 +12,7 @@
 
     <% if viewer.show_download? %>
       <button
-        class='sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-i-download-3'
+        class='sul-embed-footer-tool btn btn-toolbar sul-i-download-3'
         aria-expanded='false' aria-label='<%= download_file_label %>'
         data-sul-embed-toggle='sul-embed-download-panel'>
         <% if file_count > 0 %>
@@ -22,7 +22,7 @@
     <% end %>
 
     <% if external_url.present? %>
-      <a class='sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-i-navigation-next-4'
+      <a class='sul-embed-footer-tool btn btn-toolbar sul-i-navigation-next-4'
         href="<%= external_url %>" target='_parent'>
         <span class='sul-embed-sr-only'><%= external_url_text %></span>
       </a>
@@ -31,7 +31,7 @@
     <% if viewer.fullscreen? %>
       <button
         aria-label="Full screen"
-        class="sul-embed-footer-tool sul-embed-btn sul-embed-btn-toolbar sul-i-expand-1 sul-fullscreen-button"
+        class="sul-embed-footer-tool btn btn-toolbar sul-i-expand-1 sul-fullscreen-button"
         id="full-screen-button">
       </button>
     <% end %>
