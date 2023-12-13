@@ -34,24 +34,28 @@ module Embed
         document_resource_files.all?(&:location_restricted?)
       end
 
+      # this indicates if the PDF is accessible (either to all or to stanford people)
       def available?
-        restriction_message.blank?
+        purl_object.public? || purl_object.stanford_only_unrestricted?
       end
 
       def restriction_message
-        # NOTE: that Stanford only restrictions are handled via a separate authorization flow,
-        # since it is possible for Stanford people to do something about this restriction
+        # NOTE: Stanford only restrictions are handled via a separate authorization flow,
+        # since it is possible for Stanford people to do something about the restriction
         @restriction_message ||= if purl_object.embargoed? # check first, as it supercedes other restrictions
-                                   # (NOTE: embargoed content is also citation only)
-                                   "This content is embargoed until #{purl_object.embargo_release_date}."
-                                 elsif purl_object.citation_only?
-                                   'This content cannot be accessed online.'
-                                 elsif purl_object.stanford_only_no_download?
-                                   'This content cannot be accessed online. See access conditions for more information.'
+                                   # NOTE: embargoed content is also citation only, so check first to show message
+                                   I18n.t('restrictions.embargoed', date: formatted_embargo_release_date)
+                                 # NOTE: PDFs with no download can't be viewed in a browser either
+                                 elsif purl_object.citation_only? || purl_object.no_download?
+                                   I18n.t('restrictions.not_accessibile')
                                  end
       end
 
       private
+
+      def formatted_embargo_release_date
+        I18n.l(Date.parse(purl_object.embargo_release_date), format: :sul)
+      end
 
       def document_resource_files
         purl_object.contents.select { |content| content.type == 'document' }.map(&:files).flatten

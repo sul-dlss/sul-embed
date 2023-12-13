@@ -17,13 +17,13 @@ module Embed
     attr_accessor :druid, :type, :title, :use_and_reproduction, :copyright, :contents, :collections,
                   :license, :bounding_box, :embargo_release_date, :archived_site_url, :external_url,
                   :embargoed, :citation_only, :stanford_only_unrestricted, :public, :controlled_digital_lending,
-                  :stanford_only_no_download, :etag, :last_modified
+                  :no_download, :etag, :last_modified
 
     alias embargoed? embargoed
     alias stanford_only_unrestricted? stanford_only_unrestricted
     alias public? public
     alias controlled_digital_lending? controlled_digital_lending
-    alias stanford_only_no_download? stanford_only_no_download
+    alias no_download? no_download
 
     # @param [String] druid a druid without a namespace (e.g. "sx925dc9385")
     def self.find(druid)

@@ -21,6 +21,9 @@
 
 en:
   hello: "Hello world"
+  restrictions:
+    not_accessibile: 'This item cannot be accessed online. See Access conditions for more information.'
+    embargoed: 'This item is embargoed until %{date}.'
   date:
     formats:
       sul: '%d-%b-%Y'
