@@ -10,7 +10,7 @@ module Embed
 
     delegate :purl_object, to: :viewer
     delegate :citation_only?, :downloadable_files, :downloadable_transcript_files?,
-             :druid, :manifest_json_url, to: :purl_object
+             :druid, to: :purl_object
 
     def include_transcripts
       Settings.enabled_features.transcripts || params[:transcripts] == 'true'
@@ -20,6 +20,10 @@ module Embed
       @resources_with_primary_file ||= purl_object.contents.select do |purl_resource|
         purl_resource.primary_file.present?
       end
+    end
+
+    def iiif_v3_manifest_url
+      "#{Settings.purl_url}/#{druid}//iiif3/manifest"
     end
   end
 end
