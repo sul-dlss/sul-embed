@@ -25,7 +25,7 @@ export default class extends Controller {
 
   dispatchManifestEvent(json) {
     const event = new CustomEvent('iiif-manifest-received', { detail: json })
-    window.dispatchEvent(event)  
+    window.dispatchEvent(event)
   }
 
   validateMedia(completeCallback) {
