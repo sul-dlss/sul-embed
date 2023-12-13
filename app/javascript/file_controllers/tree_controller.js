@@ -8,7 +8,7 @@ export default class extends Controller {
   }
 
   get visibleRows() {
-    return this.tableTarget.querySelectorAll('tbody > tr:not(.hidden):not(.search-hidden)')
+    return this.tableTarget.querySelectorAll('tbody > tr:not([hidden])')
   }
 
   toggle(event) {
@@ -17,13 +17,15 @@ export default class extends Controller {
       // Contract
       dirTrElement.setAttribute('aria-expanded', 'false')
       this.childTrElements(dirTrElement).forEach((childTrElement) => {
-        childTrElement.classList.add('hidden')
+        childTrElement.dataset.expandHidden = true
+        this.toggleHide(childTrElement)
       })
     } else {
       // Expand
       dirTrElement.setAttribute('aria-expanded', 'true')
       this.childTrElements(dirTrElement).forEach((childTrElement) => {
-        childTrElement.classList.remove('hidden')
+        delete childTrElement.dataset.expandHidden
+        this.toggleHide(childTrElement)
       })
     }
   }
@@ -41,20 +43,24 @@ export default class extends Controller {
       const thisLevel = rowElement.getAttribute('aria-level')
       if(rowElement.dataset.treeRole === 'leaf') {
         if(this.searchMatch(rowElement, search)) {
-          rowElement.classList.remove('search-hidden')          
+          delete rowElement.dataset.searchHidden
+          this.toggleHide(rowElement)
           if(this.lastLevelMatch(levelMatches) != thisLevel) {
             levelMatches.push(thisLevel-1)
           }
         } else {
-          rowElement.classList.add('search-hidden')
+          rowElement.dataset.searchHidden = true
+          this.toggleHide(rowElement)
         }
       } else {
         if(this.lastLevelMatch(levelMatches) == thisLevel) {
-          rowElement.classList.remove('search-hidden')
+          delete rowElement.dataset.searchHidden
+          this.toggleHide(rowElement)
           levelMatches.pop()
           levelMatches.push(thisLevel-1)
         } else {
-          rowElement.classList.add('search-hidden')
+          rowElement.dataset.searchHidden = true
+          this.toggleHide(rowElement)
         }
       } 
     })
@@ -71,7 +77,8 @@ export default class extends Controller {
 
   clearSearch() {
     this.tableTarget.querySelectorAll('tbody > tr').forEach((rowElement) => {
-      rowElement.classList.remove('search-hidden')
+      delete rowElement.dataset.searchHidden
+      this.toggleHide(rowElement)
     })
     this.updateCount()
   }
@@ -190,7 +197,7 @@ export default class extends Controller {
   nextBranchRowElement(rowElement) {
     let siblingElement = rowElement.nextElementSibling
     while(siblingElement) {
-      if(this.isVisible(siblingElement)) {
+      if(!siblingElement.hidden) {
         return siblingElement
       }
       siblingElement = siblingElement.nextElementSibling
@@ -201,7 +208,7 @@ export default class extends Controller {
   previousBranchRowElement(rowElement) {
     let siblingElement = rowElement.previousElementSibling
     while(siblingElement) {
-      if(this.isVisible(siblingElement)) {
+      if(!siblingElement.hidden) {
         return siblingElement
       }
       siblingElement = siblingElement.previousElementSibling
@@ -209,21 +216,21 @@ export default class extends Controller {
     return null
   }
 
-  isVisible(element) {
-    return !this.isHidden(element)
-  }
-
-  isHidden(element) {
-    return element.classList.contains('hidden') || element.classList.contains('search-hidden')
-  }
-
   updateCount() {
     if(!this.hasCountTarget) return
-    const count = this.countTarget.textContent = this.tableTarget.querySelectorAll('tbody > tr[data-tree-role="leaf"]:not(.search-hidden)').length
+    const count = this.countTarget.textContent = this.tableTarget.querySelectorAll('tbody > tr[data-tree-role="leaf"]:not([data-search-hidden])').length
     if (count == 1) {
       this.countTarget.textContent = '1 file'
     } else {
       this.countTarget.textContent = `${count} files`
+    }
+  }
+
+  toggleHide(trElement) {
+    if(trElement.dataset.searchHidden === 'true' || trElement.dataset.expandHidden === 'true') {
+      trElement.hidden = true
+    } else {
+      trElement.hidden = false
     }
   }
 }
