@@ -51,10 +51,6 @@ body {
   }
 }
 
-.#{$namespace}-stripe {
-  background-color: $color-beige-10;
-}
-
 .#{$namespace}-embargo-message {
   padding: 20px;
   color: $sul-restricted-text-color;
@@ -84,6 +80,10 @@ body {
 
   thead tr th:first-of-type {
     padding-left: 15px;
+  }
+
+  tbody > tr:nth-child(odd of :not(.hidden):not(.search-hidden)) {
+    background-color: $color-beige-10;
   }
 
   col.#{$namespace}-treegrid-size,  col.#{$namespace}-treegrid-download {

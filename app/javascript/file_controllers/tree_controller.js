@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = [ 'table', 'count' ]
 
   connect() {
-    this.restripe()
     this.updateCount()
   }
 
@@ -27,7 +26,6 @@ export default class extends Controller {
         childTrElement.classList.remove('hidden')
       })
     }
-    this.restripe()
   }
 
   search(event) {
@@ -60,7 +58,6 @@ export default class extends Controller {
         }
       } 
     })
-    this.restripe()
     this.updateCount()
   }
 
@@ -76,7 +73,6 @@ export default class extends Controller {
     this.tableTarget.querySelectorAll('tbody > tr').forEach((rowElement) => {
       rowElement.classList.remove('search-hidden')
     })
-    this.restripe()
     this.updateCount()
   }
 
@@ -229,15 +225,5 @@ export default class extends Controller {
     } else {
       this.countTarget.textContent = `${count} files`
     }
-  }
-
-  restripe() {
-    this.visibleRows.forEach((rowElement, index) => {
-      if(index % 2 == 0) {
-        rowElement.classList.add('sul-embed-stripe')
-      } else {
-        rowElement.classList.remove('sul-embed-stripe')
-      }
-    })
   }
 }
