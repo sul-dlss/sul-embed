@@ -16,11 +16,10 @@ module Embed
 
     attr_accessor :druid, :type, :title, :use_and_reproduction, :copyright, :contents, :collections,
                   :license, :bounding_box, :embargo_release_date, :archived_site_url, :external_url,
-                  :embargoed, :citation_only, :stanford_only_unrestricted, :public, :controlled_digital_lending,
+                  :embargoed, :stanford_only_unrestricted, :public, :controlled_digital_lending,
                   :etag, :last_modified
 
     alias embargoed? embargoed
-    alias citation_only? citation_only
     alias stanford_only_unrestricted? stanford_only_unrestricted
     alias public? public
     alias controlled_digital_lending? controlled_digital_lending

@@ -20,7 +20,6 @@ module Embed
         bounding_box:,
         archived_site_url:,
         embargoed:,
-        citation_only:,
         stanford_only_unrestricted:,
         controlled_digital_lending:,
         public:
@@ -42,10 +41,6 @@ module Embed
 
     def embargoed
       rights.embargoed?
-    end
-
-    def citation_only
-      rights.citation_only?
     end
 
     def stanford_only_unrestricted
@@ -114,9 +109,7 @@ module Embed
     end
 
     def rights
-      # TODO: we have to pass `forindex=true` here so that we can subsequently call citation_only?
-      #       This is pretty slow.
-      @rights ||= ::Dor::RightsAuth.parse(rights_xml, true)
+      @rights ||= ::Dor::RightsAuth.parse(rights_xml)
     end
 
     def rights_xml

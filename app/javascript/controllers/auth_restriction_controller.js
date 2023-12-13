@@ -4,13 +4,15 @@ export default class extends Controller {
   static targets = ["stanfordRestriction", "stanfordRestrictionMessage", "stanfordRestrictionNotLoggedInIcon",
                     "stanfordRestrictionLoggedInIcon", "stanfordRestrictionDismissButton", "stanfordLoginButton",
                     "locationRestriction", "embargoRestriction", "embargoAndStanfordRestriction",
-                    "embargoLoginButton"]
+                    "embargoLoginButton", "noAccess"]
 
-
+  // Listener for auth-denied events
   displayMessage(event) {
     const authResponse = event.detail
     const status = authResponse.status
-    if (status.includes('embargoed')) { // Embargo check must come before stanford_restricted, because both can occur together
+    if (!status) {
+      this.displayNoAccess()
+    } else if (status.includes('embargoed')) { // Embargo check must come before stanford_restricted, because both can occur together
       if (status.includes('stanford_restricted'))
         this.displayEmbargoAndStanfordRestriction(authResponse.embargo, authResponse.service)
       else
@@ -33,6 +35,11 @@ export default class extends Controller {
 
   hideAuthRestrictionMessages() {
     this.element.hidden = true
+  }
+
+  displayNoAccess() {
+    this.element.hidden = false
+    this.noAccessTarget.hidden = false
   }
 
   displayStanfordRestriction(loginService) {
