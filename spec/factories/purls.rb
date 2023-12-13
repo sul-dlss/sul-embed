@@ -18,6 +18,14 @@ FactoryBot.define do
       stanford_only_unrestricted { true }
     end
 
+    trait :no_download do
+      no_download { true }
+    end
+
+    trait :public do
+      public { true }
+    end
+
     trait :file do
       type { 'file' }
       title { 'Title of the object' }
