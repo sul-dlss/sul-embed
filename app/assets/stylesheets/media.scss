@@ -85,7 +85,8 @@ body {
   --header-size: 62.65px; /* depends on the line-height of the header > nav > h2 */
   --modal-border-radius: 8px;
   --modal-max-width: 600px;
-  
+  --media-thumb-hover-color: #016895;
+
   border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
@@ -339,7 +340,7 @@ body {
       display: flex;
       flex: 1 1 auto;
     }
-  
+
     .sul-embed-media-wrapper {
       display: inline-block;
       height: 100%;
@@ -541,6 +542,10 @@ body {
       margin-bottom: 0.5rem;
       height: var(--thumb-height);
       text-align: center;
+
+      &:hover {
+        box-shadow: 0px 0px 3px 2px var(--media-thumb-hover-color);
+      }
 
       .default-thumbnail-icon {
         display: inline-block;
