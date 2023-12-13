@@ -46,7 +46,7 @@ module Embed
                                    # NOTE: embargoed content is also citation only, so check first to show message
                                    I18n.t('restrictions.embargoed', date: formatted_embargo_release_date)
                                  # NOTE: PDFs with no download can't be viewed in a browser either
-                                 elsif purl_object.citation_only? || purl_object.no_download?
+                                 elsif purl_object.citation_only? || no_download?
                                    I18n.t('restrictions.not_accessibile')
                                  end
       end
@@ -59,6 +59,11 @@ module Embed
 
       def document_resource_files
         purl_object.contents.select { |content| content.type == 'document' }.map(&:files).flatten
+      end
+
+      # either object level no-download OR first PDF file is set to no download
+      def no_download?
+        purl_object.no_download? || !document_resource_files.first&.downloadable?
       end
     end
   end
