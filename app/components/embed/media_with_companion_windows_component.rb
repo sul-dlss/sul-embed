@@ -23,7 +23,7 @@ module Embed
     end
 
     def iiif_v3_manifest_url
-      "#{Settings.purl_url}/#{druid}//iiif3/manifest"
+      "#{Settings.purl_url}/#{druid}/iiif3/manifest"
     end
   end
 end
