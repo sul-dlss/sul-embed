@@ -23,9 +23,19 @@ export default class extends Controller {
     } else {
       // Expand
       dirTrElement.setAttribute('aria-expanded', 'true')
+      let closedBranchLevel = null
       this.childTrElements(dirTrElement).forEach((childTrElement) => {
+        // Keeps nested closed branches closed and children hidden.
+        if(closedBranchLevel && childTrElement.getAttribute('aria-level') > closedBranchLevel) return
+
         delete childTrElement.dataset.expandHidden
-        this.toggleHide(childTrElement)
+        this.toggleHide(childTrElement)  
+        
+        if(this.isClosedBranch(childTrElement)) {
+          closedBranchLevel = childTrElement.getAttribute('aria-level')
+        } else {
+          closedBranchLevel = null
+        }        
       })
     }
   }
