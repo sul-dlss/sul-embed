@@ -21,6 +21,7 @@ module Embed
 
     alias embargoed? embargoed
     alias stanford_only_unrestricted? stanford_only_unrestricted
+    alias citation_only? citation_only
     alias public? public
     alias controlled_digital_lending? controlled_digital_lending
 

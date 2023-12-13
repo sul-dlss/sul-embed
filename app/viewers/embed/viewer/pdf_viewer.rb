@@ -45,7 +45,7 @@ module Embed
         @restriction_message ||= if purl_object.embargoed? # check first, as it supercedes other restrictions
                                    # NOTE: embargoed content is also citation only, so check first to show message
                                    I18n.t('restrictions.embargoed', date: formatted_embargo_release_date)
-                                 # NOTE: PDFs with no download can't be viewed in a browser either, so no access
+                                 # NOTE: PDFs with no download can't be viewed in a browser, so no access
                                  elsif purl_object.citation_only? || no_download?
                                    I18n.t('restrictions.not_accessibile')
                                  end
@@ -61,9 +61,9 @@ module Embed
         purl_object.contents.select { |content| content.type == 'document' }.map(&:files).flatten
       end
 
-      # first PDF file is set to no download
+      # check if first PDF file is set to no download
       def no_download?
-        !document_resource_files.first&.downloadable?
+        !document_resource_files.first&.world_downloadable?
       end
     end
   end
