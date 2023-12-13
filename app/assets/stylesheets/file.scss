@@ -75,7 +75,7 @@ body {
     padding-left: 15px;
   }
 
-  tbody > tr:nth-child(odd of :not(.hidden):not(.search-hidden)) {
+  tbody > tr:nth-child(odd of :not([hidden])) {
     background-color: $color-beige-10;
   }
 
@@ -94,9 +94,8 @@ body {
     vertical-align: top;
   }
 
-  /* Hide collapsed rows */
-  tr.hidden, tr.search-hidden {
-    display: none;
+  tr[hidden] { 
+    display: none !important; 
   }
 
   tr > td:first-child::before {
