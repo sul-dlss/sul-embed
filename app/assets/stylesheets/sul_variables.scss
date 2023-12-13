@@ -1,14 +1,10 @@
 // Colors
-$dark-cardinal: #610e0e;
-$gray-dark: lighten(#000, 20%) !default;   // #333
 $gray-80-percent: #ccc;
 $gray-46-percent: #767676;
 $gray-54-percent: #737373;
 $white-60-percent-opaque: rgba(255, 255, 255, 0.6);
 $white-color: #fff;
-$black-color: #000;
 $black-50-percent-opaque: rgba(0, 0, 0, 0.5);
-$very-dark-grey: #171717;
 
 // Namespace
 $namespace: 'sul-embed';
@@ -25,7 +21,6 @@ $close-font-weight: bold;
 $close-text-shadow: 0 1px 0 #fff;
 $font-size-base: 14px;
 $font-size-small: ceil(($font-size-base * 0.85)) !default; // ~12px
-$headings-font-weight: 300;
 $line-height-base: 1.428571429;
 $line-height-small: 1.5;
 $padding-base-horizontal: 12px;
@@ -43,15 +38,12 @@ $sul-border-color: $color-pantone-405;
 $sul-button-bg: $sul-border-color;
 $sul-button-border-color: $color-beige-30;
 $sul-button-color: white;
-$sul-botton-hover-bg: $color-cardinal-red;
-$sul-botton-hover-border-color: #600e0e;
-$sul-botton-hover-color: white;
 $sul-count-font-color: $gray-46-percent;
 $sul-description-font-color: $color-blackish;
 $sul-font-color: black;
 $sul-input-border: $gray-80-percent;
 $sul-title-size: floor(($font-size-base * 1.29));
-$sul-header-weight: $headings-font-weight;
+$sul-header-weight: 300;
 $sul-link-border-color: $color-pantone-401;
 $sul-link-color: #006CB8;
 $sul-link-hover-color: #00548f;
@@ -60,5 +52,3 @@ $sul-metadata-bg: $color-beige-05;
 $sul-metadata-heading-color: $gray-54-percent;
 $sul-metadata-label-color: dimgrey;
 $sul-restricted-text-color: $color-cardinal-red;
-$sul-iiif-instruction-color: dimgrey;
-$sul-osd-toolbar-bg: $white-60-percent-opaque;
