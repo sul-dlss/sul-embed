@@ -11,13 +11,17 @@
     border: none;
     white-space: nowrap;
     @include button-size($padding-base-vertical, $padding-base-horizontal, $font-size-base, $line-height-base, $border-radius-base);
-    @include user-select(none);
+    user-select: none;
 
     &,
     &:active,
     &.active {
       &:focus {
-        @include tab-focus();
+        // Default
+        outline: thin dotted;
+        // WebKit
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: -2px;
       }
     }
 
@@ -39,8 +43,8 @@
     fieldset[disabled] & {
       cursor: not-allowed;
       pointer-events: none; // Future-proof disabling of clicks
-      @include opacity(.65);
-      @include box-shadow(none);
+      opacity: .65;
+      box-shadow: none;
     }
   }
   .#{$namespace}-btn-default {
@@ -49,13 +53,5 @@
   
   .#{$namespace}-btn-toolbar {
     @include button-size(0, 6px, 1.3em, $line-height-base, 0);
-  }
-  
-  .#{$namespace}-btn-sm {
-    // line-height: ensure proper height of button next to small input
-    @include button-size($padding-small-vertical, $padding-small-horizontal, $font-size-small, $line-height-small, $border-radius-small);
-  }
-  .#{$namespace}-btn-xs {
-    @include button-size($padding-xs-vertical, $padding-xs-horizontal, $font-size-small, $line-height-small, $border-radius-small);
   }
 }
