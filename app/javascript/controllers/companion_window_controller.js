@@ -3,11 +3,10 @@ import EmbedThis from 'src/modules/embed_this';
 
 export default class extends Controller {
   // TODO: accessability and transcript should move to a controller just for media.
-  static targets = [ "leftDrawer", "leftButton", "metadata", "shareButton", "shareModal", "contents", "transcript",
-                     "downloadModal", "rights", "accessibility", "modalComponentsPopover"]
+  static targets = [ "leftDrawer", "shareButton", "shareModal",
+                     "downloadModal", "accessibility", "modalComponentsPopover"]
   connect() {
     this.element.hidden = false
-    this.metadataTarget.hidden = false
     EmbedThis.init();
   }
 
@@ -57,54 +56,6 @@ export default class extends Controller {
 
   openDownloadModal() {
     this.downloadModalTarget.showModal()
-  }
-
-  displayMetadata(evt) {
-    this.setLeftButtonActive(evt)
-
-    this.metadataTarget.hidden = false
-    this.contentsTarget.hidden = true
-    this.rightsTarget.hidden = true
-    this.transcriptTarget.hidden = true
-
-  }
-
-  displayContents(evt) {
-    this.setLeftButtonActive(evt)
-
-    this.metadataTarget.hidden = true
-    this.contentsTarget.hidden = false
-    this.rightsTarget.hidden = true
-    this.transcriptTarget.hidden = true
-  }
-
-  displayRights(evt) {
-    this.setLeftButtonActive(evt)
-
-    this.metadataTarget.hidden = true
-    this.contentsTarget.hidden = true
-    this.rightsTarget.hidden = false
-    this.transcriptTarget.hidden = true
-  }
-
-  displayTranscript(evt) {
-    this.setLeftButtonActive(evt)
-
-    this.metadataTarget.hidden = true
-    this.contentsTarget.hidden = true
-    this.rightsTarget.hidden = true
-    this.transcriptTarget.hidden = false
-  }
-
-  setLeftButtonActive(evt) {
-    this.leftButtonTargets.forEach((button) => {
-      button.classList.remove('active')
-      button.setAttribute("aria-selected", false);
-    })
-    // The evt.target may be the SVG, so need to look for a button
-    const button = evt.target.closest('button')
-    button.classList.add('active')
-    button.setAttribute("aria-selected", true);
   }
 
   displayAccessibility() {

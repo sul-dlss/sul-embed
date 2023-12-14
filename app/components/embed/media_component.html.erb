@@ -6,7 +6,7 @@
   <% end %>
 
   <% component.with_drawer_button do %>
-    <button data-action="click->companion-window#displayTranscript" data-transcript-target="button" data-companion-window-target="leftButton"  aria-label="Transcript" aria-controls="media-content" role="tab" hidden>
+    <button data-action="click->tab#switch" data-transcript-target="button" aria-label="Transcript" aria-controls="media-content" role="tab" hidden>
       <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg>
     </button>
   <% end %>
