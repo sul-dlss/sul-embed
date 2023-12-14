@@ -61,7 +61,6 @@ collections_to_show_attribution:
 analytics_debug: true
 min_files_to_search_default: 10
 enabled_features:
-  transcripts: false
   legacy_pdf_viewer: true # true shows the PDF.js based PDF viewer, false uses <object> tag for browser PDF rendering
   cocina: false
 language_subtag_registry:

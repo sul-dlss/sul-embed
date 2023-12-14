@@ -6,14 +6,13 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
   subject(:render) do
     render_inline(
       described_class.new(
-        resource:, resource_iteration:, druid:, include_transcripts:
+        resource:, resource_iteration:, druid:
       )
     )
   end
 
   let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 0) }
   let(:druid) { 'bc123df4567' }
-  let(:include_transcripts) { false }
 
   before do
     render
@@ -175,7 +174,6 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
 
   context 'with captions' do
     let(:resource) { build(:resource, :video) }
-    let(:include_transcripts) { true }
 
     it 'has a track element' do
       expect(page).to have_css('track[src="https://stacks.stanford.edu/file/druid:bc123df4567/abc_123_cap.vtt"]')
@@ -188,8 +186,6 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
                                          build(:resource_file, :caption, language: 'ru')])
       end
 
-      let(:include_transcripts) { true }
-
       it 'has track elements with multiple languages' do
         expect(page).to have_css('track[srclang="en"][label="English"]')
         expect(page).to have_css('track[srclang="ru"][label="Russian"]')
@@ -201,7 +197,6 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
         build(:resource, :video, files: [build(:resource_file, :video),
                                          build(:resource_file, :caption)])
       end
-      let(:include_transcripts) { true }
 
       it 'has a track element with code and label for English' do
         expect(page).to have_css('track[srclang="en"][label="English"]')

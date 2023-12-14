@@ -52,10 +52,6 @@ RSpec.describe 'metrics tracking', :js do
             ], druid:)
     end
 
-    before do
-      allow(Settings.enabled_features).to receive(:new_component).and_return(true)
-    end
-
     it 'tracks views' do
       visit_iframe_response(druid)
       wait_for_view

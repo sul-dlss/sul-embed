@@ -9,13 +9,11 @@ module Embed
     # @param [Purl::Resource] resource This resource is expected to have a primary file.
     # @param [#index] resource_iteration Information about what part of the collection we are in
     # @param [String] druid the object identifier
-    # @param [Bool] include_transcripts a feature flag about displaying VTT tracks
-    def initialize(resource:, resource_iteration:, druid:, include_transcripts:)
+    def initialize(resource:, resource_iteration:, druid:)
       @resource = resource
       @file = resource.primary_file
       @resource_iteration = resource_iteration
       @druid = druid
-      @include_transcripts = include_transcripts
     end
 
     attr_reader :file, :druid
@@ -106,7 +104,7 @@ module Embed
     end
 
     def render_captions?
-      @include_transcripts && @resource.caption_files.any?
+      @resource.caption_files.any?
     end
 
     def streaming_settings_for(streaming_type)
