@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Embed
-  class MediaWithCompanionWindowsComponent < ViewComponent::Base
+  class CompanionWindowsComponent < ViewComponent::Base
     def initialize(viewer:)
       @viewer = viewer
     end

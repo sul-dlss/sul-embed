@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::MediaWithCompanionWindowsComponent, type: :component do
+RSpec.describe Embed::CompanionWindowsComponent, type: :component do
   before do
     allow(embed_request).to receive(:purl_object).and_return(purl_object)
     render_inline(described_class.new(viewer:))

@@ -39,7 +39,7 @@ module Embed
     def render_media_viewer_for(url:)
       embed_request = Embed::Request.new(url:)
       viewer = Embed::Viewer::Media.new(embed_request)
-      render(MediaWithCompanionWindowsComponent.new(viewer:))
+      render(MediaComponent.new(viewer:))
     end
   end
 end
