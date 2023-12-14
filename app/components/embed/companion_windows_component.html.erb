@@ -8,9 +8,7 @@
       <button data-action="click->media#openModalComponentsPopover" data-media-target='shareButton' aria-label="Share and Download" aria-controls="share_and_download">
         <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0,0H24V24H0Z" fill="none"></path><path d="M19,12v7H5V12H3v9H21V12Z"></path><path d="M11.741,8.178V5L17.3,10.562l-5.562,5.562V12.867c-3.973,0-6.754,1.271-8.741,4.052C3.795,12.946,6.178,8.973,11.741,8.178Z" transform="translate(4 -4)"></path></svg></svg></span>
       </button>
-      <button data-action="click->media#displayAccessibility" aria-label="Accessibility" aria-controls="accessibility">
-        <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"></path></svg></span>
-      </button>
+      <%= header_button %>
     </nav>
   </header>
 
@@ -64,13 +62,12 @@
         <button data-action="click->media#displayContents" data-media-target="leftButton"  aria-label="Content" aria-controls="media-content" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"></path></svg>
         </button>
-        <button data-action="click->media#displayTranscript" data-transcript-target="button" data-media-target="leftButton"  aria-label="Transcript" aria-controls="media-content" role="tab" hidden>
-          <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg>
-        </button>
+        <%= drawer_button %>
         <button data-action="click->media#displayRights" data-media-target="leftButton" aria-label="Use and reproduction" aria-controls="rights" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.08 10.86c.05-.33.16-.62.3-.87s.34-.46.59-.62c.24-.15.54-.22.91-.23.23.01.44.05.63.13.2.09.38.21.52.36s.25.33.34.53.13.42.14.64h1.79c-.02-.47-.11-.9-.28-1.29s-.4-.73-.7-1.01-.66-.5-1.08-.66-.88-.23-1.39-.23c-.65 0-1.22.11-1.7.34s-.88.53-1.2.92-.56.84-.71 1.36S8 11.29 8 11.87v.27c0 .58.08 1.12.23 1.64s.39.97.71 1.35.72.69 1.2.91c.48.22 1.05.34 1.7.34.47 0 .91-.08 1.32-.23s.77-.36 1.08-.63.56-.58.74-.94.29-.74.3-1.15h-1.79c-.01.21-.06.4-.15.58s-.21.33-.36.46-.32.23-.52.3c-.19.07-.39.09-.6.1-.36-.01-.66-.08-.89-.23-.25-.16-.45-.37-.59-.62s-.25-.55-.3-.88-.08-.67-.08-1v-.27c0-.35.03-.68.08-1.01zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path></svg>
         </button>
       </nav>
+
       <div class="inner">
         <section id="about" data-media-target="metadata" role="tabpanel" hidden>
           <div class="header-background">
@@ -86,26 +83,7 @@
           <ul class="contentsList" data-media-tag-target="list" role="tablist"></ul>
         </section>
 
-        <section id="transcript" data-media-target="transcript" role="tabpanel" hidden>
-          <div class="header-background">
-            <h3>Transcript</h3>
-          </div>
-          <div class="transcript-controls header-background">
-            <div class="transcript-autoscroll">
-              <label for="autoscroll">Auto scroll</label>
-              <input data-transcript-target="autoscroll" type="checkbox" id="autoscroll">
-            </div>
-            <div class="transcript-language">
-              <label class="visually-hidden" for="caption-languages">Select Language</label>
-              <select name="caption-languages" id="caption-languages" data-transcript-target="captionLanguageSelect" data-action="transcript#selectLanguage">
-                <option value="">Select Language</option>
-              </select>
-            </div>
-          </div>
-          <div class="transcript" data-action="media-loaded@window->transcript#persistPlayer time-update@window->transcript#highlightCue">
-            <div data-transcript-target="outlet"></div>
-          </div>
-        </section>
+        <%= drawer_content %>
 
         <section id="rights" data-media-target="rights" role="tabpanel" hidden>
           <div class="header-background">
@@ -117,21 +95,7 @@
       </div>
     </aside>
     <div class='sul-embed-media' id='sul-embed-body'>
-      <div data-controller="locked-media-poster" data-action="auth-success@window->locked-media-poster#hide auth-denied@window->locked-media-poster#show" tabindex="-1" role="presentation" style="flex: 1 0 100%;" hidden>
-        <picture class="locked-media">
-          <%# The explicitly empty alt is preferred here, since this image merely adds visual decoration. %>
-          <%= image_tag 'locked-media-poster.svg', loading: 'lazy', alt: '' %>
-        </picture>
-      </div>
-
-      <div data-controller="locked-audio-poster" data-action="auth-success@window->locked-audio-poster#hide auth-denied@window->locked-audio-poster#show" tabindex="-1" role="presentation" style="flex: 1 0 100%;" hidden>
-        <picture class="locked-media">
-          <%# The explicitly empty alt is preferred here, since this image merely adds visual decoration. %>
-          <%= image_tag 'waveform-audio-poster.svg', loading: 'lazy', alt: '', data: { locked_audio_poster_target: 'poster' } %>
-        </picture>
-      </div>
-
-      <%= render Embed::MediaTagComponent.with_collection(resources_with_primary_file, druid:) %>
+      <%= body %>
     </div>
   </div>
   <dialog class="modal-components-popover" data-media-target="modalComponentsPopover" data-action="click->media#closePopover" id="share_and_download">
@@ -176,18 +140,5 @@
     <button data-action="click->media#closeModal">Close</button>
   </dialog>
 
-  <dialog class="modal-container" data-media-target="accessibility" data-action="click->media#handleBackdropClicks" id="accessibility">
-    <header>Accessibility</header>
-    <% if downloadable_transcript_files? %>
-      <p>A transcript is available for download. Click the share & download icon to download a transcript.</p>
-    <% else %>
-      <p>To request a transcript or other accommodation for this media item,
-        please send a request along with a link to this item to
-        <a href="mailto:purl-feedback@lists.stanford.edu">purl-feedback@lists.stanford.edu</a>.</p>
-    <% end %>
-    <form method="dialog">
-      <button>Close</button>
-    </form>
-  </dialog>
-  <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+  <% dialog %>
 </div>
