@@ -41,7 +41,7 @@
           <%= javascript_pack_tag('legacy_pdf_viewer') %>
       <% else %>
           <div style="padding: 10%;">
-            <%= viewer.restriction_message %>
+            <strong><%= I18n.t('restrictions.not_accessibile') %></strong>
           </div>
       <% end %>
   </div>

@@ -34,21 +34,11 @@ module Embed
         document_resource_files.all?(&:location_restricted?)
       end
 
-      # this indicates if the PDF is accessible (either to all or to stanford people)
+      # this indicates if the PDF is downloadable (though it could be stanford only)
+      # Stanford only and location restrictions are handled via a separate authorization flow,
+      # since it is possible for people to do something about the restriction
       def available?
-        purl_object.public? || purl_object.stanford_only_unrestricted?
-      end
-
-      def restriction_message
-        # NOTE: Stanford only restrictions are handled via a separate authorization flow,
-        # since it is possible for Stanford people to do something about the restriction
-        @restriction_message ||= if purl_object.embargoed? # check first, as it supercedes other restrictions
-                                   # NOTE: embargoed content is also citation only, so check first to show message
-                                   I18n.t('restrictions.embargoed', date: formatted_embargo_release_date)
-                                 # NOTE: PDFs with no download can't be viewed in a browser, so no access
-                                 elsif no_download?
-                                   I18n.t('restrictions.not_accessibile')
-                                 end
+        document_resource_files.first&.downloadable?
       end
 
       private
@@ -59,11 +49,6 @@ module Embed
 
       def document_resource_files
         purl_object.contents.select { |content| content.type == 'document' }.map(&:files).flatten
-      end
-
-      # check if first PDF file is set to no download
-      def no_download?
-        !document_resource_files.first&.world_downloadable?
       end
     end
   end
