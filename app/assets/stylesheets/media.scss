@@ -82,7 +82,9 @@ body {
   --button-color: #454545;
   --button-hover-bg-color: #9494947a;
   --background-color: rgba(255, 255, 255);
-  --header-size: 62.65px; /* depends on the line-height of the header > nav > h2 */
+  /* If the value of --header-size is too small, the bottom boarder won't display.
+     This depends on the line-height and padding of the header > nav > h2 */
+  --header-size: 58.65px;
   --modal-border-radius: 8px;
   --modal-max-width: 600px;
   --media-thumb-hover-color: #016895;
@@ -92,7 +94,6 @@ body {
   flex-direction: column;
   font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
   font-size: var(--font-size-base);
-  height: 100vh;
 
   * {
     box-sizing: border-box;
@@ -234,7 +235,6 @@ body {
     border-bottom: 1px solid gray;
 
     background-color: var(--background-color);
-    padding-bottom: 4px;
     padding-right: 4px;
     display: flex;
     flex-direction: column;
@@ -334,7 +334,7 @@ body {
   .media-component-body {
     display: flex;
     flex-grow: 1;
-    max-height: calc(100vh - var(--header-size));
+    max-height: calc(100vh - var(--header-size) - 2px); /* the 2px are for the outer 1px border */
 
     .sul-embed-media {
       display: flex;
