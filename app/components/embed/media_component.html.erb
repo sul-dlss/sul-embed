@@ -1,1 +1,71 @@
-<%= render Embed::CompanionWindowsComponent.new(viewer:) %>
+<%= render Embed::CompanionWindowsComponent.new(viewer:) do |component| %>
+  <% component.with_header_button do %>
+    <button data-action="click->media#displayAccessibility" aria-label="Accessibility" aria-controls="accessibility">
+      <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"></path></svg></span>
+    </button>
+  <% end %>
+
+  <% component.with_drawer_button do %>
+    <button data-action="click->media#displayTranscript" data-transcript-target="button" data-media-target="leftButton"  aria-label="Transcript" aria-controls="media-content" role="tab" hidden>
+      <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg>
+    </button>
+  <% end %>
+
+  <% component.with_drawer_content do %>
+    <section id="transcript" data-media-target="transcript" role="tabpanel" hidden>
+      <div class="header-background">
+        <h3>Transcript</h3>
+      </div>
+      <div class="transcript-controls header-background">
+        <div class="transcript-autoscroll">
+          <label for="autoscroll">Auto scroll</label>
+          <input data-transcript-target="autoscroll" type="checkbox" id="autoscroll">
+        </div>
+        <div class="transcript-language">
+          <label class="visually-hidden" for="caption-languages">Select Language</label>
+          <select name="caption-languages" id="caption-languages" data-transcript-target="captionLanguageSelect" data-action="transcript#selectLanguage">
+            <option value="">Select Language</option>
+          </select>
+        </div>
+      </div>
+      <div class="transcript" data-action="media-loaded@window->transcript#persistPlayer time-update@window->transcript#highlightCue">
+        <div data-transcript-target="outlet"></div>
+      </div>
+    </section>
+  <% end %>
+
+  <% component.with_body do %>
+      <div data-controller="locked-media-poster" data-action="auth-success@window->locked-media-poster#hide auth-denied@window->locked-media-poster#show" tabindex="-1" role="presentation" style="flex: 1 0 100%;" hidden>
+        <picture class="locked-media">
+          <%# The explicitly empty alt is preferred here, since this image merely adds visual decoration. %>
+          <%= image_tag 'locked-media-poster.svg', loading: 'lazy', alt: '' %>
+        </picture>
+      </div>
+
+      <div data-controller="locked-audio-poster" data-action="auth-success@window->locked-audio-poster#hide auth-denied@window->locked-audio-poster#show" tabindex="-1" role="presentation" style="flex: 1 0 100%;" hidden>
+        <picture class="locked-media">
+          <%# The explicitly empty alt is preferred here, since this image merely adds visual decoration. %>
+          <%= image_tag 'waveform-audio-poster.svg', loading: 'lazy', alt: '', data: { locked_audio_poster_target: 'poster' } %>
+        </picture>
+      </div>
+
+      <%= render Embed::MediaTagComponent.with_collection(resources_with_primary_file, druid:) %>
+  <% end %>
+
+  <% component.with_dialog do %>
+    <dialog class="modal-container" data-media-target="accessibility" data-action="click->media#handleBackdropClicks" id="accessibility">
+      <header>Accessibility</header>
+      <% if downloadable_transcript_files? %>
+        <p>A transcript is available for download. Click the share & download icon to download a transcript.</p>
+      <% else %>
+        <p>To request a transcript or other accommodation for this media item,
+          please send a request along with a link to this item to
+          <a href="mailto:purl-feedback@lists.stanford.edu">purl-feedback@lists.stanford.edu</a>.</p>
+      <% end %>
+      <form method="dialog">
+        <button>Close</button>
+      </form>
+    </dialog>
+    <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+  <% end %>
+<% end %>

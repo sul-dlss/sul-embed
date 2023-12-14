@@ -6,17 +6,16 @@ module Embed
       @viewer = viewer
     end
 
+    renders_one :header_button
+    renders_one :body
+    renders_one :dialog
+    renders_one :drawer_button
+    renders_one :drawer_content
+
     attr_reader :viewer
 
     delegate :purl_object, to: :viewer
-    delegate :downloadable_files, :downloadable_transcript_files?,
-             :druid, to: :purl_object
-
-    def resources_with_primary_file
-      @resources_with_primary_file ||= purl_object.contents.select do |purl_resource|
-        purl_resource.primary_file.present?
-      end
-    end
+    delegate :downloadable_files, :druid, to: :purl_object
 
     def iiif_v3_manifest_url
       "#{Settings.purl_url}/#{druid}/iiif3/manifest"
