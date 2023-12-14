@@ -85,7 +85,7 @@ a:hover {
   }
 }
 
-.media-component {
+.companion-window-component {
   --active-color: rgb(140, 21, 21);
   --drawer-width: 305px;
   --font-size-base: 14px;
@@ -342,11 +342,11 @@ a:hover {
   }
 
   /* Second selector is for citation-only banner. First selector is for all the other auth restrictions. */
-  [data-controller="auth-restriction"]:not([hidden]) + .media-component-body, .authLinkWrapper + .media-component-body {
+  [data-controller="auth-restriction"]:not([hidden]) + .companion-window-component-body, .authLinkWrapper + .companion-window-component-body {
     max-height: calc(100vh - 100px); /* Scroll height for metadata when the auth wrapper is displaying */
   }
 
-  .media-component-body {
+  .companion-window-component-body {
     display: flex;
     flex-grow: 1;
     max-height: calc(100vh - var(--header-size));

@@ -1,4 +1,4 @@
-<div class="sul-embed-container media-component" id='sul-embed-object' hidden data-controller="media media-tag transcript" data-media-tag-iiif-manifest-value="<%= iiif_v3_manifest_url %>" data-action="media-seek@window->media-tag#seek">
+<div class="sul-embed-container companion-window-component" id='sul-embed-object' hidden data-controller="media media-tag transcript" data-media-tag-iiif-manifest-value="<%= iiif_v3_manifest_url %>" data-action="media-seek@window->media-tag#seek">
   <header>
     <nav aria-label="Window navigation">
       <button data-action="click->media#toggleLeft transcript#load" aria-label="Display sidebar" aria-controls="left-drawer">
@@ -53,7 +53,7 @@
     </div>
   </div>
 
-  <div class="media-component-body">
+  <div class="companion-window-component-body">
     <aside class="left-drawer collapse" data-media-target="leftDrawer" id="left-drawer" aria-label="Sidebar" style="visibility: hidden">
       <nav class="vert-tabs" role="tablist">
         <button data-action="click->media#displayMetadata" data-media-target="leftButton" class="active" aria-label="About this item" aria-controls="about" aria-selected="true" role="tab">
