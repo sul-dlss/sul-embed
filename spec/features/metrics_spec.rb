@@ -11,16 +11,29 @@ RSpec.describe 'metrics tracking', :js do
 
   describe 'iiif viewer' do
     let(:purl) { nil }
-    let(:druid) { 'fr426cg9537' }
 
-    before do
-      stub_request(:get, 'https://purl.stanford.edu/fr426cg9537.xml')
+    context 'with a purl manifest' do
+      let(:druid) { 'fr426cg9537' }
+
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/fr426cg9537.xml')
+      end
+
+      it 'tracks views' do
+        visit iiif_path(url: 'https://purl.stanford.edu/fr426cg9537/iiif/manifest')
+        wait_for_view
+        expect(StubMetricsApi.last_event).to match(view_with_properties('druid' => druid))
+      end
     end
 
-    it 'tracks views' do
-      visit iiif_path(url: 'https://purl.stanford.edu/fr426cg9537/iiif/manifest')
-      wait_for_view
-      expect(StubMetricsApi.last_event).to match(view_with_properties('druid' => druid))
+    context 'with an external manifest' do
+      let(:druid) { 'wz026zp2442' }
+
+      it 'tracks views' do
+        visit iiif_path(url: 'https://dms-data.stanford.edu/data/manifests/Parker/wz026zp2442/manifest.json')
+        wait_for_view
+        expect(StubMetricsApi.last_event).to match(view_with_properties('druid' => druid))
+      end
     end
   end
 
