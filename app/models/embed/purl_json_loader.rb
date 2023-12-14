@@ -24,6 +24,7 @@ module Embed
         bounding_box:,
         archived_site_url:,
         embargoed:,
+        citation_only:,
         stanford_only_unrestricted:,
         controlled_digital_lending:,
         public:
@@ -57,6 +58,10 @@ module Embed
 
     def public
       json.dig('access', 'download') == 'world'
+    end
+
+    def citation_only
+      json.dig('access', 'view') == 'citation-only'
     end
 
     def archived_site_url
