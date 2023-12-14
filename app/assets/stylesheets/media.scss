@@ -1,6 +1,21 @@
+:root {
+  --link-color: #006CB8;
+  --link-hover-color: #00548f;
+}
+
 body {
   margin: 0;
   padding: 0;
+}
+
+a,
+a:hover,
+a:focus {
+  color: var(--link-color);
+}
+
+a:hover {
+  color: var(--link-hover-color);
 }
 
 /* VideoJS CSS overrides for responsive layout
