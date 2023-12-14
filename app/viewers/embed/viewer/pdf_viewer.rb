@@ -46,7 +46,7 @@ module Embed
                                    # NOTE: embargoed content is also citation only, so check first to show message
                                    I18n.t('restrictions.embargoed', date: formatted_embargo_release_date)
                                  # NOTE: PDFs with no download can't be viewed in a browser, so no access
-                                 elsif purl_object.citation_only? || no_download?
+                                 elsif no_download?
                                    I18n.t('restrictions.not_accessibile')
                                  end
       end

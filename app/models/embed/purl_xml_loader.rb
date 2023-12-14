@@ -20,7 +20,6 @@ module Embed
         bounding_box:,
         archived_site_url:,
         embargoed:,
-        citation_only:,
         stanford_only_unrestricted:,
         controlled_digital_lending:,
         public:
@@ -50,10 +49,6 @@ module Embed
 
     def controlled_digital_lending
       rights.controlled_digital_lending?
-    end
-
-    def citation_only
-      rights.citation_only?
     end
 
     def public
@@ -114,7 +109,7 @@ module Embed
     end
 
     def rights
-      @rights ||= ::Dor::RightsAuth.parse(rights_xml, forindex: true)
+      @rights ||= ::Dor::RightsAuth.parse(rights_xml)
     end
 
     def rights_xml
