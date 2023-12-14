@@ -1,7 +1,7 @@
 <div class="sul-embed-container media-component" id='sul-embed-object' hidden data-controller="media media-tag transcript" data-media-tag-iiif-manifest-value="<%= iiif_v3_manifest_url %>" data-action="media-seek@window->media-tag#seek">
   <header>
     <nav aria-label="Window navigation">
-      <button data-action="click->media#toggleLeft transcript#load" aria-label="Display sidebar" aria-controls="left-drawer">
+      <button data-action="click->media#toggleLeft" aria-label="Display sidebar" aria-controls="left-drawer">
         <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg></span>
       </button>
       <h2 class=""><%= viewer.purl_object.title %></h2>
@@ -102,7 +102,7 @@
               </select>
             </div>
           </div>
-          <div class="transcript" data-action="media-loaded@window->transcript#persistPlayer time-update@window->transcript#highlightCue">
+          <div class="transcript" data-action="media-loaded@window->transcript#persistPlayer media-data-loaded@window->transcript#load time-update@window->transcript#highlightCue">
             <div data-transcript-target="outlet"></div>
           </div>
         </section>
