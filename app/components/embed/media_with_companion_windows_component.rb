@@ -12,10 +12,6 @@ module Embed
     delegate :downloadable_files, :downloadable_transcript_files?,
              :druid, to: :purl_object
 
-    def include_transcripts
-      Settings.enabled_features.transcripts || params[:transcripts] == 'true'
-    end
-
     def resources_with_primary_file
       @resources_with_primary_file ||= purl_object.contents.select do |purl_resource|
         purl_resource.primary_file.present?

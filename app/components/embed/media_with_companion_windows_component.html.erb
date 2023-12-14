@@ -131,9 +131,7 @@
         </picture>
       </div>
 
-      <%= render Embed::MediaTagComponent.with_collection(resources_with_primary_file,
-                                                          include_transcripts:,
-                                                          druid:) %>
+      <%= render Embed::MediaTagComponent.with_collection(resources_with_primary_file, druid:) %>
     </div>
   </div>
   <dialog class="modal-components-popover" data-media-target="modalComponentsPopover" data-action="click->media#closePopover" id="share_and_download">

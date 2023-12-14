@@ -14,7 +14,6 @@ RSpec.describe 'Media viewer', :js do
   let(:stub_auth) { nil }
 
   before do
-    allow(Settings.enabled_features).to receive(:new_component).and_return(true)
     stub_auth
     allow(Embed::Purl).to receive(:find).and_return(purl)
     visit_iframe_response
