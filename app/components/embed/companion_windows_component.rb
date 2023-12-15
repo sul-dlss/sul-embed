@@ -2,8 +2,11 @@
 
 module Embed
   class CompanionWindowsComponent < ViewComponent::Base
-    def initialize(viewer:)
+    # @param [#purl_object] viewer
+    # @param [String] stimulus_controller any extra stimulus controllers to initialize on the component.
+    def initialize(viewer:, stimulus_controller: nil)
       @viewer = viewer
+      @stimulus_controller = stimulus_controller
     end
 
     renders_one :header_button
