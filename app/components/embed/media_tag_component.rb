@@ -68,7 +68,10 @@ module Embed
                id: "sul-embed-media-#{@resource_iteration.index}",
                data: {
                  auth_url: authentication_url,
-                 media_tag_target: 'mediaTag'
+                 media_tag_target: 'authorizeableResource',
+                 controller: 'media-player',
+                 action: 'media-seek@window->media-player#seek ' \
+                         'auth-success@window->media-player#initializeVideoJSPlayer'
                },
                poster: poster_url_for,
                controls: 'controls',
