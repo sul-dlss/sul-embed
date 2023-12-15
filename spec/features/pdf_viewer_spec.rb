@@ -32,13 +32,4 @@ RSpec.describe 'PDF Viewer', :js do
       expect(page).to have_content('This item cannot be accessed online')
     end
   end
-
-  context 'when embargoed' do
-    let(:purl) { build(:purl, :embargoed, :document) }
-
-    it 'renders the PDF viewer for documents with embargo restriction message' do
-      expect(page).to have_css('.sul-embed-pdf')
-      expect(page).to have_content('This item is embargoed until 21-Dec-2053.')
-    end
-  end
 end

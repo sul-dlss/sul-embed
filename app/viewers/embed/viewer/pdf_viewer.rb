@@ -43,10 +43,6 @@ module Embed
 
       private
 
-      def formatted_embargo_release_date
-        I18n.l(Date.parse(purl_object.embargo_release_date), format: :sul)
-      end
-
       def document_resource_files
         purl_object.contents.select { |content| content.type == 'document' }.map(&:files).flatten
       end

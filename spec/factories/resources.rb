@@ -12,7 +12,7 @@ FactoryBot.define do
     trait :document do
       type { 'document' }
       description { 'File1 Label' }
-      files { [build(:resource_file, :document)] }
+      files { [build(:resource_file, :document, :world_downloadable)] }
     end
 
     trait :document_no_download do
