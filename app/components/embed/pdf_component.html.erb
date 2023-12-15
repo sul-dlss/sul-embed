@@ -1,11 +1,7 @@
-<div class="sul-embed-container" id='sul-embed-object' hidden>
+<div class="sul-embed-container" id='sul-embed-object' data-controller="file-auth" data-file-auth-iiif-manifest-value="<%= iiif_v3_manifest_url %>" hidden>
   <%= render Embed::HeaderComponent.new viewer: viewer %>
   <% # removing 5 pixels from the body height to account for being embedded %>
-  <div class='sul-embed-body sul-embed-pdf'>
-    <object data="<%= viewer.pdf_files.first %>" type="application/pdf" style="height: 100vh; width: 100%">
-      <p>Your browser does not support viewing PDFs.  Please <a href="<%= viewer.pdf_files.first %>">download the file</a> to view it.</p>
-    </object>
-  </div>
+  <div class='sul-embed-body sul-embed-pdf' data-file-auth-target="container"></div>
   <%= render 'embed/metadata_panel', viewer: viewer %>
   <%= render 'embed/embed_this/generic', viewer: viewer %>
   <%= render Embed::Download::PdfComponent.new viewer: viewer %>

@@ -10,11 +10,15 @@ module Embed
       render_viewer_for(url: 'https://purl.stanford.edu/sq929fn8035')
     end
 
+    def stanford_only
+      render_viewer_for(url: 'https://purl.stanford.edu/jr789rw2402')
+    end
+
     private
 
     def render_viewer_for(url:)
       embed_request = Embed::Request.new(url:)
-      viewer = Embed::Viewer::PdfViewer.new(embed_request)
+      viewer = Embed::ViewerFactory.new(embed_request).viewer
       render(PdfComponent.new(viewer:))
     end
   end
