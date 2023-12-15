@@ -73,6 +73,22 @@ export default class extends Controller {
           const event = new CustomEvent('time-update', { detail: timestamp })
           window.dispatchEvent(event)
         })
+       
+        // When at least one of the tracks has been loaded, trigger transcript loading
+        // Before the tracks are loaded, the cues will not be recognized and the transcript will
+        // not load properly
+        player.textTracks().on('addtrack', () => {
+          // Retrieve the track objects.  Unfortunately, the "textTracks()" method did not cooperate
+          const tracks = player.textTracks_?.tracks_
+          // If there is at least one track we can attach the "loadeddata" event to
+          if(tracks && tracks.length > 0) {
+            player.textTracks_.tracks_[0].on('loadeddata', () => {
+              // Trigger this event, which will then lead to the transcript player load method
+              const event = new CustomEvent('media-data-loaded', { detail: player })
+              window.dispatchEvent(event)
+            })
+          }
+        })
       })
       return player
     })

@@ -12,10 +12,14 @@ export default class extends Controller {
     this.player = evt.detail
   }
 
-  // We can't load right away, because the VTT tracks may not have been parsed yet. So we wait until this panel is revealed.
+  // We can't load right away, because the VTT tracks may not have been parsed yet. 
+  // We are going to load this panel when at least one track has been loaded.
+  // This function is triggered by the 'media-data-loaded' event which is triggered
+  // by the 'loadeddata' event on the first track.  
   load() {
-    if (this.loaded || !this.currentCues())
+    if (this.loaded || !this.currentCues()) 
       return
+
     this.revealButton()
     this.setupTranscriptLanguageSwitching()
     this.renderCues()
@@ -31,7 +35,6 @@ export default class extends Controller {
 
   get cuesByLanguage() {
     const cues = {}
-
     this.captionTracks.forEach(track => {
       const list = track.cues.cues_
       const cueStartTimes = list.length === 0 ? undefined : list.map((cue) => cue.startTime)
