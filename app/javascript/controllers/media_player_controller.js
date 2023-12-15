@@ -4,7 +4,7 @@ import videojs from 'video.js';
 export default class extends Controller {
   initializeVideoJSPlayer() {
     this.element.classList.add('video-js', 'vjs-default-skin')
-    this.player = videojs(mediaTag.id)
+    this.player = videojs(this.element.id)
     this.player.on('loadedmetadata', () => {
       const event = new CustomEvent('media-loaded', { detail: this.player })
       window.dispatchEvent(event)
