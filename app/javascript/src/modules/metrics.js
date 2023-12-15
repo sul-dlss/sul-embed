@@ -6,32 +6,6 @@ export const trackView = () => {
   ahoy.trackView(eventParameters());
 };
 
-// Set up download tracking for any links with a download attribute
-export const trackFileDownloads = () => {
-  document.querySelectorAll('a[download]').forEach(link => {
-    link.addEventListener('click', event => {
-      const linkElement = event.target.closest('a');
-      try {
-        const downloadUrl = new URL(linkElement.href);
-        const file = downloadUrl.pathname.split("/").pop();
-        trackFileDownload(file);
-      } catch (e) {
-        return;
-      }
-    });
-  });
-}
-
-// When an entire object is downloaded as a .zip file
-export const trackObjectDownload = () => {
-  ahoy.track("download", eventParameters());
-};
-
-// When a single file is downloaded from an object
-export const trackFileDownload = (file) => {
-  ahoy.track("download", { file, ...eventParameters() });
-};
-
 // Parameters common to all events we track
 // Modify url/page to be the embed location instead of embed.stanford.edu
 const eventParameters = () => {
