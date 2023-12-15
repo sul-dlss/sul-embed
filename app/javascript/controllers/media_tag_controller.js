@@ -1,11 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
-import videojs from 'video.js';
 import validator from 'src/modules/validator'
 import mediaTagTokenWriter from 'src/modules/media_tag_token_writer'
 import buildThumbnail from 'src/modules/media_thumbnail_builder'
 
 export default class extends Controller {
-  static targets = [ "mediaTag", "mediaWrapper", "list" ]
+  static targets = [ "authorizeableResource", "mediaWrapper", "list" ]
   static values = {
     iiifManifest: String
   }
@@ -29,7 +28,7 @@ export default class extends Controller {
   }
 
   validateMedia(completeCallback) {
-    const validators = this.mediaTagTargets
+    const validators = this.authorizeableResourceTargets
       .map((mediaTag) => validator(mediaTag.dataset.authUrl, mediaTagTokenWriter(mediaTag)))
     Promise.all(validators).then((values) => {
       values.forEach((result) => {
@@ -40,7 +39,6 @@ export default class extends Controller {
   // NOTE: result.authResponse.status can be a string or an array.
   afterValidate(result, completeCallback) {
     if (result.authResponse.status === 'success') {
-      this.initializeVideoJSPlayer()
       if (result.authResponse.access_restrictions.stanford_restricted === true)
         window.dispatchEvent(new CustomEvent('auth-stanford-restricted'))
       window.dispatchEvent(new CustomEvent('auth-success'))
@@ -52,51 +50,6 @@ export default class extends Controller {
     if(typeof(completeCallback) === 'function') {
       completeCallback(result.authResponse);
     }
-  }
-
-  initializeVideoJSPlayer() {
-    this.players = this.mediaTagTargets.map((mediaTag) => {
-      mediaTag.classList.add('video-js', 'vjs-default-skin')
-      const player = videojs(mediaTag.id)
-      player.on('loadedmetadata', () => {
-        const event = new CustomEvent('media-loaded', { detail: player })
-        window.dispatchEvent(event)
-
-        // Stop the `loadedmetadata` event and don't bother listening for
-        // `timeupdate` events until after `loadedmetadata` fires completes.
-        // Why? If we don't, `timeupdate` will be triggered before the video
-        // (and its captions) are fully present, and we use the custom
-        // `time-update` event to scroll the transcript panel.
-        player.off('loadedmetadata')
-        player.on('timeupdate', () => {
-          const timestamp = player.currentTime()
-          const event = new CustomEvent('time-update', { detail: timestamp })
-          window.dispatchEvent(event)
-        })
-       
-        // When at least one of the tracks has been loaded, trigger transcript loading
-        // Before the tracks are loaded, the cues will not be recognized and the transcript will
-        // not load properly
-        player.textTracks().on('addtrack', () => {
-          // Retrieve the track objects.  Unfortunately, the "textTracks()" method did not cooperate
-          const tracks = player.textTracks_?.tracks_
-          // If there is at least one track we can attach the "loadeddata" event to
-          if(tracks && tracks.length > 0) {
-            player.textTracks_.tracks_[0].on('loadeddata', () => {
-              // Trigger this event, which will then lead to the transcript player load method
-              const event = new CustomEvent('media-data-loaded', { detail: player })
-              window.dispatchEvent(event)
-            })
-          }
-        })
-      })
-      return player
-    })
-  }
-
-  // Listen for events emitted by cue_controller.js to jump to a particular time
-  seek(event) {
-    this.players.forEach((player) => player.currentTime(event.detail))
   }
 
   setupThumbnails() {
