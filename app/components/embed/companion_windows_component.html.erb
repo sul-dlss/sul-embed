@@ -12,46 +12,7 @@
     </nav>
   </header>
 
-  <div data-controller="auth-restriction" data-action="auth-denied@window->auth-restriction#displayMessage auth-stanford-restricted@window->auth-restriction#displayStanfordRestriction auth-success@window->auth-restriction#hideLoginPrompt" hidden="true" role="banner" aria-label="Access message">
-    <div data-auth-restriction-target="locationRestriction" hidden>
-      <div class="authLinkWrapper">
-        <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M22 4v-.5C22 2.12 20.88 1 19.5 1S17 2.12 17 3.5V4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h5c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zm-.8 0h-3.4v-.5c0-.94.76-1.7 1.7-1.7s1.7.76 1.7 1.7V4zm-2.28 8c.04.33.08.66.08 1 0 2.08-.8 3.97-2.1 5.39-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H7v-2h2c.55 0 1-.45 1-1V8h2c1.1 0 2-.9 2-2V3.46c-.95-.3-1.95-.46-3-.46C5.48 3 1 7.48 1 13s4.48 10 10 10 10-4.48 10-10c0-.34-.02-.67-.05-1h-2.03zM10 20.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L8 16v1c0 1.1.9 2 2 2v1.93z"></path></svg>
-        <p class="loginMessage">Access is restricted to the reading room. See Access conditions for more information.</p>
-      </div>
-    </div>
-    <div data-auth-restriction-target="stanfordRestriction" hidden>
-      <div class="authLinkWrapper">
-        <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-          <path data-auth-restriction-target="stanfordRestrictionNotLoggedInIcon" d="M20 8h-3V6.21c0-2.61-1.91-4.94-4.51-5.19C9.51.74 7 3.08 7 6v2H4v14h16V8zm-8 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zM9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9z"></path>
-          <path data-auth-restriction-target="stanfordRestrictionLoggedInIcon" hidden d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6h1.9c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm0 12H6V10h12v10z"></path>
-        </svg>
-        <p class="loginMessage" data-auth-restriction-target="stanfordRestrictionMessage">Stanford users: log in to access all available features.</p>
-        <button data-auth-restriction-target="stanfordLoginButton" data-action="media-tag#logIn">Log in</button>
-        <button class="dismissButton" hidden data-auth-restriction-target="stanfordRestrictionDismissButton" data-action="auth-restriction#hideAuthRestrictionMessages" aria-label="Close access message">
-          <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
-        </button>
-      </div>
-    </div>
-    <div data-auth-restriction-target="embargoRestriction" hidden>
-      <div class="authLinkWrapper">
-        <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="m14.5 14.2 2.9 1.7-.8 1.3L13 15v-5h1.5v4.2zM22 14c0 4.41-3.59 8-8 8-2.02 0-3.86-.76-5.27-2H4c-1.15 0-2-.85-2-2V9c0-1.12.89-1.96 2-2v-.5C4 4.01 6.01 2 8.5 2c2.34 0 4.24 1.79 4.46 4.08.34-.05.69-.08 1.04-.08 4.41 0 8 3.59 8 8zM6 7h5v-.74C10.88 4.99 9.8 4 8.5 4 7.12 4 6 5.12 6 6.5V7zm14 7c0-3.31-2.69-6-6-6s-6 2.69-6 6 2.69 6 6 6 6-2.69 6-6z"></path></svg>
-        <p class="loginMessage">Access is restricted until the embargo has elapsed</p>
-      </div>
-    </div>
-    <div data-auth-restriction-target="embargoAndStanfordRestriction" hidden>
-      <div class="authLinkWrapper">
-        <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="m14.5 14.2 2.9 1.7-.8 1.3L13 15v-5h1.5v4.2zM22 14c0 4.41-3.59 8-8 8-2.02 0-3.86-.76-5.27-2H4c-1.15 0-2-.85-2-2V9c0-1.12.89-1.96 2-2v-.5C4 4.01 6.01 2 8.5 2c2.34 0 4.24 1.79 4.46 4.08.34-.05.69-.08 1.04-.08 4.41 0 8 3.59 8 8zM6 7h5v-.74C10.88 4.99 9.8 4 8.5 4 7.12 4 6 5.12 6 6.5V7zm14 7c0-3.31-2.69-6-6-6s-6 2.69-6 6 2.69 6 6 6 6-2.69 6-6z"></path></svg>
-        <p class="loginMessage">Stanford users: log in to access all available features.</p>
-        <button data-auth-restriction-target="embargoLoginButton" data-action="media-tag#logIn">Log in</button>
-      </div>
-    </div>
-    <div data-auth-restriction-target="noAccess" hidden>
-      <div class="authLinkWrapper">
-        <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8 0-1.85.63-3.55 1.69-4.9L16.9 18.31C15.55 19.37 13.85 20 12 20zm6.31-3.1L7.1 5.69C8.45 4.63 10.15 4 12 4c4.42 0 8 3.58 8 8 0 1.85-.63 3.55-1.69 4.9z"></path></svg>
-        <p class="loginMessage">This item cannot be accessed online. See access conditions for more information.</p>
-      </div>
-    </div>
-  </div>
+  <%= authorization_messages %>
 
   <div class="companion-window-component-body">
     <aside class="left-drawer collapse" data-companion-window-target="leftDrawer" id="left-drawer" aria-label="Sidebar" style="visibility: hidden">
