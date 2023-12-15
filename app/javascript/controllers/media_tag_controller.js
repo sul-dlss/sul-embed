@@ -10,21 +10,8 @@ export default class extends Controller {
   }
 
   connect() {
-    this.fetchIiifManifest()
     this.setupThumbnails()
     this.validateMedia()
-  }
-
-  fetchIiifManifest() {
-    fetch(this.iiifManifestValue)
-      .then((response) => response.json())
-      .then((json) => this.dispatchManifestEvent(json))
-      .catch((err) => console.error(err))
-  }
-
-  dispatchManifestEvent(json) {
-    const event = new CustomEvent('iiif-manifest-received', { detail: json })
-    window.dispatchEvent(event)
   }
 
   validateMedia(completeCallback) {

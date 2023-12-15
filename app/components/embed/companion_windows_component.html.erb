@@ -1,4 +1,4 @@
-<div class="sul-embed-container companion-window-component" id='sul-embed-object' hidden data-controller="companion-window <%= @stimulus_controller %>" data-media-tag-iiif-manifest-value="<%= iiif_v3_manifest_url %>">
+<div class="sul-embed-container companion-window-component" id='sul-embed-object' hidden data-controller="companion-window iiif-manifest-loader <%= @stimulus_controller %>" data-iiif-manifest-loader-iiif-manifest-value="<%= iiif_v3_manifest_url %>">
   <header aria-label="Embed main">
     <nav aria-label="Embed navigation">
       <button data-action="click->companion-window#toggleLeft" aria-label="Display sidebar" aria-controls="left-drawer">
