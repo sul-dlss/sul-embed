@@ -351,7 +351,7 @@ a:hover {
     flex-grow: 1;
     max-height: calc(100vh - var(--header-size) - 2px); /* the 2px are for the outer 1px border */
 
-    .sul-embed-media {
+    #main-display {
       display: flex;
       flex: 1 1 auto;
     }
