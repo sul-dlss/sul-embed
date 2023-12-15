@@ -27,9 +27,9 @@ export default function(dataset, index) {
 
     const fileLabel = dataset.fileLabel || '';
     // Note: the "position: relative" is required for the stretched-link style.
-    return `<li class="media-thumb ${activeClass}" data-controller="thumbnail" data-action="click->thumbnail#activate" data-thumbnail-index-param="${index}" style="position: relative;" aria-controls="sul-embed-body" role="tab">
+    return `<li class="media-thumb ${activeClass}" data-controller="thumbnail" data-action="click->thumbnail#activate" data-thumbnail-index-param="${index}" style="position: relative;" aria-controls="main-display" role="tab">
+        ${thumbnailIcon}
         <a class="stretched-link" href="#">
-          ${thumbnailIcon}
           <span class="${labelClass}">
             ${stanfordOnlyScreenreaderText}${restrictedTextMarkup}
             ${truncateWithEllipsis(fileLabel, maxFileLabelLength)}

@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import EmbedThis from 'src/modules/embed_this';
 
 export default class extends Controller {
+  // TODO: accessability and transcript should move to a controller just for media.
   static targets = [ "leftDrawer", "leftButton", "metadata", "shareButton", "shareModal", "contents", "transcript",
                      "downloadModal", "rights", "accessibility", "modalComponentsPopover"]
   connect() {

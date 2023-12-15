@@ -4,7 +4,7 @@ module Embed
   module Viewer
     class Media < CommonViewer
       def component
-        MediaWithCompanionWindowsComponent
+        MediaComponent
       end
 
       def importmap

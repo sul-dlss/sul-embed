@@ -1,20 +1,18 @@
-<div class="sul-embed-container media-component" id='sul-embed-object' hidden data-controller="media media-tag transcript" data-media-tag-iiif-manifest-value="<%= iiif_v3_manifest_url %>" data-action="media-seek@window->media-tag#seek">
-  <header>
-    <nav aria-label="Window navigation">
-      <button data-action="click->media#toggleLeft" aria-label="Display sidebar" aria-controls="left-drawer">
+<div class="sul-embed-container companion-window-component" id='sul-embed-object' hidden data-controller="companion-window <%= @stimulus_controller %>" data-media-tag-iiif-manifest-value="<%= iiif_v3_manifest_url %>" data-action="media-seek@window->media-tag#seek">
+  <header aria-label="Embed main">
+    <nav aria-label="Embed navigation">
+      <button data-action="click->companion-window#toggleLeft" aria-label="Display sidebar" aria-controls="left-drawer">
         <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg></span>
       </button>
       <h2 class=""><%= viewer.purl_object.title %></h2>
-      <button data-action="click->media#openModalComponentsPopover" data-media-target='shareButton' aria-label="Share and Download" aria-controls="share_and_download">
+      <button data-action="click->companion-window#openModalComponentsPopover" data-companion-window-target='shareButton' aria-label="Share and Download" aria-controls="share_and_download">
         <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0,0H24V24H0Z" fill="none"></path><path d="M19,12v7H5V12H3v9H21V12Z"></path><path d="M11.741,8.178V5L17.3,10.562l-5.562,5.562V12.867c-3.973,0-6.754,1.271-8.741,4.052C3.795,12.946,6.178,8.973,11.741,8.178Z" transform="translate(4 -4)"></path></svg></svg></span>
       </button>
-      <button data-action="click->media#displayAccessibility" aria-label="Accessibility" aria-controls="accessibility">
-        <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"></path></svg></span>
-      </button>
+      <%= header_button %>
     </nav>
   </header>
 
-  <div data-controller="auth-restriction" data-action="auth-denied@window->auth-restriction#displayMessage auth-stanford-restricted@window->auth-restriction#displayStanfordRestriction auth-success@window->auth-restriction#hideLoginPrompt" hidden="true">
+  <div data-controller="auth-restriction" data-action="auth-denied@window->auth-restriction#displayMessage auth-stanford-restricted@window->auth-restriction#displayStanfordRestriction auth-success@window->auth-restriction#hideLoginPrompt" hidden="true" role="banner" aria-label="Access message">
     <div data-auth-restriction-target="locationRestriction" hidden>
       <div class="authLinkWrapper">
         <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M22 4v-.5C22 2.12 20.88 1 19.5 1S17 2.12 17 3.5V4c-.55 0-1 .45-1 1v4c0 .55.45 1 1 1h5c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zm-.8 0h-3.4v-.5c0-.94.76-1.7 1.7-1.7s1.7.76 1.7 1.7V4zm-2.28 8c.04.33.08.66.08 1 0 2.08-.8 3.97-2.1 5.39-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H7v-2h2c.55 0 1-.45 1-1V8h2c1.1 0 2-.9 2-2V3.46c-.95-.3-1.95-.46-3-.46C5.48 3 1 7.48 1 13s4.48 10 10 10 10-4.48 10-10c0-.34-.02-.67-.05-1h-2.03zM10 20.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L8 16v1c0 1.1.9 2 2 2v1.93z"></path></svg>
@@ -29,7 +27,7 @@
         </svg>
         <p class="loginMessage" data-auth-restriction-target="stanfordRestrictionMessage">Stanford users: log in to access all available features.</p>
         <button data-auth-restriction-target="stanfordLoginButton" data-action="media-tag#logIn">Log in</button>
-        <button class="dismissButton" hidden data-auth-restriction-target="stanfordRestrictionDismissButton" data-action="auth-restriction#hideAuthRestrictionMessages">
+        <button class="dismissButton" hidden data-auth-restriction-target="stanfordRestrictionDismissButton" data-action="auth-restriction#hideAuthRestrictionMessages" aria-label="Close access message">
           <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
         </button>
       </div>
@@ -55,59 +53,39 @@
     </div>
   </div>
 
-  <div class="media-component-body">
-    <aside class="left-drawer collapse" data-media-target="leftDrawer" id="left-drawer" aria-label="Sidebar" style="visibility: hidden">
+  <div class="companion-window-component-body">
+    <aside class="left-drawer collapse" data-companion-window-target="leftDrawer" id="left-drawer" aria-label="Sidebar" style="visibility: hidden">
       <nav class="vert-tabs" role="tablist">
-        <button data-action="click->media#displayMetadata" data-media-target="leftButton" class="active" aria-label="About this item" aria-controls="about" aria-selected="true" role="tab">
+        <button data-action="click->companion-window#displayMetadata" data-companion-window-target="leftButton" class="active" aria-label="About this item" aria-controls="about" aria-selected="true" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
         </button>
-        <button data-action="click->media#displayContents" data-media-target="leftButton"  aria-label="Content" aria-controls="media-content" role="tab">
+        <button data-action="click->companion-window#displayContents" data-companion-window-target="leftButton"  aria-label="Content" aria-controls="media-content" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"></path></svg>
         </button>
-        <button data-action="click->media#displayTranscript" data-transcript-target="button" data-media-target="leftButton"  aria-label="Transcript" aria-controls="media-content" role="tab" hidden>
-          <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"></path></svg>
-        </button>
-        <button data-action="click->media#displayRights" data-media-target="leftButton" aria-label="Use and reproduction" aria-controls="rights" role="tab">
+        <%= drawer_button %>
+        <button data-action="click->companion-window#displayRights" data-companion-window-target="leftButton" aria-label="Use and reproduction" aria-controls="rights" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M10.08 10.86c.05-.33.16-.62.3-.87s.34-.46.59-.62c.24-.15.54-.22.91-.23.23.01.44.05.63.13.2.09.38.21.52.36s.25.33.34.53.13.42.14.64h1.79c-.02-.47-.11-.9-.28-1.29s-.4-.73-.7-1.01-.66-.5-1.08-.66-.88-.23-1.39-.23c-.65 0-1.22.11-1.7.34s-.88.53-1.2.92-.56.84-.71 1.36S8 11.29 8 11.87v.27c0 .58.08 1.12.23 1.64s.39.97.71 1.35.72.69 1.2.91c.48.22 1.05.34 1.7.34.47 0 .91-.08 1.32-.23s.77-.36 1.08-.63.56-.58.74-.94.29-.74.3-1.15h-1.79c-.01.21-.06.4-.15.58s-.21.33-.36.46-.32.23-.52.3c-.19.07-.39.09-.6.1-.36-.01-.66-.08-.89-.23-.25-.16-.45-.37-.59-.62s-.25-.55-.3-.88-.08-.67-.08-1v-.27c0-.35.03-.68.08-1.01zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"></path></svg>
         </button>
       </nav>
+
       <div class="inner">
-        <section id="about" data-media-target="metadata" role="tabpanel" hidden>
+        <section id="about" data-companion-window-target="metadata" role="tabpanel" hidden>
           <div class="header-background">
             <h3>About this item</h3>
           </div>
           <dl data-controller="iiif-metadata" class="metadataList" data-action="iiif-manifest-received@window->iiif-metadata#drawMetadata"></dl>
         </section>
 
-        <section id="media-content" data-media-target="contents" role="tabpanel" hidden>
+        <section id="media-content" data-companion-window-target="contents" role="tabpanel" hidden>
           <div class="header-background">
             <h3>Media content</h3>
           </div>
           <ul class="contentsList" data-media-tag-target="list" role="tablist"></ul>
         </section>
 
-        <section id="transcript" data-media-target="transcript" role="tabpanel" hidden>
-          <div class="header-background">
-            <h3>Transcript</h3>
-          </div>
-          <div class="transcript-controls header-background">
-            <div class="transcript-autoscroll">
-              <label for="autoscroll">Auto scroll</label>
-              <input data-transcript-target="autoscroll" type="checkbox" id="autoscroll">
-            </div>
-            <div class="transcript-language">
-              <label class="visually-hidden" for="caption-languages">Select Language</label>
-              <select name="caption-languages" id="caption-languages" data-transcript-target="captionLanguageSelect" data-action="transcript#selectLanguage">
-                <option value="">Select Language</option>
-              </select>
-            </div>
-          </div>
-          <div class="transcript" data-action="media-loaded@window->transcript#persistPlayer media-data-loaded@window->transcript#load time-update@window->transcript#highlightCue">
-            <div data-transcript-target="outlet"></div>
-          </div>
-        </section>
+        <%= drawer_content %>
 
-        <section id="rights" data-media-target="rights" role="tabpanel" hidden>
+        <section id="rights" data-companion-window-target="rights" role="tabpanel" hidden>
           <div class="header-background">
             <h3>Rights</h3>
           </div>
@@ -116,46 +94,32 @@
         </section>
       </div>
     </aside>
-    <div class='sul-embed-media' id='sul-embed-body'>
-      <div data-controller="locked-media-poster" data-action="auth-success@window->locked-media-poster#hide auth-denied@window->locked-media-poster#show" tabindex="-1" role="presentation" style="flex: 1 0 100%;" hidden>
-        <picture class="locked-media">
-          <%# The explicitly empty alt is preferred here, since this image merely adds visual decoration. %>
-          <%= image_tag 'locked-media-poster.svg', loading: 'lazy', alt: '' %>
-        </picture>
-      </div>
-
-      <div data-controller="locked-audio-poster" data-action="auth-success@window->locked-audio-poster#hide auth-denied@window->locked-audio-poster#show" tabindex="-1" role="presentation" style="flex: 1 0 100%;" hidden>
-        <picture class="locked-media">
-          <%# The explicitly empty alt is preferred here, since this image merely adds visual decoration. %>
-          <%= image_tag 'waveform-audio-poster.svg', loading: 'lazy', alt: '', data: { locked_audio_poster_target: 'poster' } %>
-        </picture>
-      </div>
-
-      <%= render Embed::MediaTagComponent.with_collection(resources_with_primary_file, druid:) %>
+    <div id='main-display'>
+      <%= body %>
     </div>
   </div>
-  <dialog class="modal-components-popover" data-media-target="modalComponentsPopover" data-action="click->media#closePopover" id="share_and_download">
-    <button class="modal-component-button" data-action="click->media#openShareModal" aria-label="Share" aria-controls="share" tabindex="0">
+  <dialog class="modal-components-popover" data-companion-window-target="modalComponentsPopover" data-action="click->companion-window#closePopover" id="share_and_download">
+    <button class="modal-component-button" data-action="click->companion-window#openShareModal" aria-label="Share" aria-controls="share" tabindex="0">
       <svg class="MuiSvgIcon-root modal-component-icon" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"></path></svg>
       <span class="modal-component-label">Share</span>
     </button>
-    <button class="modal-component-button" data-action="click->media#openDownloadModal" aria-label="Download" aria-controls="download" tabindex="0">
+    <button class="modal-component-button" data-action="click->companion-window#openDownloadModal" aria-label="Download" aria-controls="download" tabindex="0">
       <svg class="MuiSvgIcon-root modal-component-icon" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"></path></svg>
       <span class="modal-component-label">Download</span>
     </button>
   </dialog>
 
-  <dialog aria-labelledby="share-modal-header" class="modal-container" data-media-target="shareModal" data-action="click->media#handleBackdropClicks" id="share">
+  <dialog aria-labelledby="share-modal-header" class="modal-container" data-companion-window-target="shareModal" data-action="click->companion-window#handleBackdropClicks" id="share">
     <header class="modal-header" id="share-modal-header">
       Share
     </header>
 
     <%= render Embed::Media::EmbedThisFormComponent.new(viewer:) %>
 
-    <button data-action="click->media#closeModal">Close</button>
+    <button data-action="click->companion-window#closeModal">Close</button>
   </dialog>
 
-  <dialog aria-labelledby="download-modal-header" class="modal-container" data-media-target="downloadModal" data-action="click->media#handleBackdropClicks" id="download">
+  <dialog aria-labelledby="download-modal-header" class="modal-container" data-companion-window-target="downloadModal" data-action="click->companion-window#handleBackdropClicks" id="download">
     <header class="modal-header" id="download-modal-header">
       Download
     </header>
@@ -173,21 +137,8 @@
       <% end %>
     </section>
 
-    <button data-action="click->media#closeModal">Close</button>
+    <button data-action="click->companion-window#closeModal">Close</button>
   </dialog>
 
-  <dialog class="modal-container" data-media-target="accessibility" data-action="click->media#handleBackdropClicks" id="accessibility">
-    <header>Accessibility</header>
-    <% if downloadable_transcript_files? %>
-      <p>A transcript is available for download. Click the share & download icon to download a transcript.</p>
-    <% else %>
-      <p>To request a transcript or other accommodation for this media item,
-        please send a request along with a link to this item to
-        <a href="mailto:purl-feedback@lists.stanford.edu">purl-feedback@lists.stanford.edu</a>.</p>
-    <% end %>
-    <form method="dialog">
-      <button>Close</button>
-    </form>
-  </dialog>
-  <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
+  <%= dialog %>
 </div>

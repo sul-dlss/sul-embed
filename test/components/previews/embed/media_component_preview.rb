@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 # Access these previews at:
-# http://localhost:3000/rails/view_components/embed/media_with_companion_windows_component
+# http://localhost:3000/rails/view_components/embed/media_component
 module Embed
-  class MediaWithCompanionWindowsComponentPreview < ViewComponent::Preview
+  class MediaComponentPreview < ViewComponent::Preview
     layout 'preview/media'
 
     def with_audio
@@ -39,7 +39,7 @@ module Embed
     def render_media_viewer_for(url:)
       embed_request = Embed::Request.new(url:)
       viewer = Embed::Viewer::Media.new(embed_request)
-      render(MediaWithCompanionWindowsComponent.new(viewer:))
+      render(MediaComponent.new(viewer:))
     end
   end
 end
