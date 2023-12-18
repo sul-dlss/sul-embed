@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import validator from 'src/modules/validator'
 import mediaTagTokenWriter from 'src/modules/media_tag_token_writer'
-import buildThumbnail from 'src/modules/media_thumbnail_builder'
+import Thumbnail from 'src/modules/thumbnail'
 
 export default class extends Controller {
   static targets = [ "authorizeableResource", "mediaWrapper", "list" ]
@@ -54,7 +54,15 @@ export default class extends Controller {
 
   setupThumbnails() {
     const thumbnails = this.mediaWrapperTargets.
-      map((mediaDiv, index) => buildThumbnail(mediaDiv.dataset, index))
+      map((mediaDiv) => {
+        const dataset = mediaDiv.dataset
+        return new Thumbnail({ isStanfordOnly: dataset.stanfordOnly === "true",
+                               thumbnailUrl: dataset.thumbnailUrl,
+                               defaultIcon: dataset.defaultIcon,
+                               isLocationRestricted: dataset.locationRestricted === "true",
+                               fileLabel: dataset.fileLabel || '' })
+      }).
+      map((thumbnail, index) => thumbnail.build(index))
     this.listTarget.innerHTML = thumbnails.join('')
   }
 
