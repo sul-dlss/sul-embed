@@ -9,6 +9,11 @@ else
   ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 end
 
+# Workaround for supporting propshaft
+# https://github.com/capistrano/rails/issues/257
+set :assets_manifests, -> {
+    [release_path.join("public", fetch(:assets_prefix), '.manifest.json')]
+}
 
 # Default value for :scm is :git
 # set :scm, :git
