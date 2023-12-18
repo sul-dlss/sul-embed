@@ -4,13 +4,10 @@ import mediaTagTokenWriter from 'src/modules/media_tag_token_writer'
 import Thumbnail from 'src/modules/thumbnail'
 
 export default class extends Controller {
-  static targets = [ "authorizeableResource", "mediaWrapper", "list" ]
-  static values = {
-    iiifManifest: String
-  }
+  static targets = [ "authorizeableResource", "mediaWrapper" ]
 
   connect() {
-    this.setupThumbnails()
+    this.findThumbnails()
     this.validateMedia()
   }
 
@@ -39,18 +36,22 @@ export default class extends Controller {
     }
   }
 
-  setupThumbnails() {
+  // Currently this finds certain data-* properties on the media wrapper which we can make thumbnails with.
+  // Once these properties are found we emit a thumbnails-found event.  The content_list_controller.js 
+  // can then receive this event and draw the content of the thubmnail list.
+  // TODO: in the future, we should drive the thumbnail list from the data in the IIIF manifest.
+  findThumbnails() {
     const thumbnails = this.mediaWrapperTargets.
       map((mediaDiv) => {
         const dataset = mediaDiv.dataset
-        return new Thumbnail({ isStanfordOnly: dataset.stanfordOnly === "true",
-                               thumbnailUrl: dataset.thumbnailUrl,
-                               defaultIcon: dataset.defaultIcon,
-                               isLocationRestricted: dataset.locationRestricted === "true",
-                               fileLabel: dataset.fileLabel || '' })
-      }).
-      map((thumbnail, index) => thumbnail.build(index))
-    this.listTarget.innerHTML = thumbnails.join('')
+        return { isStanfordOnly: dataset.stanfordOnly === "true",
+                 thumbnailUrl: dataset.thumbnailUrl,
+                 defaultIcon: dataset.defaultIcon,
+                 isLocationRestricted: dataset.locationRestricted === "true",
+                 fileLabel: dataset.fileLabel || '' }
+      })
+    
+    window.dispatchEvent(new CustomEvent('thumbnails-found', { detail: thumbnails }))
   }
 
   // Open the login window in a new window and then poll to see if the auth credentials are now active.
