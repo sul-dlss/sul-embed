@@ -10,7 +10,7 @@ module Embed
 
     def attributes=(hash)
       hash.each do |key, value|
-        public_send("#{key}=", value)
+        public_send(:"#{key}=", value)
       end
     end
 

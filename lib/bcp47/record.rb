@@ -42,26 +42,26 @@ module Bcp47
         field = field&.underscore
         next unless KNOWN_FIELDS.include?(field)
 
-        public_send("#{field}=", value)
+        public_send(:"#{field}=", value)
       end
     end
 
     KNOWN_FIELDS.each do |field|
       define_method(field) do
-        current_value = instance_variable_get("@#{field}")
+        current_value = instance_variable_get(:"@#{field}")
         return current_value unless DATE_FIELDS.include?(field) && current_value.present?
 
         Date.parse(current_value)
       end
 
-      define_method("#{field}=") do |new_value|
+      define_method(:"#{field}=") do |new_value|
         case (current_value = public_send(field))
         when NilClass
-          instance_variable_set("@#{field}", new_value)
+          instance_variable_set(:"@#{field}", new_value)
         when String
-          instance_variable_set("@#{field}", [current_value, new_value])
+          instance_variable_set(:"@#{field}", [current_value, new_value])
         when Array
-          instance_variable_set("@#{field}", current_value << new_value)
+          instance_variable_set(:"@#{field}", current_value << new_value)
         else
           warn("field #{field} has unexpected value type: #{new_value}")
         end
