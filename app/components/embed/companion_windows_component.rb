@@ -14,6 +14,7 @@ module Embed
     renders_one :dialog
     renders_one :drawer_button
     renders_one :drawer_content
+    renders_one :authorization_messages
 
     attr_reader :viewer
 

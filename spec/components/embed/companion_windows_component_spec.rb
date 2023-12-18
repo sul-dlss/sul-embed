@@ -27,14 +27,8 @@ RSpec.describe Embed::CompanionWindowsComponent, type: :component do
   end
 
   it 'displays the page' do
-    # Accessabile dialog
-    within 'dialog' do
-      expect(page).to have_content 'To request a transcript or other accommodation'
-    end
-
-    # Auth components
-    expect(page).to have_content 'Access is restricted to the reading room. See Access conditions for more information.'
-    expect(page).to have_content 'Stanford users: log in to access all available features'
-    expect(page).to have_content 'Access is restricted until the embargo has elapsed'
+    expect(page).to have_content 'About this item'
+    expect(page).to have_content 'Media content'
+    expect(page).to have_content 'Rights'
   end
 end
