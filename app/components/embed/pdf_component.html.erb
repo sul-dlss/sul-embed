@@ -1,23 +1,13 @@
-<div class="sul-embed-container" id='sul-embed-object' data-controller="file-auth" data-file-auth-iiif-manifest-value="<%= iiif_v3_manifest_url %>" hidden>
-  <%= render Embed::HeaderComponent.new viewer: viewer %>
-  <% # removing 5 pixels from the body height to account for being embedded %>
-  <div class='sul-embed-body sul-embed-pdf' data-file-auth-target="container">
-    <% if viewer.available? %>
-      <object data="<%= viewer.pdf_files.first %>" type="application/pdf" style="height: 100vh; width: 100%">
-        <div style="padding: 10%;">
-          <strong>
-            <%= I18n.t('restrictions.not_supported_html', download_link: link_to(I18n.t('restrictions.download_the_file'), viewer.pdf_files.first, target: '_blank')).html_safe %>
-          </strong>
-        </div>
-      </object>
-    <% else %>
-       <div style="padding: 10%;">
+<% # data-file-auth-iiif-manifest-value="<%= iiif_v3_manifest_url %>
+
+<%= render Embed::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth') do |component| %>
+  <% component.with_body do %>
+    <div class='sul-embed-body sul-embed-pdf' data-action="iiif-manifest-received@window->file-auth#parseFiles"  data-file-auth-target="container">
+    <% unless viewer.available? %>
+      <div style="padding: 10%;">
           <strong><%= I18n.t('restrictions.not_accessibile') %></strong>
        </div>
     <% end %>
-  </div>
-  <%= render 'embed/metadata_panel', viewer: viewer %>
-  <%= render 'embed/embed_this/generic', viewer: viewer %>
-  <%= render Embed::Download::PdfComponent.new viewer: viewer %>
-  <%= render Embed::FooterComponent.new viewer: viewer %>
- </div>
+    </div>
+  <% end %>
+<% end %>

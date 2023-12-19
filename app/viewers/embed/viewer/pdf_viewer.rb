@@ -15,7 +15,7 @@ module Embed
       end
 
       def stylesheet
-        'pdf.css'
+        'media.css' # TODO: change this
       end
 
       def pdf_files

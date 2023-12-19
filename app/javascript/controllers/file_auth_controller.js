@@ -5,38 +5,21 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["container"]
-  static values = {
-    iiifManifest: String
-  }
 
   resources = {} // Hash of messageIds to resources
 
-  connect() {
-    this.fetchIiifManifest()
+  addPostCallbackListener() {
     window.addEventListener("message", (event) => {
       if (event.origin !== "https://stacks.stanford.edu" && event.origin !== "https://sul-stacks-stage.stanford.edu") return;
 
       this.accessTokenReceived(event.data.accessToken, event.data.messageId)
     }, false)
-
   }
 
-  fetchIiifManifest() {
-    fetch(this.iiifManifestValue)
-      .then((response) => response.json())
-      .then((json) => this.dispatchManifestEvent(json))
-      .catch((err) => console.error(err))
-  }
-
-  dispatchManifestEvent(json) {
-    const event = new CustomEvent('iiif-manifest-received', { detail: json })
-    window.dispatchEvent(event)
-
-    this.parseFiles(json)
-  }
-
-  parseFiles(document) {
+  parseFiles(evt) {
+    const document = evt.detail
     const canvases = document.items
+    this.addPostCallbackListener()
     canvases.forEach((canvas) => {
       const annotationPages = canvas.items
       annotationPages.forEach((annotationPage) => {
