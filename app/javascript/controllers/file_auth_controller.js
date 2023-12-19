@@ -59,32 +59,21 @@ export default class extends Controller {
     // We're going to make the assumption that calling the probe without a token is going to fail.
     // So we'll just get the token first.
     console.log(probeService)
-    const activeAccessService = probeService.service.find((service) => service.type === "AuthAccessService2" && service.profile === "active")
+    const accessService = probeService.service.find((service) => service.type === "AuthAccessService2")
 
-    if (activeAccessService) {
-      const tokenService = activeAccessService.service.find((service) => service.type === "AuthAccessTokenService2")
-      if (!tokenService)
-        throw(`No token service found`)
-      this.login(activeAccessService)
-      const messageId = 'ae3415' // TODO: Make this random
-      this.resources[messageId] = { probeService, contentResourceId }
-      this.initiateTokenRequest(tokenService, messageId)
-      return
-    }
+    if (!accessService)
+      throw(`No access service found`)
 
-    const externalAccessService = probeService.service.find((service) => service.type === "AuthAccessService2" && service.profile === "external")
+    const tokenService = accessService.service.find((service) => service.type === "AuthAccessTokenService2")
+    if (!tokenService)
+      throw(`No token service found`)
 
-    if (externalAccessService) {
-      const tokenService = externalAccessService.service.find((service) => service.type === "AuthAccessTokenService2")
-      if (!tokenService)
-        throw(`No token service found`)
-      const messageId = 'ae3415' // TODO: Make this random
-      this.resources[messageId] = { probeService, contentResourceId }
-      this.initiateTokenRequest(tokenService, messageId)
-      return
-    }
+    if (accessService.profile === "active")
+      this.login(accessService)
 
-    throw(`No access service found`)
+    const messageId = 'ae3415' // TODO: Make this random
+    this.resources[messageId] = { probeService, contentResourceId }
+    this.initiateTokenRequest(tokenService, messageId)
   }
 
   displayAccessTokenError(accessTokenError) {
