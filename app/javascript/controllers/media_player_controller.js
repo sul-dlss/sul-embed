@@ -30,12 +30,6 @@ export default class extends Controller {
     })
   }
 
-  // Trigger the media-data-loaded event which helps execute the transcript load method
-  dispatchMediaDataEvent() {
-    const event = new CustomEvent('media-data-loaded')
-    window.dispatchEvent(event)
-  }
-
   // Listen for events emitted by cue_controller.js to jump to a particular time
   // "this.player" was returning undefined, so we are relying on the element id to 
   // retrieve the player
