@@ -46,6 +46,7 @@ export default class extends Controller {
             else if(intervalTries > 4) {
               // After reaching a certain number of attempts, stop iterating
               window.clearInterval(intervalId)
+              console.error("Maximum number of attempts reached to retrieve cues for caption tracks")
             }
           }, 500)
        }
