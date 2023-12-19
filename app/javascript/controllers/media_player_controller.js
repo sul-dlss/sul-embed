@@ -40,9 +40,9 @@ export default class extends Controller {
 
   // Listen for events emitted by cue_controller.js to jump to a particular time
   seek(event) {
-    const mediaObject = this.player || this.element.querySelector('.video-js')
-    if (mediaObject) {
-      videojs(mediaObject.id).currentTime(event.detail)
+    const playerObject = this.player || videojs(this.element.id)
+    if (playerObject) {
+      playerObject.currentTime(event.detail)
     }
   }
 
