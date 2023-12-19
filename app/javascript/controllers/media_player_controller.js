@@ -20,27 +20,60 @@ export default class extends Controller {
         const event = new CustomEvent('time-update', { detail: timestamp })
         window.dispatchEvent(event)
       })
-     
-      // When at least one of the tracks has been loaded, trigger transcript loading
-      // Before the tracks are loaded, the cues will not be recognized and the transcript will
-      // not load properly
-      this.player.textTracks().on('addtrack', () => {
-        // Retrieve the track objects.  Unfortunately, the "textTracks()" method did not cooperate
-        const tracks = this.player.textTracks_?.tracks_
-        // If there is at least one track we can attach the "loadeddata" event to
-        if(tracks && tracks.length > 0) {
-          this.player.textTracks_.tracks_[0].on('loadeddata', () => {
-            // Trigger this event, which will then lead to the transcript player load method
-            const event = new CustomEvent('media-data-loaded', { detail: this.player })
-            window.dispatchEvent(event)
-          })
-        }
-      })
+    })
+
+    // The loadeddata event occurs when the first frame of the video is available, and 
+    // happens after loadedmetadata
+    this.player.on('loadeddata', () => {
+      //At this point, we should have some track information, even if the cues have not been loaded
+      if(this.hasCaptionTracks()) {
+        const cuesAvailable = this.hasCaptionTrackCues(this.firstCaptionTrack())
+        if(cuesAvailable) {
+          // Trigger the media-data-loaded event which will then lead to the transcript load method
+          const event = new CustomEvent('media-data-loaded', { detail: this.player })
+          window.dispatchEvent(event)
+        } else {
+          // If the cues are not available, try iterating every half second a maximum of four times
+          let intervalTries = 0;
+          const intervalId = window.setInterval(() => {
+            intervalTries += 1
+            if(_this.hasCaptionTrackCues(this.firstCaptionTrack())) {
+              const event = new CustomEvent('media-data-loaded', { detail: _this.player })
+              window.dispatchEvent(event)
+              // If track cues are now available, stop iterating
+              window.clearInterval(intervalId)
+            }
+            else if(intervalTries > 4) {
+              // After reaching a certain number of attempts, stop iterating
+              window.clearInterval(intervalId)
+            }
+          }, 500)
+       }
+      }
     })
   }
 
   // Listen for events emitted by cue_controller.js to jump to a particular time
   seek(event) {
     this.player.currentTime(event.detail)
+  }
+
+  // Check if the player has any caption tracks available
+  hasCaptionTracks() {
+    const tracks = this.player.textTracks_?.tracks_
+    if (!tracks) 
+      return false
+    
+    return ( tracks.filter(track => track.kind === 'captions').length > 0)
+  }
+
+  // We need to check if a particular track has any cues available
+  hasCaptionTrackCues(track) {
+    const cues = track.cues
+    return (cues && cues.length > 0)
+  }
+
+  firstCaptionTrack() {
+    return this.player.textTracks_.tracks_.filter(track => track.kind === 'captions')[0]
   }
 }
