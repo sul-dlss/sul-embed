@@ -59,7 +59,7 @@ export default class extends Controller {
     let intervalTries = 0;
     const intervalId = window.setInterval(() => {
       intervalTries += 1
-      if(_this.hasCaptionTrackCues(this.firstCaptionTrack())) {
+      if(_this.hasCaptionTrackCues(_this.firstCaptionTrack())) {
         _this.dispatchMediaDataEvent()
         // If track cues are now available, stop iterating
         window.clearInterval(intervalId)
