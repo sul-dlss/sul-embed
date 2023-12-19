@@ -13,10 +13,11 @@ export default class extends Controller {
   }
 
   // We can't load right away, because the VTT tracks may not have been parsed yet. 
-  // We are going to load this panel when at least one track has been loaded.
   // This function is triggered by the 'media-data-loaded' event which is triggered
   // by the 'loadeddata' event on the first track.  
   load() {
+    // Return if this method has already been called, there are no caption tracks
+    // or no cues for the tracks
     if (this.loaded || !this.currentCues()) 
       return
 
@@ -26,17 +27,20 @@ export default class extends Controller {
     this.loaded = true
   }
 
+  // Tracks may be of different kinds. 
+  // Retrieve tracks that are of kind "caption" which also have associated cues
   get captionTracks() {
     const tracks = this.player.textTracks_?.tracks_
     if (!tracks) return []
 
-    return tracks.filter(track => track.kind === 'captions' && track.cues?.cues_)
+    return tracks.filter(track => track.kind === 'captions' && this.trackCues(track).length)
   }
 
   get cuesByLanguage() {
     const cues = {}
     this.captionTracks.forEach(track => {
-      const list = track.cues.cues_
+      // Retreive the cues for this track
+      const list = this.trackCues(track)
       const cueStartTimes = list.length === 0 ? undefined : list.map((cue) => cue.startTime)
 
       cues[track.language] = {
@@ -49,6 +53,18 @@ export default class extends Controller {
     })
 
     return cues
+  }
+
+  // Different browsers may provide different types of objects for TextTrackCueList.
+  // For example, Safari does not recognize track.cues.cues_.
+  // For Firefox/Chrome, track.cues are not iterable, but track.cues[n] will work, where n is an integer.
+  // We will map the list to an array, which will allow the return values to be filterable/iterable. 
+  trackCues(track) {
+    let mappedCues = []
+    for(let x = 0; x < track.cues.length; x++) {
+      mappedCues.push(track.cues[x])
+    }
+    return mappedCues
   }
 
   currentCues() {
