@@ -1,8 +1,6 @@
-<% # data-file-auth-iiif-manifest-value="<%= iiif_v3_manifest_url %>
-
 <%= render Embed::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth') do |component| %>
   <% component.with_body do %>
-    <div class='sul-embed-body sul-embed-pdf' data-action="iiif-manifest-received@window->file-auth#parseFiles"  data-file-auth-target="container">
+    <div class='sul-embed-body sul-embed-pdf' style="width: 100%" data-action="iiif-manifest-received@window->file-auth#parseFiles"  data-file-auth-target="container"></div>
     <% unless viewer.available? %>
       <div style="padding: 10%;">
           <strong><%= I18n.t('restrictions.not_accessibile') %></strong>

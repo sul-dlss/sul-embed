@@ -44,7 +44,7 @@ export default class extends Controller {
     } else {
       const probeService = contentResource.service.find((service) => service.type === "AuthProbeService2")
       if (probeService)
-        this.probe(probeService)
+        this.probe(probeService, contentResource.id)
       else
         throw(`No probe service found for ${contentResource.id}`)
     }
@@ -59,7 +59,7 @@ export default class extends Controller {
   }
 
   // https://iiif.io/api/auth/2.0/#71-authorization-flow-algorithm
-  probe(probeService) {
+  probe(probeService, contentResourceId) {
     // We're going to make the assumption that calling the probe without a token is going to fail.
     // So we'll just get the token first.
     console.log(probeService)
@@ -71,20 +71,42 @@ export default class extends Controller {
         throw(`No token service found`)
       this.login(activeAccessService)
       const messageId = 'ae3415' // TODO: Make this random
-      this.resources[messageId] = probeService
-      const token = this.initiateTokenRequest(tokenService, messageId)
-    } else {
-      throw(`No active access service found`)
+      this.resources[messageId] = { probeService, contentResourceId }
+      this.initiateTokenRequest(tokenService, messageId)
+      return
     }
+
+    // TODO Change kiosk to external
+    const externalAccessService = probeService.service.find((service) => service.type === "AuthAccessService2" && service.profile === "kiosk")
+
+    if (externalAccessService) {
+      const tokenService = externalAccessService.service.find((service) => service.type === "AuthAccessTokenService2")
+      if (!tokenService)
+        throw(`No token service found`)
+      const messageId = 'ae3415' // TODO: Make this random
+      this.resources[messageId] = { probeService, contentResourceId }
+      this.initiateTokenRequest(tokenService, messageId)
+      return
+    }
+
+    throw(`No access service found`)
   }
 
   accessTokenReceived(token, messageId) {
-    const probeService = this.resources[messageId]
+    const resource = this.resources[messageId]
     console.log("Trying probe service")
-    fetch(probeService.id, { headers: { 'Authorization': `Bearer ${token}`}})
+    fetch(resource.probeService.id, { headers: { 'Authorization': `Bearer ${token}`}})
       .then((response) => response.json())
-      .then((json) => console.log("Response from the probe is", json))
+      .then((json) => this.handleProbeResponse(json, resource.contentResourceId))
       .catch((err) => console.error(err))
+  }
+
+  handleProbeResponse(probeResponse, contentResourceId) {
+    if (probeResponse.status === 200) {
+      this.renderViewer(contentResourceId)
+    } else {
+      throw(`Unable to handle probeResponse`, probeResponse)
+    }
   }
 
   initiateTokenRequest(tokenService, messageId) {
