@@ -61,8 +61,10 @@ export default class extends Controller {
   // We will map the list to an array, which will allow the return values to be filterable/iterable. 
   trackCues(track) {
     let mappedCues = []
-    for(let x = 0; x < track.cues.length; x++) {
-      mappedCues.push(track.cues[x])
+    if(track && track?.cues && track.cues?.length) {
+      for(let x = 0; x < track.cues.length; x++) {
+        mappedCues.push(track.cues[x])
+      }
     }
     return mappedCues
   }
@@ -121,16 +123,21 @@ export default class extends Controller {
       const startTime = Math.max.apply(Math, cues.cueStartTimes.filter(x => x <= evt.detail))
       // Find the cue element in the transcript that corresponds to this start time
       const cueElement = this.outletTarget.querySelector(`[data-cue-start-value="${startTime}"]`)
-      // Remove highlighting from all the other cue elements
-      this.removeAllCueHighlights()
-      // Apply CSS highlighting to the cue for this video time
-      cueElement.classList.add('highlight')
+      // Handling a case where there is a mismatch between the assumed start time and the cues we have
+      // For example, a multi-lingual caption situation in Safari where the transcript loads for only the 
+      // language for the selected caption.
+      if (cueElement) {
+        // Remove highlighting from all the other cue elements
+        this.removeAllCueHighlights()
+        // Apply CSS highlighting to the cue for this video time
+        cueElement.classList.add('highlight')
 
-      // Scroll the transcript window to the cue for this video
-      // These options have the element scroll to the nearest visible container position without scrolling
-      // the page itself further up or down
-      if (this.autoscrollTarget.checked)
-        cueElement.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'nearest'})
+        // Scroll the transcript window to the cue for this video
+        // These options have the element scroll to the nearest visible container position without scrolling
+        // the page itself further up or down
+        if (this.autoscrollTarget.checked)
+          cueElement.scrollIntoView({behavior: 'smooth', block: 'nearest', inline: 'nearest'})
+      }
     }
     else if (evt.detail > cues.lastCueEndTime) {
       //After we reach the end time of the last transcript, remove all the highlighting
