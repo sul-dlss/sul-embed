@@ -72,8 +72,7 @@ export default class extends Controller {
       return
     }
 
-    // TODO Change kiosk to external
-    const externalAccessService = probeService.service.find((service) => service.type === "AuthAccessService2" && service.profile === "kiosk")
+    const externalAccessService = probeService.service.find((service) => service.type === "AuthAccessService2" && service.profile === "external")
 
     if (externalAccessService) {
       const tokenService = externalAccessService.service.find((service) => service.type === "AuthAccessTokenService2")
