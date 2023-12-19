@@ -40,7 +40,10 @@ export default class extends Controller {
 
   // Listen for events emitted by cue_controller.js to jump to a particular time
   seek(event) {
-    this.player.currentTime(event.detail)
+    const mediaObject = this.player || this.element.querySelector('.video-js')
+    if (mediaObject) {
+      videojs(mediaObject.id).currentTime(event.detail)
+    }
   }
 
   // Trigger the media-data-loaded event which helps execute the transcript load method
