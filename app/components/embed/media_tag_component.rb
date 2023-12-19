@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Embed
-  class MediaTagComponent < ViewComponent::Base # rubocop:disable Metrics:ClassLength
+  class MediaTagComponent < ViewComponent::Base
     include StacksImage
     with_collection_parameter :resource
     SUPPORTED_MEDIA_TYPES = %i[audio video].freeze
@@ -78,17 +78,13 @@ module Embed
                crossorigin: 'anonymous',
                class: 'sul-embed-media-file',
                height: '100%') do
-        enabled_streaming_sources + captions
+        streaming_source + captions
       end
     end
 
-    def enabled_streaming_sources
-      safe_join(
-        enabled_streaming_types.map do |streaming_type|
-          tag.source(src: streaming_url_for(streaming_type),
-                     type: streaming_settings_for(streaming_type)[:mimetype])
-        end
-      )
+    def streaming_source
+      stacks_media_stream = Embed::StacksMediaStream.new(druid:, file:)
+      tag.source(src: stacks_media_stream.to_playlist_url, type: 'application/x-mpegURL')
     end
 
     # Generate the video caption elements
@@ -108,29 +104,6 @@ module Embed
 
     def render_captions?
       @resource.caption_files.any?
-    end
-
-    def streaming_settings_for(streaming_type)
-      # Return the media file's MIME type in dev, as we're circumventing the need for a streaming server
-      return { mimetype: file.mimetype } if Rails.env.development?
-
-      Settings.streaming[streaming_type] || {}
-    end
-
-    def enabled_streaming_types
-      Settings.streaming[:source_types]
-    end
-
-    def streaming_url_for(streaming_type)
-      stacks_media_stream = Embed::StacksMediaStream.new(druid:, file:)
-      case streaming_type.to_sym
-      when :hls
-        stacks_media_stream.to_playlist_url
-      when :flash
-        stacks_media_stream.to_rtmp_url
-      when :dash
-        stacks_media_stream.to_manifest_url
-      end
     end
 
     def authentication_url

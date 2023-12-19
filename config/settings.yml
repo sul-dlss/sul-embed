@@ -26,16 +26,6 @@ primary_mimetypes:
     - video/quicktime
 streaming:
   auth_url: "%{host}/media/%{druid}/%{title}/auth_check"
-  source_types:
-    - hls
-  hls:
-    suffix: '.m3u8'
-    mimetype: 'application/x-mpegURL'
-    protocol: 'https'
-  dash:
-    suffix: '.mpd'
-    mimetype: 'application/dash+xml'
-    protocol: 'https'
 stream:
   url: sul-mediaserver.stanford.edu/stacks/_definst_
   # streaming media file extensions we support
