@@ -38,14 +38,6 @@ streaming:
     protocol: 'https'
 stream:
   url: sul-mediaserver.stanford.edu/stacks/_definst_
-  # streaming media file extensions we support
-  video:
-    - mov
-    - mp4
-    - mpeg
-  audio:
-    - mp3
-    - m4a
 # Mapping from file extensions to Wowza streaming prefixes
 streaming_prefix:
   mov: 'mp4'
