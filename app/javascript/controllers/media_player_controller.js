@@ -20,27 +20,23 @@ export default class extends Controller {
         const event = new CustomEvent('time-update', { detail: timestamp })
         window.dispatchEvent(event)
       })
-     
-      // When at least one of the tracks has been loaded, trigger transcript loading
-      // Before the tracks are loaded, the cues will not be recognized and the transcript will
-      // not load properly
-      this.player.textTracks().on('addtrack', () => {
-        // Retrieve the track objects.  Unfortunately, the "textTracks()" method did not cooperate
-        const tracks = this.player.textTracks_?.tracks_
-        // If there is at least one track we can attach the "loadeddata" event to
-        if(tracks && tracks.length > 0) {
-          this.player.textTracks_.tracks_[0].on('loadeddata', () => {
-            // Trigger this event, which will then lead to the transcript player load method
-            const event = new CustomEvent('media-data-loaded', { detail: this.player })
-            window.dispatchEvent(event)
-          })
-        }
-      })
+    })
+
+    // The loadeddata event occurs when the first frame of the video is available, and 
+    // happens after loadedmetadata
+    this.player.on('loadeddata', () => {
+      const event = new CustomEvent('media-data-loaded')
+      window.dispatchEvent(event)
     })
   }
 
   // Listen for events emitted by cue_controller.js to jump to a particular time
+  // "this.player" was returning undefined, so we are relying on the element id to 
+  // retrieve the player
   seek(event) {
-    this.player.currentTime(event.detail)
+    const playerObject =  videojs(this.element.id)
+    if (playerObject) {
+      playerObject.currentTime(event.detail)
+    }
   }
 }
