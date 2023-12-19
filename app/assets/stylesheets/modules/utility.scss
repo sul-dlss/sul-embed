@@ -3,14 +3,6 @@
 // Utility classes
 // --------------------------------------------------
 
-
-// Floats
-// -------------------------
-
-.#{$namespace}-pull-left {
-  float: left !important;
-}
-
 .#{$namespace}-text-hide {
   // From https://www.a11yproject.com/posts/how-to-hide-content/
   clip: rect(0 0 0 0);

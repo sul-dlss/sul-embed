@@ -40,44 +40,4 @@ RSpec.describe Embed::StacksMediaStream do
       end
     end
   end
-
-  describe '#to_manifest_url' do
-    context 'with mp4 video' do
-      it 'has the expected URL' do
-        expect(stream.to_manifest_url).to eq "https://#{streaming_base_url}/ab/012/cd/3456/mp4:def.mp4/manifest.mpd"
-      end
-    end
-
-    context 'with mov video' do
-      let(:media_filename) { 'def.mov' }
-
-      it 'has the expected URL' do
-        expect(stream.to_manifest_url).to eq "https://#{streaming_base_url}/ab/012/cd/3456/mp4:def.mov/manifest.mpd"
-      end
-    end
-
-    context 'with mp3 audio' do
-      let(:media_filename) { 'def.mp3' }
-
-      it 'has the expected URL' do
-        expect(stream.to_manifest_url).to eq "https://#{streaming_base_url}/ab/012/cd/3456/mp3:def.mp3/manifest.mpd"
-      end
-    end
-
-    context 'with m4a audio' do
-      let(:media_filename) { 'def.m4a' }
-
-      it 'has the expected URL' do
-        expect(stream.to_manifest_url).to eq "https://#{streaming_base_url}/ab/012/cd/3456/mp4:def.m4a/manifest.mpd"
-      end
-    end
-
-    context 'with an unknown file type' do
-      let(:media_filename) { 'def.xxx' }
-
-      it 'returns nil' do
-        expect(stream.to_manifest_url).to be_nil
-      end
-    end
-  end
 end
