@@ -1,7 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-// import validator from 'src/modules/validator'
-// import mediaTagTokenWriter from 'src/modules/media_tag_token_writer'
-// import buildThumbnail from 'src/modules/media_thumbnail_builder'
 
 export default class extends Controller {
   static targets = ["container"]
@@ -11,8 +8,11 @@ export default class extends Controller {
   addPostCallbackListener() {
     window.addEventListener("message", (event) => {
       if (event.origin !== "https://stacks.stanford.edu" && event.origin !== "https://sul-stacks-stage.stanford.edu") return;
-
-      this.accessTokenReceived(event.data.accessToken, event.data.messageId)
+      if (event.data.type === "AuthAccessTokenError2") {
+        this.displayAccessTokenError(event.data)
+      } else {
+        this.accessTokenReceived(event.data.accessToken, event.data.messageId)
+      }
     }, false)
   }
 
@@ -51,11 +51,7 @@ export default class extends Controller {
   }
 
   renderViewer(file_uri) {
-    this.containerTarget.innerHTML = `
-      <object data="${file_uri}" type="application/pdf" style="height: 100vh; width: 100%">
-        <p>Your browser does not support viewing PDFs.  Please <a href="${file_uri}">download the file</a> to view it.</p>
-      </object>
-    `
+    window.dispatchEvent(new CustomEvent('auth-success', { detail: file_uri }))
   }
 
   // https://iiif.io/api/auth/2.0/#71-authorization-flow-algorithm
@@ -90,6 +86,11 @@ export default class extends Controller {
     }
 
     throw(`No access service found`)
+  }
+
+  displayAccessTokenError(accessTokenError) {
+    console.error("There was an error getting the token", accessTokenError)
+    alert("Authentication error. Unable to get a token from Stacks.")
   }
 
   accessTokenReceived(token, messageId) {
