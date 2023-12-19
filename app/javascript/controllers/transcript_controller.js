@@ -61,8 +61,10 @@ export default class extends Controller {
   // We will map the list to an array, which will allow the return values to be filterable/iterable. 
   trackCues(track) {
     let mappedCues = []
-    for(let x = 0; x < track.cues.length; x++) {
-      mappedCues.push(track.cues[x])
+    if(track && track?.cues && track.cues?.length) {
+      for(let x = 0; x < track.cues.length; x++) {
+        mappedCues.push(track.cues[x])
+      }
     }
     return mappedCues
   }
