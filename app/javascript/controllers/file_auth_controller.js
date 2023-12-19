@@ -1,7 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-// import validator from 'src/modules/validator'
-// import mediaTagTokenWriter from 'src/modules/media_tag_token_writer'
-// import buildThumbnail from 'src/modules/media_thumbnail_builder'
 
 export default class extends Controller {
   static targets = ["container"]
@@ -9,14 +6,15 @@ export default class extends Controller {
     iiifManifest: String
   }
 
-  resources = {} // Hash of messageIds to resources
+  resources = {} // Hash of messageIds to content resources
+  probes = {} // Hash of messageIds to ProbeServices
 
   connect() {
     this.fetchIiifManifest()
     window.addEventListener("message", (event) => {
       if (event.origin !== "https://stacks.stanford.edu" && event.origin !== "https://sul-stacks-stage.stanford.edu") return;
 
-      this.accessTokenReceived(event.data.accessToken, event.data.messageId)
+      this.checkProbeService(event.data.accessToken, event.data.messageId)
     }, false)
 
   }
@@ -61,7 +59,7 @@ export default class extends Controller {
     } else {
       const probeService = contentResource.service.find((service) => service.type === "AuthProbeService2")
       if (probeService)
-        this.probe(probeService)
+        this.probe(probeService, contentResource.id)
       else
         throw(`No probe service found for ${contentResource.id}`)
     }
@@ -76,7 +74,7 @@ export default class extends Controller {
   }
 
   // https://iiif.io/api/auth/2.0/#71-authorization-flow-algorithm
-  probe(probeService) {
+  probe(probeService, file_uri) {
     // We're going to make the assumption that calling the probe without a token is going to fail.
     // So we'll just get the token first.
     console.log(probeService)
@@ -86,22 +84,33 @@ export default class extends Controller {
       const tokenService = activeAccessService.service.find((service) => service.type === "AuthAccessTokenService2")
       if (!tokenService)
         throw(`No token service found`)
-      this.login(activeAccessService)
-      const messageId = 'ae3415' // TODO: Make this random
-      this.resources[messageId] = probeService
+    //  this.login(activeAccessService)
+      const messageId = Math.random().toString(36).slice(2) // random key to reference later
+      this.probes[messageId] = probeService
+      this.resources[messageId] = file_uri
       const token = this.initiateTokenRequest(tokenService, messageId)
     } else {
-      throw(`No active access service found`)
+      console.log('No active access service found, assume access is granted')
+      this.renderViewer(file_uri)
     }
   }
 
-  accessTokenReceived(token, messageId) {
-    const probeService = this.resources[messageId]
-    console.log("Trying probe service")
+  checkProbeService(token, messageId) {
+    const probeService = this.probes[messageId]
+    console.log(`Trying probe service for ${messageId} with ${token}`)
     fetch(probeService.id, { headers: { 'Authorization': `Bearer ${token}`}})
       .then((response) => response.json())
-      .then((json) => console.log("Response from the probe is", json))
+      .then((json) => this.probeServiceResult(json, messageId))
       .catch((err) => console.error(err))
+  }
+
+  probeServiceResult(json, messageId) {
+    console.log("Response from the probe is", json)
+    const result = json.status
+    if (result == 200) {
+      this.renderViewer(this.resources[messageId]) // render viewer if probe service says we are authorized
+    }
+    // TODO Handle cases where the probe service does not return a 200
   }
 
   initiateTokenRequest(tokenService, messageId) {
