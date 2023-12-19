@@ -27,13 +27,12 @@ export default class extends Controller {
     this.player.on('loadeddata', () => {
       //At this point, we should have some track information, even if the cues have not been loaded
       if(this.hasCaptionTracks()) {
-        const _this = this
         const cuesAvailable = this.hasCaptionTrackCues(this.firstCaptionTrack())
         if(cuesAvailable) {
           // Trigger the media-data-loaded event which will then lead to the transcript load method
-          _this.dispatchMediaDataEvent()
+          this.dispatchMediaDataEvent()
         } else {
-           _this.retryCaptionTracks()
+          this.retryCaptionTracks()
        }
       }
     })
