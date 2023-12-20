@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["container"]
+  static targets = ["container", "loginPanel", "loginButton", "loginMessage"]
 
   resources = {} // Hash of messageIds to resources
 
@@ -26,7 +26,7 @@ export default class extends Controller {
     const document = evt.detail
     const canvases = document.items
     this.addPostCallbackListener()
-    const paintingResources = canvases.flatMap((canvas) => {
+    canvases.flatMap((canvas) => {
       const annotationPages = canvas.items
       return annotationPages.flatMap((annotationPage) => {
         const paintingAnnotations = annotationPage.items.filter((annotation) => annotation.motivation === "painting")
@@ -105,7 +105,7 @@ export default class extends Controller {
     console.log(probeService)
     const accessService = this.findAccessService(probeService)
 
-    const messageId = 'ae3415' // TODO: Make this random
+    const messageId = Math.random().toString(36).slice(2) // random key to reference later
     this.resources[messageId] = { probeService, contentResourceId }
 
     this.queryProbeService(messageId)
@@ -196,15 +196,16 @@ export default class extends Controller {
 
   // Open the login window in a new window and then poll to see if the auth credentials are now active.
   loginNeeded(activeAccessService, messageId) {
-    // TODO: perhaps use hidden div for login UI instead
-    this.dialog = document.createElement('dialog')
-    this.dialog.innerHTML = `${activeAccessService.label.en[0]}: <button data-action="file-auth#login" data-file-auth-messageId-param="${messageId}" data-file-auth-url-param="${activeAccessService.id}">${activeAccessService.confirmLabel.en[0]}</button>`
-    this.element.appendChild(this.dialog)
-    this.dialog.showModal()
+    console.log(activeAccessService)
+    this.loginPanelTarget.hidden = false
+    this.loginButtonTarget.innerHTML = activeAccessService.confirmLabel.en[0]
+    this.loginButtonTarget.setAttribute('data-file-auth-messageId-param', messageId)
+    this.loginButtonTarget.setAttribute('data-file-auth-url-param', activeAccessService.id)
+    this.loginMessageTarget.innerHTML = activeAccessService.label.en[0]
   }
 
   login(evt) {
-    this.dialog.remove()
+    this.loginPanelTarget.hidden = true
     console.log(evt)
     const windowReference = window.open(evt.params.url);
     let loginStart = Date.now();
