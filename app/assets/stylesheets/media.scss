@@ -564,7 +564,7 @@ a:hover {
       }
 
       .default-thumbnail-icon {
-        display: inline-block;
+        display: contents;
         font-size: calc(var(--thumb-height) - 2px);
         width: 75px;
         margin-right: .5rem;
