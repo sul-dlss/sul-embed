@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
   trackView();
   trackFileDownloads();
 
-  document.querySelector('button[aria-label="download all files"]').addEventListener('click', () => {
-    trackObjectDownload();
-  });
+  const button = document.querySelector('button[aria-label="download all files"]')
+  button?.addEventListener('click', () => trackObjectDownload())
 })
