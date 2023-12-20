@@ -22,18 +22,25 @@ export default class extends Controller {
     const document = evt.detail
     const canvases = document.items
     this.addPostCallbackListener()
-    canvases.forEach((canvas) => {
+    const paintingResources = canvases.flatMap((canvas) => {
       const annotationPages = canvas.items
-      annotationPages.forEach((annotationPage) => {
-        const annotations = annotationPage.items
-        annotations.forEach((annotation) => {
-          if (annotation.motivation === "painting") {
-            const contentResource = annotation.body
-            this.maybeDrawContentResource(contentResource)
-          }
+      return annotationPages.flatMap((annotationPage) => {
+        const paintingAnnotations = annotationPage.items.filter((annotation) => annotation.motivation === "painting")
+        return paintingAnnotations.map((annotation) => {
+          const contentResource = annotation.body
+          this.maybeDrawContentResource(contentResource)
+          return contentResource
         })
       })
     })
+    const thumbnails = paintingResources.map((resource) => {
+      return { isStanfordOnly: false,
+               thumbnailUrl: '',
+               defaultIcon: '',
+               isLocationRestricted: false,
+               fileLabel: resource.label }
+    })
+    window.dispatchEvent(new CustomEvent('thumbnails-found', { detail: thumbnails }))
   }
 
   // TODO: This causes 1 login window to open for each resource that needs a login.
