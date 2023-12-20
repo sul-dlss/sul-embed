@@ -34,14 +34,14 @@
           <div class="header-background">
             <h3>About this item</h3>
           </div>
-          <dl data-controller="iiif-metadata" class="metadataList" data-action="iiif-manifest-received@window->iiif-metadata#drawMetadata"></dl>
+          <dl data-controller="iiif-metadata" class="metadataList left-drawer-content" data-action="iiif-manifest-received@window->iiif-metadata#drawMetadata"></dl>
         </section>
 
         <section id="media-content" role="tabpanel" hidden>
           <div class="header-background">
             <h3>Media content</h3>
           </div>
-          <ul class="contentsList" data-controller="content-list" data-action="thumbnails-found@window->content-list#draw" role="tablist"></ul>
+          <ul class="left-drawer-content" data-controller="content-list" data-action="thumbnails-found@window->content-list#draw" role="tablist"></ul>
         </section>
 
         <%= drawer_content %>
