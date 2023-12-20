@@ -13,6 +13,7 @@ export default class extends Controller {
       if (event.data.type === "AuthAccessTokenError2") {
         this.displayAccessTokenError(event.data)
       } else {
+        // TODO: store token in local browser storage
         this.queryProbeService(event.data.messageId, event.data.accessToken)
           .then((contentResourceId) => this.renderViewer(contentResourceId))
           .catch((json) => console.error("no access", json))
@@ -35,14 +36,15 @@ export default class extends Controller {
         })
       })
     })
-    const thumbnails = paintingResources.map((resource) => {
-      return { isStanfordOnly: false,
-               thumbnailUrl: '',
-               defaultIcon: '',
-               isLocationRestricted: false,
-               fileLabel: resource.label }
-    })
-    window.dispatchEvent(new CustomEvent('thumbnails-found', { detail: thumbnails }))
+    // TODO: Deal with thumbnail views
+    // const thumbnails = paintingResources.map((resource) => {
+    //   return { isStanfordOnly: false,
+    //            thumbnailUrl: '',
+    //            defaultIcon: '',
+    //            isLocationRestricted: false,
+    //            fileLabel: resource.label }
+    // })
+    // window.dispatchEvent(new CustomEvent('thumbnails-found', { detail: thumbnails }))
   }
 
   // TODO: This causes 1 login window to open for each resource that needs a login.
@@ -74,12 +76,17 @@ export default class extends Controller {
 
     const messageId = 'ae3415' // TODO: Make this random
     this.resources[messageId] = { probeService, contentResourceId }
-  
+
     this.queryProbeService(messageId)
       .then((contentResourceId) => this.renderViewer(contentResourceId))
       .catch((json) => {
         console.log("initial probe failed", json)
         if (accessService.profile === "active") {
+          // TODO: Check if non-expired token already exists in local storage,
+          // and if one exists, query probe service with token, e.g.
+          // this.queryProbeService(messageId, token)
+          // .then((contentResourceId) => this.renderViewer(contentResourceId))
+          // .catch((json) => console.error("no access", json))
           this.loginNeeded(accessService, messageId)
         } else {
           this.initiateTokenRequest(accessService, messageId)
@@ -145,6 +152,7 @@ export default class extends Controller {
 
   // Open the login window in a new window and then poll to see if the auth credentials are now active.
   loginNeeded(activeAccessService, messageId) {
+    // TODO: perhaps use hidden div for login UI instead
     this.dialog = document.createElement('dialog')
     this.dialog.innerHTML = `${activeAccessService.label.en[0]}: <button data-action="file-auth#login" data-file-auth-messageId-param="${messageId}" data-file-auth-url-param="${activeAccessService.id}">${activeAccessService.confirmLabel.en[0]}</button>`
     this.element.appendChild(this.dialog)
