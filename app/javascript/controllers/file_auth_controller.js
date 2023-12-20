@@ -13,7 +13,9 @@ export default class extends Controller {
       if (event.data.type === "AuthAccessTokenError2") {
         this.displayAccessTokenError(event.data)
       } else {
-        this.accessTokenReceived(event.data.accessToken, event.data.messageId)
+        this.queryProbeService(event.data.messageId, event.data.accessToken)
+          .then((contentResourceId) => this.renderViewer(contentResourceId))
+          .catch((json) => console.error("no access", json))
       }
     }, false)
   }
@@ -53,7 +55,7 @@ export default class extends Controller {
     } else {
       const probeService = contentResource.service.find((service) => service.type === "AuthProbeService2")
       if (probeService)
-        this.probe(probeService, contentResource.id)
+        this.checkAuthorization(probeService, contentResource.id)
       else
         throw(`No probe service found for ${contentResource.id}`)
     }
@@ -64,7 +66,7 @@ export default class extends Controller {
   }
 
   // https://iiif.io/api/auth/2.0/#71-authorization-flow-algorithm
-  probe(probeService, contentResourceId) {
+  checkAuthorization(probeService, contentResourceId) {
     // We're going to make the assumption that calling the probe without a token is going to fail.
     // So we'll just get the token first.
     console.log(probeService)
@@ -73,11 +75,16 @@ export default class extends Controller {
     const messageId = 'ae3415' // TODO: Make this random
     this.resources[messageId] = { probeService, contentResourceId }
   
-    if (accessService.profile === "active") {
-      this.loginNeeded(accessService, messageId)
-    } else {
-      this.initiateTokenRequest(accessService, messageId)
-    }
+    this.queryProbeService(messageId)
+      .then((contentResourceId) => this.renderViewer(contentResourceId))
+      .catch((json) => {
+        console.log("initial probe failed", json)
+        if (accessService.profile === "active") {
+          this.loginNeeded(accessService, messageId)
+        } else {
+          this.initiateTokenRequest(accessService, messageId)
+        }
+      })
   }
 
   findAccessService(probeService) {
@@ -105,13 +112,18 @@ export default class extends Controller {
     this.loginNeeded(activeAccessService, accessTokenError.messageId)
   }
 
-  accessTokenReceived(token, messageId) {
+  // NOTE: Token is optional
+  queryProbeService(messageId, token) {
     const resource = this.resources[messageId]
     console.log("Trying probe service")
-    fetch(resource.probeService.id, { headers: { 'Authorization': `Bearer ${token}`}})
+    const headers = {}
+    if (token) {
+      headers['Authorization'] = `Bearer ${token}`
+    }
+    const contentResourceId = resource.contentResourceId
+    return fetch(resource.probeService.id, { headers })
       .then((response) => response.json())
-      .then((json) => this.handleProbeResponse(json, resource.contentResourceId))
-      .catch((err) => console.error(err))
+      .then((json) => new Promise((resolve, reject) => json.status === 200 ? resolve(contentResourceId) : reject(json)))
   }
 
   handleProbeResponse(probeResponse, contentResourceId) {
