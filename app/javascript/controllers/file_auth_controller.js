@@ -14,6 +14,7 @@ export default class extends Controller {
         this.displayAccessTokenError(event.data)
       } else {
         // TODO: store token in local browser storage
+        this.cacheToken(event.data.accessToken, event.data.expiresIn)
         this.queryProbeService(event.data.messageId, event.data.accessToken)
           .then((contentResourceId) => this.renderViewer(contentResourceId))
           .catch((json) => console.error("no access", json))
@@ -67,6 +68,36 @@ export default class extends Controller {
     window.dispatchEvent(new CustomEvent('auth-success', { detail: file_uri }))
   }
 
+  /**
+   * Puts the token in the cache
+   * @param {string} accessToken - The token itself
+   * @param {number} expiresIn - The number of seconds until the token ceases to be valid.
+   */
+  cacheToken(accessToken, expiresIn) {
+    console.log("Storing token in cache")
+    // Get a Date that is expiresIn seconds in the future.
+    const expires = new Date(new Date().getTime() + expiresIn * 1000)
+    localStorage.setItem('accessToken', JSON.stringify({ accessToken, expires }))
+  }
+
+  getCachedToken() {
+    const json = localStorage.getItem('accessToken')
+    console.log("Cached token is ", json)
+    if (!json)
+      return
+    try {
+      const { accessToken, expires } = JSON.parse(json)
+      if (new Date() < new Date(expires))
+        return accessToken
+      else
+        console.log("Cached token expired", expires)
+    } catch {
+      // Clear out any broken storage
+      localStorage.clear()
+    }
+  }
+
+
   // https://iiif.io/api/auth/2.0/#71-authorization-flow-algorithm
   checkAuthorization(probeService, contentResourceId) {
     // We're going to make the assumption that calling the probe without a token is going to fail.
@@ -81,18 +112,31 @@ export default class extends Controller {
       .then((contentResourceId) => this.renderViewer(contentResourceId))
       .catch((json) => {
         console.log("initial probe failed", json)
-        if (accessService.profile === "active") {
-          // TODO: Check if non-expired token already exists in local storage,
-          // and if one exists, query probe service with token, e.g.
-          // this.queryProbeService(messageId, token)
-          // .then((contentResourceId) => this.renderViewer(contentResourceId))
-          // .catch((json) => console.error("no access", json))
-          this.loginNeeded(accessService, messageId)
+        // Check if non-expired token already exists in local storage,
+        // and if it exists, query probe service with it
+        const token = this.getCachedToken()
+        if (token) {
+          this.queryProbeService(messageId, token)
+            .then((contentResourceId) => this.renderViewer(contentResourceId))
+            .catch((json) => {
+              console.log("probe with cached token failed", json)
+              this.queryAccessService(accessService, messageId)
+            })
         } else {
-          this.initiateTokenRequest(accessService, messageId)
+          console.log("No cached token found")
+          this.queryAccessService(accessService, messageId)
         }
       })
   }
+
+  queryAccessService(accessService, messageId) {
+    if (accessService.profile === "active") {
+      this.loginNeeded(accessService, messageId)
+    } else {
+      this.initiateTokenRequest(accessService, messageId)
+    }
+  }
+
 
   findAccessService(probeService) {
     const accessService = probeService.service.find((service) => service.type === "AuthAccessService2")
