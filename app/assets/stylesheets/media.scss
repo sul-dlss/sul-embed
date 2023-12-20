@@ -374,8 +374,10 @@ a:hover {
     }
 
     .locked-media {
-      width: 100vw;
-      max-height: calc(100vh - 98px);
+      display: block;
+      height: 100%;
+      text-align: center;
+
       img {
         height: 100%;
       }
