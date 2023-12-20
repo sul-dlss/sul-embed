@@ -75,7 +75,6 @@ module Embed
                },
                poster: poster_url_for,
                controls: 'controls',
-               crossorigin: 'anonymous',
                class: 'sul-embed-media-file',
                height: '100%') do
         streaming_source + captions
