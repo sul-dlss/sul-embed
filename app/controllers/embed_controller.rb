@@ -2,6 +2,11 @@
 
 class EmbedController < ApplicationController
   append_view_path Rails.root.join('app/views/embed')
+
+  # Importmap digest must be part of the etag.
+  # See https://github.com/rails/importmap-rails#include-a-digest-of-the-import-map-in-your-etag
+  etag { Rails.application.importmap.digest(resolver: helpers) if request.format&.html? }
+
   before_action :embed_request
   before_action :set_cache, only: %i[iiif]
   before_action :fix_etag_header, only: %i[get iframe]
