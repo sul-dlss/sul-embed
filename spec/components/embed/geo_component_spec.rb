@@ -31,7 +31,7 @@ RSpec.describe Embed::GeoComponent, type: :component do
     end
 
     it do
-      expect(page).not_to have_css '.sul-embed-header', visible: :all
+      expect(page).to have_no_css '.sul-embed-header', visible: :all
     end
   end
 end

@@ -24,7 +24,7 @@ RSpec.describe 'Media viewer', :js do
       let(:stub_auth) { StubAuthEndpoint.set_success! }
 
       it 'hides the link' do
-        expect(page).not_to have_button('login')
+        expect(page).to have_no_button('login')
       end
     end
 
@@ -41,10 +41,10 @@ RSpec.describe 'Media viewer', :js do
     # The ajax request that displays the video does not fire in this context
     # so we are checking for a non-visible video in the first case (even though it should be visible)
     it 'displays the viewer' do
-      click_button 'Display sidebar'
+      click_on 'Display sidebar'
       within 'aside.open' do
         expect(page).to have_content 'About this item'
-        click_button 'Content'
+        click_on 'Content'
         expect(page).to have_content 'Media content'
         expect(page).to have_css('.media-thumb', count: 3)
 
@@ -54,12 +54,12 @@ RSpec.describe 'Media viewer', :js do
         # One is restricted
         expect(page).to have_css('.sul-embed-location-restricted-text', text: '(Restricted)')
         expect(page).to have_css('.media-thumb', text: '(Restricted) First Video')
-        click_button 'Use and reproduction'
+        click_on 'Use and reproduction'
         expect(page).to have_content 'Rights'
       end
 
-      click_button 'Display sidebar'
-      expect(page).not_to have_css 'aside.open'
+      click_on 'Display sidebar'
+      expect(page).to have_no_css 'aside.open'
 
       expect(page).to have_css('video', visible: :all)
     end
@@ -77,9 +77,9 @@ RSpec.describe 'Media viewer', :js do
     it 'includes a previewable image as a top level object' do
       expect(page).to have_css('div .osd', visible: :hidden)
 
-      click_button 'Display sidebar'
+      click_on 'Display sidebar'
       within 'aside.open' do
-        click_button 'Content'
+        click_on 'Content'
 
         # Setting blank alt text apparently makes the component invisible in copybara
         expect(page).to have_css('.square-icon', visible: :all)
@@ -100,9 +100,9 @@ RSpec.describe 'Media viewer', :js do
     end
 
     it 'truncates at 45 characters of combined restriction and title text' do
-      click_button 'Display sidebar'
+      click_on 'Display sidebar'
       within 'aside' do
-        click_button 'Content'
+        click_on 'Content'
         expect(page).to have_css('.media-thumb', text: /^\(Restricted\) The First Video Has An Overly Lo…$/)
 
         # displays the whole title if it is under the length limit

@@ -33,7 +33,7 @@ RSpec.describe Embed::FooterComponent, type: :component do
     end
 
     context 'when the viewer is not configured to use the local fullscreen function' do
-      it { expect(page).not_to have_css('button#full-screen-button') }
+      it { expect(page).to have_no_css('button#full-screen-button') }
     end
   end
 end

@@ -79,7 +79,7 @@ RSpec.describe Embed::FileComponent, type: :component do
     it 'adds a generalized embargo message and no links are present' do
       expect(page).to have_css('.sul-embed-embargo-message', visible: :all, text: 'Access is restricted until 21-Dec-2053')
       # FIXME: this is a bad spec as it's not checking for visibility false
-      expect(page).not_to have_link
+      expect(page).to have_no_link
     end
   end
 
@@ -98,7 +98,7 @@ RSpec.describe Embed::FileComponent, type: :component do
 
     it do
       allow(viewer).to receive(:display_header?).at_least(:once).and_return(false)
-      expect(page).not_to have_css '.sul-embed-header', visible: :all
+      expect(page).to have_no_css '.sul-embed-header', visible: :all
     end
   end
 

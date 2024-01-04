@@ -24,7 +24,7 @@ RSpec.describe Embed::Download::GeoComponent, type: :component do
     end
 
     it 'is empty' do
-      expect(page).not_to have_css('body')
+      expect(page).to have_no_css('body')
     end
   end
 

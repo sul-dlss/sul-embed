@@ -23,8 +23,8 @@ RSpec.describe Embed::File::HeaderComponent, type: :component do
     end
 
     it 'does not return the object title if the consumer requested to hide it' do
-      expect(page).not_to have_css '.sul-embed-header-title'
-      expect(page).not_to have_css '.sul-embed-metadata-title'
+      expect(page).to have_no_css '.sul-embed-header-title'
+      expect(page).to have_no_css '.sul-embed-metadata-title'
     end
   end
 end

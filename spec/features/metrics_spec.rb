@@ -29,9 +29,9 @@ RSpec.describe 'metrics tracking', :js do
 
     it 'tracks file downloads', skip: 'needs mirador plugin?' do
       visit iiif_path(url: 'https://purl.stanford.edu/fr426cg9537/iiif/manifest')
-      click_button 'Share & download'
+      click_on 'Share & download'
       find('.MuiListItem-button', text: 'Download').click
-      click_link 'Whole image (400 x 272px)'
+      click_on 'Whole image (400 x 272px)'
       wait_for_download
       expect(StubMetricsApi.last_event).to match(
         download_with_properties(
@@ -60,9 +60,9 @@ RSpec.describe 'metrics tracking', :js do
 
     it 'tracks file downloads' do
       visit_iframe_response(druid)
-      click_button 'Share and Download'
-      click_button 'Download'
-      click_link 'Download First Video'
+      click_on 'Share and Download'
+      click_on 'Download'
+      click_on 'Download First Video'
       wait_for_download
       expect(StubMetricsApi.last_event).to match(download_with_properties('druid' => druid, 'file' => 'abc_123.mp4'))
     end
@@ -86,8 +86,8 @@ RSpec.describe 'metrics tracking', :js do
 
     it 'tracks file downloads' do
       visit_iframe_response(druid)
-      click_button '1 file available for download'
-      click_link 'Download data.zip'
+      click_on '1 file available for download'
+      click_on 'Download data.zip'
       wait_for_download
       expect(StubMetricsApi.last_event).to match(
         download_with_properties(
@@ -116,8 +116,8 @@ RSpec.describe 'metrics tracking', :js do
 
     it 'tracks file downloads' do
       visit_iframe_response(druid)
-      click_button '1 file available for download'
-      click_link 'Download Title of the PDF.pdf'
+      click_on '1 file available for download'
+      click_on 'Download Title of the PDF.pdf'
       wait_for_download
       expect(StubMetricsApi.last_event).to match(
         download_with_properties(
@@ -167,8 +167,8 @@ RSpec.describe 'metrics tracking', :js do
 
     it 'tracks file downloads' do
       visit_iframe_response(druid)
-      click_button '1 file available for download'
-      click_link 'Download abc_123.glb'
+      click_on '1 file available for download'
+      click_on 'Download abc_123.glb'
       wait_for_download
       expect(StubMetricsApi.last_event).to match(
         download_with_properties(
@@ -198,7 +198,7 @@ RSpec.describe 'metrics tracking', :js do
 
     it 'tracks file downloads' do
       visit_iframe_response(druid)
-      click_link 'Download audio.mp3'
+      click_on 'Download audio.mp3'
       wait_for_download
       expect(StubMetricsApi.last_event).to match(
         download_with_properties(
@@ -210,7 +210,7 @@ RSpec.describe 'metrics tracking', :js do
 
     it 'tracks object downloads' do
       visit_iframe_response(druid)
-      click_button 'Download all 2 files (152.01 MB)'
+      click_button 'Download all 2 files (152.01 MB)' # rubocop:disable Capybara/ClickLinkOrButtonStyle
       wait_for_download
       expect(StubMetricsApi.last_event).to match(download_with_properties('druid' => druid))
     end
