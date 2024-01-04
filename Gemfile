@@ -63,6 +63,6 @@ gem 'shakapacker', '~> 7.0'
 
 gem 'view_component', '~> 3.6'
 
-gem 'importmap-rails', '~> 1.2'
+gem 'importmap-rails', '~> 2.0'
 
 gem 'stimulus-rails', '~> 1.3'
