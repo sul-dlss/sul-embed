@@ -13,7 +13,6 @@ export default class extends Controller {
       if (event.data.type === "AuthAccessTokenError2") {
         this.displayAccessTokenError(event.data)
       } else {
-        // TODO: store token in local browser storage
         this.cacheToken(event.data.accessToken, event.data.expiresIn)
         this.queryProbeService(event.data.messageId, event.data.accessToken)
           .then((contentResourceId) => this.renderViewer(contentResourceId))
@@ -22,6 +21,8 @@ export default class extends Controller {
     }, false)
   }
 
+  // iterate over all files in the IIIF manifest and try to draw them
+  // this method is called by stimulus reflex in the content type component after the IIIF manifest is loaded
   parseFiles(evt) {
     const document = evt.detail
     const canvases = document.items
@@ -48,22 +49,24 @@ export default class extends Controller {
     // window.dispatchEvent(new CustomEvent('thumbnails-found', { detail: thumbnails }))
   }
 
-  // TODO: This causes 1 login window to open for each resource that needs a login.
-  //       Instead we should open one window if any resource needs a login.
+  // Try to render the resource, checks for any required authorization and shows login window if needed
   maybeDrawContentResource(contentResource) {
     console.log("Now figure out if we can render", contentResource)
     if (!contentResource.service) {
-      // no auth is present, render it
+      // no auth service is present, just render the resource
       this.renderViewer(contentResource.id)
     } else {
+      // auth service is present, check the probe service to see what we need to do to access the resource
       const probeService = contentResource.service.find((service) => service.type === "AuthProbeService2")
       if (probeService)
         this.checkAuthorization(probeService, contentResource.id)
       else
-        throw(`No probe service found for ${contentResource.id}`)
+        throw(`Access service exists, but no probe service found for ${contentResource.id}`)
     }
   }
 
+  // Render the resource by sending an event to stimulus reflex; the relevant content type component must catch this
+  // event, and call a method for that partcular content type (e.g. pdf/media) that knows how to render content
   renderViewer(file_uri) {
     window.dispatchEvent(new CustomEvent('auth-success', { detail: file_uri }))
   }
@@ -80,6 +83,7 @@ export default class extends Controller {
     localStorage.setItem('accessToken', JSON.stringify({ accessToken, expires }))
   }
 
+  // Try to find a cached token in local storage
   getCachedToken() {
     const json = localStorage.getItem('accessToken')
     console.log("Cached token is ", json)
@@ -97,7 +101,9 @@ export default class extends Controller {
     }
   }
 
-
+  // If an access service is provided for the given resource, check the provided probe service to see
+  // what the user needs to do to access the resource.  We will cache any token provided so the user
+  // does not need to do this again for future resources in the same session.
   // https://iiif.io/api/auth/2.0/#71-authorization-flow-algorithm
   checkAuthorization(probeService, contentResourceId) {
     // We're going to make the assumption that calling the probe without a token is going to fail.
@@ -105,13 +111,18 @@ export default class extends Controller {
     console.log(probeService)
     const accessService = this.findAccessService(probeService)
 
-    const messageId = Math.random().toString(36).slice(2) // random key to reference later
+    const messageId = Math.random().toString(36).slice(2) // create a random key for this resource to reference later
     this.resources[messageId] = { probeService, contentResourceId }
 
+    // First we check the probe service for the resource.  If probe service indicates no restrictions,
+    // then the resource is shown.  If the probe service indicates access is denied/restricted, we
+    // check the local storage for any existing cached token, and try the probe service again with the token.
+    // If probe service denies access with the cached token OR there is no cached token, check the access service
+    // to get the login message and URL needed to show to the user.
     this.queryProbeService(messageId)
       .then((contentResourceId) => this.renderViewer(contentResourceId))
       .catch((json) => {
-        console.log("initial probe failed", json)
+        console.log("Probe failed or access denied/restricted", json)
         // Check if non-expired token already exists in local storage,
         // and if it exists, query probe service with it
         const token = this.getCachedToken()
@@ -119,7 +130,7 @@ export default class extends Controller {
           this.queryProbeService(messageId, token)
             .then((contentResourceId) => this.renderViewer(contentResourceId))
             .catch((json) => {
-              console.log("probe with cached token failed", json)
+              console.log("Probe with cached token failed", json)
               this.queryAccessService(accessService, messageId)
             })
         } else {
@@ -129,6 +140,7 @@ export default class extends Controller {
       })
   }
 
+  // query the accessService to see if a login is needed first; else just request a token
   queryAccessService(accessService, messageId) {
     if (accessService.profile === "active") {
       this.loginNeeded(accessService, messageId)
@@ -137,7 +149,7 @@ export default class extends Controller {
     }
   }
 
-
+  // locate the access service for this resource
   findAccessService(probeService) {
     const accessService = probeService.service.find((service) => service.type === "AuthAccessService2")
 
@@ -147,6 +159,7 @@ export default class extends Controller {
     return accessService
   }
 
+  // locate the token service for this access service
   findTokenService(accessService) {
     const tokenService = accessService.service.find((service) => service.type === "AuthAccessTokenService2")
     if (!tokenService)
@@ -155,18 +168,20 @@ export default class extends Controller {
     return tokenService
   }
 
+  // An error occurred obtaining a token
   displayAccessTokenError(accessTokenError) {
     console.error("There was an error getting the token", accessTokenError)
-    alert("Authentication error. Unable to get a token from Stacks.")
+    alert("An authentication error occurred. You may not be able to view content at this time.")
     const resource = this.resources[accessTokenError.messageId]
     const activeAccessService = this.findAccessService(resource.probeService)
     this.loginNeeded(activeAccessService, accessTokenError.messageId)
   }
 
+  // Query the probe service (and add a token if available)
   // NOTE: Token is optional
   queryProbeService(messageId, token) {
     const resource = this.resources[messageId]
-    console.log("Trying probe service")
+    console.log("Trying probe service with ", token)
     const headers = {}
     if (token) {
       headers['Authorization'] = `Bearer ${token}`
@@ -177,14 +192,7 @@ export default class extends Controller {
       .then((json) => new Promise((resolve, reject) => json.status === 200 ? resolve(contentResourceId) : reject(json)))
   }
 
-  handleProbeResponse(probeResponse, contentResourceId) {
-    if (probeResponse.status === 200) {
-      this.renderViewer(contentResourceId)
-    } else {
-      throw(`Unable to handle probeResponse`, probeResponse)
-    }
-  }
-
+  // Fetch a token for the provided resource
   initiateTokenRequest(accessService, messageId) {
     const tokenService = this.findTokenService(accessService)
 
@@ -194,9 +202,10 @@ export default class extends Controller {
     document.body.appendChild(this.iframe)
   }
 
-  // Open the login window in a new window and then poll to see if the auth credentials are now active.
+  // Show login message and link provided by auth service
   loginNeeded(activeAccessService, messageId) {
-    console.log(activeAccessService)
+    if (!this.loginPanelTarget.hidden) return // no action needed if the login window is already there
+
     this.loginPanelTarget.hidden = false
     this.loginButtonTarget.innerHTML = activeAccessService.confirmLabel.en[0]
     this.loginButtonTarget.setAttribute('data-file-auth-messageId-param', messageId)
@@ -204,9 +213,10 @@ export default class extends Controller {
     this.loginMessageTarget.innerHTML = activeAccessService.label.en[0]
   }
 
+  // Open the login page in a new window and then poll to see if the auth credentials are now active.
+  // This method is triggered by stimulus reflex when the user clicks the login button rendered by `loginNeeded`
   login(evt) {
     this.loginPanelTarget.hidden = true
-    console.log(evt)
     const windowReference = window.open(evt.params.url);
     let loginStart = Date.now();
     console.log("window reference", windowReference)
@@ -221,8 +231,9 @@ export default class extends Controller {
     }, 500)
   }
 
+  // Once the login window is closed, we can try and get a token for the resource
   afterLoginWindowClosed(messageId) {
-    console.log("Done waiting on that window")
+    console.log("Done waiting on the login window")
     const probeService = this.resources[messageId].probeService
     const accessService = this.findAccessService(probeService)
 
