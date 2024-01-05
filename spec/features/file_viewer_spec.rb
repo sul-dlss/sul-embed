@@ -49,7 +49,7 @@ RSpec.describe 'File viewer', :js do
     end
 
     it 'hides the title' do
-      expect(page).not_to have_css('.sul-embed-header-title')
+      expect(page).to have_no_css('.sul-embed-header-title')
     end
   end
 end

@@ -58,7 +58,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
     end
 
     it 'does not show any location restricted messages' do
-      expect(page).not_to have_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')
+      expect(page).to have_no_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')
     end
   end
 
@@ -137,7 +137,7 @@ RSpec.describe Embed::MediaTagComponent, type: :component do
       end
 
       it 'does not include a poster attribute' do
-        expect(page).not_to have_css('video[poster]', visible: :all)
+        expect(page).to have_no_css('video[poster]', visible: :all)
       end
     end
   end

@@ -18,7 +18,7 @@ RSpec.describe 'file viewer search bar', :js do
       expect(page).to have_css('tr[data-tree-role="leaf"]', count: 1)
       expect(page).to have_css '.sul-embed-item-count', text: '1 file'
       fill_in 'Search this list', with: 'test'
-      expect(page).not_to have_css('tr[data-tree-role="leaf"]')
+      expect(page).to have_no_css('tr[data-tree-role="leaf"]')
       expect(page).to have_css '.sul-embed-item-count', text: '0 files'
       fill_in 'Search this list', with: 'File1'
       expect(page).to have_css '.sul-embed-item-count', text: '1 file'
@@ -43,9 +43,9 @@ RSpec.describe 'file viewer search bar', :js do
       expect(page).to have_content('Title_of_the_PDF')
 
       fill_in 'Search this list', with: 'Title_of_the_PDF'
-      expect(page).not_to have_content('dir1')
-      expect(page).not_to have_content('dir2')
-      expect(page).not_to have_content('Title_of_2_PDF')
+      expect(page).to have_no_content('dir1')
+      expect(page).to have_no_content('dir2')
+      expect(page).to have_no_content('Title_of_2_PDF')
       expect(page).to have_content('Title_of_the_PDF')
 
       expect(page).to have_css '.sul-embed-item-count', text: '1 file'
@@ -55,12 +55,12 @@ RSpec.describe 'file viewer search bar', :js do
   context 'when the number of files are beneath the threshold' do
     it 'does not display the search box' do
       visit_iframe_response
-      expect(page).not_to have_css('.sul-embed-search-input')
+      expect(page).to have_no_css('.sul-embed-search-input')
     end
 
     it 'hides the search box when requested' do
       visit_iframe_response('abc123', hide_search: true)
-      expect(page).not_to have_css('.sul-embed-search')
+      expect(page).to have_no_css('.sul-embed-search')
     end
   end
 end

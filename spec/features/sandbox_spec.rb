@@ -13,12 +13,12 @@ RSpec.describe 'embed sandbox page', :js do
   end
 
   it 'passes the customization URL parameters down to the iframe successfully' do
-    expect(page).not_to have_css('iframe')
+    expect(page).to have_no_css('iframe')
     check('hide-title')
     check('hide-search')
     fill_in 'api-endpoint', with: embed_path
     fill_in 'url-scheme', with: 'http://purl.stanford.edu/abc123'
-    click_button 'Embed'
+    click_on 'Embed'
     iframe_src = page.find('iframe')['src']
     expect(iframe_src).to match(/hide_title=true/)
     expect(iframe_src).to match(/hide_search=true/)
