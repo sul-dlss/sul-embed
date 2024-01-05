@@ -195,7 +195,7 @@ GEM
     honeybadger (5.4.1)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
-    importmap-rails (1.2.3)
+    importmap-rails (2.0.1)
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
@@ -422,7 +422,7 @@ DEPENDENCIES
   filesize
   high_voltage
   honeybadger
-  importmap-rails (~> 1.2)
+  importmap-rails (~> 2.0)
   newrelic_rpm
   nokogiri (>= 1.7.1)
   okcomputer
