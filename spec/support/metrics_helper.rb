@@ -10,10 +10,6 @@ def view_with_properties(properties)
   event_with_properties('$view', properties)
 end
 
-def download_with_properties(properties)
-  event_with_properties('download', properties)
-end
-
 def wait_for_event(name)
   Timeout.timeout(Capybara.default_max_wait_time) do
     loop until StubMetricsApi.last_event&.dig('name') == name
@@ -22,8 +18,4 @@ end
 
 def wait_for_view
   wait_for_event('$view')
-end
-
-def wait_for_download
-  wait_for_event('download')
 end

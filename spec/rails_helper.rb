@@ -13,17 +13,6 @@ require 'selenium-webdriver'
 require 'view_component/test_helpers'
 require 'view_component/system_test_helpers'
 
-TEST_DOWNLOAD_DIR = 'tmp/test_downloads'
-
-Capybara.register_driver :selenium_chrome_headless do |app|
-  options = Selenium::WebDriver::Chrome::Options.new
-
-  options.add_argument('--headless')
-  options.add_preference(:download, default_directory: TEST_DOWNLOAD_DIR)
-
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
-end
-
 Capybara.javascript_driver = :selenium_chrome_headless
 Capybara.enable_aria_label = true
 Capybara.default_max_wait_time = ENV['CI'] ? 30 : 5

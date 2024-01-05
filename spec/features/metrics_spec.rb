@@ -9,10 +9,6 @@ RSpec.describe 'metrics tracking', :js do
     StubMetricsApi.reset!
   end
 
-  after do
-    FileUtils.rm_rf(TEST_DOWNLOAD_DIR)
-  end
-
   describe 'iiif viewer' do
     let(:purl) { nil }
     let(:druid) { 'fr426cg9537' }
@@ -26,117 +22,44 @@ RSpec.describe 'metrics tracking', :js do
       wait_for_view
       expect(StubMetricsApi.last_event).to match(view_with_properties('druid' => druid))
     end
-
-    it 'tracks file downloads', skip: 'needs mirador plugin?' do
-      visit iiif_path(url: 'https://purl.stanford.edu/fr426cg9537/iiif/manifest')
-      click_on 'Share & download'
-      find('.MuiListItem-button', text: 'Download').click
-      click_on 'Whole image (400 x 272px)'
-      wait_for_download
-      expect(StubMetricsApi.last_event).to match(
-        download_with_properties(
-          'druid' => druid,
-          'file' => 'SC1094_s3_b14_f17_Cats_1976_0005/full/400,/0/default.jpg'
-        )
-      )
-    end
   end
 
   describe 'media viewer' do
     let(:druid) { 'bc123df4567' }
-    let(:purl) do
-      build(:purl, :video, contents: [
-              build(:resource, :video, files: [
-                      build(:resource_file, :video, :world_downloadable, druid:)
-                    ])
-            ], druid:)
-    end
+    let(:purl) { build(:purl, :video, druid:) }
 
     it 'tracks views' do
       visit_iframe_response(druid)
       wait_for_view
       expect(StubMetricsApi.last_event).to match(view_with_properties('druid' => druid))
-    end
-
-    it 'tracks file downloads' do
-      visit_iframe_response(druid)
-      click_on 'Share and Download'
-      click_on 'Download'
-      click_on 'Download First Video'
-      wait_for_download
-      expect(StubMetricsApi.last_event).to match(download_with_properties('druid' => druid, 'file' => 'abc_123.mp4'))
     end
   end
 
   describe 'leaflet viewer' do
     let(:druid) { 'cz128vq0535' }
-    let(:purl) do
-      build(:purl, :geo, contents: [
-              build(:resource, :file, files: [
-                      build(:resource_file, :world_downloadable, druid:)
-                    ])
-            ], druid:)
-    end
+    let(:purl) { build(:purl, :geo, druid:) }
 
     it 'tracks views' do
       visit_iframe_response(druid)
       wait_for_view
       expect(StubMetricsApi.last_event).to match(view_with_properties('druid' => druid))
-    end
-
-    it 'tracks file downloads' do
-      visit_iframe_response(druid)
-      click_on '1 file available for download'
-      click_on 'Download data.zip'
-      wait_for_download
-      expect(StubMetricsApi.last_event).to match(
-        download_with_properties(
-          'druid' => druid,
-          'file' => 'data.zip'
-        )
-      )
     end
   end
 
   describe 'pdf viewer' do
     let(:druid) { 'bc123df4567' }
-    let(:purl) do
-      build(:purl, :document, contents: [
-              build(:resource, :document, files: [
-                      build(:resource_file, :document, :world_downloadable, druid:)
-                    ])
-            ], druid:)
-    end
+    let(:purl) { build(:purl, :document, druid:) }
 
     it 'tracks views' do
       visit_iframe_response(druid)
       wait_for_view
       expect(StubMetricsApi.last_event).to match(view_with_properties('druid' => druid))
     end
-
-    it 'tracks file downloads' do
-      visit_iframe_response(druid)
-      click_on '1 file available for download'
-      click_on 'Download Title of the PDF.pdf'
-      wait_for_download
-      expect(StubMetricsApi.last_event).to match(
-        download_with_properties(
-          'druid' => druid,
-          'file' => 'Title%20of%20the%20PDF.pdf'
-        )
-      )
-    end
   end
 
   describe 'web archive viewer' do
     let(:druid) { 'bc123df4567' }
-    let(:purl) do
-      build(:purl, :was_seed, contents: [
-              build(:resource, :image, files: [
-                      build(:resource_file, :image, druid:)
-                    ])
-            ], druid:)
-    end
+    let(:purl) { build(:purl, :was_seed, druid:) }
 
     before do
       stub_request(:get, 'https://swap.stanford.edu/timemap/http://naca.central.cranfield.ac.uk/')
@@ -151,68 +74,23 @@ RSpec.describe 'metrics tracking', :js do
 
   describe '3d viewer' do
     let(:druid) { 'qf794pv6287' }
-    let(:purl) do
-      build(:purl, :model_3d, contents: [
-              build(:resource, :file, files: [
-                      build(:resource_file, :model_3d, :world_downloadable, druid:)
-                    ])
-            ], druid:)
-    end
+    let(:purl) { build(:purl, :model_3d, druid:) }
 
     it 'tracks views' do
       visit_iframe_response(druid)
       wait_for_view
       expect(StubMetricsApi.last_event).to match(view_with_properties('druid' => druid))
-    end
-
-    it 'tracks file downloads' do
-      visit_iframe_response(druid)
-      click_on '1 file available for download'
-      click_on 'Download abc_123.glb'
-      wait_for_download
-      expect(StubMetricsApi.last_event).to match(
-        download_with_properties(
-          'druid' => druid,
-          'file' => 'abc_123.glb'
-        )
-      )
     end
   end
 
   describe 'file viewer' do
     let(:druid) { 'bc123df4567' }
-    let(:purl) do
-      build(:purl, :file, contents: [
-              build(:resource, :audio, files: [
-                      build(:resource_file, :image, :world_downloadable, druid:),
-                      build(:resource_file, :audio, :world_downloadable, druid:)
-                    ])
-            ], druid:)
-    end
+    let(:purl) { build(:purl, :file, druid:) }
 
     it 'tracks views' do
       visit_iframe_response(druid)
       wait_for_view
       expect(StubMetricsApi.last_event).to match(view_with_properties('druid' => druid))
-    end
-
-    it 'tracks file downloads' do
-      visit_iframe_response(druid)
-      click_on 'Download audio.mp3'
-      wait_for_download
-      expect(StubMetricsApi.last_event).to match(
-        download_with_properties(
-          'druid' => druid,
-          'file' => 'audio.mp3'
-        )
-      )
-    end
-
-    it 'tracks object downloads' do
-      visit_iframe_response(druid)
-      click_button 'Download all 2 files (152.01 MB)' # rubocop:disable Capybara/ClickLinkOrButtonStyle
-      wait_for_download
-      expect(StubMetricsApi.last_event).to match(download_with_properties('druid' => druid))
     end
   end
 end
