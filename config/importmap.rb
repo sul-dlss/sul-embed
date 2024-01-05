@@ -47,5 +47,4 @@ pin "lit-element/lit-element.js", to: "https://ga.jspm.io/npm:lit-element@3.3.3/
 pin "lit-html", to: "https://ga.jspm.io/npm:lit-html@2.8.0/lit-html.js"
 pin "lit-html/is-server.js", to: "https://ga.jspm.io/npm:lit-html@2.8.0/is-server.js"
 pin "lit/decorators.js", to: "https://ga.jspm.io/npm:lit@2.8.0/decorators.js"
-pin "three", to: "https://ga.jspm.io/npm:three@0.157.0/build/three.module.js"
-pin "three/", to: "https://ga.jspm.io/npm:three@0.157.0/"
+pin "three", to: "https://ga.jspm.io/npm:three@0.160.0/build/three.module.js"
