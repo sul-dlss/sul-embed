@@ -2,9 +2,19 @@
   <%= render Embed::HeaderComponent.new viewer: viewer %>
   <% # removing 5 pixels from the body height to account for being embedded %>
   <div class='sul-embed-body sul-embed-pdf'>
-    <object data="<%= viewer.pdf_files.first %>" type="application/pdf" style="height: 100vh; width: 100%">
-      <p>Your browser does not support viewing PDFs.  Please <a href="<%= viewer.pdf_files.first %>">download the file</a> to view it.</p>
-    </object>
+    <% if viewer.available? %>
+      <object data="<%= viewer.pdf_files.first %>" type="application/pdf" style="height: 100vh; width: 100%">
+        <div style="padding: 10%;">
+          <strong>
+            <%= I18n.t('restrictions.not_supported_html', download_link: link_to(I18n.t('restrictions.download_the_file'), viewer.pdf_files.first, target: '_blank')).html_safe %>
+          </strong>
+        </div>
+      </object>
+    <% else %>
+       <div style="padding: 10%;">
+          <strong><%= I18n.t('restrictions.not_accessibile') %></strong>
+       </div>
+    <% end %>
   </div>
   <%= render 'embed/metadata_panel', viewer: viewer %>
   <%= render 'embed/embed_this/generic', viewer: viewer %>

@@ -68,6 +68,10 @@ FactoryBot.define do
       world_downloadable { true }
     end
 
+    trait :no_download do
+      world_downloadable { false }
+    end
+
     trait :location_restricted do
       location_restricted { true }
     end

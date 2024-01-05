@@ -21,6 +21,10 @@
 
 en:
   hello: "Hello world"
+  restrictions:
+    not_accessibile: 'This item cannot be accessed online. See Access conditions for more information.'
+    not_supported_html: 'Your browser does not support viewing PDFs. Please %{download_link} to view it.'
+    download_the_file: 'download the file'
   date:
     formats:
       sul: '%d-%b-%Y'

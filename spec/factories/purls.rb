@@ -18,6 +18,10 @@ FactoryBot.define do
       stanford_only_unrestricted { true }
     end
 
+    trait :public do
+      public { true }
+    end
+
     trait :file do
       type { 'file' }
       title { 'Title of the object' }
@@ -28,6 +32,12 @@ FactoryBot.define do
       type { 'document' }
       title { 'Title of the object' }
       contents { [build(:resource, :document)] }
+    end
+
+    trait :document_no_download do
+      type { 'document' }
+      title { 'Title of the object' }
+      contents { [build(:resource, :document_no_download)] }
     end
 
     trait :was_seed do
