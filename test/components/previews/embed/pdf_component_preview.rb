@@ -14,6 +14,10 @@ module Embed
       render_viewer_for(url: 'https://purl.stanford.edu/jr789rw2402')
     end
 
+    def citation_only
+      render_viewer_for(url: 'https://purl.stanford.edu/bz673hm0344')
+    end
+
     private
 
     def render_viewer_for(url:)
