@@ -3,7 +3,7 @@
 
 // When the viewer is loaded for an object
 export const trackView = () => {
-  ahoy.trackView(eventParameters());
+  if (typeof ahoy !== "undefined") ahoy.trackView(eventParameters());
 };
 
 // Parameters common to all events we track
