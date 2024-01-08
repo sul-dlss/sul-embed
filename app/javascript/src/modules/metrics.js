@@ -20,7 +20,9 @@ const getDruid = () => {
   const purlUrl = new URLSearchParams(window.location.search).get("url");
   if (purlUrl) {
     try {
-      return new URL(purlUrl).pathname.split("/")[1];
+      const path = new URL(purlUrl).pathname
+      const match = path.match(/(\w{2}\d{3}\w{2}\d{4})/);
+      if (match) return match[0];
     } catch (e) {
       return "";
     }
