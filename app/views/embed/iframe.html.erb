@@ -16,6 +16,7 @@
         onerror: true
       });
     </script>
+    <%= render 'analytics' %>
     <%= javascript_importmap_tags @embed_response.viewer.importmap if @embed_response.viewer.importmap %>
     <%= stylesheet_link_tag @embed_response.viewer.stylesheet %>
     <%= stylesheet_link_tag 'sul_icons.css' %>
@@ -23,6 +24,5 @@
   </head>
   <body>
     <%= render @embed_response.viewer.component.new(viewer: @embed_response.viewer) %>
-    <%= render 'analytics' %>
   </body>
 </html>
