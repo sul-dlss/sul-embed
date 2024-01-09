@@ -41,14 +41,14 @@ export default class extends Controller {
       console.log(this.player.textTracks_)
       return []
     }
-
+    console.log("Transcript captionTracks(), full tracks without filtering")
+    console.log(tracks)
     return tracks.filter(track => track.kind === 'captions' && this.trackCues(track).length)
   }
 
   get cuesByLanguage() {
     const cues = {}
     console.log("Transcript cuesByLanguage()")
-    console.log(this.captionTracks)
     this.captionTracks.forEach(track => {
       // Retreive the cues for this track
       const list = this.trackCues(track)
@@ -78,6 +78,15 @@ export default class extends Controller {
       console.log(track.cues.length)
       for(let x = 0; x < track.cues.length; x++) {
         mappedCues.push(track.cues[x])
+      }
+    } else {
+      console.log("trackCues(track) - cues length not present so looking at individual track")
+      if(!track) {
+        console.log("trackCues - track doesn't exist")
+      }
+      else(track) {
+        console.log("trackCues - track exists")
+        console.log(track)
       }
     }
     return mappedCues
