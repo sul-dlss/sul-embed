@@ -47,6 +47,8 @@ export default class extends Controller {
 
   get cuesByLanguage() {
     const cues = {}
+    console.log("Transcript cuesByLanguage()")
+    console.log(this.captionTracks)
     this.captionTracks.forEach(track => {
       // Retreive the cues for this track
       const list = this.trackCues(track)
@@ -71,6 +73,9 @@ export default class extends Controller {
   trackCues(track) {
     let mappedCues = []
     if(track && track?.cues && track.cues?.length) {
+      console.log("Transcript trackCues(track)")
+      console.log("track.cues.length")
+      console.log(track.cues.length)
       for(let x = 0; x < track.cues.length; x++) {
         mappedCues.push(track.cues[x])
       }
