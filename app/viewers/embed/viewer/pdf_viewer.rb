@@ -15,7 +15,7 @@ module Embed
       end
 
       def stylesheet
-        'pdf.css'
+        Settings.enabled_features.legacy_pdf_viewer ? 'pdf.css' : 'companion_window.css'
       end
 
       def pdf_files

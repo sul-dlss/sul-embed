@@ -3,8 +3,8 @@
 # Access these previews at:
 # http://localhost:3000/rails/view_components/embed/pdf_component
 module Embed
-  class PdfComponentPreview < ViewComponent::Preview
-    layout 'preview/pdf'
+  class LegacyPdfComponentPreview < ViewComponent::Preview
+    layout 'preview/legacy_pdf'
 
     def public
       render_viewer_for(url: 'https://purl.stanford.edu/sq929fn8035')
@@ -23,7 +23,7 @@ module Embed
     def render_viewer_for(url:)
       embed_request = Embed::Request.new(url:)
       viewer = Embed::ViewerFactory.new(embed_request).viewer
-      render(PdfComponent.new(viewer:))
+      render(LegacyPdfComponent.new(viewer:))
     end
   end
 end

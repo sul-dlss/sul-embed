@@ -114,42 +114,6 @@
   max-height: calc(100vh - 100px); /* Scroll height for metadata when the auth wrapper is displaying */
 }
 
-.authLinkWrapper {
-  align-items: center;
-  display: flex;
-  background-color: var(--active-color);
-  color: white;
-  padding: .5rem;
-
-  .loginMessage {
-    margin-bottom: 0;
-    margin-left: 1rem;
-    margin-top: 0;
-  }
-
-  button {
-    margin-left: 0.75rem;
-    background-color: white;
-    color: var(--active-color);
-    border: 0;
-    border-radius: 5px;
-    padding: 0.2rem 0.4rem;
-    text-transform: uppercase;
-    &:hover {
-      cursor: pointer;
-      opacity: 0.9;
-    }
-  }
-
-  .dismissButton {
-    padding: 0.2rem;
-    svg {
-      font-size: 1rem;
-      vertical-align: bottom;
-    }
-  }
-}
-
 .transcript {
   --highlight-background-color:  rgb(243, 249, 255);
   --highlight-border-color: rgb(131, 193, 250);
