@@ -15,7 +15,7 @@ module Embed
       end
 
       def stylesheet
-        'media.css' # TODO: change this
+        Settings.enabled_features.legacy_pdf_viewer ? 'pdf.css' : 'media.css' # TODO: change to companion_window.css
       end
 
       def pdf_files
