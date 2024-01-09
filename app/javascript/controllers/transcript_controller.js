@@ -18,8 +18,12 @@ export default class extends Controller {
   load() {
     // Return if this method has already been called, there are no caption tracks
     // or no cues for the tracks
-    if (this.loaded || !this.currentCues()) 
+    if (this.loaded || !this.currentCues()) {
+      if(!this.currentCues()) {
+        console.log("Transcript load(): Returning because current cues is not returning")
+      }
       return
+    }
 
     this.revealButton()
     this.setupTranscriptLanguageSwitching()
@@ -31,7 +35,12 @@ export default class extends Controller {
   // Retrieve tracks that are of kind "caption" which also have associated cues
   get captionTracks() {
     const tracks = this.player.textTracks_?.tracks_
-    if (!tracks) return []
+    if (!tracks) {
+      console.log("Transcript captionTracks: returning b/c no tracks")
+      console.log("this.player.textTracks_")
+      console.log(this.player.textTracks_)
+      return []
+    }
 
     return tracks.filter(track => track.kind === 'captions' && this.trackCues(track).length)
   }
@@ -76,6 +85,9 @@ export default class extends Controller {
   }
 
   renderCues() {
+    console.log("Transcript renderCues method")
+    console.log("this.currentCues()")
+    console.log(this.currentCues())
     this.outletTarget.innerHTML = this.currentCues().asHtml
   }
 
