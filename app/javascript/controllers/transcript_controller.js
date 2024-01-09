@@ -84,7 +84,7 @@ export default class extends Controller {
       if(!track) {
         console.log("trackCues - track doesn't exist")
       }
-      else(track) {
+      else {
         console.log("trackCues - track exists")
         console.log(track)
       }
