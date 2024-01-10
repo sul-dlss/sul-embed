@@ -61,8 +61,7 @@ gem 'okcomputer'
 gem 'cssbundling-rails', '~> 1.1'
 gem 'shakapacker', '~> 7.0'
 
-# Pinned to work around https://github.com/ViewComponent/view_component/issues/1959
-gem 'view_component', '~> 3.8.0'
+gem 'view_component', '~> 3.10'
 
 gem 'importmap-rails', '~> 2.0'
 
