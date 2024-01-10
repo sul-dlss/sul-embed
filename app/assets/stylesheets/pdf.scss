@@ -70,3 +70,27 @@
     }
   }
 }
+
+.authLinkWrapper {
+  --active-color: rgb(140, 21, 21);
+  align-items: center;
+  display: flex;
+  background-color: var(--active-color);
+  color: white;
+  padding: .5rem;
+
+  .MuiSvgIcon-root {
+    fill: currentColor;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .loginMessage {
+    margin-bottom: 0;
+    margin-left: 1rem;
+    margin-top: 0;
+  }
+}
