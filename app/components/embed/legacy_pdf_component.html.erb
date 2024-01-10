@@ -40,9 +40,7 @@
           <% # NOTE: Remove legacy_pdf_viewer.js file when this component is removed %>
           <%= javascript_pack_tag('legacy_pdf_viewer') %>
       <% else %>
-          <div style="padding: 10%;">
-            <strong><%= I18n.t('restrictions.not_accessible') %></strong>
-          </div>
+         <%= render Embed::ContentNotAvailableComponent.new %>
       <% end %>
   </div>
   <%= render 'embed/metadata_panel', viewer: viewer %>
