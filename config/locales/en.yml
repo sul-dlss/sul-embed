@@ -23,7 +23,7 @@ en:
   hello: "Hello world"
   restrictions:
     not_accessible: 'This item cannot be accessed online. See Access conditions for more information.'
-    download_the_file: 'download the file'
+    logged_in: 'Logged in.'
   date:
     formats:
       sul: '%d-%b-%Y'
