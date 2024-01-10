@@ -1,4 +1,4 @@
-<% unless viewer.request.hide_download? %>
+<% unless viewer.embed_request.hide_download? %>
   <%= render DownloadPanelComponent.new do %>
     <% viewer.purl_object.contents.each do |resource| %>
       <ul class='sul-embed-download-list'>

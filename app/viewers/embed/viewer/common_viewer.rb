@@ -7,19 +7,19 @@ module Embed
       include Embed::PrettyFilesize
       include Embed::StacksImage
 
-      attr_reader :purl_object, :request
+      attr_reader :purl_object, :embed_request
 
-      def initialize(request)
-        @request = request
-        @purl_object = request.purl_object
+      def initialize(embed_request)
+        @embed_request = embed_request
+        @purl_object = embed_request.purl_object
       end
 
       def height
-        @request.maxheight || default_height
+        embed_request.maxheight || default_height
       end
 
       def width
-        @request.maxwidth || default_width
+        embed_request.maxwidth || default_width
       end
 
       def external_url
@@ -50,7 +50,7 @@ module Embed
       # Should the download toolbar be shown?
       # @return [Boolean]
       def show_download?
-        self.class.show_download? && !@request.hide_download?
+        self.class.show_download? && !embed_request.hide_download?
       end
 
       def self.show_download?
@@ -77,7 +77,7 @@ module Embed
       # Not a great method name here as sometimes the header is still displayed,
       # even if the title is hidden.
       def display_header?
-        !@request.hide_title?
+        !embed_request.hide_title?
       end
 
       def iframe_title

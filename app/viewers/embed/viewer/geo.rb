@@ -41,7 +41,7 @@ module Embed
       end
 
       def external_url
-        "#{Settings.geo_external_url}#{@request.object_druid}"
+        "#{Settings.geo_external_url}#{@embed_request.object_druid}"
       end
 
       def external_url_text

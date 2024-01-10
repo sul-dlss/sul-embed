@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Embed::Response, type: 'view' do
-  let(:viewer) { instance_double(Embed::Viewer::CommonViewer, request:, purl_object:) }
-  let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }) }
+  let(:viewer) { instance_double(Embed::Viewer::CommonViewer, embed_request:, purl_object:) }
+  let(:embed_request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }) }
   let(:purl_object) { instance_double(Embed::Purl, druid: 'abc123') }
-  let(:response) { described_class.new(request) }
+  let(:response) { described_class.new(embed_request) }
 
   describe 'static attributes' do
     it 'defines type' do
@@ -24,7 +24,7 @@ RSpec.describe Embed::Response, type: 'view' do
 
   describe 'title' do
     before do
-      expect(request).to receive(:purl_object).and_return(purl_object)
+      expect(embed_request).to receive(:purl_object).and_return(purl_object)
       expect(purl_object).to receive(:title).and_return('Purl Title')
     end
 
@@ -36,7 +36,7 @@ RSpec.describe Embed::Response, type: 'view' do
   describe 'html' do
     before do
       expect(response).to receive(:viewer).at_least(:once).and_return(viewer)
-      expect(request).to receive(:fullheight?).and_return(nil)
+      expect(embed_request).to receive(:fullheight?).and_return(nil)
       allow(viewer).to receive_messages(height: '100', width: '100', iframe_title: 'Kewl Viewer')
     end
 
@@ -47,8 +47,8 @@ RSpec.describe Embed::Response, type: 'view' do
 
   describe 'embed hash' do
     before do
-      expect(request).to receive(:purl_object).at_least(:once).and_return(purl_object)
-      expect(request).to receive(:fullheight?).and_return(nil)
+      expect(embed_request).to receive(:purl_object).at_least(:once).and_return(purl_object)
+      expect(embed_request).to receive(:fullheight?).and_return(nil)
       expect(purl_object).to receive(:title).and_return('Purl Title')
       expect(response).to receive(:viewer).at_least(:once).and_return(viewer)
       allow(viewer).to receive_messages(height: '100', width: '100', iframe_title: 'Kewl Viewer')
