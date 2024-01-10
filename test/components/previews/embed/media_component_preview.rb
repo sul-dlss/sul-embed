@@ -34,6 +34,10 @@ module Embed
       render_media_viewer_for(url: 'https://purl.stanford.edu/dp324gw4986')
     end
 
+    def citation_only
+      render_media_viewer_for(url: 'https://purl.stanford.edu/bc285ff3003')
+    end
+
     private
 
     def render_media_viewer_for(url:)
