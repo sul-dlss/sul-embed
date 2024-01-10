@@ -1,0 +1,9 @@
+<div class="header-background">
+    <h3><%= heading %></h3>
+</div>
+<ul class="left-drawer-content"
+    data-controller="content-list"
+    data-action="thumbnails-found@window->content-list#drawThumbnails"
+    role="tablist">
+    <%= render ContentListItemComponent.with_collection(viewer.purl_object.downloadable_files, viewer_class: viewer.class.to_s) %>
+</ul>

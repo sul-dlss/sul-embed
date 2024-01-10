@@ -38,15 +38,6 @@ export default class extends Controller {
         })
       })
     })
-    // TODO: Deal with thumbnail views
-    // const thumbnails = paintingResources.map((resource) => {
-    //   return { isStanfordOnly: false,
-    //            thumbnailUrl: '',
-    //            defaultIcon: '',
-    //            isLocationRestricted: false,
-    //            fileLabel: resource.label }
-    // })
-    // window.dispatchEvent(new CustomEvent('thumbnails-found', { detail: thumbnails }))
   }
 
   // Try to render the resource, checks for any required authorization and shows login window if needed

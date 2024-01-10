@@ -18,6 +18,10 @@ module Embed
       render_viewer_for(url: 'https://purl.stanford.edu/bz673hm0344')
     end
 
+    def with_multiple_files
+      render_viewer_for(url: 'https://purl.stanford.edu/ds777pr3860')
+    end
+
     private
 
     def render_viewer_for(url:)

@@ -20,7 +20,7 @@
         <button data-controller="tab" data-action="click->tab#switch" class="active" aria-label="About this item" aria-controls="about" aria-selected="true" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
         </button>
-        <button data-controller="tab" data-action="click->tab#switch" aria-label="Content" aria-controls="media-content" role="tab">
+        <button data-controller="tab" data-action="click->tab#switch" aria-label="Content" aria-controls="object-content" role="tab">
           <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M4 10.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zm0-6c-.83 0-1.5.67-1.5 1.5S3.17 7.5 4 7.5 5.5 6.83 5.5 6 4.83 4.5 4 4.5zm0 12c-.83 0-1.5.68-1.5 1.5s.68 1.5 1.5 1.5 1.5-.68 1.5-1.5-.67-1.5-1.5-1.5zM7 19h14v-2H7v2zm0-6h14v-2H7v2zm0-8v2h14V5H7z"></path></svg>
         </button>
         <%= drawer_button %>
@@ -37,20 +37,13 @@
           <dl data-controller="iiif-metadata" class="metadataList left-drawer-content" data-action="iiif-manifest-received@window->iiif-metadata#drawMetadata"></dl>
         </section>
 
-        <section id="media-content" role="tabpanel" hidden>
-          <div class="header-background">
-            <h3>Media content</h3>
-          </div>
-          <ul class="left-drawer-content" data-controller="content-list" data-action="thumbnails-found@window->content-list#draw" role="tablist"></ul>
+        <section id="object-content" role="tabpanel" hidden>
+          <%= render ContentListComponent.new(viewer:, heading: viewer.content_heading) %>
         </section>
 
         <%= drawer_content %>
 
         <section id="rights" role="tabpanel" hidden>
-          <div class="header-background">
-            <h3>Rights</h3>
-          </div>
-
           <%= render RightsComponent.new(viewer:) %>
         </section>
       </div>
