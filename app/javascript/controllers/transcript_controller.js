@@ -185,6 +185,10 @@ export default class extends Controller {
     captions.forEach(track => { 
       if(track.mode == 'disabled') {
         track.mode = 'hidden'
+        console.log("Setting mode to hidden")
+        console.log(track)
+        console.log(track.cues)
+        console.log(track.cues.length)
       }
     })
   }
