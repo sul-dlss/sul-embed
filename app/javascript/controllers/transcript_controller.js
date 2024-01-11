@@ -35,7 +35,7 @@ export default class extends Controller {
   // Retrieve tracks that are of kind "caption" which also have associated cues
   get captionTracks() {
     const tracks = this.player.textTracks_?.tracks_
-    
+
     if (!tracks) {
       return []
     }
@@ -84,7 +84,7 @@ export default class extends Controller {
 
   currentCues() {
     // Change track mode to 'hidden' to allow cues to be ready for Safari
-    this.changeCaptionTrackModes() 
+    // this.changeCaptionTrackModes() 
   
     // If a language is selected, get cues for that language track.
     // If no language is selected, get cues for the very first language in the list

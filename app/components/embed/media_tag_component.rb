@@ -94,11 +94,11 @@ module Embed
       # We want to enable the user to select from any of these options.
       # We also want the different language options to be listed alphabetically.
       # The first language is selected by default.
-      # default: (i.zero? ? '' : nil)
       safe_join(
         @resource.caption_files.map.with_index do |caption_file, i|
           tag.track(src: caption_file.file_url, kind: 'captions',
-                    srclang: caption_file.language_code, label: caption_file.language_label)
+                    srclang: caption_file.language_code, label: caption_file.language_label,
+                    default: (i.zero? ? '' : nil))
         end
       )
     end
