@@ -36,9 +36,6 @@ export default class extends Controller {
   get captionTracks() {
     const tracks = this.player.textTracks_?.tracks_
     if (!tracks) {
-      console.log("Transcript captionTracks: returning b/c no tracks")
-      console.log("this.player.textTracks_")
-      console.log(this.player.textTracks_)
       return []
     }
     console.log("Transcript captionTracks(), full tracks without filtering")
@@ -72,10 +69,6 @@ export default class extends Controller {
   // We will map the list to an array, which will allow the return values to be filterable/iterable. 
   trackCues(track) {
     let mappedCues = []
-    // Safari will not show disabled tracks, try changing the mode to hidden
-    if(track.mode == 'disabled') {
-      track.mode = 'hidden'
-    }
     console.log("Set track mode to hidden if mode was originally disabled")
     console.log(track)
     if(track && track?.cues && track.cues?.length) {
@@ -86,19 +79,19 @@ export default class extends Controller {
         mappedCues.push(track.cues[x])
       }
     } else {
-      console.log("trackCues(track) - cues length not present so looking at individual track")
-      if(!track) {
-        console.log("trackCues - track doesn't exist")
-      }
-      else {
-        console.log("trackCues - track exists")
-        console.log(track)
-      }
+      console.log("trackCues(track) - cues length not present")
+      console.log("Inspect track")
+      console.log(track)
     }
     return mappedCues
   }
 
   currentCues() {
+    // Change track mode to 'hidden' to allow cues to be ready for Safari
+    this.changeCaptionTrackModes() 
+  
+    // If a language is selected, get cues for that language track.
+    // If no language is selected, get cues for the very first language in the list
     return this.selectedLanguage ?
       this.cuesByLanguage[this.selectedLanguage] :
       Object.values(this.cuesByLanguage)[0]
@@ -180,6 +173,19 @@ export default class extends Controller {
   removeAllCueHighlights() {
     this.outletTarget.querySelectorAll('span.cue').forEach(elem => {
       elem.classList.remove('highlight')
+    })
+  }
+
+  // Safari will not retrieve cues for track whose mode is disabled.
+  // Changing the mode to "hidden" should make the cues visible.
+  // We also want to do this a little before we start mapping the cues
+  // to provide some time for the code before it checks cue length.
+  changeCaptionTrackModes() {
+    const captions = this.player.textTracks_?.tracks_.filter(track => track.kind === 'captions')
+    captions.forEach(track => { 
+      if(track.mode == 'disabled') {
+        track.mode = 'hidden'
+      }
     })
   }
 }
