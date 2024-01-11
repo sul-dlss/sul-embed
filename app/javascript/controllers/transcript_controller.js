@@ -35,17 +35,16 @@ export default class extends Controller {
   // Retrieve tracks that are of kind "caption" which also have associated cues
   get captionTracks() {
     const tracks = this.player.textTracks_?.tracks_
+    
     if (!tracks) {
       return []
     }
-    console.log("Transcript captionTracks(), full tracks without filtering")
-    console.log(tracks)
+
     return tracks.filter(track => track.kind === 'captions' && this.trackCues(track).length)
   }
 
   get cuesByLanguage() {
     const cues = {}
-    console.log("Transcript cuesByLanguage()")
     this.captionTracks.forEach(track => {
       // Retreive the cues for this track
       const list = this.trackCues(track)
@@ -72,9 +71,6 @@ export default class extends Controller {
     console.log("Set track mode to hidden if mode was originally disabled")
     console.log(track)
     if(track && track?.cues && track.cues?.length) {
-      console.log("Transcript trackCues(track)")
-      console.log("track.cues.length")
-      console.log(track.cues.length)
       for(let x = 0; x < track.cues.length; x++) {
         mappedCues.push(track.cues[x])
       }
@@ -98,8 +94,6 @@ export default class extends Controller {
   }
 
   renderCues() {
-    console.log("Transcript renderCues method")
-    console.log("this.currentCues()")
     console.log(this.currentCues())
     this.outletTarget.innerHTML = this.currentCues().asHtml
   }
@@ -184,11 +178,9 @@ export default class extends Controller {
     const captions = this.player.textTracks_?.tracks_.filter(track => track.kind === 'captions')
     captions.forEach(track => { 
       if(track.mode == 'disabled') {
-        track.mode = 'hidden'
-        console.log("Setting mode to hidden")
+        track.mode = 'showing'
+        console.log("Setting mode to showing")
         console.log(track)
-        console.log(track.cues)
-        console.log(track.cues[0].text)
         console.log(track.cues.length)
       }
     })
