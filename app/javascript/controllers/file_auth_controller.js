@@ -241,4 +241,8 @@ export default class extends Controller {
 
     this.initiateTokenRequest(accessService, messageId)
   }
+
+  hideLogoutPanel() {
+    this.logoutPanelTarget.hidden = true
+  }
 }

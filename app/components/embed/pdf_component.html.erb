@@ -1,15 +1,15 @@
 <%= render Embed::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth') do |component| %>
   <% component.with_body do %>
+    <div class="sul-embed-body" style="width: 100%">
     <% if viewer.available? %>
-      <div class='sul-embed-body sul-embed-pdf' style="width: 100%"
-          data-controller="pdf"
-          data-action="iiif-manifest-received@window->file-auth#parseFiles auth-success@window->pdf#show">
-        <%= render Embed::LoginComponent.new %>
-      </div>
+          <%= render Embed::LoginComponent.new %>
+          <div class="sul-embed-pdf" style="height: 100%"
+            data-controller="pdf"
+            data-action="iiif-manifest-received@window->file-auth#parseFiles auth-success@window->pdf#show">
+          </div>
     <% else %>
-       <div class='sul-embed-body sul-embed-pdf' style="width: 100%">
-         <%= render Embed::ContentNotAvailableComponent.new %>
-       </div>
+       <%= render Embed::ContentNotAvailableComponent.new %>
     <% end %>
+    </div>
   <% end %>
 <% end %>
