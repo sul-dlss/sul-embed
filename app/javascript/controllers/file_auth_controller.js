@@ -110,9 +110,15 @@ export default class extends Controller {
     // check the local storage for any existing cached token, and try the probe service again with the token.
     // If probe service denies access with the cached token OR there is no cached token, check the access service
     // to get the login message and URL needed to show to the user.
+    // https://stacks.stanford.edu/iiif/auth/v2/probe?id=FULL_PATH_TO_FILE
     this.queryProbeService(messageId)
       .then((contentResourceId) => this.renderViewer(contentResourceId))
       .catch((json) => {
+        // TODO: deal with media authentication if we abandon media specific auth controllers
+        if (json.status == 302) return // media file probe requests return a 302 instead of a 200
+                                       // wuth a link to the media server file location (and media token)
+                                       // and this can happen with a non-media object that happens to have
+                                       // a media file in it, e.g. ds777pr3860
         console.log("Probe failed or access denied/restricted", json)
         // Check if non-expired token already exists in local storage,
         // and if it exists, query probe service with it
