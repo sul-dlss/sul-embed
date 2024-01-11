@@ -188,6 +188,7 @@ export default class extends Controller {
         console.log("Setting mode to hidden")
         console.log(track)
         console.log(track.cues)
+        console.log(track.cues[0].text)
         console.log(track.cues.length)
       }
     })
