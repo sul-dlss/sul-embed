@@ -72,6 +72,12 @@ export default class extends Controller {
   // We will map the list to an array, which will allow the return values to be filterable/iterable. 
   trackCues(track) {
     let mappedCues = []
+    // Safari will not show disabled tracks, try changing the mode to hidden
+    if(track.mode == 'disabled') {
+      track.mode = 'hidden'
+    }
+    console.log("Set track mode to hidden if mode was originally disabled")
+    console.log(track)
     if(track && track?.cues && track.cues?.length) {
       console.log("Transcript trackCues(track)")
       console.log("track.cues.length")
