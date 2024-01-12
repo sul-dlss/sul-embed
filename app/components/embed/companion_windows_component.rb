@@ -24,5 +24,12 @@ module Embed
     def iiif_v3_manifest_url
       "#{Settings.purl_url}/#{druid}/iiif3/manifest"
     end
+
+    def render_content_list_panel?
+      # for PDF viewer, do not render the content panel if there is just one downloadable file in the object
+      return false if viewer.instance_of?(::Embed::Viewer::PdfViewer) && downloadable_files.size == 1
+
+      true
+    end
   end
 end

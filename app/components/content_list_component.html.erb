@@ -5,5 +5,5 @@
     data-controller="content-list"
     data-action="thumbnails-found@window->content-list#drawThumbnails"
     role="tablist">
-    <%= render ContentListItemComponent.with_collection(viewer.purl_object.downloadable_files, viewer_class: viewer.class.to_s) %>
+    <%= render ContentListItemComponent.with_collection(viewer.purl_object.downloadable_files, viewer:) %>
 </ul>
