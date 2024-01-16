@@ -42,27 +42,28 @@
 
   .vjs-text-track-settings {
     background: white !important;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #000;
-    height: 70vh;
-    max-width: 640px;
     border-radius: var(--modal-border-radius);
-    box-shadow: 5px 10px 5px gray;
-    font-size: 1em;
+    box-shadow: 5px 10px 5px #0000001e;
+    height: auto !important;
+    margin: auto;
+    max-width: 72vw;
+    position: relative !important;
+    z-index: 5;
 
-    legend {
-      color: #000;
-    }
+    .vjs-modal-dialog-content {
+      position: relative;
 
-    .vjs-track-settings-controls button {
-      color: var(--active-color);
-      background-image: none;
-      font-size: 1.2em;
-      padding: 3px;
-      text-transform: uppercase;
+      label, legend {
+        color: #000;
+      }
+
+      .vjs-track-settings-controls button {
+        color: var(--active-color);
+        background-image: none;
+        font-size: 1.2em;
+        padding: 3px;
+        text-transform: uppercase;
+      }
     }
   }
 }
