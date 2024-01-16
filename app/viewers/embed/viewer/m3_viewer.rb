@@ -3,7 +3,7 @@
 module Embed
   module Viewer
     class M3Viewer < CommonViewer
-      delegate :search, :suggested_search, :canvas_id, :cdl_hold_record_id, to: :request
+      delegate :search, :suggested_search, :canvas_id, :cdl_hold_record_id, to: :embed_request
 
       def component
         M3Component
@@ -37,15 +37,15 @@ module Embed
       #        (to avoid breaking embeds that used to work)
       # rubocop:disable Metrics/AbcSize
       def canvas_id
-        return if request.canvas_id.blank?
+        return if embed_request.canvas_id.blank?
 
-        if canvases.any? { |canvas| canvas['@id'] == request.canvas_id }
-          request.canvas_id
-        elsif cocinafied_canvases? && request.canvas_id.exclude?('cocina-fileSet')
+        if canvases.any? { |canvas| canvas['@id'] == embed_request.canvas_id }
+          embed_request.canvas_id
+        elsif cocinafied_canvases? && embed_request.canvas_id.exclude?('cocina-fileSet')
           cocinafied_canvas_id
         else
           Honeybadger.notify(
-            "Unable to find requested canvas id '#{request.canvas_id}' in manifest for #{purl_object.druid}"
+            "Unable to find requested canvas id '#{embed_request.canvas_id}' in manifest for #{purl_object.druid}"
           )
 
           nil
@@ -55,9 +55,9 @@ module Embed
 
       def canvas_index
         if canvas_id
-          canvases.index { |canvas| canvas['@id'] == canvas_id } || request.canvas_index
+          canvases.index { |canvas| canvas['@id'] == canvas_id } || embed_request.canvas_index
         else
-          request.canvas_index
+          embed_request.canvas_index
         end
       end
 
@@ -74,7 +74,7 @@ module Embed
       end
 
       def cocinafied_canvas_id
-        base, _, resource_id = request.canvas_id.rpartition('/')
+        base, _, resource_id = embed_request.canvas_id.rpartition('/')
 
         potential_canvas_id = base + "/cocina-fileSet-#{purl_object.druid}-#{resource_id}"
 

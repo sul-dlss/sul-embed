@@ -5,10 +5,10 @@ require 'rails_helper'
 RSpec.describe Embed::WasSeedComponent, type: :component do
   include WasTimeMapFixtures
 
-  let(:request) do
+  let(:embed_request) do
     Embed::Request.new(url: 'http://purl.stanford.edu/abc123')
   end
-  let(:viewer) { Embed::Viewer::WasSeed.new(request) }
+  let(:viewer) { Embed::Viewer::WasSeed.new(embed_request) }
   let(:purl) { build(:purl, :was_seed) }
 
   before do
@@ -34,7 +34,7 @@ RSpec.describe Embed::WasSeedComponent, type: :component do
     end
 
     context 'with hidden title' do
-      let(:request) do
+      let(:embed_request) do
         Embed::Request.new(url: 'http://purl.stanford.edu/abc123', hide_title: 'true')
       end
 
@@ -63,7 +63,7 @@ RSpec.describe Embed::WasSeedComponent, type: :component do
     end
 
     context 'with hidden title' do
-      let(:request) do
+      let(:embed_request) do
         Embed::Request.new(url: 'http://purl.stanford.edu/abc123', hide_title: 'true')
       end
 

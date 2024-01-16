@@ -5,7 +5,7 @@
       type='checkbox'
       id='sul-embed-embed-title'
       data-embed-attr='hide_title'
-      <%= 'checked' unless request.hide_title? %>
+      <%= 'checked' unless embed_request.hide_title? %>
     />
     <label for='sul-embed-embed-title'>
       title
@@ -18,7 +18,7 @@
       type='checkbox'
       id='sul-embed-embed'
       data-embed-attr='hide_embed'
-      <%= 'checked' unless request.hide_embed_this? %>
+      <%= 'checked' unless embed_request.hide_embed_this? %>
     />
     <label for='sul-embed-embed'>embed</label>
   </div>

@@ -2,19 +2,19 @@
 
 module Embed
   class ViewerFactory
-    def initialize(request)
-      @request = request
-      raise Embed::Purl::ResourceNotEmbeddable unless request.purl_object.valid?
+    def initialize(embed_request)
+      @embed_request = embed_request
+      raise Embed::Purl::ResourceNotEmbeddable unless embed_request.purl_object.valid?
     end
 
     def viewer
-      @viewer ||= viewer_class.new(@request)
+      @viewer ||= viewer_class.new(@embed_request)
     end
 
     private
 
     def viewer_class # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
-      case @request.purl_object.type
+      case @embed_request.purl_object.type
       when 'file'
         Embed::Viewer::File
       when 'geo'

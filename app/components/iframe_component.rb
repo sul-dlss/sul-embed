@@ -6,7 +6,7 @@ class IframeComponent < ViewComponent::Base
     @version = version
   end
 
-  delegate :height, :width, :request, :iframe_title, :purl_object, to: :@viewer
+  delegate :height, :width, :embed_request, :iframe_title, :purl_object, to: :@viewer
   delegate :druid, to: :purl_object
   attr_reader :version
 
@@ -15,11 +15,11 @@ class IframeComponent < ViewComponent::Base
   end
 
   def height_style
-    request.fullheight? ? '100%' : "#{height}px"
+    embed_request.fullheight? ? '100%' : "#{height}px"
   end
 
   def src
-    query_params = request.as_url_params.merge(version ? { _v: version } : {}).to_query
+    query_params = embed_request.as_url_params.merge(version ? { _v: version } : {}).to_query
     "#{iframe_url}?url=#{Settings.purl_url}/#{druid}&#{query_params}"
   end
 

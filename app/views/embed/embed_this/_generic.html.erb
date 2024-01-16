@@ -1,3 +1,3 @@
-<% unless viewer.request.hide_embed_this? %>
+<% unless viewer.embed_request.hide_embed_this? %>
   <%= render EmbedPanelComponent.new(viewer: viewer) %>
 <% end %>

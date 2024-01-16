@@ -7,13 +7,13 @@ RSpec.describe EmbedPanelComponent, type: :component do
     render_inline(described_class.new(viewer:)) { 'Added Panel Content' }
   end
 
-  let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }) }
+  let(:embed_request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }) }
   let(:viewer) do
     instance_double(
       Embed::Viewer::CommonViewer,
       height: '555',
       width: '666',
-      request:,
+      embed_request:,
       iframe_title: 'File viewer',
       purl_object: instance_double(Embed::Purl, druid: 'oo000oo0000', title: 'The Object Title', purl_url: 'https://stanford.edu/')
     )
