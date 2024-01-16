@@ -30,10 +30,25 @@ export default class extends Controller {
   // Tracks may be of different kinds. 
   // Retrieve tracks that are of kind "caption" which also have associated cues
   get captionTracks() {
-    const tracks = this.player.textTracks_?.tracks_
+    //const tracks = this.player.textTracks_?.tracks_
+    console.log("Caption Tracks")
+    console.log("Show remote text tracks")
+    console.log(this.player.remoteTextTracks())
+    const tracks = this.player.remoteTextTracks()?.tracks_
+    
     if (!tracks) return []
 
-    return tracks.filter(track => track.kind === 'captions' && this.trackCues(track).length)
+    const captions = tracks.filter(track => track.kind === 'captions')
+    captions.forEach(caption => {
+      if (caption.mode == 'disabled') {
+        caption.mode = 'showing'
+      }
+    })
+
+    console.log("After mode change, show remote text tracks")
+    console.log(this.player.remoteTextTracks())
+
+    return captions.filter(this.trackCues(caption).length)
   }
 
   get cuesByLanguage() {
