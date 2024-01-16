@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["container", "loginPanel", "logoutPanel", "loginButton", "loginMessage"]
+  static targets = ["container", "loginPanel", "messagePanel", "loginButton", "loginMessage"]
 
   resources = {} // Hash of messageIds to resources
 
@@ -206,7 +206,7 @@ export default class extends Controller {
   loginNeeded(activeAccessService, messageId) {
     if (!this.loginPanelTarget.hidden) return // no action needed if the login window is already there
 
-    this.logoutPanelTarget.hidden = true
+    this.messagePanelTarget.hidden = true
     this.loginPanelTarget.hidden = false
     this.loginButtonTarget.innerHTML = activeAccessService.confirmLabel.en[0]
     this.loginButtonTarget.setAttribute('data-file-auth-messageId-param', messageId)
@@ -237,12 +237,12 @@ export default class extends Controller {
     console.log("Done waiting on the login window")
     const probeService = this.resources[messageId].probeService
     const accessService = this.findAccessService(probeService)
-    this.logoutPanelTarget.hidden = false
+    this.messagePanelTarget.hidden = false
 
     this.initiateTokenRequest(accessService, messageId)
   }
 
-  hideLogoutPanel() {
-    this.logoutPanelTarget.hidden = true
+  hideMessagePanel() {
+    this.messagePanelTarget.hidden = true
   }
 }
