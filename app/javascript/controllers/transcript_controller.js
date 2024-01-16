@@ -48,7 +48,7 @@ export default class extends Controller {
     console.log("After mode change, show remote text tracks")
     console.log(this.player.remoteTextTracks())
 
-    return captions.filter(this.trackCues(caption).length)
+    return captions.filter(track => this.trackCues(track).length)
   }
 
   get cuesByLanguage() {
