@@ -41,7 +41,7 @@ export default class extends Controller {
     const captions = tracks.filter(track => track.kind === 'captions')
     captions.forEach(caption => {
       if (caption.mode == 'disabled') {
-        caption.mode = 'showing'
+        caption.mode = 'hidden'
       }
     })
 
