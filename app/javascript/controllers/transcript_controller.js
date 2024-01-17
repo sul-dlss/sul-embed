@@ -30,24 +30,25 @@ export default class extends Controller {
   // Tracks may be of different kinds. 
   // Retrieve tracks that are of kind "caption" which also have associated cues
   get captionTracks() {
-    //const tracks = this.player.textTracks_?.tracks_
-    console.log("Caption Tracks")
-    console.log("Show remote text tracks")
-    console.log(this.player.remoteTextTracks())
+    // The documentation recommends using remoteTextTracks() instead of textTracks().
+    // Also, using this method allows the change to text track mode to 'hidden'
+    // to reveal the cues for text tracks in Safari, whereas directly using
+    // this.player.textTracks_ was not allowing for this change to take effect. 
     const tracks = this.player.remoteTextTracks()?.tracks_
     
     if (!tracks) return []
 
     const captions = tracks.filter(track => track.kind === 'captions')
-    captions.forEach(caption => {
-      if (caption.mode == 'disabled') {
-        caption.mode = 'hidden'
+
+    // For each caption track that is disabled, change the mode to hidden 
+    // to allow Safari to be able to pick up the cues for the track
+    captions.forEach(track => {
+      if (track.mode == 'disabled') {
+        track.mode = 'hidden'
       }
     })
 
-    console.log("After mode change, show remote text tracks")
-    console.log(this.player.remoteTextTracks())
-
+    // Return caption tracks that have associated cues
     return captions.filter(track => this.trackCues(track).length)
   }
 
