@@ -12,7 +12,7 @@ module Embed
       end
 
       def height
-        return default_height if @request.maxheight.to_i > default_height
+        return default_height if @embed_request.maxheight.to_i > default_height
 
         super
       end
@@ -32,11 +32,11 @@ module Embed
       end
 
       def min_files_to_search
-        (@request.min_files_to_search || Settings.min_files_to_search_default).to_i
+        (@embed_request.min_files_to_search || Settings.min_files_to_search_default).to_i
       end
 
       def display_file_search?
-        @display_file_search ||= !@request.hide_search? &&
+        @display_file_search ||= !@embed_request.hide_search? &&
                                  @purl_object.contents.map(&:files).flatten.length >= min_files_to_search
       end
 
@@ -91,7 +91,7 @@ module Embed
       end
 
       def header_height
-        return 68 unless request.hide_title?
+        return 68 unless embed_request.hide_title?
         return 40 if display_file_search?
 
         0

@@ -58,7 +58,7 @@ module Embed
       private
 
       def default_height
-        return 340 if request.hide_title?
+        return 340 if embed_request.hide_title?
 
         420
       end

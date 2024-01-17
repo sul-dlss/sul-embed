@@ -3,7 +3,7 @@
     <button class='sul-embed-footer-tool btn btn-toolbar sul-i-infomation-circle'
       aria-expanded='false' aria-label='open metadata panel'
       data-sul-embed-toggle='sul-embed-metadata-panel'></button>
-    <% unless viewer.request.hide_embed_this? %>
+    <% unless viewer.embed_request.hide_embed_this? %>
       <button class='sul-embed-footer-tool btn btn-toolbar sul-i-share'
         aria-expanded='false'
         aria-label='open embed this panel'

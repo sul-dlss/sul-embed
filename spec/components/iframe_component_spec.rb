@@ -9,14 +9,14 @@ RSpec.describe IframeComponent, type: :component do
     render_inline(described_class.new(viewer:, version: '123')) { 'Added Panel Content' }
   end
 
-  let(:request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }) }
+  let(:embed_request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }) }
 
   let(:viewer) do
     instance_double(
       Embed::Viewer::CommonViewer,
       height: '555',
       width: '666',
-      request:,
+      embed_request:,
       iframe_title: 'Hello world',
       purl_object: instance_double(Embed::Purl, druid: 'oo000oo0000', title: 'The Object Title')
     )
@@ -28,7 +28,7 @@ RSpec.describe IframeComponent, type: :component do
     it { is_expected.to eq '555px' }
 
     context 'when the fullheight flag is set' do
-      let(:request) do
+      let(:embed_request) do
         Embed::Request.new({ url: 'http://purl.stanford.edu/abc123', fullheight: 'true' })
       end
 
@@ -43,7 +43,7 @@ RSpec.describe IframeComponent, type: :component do
   describe 'the src' do
     subject(:src) { iframe['src'] }
 
-    let(:request) do
+    let(:embed_request) do
       Embed::Request.new(
         url: 'https://purl.stanford.edu/abc123',
         maxheight: '555',
