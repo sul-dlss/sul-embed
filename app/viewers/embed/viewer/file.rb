@@ -17,14 +17,6 @@ module Embed
         super
       end
 
-      def file_type_icon(mimetype)
-        if Constants::FILE_ICON[mimetype].nil?
-          'sul-i-file-new-1'
-        else
-          Constants::FILE_ICON[mimetype]
-        end
-      end
-
       def file_size_text(file_size)
         return pretty_filesize(file_size) unless file_size.zero?
 

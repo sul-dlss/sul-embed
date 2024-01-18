@@ -22,6 +22,10 @@ class ContentListItemComponent < ViewComponent::Base
     'showPdf' if viewer.instance_of?(::Embed::Viewer::PdfViewer)
   end
 
+  def file_type_icon
+    viewer.file_type_icon(file.mimetype)
+  end
+
   # Only PDF content is rendered in this panel for now, can be extended later to other content types
   # Media content does not need this component since it uses custom javascript to render thumbnails and link to content
   def render?
