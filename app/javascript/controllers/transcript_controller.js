@@ -48,6 +48,26 @@ export default class extends Controller {
         console.log("Setting track to hidden")
         console.log(track)
         console.log("Checking track cues length")
+        if(this.trackCues(track).length == 0) {
+          // Wait 300 ms
+          let _this = this
+          setTimeout(function() {
+            console.log("Length of tracks after 200")
+            console.log(_this.trackCues(track).length)
+          }, 200)
+          setTimeout(function() {
+            console.log("Length of tracks after 400")
+            console.log(_this.trackCues(track).length)
+          }, 200)
+          setTimeout(function() {
+            console.log("Length of tracks after 600")
+            console.log(_this.trackCues(track).length)
+          }, 200)
+          setTimeout(function() {
+            console.log("Length of tracks after 800")
+            console.log(_this.trackCues(track).length)
+          }, 200)
+        }
         console.log(this.trackCues(track).length)
       }
     })
