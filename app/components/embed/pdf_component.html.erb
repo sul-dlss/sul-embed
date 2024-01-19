@@ -1,4 +1,11 @@
 <%= render Embed::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth') do |component| %>
+  <% component.with_header_button do %>
+      <button
+        aria-label="Full screen"
+        class="btn sul-i-expand-1 sul-fullscreen-button"
+        id="full-screen-button">
+      </button>
+  <% end %>
   <% component.with_body do %>
     <div class="sul-embed-body" style="width: 100%">
     <% if viewer.available? %>
