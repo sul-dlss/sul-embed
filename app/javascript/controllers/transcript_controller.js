@@ -48,7 +48,7 @@ export default class extends Controller {
       // If any tracks were set to hidden, allow a small amount of extra time to ensure loading
       setTimeout(function() {
         console.log("Hidden tracks is set to true")
-      }, 200)
+      }, 500)
     }
   }
 
@@ -107,6 +107,9 @@ export default class extends Controller {
         mappedCues.push(track.cues[x])
       }
     }
+    console.log("Track cues returning")
+    console.log(mappedCues)
+    console.log(mappedCues.length)
     return mappedCues
   }
 
