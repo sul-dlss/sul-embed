@@ -16,6 +16,11 @@ export default class extends Controller {
   // This function is triggered by the 'media-data-loaded' event which is triggered
   // by the 'loadeddata' event on the first track.  
   load() {
+    // Handle Safari with special cue loading logic
+    if(! this.loaded && videojs.browser.IS_ANY_SAFARI) {
+      console.log("SAFARI detected, force load cues")
+      this.forceLoadCues()
+    }
     // Return if this method has already been called, there are no caption tracks
     // or no cues for the tracks
     if (this.loaded || !this.currentCues()) 
@@ -25,6 +30,26 @@ export default class extends Controller {
     this.setupTranscriptLanguageSwitching()
     this.renderCues()
     this.loaded = true
+  }
+
+  // Safari cues require special handling, and disabled tracks may need extra time to load at first
+  // We want the track cues to be available so we can properly generate the transcript sidebar language dropdown
+  // if there is more than one language track
+  forceLoadCues() {
+    const captions = this.player.remoteTextTracks()?.tracks_.filter(track => track.kind === 'captions')
+    let hiddenTracks = false
+    captions.forEach(track => {
+      if (track.mode == 'disabled') {
+        track.mode = 'hidden'
+        hiddenTracks = true
+      }
+    })
+    if(hiddenTracks) {
+      // If any tracks were set to hidden, allow a small amount of extra time to ensure loading
+      setTimeout(function() {
+        console.log("Hidden tracks is set to true")
+      }, 200)
+    }
   }
 
   // Tracks may be of different kinds. 
@@ -45,30 +70,6 @@ export default class extends Controller {
     captions.forEach(track => {
       if (track.mode == 'disabled') {
         track.mode = 'hidden'
-        console.log("Setting track to hidden")
-        console.log(track)
-        console.log("Checking track cues length")
-        if(this.trackCues(track).length == 0) {
-          // Wait 300 ms
-          let _this = this
-          setTimeout(function() {
-            console.log("Length of tracks after 200")
-            console.log(_this.trackCues(track).length)
-          }, 200)
-          setTimeout(function() {
-            console.log("Length of tracks after 400")
-            console.log(_this.trackCues(track).length)
-          }, 200)
-          setTimeout(function() {
-            console.log("Length of tracks after 600")
-            console.log(_this.trackCues(track).length)
-          }, 200)
-          setTimeout(function() {
-            console.log("Length of tracks after 800")
-            console.log(_this.trackCues(track).length)
-          }, 200)
-        }
-        console.log(this.trackCues(track).length)
       }
     })
 
