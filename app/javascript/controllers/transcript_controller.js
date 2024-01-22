@@ -24,10 +24,17 @@ export default class extends Controller {
     // Return if this method has already been called, there are no caption tracks
     // or no cues for the tracks
     //if (this.loaded || !this.currentCues()) 
-    if (this.loaded || !this.checkCues()) 
-
+    if (this.loaded || !this.checkCues()) {
+      if(this.loaded) {
+        console.log("Loaded true")
+      }
+      if(!this.checkCues()) {
+        console.log("NOT this check cues - this is returning false")
+        console.log("Retrieve current cues")
+        console.log(this.currentCues())
+      }
       return
-
+    }
     this.revealButton()
     this.setupTranscriptLanguageSwitching()
     this.renderCues()
@@ -126,9 +133,6 @@ export default class extends Controller {
         mappedCues.push(track.cues[x])
       }
     }
-    console.log("Track cues returning")
-    console.log(mappedCues)
-    console.log(mappedCues.length)
     return mappedCues
   }
 
