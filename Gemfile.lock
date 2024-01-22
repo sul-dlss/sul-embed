@@ -124,7 +124,7 @@ GEM
     crack (0.4.5)
       rexml
     crass (1.0.6)
-    cssbundling-rails (1.3.3)
+    cssbundling-rails (1.4.0)
       railties (>= 6.0.0)
     date (3.3.4)
     debug (1.9.1)
@@ -247,7 +247,7 @@ GEM
     okcomputer (1.18.5)
     package_json (0.1.0)
     parallel (1.24.0)
-    parser (3.3.0.4)
+    parser (3.3.0.5)
       ast (~> 2.4.1)
       racc
     propshaft (0.8.0)
@@ -366,7 +366,7 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
-    shakapacker (7.2.1)
+    shakapacker (7.2.2)
       activesupport (>= 5.2)
       package_json
       rack-proxy (>= 0.6.1)
