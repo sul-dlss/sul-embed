@@ -57,24 +57,26 @@ export default class extends Controller {
   // This function is only called on load
   checkCues() {
     if(videojs.browser.IS_ANY_SAFARI) {
-      const cuePromise = new Promise((resolve, reject) => {
-        // Change any disabled tracks to hidden mode to enable getting their cues
-        this.convertDisabledTracks()
-        // We need to wait before we check for cues, since they won't be immediately available
-        setTimeout(() => {
-          resolve(this.currentCues())
-        }, 200)
-      })
-      cuePromise.then((value) => {
-        // returns true if cues present and false if not
-        console.log("Promise returning value")
-        console.log(value)
-        return value
-      })
+      console.log("IS SAFARI - executing cues promise")
+      return this.cuesPromise()
     } else {
       // Carry on as usual if the browser isn't Safari
       return this.currentCues()
     }
+  }
+
+  async cuesPromise() {
+    console.log("cuesPromise method")
+    const cuePromise = new Promise((resolve, reject) => {
+      // Change any disabled tracks to hidden mode to enable getting their cues
+      this.convertDisabledTracks()
+      // We need to wait before we check for cues, since they won't be immediately available
+      setTimeout(() => {
+        console.log("Using the timeout before we retrieve the cues")
+        resolve(this.currentCues())
+      }, 200)
+    })
+    return await cuePromise
   }
 
   // Tracks may be of different kinds. 
