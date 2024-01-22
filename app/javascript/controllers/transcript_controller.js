@@ -17,13 +17,15 @@ export default class extends Controller {
   // by the 'loadeddata' event on the first track.  
   load() {
     // Handle Safari with special cue loading logic
-    if(! this.loaded && videojs.browser.IS_ANY_SAFARI) {
-      console.log("SAFARI detected, force load cues")
-      this.forceLoadCues()
-    }
+   //if(! this.loaded && videojs.browser.IS_ANY_SAFARI) {
+   //   console.log("SAFARI detected, force load cues")
+   //   this.forceLoadCues()
+   // }
     // Return if this method has already been called, there are no caption tracks
     // or no cues for the tracks
-    if (this.loaded || !this.currentCues()) 
+    //if (this.loaded || !this.currentCues()) 
+    if (this.loaded || !this.checkCues()) 
+
       return
 
     this.revealButton()
@@ -35,20 +37,36 @@ export default class extends Controller {
   // Safari cues require special handling, and disabled tracks may need extra time to load at first
   // We want the track cues to be available so we can properly generate the transcript sidebar language dropdown
   // if there is more than one language track
-  forceLoadCues() {
+  convertDisabledTracks() {
     const captions = this.player.remoteTextTracks()?.tracks_.filter(track => track.kind === 'captions')
     let hiddenTracks = false
     captions.forEach(track => {
       if (track.mode == 'disabled') {
         track.mode = 'hidden'
-        hiddenTracks = true
       }
     })
-    if(hiddenTracks) {
-      // If any tracks were set to hidden, allow a small amount of extra time to ensure loading
-      setTimeout(function() {
-        console.log("Hidden tracks is set to true")
-      }, 500)
+  }
+
+  // This function is only called on load
+  checkCues() {
+    if(videojs.browser.IS_ANY_SAFARI) {
+      const cuePromise = new Promise((resolve, reject) => {
+        // Change any disabled tracks to hidden mode to enable getting their cues
+        this.convertDisabledTracks()
+        // We need to wait before we check for cues, since they won't be immediately available
+        setTimeout(() => {
+          resolve(this.currentCues())
+        }, 200)
+      })
+      cuePromise.then((value) => {
+        // returns true if cues present and false if not
+        console.log("Promise returning value")
+        console.log(value)
+        return value
+      })
+    } else {
+      // Carry on as usual if the browser isn't Safari
+      return this.currentCues()
     }
   }
 
@@ -66,12 +84,13 @@ export default class extends Controller {
     const captions = tracks.filter(track => track.kind === 'captions')
 
     // For each caption track that is disabled, change the mode to hidden 
-    // to allow Safari to be able to pick up the cues for the track
-    captions.forEach(track => {
-      if (track.mode == 'disabled') {
-        track.mode = 'hidden'
-      }
-    })
+    // to allow Safari to be able to pick up the cues for the track/
+    // captionTracks is called multiple times and users may select and deselect
+    // captions in the video player itself. For Safari, we want to continue
+    // changing disabled mode to "hidden" to prevent losing cue information. 
+    if(videojs.browser.IS_ANY_SAFARI) {
+      this.convertDisabledTracks()
+    }
 
     // Return caption tracks that have associated cues
     return captions.filter(track => this.trackCues(track).length)
