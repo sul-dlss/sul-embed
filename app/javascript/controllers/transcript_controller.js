@@ -33,7 +33,6 @@ export default class extends Controller {
   // if there is more than one language track.
   convertDisabledTracks() {
     const captions = this.player.remoteTextTracks()?.tracks_.filter(track => track.kind === 'captions')
-    let hiddenTracks = false
     captions.forEach(track => {
       if (track.mode == 'disabled') {
         track.mode = 'hidden'
