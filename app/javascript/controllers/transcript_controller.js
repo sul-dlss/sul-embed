@@ -15,7 +15,7 @@ export default class extends Controller {
   // We can't load right away, because the VTT tracks may not have been parsed yet. 
   // This function is triggered by the 'media-data-loaded' event which is triggered
   // by the 'loadeddata' event on the first track.  
-  load() {
+ load() {
     // Handle Safari with special cue loading logic
    //if(! this.loaded && videojs.browser.IS_ANY_SAFARI) {
    //   console.log("SAFARI detected, force load cues")
@@ -24,7 +24,7 @@ export default class extends Controller {
     // Return if this method has already been called, there are no caption tracks
     // or no cues for the tracks
     //if (this.loaded || !this.currentCues()) 
-    if (this.loaded || !this.checkCues()) {
+    if (this.loaded || ! this.checkCues()) {
       if(this.loaded) {
         console.log("Loaded true")
       }
@@ -55,10 +55,10 @@ export default class extends Controller {
   }
 
   // This function is only called on load
-  checkCues() {
+  async checkCues() {
     if(videojs.browser.IS_ANY_SAFARI) {
       console.log("IS SAFARI - executing cues promise")
-      const cuesResponse = this.cuesPromise()
+      const cuesResponse = await this.cuesPromise()
       console.log("Cues response")
       console.log(cuesResponse)
       return cuesResponse
@@ -69,7 +69,7 @@ export default class extends Controller {
     }
   }
 
-  async cuesPromise() {
+  cuesPromise() {
     console.log("cuesPromise method")
     const cuePromise = new Promise((resolve, reject) => {
       // Change any disabled tracks to hidden mode to enable getting their cues
@@ -82,7 +82,7 @@ export default class extends Controller {
         resolve(this.currentCues())
       }, 3000)
     })
-    return await cuePromise
+    return cuePromise
   }
 
   // Tracks may be of different kinds. 
