@@ -58,7 +58,10 @@ export default class extends Controller {
   checkCues() {
     if(videojs.browser.IS_ANY_SAFARI) {
       console.log("IS SAFARI - executing cues promise")
-      return this.cuesPromise()
+      const cuesResponse = this.cuesPromise()
+      console.log("Cues response")
+      console.log(cuesResponse)
+      return cuesResponse
     } else {
       console.log("Not Safari")
       // Carry on as usual if the browser isn't Safari
@@ -113,6 +116,9 @@ export default class extends Controller {
     this.captionTracks.forEach(track => {
       // Retreive the cues for this track
       const list = this.trackCues(track)
+      console.log("CUES BY LANGUAGE")
+      console.log(track.language)
+      console.log(list)
       const cueStartTimes = list.length === 0 ? undefined : list.map((cue) => cue.startTime)
 
       cues[track.language] = {
