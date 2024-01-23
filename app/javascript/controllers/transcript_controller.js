@@ -80,7 +80,7 @@ export default class extends Controller {
         console.log("Using the timeout before we retrieve the cues")
         console.log(this.player.remoteTextTracks())
         resolve(this.currentCues())
-      }, 1000)
+      }, 3000)
     })
     return await cuePromise
   }
@@ -118,7 +118,10 @@ export default class extends Controller {
       const list = this.trackCues(track)
       console.log("CUES BY LANGUAGE")
       console.log(track.language)
+      console.log("cues list")
       console.log(list)
+      console.log("cues list length")
+      console.log(list.length)
       const cueStartTimes = list.length === 0 ? undefined : list.map((cue) => cue.startTime)
 
       cues[track.language] = {
