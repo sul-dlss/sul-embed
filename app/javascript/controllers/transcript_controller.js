@@ -15,12 +15,10 @@ export default class extends Controller {
   // We can't load right away, because the VTT tracks may not have been parsed yet. 
   // This function is triggered by the 'media-data-loaded' event which is triggered
   // by the 'loadeddata' event on the first track.  
- //async load() {
-  load() {
+  async load() {
     // Return if this method has already been called, there are no caption tracks
     // or no cues for the tracks
-    // if (this.loaded || !(await this.checkCues()))  
-    if (this.loaded || !this.currentCues())  
+    if (this.loaded || !(await this.checkCues()))  
       return
     
     this.revealButton()
@@ -42,7 +40,6 @@ export default class extends Controller {
     })
   }
 
-  /*
   // This function is only called on load
   async checkCues() {
     if(videojs.browser.IS_ANY_SAFARI) {
@@ -63,7 +60,6 @@ export default class extends Controller {
       }, 200)
     })
   }
-  */
 
   // Tracks may be of different kinds. 
   // Retrieve tracks that are of kind "caption" which also have associated cues
