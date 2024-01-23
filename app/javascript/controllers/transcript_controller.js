@@ -15,25 +15,76 @@ export default class extends Controller {
   // We can't load right away, because the VTT tracks may not have been parsed yet. 
   // This function is triggered by the 'media-data-loaded' event which is triggered
   // by the 'loadeddata' event on the first track.  
-  load() {
+  async load() {
     // Return if this method has already been called, there are no caption tracks
-    // or no cues for the tracks
-    if (this.loaded || !this.currentCues()) 
+    // or no cues for the tracks.  In the case of Safari, we need to wait to check,
+    // hence the async/await combination for checkCues.
+    if (this.loaded || !(await this.checkCues()))  
       return
-
+    
     this.revealButton()
     this.setupTranscriptLanguageSwitching()
     this.renderCues()
     this.loaded = true
   }
 
+  // Safari cues require special handling.
+  // We want the track cues to be available so we can properly generate the transcript sidebar language dropdown
+  // if there is more than one language track.
+  convertDisabledTracks() {
+    const captions = this.player.remoteTextTracks()?.tracks_.filter(track => track.kind === 'captions')
+    captions.forEach(track => {
+      if (track.mode === 'disabled') {
+        track.mode = 'hidden'
+      }
+    })
+  }
+
+  // This function is only called on load and allows us to check Safari in a custom way
+  async checkCues() {
+    if(videojs.browser.IS_ANY_SAFARI) {
+      return await this.cuesPromise()
+    } else {
+      // Carry on as usual if the browser isn't Safari
+      return this.currentCues()
+    }
+  }
+
+  // To enable tracks to be readable in Safari, we must change their mode to hidden and then wait
+  // before can check the cues.
+  cuesPromise() {
+    return new Promise((resolve, reject) => {
+      // Change any disabled tracks to hidden mode to enable getting their cues
+      this.convertDisabledTracks()
+      // We need to wait before we check for cues, since they won't be immediately available
+      setTimeout(() => {
+        resolve(this.currentCues())
+      }, 200)
+    })
+  }
+
   // Tracks may be of different kinds. 
   // Retrieve tracks that are of kind "caption" which also have associated cues
   get captionTracks() {
-    const tracks = this.player.textTracks_?.tracks_
+    // The documentation recommends using remoteTextTracks() instead of textTracks().
+    // Also, using this method allows the change to text track mode to 'hidden'
+    // to reveal the cues for text tracks in Safari, whereas directly using
+    // this.player.textTracks_ was not allowing for this change to take effect. 
+    const tracks = this.player.remoteTextTracks()?.tracks_
+    
     if (!tracks) return []
 
-    return tracks.filter(track => track.kind === 'captions' && this.trackCues(track).length)
+    const captions = tracks.filter(track => track.kind === 'captions')
+
+    // captionTracks is called multiple times and users may select and deselect
+    // captions in the video player itself. For Safari, we want to continue
+    // changing disabled mode to "hidden" to prevent losing cue information. 
+    if(videojs.browser.IS_ANY_SAFARI) {
+      this.convertDisabledTracks()
+    }
+
+    // Return caption tracks that have associated cues
+    return captions.filter(track => this.trackCues(track).length)
   }
 
   get cuesByLanguage() {
