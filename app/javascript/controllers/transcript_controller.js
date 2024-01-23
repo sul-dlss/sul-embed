@@ -60,6 +60,7 @@ export default class extends Controller {
       console.log("IS SAFARI - executing cues promise")
       return this.cuesPromise()
     } else {
+      console.log("Not Safari")
       // Carry on as usual if the browser isn't Safari
       return this.currentCues()
     }
@@ -70,11 +71,13 @@ export default class extends Controller {
     const cuePromise = new Promise((resolve, reject) => {
       // Change any disabled tracks to hidden mode to enable getting their cues
       this.convertDisabledTracks()
+      console.log("Converted disabled tracks")
       // We need to wait before we check for cues, since they won't be immediately available
       setTimeout(() => {
         console.log("Using the timeout before we retrieve the cues")
+        console.log(this.player.remoteTextTracks())
         resolve(this.currentCues())
-      }, 200)
+      }, 1000)
     })
     return await cuePromise
   }
