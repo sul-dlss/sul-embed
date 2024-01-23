@@ -15,16 +15,10 @@ export default class extends Controller {
   // We can't load right away, because the VTT tracks may not have been parsed yet. 
   // This function is triggered by the 'media-data-loaded' event which is triggered
   // by the 'loadeddata' event on the first track.  
- load() {
-    // Handle Safari with special cue loading logic
-   //if(! this.loaded && videojs.browser.IS_ANY_SAFARI) {
-   //   console.log("SAFARI detected, force load cues")
-   //   this.forceLoadCues()
-   // }
+ async load() {
     // Return if this method has already been called, there are no caption tracks
     // or no cues for the tracks
-    //if (this.loaded || !this.currentCues()) 
-    if (this.loaded || ! this.checkCues()) {
+    if (this.loaded || !(await this.checkCues())) {
       if(this.loaded) {
         console.log("Loaded true")
       }
@@ -71,7 +65,7 @@ export default class extends Controller {
 
   cuesPromise() {
     console.log("cuesPromise method")
-    const cuePromise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       // Change any disabled tracks to hidden mode to enable getting their cues
       this.convertDisabledTracks()
       console.log("Converted disabled tracks")
@@ -82,7 +76,6 @@ export default class extends Controller {
         resolve(this.currentCues())
       }, 3000)
     })
-    return cuePromise
   }
 
   // Tracks may be of different kinds. 
@@ -116,12 +109,6 @@ export default class extends Controller {
     this.captionTracks.forEach(track => {
       // Retreive the cues for this track
       const list = this.trackCues(track)
-      console.log("CUES BY LANGUAGE")
-      console.log(track.language)
-      console.log("cues list")
-      console.log(list)
-      console.log("cues list length")
-      console.log(list.length)
       const cueStartTimes = list.length === 0 ? undefined : list.map((cue) => cue.startTime)
 
       cues[track.language] = {
