@@ -17,7 +17,8 @@ export default class extends Controller {
   // by the 'loadeddata' event on the first track.  
   async load() {
     // Return if this method has already been called, there are no caption tracks
-    // or no cues for the tracks
+    // or no cues for the tracks.  In the case of Safari, we need to wait to check,
+    // hence the async/await combination for checkCues.
     if (this.loaded || !(await this.checkCues()))  
       return
     
@@ -27,9 +28,9 @@ export default class extends Controller {
     this.loaded = true
   }
 
-  // Safari cues require special handling, and disabled tracks may need extra time to load at first
+  // Safari cues require special handling.
   // We want the track cues to be available so we can properly generate the transcript sidebar language dropdown
-  // if there is more than one language track
+  // if there is more than one language track.
   convertDisabledTracks() {
     const captions = this.player.remoteTextTracks()?.tracks_.filter(track => track.kind === 'captions')
     let hiddenTracks = false
@@ -40,7 +41,7 @@ export default class extends Controller {
     })
   }
 
-  // This function is only called on load
+  // This function is only called on load and allows us to check Safari in a custom way
   async checkCues() {
     if(videojs.browser.IS_ANY_SAFARI) {
       return await this.cuesPromise()
@@ -50,6 +51,8 @@ export default class extends Controller {
     }
   }
 
+  // To enable tracks to be readable in Safari, we must change their mode to hidden and then wait
+  // before can check the cues.
   cuesPromise() {
     return new Promise((resolve, reject) => {
       // Change any disabled tracks to hidden mode to enable getting their cues
@@ -74,8 +77,6 @@ export default class extends Controller {
 
     const captions = tracks.filter(track => track.kind === 'captions')
 
-    // For each caption track that is disabled, change the mode to hidden 
-    // to allow Safari to be able to pick up the cues for the track/
     // captionTracks is called multiple times and users may select and deselect
     // captions in the video player itself. For Safari, we want to continue
     // changing disabled mode to "hidden" to prevent losing cue information. 
