@@ -34,7 +34,7 @@ export default class extends Controller {
   convertDisabledTracks() {
     const captions = this.player.remoteTextTracks()?.tracks_.filter(track => track.kind === 'captions')
     captions.forEach(track => {
-      if (track.mode == 'disabled') {
+      if (track.mode === 'disabled') {
         track.mode = 'hidden'
       }
     })
