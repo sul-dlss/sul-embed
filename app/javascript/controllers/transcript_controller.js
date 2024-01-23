@@ -18,17 +18,9 @@ export default class extends Controller {
  async load() {
     // Return if this method has already been called, there are no caption tracks
     // or no cues for the tracks
-    if (this.loaded || !(await this.checkCues())) {
-      if(this.loaded) {
-        console.log("Loaded true")
-      }
-      if(!this.checkCues()) {
-        console.log("NOT this check cues - this is returning false")
-        console.log("Retrieve current cues")
-        console.log(this.currentCues())
-      }
+    if (this.loaded || !(await this.checkCues()))  
       return
-    }
+    
     this.revealButton()
     this.setupTranscriptLanguageSwitching()
     this.renderCues()
@@ -51,30 +43,21 @@ export default class extends Controller {
   // This function is only called on load
   async checkCues() {
     if(videojs.browser.IS_ANY_SAFARI) {
-      console.log("IS SAFARI - executing cues promise")
-      const cuesResponse = await this.cuesPromise()
-      console.log("Cues response")
-      console.log(cuesResponse)
-      return cuesResponse
+      return await this.cuesPromise()
     } else {
-      console.log("Not Safari")
       // Carry on as usual if the browser isn't Safari
       return this.currentCues()
     }
   }
 
   cuesPromise() {
-    console.log("cuesPromise method")
     return new Promise((resolve, reject) => {
       // Change any disabled tracks to hidden mode to enable getting their cues
       this.convertDisabledTracks()
-      console.log("Converted disabled tracks")
       // We need to wait before we check for cues, since they won't be immediately available
       setTimeout(() => {
-        console.log("Using the timeout before we retrieve the cues")
-        console.log(this.player.remoteTextTracks())
         resolve(this.currentCues())
-      }, 3000)
+      }, 200)
     })
   }
 
