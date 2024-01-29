@@ -26,6 +26,13 @@ export default class extends Controller {
       if (result.authResponse.access_restrictions.stanford_restricted === true)
         window.dispatchEvent(new CustomEvent('auth-stanford-restricted'))
       window.dispatchEvent(new CustomEvent('auth-success'))
+
+      // In some cases, such as slow connections, auth-success is dispatched
+      // prior to the auth-success@window->media-player#initializeVideoJSPlayer
+      // action being bound and Video.js will never initialize.
+      // Track if we have already dispatched auth-success in each media tag.
+      this.authorizeableResourceTargets
+        .map((mediaTag) => mediaTag.dataset.authSuccessAlreadyDispatched = true)
     } else {
       const event = new CustomEvent('auth-denied', { detail: result.authResponse })
       window.dispatchEvent(event)

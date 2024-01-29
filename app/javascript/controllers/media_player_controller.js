@@ -2,6 +2,20 @@ import { Controller } from "@hotwired/stimulus"
 import videojs from 'video.js';
 
 export default class extends Controller {
+  connect() {
+    // See afterValidate in media_tag_controller. The auth check might have
+    // dispatched auth-success prior to Stimulus adding the binding for
+    // initializeVideoJSPlayer.
+    const authSuccessAlreadyDispatched = this.element.dataset.authSuccessAlreadyDispatched === "true"
+    if (!this.videoJSPlayerAlreadyInitialized() && authSuccessAlreadyDispatched) {
+      this.initializeVideoJSPlayer()
+    }
+  }
+
+  videoJSPlayerAlreadyInitialized() {
+    return this.element.classList.contains('video-js')
+  }
+
   initializeVideoJSPlayer() {
     this.element.classList.add('video-js', 'vjs-default-skin')
     this.player = videojs(this.element.id)
