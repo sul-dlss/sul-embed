@@ -20,7 +20,7 @@ gem 'dor-rights-auth'
 gem 'nokogiri', '>= 1.7.1'
 
 group :development, :test do
-  gem 'capybara'
+  gem 'capybara', '3.39.2'
   gem 'debug', platforms: %i[mri]
   gem 'druid-tools'
   gem 'factory_bot_rails', '~> 6.4'
