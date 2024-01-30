@@ -16,18 +16,12 @@ require 'view_component/system_test_helpers'
 # Capybara 3.40.0 started using the new chrome headless by default:
 # https://developer.chrome.com/docs/chromium/new-headless
 # We need a driver with the "--headless=old" argument until
-# tests work with "new".
+# our tests work with "new".
 Capybara.register_driver :selenium_chrome_headless_old do |app|
-  version = Capybara::Selenium::Driver.load_selenium
-  options_key = Capybara::Selenium::Driver::CAPS_VERSION.satisfied_by?(version) ? :capabilities : :options
-  browser_options = Selenium::WebDriver::Chrome::Options.new.tap do |opts|
-    opts.add_argument('--headless=old')
-    opts.add_argument('--disable-gpu') if Gem.win_platform?
-    # Workaround https://bugs.chromium.org/p/chromedriver/issues/detail?id=2650&q=load&sort=-id&colspec=ID%20Status%20Pri%20Owner%20Summary
-    opts.add_argument('--disable-site-isolation-trials')
-  end
-
-  Capybara::Selenium::Driver.new(app, **{ :browser => :chrome, options_key => browser_options })
+  browser_options = Selenium::WebDriver::Chrome::Options.new
+  browser_options.add_argument('--headless=old')
+  browser_options.add_argument('--disable-site-isolation-trials')
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
 end
 
 Capybara.javascript_driver = :selenium_chrome_headless_old
