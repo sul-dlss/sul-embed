@@ -13,7 +13,18 @@ require 'selenium-webdriver'
 require 'view_component/test_helpers'
 require 'view_component/system_test_helpers'
 
-Capybara.javascript_driver = :selenium_chrome_headless
+# Capybara 3.40.0 started using the new chrome headless by default:
+# https://developer.chrome.com/docs/chromium/new-headless
+# We need a driver with the "--headless=old" argument until
+# our tests work with "new".
+Capybara.register_driver :selenium_chrome_headless_old do |app|
+  browser_options = Selenium::WebDriver::Chrome::Options.new
+  browser_options.add_argument('--headless=old')
+  browser_options.add_argument('--disable-site-isolation-trials')
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
+end
+
+Capybara.javascript_driver = :selenium_chrome_headless_old
 Capybara.enable_aria_label = true
 Capybara.default_max_wait_time = ENV['CI'] ? 30 : 5
 
