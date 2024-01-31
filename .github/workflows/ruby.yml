@@ -19,6 +19,14 @@ jobs:
       with:
         ruby-version: ${{ matrix.ruby }}
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+    # Capybara has switched to the "new" headless chrome by default.
+    # https://developer.chrome.com/docs/chromium/new-headless
+    # Chrome on ubuntu-latest, currently 22.04, causes some tests to crash
+    # when using this option.
+    - name: Install Latest Chrome
+      uses: browser-actions/setup-chrome@v1
+      with:
+        chrome-version: 'latest'
     - uses: actions/setup-node@v3
       with:
         node-version: 18
