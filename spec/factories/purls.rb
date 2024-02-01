@@ -52,7 +52,7 @@ FactoryBot.define do
       type { 'geo' }
       bounding_box { [['-1.478794', '29.572742'], ['4.234077', '35.000308']] }
       public { true }
-      contents { [build(:resource, :file, files: [build(:resource_file, filename: 'data.zip'), build(:resource_file, filename: 'data_EPSG_4326.zip')]), build(:resource, :image)] }
+      contents { [build(:resource, :file, files: [build(:resource_file, :world_downloadable, filename: 'data.zip'), build(:resource_file, :world_downloadable, filename: 'data_EPSG_4326.zip')]), build(:resource, :image)] }
     end
 
     trait :media do

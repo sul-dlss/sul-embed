@@ -6,8 +6,12 @@ module Embed
   class GeoComponentPreview < ViewComponent::Preview
     layout 'preview/geo'
 
-    def public
-      render_viewer_for(url: 'https://purl.stanford.edu/bc843cm1713')
+    def public_raster
+      render_viewer_for(url: 'https://purl.stanford.edu/tg926kp6619')
+    end
+
+    def public_vector
+      render_viewer_for(url: 'https://purl.stanford.edu/cz128vq0535')
     end
 
     private

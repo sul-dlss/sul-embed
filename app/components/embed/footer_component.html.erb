@@ -12,6 +12,7 @@
 
     <% if viewer.show_download? %>
       <button
+        id='sul-embed-download-panel-toggle'
         class='sul-embed-footer-tool btn btn-toolbar sul-i-download-3'
         aria-expanded='false' aria-label='<%= download_file_label %>'
         data-sul-embed-toggle='sul-embed-download-panel'>
@@ -25,6 +26,20 @@
       <a class='sul-embed-footer-tool btn btn-toolbar sul-i-navigation-next-4'
         href="<%= external_url %>" target='_parent'>
         <span class='sul-embed-sr-only'><%= external_url_text %></span>
+      </a>
+    <% end %>
+
+    <% if viewer.display_download_all? %>
+      <a id='sul-embed-footer-download-all' href='<%= viewer.download_url %>' target="_blank" rel="noopener noreferrer nofollow" data-controller="download" data-action="click->download#download">
+        <button class='sul-embed-footer-tool btn btn-toolbar sul-i-download-3' aria-label="download all files">
+          Download all <%= pluralize(viewer.purl_object.downloadable_files.length, "file") %>
+          (<%= viewer.pretty_filesize(viewer.purl_object.size) %>)
+          <% if viewer.any_stanford_only_files? %>
+            <span class="sul-embed-location-restricted-text sul-embed-stanford-only-text" aria-label="restricted to stanford">
+              <span class="sul-embed-text-hide"> Stanford only </span>
+            </span>
+          <% end %>
+        </button>
       </a>
     <% end %>
 

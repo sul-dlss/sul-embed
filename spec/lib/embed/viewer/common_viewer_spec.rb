@@ -69,4 +69,36 @@ RSpec.describe Embed::Viewer::CommonViewer do
       expect(file_viewer.iframe_title).to eq 'File viewer'
     end
   end
+
+  describe '#any_stanford_only_files' do
+    subject { file_viewer.any_stanford_only_files? }
+
+    before do
+      allow(Embed::Purl).to receive(:find).and_return(purl)
+    end
+
+    let(:purl) { build(:purl) }
+
+    context 'when one or more files are stanford only' do
+      let(:purl) do
+        build(:purl, contents: [build(:resource, :file, files: [build(:resource_file, :stanford_only)])])
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context 'when no files are stanford only' do
+      let(:purl) do
+        build(:purl, contents: [build(:resource, :file, files: [build(:resource_file)])])
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe '#download_url' do
+    subject { file_viewer.download_url }
+
+    it { is_expected.to eq 'https://stacks.stanford.edu/object/abc123' }
+  end
 end

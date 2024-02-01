@@ -26,6 +26,20 @@ module Embed
         nil
       end
 
+      def any_stanford_only_files?
+        @purl_object.all_resource_files.any?(&:stanford_only?)
+      end
+
+      # indicates if viewer should display the Download All link in footer (override in specific viewer classes)
+      def display_download_all?
+        false
+      end
+
+      # link that will download all of the files in this object
+      def download_url
+        "#{Settings.stacks_url}/object/#{@purl_object.druid}"
+      end
+
       def stylesheet
         "#{purl_object.type}.css"
       end
