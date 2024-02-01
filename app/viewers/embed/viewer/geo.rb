@@ -40,6 +40,13 @@ module Embed
         index_map.present?
       end
 
+      # Returns true or false whether the viewer should display the Download All
+      # link. True for all geo objects, unless there is only one file
+      # (because the file download link will suffice for that)
+      def display_download_all?
+        @purl_object.downloadable_files.length > 1
+      end
+
       def external_url
         "#{Settings.geo_external_url}#{@embed_request.object_druid}"
       end

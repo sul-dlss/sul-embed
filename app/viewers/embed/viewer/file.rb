@@ -64,14 +64,6 @@ module Embed
           @purl_object.downloadable_files.length < 3000
       end
 
-      def any_stanford_only_files?
-        @purl_object.all_resource_files.any?(&:stanford_only?)
-      end
-
-      def download_url
-        "#{Settings.stacks_url}/object/#{@purl_object.druid}"
-      end
-
       private
 
       def default_height
