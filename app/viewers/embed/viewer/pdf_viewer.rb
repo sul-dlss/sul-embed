@@ -41,6 +41,11 @@ module Embed
         document_resource_files.first&.downloadable?
       end
 
+      # The heading shown in the Content List of the CompanionWindowComponent
+      def content_heading
+        'Contents'
+      end
+
       private
 
       def document_resource_files
