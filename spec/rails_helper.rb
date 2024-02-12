@@ -13,17 +13,6 @@ require 'selenium-webdriver'
 require 'view_component/test_helpers'
 require 'view_component/system_test_helpers'
 
-# Capybara 3.40.0 started using the new chrome headless by default:
-# https://developer.chrome.com/docs/chromium/new-headless
-# Their default selenium_chrome_headless driver definition includes
-# --disable-site-isolation-trials. Some embed tests will crash Chrome with
-# that option.
-Capybara.register_driver :selenium_chrome_headless do |app|
-  browser_options = Selenium::WebDriver::Chrome::Options.new
-  browser_options.add_argument('--headless=new')
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: browser_options)
-end
-
 Capybara.javascript_driver = :selenium_chrome_headless
 Capybara.enable_aria_label = true
 Capybara.default_max_wait_time = ENV['CI'] ? 30 : 5
