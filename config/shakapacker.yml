@@ -50,7 +50,9 @@ development:
 
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:
-    https: false
+    # For running dev server with https, set `server: https`.
+    # server: https
+
     host: localhost
     port: 3035
     # Hot Module Replacement updates modules while the application is running without a full reload
