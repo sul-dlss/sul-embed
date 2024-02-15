@@ -147,9 +147,9 @@ module Embed
           end
 
           http_response.body
-        rescue Faraday::ConnectionFailed, Faraday::TimeoutError
-          nil
         end
+    rescue Faraday::ConnectionFailed, Faraday::TimeoutError
+      raise Purl::ResourceNotAvailable, "Resource unavailable #{purl_json_url} (connection error)"
     end
   end
 end

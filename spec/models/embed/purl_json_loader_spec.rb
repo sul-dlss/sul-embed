@@ -102,6 +102,16 @@ RSpec.describe Embed::PurlJsonLoader do
         expect { data }.to raise_error Embed::Purl::ResourceNotAvailable
       end
     end
+
+    context 'when the response from Purl times out' do
+      before do
+        stub_request(:get, 'https://purl.stanford.edu/12345.json').to_timeout
+      end
+
+      it 'raises an error' do
+        expect { data }.to raise_error Embed::Purl::ResourceNotAvailable
+      end
+    end
   end
 
   describe '#etag' do
