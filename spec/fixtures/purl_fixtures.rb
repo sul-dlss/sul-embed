@@ -1,4 +1,6 @@
-module PurlFixtures
+# frozen_string_literal: true
+
+module PurlFixtures # rubocop:disable Metrics/ModuleLength
   def access_discover_world
     <<-XML
       <access type="discover">
@@ -8,6 +10,7 @@ module PurlFixtures
       </access>
     XML
   end
+
   def access_read_world
     <<-XML
       <access type="read">
@@ -75,6 +78,37 @@ module PurlFixtures
 
           ]
         }
+      }
+    JSON
+  end
+
+  def collection_purl_json
+    <<~JSON
+      {
+        "cocinaVersion": "0.91.2",
+        "type": "https://cocina.sul.stanford.edu/models/collection",
+        "externalIdentifier": "druid:pp183ft6543",
+        "label": "captioned media",
+        "version": 2,
+        "access": {
+          "view": "world"
+        },
+        "administrative": {
+          "hasAdminPolicy": "druid:wr739gs6131"
+        },
+        "description": {
+          "title": [
+            {
+              "value": "Captioned media",
+              "status": "primary"
+            }
+          ],
+          "purl": "https://sul-purl-stage.stanford.edu/pp183ft6543"
+        },
+        "identification": { },
+        "created": "2023-10-20T22:06:02.000+00:00",
+        "modified": "2023-10-20T22:25:27.000+00:00",
+        "lock": "druid:pp183ft6543="
       }
     JSON
   end
@@ -233,7 +267,7 @@ module PurlFixtures
   end
 
   def geo_purl_public_xml
-     <<-XML
+    <<-XML
       <publicObject id="druid:cz128vq0535" published="2018-07-20T20:56:19Z">
         <identityMetadata>
           <objectLabel>Geo Title</objectLabel>
