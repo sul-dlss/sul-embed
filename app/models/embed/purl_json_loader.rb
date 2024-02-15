@@ -90,7 +90,8 @@ module Embed
     end
 
     def contents
-      json.dig('structural', 'contains').map do |file_set_json|
+      # NOTE: collections don't have structural.contains
+      Array(json.dig('structural', 'contains')).map do |file_set_json|
         Purl::ResourceJsonDeserializer.new(@druid, file_set_json).deserialize
       end
     end
