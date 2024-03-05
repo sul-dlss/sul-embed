@@ -87,7 +87,7 @@ RSpec.describe 'geo viewer', :js do
                            build(:resource, :file, files: [
                                    build(:resource_file, filename: 'data.zip'),
                                    build(:resource_file, filename: 'data_EPSG_4326.zip'),
-                                   build(:resource_file, druid: 'ts545zc6250', filename: 'index_map.json')
+                                   build(:resource_file, druid: 'ts545zc6250', filename:)
                                  ]),
                            build(:resource, :image)
                          ])
@@ -97,17 +97,35 @@ RSpec.describe 'geo viewer', :js do
       visit_iframe_response 'ts545zc6250'
     end
 
-    describe 'loads viewer' do
-      it 'shows the geojson' do
-        # This is a hack, but there is no other way (that we know of) to
-        # find this svg element on the page.
-        # We also need to explicitly wait for the JS to run.
-        expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
-        expect(page).to have_css '[data-index-map="https://stacks.stanford.edu/file/druid:ts545zc6250/index_map.json"]'
-        # only count paths within .leaflet-overlay-pane for testing
-        # (page.body contains SVG logos we don't care to count)
-        find '.leaflet-overlay-pane'
-        expect(Nokogiri::HTML.parse(page.body).search('.leaflet-overlay-pane').css('path').length).to eq 480
+    context 'when index_map.json' do
+      let(:filename) { 'index_map.json' }
+
+      describe 'loads viewer' do
+        it 'shows the geojson' do
+          # This is a hack, but there is no other way (that we know of) to
+          # find this svg element on the page.
+          # We also need to explicitly wait for the JS to run.
+          expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
+          expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/druid:ts545zc6250/#{filename}\"]"
+          # only count paths within .leaflet-overlay-pane for testing
+          # (page.body contains SVG logos we don't care to count)
+          find '.leaflet-overlay-pane'
+          expect(Nokogiri::HTML.parse(page.body).search('.leaflet-overlay-pane').css('path').length).to eq 480
+        end
+      end
+    end
+
+    context 'when index_map.geojson' do
+      let(:filename) { 'index_map.geojson' }
+
+      describe 'loads viewer' do
+        it 'lists the geojson' do
+          # This is a hack, but there is no other way (that we know of) to
+          # find this svg element on the page.
+          # We also need to explicitly wait for the JS to run.
+          expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
+          expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/druid:ts545zc6250/#{filename}\"]"
+        end
       end
     end
   end

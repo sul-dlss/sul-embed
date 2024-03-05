@@ -33,7 +33,7 @@ module Embed
       end
 
       def index_map
-        purl_object.contents.map(&:files).flatten.find { |file| file.title == 'index_map.json' }
+        purl_object.contents.map(&:files).flatten.find { |file| index_map_files.include? file.title }
       end
 
       def index_map?
@@ -56,6 +56,10 @@ module Embed
       end
 
       private
+
+      def index_map_files
+        %w[index_map.geojson index_map.json]
+      end
 
       def default_height
         493
