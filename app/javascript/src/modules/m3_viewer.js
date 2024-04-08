@@ -43,7 +43,7 @@ export default {
             'https://embed.stanford.edu/iframe?url=https://purl.stanford.edu/$1',
           ],
         },
-        dragAndDropInfoLink: 'https://library.stanford.edu/projects/international-image-interoperability-framework/viewers',
+        dragAndDropInfoLink: 'https://iiif.io',
         shareLink: {
           enabled: true,
           manifestIdReplacePattern: [
