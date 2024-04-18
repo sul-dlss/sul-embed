@@ -13,8 +13,8 @@ pin_all_from "app/javascript/file_controllers", under: "file_controllers"
 # pin "modules/embed_this", to: "app/javascript/src/modules/embed_this.js"
 pin_all_from 'app/javascript/src', under: 'src', to: 'src'
 
-pin "video.js", to: "https://ga.jspm.io/npm:video.js@8.11.8/dist/video.es.js"
-pin "@babel/runtime/helpers/extends", to: "https://ga.jspm.io/npm:@babel/runtime@7.24.0/helpers/esm/extends.js"
+pin "video.js", to: "https://ga.jspm.io/npm:video.js@8.12.0/dist/video.es.js"
+pin "@babel/runtime/helpers/extends", to: "https://ga.jspm.io/npm:@babel/runtime@7.24.4/helpers/esm/extends.js"
 pin "@videojs/vhs-utils/es/byte-helpers", to: "https://ga.jspm.io/npm:@videojs/vhs-utils@4.1.0/es/byte-helpers.js"
 pin "@videojs/vhs-utils/es/containers", to: "https://ga.jspm.io/npm:@videojs/vhs-utils@4.1.0/es/containers.js"
 pin "@videojs/vhs-utils/es/decode-b64-to-uint8-array", to: "https://ga.jspm.io/npm:@videojs/vhs-utils@4.1.0/es/decode-b64-to-uint8-array.js"
