@@ -58,6 +58,7 @@ module Embed
       url[/\w*$/]
     end
 
+    # @return [Embed::Purl]
     def purl_object
       @purl_object ||= Purl.find(object_druid)
     end

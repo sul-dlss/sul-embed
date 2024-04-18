@@ -82,6 +82,37 @@ module PurlFixtures # rubocop:disable Metrics/ModuleLength
     JSON
   end
 
+  def virtual_object_purl_json
+    <<~JSON
+      {
+        "type": "https://cocina.sul.stanford.edu/models/object",
+        "label": "File Title",
+        "description": {
+          "title": [
+            {
+              "value": "File Title"
+            }
+          ]
+        },
+        "access": {
+          "view": "world",
+          "download": "world",
+          "license": "https://creativecommons.org/publicdomain/mark/1.0/"
+        },
+        "structural": {
+          "contains": [],
+          "hasMemberOrders": [
+            {
+              "members": [
+                "druid:kq126jw7402"
+              ]
+            }
+          ]
+        }
+      }
+    JSON
+  end
+
   def collection_purl_json
     <<~JSON
       {
