@@ -5,6 +5,8 @@ module Embed
     attr_reader :request
 
     delegate :height, :width, to: :viewer
+
+    # @param [Embed::Request] request
     def initialize(request)
       @request = request
     end

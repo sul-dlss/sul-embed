@@ -90,9 +90,24 @@ module Embed
     end
 
     def contents
-      # NOTE: collections don't have structural.contains
+      # NOTE: collections don't have structural
+      return [] unless json['structural']
+
       Array(json.dig('structural', 'contains')).map do |file_set_json|
         Purl::ResourceJsonDeserializer.new(@druid, file_set_json).deserialize
+      end + external_resources(Array(json.dig('structural', 'hasMemberOrders', 0, 'members')))
+    end
+
+    def external_resources(identifiers)
+      identifiers.map do |identifier|
+        druid = identifier.delete_prefix('druid:')
+        component = Embed::Purl.find(druid)
+        Purl::Resource.new(
+          druid:,
+          type: component.type,
+          description: component.title,
+          files: []
+        )
       end
     end
 

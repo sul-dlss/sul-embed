@@ -63,6 +63,19 @@ RSpec.describe Embed::PurlJsonLoader do
         end
       end
 
+      context 'with a virtual object' do
+        let(:json) { virtual_object_purl_json }
+        let(:associate) { Embed::Purl.new }
+
+        before do
+          allow(Embed::Purl).to receive(:find).with('kq126jw7402').and_return(associate)
+        end
+
+        it 'has contents' do
+          expect(data[:contents].first.druid).to eq 'kq126jw7402'
+        end
+      end
+
       describe 'license' do
         context 'with a creative commons license' do
           let(:json) { file_purl_json }

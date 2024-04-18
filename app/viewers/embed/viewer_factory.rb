@@ -2,6 +2,7 @@
 
 module Embed
   class ViewerFactory
+    # @param [Embed::Request] request
     def initialize(embed_request)
       @embed_request = embed_request
       raise Embed::Purl::ResourceNotEmbeddable unless embed_request.purl_object.valid?
