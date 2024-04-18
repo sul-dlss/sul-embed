@@ -6,6 +6,7 @@ require:
   - rubocop-rails
   - rubocop-performance
   - rubocop-rspec
+  - rubocop-rspec_rails
   - rubocop-factory_bot
 
 AllCops:
@@ -369,11 +370,11 @@ FactoryBot/ConsistentParenthesesStyle: # new in 2.14
   Enabled: true
 FactoryBot/SyntaxMethods: # new in 2.7
   Enabled: true
-RSpec/Rails/AvoidSetupHook: # new in 2.4
+RSpecRails/AvoidSetupHook: # new in 2.4
   Enabled: true
-RSpec/Rails/HaveHttpStatus: # new in 2.12
+RSpecRails/HaveHttpStatus: # new in 2.12
   Enabled: true
-RSpec/Rails/InferredSpecType: # new in 2.14
+RSpecRails/InferredSpecType: # new in 2.14
   Enabled: true
 Gemspec/DevelopmentDependencies: # new in 1.44
   Enabled: true
@@ -455,11 +456,11 @@ RSpec/RedundantAround: # new in 2.19
   Enabled: true
 RSpec/SkipBlockInsideExample: # new in 2.19
   Enabled: true
-RSpec/Rails/MinitestAssertions: # new in 2.17
+RSpecRails/MinitestAssertions: # new in 2.17
   Enabled: true
-RSpec/Rails/NegationBeValid: # new in 2.23
+RSpecRails/NegationBeValid: # new in 2.23
   Enabled: true
-RSpec/Rails/TravelAround: # new in 2.19
+RSpecRails/TravelAround: # new in 2.19
   Enabled: true
 Rails/DangerousColumnNames: # new in 2.21
   Enabled: true
@@ -490,4 +491,30 @@ RSpec/SpecFilePathFormat: # new in 2.24
 RSpec/SpecFilePathSuffix: # new in 2.24
   Enabled: true
 Style/SingleLineDoEndBlock: # new in 1.57
+  Enabled: true
+Lint/ItWithoutArgumentsInBlock: # new in 1.59
+  Enabled: true
+Lint/LiteralAssignmentInCondition: # new in 1.58
+  Enabled: true
+Style/MapIntoArray: # new in 1.63
+  Enabled: true
+Style/SuperWithArgsParentheses: # new in 1.58
+  Enabled: true
+Capybara/RedundantWithinFind: # new in 2.20
+  Enabled: true
+Rails/EnvLocal: # new in 2.22
+  Enabled: true
+FactoryBot/ExcessiveCreateList: # new in 2.25
+  Enabled: true
+RSpec/EmptyOutput: # new in 2.29
+  Enabled: true
+RSpec/IsExpectedSpecify: # new in 2.27
+  Enabled: true
+RSpec/RedundantPredicateMatcher: # new in 2.26
+  Enabled: true
+RSpec/RemoveConst: # new in 2.26
+  Enabled: true
+RSpec/RepeatedSubjectCall: # new in 2.27
+  Enabled: true
+RSpec/UndescriptiveLiteralsDescription: # new in 2.29
   Enabled: true
