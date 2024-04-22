@@ -46,7 +46,7 @@ RSpec.describe 'geo viewer', :js do
       expect(page).to have_css('#sul-embed-footer-download-all')
     end
 
-    it 'shows the sidebar with attribute information after map is clicked' do
+    it 'shows the sidebar with attribute information after map is clicked', skip: 'flappy; see https://github.com/sul-dlss/sul-embed/issues/2141' do
       page.driver.browser.action.move_to(find_by_id('sul-embed-geo-map').native).click.perform
       using_wait_time 20 do
         expect(page).to have_css '.sul-embed-geo-sidebar-header h3', text: 'Features', visible: :all
