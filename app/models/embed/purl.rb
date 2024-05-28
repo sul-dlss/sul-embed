@@ -26,12 +26,8 @@ module Embed
 
     # @param [String] druid a druid without a namespace (e.g. "sx925dc9385")
     def self.find(druid)
-      loader = loader_class.new(druid)
+      loader = PurlJsonLoader.new(druid)
       new(etag: loader.etag, last_modified: loader.last_modified, **loader.load)
-    end
-
-    def self.loader_class
-      Settings.enabled_features.cocina ? PurlJsonLoader : PurlXmlLoader
     end
 
     # @returns [Bool] does this have any resources that can be embeded?
