@@ -2,32 +2,27 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   tests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby: ['3.2', '3.3']
+        ruby: ["3.2", "3.3"]
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby }}
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 18
-    - name: Run tests (with XML)
-      run: bin/rake
-      env:
-        RAILS_ENV: test
-    - name: Run tests (with Cocina)
-      run: bin/rake
-      env:
-        SETTINGS__ENABLED_FEATURES__COCINA: true
-        RAILS_ENV: test
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Run tests
+        run: bin/rake
+        env:
+          RAILS_ENV: test
