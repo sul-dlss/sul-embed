@@ -63,6 +63,12 @@ module Embed
       "#{Settings.purl_url}/#{@druid}"
     end
 
+    def first_collection_url
+      return if collections.blank?
+
+      "#{Settings.purl_url}/#{collections.first}"
+    end
+
     def manifest_json_url
       "#{Settings.purl_url}/#{druid}/iiif/manifest"
     end
