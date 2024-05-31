@@ -4,6 +4,7 @@ export default class extends Controller {
   static targets = ["container", "loginPanel", "messagePanel", "loginButton", "loginMessage"]
 
   resources = {} // Hash of messageIds to resources
+  firstFile = '' // for multiple files we need to be able to render the first on load
 
   addPostCallbackListener() {
     window.addEventListener("message", (event) => {
@@ -27,7 +28,7 @@ export default class extends Controller {
     const document = evt.detail
     const canvases = document.items
     this.addPostCallbackListener()
-    canvases.flatMap((canvas) => {
+    const resources = canvases.flatMap((canvas) => {
       const annotationPages = canvas.items
       return annotationPages.flatMap((annotationPage) => {
         const paintingAnnotations = annotationPage.items.filter((annotation) => annotation.motivation === "painting")
@@ -38,6 +39,7 @@ export default class extends Controller {
         })
       })
     })
+    this.firstFile = resources[0]['id']
   }
 
   // Try to render the resource, checks for any required authorization and shows login window if needed
@@ -59,7 +61,9 @@ export default class extends Controller {
   // Render the resource by sending an event to stimulus reflex; the relevant content type component must catch this
   // event, and call a method for that partcular content type (e.g. pdf/media) that knows how to render content
   renderViewer(file_uri) {
-    window.dispatchEvent(new CustomEvent('auth-success', { detail: file_uri }))
+    if (file_uri == this.firstFile){
+      window.dispatchEvent(new CustomEvent('auth-success', { detail: file_uri }))
+    }
   }
 
   /**
