@@ -33,5 +33,9 @@ export default class extends Controller {
     evt.preventDefault()
     const file_uri = evt.currentTarget.dataset.url
     window.dispatchEvent(new CustomEvent('auth-success', { detail: file_uri }))
+    if (document.querySelector('.active')){
+      document.querySelector('.active').classList.remove('active')
+    }
+    evt.target.parentElement.classList.add('active')
   }
 }
