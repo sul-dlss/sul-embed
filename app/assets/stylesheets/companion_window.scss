@@ -396,7 +396,7 @@
 
     --thumb-height: 75px;
 
-    .media-thumb {
+    .media-thumb, .file-thumb {
       list-style-type: none;
       border: 1px solid gray;
       margin-bottom: 0.5rem;
@@ -453,6 +453,12 @@
         width: 130px;
         text-align: left;
       }
+    }
+
+    .file-thumb {
+      height: auto!important;
+      padding: .5rem;
+      text-align: left;
     }
   }
 }
