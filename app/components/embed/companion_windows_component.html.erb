@@ -32,7 +32,9 @@
       </nav>
 
       <div class="inner">
-        <section id="about" role="tabpanel">
+        <%# If render_content_list_panel? is true, show 'object-content' by default on load
+            Otherwise show 'about' as the default. %> 
+        <section id="about" role="tabpanel" <%= 'hidden' if render_content_list_panel? %>>
           <div class="header-background">
             <h3>About this item</h3>
           </div>
@@ -40,7 +42,7 @@
         </section>
 
         <% if render_content_list_panel? %>
-          <section id="object-content" role="tabpanel" hidden>
+          <section id="object-content" role="tabpanel">
             <%= render ContentListComponent.new(viewer:, heading: viewer.content_heading) %>
           </section>
         <% end %>

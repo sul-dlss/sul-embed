@@ -1,6 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+  connect() {
+    // make the object-content tab active by default if it exists
+    if (this.element.attributes['aria-controls'].value === 'object-content') {
+      this.switch()
+    }
+  }
+
   switch() {
     this.#deactivate(this.#currentlyActiveButton())
     this.#makeActive(this.element)
