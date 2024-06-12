@@ -7,20 +7,29 @@ export default class extends Controller {
                      "downloadModal", "accessibility", "modalComponentsPopover"]
   connect() {
     this.element.hidden = false
+    // Open the drawer on load
+    this.openLeftDrawer()
     EmbedThis.init();
   }
 
   toggleLeft() {
-    const classList = this.leftDrawerTarget.classList
-    if (classList.contains('open')) {
-      classList.remove('open')
-      setTimeout(() => {
-        this.leftDrawerTarget.style.visibility = 'hidden' // remove from accessability tree
-      }, 500)
+    if (this.leftDrawerTarget.classList.contains('open')) {
+      this.closeLeftDrawer()
     } else {
-      this.leftDrawerTarget.style.visibility = ''
-      classList.add('open')
+      this.openLeftDrawer()
     }
+  }
+
+  openLeftDrawer() {
+    this.leftDrawerTarget.classList.add('open')
+    this.leftDrawerTarget.style.visibility = ''
+  }
+
+  closeLeftDrawer() {
+    this.leftDrawerTarget.classList.remove('open')
+    setTimeout(() => {
+      this.leftDrawerTarget.style.visibility = 'hidden' // remove from accessability tree
+    }, 500)
   }
 
   openModalComponentsPopover() {

@@ -40,22 +40,36 @@ RSpec.describe 'Media viewer', :js do
   context 'with multiple A/V files' do
     # The ajax request that displays the video does not fire in this context
     # so we are checking for a non-visible video in the first case (even though it should be visible)
-    it 'displays the viewer' do
-      click_on 'Display sidebar'
-      within 'aside.open' do
-        expect(page).to have_content 'About this item'
-        click_on 'Content'
-        expect(page).to have_content 'Media content'
-        expect(page).to have_css('.media-thumb', count: 3)
 
+    # the object-content panel and tab are selected by default
+    it 'selects the object-content tab by default' do
+      within '.vert-tabs' do
+        expect(page).to have_css('button[aria-selected="true"][aria-controls="object-content"]')
+      end
+    end
+
+    it 'displays the viewer' do
+      within 'aside.open' do
+        # object-content is the default tab; the other 2 are present but hidden
+        expect(find_by_id('object-content')).to be_visible
+        expect(page).to have_css('#about', visible: :hidden)
+        expect(page).to have_css('#rights', visible: :hidden)
+
+        expect(page).to have_css('.media-thumb', count: 3)
         # It indicates that one of the files is Stanford only
         expect(page).to have_css('.sul-embed-thumb-stanford-only', text: /Second Video$/)
-
         # One is restricted
         expect(page).to have_css('.sul-embed-location-restricted-text', text: '(Restricted)')
         expect(page).to have_css('.media-thumb', text: '(Restricted) First Video')
+
+        # switch to the "About this item" tab
+        click_on 'About this item'
+        expect(find_by_id('about')).to be_visible
+        expect(page).to have_css('#object-content', visible: :hidden)
+
+        # switch to the "Rights" tab
         click_on 'Use and reproduction'
-        expect(page).to have_content 'Rights'
+        expect(find_by_id('rights')).to be_visible
       end
 
       click_on 'Display sidebar'
@@ -77,7 +91,6 @@ RSpec.describe 'Media viewer', :js do
     it 'includes a previewable image as a top level object' do
       expect(page).to have_css('div .osd', visible: :hidden)
 
-      click_on 'Display sidebar'
       within 'aside.open' do
         click_on 'Content'
 
@@ -100,7 +113,6 @@ RSpec.describe 'Media viewer', :js do
     end
 
     it 'truncates at 45 characters of combined restriction and title text' do
-      click_on 'Display sidebar'
       within 'aside' do
         click_on 'Content'
         expect(page).to have_css('.media-thumb', text: /^\(Restricted\) The First Video Has An Overly Lo…$/)
