@@ -47,7 +47,7 @@ module Embed
           mimetype: @file.fetch('hasMimeType'),
           size: @file.fetch('size'),
           role: @file['use'],
-          language: @file['language'],
+          language: @file['languageTag'],
           filename:,
           stanford_only:,
           location_restricted:,
