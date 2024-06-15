@@ -475,4 +475,561 @@ module PurlFixtures # rubocop:disable Metrics/ModuleLength
       }
     JSON
   end
+
+  def pdf_public_json
+    <<~JSON
+    {
+      "cocinaVersion": "0.75.0",
+      "type": "https://cocina.sul.stanford.edu/models/document",
+      "externalIdentifier": "druid:sq929fn8035",
+      "label": "Fantasia Apocalyptica musical score (manuscript) : Four trumpets. Chapter 8",
+      "version": 5,
+      "access": {
+        "view": "world",
+        "download": "world",
+        "controlledDigitalLending": false,
+        "copyright": "Copyright (c) The Board of Trustees of the Leland Stanford Junior University. All rights reserved.",
+        "useAndReproductionStatement": "The materials are open for research use and may be used freely for non-commercial purposes with an attribution. For commercial permission requests, please contact the Stanford University Archives (universityarchives@stanford.edu)."
+      },
+      "administrative": {
+        "hasAdminPolicy": "druid:vk498gk9921",
+        "releaseTags": [
+          {
+            "who": "dhartwig",
+            "what": "collection",
+            "date": "2018-09-04T19:11:27.000+00:00",
+            "to": "Searchworks",
+            "release": true
+          }
+        ]
+      },
+      "description": {
+        "title": [
+          {
+            "structuredValue": [
+              {
+                "structuredValue": [],
+                "parallelValue": [],
+                "groupedValue": [],
+                "value": "Fantasia Apocalyptica musical score (manuscript)",
+                "type": "main title",
+                "identifier": [],
+                "note": [],
+                "appliesTo": []
+              },
+              {
+                "structuredValue": [],
+                "parallelValue": [],
+                "groupedValue": [],
+                "value": "Four trumpets",
+                "type": "subtitle",
+                "identifier": [],
+                "note": [],
+                "appliesTo": []
+              },
+              {
+                "structuredValue": [],
+                "parallelValue": [],
+                "groupedValue": [],
+                "value": "Chapter 8",
+                "type": "part number",
+                "identifier": [],
+                "note": [],
+                "appliesTo": []
+              }
+            ],
+            "parallelValue": [],
+            "groupedValue": [],
+            "identifier": [],
+            "note": [],
+            "appliesTo": []
+          }
+        ],
+        "contributor": [
+          {
+            "name": [
+              {
+                "structuredValue": [],
+                "parallelValue": [],
+                "groupedValue": [],
+                "value": "Knuth, Donald Ervin, 1938-",
+                "uri": "http://id.loc.gov/authorities/names/n79135509",
+                "identifier": [],
+                "source": {
+                  "code": "naf",
+                  "uri": "http://id.loc.gov/authorities/names/",
+                  "note": []
+                },
+                "note": [],
+                "appliesTo": []
+              }
+            ],
+            "type": "person",
+            "status": "primary",
+            "role": [
+              {
+                "structuredValue": [],
+                "parallelValue": [],
+                "groupedValue": [],
+                "value": "Composer",
+                "code": "cmp",
+                "uri": "http://id.loc.gov/vocabulary/relators/cmp",
+                "identifier": [],
+                "source": {
+                  "code": "marcrelator",
+                  "uri": "http://id.loc.gov/vocabulary/relators/",
+                  "note": []
+                },
+                "note": [],
+                "appliesTo": []
+              }
+            ],
+            "identifier": [],
+            "note": [],
+            "parallelContributor": []
+          }
+        ],
+        "event": [
+          {
+            "structuredValue": [],
+            "type": "production",
+            "displayLabel": "Place of creation",
+            "date": [
+              {
+                "structuredValue": [],
+                "parallelValue": [],
+                "groupedValue": [],
+                "value": "2018-08-08",
+                "type": "creation",
+                "status": "primary",
+                "encoding": {
+                  "code": "w3cdtf",
+                  "note": []
+                },
+                "identifier": [],
+                "note": [],
+                "appliesTo": []
+              }
+            ],
+            "contributor": [],
+            "location": [
+              {
+                "structuredValue": [],
+                "parallelValue": [],
+                "groupedValue": [],
+                "value": "Piteå (Sweden)",
+                "code": "sw",
+                "uri": "http://id.loc.gov/authorities/names/n80162583",
+                "identifier": [],
+                "source": {
+                  "code": "marccountry",
+                  "uri": "http://id.loc.gov/authorities/names/",
+                  "note": []
+                },
+                "note": [],
+                "appliesTo": []
+              }
+            ],
+            "identifier": [],
+            "note": [],
+            "parallelEvent": []
+          }
+        ],
+        "form": [
+          {
+            "structuredValue": [],
+            "parallelValue": [],
+            "groupedValue": [],
+            "value": "scores",
+            "type": "genre",
+            "uri": "http://vocab.getty.edu/aat/300026427",
+            "identifier": [],
+            "source": {
+              "code": "aat",
+              "uri": "http://vocab.getty.edu/aat",
+              "note": []
+            },
+            "note": [],
+            "appliesTo": []
+          },
+          {
+            "structuredValue": [],
+            "parallelValue": [],
+            "groupedValue": [],
+            "value": "text",
+            "type": "resource type",
+            "identifier": [],
+            "source": {
+              "value": "MODS resource types",
+              "note": []
+            },
+            "note": [],
+            "appliesTo": []
+          },
+          {
+            "structuredValue": [],
+            "parallelValue": [],
+            "groupedValue": [],
+            "value": "manuscripts",
+            "type": "form",
+            "uri": "http://vocab.getty.edu/aat/300028569",
+            "identifier": [],
+            "source": {
+              "code": "aat",
+              "uri": "http://vocab.getty.edu/aat",
+              "note": []
+            },
+            "note": [],
+            "appliesTo": []
+          },
+          {
+            "structuredValue": [],
+            "parallelValue": [],
+            "groupedValue": [],
+            "value": "access",
+            "type": "reformatting quality",
+            "identifier": [],
+            "source": {
+              "value": "MODS reformatting quality terms",
+              "note": []
+            },
+            "note": [],
+            "appliesTo": []
+          },
+          {
+            "structuredValue": [],
+            "parallelValue": [],
+            "groupedValue": [],
+            "value": "application/pdf",
+            "type": "media type",
+            "identifier": [],
+            "source": {
+              "value": "IANA media types",
+              "note": []
+            },
+            "note": [],
+            "appliesTo": []
+          },
+          {
+            "structuredValue": [],
+            "parallelValue": [],
+            "groupedValue": [],
+            "value": "1 text file",
+            "type": "extent",
+            "identifier": [],
+            "note": [],
+            "appliesTo": []
+          },
+          {
+            "structuredValue": [],
+            "parallelValue": [],
+            "groupedValue": [],
+            "value": "reformatted digital",
+            "type": "digital origin",
+            "identifier": [],
+            "source": {
+              "value": "MODS digital origin terms",
+              "note": []
+            },
+            "note": [],
+            "appliesTo": []
+          }
+        ],
+        "geographic": [],
+        "language": [
+          {
+            "appliesTo": [],
+            "code": "eng",
+            "groupedValue": [],
+            "note": [],
+            "parallelValue": [],
+            "source": {
+              "code": "iso639-2b",
+              "uri": "http://id.loc.gov/vocabulary/iso639-2",
+              "note": []
+            },
+            "structuredValue": [],
+            "uri": "http://id.loc.gov/vocabulary/iso639-2/eng",
+            "value": "English"
+          }
+        ],
+        "note": [
+          {
+            "structuredValue": [],
+            "parallelValue": [],
+            "groupedValue": [],
+            "value": "Fantasia Apocalyptica is a multimedia work for pipe organ, accompanied by several video tracks. It can be regarded as a somewhat literal translation of the Biblical book of Revelation into music.",
+            "identifier": [],
+            "displayLabel": "Abstract",
+            "note": [],
+            "appliesTo": []
+          }
+        ],
+        "identifier": [],
+        "subject": [
+          {
+            "structuredValue": [],
+            "parallelValue": [],
+            "groupedValue": [],
+            "value": "Apocalypse in music",
+            "type": "topic",
+            "uri": "http://id.loc.gov/authorities/subjects/sh2011005782",
+            "identifier": [],
+            "source": {
+              "code": "lcsh",
+              "uri": "http://id.loc.gov/authorities/subjects/",
+              "note": []
+            },
+            "note": [],
+            "appliesTo": []
+          }
+        ],
+        "access": {
+          "url": [],
+          "physicalLocation": [
+            {
+              "structuredValue": [],
+              "parallelValue": [],
+              "groupedValue": [],
+              "value": "SC0097",
+              "type": "shelf locator",
+              "identifier": [],
+              "note": [],
+              "appliesTo": []
+            }
+          ],
+          "digitalLocation": [],
+          "accessContact": [
+            {
+              "structuredValue": [],
+              "parallelValue": [],
+              "groupedValue": [],
+              "value": "Stanford University. Libraries. Department of Special Collections and University Archives",
+              "type": "repository",
+              "uri": "http://id.loc.gov/authorities/names/no2014019980",
+              "identifier": [],
+              "source": {
+                "code": "naf",
+                "note": []
+              },
+              "note": [],
+              "valueLanguage": {
+                "code": "eng",
+                "note": [],
+                "source": {
+                  "code": "iso639-2b",
+                  "note": []
+                },
+                "valueScript": {
+                  "code": "Latn",
+                  "note": [],
+                  "source": {
+                    "code": "iso15924",
+                    "note": []
+                  }
+                }
+              },
+              "appliesTo": []
+            }
+          ],
+          "digitalRepository": [],
+          "note": []
+        },
+        "relatedResource": [
+          {
+            "type": "part of",
+            "displayLabel": "Finding Aid",
+            "title": [
+              {
+                "structuredValue": [],
+                "parallelValue": [],
+                "groupedValue": [],
+                "value": "Donald E. Knuth Papers (SC0097)",
+                "identifier": [],
+                "note": [],
+                "appliesTo": []
+              }
+            ],
+            "contributor": [],
+            "event": [],
+            "form": [],
+            "language": [],
+            "note": [],
+            "identifier": [],
+            "subject": [],
+            "access": {
+              "url": [
+                {
+                  "structuredValue": [],
+                  "parallelValue": [],
+                  "groupedValue": [],
+                  "value": "https://oac.cdlib.org/findaid/ark:/13030/kt2k4035s1/",
+                  "identifier": [],
+                  "note": [],
+                  "appliesTo": []
+                }
+              ],
+              "physicalLocation": [],
+              "digitalLocation": [],
+              "accessContact": [],
+              "digitalRepository": [],
+              "note": []
+            },
+            "relatedResource": []
+          },
+          {
+            "type": "in series",
+            "displayLabel": "2018-132",
+            "title": [
+              {
+                "structuredValue": [],
+                "parallelValue": [],
+                "groupedValue": [],
+                "value": "Accession",
+                "identifier": [],
+                "note": [],
+                "appliesTo": []
+              }
+            ],
+            "contributor": [],
+            "event": [],
+            "form": [],
+            "language": [],
+            "note": [],
+            "identifier": [],
+            "subject": [],
+            "relatedResource": []
+          }
+        ],
+        "marcEncodedData": [],
+        "adminMetadata": {
+          "contributor": [
+            {
+              "name": [
+                {
+                  "structuredValue": [],
+                  "parallelValue": [],
+                  "groupedValue": [],
+                  "code": "CSt",
+                  "uri": "http://id.loc.gov/vocabulary/organizations/cst",
+                  "identifier": [],
+                  "source": {
+                    "code": "marcorg",
+                    "uri": "http://id.loc.gov/vocabulary/organizations",
+                    "note": []
+                  },
+                  "note": [],
+                  "appliesTo": []
+                }
+              ],
+              "type": "organization",
+              "role": [
+                {
+                  "structuredValue": [],
+                  "parallelValue": [],
+                  "groupedValue": [],
+                  "value": "original cataloging agency",
+                  "identifier": [],
+                  "note": [],
+                  "appliesTo": []
+                }
+              ],
+              "identifier": [],
+              "note": [],
+              "parallelContributor": []
+            }
+          ],
+          "event": [],
+          "language": [
+            {
+              "appliesTo": [],
+              "code": "eng",
+              "groupedValue": [],
+              "note": [],
+              "parallelValue": [],
+              "source": {
+                "code": "iso639-2b",
+                "uri": "http://id.loc.gov/vocabulary/iso639-2",
+                "note": []
+              },
+              "status": "primary",
+              "structuredValue": [],
+              "uri": "http://id.loc.gov/vocabulary/iso639-2/eng",
+              "value": "English"
+            }
+          ],
+          "note": [
+            {
+              "structuredValue": [],
+              "parallelValue": [],
+              "groupedValue": [],
+              "value": "human prepared",
+              "type": "record origin",
+              "identifier": [],
+              "note": [],
+              "appliesTo": []
+            }
+          ],
+          "metadataStandard": [],
+          "identifier": []
+        },
+        "purl": "https://purl.stanford.edu/sq929fn8035"
+      },
+      "identification": {
+        "catalogLinks": [],
+        "sourceId": "sul:SC0097_2018-123_FA_ms_08"
+      },
+      "structural": {
+        "contains": [
+          {
+            "type": "https://cocina.sul.stanford.edu/models/resources/document",
+            "externalIdentifier": "https://cocina.sul.stanford.edu/fileSet/sq929fn8035-sq929fn8035_1",
+            "label": "File 1",
+            "version": 4,
+            "structural": {
+              "contains": [
+                {
+                  "type": "https://cocina.sul.stanford.edu/models/file",
+                  "externalIdentifier": "https://cocina.sul.stanford.edu/file/sq929fn8035-sq929fn8035_1/SC0097_2018-123_FA_ms_08.pdf",
+                  "label": "SC0097_2018-123_FA_ms_08.pdf",
+                  "filename": "SC0097_2018-123_FA_ms_08.pdf",
+                  "size": 12150692,
+                  "version": 4,
+                  "hasMimeType": "application/pdf",
+                  "hasMessageDigests": [
+                    {
+                      "type": "sha1",
+                      "digest": "dd2ff01460fb2e1d8d0aaba542c243317da07e69"
+                    },
+                    {
+                      "type": "md5",
+                      "digest": "7e0c891151af86c47b5abe2028cb0d50"
+                    }
+                  ],
+                  "access": {
+                    "view": "world",
+                    "download": "world",
+                    "controlledDigitalLending": false
+                  },
+                  "administrative": {
+                    "publish": true,
+                    "sdrPreserve": true,
+                    "shelve": true
+                  }
+                }
+              ]
+            }
+          }
+        ],
+        "hasMemberOrders": [],
+        "isMemberOf": [
+          "druid:yz684ny6367"
+        ]
+      },
+      "created": "2023-01-24T00:45:39.000+00:00",
+      "modified": "2023-01-24T00:45:39.000+00:00",
+      "lock": "druid:sq929fn8035=0"
+    }
+    JSON
+  end
 end
