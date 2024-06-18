@@ -100,8 +100,6 @@ GEM
       capistrano-bundler (>= 1.4)
     capistrano-bundler (2.1.0)
       capistrano (~> 3.1)
-    capistrano-one_time_key (0.1.0)
-      capistrano (~> 3.0)
     capistrano-passenger (0.2.1)
       capistrano (~> 3.0)
     capistrano-rails (1.6.3)
@@ -133,11 +131,10 @@ GEM
       reline (>= 0.3.8)
     deep_merge (1.2.2)
     diff-lcs (1.5.1)
-    dlss-capistrano (4.4.1)
+    dlss-capistrano (5.0.3)
       bcrypt_pbkdf
       capistrano (~> 3.0)
       capistrano-bundle_audit (>= 0.3.0)
-      capistrano-one_time_key
       capistrano-shared_configs
       ed25519
     dor-rights-auth (1.8.0)
@@ -145,7 +142,7 @@ GEM
     drb (2.2.1)
     druid-tools (3.0.0)
     ed25519 (1.3.0)
-    erubi (1.12.0)
+    erubi (1.13.0)
     factory_bot (6.4.6)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.4.3)
@@ -162,7 +159,7 @@ GEM
       activesupport (>= 6.1)
     hashdiff (1.1.0)
     high_voltage (4.0.0)
-    honeybadger (5.11.1)
+    honeybadger (5.12.0)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.0.1)
@@ -170,7 +167,7 @@ GEM
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
     io-console (0.7.2)
-    irb (1.13.1)
+    irb (1.13.2)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.7.2)
@@ -193,7 +190,7 @@ GEM
     mutex_m (0.2.0)
     net-http (0.4.1)
       uri
-    net-imap (0.4.12)
+    net-imap (0.4.13)
       date
       net-protocol
     net-pop (0.1.2)
@@ -209,15 +206,15 @@ GEM
     net-ssh (7.2.3)
     newrelic_rpm (9.10.2)
     nio4r (2.7.3)
-    nokogiri (1.16.5)
+    nokogiri (1.16.6)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    nokogiri (1.16.5-x86_64-linux)
+    nokogiri (1.16.6-x86_64-linux)
       racc (~> 1.4)
     okcomputer (1.18.5)
     package_json (0.1.0)
     parallel (1.25.1)
-    parser (3.3.2.0)
+    parser (3.3.3.0)
       ast (~> 2.4.1)
       racc
     propshaft (0.9.0)
@@ -227,11 +224,11 @@ GEM
       railties (>= 7.0.0)
     psych (5.1.2)
       stringio
-    public_suffix (5.0.5)
+    public_suffix (5.1.1)
     puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.8.0)
-    rack (3.0.11)
+    rack (3.1.3)
     rack-proxy (0.7.7)
       rack
     rack-session (2.0.0)
@@ -275,9 +272,9 @@ GEM
     rdoc (6.7.0)
       psych (>= 4.0.0)
     regexp_parser (2.9.2)
-    reline (0.5.8)
+    reline (0.5.9)
       io-console (~> 0.5)
-    rexml (3.2.9)
+    rexml (3.3.0)
       strscan
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
@@ -285,7 +282,7 @@ GEM
       rspec-mocks (~> 3.13.0)
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
-    rspec-expectations (3.13.0)
+    rspec-expectations (3.13.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-mocks (3.13.1)
@@ -315,9 +312,9 @@ GEM
       parser (>= 3.3.1.0)
     rubocop-capybara (2.21.0)
       rubocop (~> 1.41)
-    rubocop-factory_bot (2.26.0)
-      rubocop (~> 1.41)
-    rubocop-performance (1.21.0)
+    rubocop-factory_bot (2.26.1)
+      rubocop (~> 1.61)
+    rubocop-performance (1.21.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
     rubocop-rails (2.25.0)
@@ -325,13 +322,11 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-rspec (2.31.0)
-      rubocop (~> 1.40)
-      rubocop-capybara (~> 2.17)
-      rubocop-factory_bot (~> 2.22)
-      rubocop-rspec_rails (~> 2.28)
-    rubocop-rspec_rails (2.29.0)
-      rubocop (~> 1.40)
+    rubocop-rspec (3.0.1)
+      rubocop (~> 1.61)
+    rubocop-rspec_rails (2.30.0)
+      rubocop (~> 1.61)
+      rubocop-rspec (~> 3, >= 3.0.1)
     ruby-progressbar (1.13.0)
     rubyzip (2.3.2)
     selenium-webdriver (4.21.1)
@@ -354,7 +349,7 @@ GEM
       net-ssh (>= 2.8.0)
     stimulus-rails (1.3.3)
       railties (>= 6.0.0)
-    stringio (3.1.0)
+    stringio (3.1.1)
     strscan (3.1.0)
     thor (1.3.1)
     timeout (0.4.1)
@@ -377,7 +372,7 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.6.15)
+    zeitwerk (2.6.16)
 
 PLATFORMS
   ruby
@@ -413,9 +408,12 @@ DEPENDENCIES
   rspec
   rspec-rails
   rubocop (~> 1.53)
+  rubocop-capybara
+  rubocop-factory_bot
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  rubocop-rspec_rails
   selenium-webdriver (~> 4.2)
   shakapacker (~> 7.0)
   stimulus-rails (~> 1.3)
@@ -423,4 +421,4 @@ DEPENDENCIES
   webmock (~> 3.19)
 
 BUNDLED WITH
-   2.3.24
+   2.5.13
