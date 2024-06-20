@@ -16,6 +16,8 @@ RSpec.describe 'PDF Viewer', :js do
     end
 
     it 'has working panels' do
+      skip 'native PDF viewer does not show panels' unless Settings.enabled_features.legacy_pdf_viewer
+
       expect(page).to have_css('.sul-embed-metadata-panel', visible: :all)
       within '.sul-embed-footer-toolbar' do
         first('button').click
@@ -28,7 +30,7 @@ RSpec.describe 'PDF Viewer', :js do
     let(:purl) { build(:purl, :document_no_download) }
 
     it 'renders the PDF viewer for documents with restriction message' do
-      expect(page).to have_css('.sul-embed-pdf')
+      expect(page).to have_css('.sul-embed-pdf') if Settings.enabled_features.legacy_pdf_viewer
       expect(page).to have_content('This item cannot be accessed online')
     end
   end
