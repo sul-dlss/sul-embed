@@ -1,10 +1,14 @@
 <%= render Embed::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth') do |component| %>
   <% component.with_header_button do %>
+    <%# chromium has a bug preventing the esc key from exiting full screen in some situations, see
+        https://issues.chromium.org/issues/40131988 and https://github.com/sul-dlss/sul-embed/issues/2162 %>
+    <% unless component.requested_by_chromium? %>
       <button
         aria-label="Full screen"
         class="btn sul-i-expand-1 sul-fullscreen-button"
         id="full-screen-button">
       </button>
+    <% end %>
   <% end %>
   <% component.with_body do %>
     <div class="sul-embed-body" style="width: 100%">

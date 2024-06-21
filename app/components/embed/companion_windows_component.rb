@@ -31,5 +31,12 @@ module Embed
 
       true
     end
+
+    def requested_by_chromium?
+      user_agent_str = request.headers['User-Agent']
+      return true if user_agent_str.match(%r{Chrome/\d+}) || user_agent_str.match(%r{Edg/\d+})
+
+      false
+    end
   end
 end
