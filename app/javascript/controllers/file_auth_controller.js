@@ -63,6 +63,12 @@ export default class extends Controller {
   renderViewer(file_uri) {
     if (file_uri == this.firstFile){
       window.dispatchEvent(new CustomEvent('auth-success', { detail: file_uri }))
+      // use filename because url in contents adds druid: to the data-url
+      const filename = file_uri.split("/").slice(-1)[0]
+      const content_item = document.querySelector(`[data-url*="${filename}"]`)
+      if (content_item){
+        content_item.parentElement.classList.add('active')
+      }
     }
   }
 
