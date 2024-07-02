@@ -1,73 +1,92 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["container", "loginPanel", "messagePanel", "loginButton", "loginMessage"]
+  static targets = [
+    "container",
+    "loginPanel",
+    "messagePanel",
+    "loginButton",
+    "loginMessage",
+  ];
 
-  resources = {} // Hash of messageIds to resources
-  firstFile = '' // for multiple files we need to be able to render the first on load
+  resources = {}; // Hash of messageIds to resources
+  firstFile = ""; // for multiple files we need to be able to render the first on load
 
   addPostCallbackListener() {
-    window.addEventListener("message", (event) => {
-      this.iframe.remove()
-      console.log("Post message", event.data)
-      if (event.origin !== "https://stacks.stanford.edu" && event.origin !== "https://sul-stacks-stage.stanford.edu") return;
-      if (event.data.type === "AuthAccessTokenError2") {
-        this.displayAccessTokenError(event.data)
-      } else {
-        this.cacheToken(event.data.accessToken, event.data.expiresIn)
-        this.queryProbeService(event.data.messageId, event.data.accessToken)
-          .then((contentResourceId) => this.renderViewer(contentResourceId))
-          .catch((json) => console.error("no access", json))
-      }
-    }, false)
+    window.addEventListener(
+      "message",
+      (event) => {
+        this.iframe.remove();
+        console.debug("Post message", event.data);
+        if (
+          event.origin !== "https://stacks.stanford.edu" &&
+          event.origin !== "https://sul-stacks-stage.stanford.edu"
+        )
+          return;
+        if (event.data.type === "AuthAccessTokenError2") {
+          this.displayAccessTokenError(event.data);
+        } else {
+          this.cacheToken(event.data.accessToken, event.data.expiresIn);
+          this.queryProbeService(event.data.messageId, event.data.accessToken)
+            .then((contentResourceId) => this.renderViewer(contentResourceId))
+            .catch((json) => console.error("no access", json));
+        }
+      },
+      false,
+    );
   }
 
   // iterate over all files in the IIIF manifest and try to draw them
   // this method is called by stimulus reflex in the content type component after the IIIF manifest is loaded
   parseFiles(evt) {
-    const document = evt.detail
-    const canvases = document.items
-    this.addPostCallbackListener()
+    const document = evt.detail;
+    const canvases = document.items;
+    this.addPostCallbackListener();
     const resources = canvases.flatMap((canvas) => {
-      const annotationPages = canvas.items
+      const annotationPages = canvas.items;
       return annotationPages.flatMap((annotationPage) => {
-        const paintingAnnotations = annotationPage.items.filter((annotation) => annotation.motivation === "painting")
+        const paintingAnnotations = annotationPage.items.filter(
+          (annotation) => annotation.motivation === "painting",
+        );
         return paintingAnnotations.map((annotation) => {
-          const contentResource = annotation.body
-          this.maybeDrawContentResource(contentResource)
-          return contentResource
-        })
-      })
-    })
-    this.firstFile = resources[0]['id']
+          const contentResource = annotation.body;
+          this.maybeDrawContentResource(contentResource);
+          return contentResource;
+        });
+      });
+    });
+    this.firstFile = resources[0]["id"];
   }
 
   // Try to render the resource, checks for any required authorization and shows login window if needed
   maybeDrawContentResource(contentResource) {
-    console.log("Now figure out if we can render", contentResource)
     if (!contentResource.service) {
       // no auth service is present, just render the resource
-      this.renderViewer(contentResource.id)
+      this.renderViewer(contentResource.id);
     } else {
       // auth service is present, check the probe service to see what we need to do to access the resource
-      const probeService = contentResource.service.find((service) => service.type === "AuthProbeService2")
+      const probeService = contentResource.service.find(
+        (service) => service.type === "AuthProbeService2",
+      );
       if (probeService)
-        this.checkAuthorization(probeService, contentResource.id)
+        this.checkAuthorization(probeService, contentResource.id);
       else
-        throw(`Access service exists, but no probe service found for ${contentResource.id}`)
+        throw `Access service exists, but no probe service found for ${contentResource.id}`;
     }
   }
 
   // Render the resource by sending an event to stimulus reflex; the relevant content type component must catch this
   // event, and call a method for that partcular content type (e.g. pdf/media) that knows how to render content
   renderViewer(file_uri) {
-    if (file_uri == this.firstFile){
-      window.dispatchEvent(new CustomEvent('auth-success', { detail: file_uri }))
+    if (file_uri == this.firstFile) {
+      window.dispatchEvent(
+        new CustomEvent("auth-success", { detail: file_uri }),
+      );
       // use filename because url in contents adds druid: to the data-url
-      const filename = file_uri.split("/").slice(-1)[0]
-      const content_item = document.querySelector(`[data-url*="${filename}"]`)
-      if (content_item){
-        content_item.parentElement.classList.add('active')
+      const filename = file_uri.split("/").slice(-1)[0];
+      const content_item = document.querySelector(`[data-url*="${filename}"]`);
+      if (content_item) {
+        content_item.parentElement.classList.add("active");
       }
     }
   }
@@ -78,27 +97,27 @@ export default class extends Controller {
    * @param {number} expiresIn - The number of seconds until the token ceases to be valid.
    */
   cacheToken(accessToken, expiresIn) {
-    console.log("Storing token in cache")
+    console.debug("Storing token in cache");
     // Get a Date that is expiresIn seconds in the future.
-    const expires = new Date(new Date().getTime() + expiresIn * 1000)
-    localStorage.setItem('accessToken', JSON.stringify({ accessToken, expires }))
+    const expires = new Date(new Date().getTime() + expiresIn * 1000);
+    localStorage.setItem(
+      "accessToken",
+      JSON.stringify({ accessToken, expires }),
+    );
   }
 
   // Try to find a cached token in local storage
   getCachedToken() {
-    const json = localStorage.getItem('accessToken')
-    console.log("Cached token is ", json)
-    if (!json)
-      return
+    const json = localStorage.getItem("accessToken");
+    console.debug("Cached token is ", json);
+    if (!json) return;
     try {
-      const { accessToken, expires } = JSON.parse(json)
-      if (new Date() < new Date(expires))
-        return accessToken
-      else
-        console.log("Cached token expired", expires)
+      const { accessToken, expires } = JSON.parse(json);
+      if (new Date() < new Date(expires)) return accessToken;
+      else console.debug("Cached token expired", expires);
     } catch {
       // Clear out any broken storage
-      localStorage.clear()
+      localStorage.clear();
     }
   }
 
@@ -109,11 +128,11 @@ export default class extends Controller {
   checkAuthorization(probeService, contentResourceId) {
     // We're going to make the assumption that calling the probe without a token is going to fail.
     // So we'll just get the token first.
-    console.log(probeService)
-    const accessService = this.findAccessService(probeService)
+    console.debug("Probe service", probeService);
+    const accessService = this.findAccessService(probeService);
 
-    const messageId = Math.random().toString(36).slice(2) // create a random key for this resource to reference later
-    this.resources[messageId] = { probeService, contentResourceId }
+    const messageId = Math.random().toString(36).slice(2); // create a random key for this resource to reference later
+    this.resources[messageId] = { probeService, contentResourceId };
 
     // First we check the probe service for the resource.  If probe service indicates no restrictions,
     // then the resource is shown.  If the probe service indicates access is denied/restricted, we
@@ -125,131 +144,149 @@ export default class extends Controller {
       .then((contentResourceId) => this.renderViewer(contentResourceId))
       .catch((json) => {
         // TODO: deal with media authentication if we abandon media specific auth controllers
-        if (json.status == 302) return // media file probe requests return a 302 instead of a 200
-                                       // wuth a link to the media server file location (and media token)
-                                       // and this can happen with a non-media object that happens to have
-                                       // a media file in it, e.g. ds777pr3860
-        console.log("Probe failed or access denied/restricted", json)
+        if (json.status == 302) return; // media file probe requests return a 302 instead of a 200
+        // wuth a link to the media server file location (and media token)
+        // and this can happen with a non-media object that happens to have
+        // a media file in it, e.g. ds777pr3860
+        console.debug("Probe failed or access denied/restricted", json);
         // Check if non-expired token already exists in local storage,
         // and if it exists, query probe service with it
-        const token = this.getCachedToken()
+        const token = this.getCachedToken();
         if (token) {
           this.queryProbeService(messageId, token)
             .then((contentResourceId) => this.renderViewer(contentResourceId))
             .catch((json) => {
-              console.log("Probe with cached token failed", json)
-              this.queryAccessService(accessService, messageId)
-            })
+              console.debug("Probe with cached token failed", json);
+              this.queryAccessService(accessService, messageId);
+            });
         } else {
-          console.log("No cached token found")
-          this.queryAccessService(accessService, messageId)
+          console.debug("No cached token found");
+          this.queryAccessService(accessService, messageId);
         }
-      })
+      });
   }
 
   // query the accessService to see if a login is needed first; else just request a token
   queryAccessService(accessService, messageId) {
     if (accessService.profile === "active") {
-      this.loginNeeded(accessService, messageId)
+      this.loginNeeded(accessService, messageId);
     } else {
-      this.initiateTokenRequest(accessService, messageId)
+      this.initiateTokenRequest(accessService, messageId);
     }
   }
 
   // locate the access service for this resource
   findAccessService(probeService) {
-    const accessService = probeService.service.find((service) => service.type === "AuthAccessService2")
+    const accessService = probeService.service.find(
+      (service) => service.type === "AuthAccessService2",
+    );
 
-    if (!accessService)
-      throw(`No access service found`)
+    if (!accessService) throw `No access service found`;
 
-    return accessService
+    return accessService;
   }
 
   // locate the token service for this access service
   findTokenService(accessService) {
-    const tokenService = accessService.service.find((service) => service.type === "AuthAccessTokenService2")
-    if (!tokenService)
-      throw(`No token service found`)
+    const tokenService = accessService.service.find(
+      (service) => service.type === "AuthAccessTokenService2",
+    );
+    if (!tokenService) throw `No token service found`;
 
-    return tokenService
+    return tokenService;
   }
 
   // An error occurred obtaining a token
   displayAccessTokenError(accessTokenError) {
-    console.error("There was an error getting the token", accessTokenError)
-    alert("An authentication error occurred. You may not be able to view content at this time.")
-    const resource = this.resources[accessTokenError.messageId]
-    const activeAccessService = this.findAccessService(resource.probeService)
-    this.loginNeeded(activeAccessService, accessTokenError.messageId)
+    console.error("There was an error getting the token", accessTokenError);
+    alert(
+      "An authentication error occurred. You may not be able to view content at this time.",
+    );
+    const resource = this.resources[accessTokenError.messageId];
+    const activeAccessService = this.findAccessService(resource.probeService);
+    this.loginNeeded(activeAccessService, accessTokenError.messageId);
   }
 
   // Query the probe service (and add a token if available)
   // NOTE: Token is optional
   queryProbeService(messageId, token) {
-    const resource = this.resources[messageId]
-    console.log("Trying probe service with ", token)
-    const headers = {}
+    const resource = this.resources[messageId];
+    console.debug("Trying probe service with ", token);
+    const headers = {};
     if (token) {
-      headers['Authorization'] = `Bearer ${token}`
+      headers["Authorization"] = `Bearer ${token}`;
     }
-    const contentResourceId = resource.contentResourceId
+    const contentResourceId = resource.contentResourceId;
     return fetch(resource.probeService.id, { headers })
       .then((response) => response.json())
-      .then((json) => new Promise((resolve, reject) => json.status === 200 ? resolve(contentResourceId) : reject(json)))
+      .then(
+        (json) =>
+          new Promise((resolve, reject) =>
+            json.status === 200 ? resolve(contentResourceId) : reject(json),
+          ),
+      );
   }
 
   // Fetch a token for the provided resource
   initiateTokenRequest(accessService, messageId) {
-    const tokenService = this.findTokenService(accessService)
+    const tokenService = this.findTokenService(accessService);
 
-    this.iframe = document.createElement('iframe')
-    this.iframe.src = `${tokenService.id}?messageId=${messageId}&origin=${window.origin}`
-    console.log(`Creating iframe for ${tokenService.id}`)
-    document.body.appendChild(this.iframe)
+    this.iframe = document.createElement("iframe");
+    this.iframe.src = `${tokenService.id}?messageId=${messageId}&origin=${window.origin}`;
+    console.debug(`Creating iframe for ${tokenService.id}`);
+    document.body.appendChild(this.iframe);
   }
 
   // Show login message and link provided by auth service
   loginNeeded(activeAccessService, messageId) {
-    if (!this.loginPanelTarget.hidden) return // no action needed if the login window is already there
+    if (!this.loginPanelTarget.hidden) return; // no action needed if the login window is already there
 
-    this.messagePanelTarget.hidden = true
-    this.loginPanelTarget.hidden = false
-    this.loginButtonTarget.innerHTML = activeAccessService.confirmLabel.en[0]
-    this.loginButtonTarget.setAttribute('data-file-auth-messageId-param', messageId)
-    this.loginButtonTarget.setAttribute('data-file-auth-url-param', activeAccessService.id)
-    this.loginMessageTarget.innerHTML = activeAccessService.label.en[0]
+    this.messagePanelTarget.hidden = true;
+    this.loginPanelTarget.hidden = false;
+    this.loginButtonTarget.innerHTML = activeAccessService.confirmLabel.en[0];
+    this.loginButtonTarget.setAttribute(
+      "data-file-auth-messageId-param",
+      messageId,
+    );
+    this.loginButtonTarget.setAttribute(
+      "data-file-auth-url-param",
+      activeAccessService.id,
+    );
+    this.loginMessageTarget.innerHTML = activeAccessService.label.en[0];
   }
 
   // Open the login page in a new window and then poll to see if the auth credentials are now active.
   // This method is triggered by stimulus reflex when the user clicks the login button rendered by `loginNeeded`
   login(evt) {
-    this.loginPanelTarget.hidden = true
+    this.loginPanelTarget.hidden = true;
     const windowReference = window.open(evt.params.url);
     let loginStart = Date.now();
-    console.log("window reference", windowReference)
+    console.debug("window reference", windowReference);
     let checkWindow = setInterval(() => {
-      console.log("in interval", (Date.now() - loginStart))
-      if ((Date.now() - loginStart) < 30000 &&
-        (!windowReference || !windowReference.closed)) return;
+      console.debug("in interval", Date.now() - loginStart);
+      if (
+        Date.now() - loginStart < 30000 &&
+        (!windowReference || !windowReference.closed)
+      )
+        return;
 
       clearInterval(checkWindow);
       // once the window is closed we can initiate the token request
-      this.afterLoginWindowClosed(evt.params.messageid)
-    }, 500)
+      this.afterLoginWindowClosed(evt.params.messageid);
+    }, 500);
   }
 
   // Once the login window is closed, we can try and get a token for the resource
   afterLoginWindowClosed(messageId) {
-    console.log("Done waiting on the login window")
-    const probeService = this.resources[messageId].probeService
-    const accessService = this.findAccessService(probeService)
-    this.messagePanelTarget.hidden = false
+    console.debug("Done waiting on the login window");
+    const probeService = this.resources[messageId].probeService;
+    const accessService = this.findAccessService(probeService);
+    this.messagePanelTarget.hidden = false;
 
-    this.initiateTokenRequest(accessService, messageId)
+    this.initiateTokenRequest(accessService, messageId);
   }
 
   hideMessagePanel() {
-    this.messagePanelTarget.hidden = true
+    this.messagePanelTarget.hidden = true;
   }
 }
