@@ -42,8 +42,6 @@ collections_to_show_attribution:
 # in shared_configs for embed-prod, we set this value to 0
 analytics_debug: true
 min_files_to_search_default: 10
-enabled_features:
-  legacy_pdf_viewer: false # true shows the PDF.js based PDF viewer, false uses <object> tag for browser PDF rendering
 
 language_subtag_registry:
   path: vendor/data/language-subtag-registry
