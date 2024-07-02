@@ -13,7 +13,7 @@
   },
   "scripts": {
     "test": "jest -c jest.config.js",
-    "build:css": "sass ./app/assets/stylesheets/companion_window.scss:./app/assets/builds/companion_window.css ./app/assets/stylesheets/media.scss:./app/assets/builds/media.css ./app/assets/stylesheets/file.scss:./app/assets/builds/file.css ./app/assets/stylesheets/geo.scss:./app/assets/builds/geo.css ./app/assets/stylesheets/m3.scss:./app/assets/builds/m3.css ./app/assets/stylesheets/pdf.scss:./app/assets/builds/pdf.css ./app/assets/stylesheets/model.scss:./app/assets/builds/model.css ./app/assets/stylesheets/was_seed.scss:./app/assets/builds/was_seed.css ./app/assets/stylesheets/sul_icons.scss:./app/assets/builds/sul_icons.css --no-source-map --load-path=node_modules --load-path=vendor/assets/javascripts"
+    "build:css": "sass ./app/assets/stylesheets/companion_window.scss:./app/assets/builds/companion_window.css ./app/assets/stylesheets/media.scss:./app/assets/builds/media.css ./app/assets/stylesheets/file.scss:./app/assets/builds/file.css ./app/assets/stylesheets/geo.scss:./app/assets/builds/geo.css ./app/assets/stylesheets/m3.scss:./app/assets/builds/m3.css ./app/assets/stylesheets/model.scss:./app/assets/builds/model.css ./app/assets/stylesheets/was_seed.scss:./app/assets/builds/was_seed.css ./app/assets/stylesheets/sul_icons.scss:./app/assets/builds/sul_icons.css --no-source-map --load-path=node_modules --load-path=vendor/assets/javascripts"
   },
   "private": true,
   "dependencies": {
@@ -36,7 +36,6 @@
     "mirador-dl-plugin": "^0.13.0",
     "mirador-image-tools": "^0.8.0",
     "mirador-share-plugin": "^0.11.0",
-    "pdfjs-dist": "^3.11.174",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -50,13 +49,9 @@
     "webpack-merge": "5"
   },
   "babel": {
-    "presets": [
-      "./node_modules/shakapacker/package/babel/preset.js"
-    ]
+    "presets": ["./node_modules/shakapacker/package/babel/preset.js"]
   },
-  "browserslist": [
-    "defaults"
-  ],
+  "browserslist": ["defaults"],
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "jest": "^29.7.0",
