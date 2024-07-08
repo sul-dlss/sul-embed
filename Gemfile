@@ -54,8 +54,6 @@ end
 # Use honeybadger for exception handling
 gem 'honeybadger'
 
-gem 'filesize'
-
 gem 'newrelic_rpm', group: :production
 
 # Use okcomputer to monitor the application

@@ -25,7 +25,7 @@ RSpec.describe 'File viewer', :js do
 
       expect(page).to have_css('tr[data-tree-role="leaf"] a', text: 'Download')
       expect(page).to have_css('*[data-tree-role="label"]', text: 'File1 Label')
-      expect(page).to have_css('td', text: '12.34 kB')
+      expect(page).to have_css('td', text: '12.35 kB')
     end
 
     context 'when the object has multiple files' do

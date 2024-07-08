@@ -9,7 +9,7 @@ module Embed
     # @param [String] size the file size in bytes
     # @return [String] a human readable representation in SI units
     def pretty_filesize(size)
-      Filesize.new("#{size} B", Filesize::SI).pretty
+      SizeConverter.new(size, { base: 1000, precision: 2, significant: false }).convert
     end
   end
 end
