@@ -1,4 +1,4 @@
-const GeoViewer = require('../../../app/javascript/src/modules/geo_viewer.js');
+import GeoViewer from '../../../app/javascript/src/modules/geo_viewer.js';
 
 describe('geo_viewer.js', () => {
   describe('loads and makes available modules', () => {

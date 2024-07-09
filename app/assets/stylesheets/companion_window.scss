@@ -235,7 +235,7 @@
   }
 
   .header-background {
-    background: #f4f4f4;
+    background: $color-fog-light;
     display: flex;
     flex-shrink: 0;
     padding-left: var(--drawer-content-padding);
