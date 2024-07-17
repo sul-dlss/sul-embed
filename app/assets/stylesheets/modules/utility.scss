@@ -3,7 +3,7 @@
 // Utility classes
 // --------------------------------------------------
 
-.#{$namespace}-text-hide {
+.sul-embed-text-hide {
   // From https://www.a11yproject.com/posts/how-to-hide-content/
   clip: rect(0 0 0 0);
   clip-path: inset(50%);
@@ -16,27 +16,27 @@
 
 // https://github.com/twbs/bootstrap-sass/blob/d5625c907168b6311be122b99d89614e02448475/assets/stylesheets/bootstrap/_close.scss
 
-.#{$namespace}-close {
+.sul-embed-close {
   float: right;
   font-size: ($font-size-base * 1.5);
   font-weight: $close-font-weight;
   line-height: 1;
   color: $close-color;
   text-shadow: $close-text-shadow;
-  opacity: .2;
+  opacity: 0.2;
 
   &:hover,
   &:focus {
     color: $close-color;
     text-decoration: none;
     cursor: pointer;
-    opacity: .5;
+    opacity: 0.5;
   }
 
   // [converter] extracted button& to button.close
 }
 
-button.#{$namespace}-close {
+button.sul-embed-close {
   padding: 0;
   cursor: pointer;
   background: transparent;
@@ -46,21 +46,21 @@ button.#{$namespace}-close {
 
 // https://github.com/twbs/bootstrap-sass/blob/d5625c907168b6311be122b99d89614e02448475/assets/stylesheets/bootstrap/_scaffolding.scss
 
-.#{$namespace}-sr-only {
+.sul-embed-sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
   margin: -1px;
   padding: 0;
   overflow: hidden;
-  clip: rect(0,0,0,0);
+  clip: rect(0, 0, 0, 0);
   border: 0;
 }
 
 // Stretched links
 // https://github.com/twbs/bootstrap/blob/c28934cb1871d6b6bd6a866660493a1137de17c6/scss/helpers/_stretched-link.scss
 
-.#{$namespace}-stretched-link {
+.sul-embed-stretched-link {
   &::after {
     position: absolute;
     top: 0;

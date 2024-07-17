@@ -1,30 +1,30 @@
 // @import 'sul_variables';
-@import 'common';
+@import "common";
 
-.#{$namespace}-was-seed-content {
+.sul-embed-was-seed-content {
   padding: 10px;
 }
 
-.#{$namespace}-was-seed-row {
+.sul-embed-was-seed-row {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
 
-.#{$namespace}-was-seed-column {
+.sul-embed-was-seed-column {
   display: flex;
   flex-direction: column;
   flex: 1;
   padding: 0 12px 12px 12px;
 }
 
-.#{$namespace}-was-seed-preview {
+.sul-embed-was-seed-preview {
   img {
     max-height: 200px;
   }
 }
 
-.#{$namespace}-was-seed-captures {
+.sul-embed-was-seed-captures {
   padding-top: 6px;
   h1 {
     font-size: 1.5rem;
@@ -32,8 +32,7 @@
   }
 }
 
-
-.#{$namespace}-was-seed-info {
+.sul-embed-was-seed-info {
   flex-basis: 200px;
   max-width: 220px;
   padding-top: 12px;
@@ -45,14 +44,14 @@
   }
 }
 
-.#{$namespace}-was-seed-list {
+.sul-embed-was-seed-list {
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
   padding-top: 12px;
 }
 
-.#{$namespace}-was-seed-list-item {
+.sul-embed-was-seed-list-item {
   border: 1px solid $color-beige-30;
   margin: 0 15px 15px 0;
   min-width: 225px;
@@ -60,9 +59,9 @@
   position: relative;
 
   &:before {
-    content: ' \f123';
+    content: " \f123";
     color: $gray-54-percent;
-    font-family: 'sul-icons';
+    font-family: "sul-icons";
     font-size: 24px;
     margin-right: 8px;
     vertical-align: middle;
