@@ -6,9 +6,6 @@ $white-60-percent-opaque: rgba(255, 255, 255, 0.6);
 $white-color: #fff;
 $black-50-percent-opaque: rgba(0, 0, 0, 0.5);
 
-// Namespace
-$namespace: 'sul-embed';
-
 // Bootstrap needed (for mixins)
 $btn-font-weight: normal;
 $btn-default-bg: #fff;
@@ -30,7 +27,6 @@ $padding-small-vertical: 5px;
 $padding-xs-horizontal: 5px;
 $padding-xs-vertical: 1px;
 
-
 $sul-border-color: $color-pantone-405;
 $sul-button-bg: $sul-border-color;
 $sul-button-color: white;
@@ -41,7 +37,7 @@ $sul-input-border: $gray-80-percent;
 $sul-title-size: floor(($font-size-base * 1.29));
 $sul-header-weight: 300;
 $sul-link-border-color: $color-pantone-401;
-$sul-link-color: #006CB8;
+$sul-link-color: #006cb8;
 $sul-link-hover-color: #00548f;
 $sul-metadata-bg: $color-beige-05;
 $sul-metadata-heading-color: $gray-54-percent;

@@ -1,4 +1,4 @@
-@import 'common';
+@import "common";
 
 .mosaic-root {
   bottom: 0 !important;
@@ -11,14 +11,18 @@
   margin: 0 !important;
 }
 
-.mosaic-split.-row, .mosaic-split.-column {
+.mosaic-split.-row,
+.mosaic-split.-column {
   background-color: #aaa;
 }
 
-.#{$namespace}-container {
+.sul-embed-container {
   border: 0;
   border-left: 1px solid $gray-80-percent;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.2), 0 2px 1px -1px rgba(0, 0, 0, 0.2);
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.2),
+    0 1px 1px 0 rgba(0, 0, 0, 0.2),
+    0 2px 1px -1px rgba(0, 0, 0, 0.2);
   height: calc(100vh - 3px); // Give a little space for the box shadow
   margin: 0 1px 3px 0;
   position: relative;
@@ -31,7 +35,7 @@
   }
 }
 
-.#{$namespace}-container {
+.sul-embed-container {
   .mirador-window-sidebar-annotation-panel {
     .MuiMenuItem-root {
       white-space: normal;

@@ -1,22 +1,22 @@
-@import 'common';
+@import "common";
 
 body {
   overflow-y: hidden;
 }
 
-.#{$namespace}-container {
-  .#{$namespace}-header {
+.sul-embed-container {
+  .sul-embed-header {
     flex-shrink: 0;
   }
 
-  .#{$namespace}-search {
+  .sul-embed-search {
     padding-top: 8px;
 
     label {
       display: none;
     }
 
-    .#{$namespace}-search-input {
+    .sul-embed-search-input {
       @include container-padding;
       border: 1px solid $sul-input-border;
       border-radius: 3px;
@@ -25,39 +25,39 @@ body {
     }
   }
 
-  .#{$namespace}-body {
+  .sul-embed-body {
     overflow-y: scroll;
   }
 
-  .#{$namespace}-description {
+  .sul-embed-description {
     color: $sul-description-font-color;
   }
 
-  .#{$namespace}-count {
+  .sul-embed-count {
     color: $sul-count-font-color;
     width: 18px;
   }
 
-  .#{$namespace}-footer-toolbar .sul-i-download-3 {
+  .sul-embed-footer-toolbar .sul-i-download-3 {
     padding: 0px 5px 0px 5px;
   }
 
-  .#{$namespace}-footer-toolbar .sul-embed-location-restricted-text {
+  .sul-embed-footer-toolbar .sul-embed-location-restricted-text {
     background-color: $white-color;
   }
 
-  .#{$namespace}-footer-toolbar a {
+  .sul-embed-footer-toolbar a {
     color: $white-color;
   }
 }
 
-.#{$namespace}-embargo-message {
+.sul-embed-embargo-message {
   padding: 20px;
   color: $sul-restricted-text-color;
 }
 
 /* Collapse/expand icons */
-.#{$namespace}-treegrid {
+.sul-embed-treegrid {
   width: 100%;
   table-layout: fixed;
   border-collapse: collapse;
@@ -79,12 +79,14 @@ body {
     background-color: $color-beige-10;
   }
 
-  col.#{$namespace}-treegrid-size,  col.#{$namespace}-treegrid-download {
+  col.sul-embed-treegrid-size,
+  col.sul-embed-treegrid-download {
     width: 20%;
   }
 
   /* Extra space between columns for readability */
-  th, td {
+  th,
+  td {
     padding-top: 5px;
     padding-bottom: 5px;
   }
@@ -94,8 +96,8 @@ body {
     vertical-align: top;
   }
 
-  tr[hidden] { 
-    display: none !important; 
+  tr[hidden] {
+    display: none !important;
   }
 
   tr > td:first-child::before {
@@ -110,8 +112,8 @@ body {
   tr[aria-expanded] > td:first-child::before,
   td[aria-expanded]:first-child::before {
     cursor: pointer;
-    font-family: 'sul-icons';
-    content: '\f10b'; // sul-i-arrow-right-8 
+    font-family: "sul-icons";
+    content: "\f10b"; // sul-i-arrow-right-8
     display: inline-block;
     font-weight: 900;
   }
@@ -121,7 +123,7 @@ body {
     transform: rotate(90deg);
   }
 
-  .#{$namespace}-filename-cell {
+  .sul-embed-filename-cell {
     padding-right: 10px;
   }
 }

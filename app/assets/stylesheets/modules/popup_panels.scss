@@ -1,5 +1,5 @@
-.#{$namespace}-container {
-  .#{$namespace}-panel-container {
+.sul-embed-container {
+  .sul-embed-panel-container {
     height: 0px;
     position: relative;
 
@@ -7,10 +7,11 @@
       margin-bottom: 5px;
     }
 
-    dt, .#{$namespace}-options-label {
+    dt,
+    .sul-embed-options-label {
       color: $sul-metadata-label-color;
       font-weight: normal;
-      font-size: .9em;
+      font-size: 0.9em;
       text-transform: uppercase !important;
       padding-top: 15px;
     }
@@ -18,7 +19,7 @@
       margin-left: 15px;
     }
 
-    .#{$namespace}-panel {
+    .sul-embed-panel {
       background: $sul-metadata-bg;
       border: none;
       border-top: 1px solid $sul-border-color;
@@ -30,17 +31,17 @@
       width: 100%;
       z-index: 2000;
 
-      .#{$namespace}-panel-header {
+      .sul-embed-panel-header {
         border-bottom: 1px solid #e3dfd5;
         font-size: 1.1em;
         height: auto;
         padding: 10px 15px;
 
-        .#{$namespace}-close {
+        .sul-embed-close {
           float: right;
         }
 
-        .#{$namespace}-panel-title {
+        .sul-embed-panel-title {
           font-size: $sul-title-size;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -48,42 +49,43 @@
         }
       }
 
-      .#{$namespace}-panel-body {
+      .sul-embed-panel-body {
         padding: 0 15px 15px 15px;
       }
 
-      .#{$namespace}-metadata-section {
+      .sul-embed-metadata-section {
         padding-bottom: 0px;
         padding-top: 15px;
       }
 
-      .#{$namespace}-panel-heading {
+      .sul-embed-panel-heading {
         color: $sul-metadata-heading-color;
-        font-size: .9em;
+        font-size: 0.9em;
         text-transform: uppercase;
       }
 
-      &.#{$namespace}-embed-this-panel {
-        .#{$namespace}-embed-this-form {
-          input[type='checkbox'], input[type='text'] {
+      &.sul-embed-embed-this-panel {
+        .sul-embed-embed-this-form {
+          input[type="checkbox"],
+          input[type="text"] {
             margin-right: 3px;
           }
-          input[type='text'] {
+          input[type="text"] {
             margin-left: 3px;
             width: 26px;
           }
-          .#{$namespace}-embed-title-section {
+          .sul-embed-embed-title-section {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
           }
-          .#{$namespace}-embed-title {
+          .sul-embed-embed-title {
             font-style: italic;
           }
-          .#{$namespace}-options-label {
+          .sul-embed-options-label {
             display: block;
           }
-          .#{$namespace}-section {
+          .sul-embed-section {
             margin-left: 15px;
           }
           textarea {
@@ -93,28 +95,28 @@
         }
       }
 
-      &.#{$namespace}-download-panel {
-        .#{$namespace}-download-options {
+      &.sul-embed-download-panel {
+        .sul-embed-download-options {
           margin: 20px 10px;
           width: 80%;
 
-          .#{$namespace}-stanford-only a {
+          .sul-embed-stanford-only a {
             border-width: 0;
           }
         }
 
-        .#{$namespace}-panel-item-label {
+        .sul-embed-panel-item-label {
           margin-left: 5px;
         }
       }
     }
   }
 
-  ul.#{$namespace}-download-list {
+  ul.sul-embed-download-list {
     @include panel-list-style;
   }
 
-  ul.#{$namespace}-download-list-full {
+  ul.sul-embed-download-list-full {
     @include panel-list-style;
     padding-bottom: 8px;
     padding-top: 8px;

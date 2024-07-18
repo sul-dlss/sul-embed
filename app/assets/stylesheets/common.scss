@@ -1,24 +1,24 @@
 // All classes should be scoped within the .sul-embed-container
-@import 'palette';
-@import 'sul_variables';
-@import 'mixins';
-@import 'modules/buttons';
-@import 'modules/popup_panels';
-@import 'modules/shadows';
-@import 'modules/utility';
+@import "palette";
+@import "sul_variables";
+@import "mixins";
+@import "modules/buttons";
+@import "modules/popup_panels";
+@import "modules/shadows";
+@import "modules/utility";
 
 body {
   margin: 0;
   padding: 0;
 }
 
-.#{$namespace}-container {
+.sul-embed-container {
   background: $white-color;
   border: 1px solid $color-pantone-405;
   color: $sul-font-color;
   display: flex;
   flex-direction: column;
-  font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
+  font-family: "Source Sans Pro", "Arial Unicode MS", Helvetica, sans-serif;
   font-size: $font-size-base;
   height: 100vh;
   overflow-x: hidden;
@@ -29,16 +29,16 @@ body {
     margin: 0;
   }
 
-  .#{$namespace}-header {
+  .sul-embed-header {
     flex: 0 1 auto;
   }
 
-  .#{$namespace}-body {
+  .sul-embed-body {
     flex: 1 1 auto;
     overflow-y: scroll; // May need to evaluate this on a viewer by viewer basis
   }
 
-  .#{$namespace}-footer {
+  .sul-embed-footer {
     flex: 0 1 auto;
   }
 
@@ -54,7 +54,7 @@ body {
     color: $sul-link-hover-color;
   }
 
-  .#{$namespace}-header {
+  .sul-embed-header {
     background: $sul-border-color;
     font-weight: $sul-header-weight;
     min-height: 40px;
@@ -62,7 +62,7 @@ body {
     padding: 0 15px;
     white-space: nowrap;
 
-    .#{$namespace}-header-title {
+    .sul-embed-header-title {
       color: white;
       display: inline-block;
       font-size: $sul-title-size;
@@ -72,10 +72,9 @@ body {
       width: 100%;
       margin-top: 4px;
     }
-
   }
 
-  .#{$namespace}-item-count {
+  .sul-embed-item-count {
     color: white;
     border-bottom: 0;
     font-size: $font-size-base;
@@ -88,14 +87,14 @@ body {
     float: left;
   }
 
-  .#{$namespace}-footer {
+  .sul-embed-footer {
     @include top-shadow;
     background: $sul-border-color;
     min-height: 30px;
     position: relative;
     padding: 0 15px;
 
-    .#{$namespace}-footer-toolbar {
+    .sul-embed-footer-toolbar {
       padding-top: 0;
       vertical-align: middle;
       color: $white-color;
@@ -106,7 +105,7 @@ body {
       padding-right: 1px;
     }
 
-    .#{$namespace}-download-count {
+    .sul-embed-download-count {
       background-color: $btn-default-bg;
       border-radius: 16px;
       color: $color-pantone-405;
@@ -124,24 +123,24 @@ body {
   }
 }
 
-.#{$namespace}-stanford-only a {
+.sul-embed-stanford-only a {
   @include stanford-only(right, 20px);
 }
 
-.#{$namespace}-stanford-only-text {
+.sul-embed-stanford-only-text {
   @include stanford-only(left, 15px);
 }
 
-.#{$namespace}-location-restricted-text {
+.sul-embed-location-restricted-text {
   color: $sul-restricted-text-color;
 }
 
-.#{$namespace}-header {
+.sul-embed-header {
   @include shadow(1);
   position: relative;
   z-index: 10;
 }
 
-.#{$namespace}-footer {
+.sul-embed-footer {
   @include shadow(1);
 }
