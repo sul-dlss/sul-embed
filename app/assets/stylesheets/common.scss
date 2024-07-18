@@ -123,12 +123,13 @@ body {
   }
 }
 
-.sul-embed-stanford-only a {
-  @include stanford-only(right, 20px);
-}
-
 .sul-embed-stanford-only-text {
-  @include stanford-only(left, 15px);
+  background:
+    url("stanford_s.svg") no-repeat left,
+    none;
+  display: inline-block;
+  height: 15px;
+  width: 15px;
 }
 
 .sul-embed-location-restricted-text {
