@@ -1,4 +1,4 @@
-@import 'sul_variables';
+@import "sul_variables";
 
 @mixin container-padding {
   padding: 4px 7px;
@@ -25,12 +25,6 @@
   padding: 10px;
 }
 
-@mixin stanford-only($orientation: right, $icon-padding: 20px) {
-  background: url('stanford_s.png') no-repeat $orientation;
-  background: url('stanford_s.svg') no-repeat $orientation, none;
-  padding-#{$orientation}: $icon-padding;
-}
-
 @mixin transform($transforms) {
   -webkit-transform: $transforms;
   -moz-transform: $transforms;
@@ -38,6 +32,6 @@
   transform: $transforms;
 }
 
-@mixin rotate ($deg) { 
-	@include transform(rotate(#{$deg}deg));
+@mixin rotate($deg) {
+  @include transform(rotate(#{$deg}deg));
 }
