@@ -1,5 +1,5 @@
-@import 'common';
-@import 'leaflet/dist/leaflet';
+@import "common";
+@import "leaflet/dist/leaflet";
 
 [data-wms-url] {
   cursor: crosshair;
@@ -19,7 +19,7 @@
 
   &.collapsed {
     i {
-      @include rotate(180);
+      transform: rotate(180deg);
     }
   }
 }
@@ -72,7 +72,10 @@
   background-color: #a9acb1;
   border-radius: 15px;
   color: black;
-  font: bold 18px 'Lucida Console', Monaco, monospace;
+  font:
+    bold 18px "Lucida Console",
+    Monaco,
+    monospace;
   display: block;
   height: 200px;
   left: 11px;
@@ -94,7 +97,7 @@
     top: 0;
     width: 26px;
     z-index: 20;
-    box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
 
     &:hover {
       background-color: $color-fog-light;
@@ -109,7 +112,7 @@
     width: 100%;
 
     &:before {
-      content: '=';
+      content: "=";
     }
   }
 
@@ -121,7 +124,7 @@
     width: 100%;
 
     &:before {
-      content: '=';
+      content: "=";
     }
   }
 

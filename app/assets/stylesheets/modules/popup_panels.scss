@@ -113,12 +113,7 @@
   }
 
   ul.sul-embed-download-list {
-    @include panel-list-style;
-  }
-
-  ul.sul-embed-download-list-full {
-    @include panel-list-style;
-    padding-bottom: 8px;
-    padding-top: 8px;
+    list-style: none;
+    padding-left: 8px;
   }
 }
