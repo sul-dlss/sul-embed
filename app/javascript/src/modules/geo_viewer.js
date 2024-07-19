@@ -16,6 +16,7 @@ export default {
         'streetmap.org/" target="_blank" rel="noopener noreferrer">Humanitarian OpenStreetMap Team<' +
         '/a>',
     }).addTo(this.map);
+    this.highlightLayer = L.layerGroup().addTo(this.map);
 
     this.addVisualizationLayer();
 
@@ -38,7 +39,7 @@ export default {
               return _this.availabilityStyle(feature.properties.available);
             },
             onEachFeature: function (feature, layer) {
-              feature.properties.geoJSON = true;
+              layer.customProperty = { geoJSON: true };
               // Add a hover label for the label property
               if (feature.properties.label !== null) {
                 layer.bindTooltip(feature.properties.label);
@@ -46,6 +47,7 @@ export default {
               // If it is available add clickable info
               if (feature.properties.available !== null) {
                 layer.on('click', function (e) {
+                  _this.highlightBox(this)
                   _this.indexMapInspection(e);
                 });
               }
@@ -61,17 +63,17 @@ export default {
       });
     } else if (hasWmsUrl && hasLayers) {
       // Feature inspection for public layers
-      const layer = L.tileLayer.wms(dataAttributes.wmsUrl, {
+      this.layer = L.tileLayer.wms(dataAttributes.wmsUrl, {
         layers: dataAttributes.layers,
         format: 'image/png',
         transparent: true,
         opacity: .75,
         tiled: true
       })
-      layer.addTo(this.map);
+      this.layer.addTo(this.map);
       this.setupSidebar();
       this.setupFeatureInspection();
-      this.map.addControl(new L.Control.LayerOpacity(layer));
+      this.map.addControl(new L.Control.LayerOpacity(this.layer));
     } else {
       // Restricted layers
       L.rectangle(dataAttributes.boundingBox, { color: '#0000FF', weight: 4 })
@@ -173,11 +175,35 @@ export default {
             });
           });
           html += '</dl>';
+          _this.highlightBox(data);
           _this.openSidebarWithContent(html);
         }
       });
     });
   },
+
+  highlightBox: function(data) {
+    this.highlightLayer.clearLayers();
+    if (!data._latlngs && !data.numberReturned) { return }
+    var opacity = this.layer ? this.layer.options.opacity : data.options.fillOpacity ? data.options.fillOpacity : data.options.opacity;
+    var geoJSON = false;
+    var layer;
+    var color = 'blue';
+    if (data._latlngs) {
+      layer = L.polygon(data._latlngs, {
+        color: color,
+        weight: 2,
+        layer: true,
+        fillOpacity: opacity
+      })
+    } else {
+      layer = L.geoJSON(data, {color: color, opacity: opacity})
+      geoJSON = true;
+    }
+    layer.customProperty = { 'addToOpacitySlider': true, geoJSON: geoJSON };
+    layer.addTo(this.highlightLayer);
+  },
+
   openSidebarWithContent: function (html) {
     this.$el
       .find('.sul-embed-geo-sidebar')

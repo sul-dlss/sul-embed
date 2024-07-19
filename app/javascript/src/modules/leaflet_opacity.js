@@ -12,21 +12,35 @@ import L from "leaflet";
       if (typeof layer.getLayers !== 'undefined') {
         const layers = layer.getLayers();
         // Check if geoJSON. Layer control is different between geoJSON and WMS layer
-        this.geoJSON = layers[0].feature.properties.geoJSON;
+        this.geoJSON = layers[0].customProperty.geoJSON;
 
         // add first layer from layer group to options
         options.layer = layers[0];
-        if (this.geoJSON){ options.layers = layers; }
+        options.layers = layers;
       } else {
 
         // add layer to options
         options.layer = layer;
+        options.layers = [layer];
       }
 
       L.Util.setOptions(this, options);
     },
 
     onAdd: function(map) {
+      var _this = this;
+      L.DomEvent.on(map, 'layeradd', function(e) {
+        if (e.layer.customProperty && e.layer.customProperty.addToOpacitySlider){
+          _this.options.layers.push(e.layer)
+        }
+      });
+
+      L.DomEvent.on(map, 'layerremove', function(e) {
+        if (e.layer.customProperty && e.layer.customProperty.addToOpacitySlider){
+          const index = _this.options.layers.indexOf(e.layer);
+          if (index) { _this.options.layers.splice(index, 1)}
+        }
+      });
       var container = L.DomUtil.create('div', 'opacity-control unselectable'),
         controlArea = L.DomUtil.create('div', 'opacity-area', container),
         handle = L.DomUtil.create('div', 'opacity-handle', container),
@@ -50,10 +64,18 @@ import L from "leaflet";
     },
 
     updateMapOpacity: function(opacity) {
-      if (this.geoJSON) {
-        this.options.layers.forEach((element) => element.setStyle({'fillOpacity': opacity}));
-      } else {
-        this.options.layer.setOpacity(opacity);
+      this.options.layers.forEach((layer) => this.layerOpacity(layer, opacity))
+    },
+
+    layerOpacity: function(layer, opacity) {
+      try {
+        layer.setStyle({'fillOpacity': opacity, "opacity": opacity})
+      } catch {
+        try {
+          layer.setOpacity(opacity);
+        } catch {
+          console.log(layer)
+        }
       }
     },
 
