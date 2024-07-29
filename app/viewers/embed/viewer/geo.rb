@@ -21,6 +21,7 @@ module Embed
           options['data-layers'] = "druid:#{@purl_object.druid}"
         end
         options['data-index-map'] = index_map.file_url if index_map?
+        options['data-geo-viewer-colors'] = Settings.geo_viewer_colors.to_json
         options
       end
 
