@@ -10,7 +10,7 @@ RSpec.describe IframeComponent, type: :component do
   end
 
   let(:embed_request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }) }
-
+  let(:purl_object) { instance_double(Embed::Purl, druid: 'oo000oo0000', title: 'The Object Title', version_id: nil) }
   let(:viewer) do
     instance_double(
       Embed::Viewer::CommonViewer,
@@ -18,7 +18,7 @@ RSpec.describe IframeComponent, type: :component do
       width: '666',
       embed_request:,
       iframe_title: 'Hello world',
-      purl_object: instance_double(Embed::Purl, druid: 'oo000oo0000', title: 'The Object Title')
+      purl_object:
     )
   end
 
@@ -63,8 +63,34 @@ RSpec.describe IframeComponent, type: :component do
       expect(src).not_to match(/maxwidth/)
     end
 
+    it 'links to the versionless purl url' do
+      expect(src).to match(%r{iframe\?url=https://purl\.stanford\.edu/oo000oo0000/&})
+    end
+
     it 'includes a cache busting parameter' do
       expect(src).to match(/&_v=123/)
+    end
+
+    context 'when purl object has a version id' do
+      let(:purl_object) { instance_double(Embed::Purl, druid: 'oo000oo0000', title: 'The Object Title', version_id: 'v3') }
+
+      it 'includes the relevant request parameters' do
+        expect(src).to match(/&hide_embed=true/)
+        expect(src).to match(/&hide_title=true/)
+      end
+
+      it 'does not include the maxheight / maxwidth parameters (these are handled in the iframe)' do
+        expect(src).not_to match(/maxheight/)
+        expect(src).not_to match(/maxwidth/)
+      end
+
+      it 'links to the versionful purl url' do
+        expect(src).to match(%r{iframe\?url=https://purl\.stanford\.edu/oo000oo0000/v3&})
+      end
+
+      it 'includes a cache busting parameter' do
+        expect(src).to match(/&_v=123/)
+      end
     end
   end
 end

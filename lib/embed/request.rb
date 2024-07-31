@@ -55,12 +55,20 @@ module Embed
     end
 
     def object_druid
-      url[/\w*$/]
+      url_path_segments[0]
+    end
+
+    def object_version_id
+      url_path_segments[1]
+    end
+
+    def url_path_segments
+      URI.parse(url).path.split('/').compact_blank
     end
 
     # @return [Embed::Purl]
     def purl_object
-      @purl_object ||= Purl.find(object_druid)
+      @purl_object ||= Purl.find(object_druid, object_version_id)
     end
 
     def as_url_params
