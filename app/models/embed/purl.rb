@@ -14,7 +14,7 @@ module Embed
       end
     end
 
-    attr_accessor :druid, :type, :title, :use_and_reproduction, :copyright, :contents, :collections,
+    attr_accessor :druid, :version_id, :type, :title, :use_and_reproduction, :copyright, :contents, :collections,
                   :license, :bounding_box, :embargo_release_date, :archived_site_url, :external_url,
                   :embargoed, :stanford_only_unrestricted, :public, :controlled_digital_lending,
                   :etag, :last_modified
@@ -25,8 +25,8 @@ module Embed
     alias controlled_digital_lending? controlled_digital_lending
 
     # @param [String] druid a druid without a namespace (e.g. "sx925dc9385")
-    def self.find(druid)
-      loader = PurlJsonLoader.new(druid)
+    def self.find(druid, version_id = nil)
+      loader = PurlJsonLoader.new(druid, version_id)
       new(etag: loader.etag, last_modified: loader.last_modified, **loader.load)
     end
 
@@ -60,7 +60,9 @@ module Embed
     end
 
     def purl_url
-      "#{Settings.purl_url}/#{@druid}"
+      return "#{Settings.purl_url}/#{@druid}" if @version_id.blank?
+
+      "#{Settings.purl_url}/#{@druid}/v#{@version_id}"
     end
 
     def first_collection_url

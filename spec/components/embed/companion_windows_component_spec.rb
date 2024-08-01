@@ -23,6 +23,7 @@ RSpec.describe Embed::CompanionWindowsComponent, type: :component do
                     copyright: '',
                     license: '',
                     druid: '123',
+                    version_id: nil,
                     contents: [],
                     downloadable_files: [],
                     downloadable_transcript_files?: false)

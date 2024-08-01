@@ -5,6 +5,20 @@ require 'rails_helper'
 RSpec.describe Embed::PurlJsonLoader do
   include PurlFixtures
 
+  describe '#purl_json_url' do
+    context 'when version id is not supplied' do
+      subject(:loader) { described_class.new('12345').send(:purl_json_url) }
+
+      it { is_expected.to eq('https://purl.stanford.edu/12345.json') }
+    end
+
+    context 'when version id is supplied' do
+      subject(:loader) { described_class.new('12345', 'v3').send(:purl_json_url) }
+
+      it { is_expected.to eq('https://purl.stanford.edu/12345/v3.json') }
+    end
+  end
+
   describe '#load' do
     subject(:data) { described_class.new('12345').load }
 

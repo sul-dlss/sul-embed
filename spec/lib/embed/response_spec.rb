@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Embed::Response, type: 'view' do
   let(:viewer) { instance_double(Embed::Viewer::CommonViewer, embed_request:, purl_object:) }
   let(:embed_request) { Embed::Request.new({ url: 'http://purl.stanford.edu/abc123' }) }
-  let(:purl_object) { instance_double(Embed::Purl, druid: 'abc123') }
+  let(:purl_object) { instance_double(Embed::Purl, druid: 'abc123', version_id: nil) }
   let(:response) { described_class.new(embed_request) }
 
   describe 'static attributes' do

@@ -6,7 +6,7 @@ RSpec.describe EmbedThisFormComponent, type: :component do
   let(:request) do
     Embed::Request.new(url: 'http://purl.stanford.edu/abc123')
   end
-  let(:object) { instance_double(Embed::Purl, title: '', druid: '', all_resource_files: [], embargoed?: false) }
+  let(:object) { instance_double(Embed::Purl, title: '', druid: '', version_id: nil, all_resource_files: [], embargoed?: false) }
   let(:viewer) { Embed::Viewer::File.new(request) }
 
   before do

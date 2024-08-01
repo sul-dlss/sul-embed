@@ -33,6 +33,24 @@ RSpec.describe Embed::Purl do
     end
   end
 
+  describe '#purl_url' do
+    context 'when item lacks a version id' do
+      subject(:purl) { described_class.new(druid: 'kq126jw7402') }
+
+      it 'returns a versionless purl url' do
+        expect(purl.purl_url).to eq('https://purl.stanford.edu/kq126jw7402')
+      end
+    end
+
+    context 'when item has a version id' do
+      subject(:purl) { described_class.new(druid: 'kq126jw7402', version_id: 2) }
+
+      it 'returns a versionful purl url' do
+        expect(purl.purl_url).to eq('https://purl.stanford.edu/kq126jw7402/v2')
+      end
+    end
+  end
+
   describe '#public?' do
     context 'when an item is public' do
       subject(:purl) { described_class.new(public: true) }

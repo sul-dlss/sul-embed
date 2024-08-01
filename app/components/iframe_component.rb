@@ -7,7 +7,7 @@ class IframeComponent < ViewComponent::Base
   end
 
   delegate :height, :width, :embed_request, :iframe_title, :purl_object, to: :@viewer
-  delegate :druid, to: :purl_object
+  delegate :druid, :version_id, to: :purl_object
   attr_reader :version
 
   def width_style
@@ -20,7 +20,11 @@ class IframeComponent < ViewComponent::Base
 
   def src
     query_params = embed_request.as_url_params.merge(version ? { _v: version } : {}).to_query
-    "#{iframe_url}?url=#{Settings.purl_url}/#{druid}&#{query_params}"
+    "#{iframe_url}?url=#{Settings.purl_url}/#{path_segments}&#{query_params}"
+  end
+
+  def path_segments
+    [druid, version_id].join('/')
   end
 
   def call

@@ -6,13 +6,15 @@ module Embed
       'object' => 'file'
     }.freeze
 
-    def initialize(druid)
+    def initialize(druid, version_id = nil)
       @druid = druid
+      @version_id = version_id
     end
 
     def load # rubocop:disable Metrics/MethodLength
       {
         druid: @druid,
+        version_id: @version_id,
         type:,
         title:,
         contents:,
@@ -140,7 +142,9 @@ module Embed
     end
 
     def purl_json_url
-      "#{Settings.purl_url}/#{@druid}.json"
+      return "#{Settings.purl_url}/#{@druid}.json" if @version_id.blank?
+
+      "#{Settings.purl_url}/#{@druid}/#{@version_id}.json"
     end
 
     def http_response
