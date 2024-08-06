@@ -104,6 +104,7 @@ import L from "leaflet";
         } else {
           return;
         }
+        e.preventDefault();
         if (newOpacity > 100 || newOpacity < 0) { return; }
         newOpacity = Math.round(newOpacity)
         handle.style.top = `calc(100% - ${newOpacity}% - 12px)`;
