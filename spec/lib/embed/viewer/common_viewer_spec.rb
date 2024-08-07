@@ -101,4 +101,16 @@ RSpec.describe Embed::Viewer::CommonViewer do
 
     it { is_expected.to eq 'https://stacks.stanford.edu/object/abc123' }
   end
+
+  context 'when a version_id is provided by purl' do
+    subject { file_viewer.download_url }
+
+    let(:request) do
+      Embed::Request.new(url: 'http://purl.stanford.edu/bc123df456/version/1')
+    end
+    let(:purl) { build(:purl, contents: resources, druid: 'bc123df456', version_id: '1') }
+    let(:resources) { [build(:resource, :file, druid: 'bc123df456', files: [build(:resource_file, label: 'A File')])] }
+
+    it { is_expected.to eq 'https://stacks.stanford.edu/object/bc123df456/version/1' }
+  end
 end

@@ -27,13 +27,13 @@ RSpec.describe Embed::FooterComponent, type: :component do
 
   context 'when the purl includes a version id' do
     let(:request) do
-      Embed::Request.new(url: 'http://purl.stanford.edu/bc123df456/1')
+      Embed::Request.new(url: 'http://purl.stanford.edu/bc123df4567/version/1')
     end
-    let(:purl) { build(:purl, contents: resources, druid: 'bc123df456', version_id: '1') }
-    let(:resources) { [build(:resource, :file, druid: 'bc123df456', files: [build(:resource_file, label: 'A File')])] }
+    let(:purl) { build(:purl, contents: resources, druid: 'bc123df4567', version_id: '1') }
+    let(:resources) { [build(:resource, :file, druid: 'bc123df4567', files: [build(:resource_file, :world_downloadable), build(:resource_file, :world_downloadable)])] }
 
     it 'returns a versioned stacks url for download all' do
-      link = page.find_by_id('#sul-embed-footer-download-all')
+      link = page.find_by_id('sul-embed-footer-download-all')
       expect(link['href']).to eq('https://stacks.stanford.edu/object/bc123df4567/version/1')
     end
   end

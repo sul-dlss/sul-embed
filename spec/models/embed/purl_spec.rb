@@ -46,7 +46,7 @@ RSpec.describe Embed::Purl do
       subject(:purl) { described_class.new(druid: 'kq126jw7402', version_id: 2) }
 
       it 'returns a versionful purl url' do
-        expect(purl.purl_url).to eq('https://purl.stanford.edu/kq126jw7402/v2')
+        expect(purl.purl_url).to eq('https://purl.stanford.edu/kq126jw7402/version/2')
       end
     end
   end
