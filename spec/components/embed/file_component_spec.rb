@@ -26,14 +26,14 @@ RSpec.describe Embed::FileComponent, type: :component do
 
   context 'when a version id is supplied' do
     let(:request) do
-      Embed::Request.new(url: 'http://purl.stanford.edu/bc123df456/v1')
+      Embed::Request.new(url: 'http://purl.stanford.edu/bc123df456/version/1')
     end
-    let(:purl) { build(:purl, contents: resources, druid: 'bc123df456', version_id: 'v1') }
+    let(:purl) { build(:purl, contents: resources, druid: 'bc123df456', version_id: '1') }
     let(:resources) { [build(:resource, :file, druid: 'bc123df456', files: [build(:resource_file, label: 'A File')])] }
 
     it 'returns a versioned stacks url' do
       link = page.find('tr[data-tree-role="leaf"] a', match: :first, visible: :all)
-      expect(link['href']).to eq('https://stacks.stanford.edu/v2/file/bc123df4567/v1/data.zip')
+      expect(link['href']).to eq('https://stacks.stanford.edu/v2/file/bc123df4567/version/1/data.zip')
     end
   end
 

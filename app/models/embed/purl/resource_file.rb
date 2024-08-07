@@ -33,7 +33,7 @@ module Embed
         encoded_title = title.split('/').map { |title_part| ERB::Util.url_encode(title_part) }.join('/')
 
         uri = if version
-                URI.parse("#{versioned_stacks_url}/#{version}/#{encoded_title}")
+                URI.parse("#{versioned_stacks_url}/version/#{version}/#{encoded_title}")
               else
                 URI.parse("#{stacks_url}/#{encoded_title}")
               end
