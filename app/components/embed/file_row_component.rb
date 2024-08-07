@@ -12,7 +12,7 @@ module Embed
 
     attr_reader :viewer, :file, :pos_in_set, :set_size, :level
 
-    delegate :file_url, :label, to: :file
+    delegate :label, to: :file
 
     def file_size_text
       viewer.file_size_text(file.size)
@@ -32,6 +32,14 @@ module Embed
 
     def download?
       !viewer.embargoed_to_world?(file)
+    end
+
+    def version
+      viewer.purl_object.version_id
+    end
+
+    def url
+      file.file_url(download: false, version:)
     end
 
     def file_type_icon

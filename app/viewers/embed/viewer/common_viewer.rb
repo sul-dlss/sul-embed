@@ -37,6 +37,10 @@ module Embed
 
       # link that will download all of the files in this object
       def download_url
+        if @purl_object.version_id
+          return "#{Settings.stacks_url}/object/#{@purl_object.druid}/version/#{@purl_object.version_id}"
+        end
+
         "#{Settings.stacks_url}/object/#{@purl_object.druid}"
       end
 

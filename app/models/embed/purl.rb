@@ -62,7 +62,7 @@ module Embed
     def purl_url
       return "#{Settings.purl_url}/#{@druid}" if @version_id.blank?
 
-      "#{Settings.purl_url}/#{@druid}/v#{@version_id}"
+      "#{Settings.purl_url}/#{@druid}/version/#{@version_id}"
     end
 
     def first_collection_url
