@@ -28,16 +28,25 @@ module Embed
       # Creates a file url for stacks
       # @param [Boolean] download
       # @return [String]
-      def file_url(download: false)
+      def file_url(download: false, version: nil)
         # Allow literal slashes in the file URL (do not encode them)
         encoded_title = title.split('/').map { |title_part| ERB::Util.url_encode(title_part) }.join('/')
-        uri = URI.parse("#{stacks_url}/#{encoded_title}")
+
+        uri = if version
+                URI.parse("#{versioned_stacks_url}/#{version}/#{encoded_title}")
+              else
+                URI.parse("#{stacks_url}/#{encoded_title}")
+              end
         uri.query = URI.encode_www_form(download: true) if download
         uri.to_s
       end
 
       def stacks_url
         "#{Settings.stacks_url}/file/druid:#{@druid}"
+      end
+
+      def versioned_stacks_url
+        "#{Settings.stacks_url}/v2/file/#{@druid}"
       end
 
       def label_or_filename
