@@ -13,9 +13,9 @@ RSpec.describe Embed::PurlJsonLoader do
     end
 
     context 'when version id is supplied' do
-      subject(:loader) { described_class.new('12345', 'v3').send(:purl_json_url) }
+      subject(:loader) { described_class.new('12345', '3').send(:purl_json_url) }
 
-      it { is_expected.to eq('https://purl.stanford.edu/12345/v3.json') }
+      it { is_expected.to eq('https://purl.stanford.edu/12345/version/3.json') }
     end
   end
 

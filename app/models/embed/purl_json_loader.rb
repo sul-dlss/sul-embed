@@ -144,7 +144,7 @@ module Embed
     def purl_json_url
       return "#{Settings.purl_url}/#{@druid}.json" if @version_id.blank?
 
-      "#{Settings.purl_url}/#{@druid}/#{@version_id}.json"
+      "#{Settings.purl_url}/#{@druid}/version/#{@version_id}.json"
     end
 
     def http_response
