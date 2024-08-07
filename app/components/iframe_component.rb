@@ -24,7 +24,9 @@ class IframeComponent < ViewComponent::Base
   end
 
   def path_segments
-    [druid, version_id].join('/')
+    segments = [druid]
+    segments += ['version', version_id] if version_id
+    segments.join('/')
   end
 
   def call

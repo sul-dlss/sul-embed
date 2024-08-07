@@ -117,10 +117,10 @@ RSpec.describe Embed::Request do
     end
 
     context 'when url is a versioned purl' do
-      let(:purl) { "#{Settings.purl_url}/abc123/v1" }
+      let(:purl) { "#{Settings.purl_url}/abc123/version/1" }
 
       it 'instantiates a Purl object w/ the object druid and version ID' do
-        expect(Embed::Purl).to receive(:find).with('abc123', 'v1').and_return(object)
+        expect(Embed::Purl).to receive(:find).with('abc123', '1').and_return(object)
         expect(described_class.new(url: purl).purl_object).to be object
       end
     end
