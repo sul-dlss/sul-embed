@@ -64,7 +64,7 @@ RSpec.describe IframeComponent, type: :component do
     end
 
     it 'links to the versionless purl url' do
-      expect(src).to match(%r{iframe\?url=https://purl\.stanford\.edu/oo000oo0000/&})
+      expect(src).to match(%r{iframe\?url=https://purl\.stanford\.edu/oo000oo0000&})
     end
 
     it 'includes a cache busting parameter' do
@@ -72,7 +72,7 @@ RSpec.describe IframeComponent, type: :component do
     end
 
     context 'when purl object has a version id' do
-      let(:purl_object) { instance_double(Embed::Purl, druid: 'oo000oo0000', title: 'The Object Title', version_id: 'v3') }
+      let(:purl_object) { instance_double(Embed::Purl, druid: 'oo000oo0000', title: 'The Object Title', version_id: '3') }
 
       it 'includes the relevant request parameters' do
         expect(src).to match(/&hide_embed=true/)
@@ -85,7 +85,7 @@ RSpec.describe IframeComponent, type: :component do
       end
 
       it 'links to the versionful purl url' do
-        expect(src).to match(%r{iframe\?url=https://purl\.stanford\.edu/oo000oo0000/v3&})
+        expect(src).to match(%r{iframe\?url=https://purl\.stanford\.edu/oo000oo0000/version/3&})
       end
 
       it 'includes a cache busting parameter' do

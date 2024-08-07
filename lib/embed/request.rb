@@ -59,7 +59,7 @@ module Embed
     end
 
     def object_version_id
-      url_path_segments[1]
+      url_path_segments[2]
     end
 
     def url_path_segments
