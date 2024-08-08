@@ -197,7 +197,20 @@ export default {
         fillOpacity: opacity
       })
     } else {
-      layer = L.geoJSON(data, {color: color, opacity: opacity})
+      layer = L.geoJSON(data, {
+        color: color,
+        opacity: opacity,
+        pointToLayer: function(feature, latlng) {
+          return L.circleMarker(latlng, {
+            radius: 8,
+            fillColor: color,
+            color: color,
+            weight: 1,
+            opacity: opacity,
+            fillOpacity: opacity
+          });
+        }
+      })
       geoJSON = true;
     }
     layer.customProperty = { 'addToOpacitySlider': true, geoJSON: geoJSON };
