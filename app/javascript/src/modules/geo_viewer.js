@@ -6,16 +6,12 @@ export default {
   init: function (options) {
     this.$el = jQuery('#sul-embed-geo-map');
     this.dataAttributes = this.$el.data();
+    this.geoViewer = this.dataAttributes.geoViewer;
 
     this.map = L.map('sul-embed-geo-map', options).fitBounds(this.dataAttributes.boundingBox);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyrigh' +
-        't">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.open' +
-        'streetmap.org/" target="_blank" rel="noopener noreferrer">Humanitarian OpenStreetMap Team<' +
-        '/a>',
-    }).addTo(this.map);
+
+    L.tileLayer(this.geoViewer.leaflet_map.url, this.geoViewer.leaflet_map.settings).addTo(this.map);
     this.highlightLayer = L.layerGroup().addTo(this.map);
 
     this.addVisualizationLayer();
@@ -84,6 +80,7 @@ export default {
     var style = {
       radius: 4,
       weight: 1,
+      className: availability ? 'available' : 'unavailable'
     };
     // Style the colors based on availability
     if (typeof (availability) === 'undefined') {
@@ -91,9 +88,9 @@ export default {
     }
 
     if (availability) {
-      style.color = this.dataAttributes.geoViewerColors.available;
+      style.color = this.geoViewer.available;
     } else {
-      style.color = this.dataAttributes.geoViewerColors.unavailable;
+      style.color = this.geoViewer.unavailable;
     }
     return style;
   },
@@ -188,16 +185,17 @@ export default {
     var opacity = this.layer ? this.layer.options.opacity : data.options.fillOpacity ? data.options.fillOpacity : data.options.opacity;
     var geoJSON = false;
     var layer;
-    var color = this.dataAttributes.geoViewerColors.selected;
+    var color = this.geoViewer.selected;
     if (data._latlngs) {
       layer = L.polygon(data._latlngs, {
         color: color,
         weight: 2,
         layer: true,
+        className: 'selected',
         fillOpacity: opacity
       })
     } else {
-      layer = L.geoJSON(data, {color: color, opacity: opacity})
+      layer = L.geoJSON(data, {color: color, opacity: opacity, className: 'selected'})
       geoJSON = true;
     }
     layer.customProperty = { 'addToOpacitySlider': true, geoJSON: geoJSON };

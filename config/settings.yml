@@ -8,10 +8,16 @@ iiif_info_url: "https://library.stanford.edu/iiif/viewers"
 enable_media_viewer?: <%= true %>
 geo_external_url: "https://earthworks.stanford.edu/catalog/stanford-"
 geo_wms_url: "https://geowebservices.stanford.edu/geoserver/wms/"
-geo_viewer_colors:
+geo_viewer:
   selected: 'blue'
   available: '#1eb300'
   unavailable: '#b3001e'
+  leaflet_map:
+    url: 'https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png'
+    settings:
+      maxZoom: 19
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank" rel="noopener noreferrer">Humanitarian OpenStreetMap Team</a>'
+
 resource_types_that_contain_thumbnails:
   - audio
   - file
