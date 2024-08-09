@@ -20,7 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
   restrictions:
     not_accessible: 'This item cannot be accessed online. See Access conditions for more information.'
     logged_in: 'Logged in.'
@@ -28,6 +27,11 @@ en:
     formats:
       sul: '%d-%b-%Y'
       sul_was_long: '%d %B %Y'
+  number:
+    human:
+      storage_units:
+        units:
+          kb: kB # This is the SI unit for 10^3
   viewers:
     file:
       title: 'File viewer'
