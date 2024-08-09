@@ -91,9 +91,9 @@ export default {
     }
 
     if (availability) {
-      style.color = '#1eb300';
+      style.color = this.dataAttributes.geoViewerColors.available;
     } else {
-      style.color = '#b3001e';
+      style.color = this.dataAttributes.geoViewerColors.unavailable;
     }
     return style;
   },
@@ -188,7 +188,7 @@ export default {
     var opacity = this.layer ? this.layer.options.opacity : data.options.fillOpacity ? data.options.fillOpacity : data.options.opacity;
     var geoJSON = false;
     var layer;
-    var color = 'blue';
+    var color = this.dataAttributes.geoViewerColors.selected;
     if (data._latlngs) {
       layer = L.polygon(data._latlngs, {
         color: color,
