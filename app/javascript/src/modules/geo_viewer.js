@@ -200,6 +200,7 @@ export default {
       layer = L.geoJSON(data, {color: color, opacity: opacity})
       geoJSON = true;
     }
+    this.map.setView(layer.getBounds().getCenter());
     layer.customProperty = { 'addToOpacitySlider': true, geoJSON: geoJSON };
     layer.addTo(this.highlightLayer);
   },
