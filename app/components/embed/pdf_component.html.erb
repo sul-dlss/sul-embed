@@ -1,4 +1,4 @@
-<%= render Embed::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth') do |component| %>
+<%= render Embed::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth fullscreen') do |component| %>
   <% component.with_header_button do %>
     <%# chromium has a bug preventing the esc key from exiting full screen in some situations, see
         https://issues.chromium.org/issues/40131988 and https://github.com/sul-dlss/sul-embed/issues/2162 %>
@@ -6,6 +6,7 @@
       <button
         aria-label="Full screen"
         class="btn sul-i-expand-1 sul-fullscreen-button"
+        data-action="fullscreen#toggle"
         id="full-screen-button">
       </button>
     <% end %>
@@ -16,6 +17,7 @@
           <%= render Embed::LoginComponent.new %>
           <div class="sul-embed-pdf" style="height: 100%"
             data-controller="pdf"
+            data-fullscreen-target="area"
             data-action="iiif-manifest-received@window->file-auth#parseFiles auth-success@window->pdf#show">
           </div>
     <% else %>

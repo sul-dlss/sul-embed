@@ -23,7 +23,7 @@ RSpec.describe Embed::PdfComponent, type: :component do
     let(:companion_windows_component) { Embed::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth') }
 
     before do
-      allow(Embed::CompanionWindowsComponent).to receive(:new).with(viewer:, stimulus_controller: 'file-auth').and_return(companion_windows_component)
+      allow(Embed::CompanionWindowsComponent).to receive(:new).with(viewer:, stimulus_controller: 'file-auth fullscreen').and_return(companion_windows_component)
       allow(companion_windows_component).to receive(:requested_by_chromium?).and_return(true)
     end
 
