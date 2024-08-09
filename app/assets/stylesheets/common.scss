@@ -1,7 +1,6 @@
 // All classes should be scoped within the .sul-embed-container
 @import "palette";
 @import "sul_variables";
-@import "mixins";
 @import "modules/buttons";
 @import "modules/popup_panels";
 @import "modules/shadows";
@@ -23,11 +22,6 @@ body {
   height: 100vh;
   overflow-x: hidden;
   overflow-y: hidden;
-
-  * {
-    padding: 0;
-    margin: 0;
-  }
 
   .sul-embed-header {
     flex: 0 1 auto;
