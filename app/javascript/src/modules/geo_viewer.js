@@ -200,7 +200,15 @@ export default {
       layer = L.geoJSON(data, {color: color, opacity: opacity})
       geoJSON = true;
     }
-    this.map.setView(layer.getBounds().getCenter());
+
+    // Sometimes data doesn't have geometry (https://purl.stanford.edu/tg926kp6619)
+    // Trying to getBounds() breaks on layers without geometry
+    try {
+      this.map.setView(layer.getBounds().getCenter());
+    } catch (error) {
+      console.error(error);
+    }
+
     layer.customProperty = { 'addToOpacitySlider': true, geoJSON: geoJSON };
     layer.addTo(this.highlightLayer);
   },
