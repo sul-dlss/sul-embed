@@ -18,7 +18,7 @@ AllCops:
     - 'spec/fixtures/**/*'
     - 'vendor/**/*'
     - 'node_modules/**/*'
-  TargetRubyVersion: 3.1
+  TargetRubyVersion: 3.3
 
 Rails:
   Enabled: true
@@ -517,4 +517,12 @@ RSpec/RemoveConst: # new in 2.26
 RSpec/RepeatedSubjectCall: # new in 2.27
   Enabled: true
 RSpec/UndescriptiveLiteralsDescription: # new in 2.29
+  Enabled: true
+Gemspec/AddRuntimeDependency: # new in 1.65
+  Enabled: true
+Style/SendWithLiteralMethodName: # new in 1.64
+  Enabled: true
+Style/SuperArguments: # new in 1.64
+  Enabled: true
+Rails/WhereRange: # new in 2.25
   Enabled: true
