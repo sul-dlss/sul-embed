@@ -8,13 +8,13 @@
       <div style="max-width: 95%; overflow-wrap: break-word;">
         <%= title %>
         <% if label %>
-          <p data-tree-role="label"><%= label %></p>
+          <p data-tree-role="label" class="tree-label"><%= label %></p>
         <% end %>
       </div>
     </div>
   </td>
   <td role="gridcell"><%= file_size_text%></td>
-  <td role="gridcell">    
+  <td role="gridcell">
     <% if download? %>
       <a href="<%= url %>" target='_blank' rel='noopener noreferrer' download>
         <i class='sul-i-download-3'></i>
