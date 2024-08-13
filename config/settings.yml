@@ -9,9 +9,9 @@ enable_media_viewer?: <%= true %>
 geo_external_url: "https://earthworks.stanford.edu/catalog/stanford-"
 geo_wms_url: "https://geowebservices.stanford.edu/geoserver/wms/"
 geo_viewer_colors:
-  selected: 'blue'
-  available: '#1eb300'
-  unavailable: '#b3001e'
+  selected: 'yellow'
+  available: '#006CB8'
+  unavailable: '#B1040E'
 resource_types_that_contain_thumbnails:
   - audio
   - file
