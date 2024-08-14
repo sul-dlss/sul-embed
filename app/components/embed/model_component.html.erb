@@ -1,6 +1,6 @@
-<div class="sul-embed-container" id='sul-embed-object' hidden>
+<div class="sul-embed-container" data-controller="fullscreen" id='sul-embed-object' hidden>
   <%= render Embed::HeaderComponent.new viewer: viewer %>
-  <div class="sul-embed-3d sul-embed-body">
+  <div class="sul-embed-3d sul-embed-body" data-fullscreen-target="area">
     <div class="buttons">
       <button aria-label="Zoom in" class="zoom-in">+</button>
       <button aria-label="Zoom out" class="zoom-out">-</button>
@@ -8,11 +8,6 @@
     <div id="3d-viewer">
       <model-viewer auto-rotate camera-controls ar-modes="webxr scene-viewer quick-look" src="<%= viewer.three_dimensional_files.first %>"></model-viewer>
     </div>
-    <button
-      aria-label="Exit full screen"
-      class="btn sul-i-close sul-close-fullscreen-button"
-      id="close-full-screen-button">
-    </button>
   </div>
 
   <%= render 'embed/metadata_panel', viewer: viewer %>
