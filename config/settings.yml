@@ -4,7 +4,7 @@ purl_read_timeout: 20
 purl_conn_timeout: 2
 purl_feedback_email: "some-email-address@distribution-list-host.stanford.edu"
 stacks_url: "https://stacks.stanford.edu"
-iiif_info_url: "https://library.stanford.edu/iiif/viewers"
+iiif_info_url: "https://library.stanford.edu/iiif"
 enable_media_viewer?: <%= true %>
 geo_external_url: "https://earthworks.stanford.edu/catalog/stanford-"
 geo_wms_url: "https://geowebservices.stanford.edu/geoserver/wms/"
