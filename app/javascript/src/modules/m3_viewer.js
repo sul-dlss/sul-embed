@@ -43,7 +43,7 @@ export default {
             'https://embed.stanford.edu/iframe?url=https://purl.stanford.edu/$1',
           ],
         },
-        dragAndDropInfoLink: 'https://library.stanford.edu/iiif-viewers',
+        dragAndDropInfoLink: 'https://library.stanford.edu/iiif',
         shareLink: {
           enabled: true,
           manifestIdReplacePattern: [
