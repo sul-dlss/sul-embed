@@ -9,12 +9,10 @@ export default {
 
     this.map = L.map('sul-embed-geo-map', options).fitBounds(this.dataAttributes.boundingBox);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+    const attribution = `&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://carto.com/attributions">Carto</a>`
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png', {
       maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyrigh' +
-        't">OpenStreetMap</a>, Tiles courtesy of <a href="http://hot.open' +
-        'streetmap.org/" target="_blank" rel="noopener noreferrer">Humanitarian OpenStreetMap Team<' +
-        '/a>',
+      attribution: attribution,
     }).addTo(this.map);
     this.highlightLayer = L.layerGroup().addTo(this.map);
 
