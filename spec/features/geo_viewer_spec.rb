@@ -20,12 +20,12 @@ RSpec.describe 'geo viewer', :js do
       expect(page).to have_css('.leaflet-control-zoom-out', count: 1, visible: :visible)
 
       within '.leaflet-control-attribution.leaflet-control' do
-        expect(page).to have_content(' OpenStreetMap, Tiles courtesy of ')
+        expect(page).to have_content('OpenStreetMap contributors')
       end
     end
 
     it 'shows the OpenStreetMap tiles' do
-      expect(page).to have_css("img[src*='openstreetmap.fr']", minimum: 6)
+      expect(page).to have_css("img[src*='basemaps.cartocdn']", minimum: 6)
     end
 
     it 'shows the wms tiles' do
