@@ -15,7 +15,7 @@ RSpec.describe 'application and dependency monitoring' do
         .to_return(status: 200, body: '', headers: {})
       stub_request(:get, 'https://stacks.stanford.edu/')
         .to_return(status: 200, body: '', headers: {})
-      stub_request(:get, 'https://sul-mediaserver.stanford.edu/stacks/_definst_')
+      stub_request(:get, 'https://sul-mediaserver.stanford.edu/stacks/ServerVersion')
         .to_return(status: 200, body: '', headers: {})
       stub_request(:get, 'https://geowebservices.stanford.edu/geoserver/wms/')
         .to_return(status: 200, body: '', headers: {})
@@ -35,7 +35,7 @@ RSpec.describe 'application and dependency monitoring' do
 
   describe '/status/streaming_url' do
     before do
-      stub_request(:get, 'https://sul-mediaserver.stanford.edu/stacks/_definst_')
+      stub_request(:get, 'https://sul-mediaserver.stanford.edu/stacks/ServerVersion')
         .to_return(status: 200, body: '', headers: {})
     end
 
