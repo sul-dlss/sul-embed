@@ -23,11 +23,11 @@ OkComputer.make_optional ['stacks_url']
 # NON-CRUCIAL (Optional) checks, avail at /status/<name-of-check>
 #   - at individual endpoint, HTTP response code reflects the actual result
 #   - in /status/all, these checks will display their result text, but will not affect HTTP response code
-if Settings.enable_media_viewer?
-  stream_url = "https://#{Settings.stream.url}"
-  OkComputer::Registry.register 'streaming_url', OkComputer::HttpCheck.new(stream_url)
-  OkComputer.make_optional ['streaming_url']
-end
+# if Settings.enable_media_viewer?
+#   stream_url = "https://#{Settings.stream.url}"
+#   OkComputer::Registry.register 'streaming_url', OkComputer::HttpCheck.new(stream_url)
+#   OkComputer.make_optional ['streaming_url']
+# end
 
 OkComputer::Registry.register 'geo_web_services_url', OkComputer::HttpCheck.new(Settings.geo_wms_url)
 
