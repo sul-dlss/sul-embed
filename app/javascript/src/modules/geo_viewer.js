@@ -222,7 +222,6 @@ export default {
       .find('.sul-embed-geo-sidebar-content')
       .html(html)
       .slideDown(400)
-      .css({ 'height': this.map.getSize().y - 90 })
       .attr('aria-hidden', false);
   },
   geoSidebar: function () {
