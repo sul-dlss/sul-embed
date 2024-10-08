@@ -12,6 +12,7 @@ geo_viewer_colors:
   selected: 'yellow'
   available: '#006CB8'
   unavailable: '#B1040E'
+  restricted: '#175E54'
 resource_types_that_contain_thumbnails:
   - audio
   - file

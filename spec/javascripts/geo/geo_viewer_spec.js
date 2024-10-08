@@ -8,7 +8,7 @@ describe('geo_viewer.js', () => {
   });
   describe('#init', () => {
     document.body.innerHTML = '<div id="sul-embed-geo-map" data-bounding-box=\'[["38.298673'
-      + '", "-123.387626"], ["39.399103", "-122.528843"]]\'></div>';
+      + '", "-123.387626"], ["39.399103", "-122.528843"]]\' data-geo-viewer-colors="\'{"restricted" :"blue"}\'"></div>';
     it('initializes map', () => {
       GeoViewer.init({ renderer: L.canvas() });
     });
