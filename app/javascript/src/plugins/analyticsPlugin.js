@@ -5,12 +5,27 @@ import ActionTypes from 'mirador/dist/es/src/state/actions/action-types.js';
 import { getManifest, getCompanionWindow } from 'mirador/dist/es/src/state/selectors/index.js';
 
 function* onSetCanvas({ type, windowId, canvasId }) {
-  const { id: manifestId } = yield select(getManifest, { windowId });
-  yield put({ type: 'mirador/analytics', payload: {
-    eventCategory: manifestId,
-    eventAction: type,
-    eventLabel: canvasId,
-  }});
+  // TODO fix this
+  // Cannot destructure property 'id' of '(intermediate value)' as it is undefined.
+  // const { id: manifestId } = yield select(getManifest, { windowId });
+  // Assume that windowIds is an array of window IDs
+    // const windowIds = yield select(getWindowIds); // Replace with your actual selector
+
+    // Filter out null IDs
+    const validWindowIds = windowIds.filter(id => id !== null);
+
+    // If there are valid IDs, use the first one; otherwise handle the case where no valid ID exists
+    if (validWindowIds.length > 0) {
+        const { id: manifestId } = yield select(getManifest, { windowId: validWindowIds[0] });
+        yield put({ type: 'mirador/analytics', payload: {
+          eventCategory: manifestId,
+          eventAction: type,
+          eventLabel: canvasId,
+        }});
+    } else {
+        // Handle the case where no valid windowId is found
+        console.error('No valid windowId found');
+    }
 }
 
 function* onAddResource({ type, manifestId }) {

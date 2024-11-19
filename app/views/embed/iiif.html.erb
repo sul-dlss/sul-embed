@@ -25,6 +25,8 @@
           id='sul-embed-m3'
           class='m3'
           data-m3-uri='<%= @embed_request.url %>'
+          # this one is what's getting rendered
+          data-workspace-state='<%= @embed_request.workspace_state %>'
           data-canvas-id='<%= @embed_request.canvas_id %>'
           data-canvas-index='<%= @embed_request.canvas_index %>'
           data-hide-title='<%= @embed_request.hide_title? %>'

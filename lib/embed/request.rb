@@ -77,7 +77,8 @@ module Embed
         :min_files_to_search,
         :canvas_id, :canvas_index,
         :search, :suggested_search,
-        :image_tools
+        :image_tools,
+        :workspace_state
       )
 
       if p.respond_to? :permit!
@@ -101,6 +102,10 @@ module Embed
 
     def suggested_search
       params[:suggested_search]
+    end
+
+    def workspace_state
+      params[:workspace_state]
     end
 
     def image_tools

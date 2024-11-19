@@ -11,11 +11,14 @@ import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin';
 import embedModePlugin from '../plugins/embedModePlugin';
 import analyticsPlugin from '../plugins/analyticsPlugin';
 import cdlAuthPlugin from '../plugins/cdlAuthPlugin';
+import { getExportableState } from 'mirador/dist/es/src/state/selectors';
+import { importMiradorState } from 'mirador/dist/es/src/state/actions';
 
 export default {
   init: function() {
     const el = document.getElementById('sul-embed-m3');
     const data = el.dataset;
+    console.log("data props", data)
     const showAttribution = (data.showAttribution === 'true')
     const hideWindowTitle = (data.hideTitle === 'true')
     const imageTools = (data.imageTools === 'true')
@@ -30,7 +33,7 @@ export default {
       sideBarPanel = 'attribution';
     }
 
-    Mirador.viewer({
+    const viewerInstance = Mirador.viewer({
       id: 'sul-embed-m3',
       miradorDownloadPlugin: {
         restrictDownloadOnSizeDefinition: true,
@@ -40,7 +43,7 @@ export default {
           enabled: true,
           embedUrlReplacePattern: [
             /.*\.edu\/(\w+)\/iiif\d?\/manifest/,
-            'https://embed.stanford.edu/iframe?url=https://purl.stanford.edu/$1',
+            'https://localhost:3001/iframe?url=https://purl.stanford.edu/$1',
           ],
         },
         dragAndDropInfoLink: 'https://library.stanford.edu/iiif',
@@ -74,6 +77,15 @@ export default {
           }
         }
       },
+      // viewers: {
+      //   'main': {
+      //     flip: false,
+      //     rotation: 0,
+      //     x: 7190,
+      //     y: 3668,
+      //     zoom: 0.007
+      //   }
+      // },
       windows: [{
         id: 'main',
         defaultSearchQuery: data.search.length > 0 ? data.search : undefined,
@@ -112,10 +124,11 @@ export default {
       workspace: {
         showZoomControls: true,
         type: imageTools ? 'mosaic' : 'single',
+        viewportPosition: {x: 1000, y: 2000},
       },
       workspaceControlPanel: {
-        enabled: false,
-      }
+        enabled: true,
+      },
     }, [
       ...((cdl && cdlAuthPlugin) || []),
       ...((imageTools && miradorImageToolsPlugin) || []),
@@ -134,5 +147,71 @@ export default {
       },
       analyticsPlugin,
     ].filter(Boolean));
+
+    const setInitialState = () => {
+      let parsedIncomingState;
+      console.log("Sul-Embed: data.workspaceState", data)
+      if (data.workspaceState) {
+        try {
+          parsedIncomingState = JSON.parse(data.workspaceState);
+        }
+        catch (e) {
+          // debugger
+          console.error('Sul-Embed: Failed to parse workspaceState', e);
+          return;
+        }
+        const currentState = viewerInstance.store.getState();
+
+        let newState = {
+          ...currentState,
+          ...parsedIncomingState
+        }
+      
+        // !!! THE ISSUE IS the MAIN windowId 
+        viewerInstance.store.dispatch(
+          importMiradorState({
+            ...newState,
+            config: {preserveViewport: true, ...newState.config},
+          },)
+        );
+        console.log("viewerInstance.store.getState().config", viewerInstance.store.getState().config)
+      }
+    };
+    // for redux plugin pattern tips https://github.com/ProjectMirador/mirador/issues/3531
+    if (data.workspaceState) {
+      setInitialState();
+    }
+
+    // Listen for messages from the parent window inside the iframe
+    window.addEventListener('message', (event) => {
+      // TODO: Ensure the message is coming from a trusted origin
+      // if (event.origin !== 'something-sul') {
+      //   return;
+      // }
+      if (event && event.data) {
+        let parsedData;
+        try {
+          parsedData = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        } catch (error) {
+          console.error('Failed to parse event data:', error);
+          return; // Exit if parsing fails
+        }
+    
+        if (parsedData.type === "requestState") {
+          const currentState = viewerInstance.store.getState();
+          const exportableState = getExportableState(currentState);
+          console.log("Sul-Embed: Sending iframe state to parent...")
+          // Send the state back to the parent window
+          window.parent.postMessage(
+            JSON.stringify({
+              type: 'stateResponse',
+              data: exportableState,
+              source: 'sul-embed-m3',
+            }),
+            '*'
+          ); // Change '*' to a specific origin ??
+        }
+      }
+    });
   }
-};
+}

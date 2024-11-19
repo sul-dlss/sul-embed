@@ -1,4 +1,4 @@
-web: unset PORT && bin/rdbg -O -n -c -- bin/rails server
+web: unset PORT && bin/rdbg -O -n -c -- bin/rails server -p 3001
 css: bin/yarn build:css --watch
 js: bin/shakapacker-dev-server
 stacks: docker compose up --abort-on-container-exit --build

@@ -67,17 +67,17 @@ function* requestCdlInfoAndAvailability(cdlInfoEndpoint, accessToken) {
   const cdlInfoResponse = yield fetch(cdlInfoEndpoint, options)
     .then(res => res.json());
 
-  yield put({ id: 'main', payload: {
-    cdlInfoResponse,
-    cdlInfoResponseUrl: cdlInfoEndpoint,
-  }, type: ActionTypes.UPDATE_WINDOW });
+  // yield put({ id: 'main', payload: {
+  //   cdlInfoResponse,
+  //   cdlInfoResponseUrl: cdlInfoEndpoint,
+  // }, type: ActionTypes.UPDATE_WINDOW });
 
   const cdlAvailability = yield fetch(cdlInfoResponse.availability_url)
     .then(res => res.json());
 
-  yield put({ id: 'main', payload: {
-      cdlAvailability,
-  }, type: ActionTypes.UPDATE_WINDOW });
+  // yield put({ id: 'main', payload: {
+  //     cdlAvailability,
+  // }, type: ActionTypes.UPDATE_WINDOW });
 }
 
 /** */

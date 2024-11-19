@@ -19,8 +19,9 @@ class IframeComponent < ViewComponent::Base
   end
 
   def src
+    puts ">> embed_request.as_url_params: #{embed_request.as_url_params}"
     query_params = embed_request.as_url_params.merge(version ? { _v: version } : {}).to_query
-    "#{iframe_url}?url=#{Settings.purl_url}/#{path_segments}&#{query_params}"
+    "http://localhost:3001/iframe?url=#{Settings.purl_url}/#{path_segments}&#{query_params}"
   end
 
   def path_segments

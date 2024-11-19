@@ -8,14 +8,14 @@ class EmbedController < ApplicationController
   etag { Rails.application.importmap.digest(resolver: helpers) if request.format&.html? }
 
   before_action :embed_request
-  before_action :set_cache, only: %i[iiif]
+  # before_action :set_cache, only: %i[iiif]
   before_action :fix_etag_header, only: %i[get iframe]
   before_action :allow_iframe, only: %i[iiif iframe]
 
   def get
     @embed_request.validate!
 
-    return unless stale?(last_modified: @embed_request.purl_object.last_modified, etag: @embed_request.purl_object.etag)
+  # return unless stale?(last_modified: @embed_request.purl_object.last_modified, etag: @embed_request.purl_object.etag)
 
     if @embed_request.format.to_sym == :xml
       render xml: Embed::Response.new(@embed_request).embed_hash(self).to_xml(root: 'oembed')
@@ -23,6 +23,17 @@ class EmbedController < ApplicationController
       render json: Embed::Response.new(@embed_request).embed_hash(self)
     end
   end
+
+  def post
+    @embed_request.validate!
+
+    if @embed_request.format.to_sym == :xml
+        render xml: Embed::Response.new(@embed_request).embed_hash(self).to_xml(root: 'oembed')
+    else
+        render json: Embed::Response.new(@embed_request).embed_hash(self)
+    end
+  end
+
 
   def iframe
     # Trigger purl object validation (will raise Embed::Purl::ResourceNotAvailable)
@@ -56,7 +67,7 @@ class EmbedController < ApplicationController
     end
     params.permit(:url, :maxwidth, :maxheight, :format, :fullheight, :new_component,
                   :hide_title, :hide_embed, :hide_download, :hide_search, :min_files_to_search,
-                  :canvas_id, :canvas_index, :search, :suggested_search, :image_tools, :cdl_hold_record_id)
+                  :canvas_id, :canvas_index, :search, :suggested_search, :image_tools, :cdl_hold_record_id, :workspace_state)
   end
 
   rescue_from Embed::Request::NoURLProvided do |e|
