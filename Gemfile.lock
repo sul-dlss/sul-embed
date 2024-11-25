@@ -162,7 +162,7 @@ GEM
       activesupport (>= 6.1)
     hashdiff (1.1.2)
     high_voltage (4.0.0)
-    honeybadger (5.22.0)
+    honeybadger (5.24.0)
       logger
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
@@ -190,7 +190,7 @@ GEM
     method_source (1.1.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.8)
-    minitest (5.25.1)
+    minitest (5.25.2)
     msgpack (1.7.5)
     net-http (0.5.0)
       uri
@@ -208,7 +208,7 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     net-ssh (7.3.0)
-    newrelic_rpm (9.15.0)
+    newrelic_rpm (9.16.0)
     nio4r (2.7.4)
     nokogiri (1.16.7)
       mini_portile2 (~> 2.8.2)
@@ -230,7 +230,7 @@ GEM
     psych (5.2.0)
       stringio
     public_suffix (6.0.1)
-    puma (6.4.3)
+    puma (6.5.0)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.1.8)
@@ -273,7 +273,7 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.2.1)
-    rdoc (6.7.0)
+    rdoc (6.8.1)
       psych (>= 4.0.0)
     regexp_parser (2.9.2)
     reline (0.5.11)
