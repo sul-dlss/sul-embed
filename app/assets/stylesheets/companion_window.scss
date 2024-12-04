@@ -234,6 +234,11 @@
     }
   }
 
+  .transcript-header {
+    background: $color-fog-light;
+    padding-bottom: 1.5rem;
+  }
+
   .header-background {
     background: $color-fog-light;
     display: flex;
@@ -253,6 +258,7 @@
 
     &.transcript-controls {
       font-size: 0.8rem;
+      flex-direction: column;
 
       input {
         margin-left: 0.6rem;
