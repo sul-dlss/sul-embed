@@ -11,13 +11,18 @@ export default class extends Controller {
   toggleVisibility(event) {
     const index =  event.detail.index
     this.element.hidden = this.indexValue !== index
-    this.pauseAllMedia()
+    this.pauseAllMedia(index)
   }
 
-  pauseAllMedia() {
+  // switch transcript if media object index is the same as the visible index.
+  pauseAllMedia(index) {
     const mediaObject = this.element.querySelector('.video-js')
     if (mediaObject) {
-      videojs(mediaObject.id).pause()
+      const playerObject = videojs(mediaObject.id);
+      playerObject.pause()
+      if (mediaObject.dataset.index == index){
+        window.dispatchEvent(new CustomEvent('switch-transcript', { detail: playerObject }))
+      }
     }
   }
 }
