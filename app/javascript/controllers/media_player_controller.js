@@ -5,9 +5,9 @@ export default class extends Controller {
   initializeVideoJSPlayer() {
     this.element.classList.add('video-js', 'vjs-default-skin')
     this.player = videojs(this.element.id, {"responsive": true})
-    this.player.on('loadedmetadata', () => {
-      const event = new CustomEvent('media-loaded', { detail: this.player })
-      window.dispatchEvent(event)
+    this.player.index = this.element.dataset.index;
+
+    this.player.on('loadedmetadata', (evt) => {
 
       // Stop the `loadedmetadata` event and don't bother listening for
       // `timeupdate` events until after `loadedmetadata` fires completes.
@@ -20,13 +20,20 @@ export default class extends Controller {
         const event = new CustomEvent('time-update', { detail: timestamp })
         window.dispatchEvent(event)
       })
+
+      if (evt.target.player.index == 0){
+        const event = new CustomEvent('media-loaded', { detail: this.player });
+        window.dispatchEvent(event);
+      }
     })
 
     // The loadeddata event occurs when the first frame of the video is available, and 
     // happens after loadedmetadata
-    this.player.on('loadeddata', () => {
-      const event = new CustomEvent('media-data-loaded')
-      window.dispatchEvent(event)
+    this.player.on('loadeddata', (evt) => {
+      if (evt.target.player.index == 0){
+        const event = new CustomEvent('media-data-loaded');
+        window.dispatchEvent(event);
+      }
     })
   }
 
