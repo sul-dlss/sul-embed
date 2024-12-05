@@ -1,7 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import validator from 'src/modules/validator'
 import mediaTagTokenWriter from 'src/modules/media_tag_token_writer'
-import Thumbnail from 'src/modules/thumbnail'
 
 export default class extends Controller {
   static targets = [ "authorizeableResource", "mediaWrapper" ]
@@ -37,7 +36,7 @@ export default class extends Controller {
   }
 
   // Currently this finds certain data-* properties on the media wrapper which we can make thumbnails with.
-  // Once these properties are found we emit a thumbnails-found event.  The content_list_controller.js 
+  // Once these properties are found we emit a thumbnails-found event.  The content_list_controller.js
   // can then receive this event and draw the content of the thubmnail list.
   // TODO: in the future, we should drive the thumbnail list from the data in the IIIF manifest.
   findThumbnails() {
@@ -50,7 +49,7 @@ export default class extends Controller {
                  isLocationRestricted: dataset.locationRestricted === "true",
                  fileLabel: dataset.fileLabel || '' }
       })
-    
+
     window.dispatchEvent(new CustomEvent('thumbnails-found', { detail: thumbnails }))
   }
 
