@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import EmbedThis from 'src/modules/embed_this';
+import EmbedThis from 'src/modules/embed_this'
 
 export default class extends Controller {
   // TODO: accessability and transcript should move to a controller just for media.
@@ -9,7 +9,7 @@ export default class extends Controller {
     this.element.hidden = false
     // Open the drawer on load
     this.openLeftDrawer()
-    EmbedThis.init();
+    EmbedThis.init()
   }
 
   toggleLeft() {

@@ -1,33 +1,33 @@
-'use strict';
+'use strict'
 
-import Mirador from 'mirador/dist/es/src/index.js';
-import miradorImageToolsPlugin from 'mirador-image-tools/es/plugins/miradorImageToolsPlugin.js';
-import miradorShareDialogPlugin from 'mirador-share-plugin/es/MiradorShareDialog.js';
-import miradorSharePlugin from 'mirador-share-plugin/es/miradorSharePlugin.js';
-import miradorDownloadPlugin from 'mirador-dl-plugin/es/miradorDownloadPlugin.js';
-import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDialog.js';
-import shareMenuPlugin from '../plugins/shareMenuPlugin';
-import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin';
-import embedModePlugin from '../plugins/embedModePlugin';
-import analyticsPlugin from '../plugins/analyticsPlugin';
-import cdlAuthPlugin from '../plugins/cdlAuthPlugin';
+import Mirador from 'mirador/dist/es/src/index.js'
+import miradorImageToolsPlugin from 'mirador-image-tools/es/plugins/miradorImageToolsPlugin.js'
+import miradorShareDialogPlugin from 'mirador-share-plugin/es/MiradorShareDialog.js'
+import miradorSharePlugin from 'mirador-share-plugin/es/miradorSharePlugin.js'
+import miradorDownloadPlugin from 'mirador-dl-plugin/es/miradorDownloadPlugin.js'
+import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDialog.js'
+import shareMenuPlugin from '../plugins/shareMenuPlugin'
+import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin'
+import embedModePlugin from '../plugins/embedModePlugin'
+import analyticsPlugin from '../plugins/analyticsPlugin'
+import cdlAuthPlugin from '../plugins/cdlAuthPlugin'
 
 export default {
   init: function() {
-    const el = document.getElementById('sul-embed-m3');
-    const data = el.dataset;
+    const el = document.getElementById('sul-embed-m3')
+    const data = el.dataset
     const showAttribution = (data.showAttribution === 'true')
     const hideWindowTitle = (data.hideTitle === 'true')
     const imageTools = (data.imageTools === 'true')
     const cdl = (data.cdl === 'true')
 
     // Determine which panel should be open
-    var sideBarPanel = 'info';
+    var sideBarPanel = 'info'
     if (data.search.length > 0) {
-      sideBarPanel = 'search';
+      sideBarPanel = 'search'
     }
     if (showAttribution) {
-      sideBarPanel = 'attribution';
+      sideBarPanel = 'attribution'
     }
 
     Mirador.viewer({
@@ -133,6 +133,6 @@ export default {
         target: 'WindowTopBarShareMenu',
       },
       analyticsPlugin,
-    ].filter(Boolean));
+    ].filter(Boolean))
   }
-};
+}

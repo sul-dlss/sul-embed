@@ -12,7 +12,7 @@ export default class extends Controller {
   // Show a different media file when the user selects it in the list
   // Sends an event that tells the MediaWrapperController to display the selected media.
   showMedia(evt) {
-    evt.preventDefault();
+    evt.preventDefault()
     const event = new CustomEvent('thumbnail-clicked', { detail: { index: evt.params.index } })
     window.dispatchEvent(event)
 
