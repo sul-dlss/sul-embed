@@ -12,16 +12,16 @@ export default class extends Controller {
     this.player = evt.detail
   }
 
-  // We can't load right away, because the VTT tracks may not have been parsed yet. 
+  // We can't load right away, because the VTT tracks may not have been parsed yet.
   // This function is triggered by the 'media-data-loaded' event which is triggered
-  // by the 'loadeddata' event on the first track.  
+  // by the 'loadeddata' event on the first track.
   async load() {
     // Return if this method has already been called, there are no caption tracks
     // or no cues for the tracks.  In the case of Safari, we need to wait to check,
     // hence the async/await combination for checkCues.
-    if (this.loaded || !(await this.checkCues()))  
+    if (this.loaded || !(await this.checkCues()))
       return
-    
+
     this.revealButton()
     this.setupTranscriptLanguageSwitching()
     this.renderCues()
@@ -63,22 +63,22 @@ export default class extends Controller {
     })
   }
 
-  // Tracks may be of different kinds. 
+  // Tracks may be of different kinds.
   // Retrieve tracks that are of kind "caption" which also have associated cues
   get captionTracks() {
     // The documentation recommends using remoteTextTracks() instead of textTracks().
     // Also, using this method allows the change to text track mode to 'hidden'
     // to reveal the cues for text tracks in Safari, whereas directly using
-    // this.player.textTracks_ was not allowing for this change to take effect. 
+    // this.player.textTracks_ was not allowing for this change to take effect.
     const tracks = this.player.remoteTextTracks()?.tracks_
-    
+
     if (!tracks) return []
 
     const captions = tracks.filter(track => track.kind === 'captions')
 
     // captionTracks is called multiple times and users may select and deselect
     // captions in the video player itself. For Safari, we want to continue
-    // changing disabled mode to "hidden" to prevent losing cue information. 
+    // changing disabled mode to "hidden" to prevent losing cue information.
     if(videojs.browser.IS_ANY_SAFARI) {
       this.convertDisabledTracks()
     }
@@ -109,7 +109,7 @@ export default class extends Controller {
   // Different browsers may provide different types of objects for TextTrackCueList.
   // For example, Safari does not recognize track.cues.cues_.
   // For Firefox/Chrome, track.cues are not iterable, but track.cues[n] will work, where n is an integer.
-  // We will map the list to an array, which will allow the return values to be filterable/iterable. 
+  // We will map the list to an array, which will allow the return values to be filterable/iterable.
   trackCues(track) {
     let mappedCues = []
     if(track && track?.cues && track.cues?.length) {
@@ -175,7 +175,7 @@ export default class extends Controller {
       // Find the cue element in the transcript that corresponds to this start time
       const cueElement = this.outletTarget.querySelector(`[data-cue-start-value="${startTime}"]`)
       // Handling a case where there is a mismatch between the assumed start time and the cues we have
-      // For example, a multi-lingual caption situation in Safari where the transcript loads for only the 
+      // For example, a multi-lingual caption situation in Safari where the transcript loads for only the
       // language for the selected caption.
       if (cueElement) {
         // Remove highlighting from all the other cue elements

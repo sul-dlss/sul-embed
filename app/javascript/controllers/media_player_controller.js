@@ -22,7 +22,7 @@ export default class extends Controller {
       })
     })
 
-    // The loadeddata event occurs when the first frame of the video is available, and 
+    // The loadeddata event occurs when the first frame of the video is available, and
     // happens after loadedmetadata
     this.player.on('loadeddata', () => {
       const event = new CustomEvent('media-data-loaded')
@@ -31,7 +31,7 @@ export default class extends Controller {
   }
 
   // Listen for events emitted by cue_controller.js to jump to a particular time
-  // "this.player" was returning undefined, so we are relying on the element id to 
+  // "this.player" was returning undefined, so we are relying on the element id to
   // retrieve the player
   seek(event) {
     const playerObject =  videojs(this.element.id)

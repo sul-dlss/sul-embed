@@ -29,13 +29,13 @@ export default class extends Controller {
         if(closedBranchLevel && childTrElement.getAttribute('aria-level') > closedBranchLevel) return
 
         delete childTrElement.dataset.expandHidden
-        this.toggleHide(childTrElement)  
-        
+        this.toggleHide(childTrElement)
+
         if(this.isClosedBranch(childTrElement)) {
           closedBranchLevel = childTrElement.getAttribute('aria-level')
         } else {
           closedBranchLevel = null
-        }        
+        }
       })
     }
   }
@@ -72,7 +72,7 @@ export default class extends Controller {
           rowElement.dataset.searchHidden = true
           this.toggleHide(rowElement)
         }
-      } 
+      }
     })
     this.updateCount()
   }
@@ -147,7 +147,7 @@ export default class extends Controller {
         // Move to the previous node without opening or closing
         const previousRowElement = this.previousBranchRowElement(event.target)
         if(!previousRowElement) break;
-        
+
         event.preventDefault()
         previousRowElement.focus()
         break;
@@ -155,7 +155,7 @@ export default class extends Controller {
         // Move to the next node without opening or closing
         const nextRowElement = this.nextBranchRowElement(event.target)
         if(!nextRowElement) break;
-        
+
         event.preventDefault()
         nextRowElement.focus()
         break;
