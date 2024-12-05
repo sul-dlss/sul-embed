@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import videojs from 'video.js';
+import videojs from 'video.js'
 
 // This is tightly coupled to VideoJS's tracks implementation, because VideoJS removes the tracks from the
 // native player when it initializes.  This depends on the media_tag_controller.js emitting a custom media-loaded

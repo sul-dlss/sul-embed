@@ -1,48 +1,48 @@
 import {
   all, put, select, takeEvery,
-} from 'redux-saga/effects';
-import ActionTypes from 'mirador/dist/es/src/state/actions/action-types.js';
-import { getManifest, getCompanionWindow } from 'mirador/dist/es/src/state/selectors/index.js';
+} from 'redux-saga/effects'
+import ActionTypes from 'mirador/dist/es/src/state/actions/action-types.js'
+import { getManifest, getCompanionWindow } from 'mirador/dist/es/src/state/selectors/index.js'
 
 function* onSetCanvas({ type, windowId, canvasId }) {
-  const { id: manifestId } = yield select(getManifest, { windowId });
+  const { id: manifestId } = yield select(getManifest, { windowId })
   yield put({ type: 'mirador/analytics', payload: {
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: canvasId,
-  }});
+  }})
 }
 
 function* onAddResource({ type, manifestId }) {
   yield put({ type: 'mirador/analytics', payload: {
     eventCategory: manifestId,
     eventAction: type,
-  }});
+  }})
 }
 
 function* onAddCompanionWindow({ payload: { position, content }, type, windowId }) {
-  if (!windowId) return;
+  if (!windowId) return
 
-  const { id: manifestId } = yield select(getManifest, { windowId });
+  const { id: manifestId } = yield select(getManifest, { windowId })
 
   yield put({ type: 'mirador/analytics', payload: {
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: `${content}/${position}`,
-  }});
+  }})
 }
 
 function* onUpdateCompanionWindow({ id, payload: { position, content }, type, windowId }) {
-  if (!windowId) return;
+  if (!windowId) return
 
-  const { id: manifestId } = yield select(getManifest, { windowId });
-  const { content: existingContent } = yield select(getCompanionWindow, { companionWindowId: id });
+  const { id: manifestId } = yield select(getManifest, { windowId })
+  const { content: existingContent } = yield select(getCompanionWindow, { companionWindowId: id })
 
   yield put({ type: 'mirador/analytics', payload: {
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: `${content || existingContent}/${position}`,
-  }});
+  }})
 }
 
 
@@ -50,17 +50,17 @@ function* onReceiveManifest({ manifestId, type }) {
   yield put({ type: 'mirador/analytics', payload: {
     eventCategory: manifestId,
     eventAction: type,
-  }});
+  }})
 }
 
 function* onRequestSearch({ query, type, windowId }) {
-  const { id: manifestId } = yield select(getManifest, { windowId });
+  const { id: manifestId } = yield select(getManifest, { windowId })
 
   yield put({ type: 'mirador/analytics', payload: {
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: query,
-  }});
+  }})
 }
 
 function* onAddWindow({ type, window: { canvasId, manifestId } }) {
@@ -68,104 +68,104 @@ function* onAddWindow({ type, window: { canvasId, manifestId } }) {
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: canvasId,
-  }});
+  }})
 }
 
 function* onMaximizeWindow({ type, windowId }) {
-  const { id: manifestId } = yield select(getManifest, { windowId });
+  const { id: manifestId } = yield select(getManifest, { windowId })
 
   yield put({ type: 'mirador/analytics', payload: {
     eventCategory: manifestId,
     eventAction: type,
-  }});
+  }})
 }
 
 function* onSetWindowViewType({ type, viewType, windowId }) {
-  const { id: manifestId } = yield select(getManifest, { windowId });
+  const { id: manifestId } = yield select(getManifest, { windowId })
 
   yield put({ type: 'mirador/analytics', payload: {
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: viewType,
-  }});
+  }})
 }
 
 function* onSelectAnnotation({ annotationId, type, windowId }) {
-  const { id: manifestId } = yield select(getManifest, { windowId });
+  const { id: manifestId } = yield select(getManifest, { windowId })
 
   yield put({ type: 'mirador/analytics', payload: {
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: annotationId,
-  }});
+  }})
 }
 
 function* onSetWorkspaceAction({ type }) {
   yield put({ type: 'mirador/analytics', payload: {
     eventAction: type,
-  }});
+  }})
 }
 
 function* onSetWorkspaceActionLayout({ layout, type }) {
   yield put({ type: 'mirador/analytics', payload: {
     eventCategory: layout,
     eventAction: type,
-  }});
+  }})
 }
 
-const authTimes = {};
+const authTimes = {}
 
 function* onAddAuthRequest({ id, type, windowId }) {
-  const { id: manifestId } = yield select(getManifest, { windowId });
+  const { id: manifestId } = yield select(getManifest, { windowId })
 
-  authTimes[id] = Date.now();
+  authTimes[id] = Date.now()
 
   yield put({ type: 'mirador/analytics', payload: {
     eventCategory: manifestId,
     eventAction: type,
     eventLabel: id,
-  }});
+  }})
 }
 
 function* onResetAuthState({ id, type }) {
-  const sessionMinutes = Math.ceil((Date.now() - (authTimes[id] || Date.now())) / 1000 / 60);
-  authTimes[id] = undefined;
+  const sessionMinutes = Math.ceil((Date.now() - (authTimes[id] || Date.now())) / 1000 / 60)
+  authTimes[id] = undefined
 
   yield put({ type: 'mirador/analytics', payload: {
     eventAction: type,
     eventLabel: id,
     eventValue: sessionMinutes,
-  }});
+  }})
 }
 
-const tokenRequests = {};
+const tokenRequests = {}
 function* onTokenRequest({ type, authId }) {
-  const sessionMinutes = Math.ceil((Date.now() - (authTimes[authId] || Date.now())) / 1000 / 60);
+  const sessionMinutes = Math.ceil((Date.now() - (authTimes[authId] || Date.now())) / 1000 / 60)
 
   // probably the initial token request
-  if (sessionMinutes < 5) return;
-  tokenRequests[authId] = (tokenRequests[authId] || 0) + 1;
+  if (sessionMinutes < 5) return
+  tokenRequests[authId] = (tokenRequests[authId] || 0) + 1
 
   yield put({ type: 'mirador/analytics', payload: {
     eventAction: type,
     eventLabel: authId,
     eventValue: tokenRequests[authId],
-  }});
+  }})
 }
 
 function* onTokenFailure({ type, authId }) {
-  const sessionMinutes = Math.ceil((Date.now() - (authTimes[authId] || Date.now())) / 1000 / 60);
-  let newOrExpired = 'expired';
+  const sessionMinutes = Math.ceil((Date.now() - (authTimes[authId] || Date.now())) / 1000 / 60)
+  let newOrExpired = 'expired'
 
   if (sessionMinutes < 5) {
-    newOrExpired = 'login failed';
+    newOrExpired = 'login failed'
   }
 
   yield put({ type: 'mirador/analytics', payload: {
     eventAction: type,
     eventCategory: newOrExpired,
     eventLabel: authId,
-  }});
+  }})
 }
 
 // This function sends events in the required format for GA4
@@ -174,7 +174,7 @@ function* sendAnalyticsEvent({ payload: { eventAction, eventCategory, eventLabel
     event_category: eventCategory,
     event_label: eventLabel,
     event_value: eventValue
-  });
+  })
 }
 
 /** */
@@ -198,10 +198,10 @@ function* analyticsSaga() {
     takeEvery(ActionTypes.REQUEST_ACCESS_TOKEN, onTokenRequest),
     takeEvery(ActionTypes.RECEIVE_ACCESS_TOKEN_FAILURE, onTokenFailure),
     takeEvery('mirador/analytics', sendAnalyticsEvent),
-  ]);
+  ])
 }
 
 export default {
   component: () => {},
   saga: analyticsSaga,
-};
+}

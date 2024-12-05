@@ -12,14 +12,14 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   download(event) {
-    const el = event.target;
+    const el = event.target
     if (el.localName == 'button') {
-      el.disabled = true;
-      el.innerText = " Initializing download...";
+      el.disabled = true
+      el.innerText = " Initializing download..."
 
       // replace the anchor tag with the button to prevent further clicks
-      const a = el.parentElement;
-      a.replaceWith(el);
+      const a = el.parentElement
+      a.replaceWith(el)
     }
   }
 }

@@ -10,7 +10,7 @@ export default class extends Controller {
     window.addEventListener("message", (event) => {
       this.iframe.remove()
       console.debug("Post message", event.data)
-      if (event.origin !== "https://stacks.stanford.edu" && event.origin !== "https://sul-stacks-stage.stanford.edu") return;
+      if (event.origin !== "https://stacks.stanford.edu" && event.origin !== "https://sul-stacks-stage.stanford.edu") return
       if (event.data.type === "AuthAccessTokenError2") {
         this.displayAccessTokenError(event.data)
       } else {
@@ -225,15 +225,15 @@ export default class extends Controller {
   // This method is triggered by stimulus reflex when the user clicks the login button rendered by `loginNeeded`
   login(evt) {
     this.loginPanelTarget.hidden = true
-    const windowReference = window.open(evt.params.url);
-    let loginStart = Date.now();
+    const windowReference = window.open(evt.params.url)
+    let loginStart = Date.now()
     console.debug("window reference", windowReference)
     let checkWindow = setInterval(() => {
       console.debug("in interval", (Date.now() - loginStart))
       if ((Date.now() - loginStart) < 30000 &&
-        (!windowReference || !windowReference.closed)) return;
+        (!windowReference || !windowReference.closed)) return
 
-      clearInterval(checkWindow);
+      clearInterval(checkWindow)
       // once the window is closed we can initiate the token request
       this.afterLoginWindowClosed(evt.params.messageid)
     }, 500)
