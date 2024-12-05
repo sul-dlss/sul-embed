@@ -98,7 +98,7 @@ module Embed
         @resource.caption_files.map.with_index do |caption_file, i|
           tag.track(src: caption_file.file_url, kind: 'captions',
                     srclang: caption_file.language_code, label: caption_file.media_caption_label,
-                    default: (i.zero? ? '' : nil))
+                    default: (i.zero? && !caption_file.sdr_generated? ? '' : nil))
         end
       )
     end
