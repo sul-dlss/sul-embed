@@ -37,7 +37,7 @@ export default class extends Controller {
   }
 
   // Currently this finds certain data-* properties on the media wrapper which we can make thumbnails with.
-  // Once these properties are found we emit a thumbnails-found event.  The content_list_controller.js 
+  // Once these properties are found we emit a thumbnails-found event.  The content_list_controller.js
   // can then receive this event and draw the content of the thubmnail list.
   // TODO: in the future, we should drive the thumbnail list from the data in the IIIF manifest.
   findThumbnails() {
@@ -50,7 +50,7 @@ export default class extends Controller {
                  isLocationRestricted: dataset.locationRestricted === "true",
                  fileLabel: dataset.fileLabel || '' }
       })
-    
+
     window.dispatchEvent(new CustomEvent('thumbnails-found', { detail: thumbnails }))
   }
 
@@ -58,7 +58,7 @@ export default class extends Controller {
   logIn(event) {
     const windowReference = window.open(event.params.loginService);
     this.loginStart = Date.now();
-    var checkWindow = setInterval(() => {
+    const checkWindow = setInterval(() => {
       if ((Date.now() - this.loginStart) < 30000 &&
         (!windowReference || !windowReference.closed)) return;
       this.validateMedia((authResponse) => {
