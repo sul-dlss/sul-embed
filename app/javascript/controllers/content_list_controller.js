@@ -31,8 +31,8 @@ export default class extends Controller {
   // Sends an event that tells the PDFController to display the selected PDF.
   showPdf(evt) {
     evt.preventDefault()
-    const file_uri = evt.currentTarget.dataset.url
-    window.dispatchEvent(new CustomEvent('auth-success', { detail: file_uri }))
+    const fileUri = evt.currentTarget.dataset.url
+    window.dispatchEvent(new CustomEvent('auth-success', { detail: fileUri }))
     if (document.querySelector('.file-thumb.active')){
       document.querySelector('.file-thumb.active').classList.remove('active')
     }
