@@ -1,7 +1,7 @@
 export default function(mediaTag) {
   return function(token) {
     if(token === undefined) {
-      return;
+      return
     }
     const sources = mediaTag.querySelectorAll('source')
     sources.forEach((source) => {

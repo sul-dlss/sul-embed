@@ -1,8 +1,8 @@
 const { generateWebpackConfig, merge } = require('shakapacker')
 const webpack = require('webpack')
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
+const isDevelopment = process.env.NODE_ENV !== 'production'
 const baseWebpackConfig = generateWebpackConfig()
 const options = {
   resolve: {

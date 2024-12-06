@@ -13,11 +13,11 @@ export default class {
     let labelClass = 'text'
     let stanfordOnlyScreenreaderText = ''
     if (this.isStanfordOnly) {
-      labelClass += ' sul-embed-thumb-stanford-only';
+      labelClass += ' sul-embed-thumb-stanford-only'
       stanfordOnlyScreenreaderText = '<span class="visually-hidden">Stanford only</span>'
     }
 
-    let thumbnailIcon = '';
+    let thumbnailIcon = ''
     if (this.thumbnailUrl) {
       thumbnailIcon = `<img class="square-icon" src="${this.thumbnailUrl}" alt="" />`
     } else {
@@ -25,11 +25,11 @@ export default class {
     }
 
     let restrictedTextMarkup = ''
-    let maxFileLabelLength = 45;
+    let maxFileLabelLength = 45
     if(this.isLocationRestricted) {
       const restrictedText = '(Restricted)'
       restrictedTextMarkup = `<span class="sul-embed-location-restricted-text">${restrictedText}</span>`
-      maxFileLabelLength -= restrictedText.length;
+      maxFileLabelLength -= restrictedText.length
     }
 
     // Note: the "position: relative" is required for the stretched-link style.
@@ -45,6 +45,6 @@ export default class {
   }
 
   truncateWithEllipsis(text, maxLen) {
-    return text.substr(0, maxLen - 1) + (text.length > maxLen ? '&hellip;' : '');
+    return text.substr(0, maxLen - 1) + (text.length > maxLen ? '&hellip;' : '')
   }
 }

@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import videojs from 'video.js';
+import videojs from 'video.js'
 
 export default class extends Controller {
   static targets = [ ]
@@ -11,7 +11,7 @@ export default class extends Controller {
   toggleVisibility(event) {
     const index =  event.detail.index
     this.element.hidden = this.indexValue !== index
-    this.pauseAllMedia();
+    this.pauseAllMedia()
   }
 
   pauseAllMedia() {

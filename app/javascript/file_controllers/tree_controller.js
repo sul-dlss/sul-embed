@@ -111,65 +111,65 @@ export default class extends Controller {
       case event.key === 'Enter' && this.isBranch(event.target):
         event.preventDefault()
         this.toggle(event)
-        break;
+        break
       case event.key === 'Enter' && this.isLeaf(event.target):
         // Perform the default action (download the file)
         const downloadElement = this.downloadElement(event.target)
-        if(!downloadElement) break;
+        if(!downloadElement) break
 
         event.preventDefault()
         downloadElement.click()
-        break;
+        break
       case event.key === 'ArrowRight' && this.isClosedBranch(event.target):
         // When a closed node, opens the node
         event.preventDefault()
         this.toggle(event)
-        break;
+        break
       case event.key === 'ArrowRight' && this.isOpenBranch(event.target):
         // When an open node, moves focus to the first child node
         event.preventDefault()
         event.target.nextElementSibling.focus()
-        break;
+        break
       case event.key === 'ArrowLeft' && this.isOpenBranch(event.target):
         // When an open node, closes the node
         event.preventDefault()
         this.toggle(event)
-        break;
+        break
       case event.key === 'ArrowLeft' && event.target.getAttribute('aria-level') > 1:
         // When a closed node, moves focus to the node's parent node
         const parentBranchRowElement = this.parentBranchRowElement(event.target)
-        if(!parentBranchRowElement) break;
+        if(!parentBranchRowElement) break
 
         event.preventDefault()
         parentBranchRowElement.focus()
-        break;
+        break
       case event.key === 'ArrowUp':
         // Move to the previous node without opening or closing
         const previousRowElement = this.previousBranchRowElement(event.target)
-        if(!previousRowElement) break;
+        if(!previousRowElement) break
 
         event.preventDefault()
         previousRowElement.focus()
-        break;
+        break
       case event.key === 'ArrowDown':
         // Move to the next node without opening or closing
         const nextRowElement = this.nextBranchRowElement(event.target)
-        if(!nextRowElement) break;
+        if(!nextRowElement) break
 
         event.preventDefault()
         nextRowElement.focus()
-        break;
+        break
       case event.key === 'Home':
         // Move to the first node without opening or closing
         event.preventDefault()
         this.visibleRows[0].focus()
-        break;
+        break
       case event.key === 'End':
         // Move to the last node without opening or closing
         event.preventDefault()
         const rowElements = this.visibleRows
         rowElements[rowElements.length - 1].focus()
-        break;
+        break
     }
   }
 
