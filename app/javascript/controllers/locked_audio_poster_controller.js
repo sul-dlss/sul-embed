@@ -6,9 +6,9 @@ export default class extends Controller {
   // does not support the poster attribute
   show() {
     if (this.isAudio()) {
-      const poster_path = this.poster()
-      if (poster_path)
-        this.posterTarget.setAttribute('src', poster_path)
+      const posterPath = this.poster()
+      if (posterPath)
+        this.posterTarget.setAttribute('src', posterPath)
 
       this.element.hidden = false
     }
