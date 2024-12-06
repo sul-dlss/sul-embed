@@ -28,6 +28,14 @@ export default class extends Controller {
     this.loaded = true
   }
 
+  // event called when switch-transcript event is fired.
+  // This really only happens when there are more than one media item with captions.
+  switchTranscript(evt) {
+    this.player = evt.detail;
+    this.setupTranscriptLanguageSwitching();
+    this.renderCues();
+  }
+
   // Safari cues require special handling.
   // We want the track cues to be available so we can properly generate the transcript sidebar language dropdown
   // if there is more than one language track.
@@ -136,12 +144,7 @@ export default class extends Controller {
   }
 
   setupTranscriptLanguageSwitching() {
-    this.captionTracks.forEach(track => {
-      this.captionLanguageSelectTarget.insertAdjacentHTML(
-        'beforeend',
-        `<option value="${track.language}">${track.label}</option>`
-      )
-    })
+    this.captionLanguageSelectTarget.innerHTML = this.captionTracks.map(track => `<option value="${track.language}">${track.label}</option>`).join("");
   }
 
   buildCue(cue) {
