@@ -40,6 +40,10 @@ module Embed
         @file.fetch('access').fetch('view')
       end
 
+      def sdr_generated
+        @file.fetch('sdrGeneratedText', false)
+      end
+
       def deserialize # rubocop:disable Metrics/MethodLength
         ResourceFile.new(
           druid: @druid,
@@ -52,6 +56,7 @@ module Embed
           stanford_only:,
           location_restricted:,
           world_downloadable:,
+          sdr_generated:,
           stanford_only_downloadable:
         )
       end
