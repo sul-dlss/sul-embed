@@ -9,7 +9,7 @@ export default class extends Controller {
 
   connect() {
     // Customize the error message displayed to users:
-    OpenSeadragon.setString('Errors.OpenFailed', 'Restricted') 
+    OpenSeadragon.setString('Errors.OpenFailed', 'Restricted')
     OpenSeadragon({
       id: this.element.id,
       tileSources: [this.urlValue],

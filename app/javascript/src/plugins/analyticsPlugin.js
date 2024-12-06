@@ -174,7 +174,7 @@ function* sendAnalyticsEvent({ payload: { eventAction, eventCategory, eventLabel
     event_category: eventCategory,
     event_label: eventLabel,
     event_value: eventValue
-  });  
+  });
 }
 
 /** */
