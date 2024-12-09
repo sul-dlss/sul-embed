@@ -15,7 +15,7 @@ module Embed
         end
       end
 
-      attr_accessor :druid, :label, :filename, :mimetype, :size, :language, :role,
+      attr_accessor :druid, :label, :filename, :mimetype, :size, :language, :role, :sdr_generated,
                     :world_downloadable, :stanford_only, :location_restricted, :stanford_only_downloadable
 
       alias title filename
@@ -23,6 +23,7 @@ module Embed
       alias stanford_only? stanford_only
       alias location_restricted? location_restricted
       alias stanford_only_downloadable? stanford_only_downloadable
+      alias sdr_generated? sdr_generated
 
       ##
       # Creates a file url for stacks
@@ -59,8 +60,16 @@ module Embed
         Bcp47::Registry.resolve(language_code) || 'Unknown'
       end
 
+      def media_caption_label
+        "#{language_label}#{sdr_generated_text}"
+      end
+
       def caption_label
-        "#{language_label} captions"
+        "#{language_label} captions#{sdr_generated_text}"
+      end
+
+      def sdr_generated_text
+        sdr_generated? ? ' (auto-generated)' : ''
       end
 
       def downloadable?

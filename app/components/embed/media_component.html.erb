@@ -13,19 +13,21 @@
 
   <% component.with_drawer_content do %>
     <section id="transcript" data-companion-window-target="transcript" role="tabpanel" hidden>
-      <div class="header-background">
-        <h3>Transcript</h3>
-      </div>
-      <div class="transcript-controls header-background">
-        <div class="transcript-autoscroll">
-          <label for="autoscroll">Auto scroll</label>
-          <input data-transcript-target="autoscroll" type="checkbox" id="autoscroll">
+      <div class="transcript-header">
+        <div class="header-background">
+          <h3>Transcript</h3>
         </div>
-        <div class="transcript-language">
-          <label class="visually-hidden" for="caption-languages">Select Language</label>
-          <select name="caption-languages" id="caption-languages" data-transcript-target="captionLanguageSelect" data-action="transcript#selectLanguage">
-            <option value="">Select Language</option>
-          </select>
+        <div class="transcript-controls header-background">
+          <div class="transcript-autoscroll">
+            <label for="autoscroll">Auto scroll</label>
+            <input data-transcript-target="autoscroll" type="checkbox" id="autoscroll">
+          </div>
+          <div class="transcript-language">
+            <label class="visually-hidden" for="caption-languages">Select Language</label>
+            <select name="caption-languages" id="caption-languages" data-transcript-target="captionLanguageSelect" data-action="transcript#selectLanguage">
+              <option value="">Select Language</option>
+            </select>
+          </div>
         </div>
       </div>
       <div class="left-drawer-content transcript" data-action="media-loaded@window->transcript#persistPlayer media-data-loaded@window->transcript#load time-update@window->transcript#highlightCue">
