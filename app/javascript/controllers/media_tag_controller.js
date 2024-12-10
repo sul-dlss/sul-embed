@@ -57,7 +57,7 @@ export default class extends Controller {
   logIn(event) {
     const windowReference = window.open(event.params.loginService);
     this.loginStart = Date.now();
-    var checkWindow = setInterval(() => {
+    const checkWindow = setInterval(() => {
       if ((Date.now() - this.loginStart) < 30000 &&
         (!windowReference || !windowReference.closed)) return;
       this.validateMedia((authResponse) => {
