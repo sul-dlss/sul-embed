@@ -25,6 +25,7 @@ const EmbedThis = (function() {
             textarea.text(textarea.text().replace(src, src + urlAttr));
           }
         }else{
+          let oldParam
           if(oldParam = textarea.text().match('&' + $(this).data('embed-attr') + "=\\w+")) {
             textarea.text(textarea.text().replace(oldParam, '&' + $(this).data('embed-attr') + '=' + $(this).val()));
           }else{
