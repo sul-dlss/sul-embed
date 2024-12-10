@@ -74,7 +74,7 @@ export default {
       this.map.addControl(new L.Control.LayerOpacity(this.layer));
     } else {
       // Restricted layers
-      L.rectangle(dataAttributes.boundingBox, { color: '#0000FF', weight: 4 })
+      L.rectangle(dataAttributes.boundingBox, { color: this.dataAttributes.geoViewerColors.restricted, weight: 4 })
         .addTo(this.map);
     }
   },
