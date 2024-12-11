@@ -11,6 +11,7 @@ import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin';
 import embedModePlugin from '../plugins/embedModePlugin';
 import analyticsPlugin from '../plugins/analyticsPlugin';
 import cdlAuthPlugin from '../plugins/cdlAuthPlugin';
+import xywhPlugin from '../plugins/xywhPlugin';
 
 export default {
   init: function() {
@@ -133,6 +134,7 @@ export default {
         target: 'WindowTopBarShareMenu',
       },
       analyticsPlugin,
+      xywhPlugin,
     ].filter(Boolean));
   }
 };
