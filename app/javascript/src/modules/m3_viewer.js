@@ -133,6 +133,7 @@ export default {
         target: 'WindowTopBarShareMenu',
       },
       analyticsPlugin,
+      xywhPlugin,
     ].filter(Boolean))
   }
 }
