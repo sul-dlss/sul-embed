@@ -82,7 +82,8 @@ module Embed
         :min_files_to_search,
         :canvas_id, :canvas_index,
         :search, :suggested_search,
-        :image_tools
+        :image_tools,
+        :iiif_initial_viewer_config
       )
 
       if p.respond_to? :permit!
@@ -110,6 +111,10 @@ module Embed
 
     def image_tools
       params[:image_tools]
+    end
+
+    def iiif_initial_viewer_config
+      params[:iiif_initial_viewer_config]
     end
 
     def validate!(url_parameter: true, url_scheme: true, format: true)

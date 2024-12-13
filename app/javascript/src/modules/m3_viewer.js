@@ -11,6 +11,8 @@ import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin'
 import embedModePlugin from '../plugins/embedModePlugin'
 import analyticsPlugin from '../plugins/analyticsPlugin'
 import cdlAuthPlugin from '../plugins/cdlAuthPlugin'
+import xywhPlugin from '../plugins/xywhPlugin'
+import { getExportableState } from 'mirador/dist/es/src/state/selectors'
 
 export default {
   init: function() {
@@ -30,7 +32,10 @@ export default {
       sideBarPanel = 'attribution'
     }
 
-    Mirador.viewer({
+    let viewerConfig
+    if (data.viewerConfig && data.viewerConfig !== 'undefined') { viewerConfig = JSON.parse(decodeURIComponent(data.viewerConfig)) }
+
+    const viewerInstance = Mirador.viewer({
       id: 'sul-embed-m3',
       miradorDownloadPlugin: {
         restrictDownloadOnSizeDefinition: true,
@@ -80,6 +85,7 @@ export default {
         suggestedSearches: data.suggestedSearch.length > 0 ? [data.suggestedSearch] : null,
         loadedManifest: data.m3Uri,
         canvasIndex: Number(data.canvasIndex),
+        initialViewerConfig: viewerConfig,
         canvasId: data.canvasId,
         ...(cdl && {
           cdl: {
@@ -135,5 +141,39 @@ export default {
       analyticsPlugin,
       xywhPlugin,
     ].filter(Boolean))
+
+    window.addEventListener('message', (event) => {
+      const regex = /^(stanford\.edu|[\w-]+\.stanford\.edu)$/
+      if (regex.exec(event.origin) === null && process.env.RAILS_ENV !== 'development') {
+        return
+      }
+
+      if (event && event.data) {
+        let parsedData
+        try {
+          parsedData = typeof event.data === 'string' ? JSON.parse(event.data) : event.data
+        } catch (error) {
+          console.error('Failed to parse event data:', error)
+          return // Exit if parsing fails
+        }
+        if (parsedData.type === "requestState") {
+          const currentState = viewerInstance.store.getState()
+          const exportableState = getExportableState(currentState)
+
+          const imageUrl = viewerInstance.container.querySelector('[data-full-image]').dataset.fullImage.split('*')
+          const canvasIndex = viewerInstance.container.querySelector('.mirador-canvas-count').textContent.split(' of')[0]
+
+          // Send the state back to the parent window
+          window.parent.postMessage(
+            JSON.stringify({
+              type: 'stateResponse',
+              data: {...exportableState, ...{'iiif_images': imageUrl, 'canvas_index': canvasIndex}},
+              source: 'sul-embed-m3',
+            }),
+            event.origin
+          )
+        }
+      }
+    })
   }
 }
