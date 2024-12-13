@@ -3,7 +3,8 @@
 module Embed
   module Viewer
     class M3Viewer < CommonViewer
-      delegate :search, :suggested_search, :canvas_id, :cdl_hold_record_id, to: :embed_request
+      delegate :search, :suggested_search, :canvas_id, :cdl_hold_record_id, :iiif_initial_viewer_config,
+               to: :embed_request
 
       def component
         M3Component
