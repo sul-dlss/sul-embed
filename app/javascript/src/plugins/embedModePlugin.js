@@ -3,9 +3,9 @@ import {
   AllowDragAndDrop,
   CompareDialog,
   CompareMenuItem,
-} from '../components/embedMode';
-import * as actions from 'mirador/dist/es/src/state/actions/index.js';
-import { getWindow } from 'mirador/dist/es/src/state/selectors';
+} from '../components/embedMode'
+import * as actions from 'mirador/dist/es/src/state/actions/index.js'
+import { getWindow } from 'mirador/dist/es/src/state/selectors'
 
 export default [
   {
@@ -40,4 +40,4 @@ export default [
     name: 'CompareDialog',
     target: 'Window',
   },
-];
+]

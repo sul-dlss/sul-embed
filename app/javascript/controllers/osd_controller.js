@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import OpenSeadragon from 'openseadragon';
+import OpenSeadragon from 'openseadragon'
 
 export default class extends Controller {
   static values = {
