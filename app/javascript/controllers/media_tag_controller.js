@@ -50,7 +50,11 @@ export default class extends Controller {
                  fileLabel: dataset.fileLabel || '' }
       })
 
-    window.dispatchEvent(new CustomEvent('thumbnails-found', { detail: thumbnails }))
+    // Timeout is set because when the page is cached, the event fires before the content_list_controller is mounted.
+    // This causes the sidebar not to load: https://github.com/sul-dlss/sul-embed/issues/2175
+    setTimeout(() => {
+      window.dispatchEvent(new CustomEvent('thumbnails-found', { detail: thumbnails }))
+    }, "100");
   }
 
   // Open the login window in a new window and then poll to see if the auth credentials are now active.
