@@ -68,6 +68,7 @@ module Embed
                id: "sul-embed-media-#{@resource_iteration.index}",
                data: {
                  auth_url: authentication_url,
+                 index: @resource_iteration.index,
                  media_tag_target: 'authorizeableResource',
                  controller: 'media-player',
                  action: 'media-seek@window->media-player#seek ' \
@@ -82,8 +83,9 @@ module Embed
     end
 
     def streaming_source
+      type = Rails.env.development? ? file.mimetype : 'application/x-mpegURL'
       stacks_media_stream = Embed::StacksMediaStream.new(druid:, file:)
-      tag.source(src: stacks_media_stream.to_playlist_url, type: 'application/x-mpegURL')
+      tag.source(src: stacks_media_stream.to_playlist_url, type:)
     end
 
     # Generate the video caption elements
