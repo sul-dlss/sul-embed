@@ -59,9 +59,9 @@ export default class extends Controller {
 
   // Open the login window in a new window and then poll to see if the auth credentials are now active.
   logIn(event) {
-    const windowReference = window.open(event.params.loginService)
-    this.loginStart = Date.now()
-    var checkWindow = setInterval(() => {
+    const windowReference = window.open(event.params.loginService);
+    this.loginStart = Date.now();
+    const checkWindow = setInterval(() => {
       if ((Date.now() - this.loginStart) < 30000 &&
         (!windowReference || !windowReference.closed)) return
       this.validateMedia((authResponse) => {
