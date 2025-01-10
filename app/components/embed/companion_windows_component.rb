@@ -38,5 +38,12 @@ module Embed
 
       false
     end
+
+    # We use this in the download FileListComponent to determine if we need to group files.
+    # For example, if a media file has a caption or transcript
+    # we will want to group the caption with the media file.
+    def show_headers?
+      downloadable_files.any? { |file| file.caption? || file.transcript? }
+    end
   end
 end
