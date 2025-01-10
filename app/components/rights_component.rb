@@ -19,10 +19,4 @@ class RightsComponent < ViewComponent::Base
   def default_attribution
     'Provided by the Stanford University Libraries'
   end
-
-  def stanford_libraries_logo_url
-    # NOTE: This is the URL Mirador already uses, so this increases parity between the
-    #       image and media viewers even if it may appear brittle
-    'https://stacks.stanford.edu/image/iiif/wy534zh7137/SULAIR_rosette/full/400,/0/default.jpg'
-  end
 end
