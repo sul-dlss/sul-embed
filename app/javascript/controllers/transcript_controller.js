@@ -89,8 +89,11 @@ export default class extends Controller {
     // changing disabled mode to "hidden" to prevent losing cue information.
     if(videojs.browser.IS_ANY_SAFARI) {
       this.convertDisabledTracks()
+      // the function this.trackCues returns the wrong number of captions when in Safari
+      // this has something to do with loadedmetadata triggering before all the captions have loaded.
+      // This is a temporary fix. We really should figure out a way to update this function
+      return captions;
     }
-
     // Return caption tracks that have associated cues
     return captions.filter(track => this.trackCues(track).length)
   }
@@ -129,7 +132,12 @@ export default class extends Controller {
   }
 
   currentCues() {
-    return this.selectedLanguage ?
+    // We need to check if there are captions for multiple videos with mixed languages.
+    // for example if video 1 has english and russian captions and video 2 has spanish and english captions
+    // if we switched to russian, this.selectedLanguage = 'ru', but if we then switch to video 2
+    // it won't have any captions in russian.
+    // https://github.com/sul-dlss/sul-embed/issues/2293
+    return this.selectedLanguage && this.cuesByLanguage[this.selectedLanguage] ?
       this.cuesByLanguage[this.selectedLanguage] :
       Object.values(this.cuesByLanguage)[0]
   }
@@ -144,7 +152,11 @@ export default class extends Controller {
   }
 
   setupTranscriptLanguageSwitching() {
-    this.captionLanguageSelectTarget.innerHTML = this.captionTracks.map(track => `<option value="${track.language}">${track.label}</option>`).join("");
+    this.captionLanguageSelectTarget.innerHTML = this.captionTracks.map(track => `<option value="${track.language}" ${this.selectedDropdownLang(track.language) ? ' selected' : ''}>${track.label}</option>`).join("");
+  }
+
+  selectedDropdownLang(language) {
+    return language == this.selectedLanguage;
   }
 
   buildCue(cue) {
