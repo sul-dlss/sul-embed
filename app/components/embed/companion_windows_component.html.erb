@@ -90,7 +90,7 @@
           Files
         </h3>
         <ul>
-          <%= render Embed::Download::FileListItemComponent.with_collection(downloadable_files) %>
+          <%= render Embed::Download::FileListItemComponent.with_collection(downloadable_files, show_headers: show_headers?) %>
         </ul>
       <% else %>
         <p>No downloads available</p>

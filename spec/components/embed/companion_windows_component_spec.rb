@@ -14,6 +14,8 @@ RSpec.describe Embed::CompanionWindowsComponent, type: :component do
   let(:viewer) do
     Embed::Viewer::Media.new(embed_request)
   end
+
+  let(:downloadable_files) { [] }
   let(:purl_object) do
     instance_double(Embed::Purl,
                     title: 'foo',
@@ -25,7 +27,7 @@ RSpec.describe Embed::CompanionWindowsComponent, type: :component do
                     druid: '123',
                     version_id: nil,
                     contents: [],
-                    downloadable_files: [],
+                    downloadable_files:,
                     downloadable_transcript_files?: false)
   end
 
@@ -33,6 +35,30 @@ RSpec.describe Embed::CompanionWindowsComponent, type: :component do
     expect(page).to have_content 'About this item'
     expect(page).to have_content 'Media content'
     expect(page).to have_content 'Rights'
+  end
+
+  describe 'with downloadable files' do
+    let(:media_file) { instance_double(Embed::Purl::ResourceFile, title: 'file-abc123.pdf', file_url: '//one', caption?: false, transcript?: false, label_or_filename: 'media filename', location_restricted?: false, stanford_only?: false, size: 100) }
+    let(:caption_file) { instance_double(Embed::Purl::ResourceFile, title: 'file-abc123.vtt', file_url: '//one', caption?: true, transcript?: false, label_or_filename: 'caption filename', location_restricted?: false, stanford_only?: false, size: 100) }
+
+    context 'when there are no media files' do
+      let(:downloadable_files) { [media_file] }
+
+      it 'does not have extra headings' do
+        expect(page).to have_content 'Download media filename'
+        expect(page).to have_no_css('h4', text: 'media filename', visible: :hidden)
+      end
+    end
+
+    context 'when there are media files' do
+      let(:downloadable_files) { [media_file, caption_file] }
+
+      it 'does have extra headings' do
+        expect(page).to have_content 'Download media filename'
+        expect(page).to have_content 'Download caption filename'
+        expect(page).to have_css('h4', text: 'media filename', visible: :hidden)
+      end
+    end
   end
 
   describe 'requested_by_chromium?' do
