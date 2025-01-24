@@ -159,3 +159,479 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+/** Copied **/
+@import 'common';
+@import 'modules/fullscreen';
+
+.authLinkWrapper {
+  align-items: center;
+  display: flex;
+  background-color: var(--active-color);
+  color: white;
+  padding: .5rem;
+
+  .loginMessage {
+    margin-bottom: 0;
+    margin-left: 1rem;
+    margin-top: 0;
+  }
+
+  button {
+    margin-left: 0.75rem;
+    background-color: white;
+    color: var(--active-color);
+    border: 0;
+    border-radius: 5px;
+    padding: 0.2rem 0.4rem;
+    text-transform: uppercase;
+    &:hover {
+      cursor: pointer;
+      opacity: 0.9;
+    }
+  }
+
+  .dismissButton {
+    padding: 0.2rem;
+    svg {
+      font-size: 1rem;
+      vertical-align: bottom;
+    }
+  }
+}
+
+/*.companion-window-component {*/
+.sul-embed-geo {
+  --active-color: rgb(140, 21, 21);
+  --drawer-width: 310px;
+  --font-size-base: 14px;
+  --tab-width: 48px;
+  --tab-height: 48px;
+  --drawer-content-padding: 0.7rem;
+  --text-color: rgba(0, 0, 0, 0.87);
+  --border-color: #5f574f;
+  --button-color: #454545;
+  --button-hover-bg-color: #9494947a;
+  --background-color: rgba(255, 255, 255);
+  /* If the value of --header-size is too small, the bottom boarder won't display.
+     This depends on the line-height and padding of the header > nav > h2 */
+  --header-size: 58.65px;
+  --modal-border-radius: 8px;
+  --modal-max-width: 600px;
+  --active-media-thumb-color: #016895;
+
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
+  font-size: var(--font-size-base);
+
+  * {
+    box-sizing: border-box;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  .modal-container {
+    max-width: var(--modal-max-width);
+    width: 79vw;
+    max-height: 79vh;
+    padding: 2rem;
+    margin: auto;
+    border: none;
+    border-radius: var(--modal-border-radius);
+    box-shadow: 5px 10px 5px gray;
+
+    &::backdrop {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    header {
+      color: var(--text-color);
+      font-weight: 400;
+      font-size: 18pt;
+      margin-bottom: 1rem;
+    }
+
+    .sul-embed-options-label {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .sul-embed-embed-this-form, .sul-embed-downloads {
+      color: var(--text-color);
+    }
+
+    .sul-embed-embed-this-form {
+      .form-label, legend {
+        display: inline-block;
+        font-size: 12pt;
+        font-weight: 600;
+        margin: 0.5em 0;
+      }
+
+      input[type="text"], textarea {
+        margin-bottom: 1rem;
+        padding: .375rem .75rem;
+        width: calc(100% - 2rem);
+      }
+
+      fieldset {
+        border: none;
+      }
+
+      #sul-embed-iframe-code {
+        height: 7rem;
+      }
+    }
+
+    .sul-embed-downloads {
+      height: auto;
+      overflow-y: scroll;
+      margin-bottom: 1rem;
+
+      ul {
+        list-style: none;
+
+        li {
+          margin-bottom: 1rem;
+          border-bottom: 1px solid lightgray;
+        }
+      }
+    }
+
+    button {
+      background-color: transparent;
+      border: none;
+      color: var(--active-color);
+      text-transform: uppercase;
+      float: right;
+      &:hover {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+    }
+  }
+
+  .modal-components-popover {
+    border: 0;
+    top: 49px;
+    left: calc(100% - 180px);
+    box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);
+    border-radius: var(--modal-border-radius);
+    margin: 0;
+    padding: 0;
+
+    &::backdrop {
+      background-color: transparent;
+    }
+
+    .modal-component-button {
+      border: 0;
+      background-color: var(--background-color);
+      display: block;
+      width: 100%;
+      padding: 1.2rem;
+      text-align: left;
+
+      .modal-component-label {
+        font-size: 1rem;
+        line-height: 1.6em;
+      }
+
+      .modal-component-icon {
+        min-width: 32px;
+        vertical-align: middle;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-image: linear-gradient(rgb(0 0 0/10%) 0 0);
+      }
+    }
+  }
+
+  &>header {
+    border-top: 2px solid var(--active-color);
+    border-bottom: 1px solid gray;
+
+    background-color: var(--background-color);
+    padding-right: 4px;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+
+    nav {
+      font-size: 15px;
+      display: flex;
+      flex-direction: row;
+      min-height: 32px;
+      align-items: center;
+
+      button {
+        background-color: transparent;
+        border: none;
+        border-radius: 50%;
+        padding: 12px;
+        color: var(--button-color);
+
+        &:hover {
+          background-color: var(--button-hover-bg-color);
+          cursor: pointer;
+        }
+      }
+
+      h2 {
+        color: var(--text-color);
+        padding-left: 4px;
+        font-size: 1.067rem;
+        font-weight: 400;
+        line-height: 1.6em;
+        flex-grow: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .header-background {
+    background: $color-fog-light;
+    display: flex;
+    flex-shrink: 0;
+    padding-left: var(--drawer-content-padding);
+    justify-content: space-between;
+    height: var(--tab-height);
+    white-space: nowrap;
+
+    h3 {
+      align-self: center;
+      font-size: 1rem;
+      font-weight: 300;
+      line-height: 1.6em;
+      letter-spacing: 0.015em;
+    }
+
+    &.transcript-controls {
+      font-size: 0.8rem;
+
+      input {
+        margin-left: 0.6rem;
+      }
+
+      input, select {
+        margin-right: 0.6rem;
+        vertical-align: middle;
+      }
+    }
+  }
+
+  .button-label {
+    width: 100%;
+    display: flex;
+    align-items: inherit;
+    justify-content: inherit;
+  }
+
+  .MuiSvgIcon-root {
+    fill: currentColor;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .companion-window-component-body {
+    display: flex;
+    flex-grow: 1;
+    max-height: calc(100vh - var(--header-size) - 2px); /* the 2px are for the outer 1px border */
+
+    #main-display {
+      display: flex;
+      flex: 1 1 auto;
+    }
+  }
+
+  .collapse {
+    width: 0px;
+    overflow: hidden;
+    transition: flex-basis .5s ease-in-out;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: 0;
+
+    &.open {
+      flex-basis: var(--drawer-width);
+    }
+  }
+
+  .left-drawer {
+    border-right: 1px solid gray;
+    display: flex;
+
+    .vert-tabs {
+      background-color: var(--background-color);
+      flex-basis: var(--tab-width);
+      flex-shrink: 0;
+      height: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid gray;
+
+      button {
+        background-color: transparent;
+        border: 0;
+        border-right: 2px solid transparent;
+        color: var(--button-color);
+        height: var(--tab-height);
+        padding-top: 4px;
+        &.active {
+          border-right: 2px solid var(--active-color);
+          color: var(--active-color);
+        }
+        &:hover {
+          background-color: var(--button-hover-bg-color);
+          cursor: pointer;
+        }
+      }
+    }
+
+    /* From https://www.a11yproject.com/posts/how-to-hide-content/ */
+    .visually-hidden {
+      clip: rect(0 0 0 0);
+      clip-path: inset(50%);
+      height: 1px;
+      overflow: hidden;
+      position: absolute;
+      white-space: nowrap;
+      width: 1px;
+    }
+
+    .inner {
+      display: flex;
+      flex-direction: column;
+      overflow: clip auto;
+
+      section {
+        /* This avoids wrapping when animating. */
+        width: calc(var(--drawer-width) - var(--tab-width));
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+    }
+
+    .left-drawer-content {
+      color: var(--text-color);
+      flex-shrink: 1;
+      overflow: hidden auto;
+      padding: var(--drawer-content-padding);
+    }
+
+    .logoContainer {
+      padding: 1rem;
+    }
+
+    .attributionLogo {
+      max-width: 100%;
+    }
+
+    .metadataList, .rightsList {
+      dt {
+        font-size: 0.878rem;
+        font-weight: 500;
+        line-height: 1.75em;
+        letter-spacing: 0.02em;
+      }
+      dd {
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.6em;
+        letter-spacing: 0em;
+        margin-bottom: 0.5em;
+        margin-left: 0;
+      }
+    }
+
+    --thumb-height: 75px;
+
+    .media-thumb, .file-thumb {
+      list-style-type: none;
+      border: 1px solid gray;
+      margin-bottom: 0.5rem;
+      height: var(--thumb-height);
+      text-align: center;
+
+      &.active {
+        box-shadow: 0px 0px 3px 2px var(--active-media-thumb-color);
+      }
+
+      .default-thumbnail-icon {
+        display: inline-block;
+        font-size: calc(var(--thumb-height) - 2px);
+        width: 75px;
+        margin-right: .5rem;
+        padding-left: .3rem;
+
+        &::before {
+          vertical-align: text-top;
+        }
+      }
+
+      /* Stretched links
+         https://github.com/twbs/bootstrap/blob/c28934cb1871d6b6bd6a866660493a1137de17c6/scss/helpers/_stretched-link.scss */
+      .stretched-link {
+        &::after {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          z-index: 1;
+          content: "";
+        }
+      }
+
+      .square-icon {
+        float: left;
+      }
+
+      .sul-embed-thumb-stanford-only {
+        background: url('stanford_s.svg') no-repeat;
+        background-position: bottom left;
+        padding-right: 20px;
+        &.text {
+          height: calc(100% - 0.75rem); /* positions .sul-embed-thumb-stanford-only */
+        }
+      }
+
+      .text {
+        display: inline-block;
+        margin-top: 0.25rem;
+        vertical-align: top;
+        width: 130px;
+        text-align: left;
+      }
+    }
+
+    .file-thumb {
+      height: auto!important;
+      padding: .5rem;
+      text-align: left;
+    }
+  }
+}
+
+.sul-embed-pdf {
+  min-height: 90vh;
+}
+
+.no-bullets {
+  list-style-type: none;
+}
+

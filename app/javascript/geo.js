@@ -1,3 +1,4 @@
+import "controllers";
 import EmbedThis from "../src/modules/embed_this";
 import PopupPanels from "../src/modules/popup_panels";
 import GeoViewer from "../src/modules/geo_viewer";
@@ -12,4 +13,5 @@ document.addEventListener("DOMContentLoaded", () => {
   PopupPanels.init();
   EmbedThis.init();
   trackView();
+  console.log("THIS IS THE APP JAVASCRIPT GEOJS");
 });

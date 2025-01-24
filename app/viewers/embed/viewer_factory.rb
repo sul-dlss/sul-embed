@@ -19,7 +19,11 @@ module Embed
       when 'file'
         Embed::Viewer::File
       when 'geo'
-        Embed::Viewer::Geo
+        Embed::Viewer::Geor
+        #Embed::Viewer::Geo
+        #Embed::Viewer::File
+        #Embed::Viewer::PdfViewer
+        #Embed::Viewer::M3Viewer
       when 'image', 'manuscript', 'map', 'book'
         Embed::Viewer::M3Viewer
       when 'document'

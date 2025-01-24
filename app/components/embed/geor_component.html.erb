@@ -1,0 +1,22 @@
+<div class="sul-embed-container" id='sul-embed-object' hidden controller='iiif-manifest-loader file-auth' data-iiif-manifest-loader-iiif-manifest-value="<%= iiif_v3_manifest_url %>">
+  <%= render Embed::HeaderComponent.new viewer: viewer %>
+  <div class='sul-embed-geo sul-embed-body'>
+    <%#render Embed::LoginComponent.new if viewer.display_login %>
+    <%= render Embed::LoginComponent.new %>
+    <div style="height: 20px"
+      data-controller="geo"
+      data-action="auth-success@window->geo#show">
+    </div>
+    <div id="sul-embed-geo-sidebar" class="" style="display: none;">
+    </div>
+    <%= content_tag :div, viewer.map_element_options do %>
+
+    <% end %>
+    <%= javascript_pack_tag('geo') %>
+  </div>
+
+  <%= render 'embed/metadata_panel', viewer: viewer %>
+  <%= render 'embed/embed_this/generic', viewer: viewer %>
+  <%= render Embed::Download::GeoComponent.new viewer: viewer %>
+  <%= render Embed::FooterComponent.new viewer: viewer %>
+ </div>
