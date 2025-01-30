@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        <%= render Embed::DirRowComponent.new(viewer: viewer, dir: viewer.purl_object.hierarchical_contents)%>
+        <%= render Embed::File::DirRowComponent.new(viewer: viewer, dir: viewer.purl_object.hierarchical_contents)%>
       </tbody>
     </table>
   </div>
