@@ -7,6 +7,10 @@ module Embed
         GeoComponent
       end
 
+      def importmap
+        'geo'
+      end
+
       ##
       # Options for the map element tag
       # @return [Hash]
