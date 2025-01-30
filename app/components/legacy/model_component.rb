@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Embed
+module Legacy
   class ModelComponent < ViewComponent::Base
     def initialize(viewer:)
       @viewer = viewer
