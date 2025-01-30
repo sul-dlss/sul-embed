@@ -2,7 +2,7 @@
 
 pin "media", preload: true
 pin "legacy_webarchive", preload: true
-pin "file", preload: true
+pin "legacy_file", preload: true
 pin "document", preload: true
 pin "legacy_3d", preload: true
 pin "geo", preload: true

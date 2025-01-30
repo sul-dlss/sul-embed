@@ -4,11 +4,11 @@ module Embed
   module Viewer
     class File < CommonViewer
       def component
-        FileComponent
+        Legacy::FileComponent
       end
 
       def importmap
-        'file'
+        'legacy_file'
       end
 
       def height

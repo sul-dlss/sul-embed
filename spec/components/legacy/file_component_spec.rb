@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::FileComponent, type: :component do
+RSpec.describe Legacy::FileComponent, type: :component do
   let(:request) do
     Embed::Request.new(url: 'http://purl.stanford.edu/abc123')
   end
