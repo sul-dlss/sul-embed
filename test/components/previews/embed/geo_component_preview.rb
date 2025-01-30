@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Access these previews at:
-# http://localhost:3000/rails/view_components/embed/pdf_component
+# http://localhost:3000/rails/view_components/embed/geo_component
 module Embed
   class GeoComponentPreview < ViewComponent::Preview
     layout 'preview/geo'
