@@ -4,15 +4,15 @@ module Embed
   module Viewer
     class ModelViewer < CommonViewer
       def component
-        ModelComponent
+        Legacy::ModelComponent
       end
 
       def importmap
-        '3d'
+        'legacy_3d'
       end
 
       def stylesheet
-        'model.css'
+        'legacy_model.css'
       end
 
       def three_dimensional_files
