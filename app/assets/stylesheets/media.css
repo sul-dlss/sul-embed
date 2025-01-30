@@ -1,4 +1,4 @@
-@import 'companion_window';
+@import url("companion_window.css");
 
 /* VideoJS CSS overrides for responsive layout
    See http://andreassauer.name/experimente/video-js/demo.html */
