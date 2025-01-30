@@ -4,7 +4,7 @@ module Embed
   module Viewer
     class Geo < CommonViewer
       def component
-        GeoComponent
+        Legacy::GeoComponent
       end
 
       def importmap
@@ -30,7 +30,7 @@ module Embed
       end
 
       def stylesheet
-        'geo.css'
+        'legacy_geo.css'
       end
 
       def self.show_download?
