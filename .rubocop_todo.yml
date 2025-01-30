@@ -36,7 +36,7 @@ Metrics/MethodLength:
 # Offense count: 13
 RSpec/AnyInstance:
   Exclude:
-    - 'spec/components/embed/was_seed_component_spec.rb'
+    - 'spec/components/legacy/was_seed_component_spec.rb'
     - 'spec/features/was_seed_viewer_spec.rb'
     - 'spec/lib/embed/viewer/m3_viewer_spec.rb'
     - 'spec/models/embed/purl_spec.rb'
@@ -53,7 +53,7 @@ RSpec/ContextWording:
 # Offense count: 23
 RSpec/ExpectInHook:
   Exclude:
-    - 'spec/components/embed/was_seed_component_spec.rb'
+    - 'spec/components/legacy/was_seed_component_spec.rb'
     - 'spec/features/was_seed_viewer_spec.rb'
     - 'spec/lib/embed/response_spec.rb'
     - 'spec/lib/embed/viewer/file_spec.rb'
@@ -69,7 +69,7 @@ RSpec/IteratedExpectation:
 # SupportedStyles: have_received, receive
 RSpec/MessageSpies:
   Exclude:
-    - 'spec/components/embed/was_seed_component_spec.rb'
+    - 'spec/components/legacy/was_seed_component_spec.rb'
     - 'spec/features/was_seed_viewer_spec.rb'
     - 'spec/lib/embed/request_spec.rb'
     - 'spec/lib/embed/response_spec.rb'
