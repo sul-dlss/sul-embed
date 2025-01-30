@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::FooterComponent, type: :component do
+RSpec.describe Legacy::FooterComponent, type: :component do
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:object) { Embed::Purl.find('12345') }
   let(:viewer) { Embed::Viewer::Geo.new(request) }

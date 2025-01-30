@@ -1,5 +1,5 @@
 <div class="sul-embed-container" data-controller="fullscreen" id='sul-embed-object' hidden>
-  <%= render Embed::HeaderComponent.new viewer: viewer %>
+  <%= render Legacy::HeaderComponent.new viewer: viewer %>
   <div class="sul-embed-3d sul-embed-body" data-fullscreen-target="area">
     <div class="buttons">
       <button aria-label="Zoom in" class="zoom-in">+</button>
@@ -12,6 +12,6 @@
 
   <%= render 'embed/metadata_panel', viewer: viewer %>
   <%= render 'embed/embed_this/generic', viewer: viewer %>
-  <%= render Embed::Download::ModelComponent.new viewer: viewer %>
-  <%= render Embed::FooterComponent.new viewer: viewer %>
+  <%= render Legacy::Download::ModelComponent.new viewer: viewer %>
+  <%= render Legacy::FooterComponent.new viewer: viewer %>
  </div>
