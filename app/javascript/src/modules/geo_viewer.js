@@ -1,4 +1,5 @@
-import './leaflet_opacity'
+import 'src/modules/leaflet_opacity'
+
 export default {
   isDefined: function (object) {
     return typeof object !== 'undefined'
