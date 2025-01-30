@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::MediaWrapperComponent, type: :component do
+RSpec.describe Embed::Media::WrapperComponent, type: :component do
   subject(:render) do
     render_inline(
       described_class.new(
