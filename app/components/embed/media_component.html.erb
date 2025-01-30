@@ -91,7 +91,7 @@
         </picture>
       </div>
 
-      <%= render Embed::MediaTagComponent.with_collection(resources_with_primary_file, druid:) %>
+      <%= render Embed::Media::TagComponent.with_collection(resources_with_primary_file, druid:) %>
   <% end %>
 
   <% component.with_dialog do %>
