@@ -31,7 +31,7 @@ module Bcp47
         record_string
           .gsub(FOLDED_LINE, ' ')
           .split("\n")
-          .filter_map { |line| FIELD_PATTERN.match(line)&.named_captures&.slice('field_name', 'field_body')&.values }
+          .filter_map { |line| FIELD_PATTERN.match(line)&.named_captures&.slice('field_name', 'field_body')&.values } # rubocop:disable Style/SafeNavigationChainLength
       )
     end
 
