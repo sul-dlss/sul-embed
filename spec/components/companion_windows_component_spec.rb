@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::CompanionWindowsComponent, type: :component do
+RSpec.describe CompanionWindowsComponent, type: :component do
   subject(:companion_windows_component) { described_class.new(viewer:) }
 
   before do
