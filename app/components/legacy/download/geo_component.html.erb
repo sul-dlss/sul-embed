@@ -1,5 +1,5 @@
 <% unless viewer.embed_request.hide_download? %>
-  <%= render DownloadPanelComponent.new do %>
+  <%= render Legacy::DownloadPanelComponent.new do %>
     <% viewer.purl_object.contents.each do |resource| %>
       <ul class='sul-embed-download-list'>
         <%= render Embed::Download::FileListItemComponent.with_collection(resource.files, prefer_filename: true) %>

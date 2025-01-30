@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe DownloadPanelComponent, type: :component do
+RSpec.describe Legacy::DownloadPanelComponent, type: :component do
   before do
     render_inline(described_class.new(title: 'The Panel Title')) { 'Added Panel Content' }
   end
