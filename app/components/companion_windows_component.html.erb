@@ -33,7 +33,7 @@
 
       <div class="inner">
         <%# If render_content_list_panel? is true, show 'object-content' by default on load
-            Otherwise show 'about' as the default. %> 
+            Otherwise show 'about' as the default. %>
         <section id="about" role="tabpanel" <%= 'hidden' if render_content_list_panel? %>>
           <div class="header-background">
             <h3>About this item</h3>
@@ -90,7 +90,7 @@
           Files
         </h3>
         <ul>
-          <%= render Embed::Download::FileListItemComponent.with_collection(downloadable_files, show_headers: show_headers?) %>
+          <%= render Download::FileListItemComponent.with_collection(downloadable_files, show_headers: show_headers?) %>
         </ul>
       <% else %>
         <p>No downloads available</p>

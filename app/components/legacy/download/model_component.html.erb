@@ -1,5 +1,5 @@
 <%= render Legacy::DownloadPanelComponent.new do %>
   <ul class='sul-embed-download-list'>
-    <%= render Embed::Download::FileListItemComponent.with_collection(viewer.purl_object.downloadable_files) %>
+    <%= render Download::FileListItemComponent.with_collection(viewer.purl_object.downloadable_files) %>
   </ul>
 <% end %>
