@@ -6,15 +6,15 @@ module Embed
       delegate :druid, to: :@purl_object
 
       def component
-        WasSeedComponent
+        Legacy::WasSeedComponent
       end
 
       def importmap
-        'webarchive'
+        'legacy_webarchive'
       end
 
       def stylesheet
-        'was_seed.css'
+        'legacy_was_seed.css'
       end
 
       def capture_list

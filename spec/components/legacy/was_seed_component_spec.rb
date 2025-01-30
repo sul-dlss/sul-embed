@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::WasSeedComponent, type: :component do
+RSpec.describe Legacy::WasSeedComponent, type: :component do
   include WasTimeMapFixtures
 
   let(:embed_request) do
