@@ -10,7 +10,6 @@ import shareMenuPlugin from '../plugins/shareMenuPlugin'
 import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin'
 import embedModePlugin from '../plugins/embedModePlugin'
 import analyticsPlugin from '../plugins/analyticsPlugin'
-import cdlAuthPlugin from '../plugins/cdlAuthPlugin'
 import xywhPlugin from '../plugins/xywhPlugin'
 import { getExportableState } from 'mirador/dist/es/src/state/selectors'
 
@@ -20,8 +19,12 @@ export default {
     const data = el.dataset
     const showAttribution = (data.showAttribution === 'true')
     const hideWindowTitle = (data.hideTitle === 'true')
+<<<<<<< HEAD
     const enableComparison = (data.enableComparison === 'true')
     const cdl = (data.cdl === 'true')
+=======
+    const imageTools = (data.imageTools === 'true')
+>>>>>>> 65c5f1a5 (Remove CDL mirador plugins.)
 
     // Determine which panel should be open
     var sideBarPanel = 'info'
@@ -84,11 +87,6 @@ export default {
         canvasIndex: Number(data.canvasIndex),
         ...(data.viewerConfig && { initialViewerConfig: JSON.parse(data.viewerConfig) }),
         canvasId: data.canvasId,
-        ...(cdl && {
-          cdl: {
-            cdlHoldRecordId: data.cdlHoldRecordId && data.cdlHoldRecordId.toString(),
-          }
-        }),
       }],
       window: {
         allowClose: false,
@@ -120,9 +118,8 @@ export default {
         enabled: false,
       }
     }, [
-      ...((cdl && cdlAuthPlugin) || []),
       ...miradorImageToolsPlugin,
-      (!cdl && shareMenuPlugin),
+      shareMenuPlugin,
       miradorZoomBugPlugin,
       ...((enableComparison && embedModePlugin) || []),
       {
