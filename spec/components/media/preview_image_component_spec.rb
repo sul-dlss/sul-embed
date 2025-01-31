@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::Media::PreviewImageComponent, type: :component do
+RSpec.describe Media::PreviewImageComponent, type: :component do
   pending "add some examples to (or delete) #{__FILE__}"
 
   # it "renders something useful" do

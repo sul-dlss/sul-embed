@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::MediaComponent, type: :component do
+RSpec.describe MediaComponent, type: :component do
   before do
     allow(embed_request).to receive(:purl_object).and_return(purl_object)
     render_inline(described_class.new(viewer:))

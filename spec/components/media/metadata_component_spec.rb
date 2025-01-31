@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::Media::MetadataComponent, type: :component do
+RSpec.describe Media::MetadataComponent, type: :component do
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:viewer) { Embed::Viewer::Media.new(request) }
   let(:purl) { build(:purl) }
