@@ -2,6 +2,7 @@
 
 pin "media", preload: true
 pin "legacy_webarchive", preload: true
+pin "webarchive", preload: true
 pin "legacy_file", preload: true
 pin "document", preload: true
 pin "legacy_3d", preload: true

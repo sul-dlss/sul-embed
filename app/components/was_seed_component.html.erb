@@ -1,0 +1,30 @@
+<%= render ::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth fullscreen') do |component| %>
+  <% component.with_body do %>
+    <div class="sul-embed-body" style="width: 100%">
+      <div class='sul-embed-was-seed-column sul-embed-was-seed-info'>
+        <%= link_to viewer.archived_site_url, target: '_top' do %>
+          <div class="sul-embed-was-seed-preview">
+            <%= image_tag viewer.shelved_thumb, alt: '' %>
+          </div>
+          Stanford Web Archive Portal
+        <% end %>
+      </div>
+      <div class='sul-embed-was-seed-column sul-embed-was-seed-captures'>
+        <% if viewer.capture_list.length.positive? %>
+          <h1>
+            <%= "Captured #{pluralize(viewer.capture_list.length, 'time')} between #{viewer.format_memento_datetime(viewer.capture_list.first.datetime)} and #{viewer.format_memento_datetime(viewer.capture_list.last.datetime)}" %>
+          </h1>
+        <% end %>
+        <ul class='sul-embed-was-seed-list'>
+          <% viewer.capture_list.each do |memento| %>
+            <li class='sul-embed-was-seed-list-item'>
+              <%= link_to memento.url, target: '_top', class: 'sul-embed-stretched-link' do %>
+                <%= DateTime.parse(memento.datetime).utc %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+<% end %>
