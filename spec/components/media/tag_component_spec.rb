@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::Media::TagComponent, type: :component do
+RSpec.describe Media::TagComponent, type: :component do
   subject(:render) do
     render_inline(
       described_class.new(
