@@ -1,10 +1,7 @@
 'use strict';
 import React from 'react';
-import SvgIcon from '@material-ui/core/SvgIcon';
-import { withStyles } from '@material-ui/core';
-import { withPlugins } from 'mirador/dist/es/src/extend/withPlugins';
-import { WindowTopBarPluginMenu } from 'mirador/dist/es/src/components/WindowTopBarPluginMenu';
-import { getContainerId } from 'mirador/dist/es/src/state/selectors';
+import SvgIcon from '@mui/material/SvgIcon';
+import { withPlugins, WindowTopBarPluginMenu, getContainerId } from 'mirador';
 
 const CustomIcon = (props) => (
   <SvgIcon {...props}>
@@ -24,18 +21,7 @@ const WindowTopBarShareMenu = (props) => (
   />
 )
 
-/**
- *
- * @param theme
- * @returns {{ctrlBtn: {margin: (number|string)}}}
- */
-const styles = theme => ({
-  ctrlBtnSelected: {
-    backgroundColor: theme.palette.action.selected,
-  },
-});
-
-const ImprovedWindowTopBarShareMenu = withStyles(styles)(
+const ImprovedWindowTopBarShareMenu = (
   withPlugins('WindowTopBarShareMenu')(
     WindowTopBarShareMenu
   )
@@ -43,7 +29,13 @@ const ImprovedWindowTopBarShareMenu = withStyles(styles)(
 
 
 export default {
-  component: ImprovedWindowTopBarShareMenu,
+  config: {
+    translations: {
+      en: {
+        'windowPluginMenu': 'Share & download',
+      },
+    }
+  },
   mapStateToProps: (state) => ({
     containerId: getContainerId(state),
   }),
