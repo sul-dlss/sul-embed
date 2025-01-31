@@ -1,16 +1,14 @@
 'use strict'
 
-import Mirador from 'mirador/dist/es/src/index.js'
-import miradorImageToolsPlugin from 'mirador-image-tools/es/plugins/miradorImageToolsPlugin.js'
+import Mirador, { getExportableState } from 'mirador'
+import { miradorImageToolsPlugin } from 'mirador-image-tools'
 import miradorShareDialogPlugin from 'mirador-share-plugin/es/MiradorShareDialog.js'
 import miradorSharePlugin from 'mirador-share-plugin/es/miradorSharePlugin.js'
-import miradorDownloadPlugin from 'mirador-dl-plugin/es/miradorDownloadPlugin.js'
-import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDialog.js'
+import { miradorDownloadPlugin, MiradorDownloadDialogPlugin as miradorDownloadDialogPlugin } from 'mirador-dl-plugin'
 import shareMenuPlugin from '../plugins/shareMenuPlugin'
 import embedModePlugin from '../plugins/embedModePlugin'
 import analyticsPlugin from '../plugins/analyticsPlugin'
 import xywhPlugin from '../plugins/xywhPlugin'
-import { getExportableState } from 'mirador/dist/es/src/state/selectors'
 
 export default {
   init: function() {

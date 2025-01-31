@@ -4,8 +4,7 @@ import {
   CompareDialog,
   CompareMenuItem,
 } from '../components/embedMode'
-import * as actions from 'mirador/dist/es/src/state/actions/index.js'
-import { getWindow } from 'mirador/dist/es/src/state/selectors'
+import { addWindow, getWindow, updateWindow } from 'mirador'
 
 export default [
   {
@@ -21,7 +20,7 @@ export default [
   {
     component: CompareMenuItem,
     mapDispatchToProps: {
-      updateWindow: actions.updateWindow,
+      updateWindow: updateWindow,
     },
     mode: 'add',
     name: 'CompareMenuItem',
@@ -30,8 +29,8 @@ export default [
   {
     component: CompareDialog,
     mapDispatchToProps: {
-      addWindow: actions.addWindow,
-      updateWindow: actions.updateWindow,
+      addWindow: addWindow,
+      updateWindow: updateWindow,
     },
     mapStateToProps: (state, { windowId }) => ({
       show: getWindow(state, { windowId }).showCompareDialog,
