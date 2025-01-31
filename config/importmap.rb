@@ -5,7 +5,7 @@ pin "legacy_webarchive", preload: true
 pin "file", preload: true
 pin "document", preload: true
 pin "legacy_3d", preload: true
-pin "geo", preload: true
+pin "legacy_geo", preload: true
 
 pin "@hotwired/stimulus", to: "stimulus.min.js", preload: true
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js", preload: true
