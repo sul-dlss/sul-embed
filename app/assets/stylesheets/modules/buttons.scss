@@ -99,8 +99,8 @@
   }
 
   .btn-toolbar {
-    --bs-btn-color: #{$sul-button-color};
-    --bs-btn-bg: #{$sul-button-bg};
+    --bs-btn-color: white;
+    --bs-btn-bg: #{$sul-border-color};
     --bs-btn-border-color: transparent;
     --bs-btn-hover-bg: #433e38;
     --bs-btn-hover-border-color: transparent;

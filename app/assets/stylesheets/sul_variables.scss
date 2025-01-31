@@ -1,23 +1,19 @@
 // Colors
+$color-cardinal-red: #8c1515;
+$color-fog-light: #f4f4f4;
+$color-beige-05: #fbfbf9;
+$color-pantone-405: #5f574f;
 $gray-80-percent: #ccc;
 $gray-54-percent: #737373;
 $white-color: #fff;
 
-// Bootstrap needed (for mixins)
-$btn-default-bg: #fff;
-$close-color: #000;
-$close-font-weight: bold;
-$close-text-shadow: 0 1px 0 #fff;
 $font-size-base: 14px;
 
 $sul-border-color: $color-pantone-405;
 $sul-button-bg: $sul-border-color;
-$sul-button-color: white;
-$sul-font-color: black;
 $sul-input-border: $gray-80-percent;
 $sul-title-size: floor(($font-size-base * 1.29));
 $sul-header-weight: 300;
-$sul-link-border-color: $color-pantone-401;
 $sul-link-color: #006cb8;
 $sul-link-hover-color: #00548f;
 $sul-metadata-bg: $color-beige-05;
