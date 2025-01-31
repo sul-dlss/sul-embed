@@ -1,12 +1,15 @@
-@import 'common';
-@import 'modules/fullscreen';
+@import "modules/fullscreen";
+
+:root {
+  --color-fog-light: #f4f4f4;
+}
 
 .authLinkWrapper {
   align-items: center;
   display: flex;
   background-color: var(--active-color);
   color: white;
-  padding: .5rem;
+  padding: 0.5rem;
 
   .loginMessage {
     margin-bottom: 0;
@@ -59,7 +62,7 @@
   border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
-  font-family: 'Source Sans Pro', 'Arial Unicode MS', Helvetica, sans-serif;
+  font-family: "Source Sans Pro", "Arial Unicode MS", Helvetica, sans-serif;
   font-size: var(--font-size-base);
 
   * {
@@ -96,21 +99,24 @@
       margin-bottom: 1rem;
     }
 
-    .sul-embed-embed-this-form, .sul-embed-downloads {
+    .sul-embed-embed-this-form,
+    .sul-embed-downloads {
       color: var(--text-color);
     }
 
     .sul-embed-embed-this-form {
-      .form-label, legend {
+      .form-label,
+      legend {
         display: inline-block;
         font-size: 12pt;
         font-weight: 600;
         margin: 0.5em 0;
       }
 
-      input[type="text"], textarea {
+      input[type="text"],
+      textarea {
         margin-bottom: 1rem;
-        padding: .375rem .75rem;
+        padding: 0.375rem 0.75rem;
         width: calc(100% - 2rem);
       }
 
@@ -150,7 +156,6 @@
         text-decoration: underline;
         cursor: pointer;
       }
-
     }
   }
 
@@ -158,7 +163,10 @@
     border: 0;
     top: 49px;
     left: calc(100% - 180px);
-    box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);
+    box-shadow:
+      0px 5px 5px -3px rgba(0, 0, 0, 0.2),
+      0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+      0px 3px 14px 2px rgba(0, 0, 0, 0.12);
     border-radius: var(--modal-border-radius);
     margin: 0;
     padding: 0;
@@ -192,7 +200,7 @@
     }
   }
 
-  &>header {
+  & > header {
     border-top: 2px solid var(--active-color);
     border-bottom: 1px solid gray;
 
@@ -237,12 +245,12 @@
   }
 
   .transcript-header {
-    background: $color-fog-light;
+    background: var(--color-fog-light);
     padding-bottom: 1.5rem;
   }
 
   .header-background {
-    background: $color-fog-light;
+    background: var(--color-fog-light);
     display: flex;
     flex-shrink: 0;
     padding-left: var(--drawer-content-padding);
@@ -266,7 +274,8 @@
         margin-left: 0.6rem;
       }
 
-      input, select {
+      input,
+      select {
         margin-right: 0.6rem;
         vertical-align: middle;
       }
@@ -292,7 +301,9 @@
   .companion-window-component-body {
     display: flex;
     flex-grow: 1;
-    max-height: calc(100vh - var(--header-size) - 2px); /* the 2px are for the outer 1px border */
+    max-height: calc(
+      100vh - var(--header-size) - 2px
+    ); /* the 2px are for the outer 1px border */
 
     #main-display {
       display: flex;
@@ -303,7 +314,7 @@
   .collapse {
     width: 0px;
     overflow: hidden;
-    transition: flex-basis .5s ease-in-out;
+    transition: flex-basis 0.5s ease-in-out;
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: 0;
@@ -385,7 +396,8 @@
       max-width: 100%;
     }
 
-    .metadataList, .rightsList {
+    .metadataList,
+    .rightsList {
       dt {
         font-size: 0.878rem;
         font-weight: 500;
@@ -404,7 +416,8 @@
 
     --thumb-height: 75px;
 
-    .media-thumb, .file-thumb {
+    .media-thumb,
+    .file-thumb {
       list-style-type: none;
       border: 1px solid gray;
       margin-bottom: 0.5rem;
@@ -419,8 +432,8 @@
         display: inline-block;
         font-size: calc(var(--thumb-height) - 2px);
         width: 75px;
-        margin-right: .5rem;
-        padding-left: .3rem;
+        margin-right: 0.5rem;
+        padding-left: 0.3rem;
 
         &::before {
           vertical-align: text-top;
@@ -446,11 +459,13 @@
       }
 
       .sul-embed-thumb-stanford-only {
-        background: url('stanford_s.svg') no-repeat;
+        background: url("stanford_s.svg") no-repeat;
         background-position: bottom left;
         padding-right: 20px;
         &.text {
-          height: calc(100% - 0.75rem); /* positions .sul-embed-thumb-stanford-only */
+          height: calc(
+            100% - 0.75rem
+          ); /* positions .sul-embed-thumb-stanford-only */
         }
       }
 
@@ -464,8 +479,8 @@
     }
 
     .file-thumb {
-      height: auto!important;
-      padding: .5rem;
+      height: auto !important;
+      padding: 0.5rem;
       text-align: left;
     }
   }
