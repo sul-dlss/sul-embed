@@ -10,7 +10,6 @@ import shareMenuPlugin from '../plugins/shareMenuPlugin'
 import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin'
 import embedModePlugin from '../plugins/embedModePlugin'
 import analyticsPlugin from '../plugins/analyticsPlugin'
-import cdlAuthPlugin from '../plugins/cdlAuthPlugin'
 
 export default {
   init: function() {
@@ -19,7 +18,6 @@ export default {
     const showAttribution = (data.showAttribution === 'true')
     const hideWindowTitle = (data.hideTitle === 'true')
     const imageTools = (data.imageTools === 'true')
-    const cdl = (data.cdl === 'true')
 
     // Determine which panel should be open
     var sideBarPanel = 'info'
@@ -81,11 +79,6 @@ export default {
         loadedManifest: data.m3Uri,
         canvasIndex: Number(data.canvasIndex),
         canvasId: data.canvasId,
-        ...(cdl && {
-          cdl: {
-            cdlHoldRecordId: data.cdlHoldRecordId && data.cdlHoldRecordId.toString(),
-          }
-        }),
       }],
       window: {
         allowClose: false,
@@ -117,9 +110,8 @@ export default {
         enabled: false,
       }
     }, [
-      ...((cdl && cdlAuthPlugin) || []),
       ...((imageTools && miradorImageToolsPlugin) || []),
-      (!cdl && shareMenuPlugin),
+      shareMenuPlugin,
       miradorZoomBugPlugin,
       ...((imageTools && embedModePlugin) || []),
       {
