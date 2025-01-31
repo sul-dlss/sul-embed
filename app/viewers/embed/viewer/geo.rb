@@ -8,7 +8,7 @@ module Embed
       end
 
       def importmap
-        'geo'
+        'legacy_geo'
       end
 
       ##
