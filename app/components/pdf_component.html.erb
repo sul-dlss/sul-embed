@@ -14,7 +14,7 @@
   <% component.with_body do %>
     <div class="sul-embed-body" style="width: 100%">
     <% if viewer.available? %>
-          <%= render Embed::LoginComponent.new %>
+          <%= render LoginComponent.new %>
           <div class="sul-embed-pdf" style="height: 100%"
             data-controller="pdf"
             data-fullscreen-target="area"

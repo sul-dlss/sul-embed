@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::PdfComponent, type: :component do
+RSpec.describe PdfComponent, type: :component do
   include PurlFixtures
 
   let(:url) { 'https://purl.stanford.edu/sq929fn8035' }
