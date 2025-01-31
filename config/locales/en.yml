@@ -21,12 +21,12 @@
 
 en:
   restrictions:
-    not_accessible: 'This item cannot be accessed online. See Access conditions for more information.'
-    logged_in: 'Logged in.'
+    not_accessible: "This item cannot be accessed online. See Access conditions for more information."
+    logged_in: "Logged in."
   date:
     formats:
-      sul: '%d-%b-%Y'
-      sul_was_long: '%d %B %Y'
+      sul: "%d-%b-%Y"
+      sul_was_long: "%d %B %Y"
   number:
     human:
       storage_units:
@@ -34,20 +34,22 @@ en:
           kb: kB # This is the SI unit for 10^3
   viewers:
     file:
-      title: 'File viewer'
+      title: "File viewer"
     geo:
-      title: 'Geospatial viewer'
+      title: "Geospatial viewer"
     m3_viewer:
-      title: 'Image viewer'
+      title: "Image viewer"
     media:
-      title: 'Media viewer'
+      title: "Media viewer"
+      content_list_heading: Media content
     pdf_viewer:
-      title: 'PDF viewer'
+      title: "PDF viewer"
+      content_list_heading: Contents
     model_viewer:
-      title: '3-D object viewer'
+      title: "3-D object viewer"
     was_seed:
-      title: 'File viewer'
+      title: "File viewer"
   download_files:
-    zero: 'No file available for download'
-    one: '1 file available for download'
-    other: '%{count} files available for download'
+    zero: "No file available for download"
+    one: "1 file available for download"
+    other: "%{count} files available for download"

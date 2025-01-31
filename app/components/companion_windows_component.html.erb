@@ -43,7 +43,7 @@
 
         <% if render_content_list_panel? %>
           <section id="object-content" role="tabpanel">
-            <%= render ContentListComponent.new(viewer:, heading: viewer.content_heading) %>
+            <%= render ContentListComponent.new(viewer:) %>
           </section>
         <% end %>
 
