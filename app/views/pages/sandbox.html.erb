@@ -231,119 +231,118 @@
     </ul>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-      crossorigin="anonymous"></script>
   <script>
-    $(function() {
-      // Turn off jQuery animations on test suite
-      if ('<%= Rails.env %>' === 'test') {
-        if (window.jQuery) { jQuery.fx.off = true; }
+  const embed = (function() {
+    let url, format;
+
+    function init() {
+      if (isValidUrl()) {
+        submitRequest(url);
       }
-        $('.btn-render').on('click', function() {
-            embed.render();
-        });
-        $('input').keyup(function (e) {
-            if (e.keyCode == 13) {
-                embed.render();
-            }
-        });
+    }
+
+    function isValidUrl() {
+      const apiEndpoint = document.querySelector('.api-endpoint').value.trim();
+      const urlScheme = document.querySelector('.url-scheme').value.trim();
+      const hideTitle = document.querySelector('.hide-title').checked;
+      const hideSearch = document.querySelector('.hide-search').checked;
+      const minFiles = document.querySelector('.min-files').value;
+      const hideEmbed = document.querySelector('.hide-embed').checked;
+      const hideDownload = document.querySelector('.hide-download').checked;
+      const maxWidth = parseInt(document.querySelector('.max-width').value, 10);
+      const maxHeight = parseInt(document.querySelector('.max-height').value, 10);
+      const canvasIndex = parseInt(document.querySelector('.canvas-index').value, 10);
+
+      format = document.getElementById('select-format').value;
+
+      if (apiEndpoint !== "" && urlScheme !== "") {
+        url = apiEndpoint + "/?url=" + urlScheme + "&format=" + format;
+
+        if (hideTitle) url += "&hide_title=true";
+        if (hideSearch) url += "&hide_search=true";
+        if (minFiles) url += "&min_files_to_search=" + minFiles;
+        if (hideEmbed) url += "&hide_embed=true";
+        if (hideDownload) url += "&hide_download=true";
+        if (!isNaN(maxWidth)) url += "&maxwidth=" + maxWidth;
+        if (!isNaN(maxHeight)) url += "&maxheight=" + maxHeight;
+        if (!isNaN(canvasIndex)) url += "&canvas_index=" + canvasIndex;
+
+      } else {
+        alert('Error:\nEmpty API endpoint and/or URL scheme');
+        return false;
+      }
+
+      return true;
+    }
+
+    function appendContent(response) {
+      const viewer = document.querySelector('.viewer');
+
+      let html;
+      if (format === "json") {
+        html = response.html;
+      }
+
+      viewer.innerHTML = ''; // Clear existing content
+      viewer.innerHTML = html;
+
+
+    }
+
+    function submitRequest(url) {
+      let statusElement = document.querySelector('.status');
+      if (!statusElement) {
+        statusElement = document.createElement('p');
+        statusElement.classList.add('status');
+        document.querySelector('.viewer').appendChild(statusElement);
+      }
+
+      statusElement.classList.remove('failed');
+      statusElement.textContent = 'Loading...';
+
+      fetch(url, {
+        method: 'GET'
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response[format === 'json' ? 'json' : 'text'](); // Parse based on format
+      })
+      .then(data => {
+        statusElement.remove();
+        appendContent(data);
+        document.activeElement.blur();
+      })
+      .catch(error => {
+        const viewer = document.querySelector('.viewer');
+        viewer.innerHTML = '';
+        const statusFeedback = document.createElement('p');
+        statusFeedback.classList.add('status', 'failed');
+        statusFeedback.textContent = 'Request Failed';
+        viewer.appendChild(statusFeedback);
+        console.error('Request failed:', error);
+      });
+    }
+
+    return {
+      render: init
+    };
+
+  })();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.btn-render').addEventListener('click', embed.render);
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+      input.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') {
+          embed.render();
+        }
+      });
     });
 
-    var embed = (function() {
-      var url, format, data;
-
-      function init() {
-        if (isValidUrl()) {
-          submitRequest(url);
-        };
-      }
-
-      function isValidUrl() {
-        var apiEndpoint = $.trim($('.api-endpoint').val()),
-            urlScheme = $.trim($('.url-scheme').val()),
-            hideTitle = $('.hide-title').is(':checked'),
-            hideSearch = $('.hide-search').is(':checked'),
-            minFiles = $('.min-files').val(),
-            hideEmbed = $('.hide-embed').is(':checked'),
-            hideDownload = $('.hide-download').is(':checked'),
-            maxWidth = parseInt($('.max-width').val(), 10),
-            maxHeight = parseInt($('.max-height').val(), 10);
-            canvasIndex = parseInt($('.canvas-index').val(), 10);
-
-        format = $('#select-format').val();
-
-        if (apiEndpoint !== "" && urlScheme !== "") {
-          url = apiEndpoint + "/?url=" + urlScheme + "&format=" + format;
-
-          if (hideTitle) url += "&hide_title=true";
-          if (hideSearch) url += "&hide_search=true";
-          if (minFiles) url += "&min_files_to_search=" + minFiles;
-          if (hideEmbed) url += "&hide_embed=true";
-          if (hideDownload) url += "&hide_download=true";
-          if (!isNaN(maxWidth)) url += "&maxwidth=" + maxWidth;
-          if (!isNaN(maxHeight)) url += "&maxheight=" + maxHeight;
-          if (!isNaN(canvasIndex)) url += "&canvas_index=" + canvasIndex;
-
-        } else {
-          alert('Error:\nEmpty API endpoint and/or URL scheme')
-          return false;
-        }
-
-        return true;
-      }
-
-      function appendContent(response) {
-        var $viewer = $('.viewer'),
-            thumbnail_url,
-            width,
-            height;
-
-        if (format === "json") {
-          html = response.html;
-        }
-
-        if (format === "xml") {
-          // xmlDoc = $.parseXML( response );
-        }
-
-        $viewer.empty().width(width).height(height);
-        $viewer.append($('<div>' + html + '</div>'));
-      }
-
-      function submitRequest(url) {
-        if ($('.status').length === 0) {
-            var statusFeedback = $('.viewer').append('<p/>');
-            $('.viewer p').addClass('status');
-        }
-
-        $('.status').removeClass('failed').text('Loading...');
-
-        var request = $.ajax({
-          type: "GET",
-          url: url,
-          dataType: format
-        });
-
-        request.done(function(response) {
-          $('.status').remove();
-          appendContent(response);
-          document.activeElement.blur();
-        });
-
-        request.fail(function(jqXhr, status) {
-          $('.viewer').empty();
-          var statusFeedback = $('.viewer').append('<p/>');
-          $('.viewer p').addClass('status failed').text('Request Failed');
-          console.log('Request failed : ' + status);
-        });
-      }
-
-      return {
-        render: function() { init(); }
-      };
-
-    })();
+  });
   </script>
 </body>
 
