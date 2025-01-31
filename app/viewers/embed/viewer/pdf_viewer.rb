@@ -12,7 +12,7 @@ module Embed
       end
 
       def stylesheet
-        'companion_window.css'
+        'pdf.css'
       end
 
       def pdf_files
