@@ -17,31 +17,25 @@
 // https://github.com/twbs/bootstrap-sass/blob/d5625c907168b6311be122b99d89614e02448475/assets/stylesheets/bootstrap/_close.scss
 
 .sul-embed-close {
+  background: transparent;
+  border: 0;
+  color: black;
+  cursor: pointer;
   float: right;
   font-size: ($font-size-base * 1.5);
-  font-weight: $close-font-weight;
+  font-weight: bold;
   line-height: 1;
-  color: $close-color;
-  text-shadow: $close-text-shadow;
+  text-shadow: 0 1px 0 #fff;
   opacity: 0.2;
+  padding: 0;
+  -webkit-appearance: none;
 
   &:hover,
   &:focus {
-    color: $close-color;
     text-decoration: none;
     cursor: pointer;
     opacity: 0.5;
   }
-
-  // [converter] extracted button& to button.close
-}
-
-button.sul-embed-close {
-  padding: 0;
-  cursor: pointer;
-  background: transparent;
-  border: 0;
-  -webkit-appearance: none;
 }
 
 // https://github.com/twbs/bootstrap-sass/blob/d5625c907168b6311be122b99d89614e02448475/assets/stylesheets/bootstrap/_scaffolding.scss

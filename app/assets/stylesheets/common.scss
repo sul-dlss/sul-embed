@@ -1,9 +1,11 @@
 // All classes should be scoped within the .sul-embed-container
-@import "palette";
 @import "sul_variables";
 @import "modules/buttons";
 @import "modules/popup_panels";
 @import "modules/utility";
+
+$color-pantone-401: #b6b1a9;
+$sul-link-border-color: $color-pantone-401;
 
 body {
   margin: 0;
@@ -12,9 +14,9 @@ body {
 
 .sul-embed-container {
   background: $white-color;
-  border: 1px solid $color-pantone-405;
+  border: 1px solid $sul-border-color;
   box-sizing: border-box;
-  color: $sul-font-color;
+  color: black;
   display: flex;
   flex-direction: column;
   font-family: "Source Sans Pro", "Arial Unicode MS", Helvetica, sans-serif;
@@ -100,7 +102,7 @@ body {
     }
 
     .sul-embed-download-count {
-      background-color: $btn-default-bg;
+      background-color: white;
       border-radius: 16px;
       color: $color-pantone-405;
       display: inline-block;
