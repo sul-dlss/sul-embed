@@ -3,6 +3,7 @@
 @import "modules/buttons";
 @import "modules/popup_panels";
 @import "modules/utility";
+@import "https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap";
 
 $color-pantone-401: #b6b1a9;
 $sul-link-border-color: $color-pantone-401;
@@ -19,7 +20,7 @@ body {
   color: black;
   display: flex;
   flex-direction: column;
-  font-family: "Source Sans Pro", "Arial Unicode MS", Helvetica, sans-serif;
+  font-family: "Source Sans 3", "Arial Unicode MS", Helvetica, sans-serif;
   font-size: $font-size-base;
   height: 100vh;
   overflow-x: hidden;
