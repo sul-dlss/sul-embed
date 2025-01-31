@@ -7,7 +7,6 @@ import miradorSharePlugin from 'mirador-share-plugin/es/miradorSharePlugin.js'
 import miradorDownloadPlugin from 'mirador-dl-plugin/es/miradorDownloadPlugin.js'
 import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDialog.js'
 import shareMenuPlugin from '../plugins/shareMenuPlugin'
-import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin'
 import embedModePlugin from '../plugins/embedModePlugin'
 import analyticsPlugin from '../plugins/analyticsPlugin'
 import xywhPlugin from '../plugins/xywhPlugin'
@@ -120,8 +119,12 @@ export default {
     }, [
       ...miradorImageToolsPlugin,
       shareMenuPlugin,
+<<<<<<< HEAD
       miradorZoomBugPlugin,
       ...((enableComparison && embedModePlugin) || []),
+=======
+      ...((imageTools && embedModePlugin) || []),
+>>>>>>> a6b7bab9 (Remove mirador zoom button patch.)
       {
         ...miradorSharePlugin,
         target: 'WindowTopBarShareMenu',
