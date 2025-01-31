@@ -7,7 +7,6 @@ import miradorSharePlugin from 'mirador-share-plugin/es/miradorSharePlugin.js'
 import miradorDownloadPlugin from 'mirador-dl-plugin/es/miradorDownloadPlugin.js'
 import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDialog.js'
 import shareMenuPlugin from '../plugins/shareMenuPlugin'
-import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin'
 import embedModePlugin from '../plugins/embedModePlugin'
 import analyticsPlugin from '../plugins/analyticsPlugin'
 
@@ -112,7 +111,6 @@ export default {
     }, [
       ...((imageTools && miradorImageToolsPlugin) || []),
       shareMenuPlugin,
-      miradorZoomBugPlugin,
       ...((imageTools && embedModePlugin) || []),
       {
         ...miradorSharePlugin,
