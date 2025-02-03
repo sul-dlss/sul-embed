@@ -77,6 +77,7 @@ module Media
                poster: poster_url_for,
                controls: 'controls',
                class: 'sul-embed-media-file',
+               crossorigin: 'use-credentials', # So that VTT can be downloaded when download:stanford
                height: '100%') do
         streaming_source + captions
       end
