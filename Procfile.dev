@@ -1,4 +1,4 @@
-web: unset PORT && bin/rdbg -O -n -c -- bin/rails server
+web: env RUBY_DEBUG_OPEN=true bin/rails server
 css: bin/yarn build:css --watch
 js: bin/shakapacker-dev-server
 stacks: docker compose up --abort-on-container-exit --build
