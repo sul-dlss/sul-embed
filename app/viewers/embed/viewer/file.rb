@@ -11,6 +11,10 @@ module Embed
         'legacy_file'
       end
 
+      def stylesheet
+        'legacy_file.css'
+      end
+
       def height
         return default_height if @embed_request.maxheight.to_i > default_height
 
