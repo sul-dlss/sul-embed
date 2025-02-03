@@ -6,14 +6,17 @@ RSpec.describe Media::WrapperComponent, type: :component do
   subject(:render) do
     render_inline(
       described_class.new(
-        file:, type:, resource_index:, thumbnail:
+        file:, type:, resource_index:, thumbnail:, size:
       )
-    )
+    ) do
+      'content'
+    end
   end
 
   let(:resource_index) { 0 }
   let(:thumbnail) { '' }
   let(:type) { 'audio' }
+  let(:size) { 10 }
 
   before do
     render
@@ -25,6 +28,9 @@ RSpec.describe Media::WrapperComponent, type: :component do
     context 'with audio' do
       it 'renders the page' do
         expect(page).to have_css('[data-default-icon="sul-i-file-music-1"]')
+        expect(page).to have_css('button[aria-label="Previous item"][disabled]')
+        expect(page).to have_css('button[aria-label="Next item"]')
+        expect(page).to have_no_css('button[aria-label="Next item"][disabled]')
       end
     end
 
@@ -33,6 +39,9 @@ RSpec.describe Media::WrapperComponent, type: :component do
 
       it 'renders the page' do
         expect(page).to have_css('[data-default-icon="sul-i-file-video-3"]')
+        expect(page).to have_css('button[aria-label="Previous item"][disabled]')
+        expect(page).to have_css('button[aria-label="Next item"]')
+        expect(page).to have_no_css('button[aria-label="Next item"][disabled]')
       end
     end
   end
@@ -43,6 +52,9 @@ RSpec.describe Media::WrapperComponent, type: :component do
 
       it 'renders the page' do
         expect(page).to have_css('[data-stanford-only="true"]')
+        expect(page).to have_css('button[aria-label="Previous item"][disabled]')
+        expect(page).to have_css('button[aria-label="Next item"]')
+        expect(page).to have_no_css('button[aria-label="Next item"][disabled]')
       end
     end
 
@@ -51,6 +63,9 @@ RSpec.describe Media::WrapperComponent, type: :component do
 
       it 'renders the page' do
         expect(page).to have_css('[data-stanford-only="false"]')
+        expect(page).to have_css('button[aria-label="Previous item"][disabled]')
+        expect(page).to have_css('button[aria-label="Next item"]')
+        expect(page).to have_no_css('button[aria-label="Next item"][disabled]')
       end
     end
   end
@@ -61,6 +76,9 @@ RSpec.describe Media::WrapperComponent, type: :component do
 
       it 'renders the page' do
         expect(page).to have_css('[data-location-restricted="true"]')
+        expect(page).to have_css('button[aria-label="Previous item"][disabled]')
+        expect(page).to have_css('button[aria-label="Next item"]')
+        expect(page).to have_no_css('button[aria-label="Next item"][disabled]')
       end
     end
 
@@ -69,6 +87,18 @@ RSpec.describe Media::WrapperComponent, type: :component do
 
       it 'renders the page' do
         expect(page).to have_css('[data-location-restricted="false"]')
+        expect(page).to have_css('button[aria-label="Previous item"][disabled]')
+        expect(page).to have_css('button[aria-label="Next item"]')
+        expect(page).to have_no_css('button[aria-label="Next item"][disabled]')
+      end
+
+      context 'when there is only one item' do
+        let(:size) { 1 }
+
+        it 'has both buttons disabled' do
+          expect(page).to have_css('button[aria-label="Previous item"][disabled]')
+          expect(page).to have_css('button[aria-label="Next item"][disabled]')
+        end
       end
     end
   end
