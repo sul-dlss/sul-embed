@@ -11,11 +11,6 @@ module Embed
         'media'
       end
 
-      # The heading shown in the Content List of the CompanionWindowComponent
-      def content_heading
-        'Media content'
-      end
-
       private
 
       def default_height

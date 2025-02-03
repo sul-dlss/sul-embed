@@ -106,8 +106,12 @@ module Embed
         !embed_request.hide_title?
       end
 
+      def i18n_path
+        "viewers.#{self.class.name.demodulize.underscore}"
+      end
+
       def iframe_title
-        I18n.t("viewers.#{self.class.name.demodulize.underscore}.title", default: 'Viewer')
+        I18n.t('title', default: 'Viewer', scope: i18n_path)
       end
 
       private
