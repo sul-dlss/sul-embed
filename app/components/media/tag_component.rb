@@ -60,7 +60,19 @@ module Media
     end
 
     def safari_wants_audio_with_captions?
-      type == 'audio' && request.headers['User-Agent'].include?('Safari') && render_captions?
+      type == 'audio' && render_captions? && webkit_useragent?
+    end
+
+    # Many user agents include "safari"
+    # Tested with:
+    # rubocop:disable Layout/LineLength
+    # Firefox: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:134.0) Gecko/20100101 Firefox/134.0"
+    # Edge: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0'
+    # iOS Safari: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.2 Mobile/15E148 Safari/604.1"
+    # MacOS Safari: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15"
+    # rubocop:enable Layout/LineLength
+    def webkit_useragent?
+      /^((?!chrome|android).)*safari/i.match?(request.headers['User-Agent'])
     end
 
     def media_tag # rubocop:disable Metrics/MethodLength
