@@ -1,0 +1,10 @@
+<% if downloadable_files.present? %>
+  <h3 class='sul-embed-options-label modal-subheader'>
+    Files
+  </h3>
+  <ul>
+    <%= render Download::FileListItemComponent.with_collection(downloadable_files, show_headers: show_headers?) %>
+  </ul>
+<% else %>
+  <p>No downloads available</p>
+<% end %>
