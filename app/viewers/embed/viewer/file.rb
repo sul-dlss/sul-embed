@@ -4,15 +4,15 @@ module Embed
   module Viewer
     class File < CommonViewer
       def component
-        Legacy::FileComponent
+        new_viewer? ? FileComponent : Legacy::FileComponent
       end
 
       def importmap
-        'legacy_file'
+        new_viewer? ? 'file' : 'legacy_file'
       end
 
       def stylesheet
-        'legacy_file.css'
+        new_viewer? ? 'file' : 'legacy_file.css'
       end
 
       def height

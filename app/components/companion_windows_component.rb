@@ -27,6 +27,7 @@ class CompanionWindowsComponent < ViewComponent::Base
   def render_content_list_panel?
     # for PDF viewer, do not render the content panel if there is just one downloadable file in the object
     return false if viewer.instance_of?(::Embed::Viewer::PdfViewer) && downloadable_files.size == 1
+    return false if viewer.instance_of?(::Embed::Viewer::File)
 
     true
   end

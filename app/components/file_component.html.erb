@@ -1,0 +1,28 @@
+<%= render ::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth') do |component| %>
+  <% component.with_body do %>
+    <div style="overflow-y: scroll; flex-basis: 100%" data-controller="tree">
+      <% if viewer.purl_object.embargoed? %>
+        <div class='sul-embed-embargo-message'>
+          <%= viewer.embargo_message %>
+        </div>
+      <% end %>
+      <table class="sul-embed-treegrid" role="treegrid" aria-label="File list" data-action="keydown->tree#navigate" data-tree-target="table">
+        <colgroup>
+          <col class="sul-embed-treegrid-name">
+          <col class="sul-embed-treegrid-size">
+          <col class="sul-embed-treegrid-download">
+        </colgroup>
+        <thead>
+          <tr>
+            <th scope="col">File Name</th>
+            <th scope="col">Size</th>
+            <th scope="col" class="sul-embed-text-hide visually-hidden">Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%= render Embed::File::DirRowComponent.new(viewer: viewer, dir: viewer.purl_object.hierarchical_contents)%>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+<% end %>

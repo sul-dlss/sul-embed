@@ -3,7 +3,7 @@
   <td role="gridcell" style="<%= first_td_style %>" class="sul-embed-filename-cell">
     <div style="display: flex;">
       <div style="margin-right: 5px;">
-        <i class="sul-i-2x <%= file_type_icon %>"></i>
+        <i class="text-gray sul-i-2x <%= file_type_icon %>"></i>
       </div>
       <div style="max-width: 95%; overflow-wrap: break-word;">
         <%= title %>
@@ -17,9 +17,8 @@
   <td role="gridcell">
     <% if download? %>
       <a href="<%= url %>" target='_blank' rel='noopener noreferrer' download>
-        <i class='sul-i-download-3'></i>
-        <span>Download</span>
-        <span class="sul-embed-sr-only"><%= title %></span>
+        <i class='sul-i-download-3'></i> Download
+        <span class="sul-embed-sr-only visually-hidden"><%= title %></span>
       </a>
       <%= render 'embed/restrictions_text_for_file', file: file %>
     <% end %>
