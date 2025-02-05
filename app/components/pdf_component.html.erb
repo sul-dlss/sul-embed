@@ -21,7 +21,7 @@
     <div class="sul-embed-body" style="flex-basis: 100%">
       <div style="display: flex; flex-direction: column; height: 100%">
         <% if viewer.available? %>
-              <%= render LoginComponent.new %>
+              <%= render Document::LoginComponent.new %>
               <div class="sul-embed-pdf" style="height: 100%"
                 data-controller="pdf"
                 data-fullscreen-target="area"
