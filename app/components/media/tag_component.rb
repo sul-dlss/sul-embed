@@ -77,17 +77,10 @@ module Media
       /^((?!chrome|android).)*safari/i.match?(request.headers['User-Agent'])
     end
 
-    def media_tag # rubocop:disable Metrics/MethodLength
+    def media_tag
       tag.send(media_tag_name,
                id: "sul-embed-media-#{@resource_iteration.index}",
-               data: {
-                 auth_url: authentication_url,
-                 index: @resource_iteration.index,
-                 media_tag_target: 'authorizeableResource',
-                 controller: 'media-player',
-                 action: 'media-seek@window->media-player#seek ' \
-                         'auth-success@window->media-player#initializeVideoJSPlayer'
-               },
+               data: data_attributes,
                poster: poster_url_for,
                controls: 'controls',
                class: 'sul-embed-media-file',
@@ -95,6 +88,30 @@ module Media
                height: '100%') do
         streaming_source + captions
       end
+    end
+
+    def data_attributes
+      attrs = {
+        auth_url: authentication_url,
+        index: @resource_iteration.index,
+        media_tag_target: 'authorizeableResource',
+        controller: 'media-player',
+        action: 'media-seek@window->media-player#seek ' \
+                'auth-success@window->media-player#initializeVideoJSPlayer'
+      }
+
+      # Firefox displays "No video with supported format and MIME type found" if the video is "Stanford-only"
+      attrs[:setup] = { preload: 'none' } if restricted? && firefox?
+
+      attrs
+    end
+
+    def restricted?
+      @file.stanford_only? || @file.location_restricted?
+    end
+
+    def firefox?
+      request.headers['User-Agent'].include?('Firefox')
     end
 
     def streaming_source
