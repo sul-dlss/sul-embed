@@ -19,24 +19,6 @@ RSpec.describe Media::WrapperComponent, type: :component do
     render
   end
 
-  describe 'data-default-icon attribute' do
-    let(:file) { instance_double(Embed::Purl::ResourceFile, stanford_only?: false, location_restricted?: false, label_or_filename: 'ignored') }
-
-    context 'with audio' do
-      it 'renders the page' do
-        expect(page).to have_css('[data-default-icon="sul-i-file-music-1"]')
-      end
-    end
-
-    context 'with video' do
-      let(:type) { 'video' }
-
-      it 'renders the page' do
-        expect(page).to have_css('[data-default-icon="sul-i-file-video-3"]')
-      end
-    end
-  end
-
   describe 'data-stanford-only attribute' do
     context 'with Stanford only files' do
       let(:file) { instance_double(Embed::Purl::ResourceFile, stanford_only?: true, location_restricted?: false, label_or_filename: 'ignored') }

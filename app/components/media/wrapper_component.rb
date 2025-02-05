@@ -21,8 +21,7 @@ module Media
                 location_restricted: @file.location_restricted?,
                 file_label: @file.label_or_filename,
                 media_tag_target: 'mediaWrapper',
-                thumbnail_url: @thumbnail.presence,
-                default_icon: @type == 'audio' ? 'sul-i-file-music-1' : 'sul-i-file-video-3'
+                thumbnail_url: @thumbnail.presence
               },
               # When rendering this component, show only the first media wrapper component
               hidden: !@resource_index.zero?) do
