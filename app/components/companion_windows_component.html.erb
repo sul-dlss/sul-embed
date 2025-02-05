@@ -43,14 +43,14 @@
 
         <% if render_content_list_panel? %>
           <section id="object-content" role="tabpanel">
-            <%= render ContentListComponent.new(viewer:) %>
+            <%= render CompanionWindows::ContentListComponent.new(viewer:) %>
           </section>
         <% end %>
 
         <%= drawer_content %>
 
         <section id="rights" role="tabpanel" hidden>
-          <%= render RightsComponent.new(viewer:) %>
+          <%= render CompanionWindows::RightsComponent.new(viewer:) %>
         </section>
       </div>
     </aside>

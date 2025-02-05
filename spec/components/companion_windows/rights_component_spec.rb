@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe RightsComponent, type: :component do
+RSpec.describe CompanionWindows::RightsComponent, type: :component do
   before do
     render_inline(described_class.new(viewer:))
   end
