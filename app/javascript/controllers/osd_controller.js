@@ -7,10 +7,14 @@ export default class extends Controller {
     navImages: Object,
   }
 
-  connect() {
+  initializeViewer(evt) {
     // Customize the error message displayed to users:
     OpenSeadragon.setString('Errors.OpenFailed', 'Restricted')
-    OpenSeadragon({
+
+    // only load viewer if the image has been clicked in the sidebar
+    // and the viewer has never been initialized.
+    if (this.viewer || this.element.dataset.index != String(evt.detail.index)) return;
+    this.viewer = OpenSeadragon({
       id: this.element.id,
       tileSources: [this.urlValue],
       prefixUrl: '',

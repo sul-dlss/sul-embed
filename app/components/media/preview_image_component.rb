@@ -24,7 +24,9 @@ module Media
       thumb_url = stacks_square_url(druid, file.title, size: '74,73')
       render WrapperComponent.new(thumbnail: thumb_url, file:, type:, resource_index:, size:) do
         tag.div(class: 'osd', id: "openseadragon-#{resource_index}",
-                data: { controller: 'osd', osd_url_value:, osd_nav_images_value: })
+                data: { controller: 'osd', osd_url_value:, osd_nav_images_value:,
+                        index: resource_index,
+                        action: 'thumbnail-clicked@window->osd#initializeViewer' })
       end
     end
 
