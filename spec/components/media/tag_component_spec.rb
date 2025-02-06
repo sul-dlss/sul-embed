@@ -11,7 +11,7 @@ RSpec.describe Media::TagComponent, type: :component do
     )
   end
 
-  let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 0) }
+  let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 0, size: 1) }
   let(:druid) { 'bc123df4567' }
 
   before do
@@ -37,7 +37,7 @@ RSpec.describe Media::TagComponent, type: :component do
   end
 
   context 'with a stanford only video' do
-    let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1) }
+    let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1, size: 4) }
     let(:resource) { build(:resource, :video, files: [build(:resource_file, :video, :stanford_only)]) }
 
     it 'includes a data attribute that includes the url to check the users auth status' do
@@ -48,7 +48,7 @@ RSpec.describe Media::TagComponent, type: :component do
   end
 
   context 'with a world access video' do
-    let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 3) }
+    let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 3, size: 3) }
     let(:resource) { build(:resource, :video, files: [build(:resource_file, :video, :world_downloadable)]) }
 
     it 'includes a data attribute that includes the url to check the users auth status' do

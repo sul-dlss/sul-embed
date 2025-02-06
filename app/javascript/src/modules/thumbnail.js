@@ -33,7 +33,7 @@ export default class {
     }
 
     // Note: the "position: relative" is required for the stretched-link style.
-    return `<li class="media-thumb ${activeClass}" data-controller="content-list" data-action="click->content-list#showMedia" data-content-list-index-param="${index}" style="position: relative;" aria-controls="main-display" role="tab">
+    return `<li class="media-thumb ${activeClass}" data-action="click->content-list#showMedia" data-content-list-target="listItem" data-content-list-index-param="${index}" style="position: relative;" aria-controls="main-display" role="tab">
         ${thumbnailIcon}
         <a class="stretched-link" href="#">
           <span class="${labelClass}">

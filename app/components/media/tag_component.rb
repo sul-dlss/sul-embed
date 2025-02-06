@@ -24,7 +24,8 @@ module Media
       if SUPPORTED_MEDIA_TYPES.include?(type.to_sym)
         media_element
       else
-        render PreviewImageComponent.new(druid:, file:, type:, resource_index: @resource_iteration.index)
+        render PreviewImageComponent.new(druid:, file:, type:, size: @resource_iteration.size,
+                                         resource_index: @resource_iteration.index)
       end
     end
 
@@ -50,6 +51,7 @@ module Media
 
     def media_element
       render WrapperComponent.new(thumbnail: thumbnail_url, file:, type:,
+                                  size: @resource_iteration.size,
                                   resource_index: @resource_iteration.index) do
         media_tag
       end

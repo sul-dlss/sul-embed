@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import Thumbnail from 'src/modules/thumbnail'
 
 export default class extends Controller {
+  static targets = ['listItem']
   // This listens for a thumbnails-found event. Then it draws the media thumbnails in the contents panel
   drawThumbnails(evt) {
     const thumbnails = evt.detail.
@@ -16,13 +17,12 @@ export default class extends Controller {
     const event = new CustomEvent('thumbnail-clicked', { detail: { index: evt.params.index } })
     window.dispatchEvent(event)
 
-    const tabs = this.element.closest('[role="tablist"]').querySelectorAll('[role="tab"]')
-    tabs.forEach((target) => {
+    this.listItemTargets.forEach((target) => {
       target.classList.remove('active')
       target.setAttribute("aria-selected", false)
     })
 
-    const target = this.element
+    const target = this.listItemTargets.find(element => element.dataset.contentListIndexParam == evt.params.index)
     target.classList.add('active')
     target.setAttribute("aria-selected", true)
   }

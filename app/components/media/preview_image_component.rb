@@ -9,19 +9,20 @@ module Media
     # @param [ResourceFile] file the file to display
     # @param [Integer] resource_index the offset of this resource in the purl
     # @param [String] type the type of resource (either audio or video), used to determine which icon to show
-    def initialize(druid:, file:, resource_index:, type:)
+    def initialize(druid:, file:, resource_index:, type:, size:)
       @druid = druid
       @file = file
       @resource_index = resource_index
       @type = type
+      @size = size
     end
 
-    attr_reader :resource_index, :druid, :file, :type
+    attr_reader :resource_index, :druid, :file, :type, :size
 
     def call
       # the 74,73 size accounts for the additional pixel size returned by the image server
       thumb_url = stacks_square_url(druid, file.title, size: '74,73')
-      render WrapperComponent.new(thumbnail: thumb_url, file:, type:, resource_index:) do
+      render WrapperComponent.new(thumbnail: thumb_url, file:, type:, resource_index:, size:) do
         tag.div(class: 'osd', id: "openseadragon-#{resource_index}",
                 data: { controller: 'osd', osd_url_value:, osd_nav_images_value: })
       end
