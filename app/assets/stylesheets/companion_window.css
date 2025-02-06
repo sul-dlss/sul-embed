@@ -41,7 +41,11 @@
 }
 
 .companion-window-component {
-  --active-color: rgb(140, 21, 21);
+  --stanford-black-60: #767674;
+  --stanford-fog-light: #f4f4f4;
+  --stanford-cardinal: #8c1515;
+
+  --active-color: var(--stanford-cardinal);
   --drawer-width: 310px;
   --font-size-base: 14px;
   --tab-width: 48px;
@@ -49,8 +53,8 @@
   --drawer-content-padding: 0.7rem;
   --text-color: rgba(0, 0, 0, 0.87);
   --border-color: #5f574f;
-  --button-color: #454545;
-  --button-hover-bg-color: #9494947a;
+  --button-color: var(--stanford-black-60);
+  --button-hover-bg-color: var(--stanford-fog-light);
   --background-color: rgba(255, 255, 255);
   /* If the value of --header-size is too small, the bottom boarder won't display.
      This depends on the line-height and padding of the header > nav > h2 */
