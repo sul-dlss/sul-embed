@@ -8,7 +8,7 @@ class CompanionWindowsComponent < ViewComponent::Base
     @stimulus_controller = stimulus_controller
   end
 
-  renders_one :header_button
+  renders_many :header_buttons
   renders_one :body
   renders_one :dialog
   renders_one :drawer_button

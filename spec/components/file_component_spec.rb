@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe FileComponent, type: :component do
   let(:request) do
-    Embed::Request.new(url: 'http://purl.stanford.edu/abc123', new_viewer: 'true')
+    Embed::Request.new(url: 'http://purl.stanford.edu/abc123', min_files_to_search: 1, new_viewer: 'true')
   end
   let(:viewer) { Embed::Viewer::File.new(request) }
   let(:purl) { build(:purl, contents: resources) }
@@ -18,6 +18,7 @@ RSpec.describe FileComponent, type: :component do
   it 'returns html that has a body wrapped in a container' do
     # visible :all because we display:none the container until we've loaded the CSS.
     expect(page).to have_css 'div.sul-embed-container', visible: :all
+    expect(page).to have_content 'Search this list'
   end
 
   context 'when a version id is supplied' do

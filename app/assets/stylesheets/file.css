@@ -5,6 +5,28 @@
   color: gray;
 }
 
+.search-query-form {
+  border: 1px solid #ababa9;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+
+  svg {
+    vertical-align: middle;
+    color: var(--button-color);
+  }
+
+  .search-input {
+    border: 0;
+    &:focus-visible {
+      outline: 0;
+    }
+  }
+}
+
+.item-count {
+  margin-inline-end: 1rem;
+}
+
 /* Collapse/expand icons */
 .sul-embed-treegrid {
   width: 100%;
