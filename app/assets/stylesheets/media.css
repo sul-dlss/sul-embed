@@ -1,4 +1,5 @@
 @import url("companion_window.css");
+@import url("locked_status.css");
 
 /* VideoJS CSS overrides for responsive layout
    See http://andreassauer.name/experimente/video-js/demo.html */
@@ -6,7 +7,7 @@
   width: 100% !important;
 
   &::after {
-    content: '.';
+    content: ".";
     display: block;
     height: 0;
     margin: 0 0 0 -100%;
@@ -36,7 +37,9 @@
   /* Style the CC button when they have captions enabled
      This won't work on Firefox unless enabled by layout.css.has-selector.enabled in about:config
      Other than this, there doesn't seem to be a way to style the state */
-  .vjs-subs-caps-button:has(+ .vjs-menu > .vjs-menu-content > .vjs-selected.vjs-captions-menu-item) {
+  .vjs-subs-caps-button:has(
+      + .vjs-menu > .vjs-menu-content > .vjs-selected.vjs-captions-menu-item
+    ) {
     border-bottom: 2px solid red;
   }
 
@@ -53,7 +56,8 @@
     .vjs-modal-dialog-content {
       position: relative;
 
-      label, legend {
+      label,
+      legend {
         color: #000;
       }
 
@@ -68,7 +72,6 @@
   }
 }
 
-
 .video-js .vjs-tech {
   position: relative;
 }
@@ -81,7 +84,6 @@
   height: 100%;
   width: 100%;
 }
-
 
 .sul-embed-media-wrapper {
   display: inline-block;
@@ -100,23 +102,17 @@
   }
 }
 
-.locked-media {
-  display: block;
-  height: 100%;
-  text-align: center;
-
-  img {
-    height: 100%;
-  }
-}
-
 /* Second selector is for citation-only banner. First selector is for all the other auth restrictions. */
-[data-controller="auth-restriction"]:not([hidden]) + .companion-window-component-body, .authLinkWrapper + .companion-window-component-body {
-  max-height: calc(100vh - 100px); /* Scroll height for metadata when the auth wrapper is displaying */
+[data-controller="auth-restriction"]:not([hidden])
+  + .companion-window-component-body,
+.authLinkWrapper + .companion-window-component-body {
+  max-height: calc(
+    100vh - 100px
+  ); /* Scroll height for metadata when the auth wrapper is displaying */
 }
 
 .transcript {
-  --highlight-background-color:  rgb(243, 249, 255);
+  --highlight-background-color: rgb(243, 249, 255);
   --highlight-border-color: rgb(131, 193, 250);
   .cue {
     border: 1px solid transparent;
@@ -131,7 +127,7 @@
       cursor: pointer;
     }
     &.cue-new-speaker:not(:first-of-type)::before {
-      content: '';
+      content: "";
       display: block;
       margin-top: 1rem;
     }

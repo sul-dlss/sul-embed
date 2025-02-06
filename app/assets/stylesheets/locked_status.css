@@ -1,0 +1,9 @@
+.locked-status {
+  overflow: hidden;
+  height: 100%;
+  text-align: center;
+
+  img {
+    height: 100%;
+  }
+}

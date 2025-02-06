@@ -15,17 +15,20 @@
     <% end %>
   <% end %>
   <% component.with_body do %>
-    <div class="sul-embed-body" style="width: 100%">
-    <% if viewer.available? %>
-          <%= render LoginComponent.new %>
-          <div class="sul-embed-pdf" style="height: 100%"
-            data-controller="pdf"
-            data-fullscreen-target="area"
-            data-action="iiif-manifest-received@window->file-auth#parseFiles auth-success@window->pdf#show">
-          </div>
-    <% else %>
-       <%= render ::ContentNotAvailableComponent.new %>
-    <% end %>
+    <div class="sul-embed-body" style="flex-basis: 100%">
+      <div style="display: flex; flex-direction: column; height: 100%">
+        <% if viewer.available? %>
+              <%= render LoginComponent.new %>
+              <div class="sul-embed-pdf" style="height: 100%"
+                data-controller="pdf"
+                data-fullscreen-target="area"
+                data-action="iiif-manifest-received@window->file-auth#parseFiles auth-success@window->pdf#show">
+              </div>
+        <% else %>
+          <%= render ContentNotAvailableComponent.new %>
+          <%= render LockedStatusComponent.new %>
+        <% end %>
+      </div>
     </div>
   <% end %>
 <% end %>
