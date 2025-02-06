@@ -22,7 +22,7 @@ module Media
                 file_label: @file.label_or_filename,
                 media_tag_target: 'mediaWrapper',
                 thumbnail_url: @thumbnail.presence,
-                default_icon: @type == 'audio' ? 'sul-i-file-music-1' : 'sul-i-file-video-3'
+                default_icon:
               },
               # When rendering this component, show only the first media wrapper component
               hidden: !@resource_index.zero?) do
@@ -30,6 +30,12 @@ module Media
           content
         end
       end
+    end
+
+    # What class to put on the icon in the "Media content" sidebar when there is no thumbnail
+    # Used in media_tag_controller.js
+    def default_icon
+      @type == 'audio' ? 'sul-i-file-music-1' : 'sul-i-file-video-3'
     end
   end
 end
