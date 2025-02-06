@@ -9,6 +9,8 @@ module Embed
 
       attr_reader :purl_object, :embed_request
 
+      delegate :new_viewer?, to: :embed_request
+
       def initialize(embed_request)
         @embed_request = embed_request
         @purl_object = embed_request.purl_object

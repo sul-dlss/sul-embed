@@ -50,6 +50,11 @@ module Embed
       params[:hide_search] == 'true'
     end
 
+    # This is a temporary method that allows us to test new viewers before making them the default
+    def new_viewer?
+      params[:new_viewer] == 'true'
+    end
+
     def min_files_to_search
       params[:min_files_to_search]
     end

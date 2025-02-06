@@ -20,7 +20,7 @@ module Embed
       end
 
       def first_td_style
-        "padding-left: #{((level - 1) * 2) + 1.5}ch;"
+        "padding-left: #{((level - 1) * 4) + 2}ch;"
       end
     end
   end

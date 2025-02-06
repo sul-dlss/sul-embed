@@ -1,0 +1,106 @@
+@import url("companion_window.css");
+@import url("common.css");
+
+.text-gray {
+  color: gray;
+}
+
+/* Collapse/expand icons */
+.sul-embed-treegrid {
+  width: 100%;
+  /* table-layout: fixed; */
+  border-collapse: collapse;
+
+  th {
+    font-weight: normal;
+    text-align: left;
+  }
+
+  th {
+    &:nth-of-type(2) {
+      border-inline: 1px solid gray;
+    }
+  }
+
+  th,
+  td {
+    &:nth-of-type(2) {
+      padding-inline: 1rem;
+      text-align: center;
+    }
+  }
+
+  th,
+  td {
+    &:nth-of-type(3) {
+      padding-inline-start: 3rem;
+    }
+  }
+
+  tr {
+    display: table-row;
+    cursor: default;
+    border-bottom: 1px solid gray;
+  }
+
+  thead tr th:first-of-type {
+    padding-left: 15px;
+  }
+
+  col.sul-embed-treegrid-size {
+    width: 15%;
+  }
+  col.sul-embed-treegrid-download {
+    width: 28%;
+  }
+
+  /* Extra space between columns for readability */
+  th,
+  td {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  tbody td {
+    cursor: default;
+    vertical-align: top;
+  }
+
+  tr[hidden] {
+    display: none !important;
+  }
+
+  tr > td:first-child::before {
+    display: inline;
+    width: 2ch;
+    height: 11px;
+    transition: transform 0.3s;
+    transform-origin: 5px 5px;
+    margin-left: 5px;
+  }
+
+  tr[aria-expanded] > td:first-child,
+  td[aria-expanded]:first-child {
+    &::before {
+      cursor: pointer;
+      font-family: "sul-icons";
+      content: "\f10b";
+      display: inline-block;
+      font-weight: 900;
+    }
+    font-weight: bold;
+  }
+
+  tr[aria-expanded="true"] > td:first-child::before,
+  td[aria-expanded="true"]:first-child::before {
+    transform: rotate(90deg);
+  }
+
+  .sul-embed-filename-cell {
+    padding-right: 10px;
+
+    .tree-label {
+      margin: 0;
+    }
+  }
+}

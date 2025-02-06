@@ -35,6 +35,7 @@ en:
   viewers:
     file:
       title: "File viewer"
+      content_list_heading: Unused
     geo:
       title: "Geospatial viewer"
     m3_viewer:
