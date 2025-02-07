@@ -7,8 +7,10 @@ export default class extends Controller {
                      "downloadModal", "accessibility", "modalComponentsPopover"]
   connect() {
     this.element.hidden = false
-    // Open the drawer on load
-    this.openLeftDrawer()
+    if (!this.isSmallViewportWidth()) {
+      // Open the drawer on load
+      this.openLeftDrawer()
+    }
     EmbedThis.init()
   }
 
@@ -69,5 +71,9 @@ export default class extends Controller {
 
   displayAccessibility() {
     this.accessibilityTarget.showModal()
+  }
+
+  isSmallViewportWidth() {
+    return screen.width < 800
   }
 }
