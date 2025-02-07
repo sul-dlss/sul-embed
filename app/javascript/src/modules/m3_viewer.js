@@ -32,9 +32,6 @@ export default {
       sideBarPanel = 'attribution'
     }
 
-    let viewerConfig
-    if (data.viewerConfig && data.viewerConfig !== 'undefined') { viewerConfig = JSON.parse(decodeURIComponent(data.viewerConfig)) }
-
     const viewerInstance = Mirador.viewer({
       id: 'sul-embed-m3',
       miradorDownloadPlugin: {
@@ -85,7 +82,7 @@ export default {
         suggestedSearches: data.suggestedSearch.length > 0 ? [data.suggestedSearch] : null,
         loadedManifest: data.m3Uri,
         canvasIndex: Number(data.canvasIndex),
-        initialViewerConfig: viewerConfig,
+        ...(data.viewerConfig && { initialViewerConfig: JSON.parse(data.viewerConfig) }),
         canvasId: data.canvasId,
         ...(cdl && {
           cdl: {
