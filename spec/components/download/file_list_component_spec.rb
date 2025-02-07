@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Download::AllFilesComponent, type: :component do
+RSpec.describe Download::FileListComponent, type: :component do
   subject(:component) { described_class.new(viewer:) }
 
   before do

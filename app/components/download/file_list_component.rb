@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Download
-  class AllFilesComponent < ViewComponent::Base
+  class FileListComponent < ViewComponent::Base
     # @param [#purl_object] viewer
     def initialize(viewer:)
       @viewer = viewer
