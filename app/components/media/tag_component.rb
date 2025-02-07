@@ -77,8 +77,13 @@ module Media
       /^((?!chrome|android).)*safari/i.match?(request.headers['User-Agent'])
     end
 
+    def restricted?
+      @file.stanford_only? || @file.location_restricted?
+    end
+
     def media_tag # rubocop:disable Metrics/MethodLength
       tag.send(media_tag_name,
+               preload: restricted? ? 'none' : 'auto',
                id: "sul-embed-media-#{@resource_iteration.index}",
                data: {
                  auth_url: authentication_url,
