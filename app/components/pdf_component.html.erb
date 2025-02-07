@@ -1,5 +1,8 @@
 <%= render ::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth fullscreen') do |component| %>
   <% component.with_header_button do %>
+    <%= render CompanionWindows::ShareButtonComponent.new %>
+  <% end %>
+  <% component.with_header_button do %>
     <%# chromium has a bug preventing the esc key from exiting full screen in some situations, see
         https://issues.chromium.org/issues/40131988 and https://github.com/sul-dlss/sul-embed/issues/2162 %>
     <% unless component.requested_by_chromium? %>
