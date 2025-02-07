@@ -24,10 +24,14 @@ class CompanionWindowsComponent < ViewComponent::Base
     "#{Settings.purl_url}/#{druid}/iiif3/manifest"
   end
 
+  def file_viewer?
+    viewer.instance_of?(::Embed::Viewer::File)
+  end
+
   def render_content_list_panel?
     # for PDF viewer, do not render the content panel if there is just one downloadable file in the object
     return false if viewer.instance_of?(::Embed::Viewer::PdfViewer) && downloadable_files.size == 1
-    return false if viewer.instance_of?(::Embed::Viewer::File)
+    return false if file_viewer?
 
     true
   end
