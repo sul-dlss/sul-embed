@@ -57,47 +57,31 @@ module Media
       end
     end
 
-    def media_tag_name
-      safari_wants_audio_with_captions? ? 'video' : type
-    end
-
-    def safari_wants_audio_with_captions?
-      type == 'audio' && render_captions? && webkit_useragent?
-    end
-
-    # Many user agents include "safari"
-    # Tested with:
-    # rubocop:disable Layout/LineLength
-    # Firefox: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:134.0) Gecko/20100101 Firefox/134.0"
-    # Edge: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0'
-    # iOS Safari: "Mozilla/5.0 (iPhone; CPU iPhone OS 18_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.2 Mobile/15E148 Safari/604.1"
-    # MacOS Safari: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15"
-    # rubocop:enable Layout/LineLength
-    def webkit_useragent?
-      /^((?!chrome|android).)*safari/i.match?(request.headers['User-Agent'])
-    end
-
     def restricted?
       @file.stanford_only? || @file.location_restricted?
     end
 
+    # We render a video tag, even if it's an audio, because we may have VTT to display and
+    # we want the control bar to fade away to not conflict with the captions display.
+    # Audio tags don't fade the control bar.
     def media_tag # rubocop:disable Metrics/MethodLength
-      tag.send(media_tag_name,
-               preload: restricted? ? 'none' : 'auto',
-               id: "sul-embed-media-#{@resource_iteration.index}",
-               data: {
-                 auth_url: authentication_url,
-                 index: @resource_iteration.index,
-                 media_tag_target: 'authorizeableResource',
-                 controller: 'media-player',
-                 action: 'media-seek@window->media-player#seek ' \
-                         'auth-success@window->media-player#initializeVideoJSPlayer'
-               },
-               poster: poster_url_for,
-               controls: 'controls',
-               class: 'sul-embed-media-file',
-               crossorigin: 'use-credentials', # So that VTT can be downloaded when download:stanford
-               height: '100%') do
+      tag.video(
+        preload: restricted? ? 'none' : 'auto',
+        id: "sul-embed-media-#{@resource_iteration.index}",
+        data: {
+          auth_url: authentication_url,
+          index: @resource_iteration.index,
+          media_tag_target: 'authorizeableResource',
+          controller: 'media-player',
+          action: 'media-seek@window->media-player#seek ' \
+                  'auth-success@window->media-player#initializeVideoJSPlayer'
+        },
+        poster: poster_url_for,
+        controls: 'controls',
+        class: 'sul-embed-media-file',
+        crossorigin: 'use-credentials', # So that VTT can be downloaded when download:stanford
+        height: '100%'
+      ) do
         streaming_source + captions
       end
     end

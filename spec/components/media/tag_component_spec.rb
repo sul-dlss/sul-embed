@@ -145,28 +145,13 @@ RSpec.describe Media::TagComponent, type: :component do
   context 'with audio' do
     let(:resource) { build(:resource, :audio) }
 
-    it 'renders an audio tag in the provided document' do
-      expect(page).to have_css('audio', visible: :all)
-    end
-
-    context 'when a file-level thumbnail is present' do
-      let(:resource) { build(:resource, :audio) }
-
-      it 'includes a poster attribute pointing at the thumbnail' do
-        expect(page).to have_css('audio[poster]', visible: :all)
-        audio = page.find('audio[poster]', visible: :all)
-        expect(audio['poster']).to match(%r{/bc123df4567%2Faudio_1/full/})
-      end
-    end
-
     context 'when a file level thumbnail is not present' do
       let(:resource) do
         build(:resource, :audio, files: [build(:resource_file, :audio)])
       end
 
       it 'includes the default poster attribute' do
-        expect(page).to have_css('audio[poster]', visible: :all)
-        audio = page.find('audio[poster]', visible: :all)
+        audio = page.find('video[poster]', visible: :all)
         expect(audio['poster']).to match(/waveform-audio-poster/)
       end
     end
