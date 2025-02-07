@@ -9,7 +9,7 @@ module CompanionWindows
     attr_reader :viewer
 
     def document_viewer?
-      viewer.instance_of?(::Embed::Viewer::PdfViewer)
+      viewer.instance_of?(::Embed::Viewer::DocumentViewer)
     end
   end
 end

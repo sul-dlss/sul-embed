@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::Viewer::PdfViewer do
+RSpec.describe Embed::Viewer::DocumentViewer do
   subject(:pdf_viewer) { described_class.new(request) }
 
   let(:purl) do

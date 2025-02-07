@@ -2,7 +2,7 @@
 
 module Embed
   module Viewer
-    class PdfViewer < CommonViewer
+    class DocumentViewer < CommonViewer
       def component
         PdfComponent
       end
@@ -12,7 +12,7 @@ module Embed
       end
 
       def stylesheet
-        'pdf.css'
+        'document.css'
       end
 
       def pdf_files

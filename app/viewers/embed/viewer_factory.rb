@@ -23,7 +23,7 @@ module Embed
       when 'image', 'manuscript', 'map', 'book'
         Embed::Viewer::M3Viewer
       when 'document'
-        Embed::Viewer::PdfViewer
+        Embed::Viewer::DocumentViewer
       when '3d'
         Embed::Viewer::ModelViewer
       when 'media'

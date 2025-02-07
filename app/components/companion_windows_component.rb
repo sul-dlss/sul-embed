@@ -26,7 +26,7 @@ class CompanionWindowsComponent < ViewComponent::Base
   end
 
   def document_viewer?
-    viewer.instance_of?(::Embed::Viewer::PdfViewer)
+    viewer.instance_of?(::Embed::Viewer::DocumentViewer)
   end
 
   def render_content_list_panel?

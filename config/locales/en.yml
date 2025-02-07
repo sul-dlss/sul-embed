@@ -44,7 +44,7 @@ en:
       title: "Image viewer: %{title}"
     media:
       title: "Media viewer: %{title}"
-    pdf_viewer:
+    document_viewer:
       title: "PDF viewer: %{title}"
     model_viewer:
       title: "3-D object viewer: %{title}"
