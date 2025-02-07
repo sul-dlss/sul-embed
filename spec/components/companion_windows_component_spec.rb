@@ -37,30 +37,6 @@ RSpec.describe CompanionWindowsComponent, type: :component do
     expect(page).to have_content 'Rights'
   end
 
-  describe 'with downloadable files' do
-    let(:media_file) { instance_double(Embed::Purl::ResourceFile, title: 'file-abc123.pdf', file_url: '//one', caption?: false, transcript?: false, label_or_filename: 'media filename', location_restricted?: false, stanford_only?: false, size: 100) }
-    let(:caption_file) { instance_double(Embed::Purl::ResourceFile, title: 'file-abc123.vtt', file_url: '//one', caption?: true, transcript?: false, label_or_filename: 'caption filename', location_restricted?: false, stanford_only?: false, size: 100) }
-
-    context 'when there are no media files' do
-      let(:downloadable_files) { [media_file] }
-
-      it 'does not have extra headings' do
-        expect(page).to have_content 'Download media filename'
-        expect(page).to have_no_css('h4', text: 'media filename', visible: :hidden)
-      end
-    end
-
-    context 'when there are media files' do
-      let(:downloadable_files) { [media_file, caption_file] }
-
-      it 'does have extra headings' do
-        expect(page).to have_content 'Download media filename'
-        expect(page).to have_content 'Download caption filename'
-        expect(page).to have_css('h4', text: 'media filename', visible: :hidden)
-      end
-    end
-  end
-
   describe 'requested_by_chromium?' do
     before { vc_test_request.headers['User-Agent'] = user_agent_string }
 

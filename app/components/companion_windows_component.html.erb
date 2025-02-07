@@ -78,26 +78,9 @@
     <button data-action="click->companion-window#closeModal">Close</button>
   </dialog>
 
-  <dialog aria-labelledby="download-modal-header" class="modal-container" data-companion-window-target="downloadModal" data-action="click->companion-window#handleBackdropClicks" id="download">
-    <header class="modal-header" id="download-modal-header">
-      Download
-    </header>
-
-    <section class='sul-embed-downloads'>
-      <% if downloadable_files.present? %>
-        <h3 class='sul-embed-options-label modal-subheader'>
-          Files
-        </h3>
-        <ul>
-          <%= render Download::FileListItemComponent.with_collection(downloadable_files, show_headers: show_headers?) %>
-        </ul>
-      <% else %>
-        <p>No downloads available</p>
-      <% end %>
-    </section>
-
-    <button data-action="click->companion-window#closeModal">Close</button>
-  </dialog>
+  <%= render Download::DialogComponent.new do %>
+    <%= render Download::AllFilesComponent.new(viewer:) %>
+  <% end %>
 
   <%= dialog %>
 </div>
