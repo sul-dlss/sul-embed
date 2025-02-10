@@ -9,6 +9,9 @@ export default {
     this.dataAttributes = this.el.dataset
     this.map = L.map('sul-embed-geo-map', options).fitBounds(JSON.parse(this.dataAttributes.boundingBox))
 
+    const resizeObserver = new ResizeObserver(() => this.map.invalidateSize())
+    resizeObserver.observe(this.el)
+
     const attribution = `&copy <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy <a href="http://carto.com/attributions">Carto</a>`
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png', {
       maxZoom: 19,

@@ -6,7 +6,7 @@ module Embed
       delegate :druid, to: :@purl_object
 
       def component
-        Legacy::WasSeedComponent
+        ::Legacy::WasSeedComponent
       end
 
       def importmap

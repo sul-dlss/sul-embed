@@ -1,5 +1,6 @@
-@import "legacy_common";
-@import "leaflet";
+@import url("companion_window.css");
+@import url("common.css");
+@import url("leaflet.css");
 
 [data-wms-url] {
   cursor: crosshair;
@@ -8,10 +9,12 @@
 .sul-embed-geo {
   position: relative;
   display: flex;
+  flex-grow: 1;
+  height: calc(100vh - var(--header-size));
 }
 
 .sul-embed-geo-sidebar {
-  background: $sul-metadata-bg;
+  background: var(--stanford-fog-light);
   min-height: 50px;
   position: absolute;
   right: 0;
@@ -36,7 +39,6 @@
 }
 
 .sul-embed-geo-sidebar-content {
-  background: $sul-metadata-bg;
   overflow: scroll;
   padding: 0 10px 10px;
 
@@ -51,7 +53,6 @@
     overflow: visible;
     width: 100%;
 
-    // scss-lint:disable SelectorDepth
     dt {
       flex: 0 0 33%;
       overflow: scroll;
@@ -64,7 +65,6 @@
       overflow: scroll;
       text-align: left;
     }
-    // scss-lint:enable SelectorDepth
   }
 }
 
@@ -100,7 +100,7 @@
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
 
     &:hover {
-      background-color: $color-fog-light;
+      background-color: var(--stanford-fog-light);
     }
   }
 
@@ -139,7 +139,7 @@
     width: 5px;
   }
 
-  // Area underneath slider to prevent unintentioned map clicks
+  /* Area underneath slider to prevent unintentioned map clicks */
   .opacity-area {
     padding: 14px;
     cursor: default;

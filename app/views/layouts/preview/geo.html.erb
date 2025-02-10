@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-        crossorigin="anonymous"></script>
-    <%= stylesheet_link_tag 'legacy_geo.css' %>
-    <%= stylesheet_link_tag 'sul_icons.css' %>
-    <%= javascript_importmap_tags 'legacy_geo' %>
+    <%= stylesheet_link_tag 'geo.css' %>
+    <%= javascript_importmap_tags 'geo' %>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
     <%= yield %>

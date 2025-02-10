@@ -17,7 +17,7 @@ module Embed
     private
 
     def render_viewer_for(url:)
-      embed_request = Embed::Request.new(url:)
+      embed_request = Embed::Request.new(url:, new_viewer: 'true')
       viewer = Embed::Viewer::Geo.new(embed_request)
       render(viewer.component.new(viewer:))
     end

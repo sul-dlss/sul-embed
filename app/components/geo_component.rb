@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class FileComponent < ViewComponent::Base
+class GeoComponent < ViewComponent::Base
   def initialize(viewer:)
     @viewer = viewer
   end

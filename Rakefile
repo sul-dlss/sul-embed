@@ -15,14 +15,10 @@ end
 # remove default rspec task
 task(:default).clear
 
-task default: ['test:prepare', :javascript_tests, :spec, :rubocop]
+task default: ['test:prepare', :spec, :rubocop]
 
 task asset_paths: [:environment] do
   puts Rails.application.config.assets.paths
-end
-
-task javascript_tests: [:environment] do
-  exit(1) unless system 'yarn test'
 end
 
 task :update_language_tags do
