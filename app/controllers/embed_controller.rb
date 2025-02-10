@@ -54,7 +54,7 @@ class EmbedController < ApplicationController
     rescue URI::InvalidURIError
       raise ActionController::BadRequest
     end
-    params.permit(:url, :maxwidth, :maxheight, :format, :fullheight, :new_viewer,
+    params.permit(:url, :maxwidth, :maxheight, :format, :fullheight, :new_viewer, :iiif_initial_viewer_config,
                   :hide_title, :hide_embed, :hide_download, :hide_search, :min_files_to_search,
                   :canvas_id, :canvas_index, :search, :suggested_search, :image_tools, :cdl_hold_record_id)
   end
