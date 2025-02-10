@@ -15,6 +15,7 @@ RSpec.describe Download::AllFilesComponent, type: :component do
     Embed::Viewer::Media.new(embed_request)
   end
 
+  let(:contents) { instance_double(Embed::Purl::Resource) }
   let(:downloadable_files) { [] }
   let(:purl_object) do
     instance_double(Embed::Purl,
@@ -26,13 +27,13 @@ RSpec.describe Download::AllFilesComponent, type: :component do
                     license: '',
                     druid: '123',
                     version_id: nil,
-                    contents: [],
+                    contents: [contents],
                     downloadable_files:,
                     downloadable_transcript_files?: false)
   end
 
-  let(:media_file) { instance_double(Embed::Purl::ResourceFile, title: 'file-abc123.pdf', file_url: '//one', caption?: false, transcript?: false, label_or_filename: 'media filename', location_restricted?: false, stanford_only?: false, size: 100) }
-  let(:caption_file) { instance_double(Embed::Purl::ResourceFile, title: 'file-abc123.vtt', file_url: '//one', caption?: true, transcript?: false, label_or_filename: 'caption filename', location_restricted?: false, stanford_only?: false, size: 100) }
+  let(:media_file) { instance_double(Embed::Purl::ResourceFile, downloadable?: true, title: 'file-abc123.pdf', file_url: '//one', caption?: false, transcript?: false, label_or_filename: 'media filename', location_restricted?: false, stanford_only?: false, size: 100) }
+  let(:caption_file) { instance_double(Embed::Purl::ResourceFile, downloadable?: true, title: 'file-abc123.vtt', file_url: '//one', caption?: true, transcript?: false, label_or_filename: 'caption filename', location_restricted?: false, stanford_only?: false, size: 100) }
 
   context 'when there are no media files' do
     let(:downloadable_files) { [media_file] }
@@ -45,6 +46,7 @@ RSpec.describe Download::AllFilesComponent, type: :component do
 
   context 'when there are media files' do
     let(:downloadable_files) { [media_file, caption_file] }
+    let(:contents) { Embed::Purl::Resource.new(files: [media_file, caption_file]) }
 
     it 'does have extra headings' do
       expect(page).to have_content 'Download media filename'

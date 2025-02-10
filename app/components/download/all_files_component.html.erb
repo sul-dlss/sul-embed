@@ -2,9 +2,20 @@
   <h3 class='sul-embed-options-label modal-subheader'>
     Files
   </h3>
-  <ul>
-    <%= render Download::FileListItemComponent.with_collection(downloadable_files, show_headers: show_headers?) %>
-  </ul>
+  <% if grouped_files? %>
+    <% grouped_downloadable_files.each do |content| %>
+      <% if content.files.any? %>
+        <h4><%= content.files.first.label_or_filename %></h4>
+        <ul>
+          <%= render Download::FileListItemComponent.with_collection(content.files) %>
+        </ul>
+      <% end %>
+    <% end %>
+  <% else %>
+    <ul>
+      <%= render Download::FileListItemComponent.with_collection(downloadable_files) %>
+    </ul>
+  <% end %>
 <% else %>
   <p>No downloads available</p>
 <% end %>
