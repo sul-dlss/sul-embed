@@ -1,7 +1,7 @@
 <% if file.location_restricted? || file.stanford_only? %>
   <span class="sul-embed-location-restricted-text <%= 'sul-embed-stanford-only-text' if file.stanford_only? %>">
     <% if file.stanford_only? %>
-      <span class="sul-embed-text-hide"> Stanford only </span>
+      <span class="sul-embed-text-hide visually-hidden"> Stanford only </span>
     <% end %>
     <%= '(Restricted)' if file.location_restricted? %>
   </span>

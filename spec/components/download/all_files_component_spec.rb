@@ -12,10 +12,9 @@ RSpec.describe Download::AllFilesComponent, type: :component do
 
   let(:embed_request) { Embed::Request.new({}) }
   let(:viewer) do
-    Embed::Viewer::Media.new(embed_request)
+    Embed::Viewer::File.new(embed_request)
   end
 
-  let(:contents) { instance_double(Embed::Purl::Resource) }
   let(:downloadable_files) { [] }
   let(:purl_object) do
     instance_double(Embed::Purl,
@@ -27,31 +26,26 @@ RSpec.describe Download::AllFilesComponent, type: :component do
                     license: '',
                     druid: '123',
                     version_id: nil,
-                    contents: [contents],
+                    contents: [],
                     downloadable_files:,
                     downloadable_transcript_files?: false)
   end
 
-  let(:media_file) { instance_double(Embed::Purl::ResourceFile, downloadable?: true, title: 'file-abc123.pdf', file_url: '//one', caption?: false, transcript?: false, label_or_filename: 'media filename', location_restricted?: false, stanford_only?: false, size: 100) }
-  let(:caption_file) { instance_double(Embed::Purl::ResourceFile, downloadable?: true, title: 'file-abc123.vtt', file_url: '//one', caption?: true, transcript?: false, label_or_filename: 'caption filename', location_restricted?: false, stanford_only?: false, size: 100) }
+  context 'when there are two files available for download' do
+    let(:purl_object) { build(:purl, contents:) }
+    let(:contents) { [build(:resource, :image, files: [build(:resource_file, :world_downloadable), build(:resource_file, :world_downloadable)])] }
 
-  context 'when there are no media files' do
-    let(:downloadable_files) { [media_file] }
-
-    it 'does not have extra headings' do
-      expect(page).to have_content 'Download media filename'
-      expect(page).to have_no_css('h4', text: 'media filename')
+    it 'shows the count' do
+      expect(page).to have_link 'Download all 2 files', href: 'https://stacks.stanford.edu/object/abc123'
     end
   end
 
-  context 'when there are media files' do
-    let(:downloadable_files) { [media_file, caption_file] }
-    let(:contents) { Embed::Purl::Resource.new(files: [media_file, caption_file]) }
+  context 'when the purl includes a version id' do
+    let(:purl_object) { build(:purl, contents:, druid: 'bc123df4567', version_id: '1') }
+    let(:contents) { [build(:resource, :file, druid: 'bc123df4567', files: [build(:resource_file, :world_downloadable), build(:resource_file, :world_downloadable)])] }
 
-    it 'does have extra headings' do
-      expect(page).to have_content 'Download media filename'
-      expect(page).to have_content 'Download caption filename'
-      expect(page).to have_css('h4', text: 'media filename')
+    it 'returns a versioned stacks url for download all' do
+      expect(page).to have_link href: 'https://stacks.stanford.edu/object/bc123df4567/version/1'
     end
   end
 end
