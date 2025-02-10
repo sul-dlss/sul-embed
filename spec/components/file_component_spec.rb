@@ -19,6 +19,7 @@ RSpec.describe FileComponent, type: :component do
     # visible :all because we display:none the container until we've loaded the CSS.
     expect(page).to have_css 'div.sul-embed-container', visible: :all
     expect(page).to have_content 'Search this list'
+    expect(page).to have_css 'button[aria-label="Full screen"]', visible: :all
   end
 
   context 'when a version id is supplied' do

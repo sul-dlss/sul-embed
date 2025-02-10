@@ -1,4 +1,4 @@
-<%= render ::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth tree') do |component| %>
+<%= render ::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth tree fullscreen') do |component| %>
   <% component.with_header_button do %>
     <div class="item-count" aria-live="polite" data-tree-target="count"></div>
     <% if viewer.display_file_search? %>
@@ -14,8 +14,13 @@
     <%= render CompanionWindows::ShareButtonComponent.new %>
   <% end %>
 
+  <% component.with_header_button do %>
+    <%= render CompanionWindows::FullscreenButtonComponent.new %>
+  <% end %>
+
   <% component.with_body do %>
-    <div style="overflow-y: scroll; flex-basis: 100%">
+    <% # background-color: white must be set for full screen when the browser prefers dark mode %>
+    <div style="overflow-y: scroll; flex-basis: 100%; background-color: white;" data-fullscreen-target="area">
       <% if viewer.purl_object.embargoed? %>
         <div class='sul-embed-embargo-message'>
           <%= viewer.embargo_message %>

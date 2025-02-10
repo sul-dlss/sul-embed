@@ -36,32 +36,4 @@ RSpec.describe CompanionWindowsComponent, type: :component do
     expect(page).to have_content 'Media content'
     expect(page).to have_content 'Rights'
   end
-
-  describe 'requested_by_chromium?' do
-    before { vc_test_request.headers['User-Agent'] = user_agent_string }
-
-    context 'with a realistic sample Firefox user agent string' do
-      let(:user_agent_string) { 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:127.0) Gecko/20100101 Firefox/127.0' }
-
-      it 'returns false' do
-        expect(companion_windows_component.requested_by_chromium?).to be false
-      end
-    end
-
-    context 'with a realistic sample Chrome user agent string' do
-      let(:user_agent_string) { 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36' }
-
-      it 'returns true' do
-        expect(companion_windows_component.requested_by_chromium?).to be true
-      end
-    end
-
-    context 'with a realistic sample Edge user agent string' do
-      let(:user_agent_string) { 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0' }
-
-      it 'returns true' do
-        expect(companion_windows_component.requested_by_chromium?).to be true
-      end
-    end
-  end
 end

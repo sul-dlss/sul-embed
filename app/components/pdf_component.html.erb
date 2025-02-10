@@ -2,21 +2,11 @@
   <% component.with_header_button do %>
     <%= render CompanionWindows::ShareButtonComponent.new %>
   <% end %>
+
   <% component.with_header_button do %>
-    <%# chromium has a bug preventing the esc key from exiting full screen in some situations, see
-        https://issues.chromium.org/issues/40131988 and https://github.com/sul-dlss/sul-embed/issues/2162 %>
-    <% unless component.requested_by_chromium? %>
-      <button
-        aria-label="Full screen"
-        class="btn"
-        data-action="fullscreen#toggle"
-        id="full-screen-button">
-          <span class="button-label">
-            <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" tabindex="-1" title="Fullscreen"><path d="M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"></path></svg>
-          </span>
-      </button>
-    <% end %>
-  <% end %>
+    <%= render CompanionWindows::FullscreenButtonComponent.new  %>
+  <% end unless requested_by_chromium? %>
+
   <% component.with_body do %>
     <div class="sul-embed-body" style="flex-basis: 100%">
       <div style="display: flex; flex-direction: column; height: 100%">
