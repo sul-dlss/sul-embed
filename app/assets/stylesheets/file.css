@@ -83,11 +83,6 @@
     padding-bottom: 5px;
   }
 
-  tbody td {
-    cursor: default;
-    vertical-align: top;
-  }
-
   tr[hidden] {
     display: none !important;
   }
