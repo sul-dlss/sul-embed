@@ -20,6 +20,12 @@ module Embed
 
       attr_accessor :druid, :type, :description, :files
 
+      # In deserialize, description is the label
+      # https://github.com/sul-dlss/sul-embed/blob/784e6dd51fd9fbe18d11ff63e2640bea010ab0dc/app/models/embed/purl/resource_json_deserializer.rb#L17
+      def label
+        description
+      end
+
       def three_dimensional?
         type == '3d'
       end

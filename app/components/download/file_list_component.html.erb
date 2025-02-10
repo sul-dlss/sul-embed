@@ -5,7 +5,7 @@
   <% if grouped_files? %>
     <% grouped_downloadable_files.each do |content| %>
       <% if content.files.any? %>
-        <h4><%= content.files.first.label_or_filename %></h4>
+        <h4><%= content.label %></h4>
         <ul>
           <%= render Download::FileListItemComponent.with_collection(content.files) %>
         </ul>
