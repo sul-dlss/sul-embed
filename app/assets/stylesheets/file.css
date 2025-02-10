@@ -40,7 +40,7 @@
 
   th {
     &:nth-of-type(2) {
-      border-inline: 1px solid gray;
+      border-inline: 1px solid var(--border-color);
     }
   }
 
@@ -62,7 +62,7 @@
   tr {
     display: table-row;
     cursor: default;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid var(--border-color);
   }
 
   thead tr th:first-of-type {

@@ -42,6 +42,7 @@
 
 .companion-window-component {
   --stanford-black-60: #767674;
+  --stanford-black-20: #D5D5D4;
   --stanford-fog-light: #f4f4f4;
   --stanford-cardinal: #8c1515;
 
@@ -52,7 +53,7 @@
   --tab-height: 48px;
   --drawer-content-padding: 0.7rem;
   --text-color: rgba(0, 0, 0, 0.87);
-  --border-color: #5f574f;
+  --border-color: var(--stanford-black-20);
   --button-color: var(--stanford-black-60);
   --button-hover-bg-color: var(--stanford-fog-light);
   --background-color: rgba(255, 255, 255);
@@ -206,7 +207,7 @@
 
   & > header {
     border-top: 2px solid var(--active-color);
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid var(--border-color);
 
     background-color: var(--background-color);
     padding-right: 4px;
@@ -329,7 +330,7 @@
   }
 
   .left-drawer {
-    border-right: 1px solid gray;
+    border-right: 1px solid var(--border-color);
     display: flex;
 
     .vert-tabs {
@@ -340,7 +341,7 @@
       text-align: center;
       display: flex;
       flex-direction: column;
-      border-right: 1px solid gray;
+      border-right: 1px solid var(--border-color);
 
       button {
         background-color: transparent;
@@ -423,7 +424,7 @@
     .media-thumb,
     .file-thumb {
       list-style-type: none;
-      border: 1px solid gray;
+      border: 1px solid var(--border-color);
       margin-bottom: 0.5rem;
       height: var(--thumb-height);
       text-align: center;
