@@ -186,6 +186,7 @@
       width: 100%;
       padding: 1.2rem;
       text-align: left;
+      color: var(--button-color);
 
       .modal-component-label {
         font-size: 1rem;
@@ -199,7 +200,7 @@
 
       &:hover {
         cursor: pointer;
-        background-image: linear-gradient(rgb(0 0 0/10%) 0 0);
+        background-color: var(--button-hover-bg-color);
       }
     }
   }
