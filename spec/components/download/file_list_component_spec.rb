@@ -46,7 +46,7 @@ RSpec.describe Download::FileListComponent, type: :component do
 
   context 'when there are media files' do
     let(:downloadable_files) { [media_file, caption_file] }
-    let(:contents) { Embed::Purl::Resource.new(files: [media_file, caption_file]) }
+    let(:contents) { Embed::Purl::Resource.new(description: 'media filename', files: [media_file, caption_file]) }
 
     it 'does have extra headings' do
       expect(page).to have_content 'Download media filename'
