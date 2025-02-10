@@ -3,12 +3,11 @@
 module Download
   class FileListItemComponent < ViewComponent::Base
     include Embed::PrettyFilesize
-    def initialize(file_list_item:, prefer_filename: false, show_headers: false)
+    def initialize(file_list_item:, prefer_filename: false)
       @file = file_list_item
       @prefer_filename = prefer_filename
-      @show_headers = show_headers
     end
-    attr_reader :file, :show_headers
+    attr_reader :file
 
     def file_size
       "(#{pretty_filesize(file.size)})" if file.size
