@@ -4,7 +4,7 @@ module Embed
   module Viewer
     class ModelViewer < CommonViewer
       def component
-        Legacy::ModelComponent
+        ::Legacy::ModelComponent
       end
 
       def importmap

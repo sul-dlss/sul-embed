@@ -12,7 +12,6 @@
     "url": "https://github.com/sul-dlss/sul-embed/issues"
   },
   "scripts": {
-    "test": "jest -c jest.config.js",
     "build:css": "sass ./app/assets/stylesheets/legacy_file.scss:./app/assets/builds/legacy_file.css ./app/assets/stylesheets/legacy_geo.scss:./app/assets/builds/legacy_geo.css ./app/assets/stylesheets/m3.scss:./app/assets/builds/m3.css ./app/assets/stylesheets/legacy_model.scss:./app/assets/builds/legacy_model.css ./app/assets/stylesheets/legacy_was_seed.scss:./app/assets/builds/legacy_was_seed.css ./app/assets/stylesheets/sul_icons.scss:./app/assets/builds/sul_icons.css --no-source-map --load-path=node_modules --load-path=vendor/assets/javascripts"
   },
   "private": true,
@@ -29,7 +28,6 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "compression-webpack-plugin": "9",
     "jquery": "^3.7.1",
-    "leaflet": "^1.9.3",
     "mirador": "^3.3.0",
     "mirador-dl-plugin": "^0.13.0",
     "mirador-image-tools": "^0.8.0",
@@ -56,10 +54,7 @@
   ],
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
-    "canvas": "^2.11.2",
     "eslint": "^9.16.0",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
     "react-refresh": "^0.14.0"
   }
 }

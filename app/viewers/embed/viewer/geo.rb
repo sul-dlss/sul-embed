@@ -4,11 +4,15 @@ module Embed
   module Viewer
     class Geo < CommonViewer
       def component
-        Legacy::GeoComponent
+        new_viewer? ? GeoComponent : ::Legacy::GeoComponent
       end
 
       def importmap
-        'legacy_geo'
+        new_viewer? ? 'geo' : 'legacy_geo'
+      end
+
+      def stylesheet
+        new_viewer? ? 'geo.css' : 'legacy_geo.css'
       end
 
       ##
@@ -27,10 +31,6 @@ module Embed
         options['data-index-map'] = index_map.file_url if index_map?
         options['data-geo-viewer-colors'] = Settings.geo_viewer_colors.to_json
         options
-      end
-
-      def stylesheet
-        'legacy_geo.css'
       end
 
       def self.show_download?

@@ -4,7 +4,7 @@ module Embed
   module Viewer
     class File < CommonViewer
       def component
-        new_viewer? ? FileComponent : Legacy::FileComponent
+        new_viewer? ? FileComponent : ::Legacy::FileComponent
       end
 
       def importmap
