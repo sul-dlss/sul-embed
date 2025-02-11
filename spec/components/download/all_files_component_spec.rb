@@ -10,33 +10,26 @@ RSpec.describe Download::AllFilesComponent, type: :component do
     render_inline(component)
   end
 
+  let(:purl_object) { build(:purl, contents:) }
   let(:embed_request) { Embed::Request.new({}) }
   let(:viewer) do
     Embed::Viewer::File.new(embed_request)
   end
 
-  let(:downloadable_files) { [] }
-  let(:purl_object) do
-    instance_double(Embed::Purl,
-                    title: 'foo',
-                    purl_url: 'https://purl.stanford.edu/123',
-                    manifest_json_url: 'https://purl.stanford.edu/123/iiif/manifest',
-                    use_and_reproduction: '',
-                    copyright: '',
-                    license: '',
-                    druid: '123',
-                    version_id: nil,
-                    contents: [],
-                    downloadable_files:,
-                    downloadable_transcript_files?: false)
-  end
-
   context 'when there are two files available for download' do
-    let(:purl_object) { build(:purl, contents:) }
     let(:contents) { [build(:resource, :image, files: [build(:resource_file, :world_downloadable), build(:resource_file, :world_downloadable)])] }
 
     it 'shows the count' do
       expect(page).to have_link 'Download all 2 files', href: 'https://stacks.stanford.edu/object/abc123'
+    end
+  end
+
+  context 'when the count exceeds the threshold' do
+    let(:contents) { [build(:resource, :image, files: files)] }
+    let(:files) { Array.new(3001) { build(:resource_file, :world_downloadable) } }
+
+    it 'shows the not available message' do
+      expect(page).to have_content 'Bulk download not available. The total file size exceeds the download limit. Please download files individually.'
     end
   end
 
