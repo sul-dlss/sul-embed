@@ -70,6 +70,14 @@ RSpec.describe 'Embed requests' do
                                                   'provider_name' => 'SUL Embed Service' })
         expect(response.headers.keys).to include('etag', 'last-modified')
       end
+
+      it 'has a 200 status code and html returns correct parameters' do
+        get '/embed', params: { url: 'http://purl.stanford.edu/fn662rv4961', new_viewer: true, hide_title: false, invalid_field: true }
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body['html']).to include('new_viewer=true')
+        expect(response.parsed_body['html']).to include('hide_title=false')
+        expect(response.parsed_body['html']).not_to include('invalid_field=true')
+      end
     end
 
     context 'with a valid request (xml)' do
