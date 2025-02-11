@@ -63,12 +63,14 @@
   --modal-border-radius: 8px;
   --modal-max-width: 600px;
   --active-media-thumb-color: #016895;
+  --box-shadow-color: #00000040;
 
   border: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
   font-family: "Roboto", Helvetica, sans-serif;
   font-size: var(--font-size-base);
+  box-shadow: 0px 2px 1px 0px var(--box-shadow-color);
 
   * {
     box-sizing: border-box;
@@ -211,7 +213,6 @@
     border-bottom: 1px solid var(--border-color);
 
     background-color: var(--background-color);
-    padding-right: 4px;
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -222,6 +223,8 @@
       flex-direction: row;
       min-height: 32px;
       align-items: center;
+      box-shadow: 0px 3px 3px 0px var(--box-shadow-color);
+      padding-right: 4px;
 
       button {
         background-color: transparent;
