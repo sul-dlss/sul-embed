@@ -10,7 +10,7 @@
   border-radius: 0.25rem;
   padding: 0.25rem;
   margin-inline-start: 1rem;
-  margin-inline-end: .3rem;
+  margin-inline-end: 0.3rem;
   display: flex;
 
   svg {
@@ -33,7 +33,6 @@
 /* Collapse/expand icons */
 .sul-embed-treegrid {
   width: 100%;
-  /* table-layout: fixed; */
   border-collapse: collapse;
 
   th {
@@ -116,10 +115,16 @@
     transform: rotate(90deg);
   }
 
+  .sul-embed-filename-cell,
+  .dirname {
+    font-size: 1rem;
+  }
+
   .sul-embed-filename-cell {
     padding-right: 10px;
 
     .tree-label {
+      font-size: 0.875rem;
       margin: 0;
     }
 

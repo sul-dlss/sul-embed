@@ -1,6 +1,6 @@
 <% if title.present? %>
   <tr role="row" aria-level="<%= level %>" aria-posinset="<%= pos_in_set %>" aria-setsize="<%= set_size %>" aria-expanded="true" tabindex="0" data-action="click->tree#toggle" data-tree-role="branch">
-    <td role="gridcell" style="<%= first_td_style %>">
+    <td role="gridcell" style="<%= first_td_style %>" class="dirname">
       <i class="text-gray sul-i-2x sul-i-file-zipped" style="margin-right: 3px;"></i><%= title %>
     </td>
     <td role="gridcell"></td>
