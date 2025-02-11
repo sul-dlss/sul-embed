@@ -4,7 +4,11 @@
       <button data-action="click->companion-window#toggleLeft" aria-label="Display sidebar" aria-controls="left-drawer">
         <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg></span>
       </button>
-      <h2 class=""><%= viewer.purl_object.title %></h2>
+      <% if display_header? %>
+        <h2 class=""><%= title %></h2>
+      <% else %>
+        <span style="flex-grow: 1"></span>
+      <% end %>
       <% header_buttons.each do |header_button| %>
         <%= header_button %>
       <% end %>
