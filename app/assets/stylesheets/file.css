@@ -9,6 +9,7 @@
   border: 1px solid #ababa9;
   border-radius: 0.25rem;
   padding: 0.25rem;
+  display: flex;
 
   svg {
     vertical-align: middle;
@@ -24,6 +25,7 @@
 }
 
 .item-count {
+  white-space: nowrap;
   margin-inline-end: 1rem;
 }
 
