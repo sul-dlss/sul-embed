@@ -115,6 +115,8 @@ export default {
       }
     }, [
       ...miradorImageToolsPlugin,
+      // shareMenuPlugin is the customized menu in the top bar containing the share and download plugin buttons
+      // shareMenuPlugin exposes the SulEmbedShareMenu component
       shareMenuPlugin,
 <<<<<<< HEAD
       miradorZoomBugPlugin,
@@ -123,14 +125,14 @@ export default {
       ...((imageTools && embedModePlugin) || []),
 >>>>>>> a6b7bab9 (Remove mirador zoom button patch.)
       {
-        ...miradorSharePlugin,
-        target: 'WindowTopBarShareMenu',
+        ...miradorSharePlugin, 
+        target: 'SulEmbedShareMenu',
       },
       miradorShareDialogPlugin,
       miradorDownloadDialogPlugin,
       {
         ...miradorDownloadPlugin,
-        target: 'WindowTopBarShareMenu',
+        target: 'SulEmbedShareMenu',
       },
       analyticsPlugin,
       xywhPlugin,

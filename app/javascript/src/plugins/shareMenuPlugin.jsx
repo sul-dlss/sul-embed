@@ -3,7 +3,7 @@ import React from 'react';
 import SvgIcon from '@mui/material/SvgIcon';
 import { withPlugins, WindowTopBarPluginMenu, getContainerId } from 'mirador';
 
-const CustomIcon = (props) => (
+const ShareMenuIcon = (props) => (
   <SvgIcon {...props}>
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
       <path d="M0,0H24V24H0Z" fill="none" />
@@ -13,22 +13,17 @@ const CustomIcon = (props) => (
   </SvgIcon>
 );
 
-const WindowTopBarShareMenu = (props) => (
+const ShareMenu = (props) => (
   <WindowTopBarPluginMenu
     {...props}
-    t={() => 'Share & download'}
-    menuIcon={<CustomIcon />}
+    menuIcon={<ShareMenuIcon />}
   />
-)
-
-const ImprovedWindowTopBarShareMenu = (
-  withPlugins('WindowTopBarShareMenu')(
-    WindowTopBarShareMenu
-  )
 );
 
+const ShareMenuWithPlugins = withPlugins('SulEmbedShareMenu')(ShareMenu);
 
 export default {
+  component: ShareMenuWithPlugins,
   config: {
     translations: {
       en: {
@@ -40,6 +35,6 @@ export default {
     containerId: getContainerId(state),
   }),
   mode: 'add',
-  name: 'WindowTopBarShareMenu',
+  name: 'SulEmbedShareMenu',
   target: 'WindowTopBarPluginArea',
 };
