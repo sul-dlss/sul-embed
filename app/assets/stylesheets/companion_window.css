@@ -42,7 +42,7 @@
 
 .companion-window-component {
   --stanford-black-60: #767674;
-  --stanford-black-20: #D5D5D4;
+  --stanford-black-20: #d5d5d4;
   --stanford-fog-light: #f4f4f4;
   --stanford-cardinal: #8c1515;
 
@@ -182,6 +182,11 @@
       background-color: transparent;
     }
 
+    a.modal-component-button {
+      color: var(--text-color);
+      text-decoration: none;
+    }
+
     .modal-component-button {
       border: 0;
       background-color: var(--background-color);
@@ -189,7 +194,6 @@
       width: 100%;
       padding: 1.2rem;
       text-align: left;
-      color: var(--button-color);
 
       .modal-component-label {
         font-size: 1rem;
@@ -199,6 +203,7 @@
       .modal-component-icon {
         min-width: 32px;
         vertical-align: middle;
+        color: var(--button-color);
       }
 
       &:hover {
