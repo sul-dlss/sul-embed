@@ -3,7 +3,7 @@
   <td role="gridcell" style="<%= first_td_style %>" class="sul-embed-filename-cell">
     <div style="display: flex;">
       <div style="margin-right: 5px;">
-        <i class="text-gray sul-i-2x <%= file_type_icon %>"></i>
+        <%= render file_type_icon.new %>
       </div>
       <div style="max-width: 95%; overflow-wrap: break-word;">
         <%= title %>

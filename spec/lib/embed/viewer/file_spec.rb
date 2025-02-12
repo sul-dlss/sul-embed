@@ -157,11 +157,11 @@ RSpec.describe Embed::Viewer::File do
 
   describe 'file_type_icon' do
     it 'default file icon if mimetype is not recognized' do
-      expect(file_viewer.file_type_icon('application/null')).to eq 'sul-i-file-new-1'
+      expect(file_viewer.file_type_icon('application/null')).to eq Icons::InsertDriveFileComponent
     end
 
     it 'translated file icon for recognized mime type' do
-      expect(file_viewer.file_type_icon('application/zip')).to eq 'sul-i-file-zipped'
+      expect(file_viewer.file_type_icon('application/zip')).to eq Icons::FolderZipComponent
     end
   end
 
