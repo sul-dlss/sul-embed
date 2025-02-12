@@ -1,3 +1,6 @@
+:root {
+  --link-color: #006cb8;
+}
 /* From Bootstrap 5.3 */
 .visually-hidden-focusable:not(:focus):not(:focus-within):not(caption),
 .visually-hidden:not(caption) {
@@ -19,7 +22,7 @@
 a,
 a:hover,
 a:focus {
-  color: #006cb8;
+  color: var(--link-color);
 }
 
 /* TODO: Remove this class and replace with Icons::StanfordOnlyComponent when we remove legacy file viewer */

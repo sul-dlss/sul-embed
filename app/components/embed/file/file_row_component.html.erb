@@ -17,7 +17,7 @@
   <td role="gridcell">
     <% if download? %>
       <a href="<%= url %>" target='_blank' rel='noopener noreferrer' download>
-        <i class='sul-i-download-3'></i> Download
+        <%= render Icons::DownloadComponent.new(classes: 'download-icon') %> Download
         <span class="sul-embed-sr-only visually-hidden"><%= title %></span>
       </a>
       <%= render 'embed/restrictions_text_for_file', file: file %>

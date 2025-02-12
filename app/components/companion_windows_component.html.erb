@@ -63,7 +63,7 @@
       <span class="modal-component-label">Share</span>
     </button>
     <button class="modal-component-button" data-action="click->companion-window#openDownloadModal" aria-label="Download" aria-controls="download" tabindex="0">
-      <svg class="MuiSvgIcon-root modal-component-icon" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M5 20h14v-2H5v2zM19 9h-4V3H9v6H5l7 7 7-7z"></path></svg>
+      <%= render Icons::DownloadComponent.new %>
       <span class="modal-component-label">Download</span>
     </button>
     <% share_menu_buttons.each do |share_menu_button| %>
