@@ -33,10 +33,6 @@ class CompanionWindowsComponent < ViewComponent::Base
     viewer.instance_of?(::Embed::Viewer::PdfViewer)
   end
 
-  def file_viewer?
-    viewer.instance_of?(::Embed::Viewer::File)
-  end
-
   def render_content_list_panel?
     # for Document viewer, do not render the content panel if there is just one downloadable file in the object
     media_viewer? || (document_viewer? && downloadable_files.size == 1)

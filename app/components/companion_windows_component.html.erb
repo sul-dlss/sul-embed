@@ -82,11 +82,7 @@
   </dialog>
 
   <%= render Download::DialogComponent.new do %>
-    <% if file_viewer? %>
-      <%= render Download::AllFilesComponent.new(viewer:) %>
-    <% else %>
-      <%= render Download::FileListComponent.new(viewer:) %>
-    <% end %>
+    <%= render Download::FileListComponent.new(viewer:) %>
   <% end %>
 
   <%= dialog %>

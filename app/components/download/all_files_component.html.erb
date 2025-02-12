@@ -1,17 +1,9 @@
-<% if downloadable_files.present? %>
-  <h3 class='sul-embed-options-label'>
-    Files
-  </h3>
-  <% if display_download_all? %>
-    <a href='<%= download_url %>' target="_blank" rel="noopener noreferrer nofollow">
-      Download all <%= pluralize(downloadable_files.length, "file") %></a>
-    <%= render Icons::StanfordOnlyComponent.new if any_stanford_only_files? %>
-    (<%= pretty_filesize %>)
-
-  <% else %>
-    <p>Bulk download not available. The total file size exceeds the download limit. Please download files individually.</p>
-  <% end %>
+<% if display_download_all? %>
+  <a href='<%= download_url %>' target="_blank" rel="noopener noreferrer nofollow">
+    Download all <%= pluralize(downloadable_files.length, "file") %></a>
+  <%= render Icons::StanfordOnlyComponent.new if any_stanford_only_files? %>
+  (<%= pretty_filesize %>)
 
 <% else %>
-  <p>No downloads available</p>
+  <p>Bulk download not available. The total file size exceeds the download limit. Please download files individually.</p>
 <% end %>

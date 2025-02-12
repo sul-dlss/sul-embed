@@ -12,6 +12,10 @@ module Download
     delegate :purl_object, :download_url, :any_stanford_only_files?, to: :viewer
     delegate :downloadable_files, to: :purl_object
 
+    def render?
+      viewer.is_a?(Embed::Viewer::Geo) || viewer.is_a?(Embed::Viewer::File)
+    end
+
     # Returns true or false whether the viewer should display the Download All
     # link. The limits were determined in testing and may need to be adjusted
     # based on experience with download performance and any changes in the
