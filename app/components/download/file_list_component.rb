@@ -22,7 +22,21 @@ module Download
     # For example, if a media file has a caption or transcript
     # we will want to group the caption with the media file.
     def grouped_files?
-      downloadable_files.any? { |file| file.caption? || file.transcript? }
+      viewer.is_a?(Embed::Viewer::Geo) ||
+        downloadable_files.any? { |file| file.caption? || file.transcript? }
+    end
+
+    # File viewer does not show single file download links because it has these links in the main panel
+    def single_file_download?
+      !viewer.is_a?(Embed::Viewer::File)
+    end
+
+    def prefer_filename
+      viewer.is_a?(Embed::Viewer::Geo)
+    end
+
+    def pretty_filesize
+      viewer.pretty_filesize(purl_object.size)
     end
   end
 end
