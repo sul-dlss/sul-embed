@@ -29,7 +29,13 @@ const ImprovedWindowTopBarShareMenu = (
 
 
 export default {
-  component: ImprovedWindowTopBarShareMenu,
+  config: {
+    translations: {
+      en: {
+        'windowPluginMenu': 'Share & download',
+      },
+    }
+  },
   mapStateToProps: (state) => ({
     containerId: getContainerId(state),
   }),
