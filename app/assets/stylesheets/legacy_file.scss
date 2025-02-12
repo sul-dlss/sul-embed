@@ -5,6 +5,13 @@ body {
   overflow-y: hidden;
 }
 
+.folder-title {
+  svg {
+    height: 1rem;
+    width: 1rem;
+    vertical-align: middle;
+  }
+}
 .sul-embed-container {
   .sul-embed-header {
     flex-shrink: 0;

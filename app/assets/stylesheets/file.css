@@ -5,6 +5,15 @@
   color: gray;
 }
 
+.folder-title {
+  svg {
+    height: 1rem;
+    width: 1rem;
+    vertical-align: middle;
+    color: var(--button-color);
+  }
+}
+
 .search-query-form {
   border: 1px solid #ababa9;
   border-radius: 0.25rem;
@@ -116,7 +125,7 @@
   }
 
   .sul-embed-filename-cell,
-  .dirname {
+  .folder-title {
     font-size: 1rem;
   }
 
