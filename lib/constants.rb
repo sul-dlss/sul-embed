@@ -4,7 +4,7 @@ module Constants
   FILE_ICON = {
     'application/msword' => 'sul-i-file-words',
     'application/pdf' => 'sul-i-file-acrobat',
-    'application/vnd.ms-powerpointtd>' => 'sul-i-file-powerpoint',
+    'application/vnd.ms-powerpoint' => 'sul-i-file-powerpoint',
     'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'sul-i-file-powerpoint',
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'sul-i-file-words',
     'application/vnd.ms-excel' => 'sul-i-file-excel',
