@@ -18,9 +18,7 @@ module Download
     # Stacks API. It returns false when there is just one file because the
     # file download link will suffice for that.
     def display_download_all?
-      purl_object.size < 10_737_418_240 &&
-        downloadable_files.length > 1 &&
-        downloadable_files.length < 3000
+      purl_object.size < 10_737_418_240 && downloadable_files.length < 3000
     end
 
     def pretty_filesize
