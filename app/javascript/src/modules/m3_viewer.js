@@ -108,17 +108,19 @@ export default {
       }
     }, [
       ...((imageTools && miradorImageToolsPlugin) || []),
+      // shareMenuPlugin is the customized menu in the top bar containing the share and download plugin buttons
+      // shareMenuPlugin exposes the SulEmbedShareMenu component
       shareMenuPlugin,
       ...((imageTools && embedModePlugin) || []),
       {
-        ...miradorSharePlugin,
-        target: 'WindowTopBarShareMenu',
+        ...miradorSharePlugin, 
+        target: 'SulEmbedShareMenu',
       },
       miradorShareDialogPlugin,
       miradorDownloadDialogPlugin,
       {
         ...miradorDownloadPlugin,
-        target: 'WindowTopBarShareMenu',
+        target: 'SulEmbedShareMenu',
       },
       analyticsPlugin,
     ].filter(Boolean))
