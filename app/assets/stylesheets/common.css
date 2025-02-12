@@ -32,3 +32,7 @@ a:focus {
   width: 15px;
   vertical-align: middle;
 }
+
+.sul-embed-location-restricted-text {
+  color: var(--stanford-digital-red);
+}

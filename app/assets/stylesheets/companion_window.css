@@ -42,9 +42,10 @@
 
 .companion-window-component {
   --stanford-black-60: #767674;
-  --stanford-black-20: #D5D5D4;
+  --stanford-black-20: #d5d5d4;
   --stanford-fog-light: #f4f4f4;
   --stanford-cardinal: #8c1515;
+  --stanford-digital-red: #b1040e;
 
   --active-color: var(--stanford-cardinal);
   --drawer-width: 310px;
