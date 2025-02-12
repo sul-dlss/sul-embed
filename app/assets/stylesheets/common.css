@@ -39,3 +39,7 @@ a:focus {
 .sul-embed-location-restricted-text {
   color: var(--stanford-digital-red);
 }
+
+.sul-embed-container {
+  overflow: scroll;
+}
