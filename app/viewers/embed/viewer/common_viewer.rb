@@ -94,11 +94,7 @@ module Embed
       end
 
       def file_type_icon(mimetype)
-        if Constants::FILE_ICON[mimetype].nil?
-          'sul-i-file-new-1'
-        else
-          Constants::FILE_ICON[mimetype]
-        end
+        Constants::FILE_ICON.fetch(mimetype, Icons::InsertDriveFileComponent)
       end
 
       ##

@@ -122,6 +122,12 @@
     .tree-label {
       margin: 0;
     }
+
+    svg {
+      height: 1rem;
+      width: 1rem;
+      color: var(--button-color);
+    }
   }
 }
 
