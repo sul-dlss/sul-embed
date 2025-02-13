@@ -27,7 +27,7 @@ RSpec.describe Media::WrapperComponent, type: :component do
 
     context 'with audio' do
       it 'renders the page' do
-        expect(page).to have_css('[data-default-icon="sul-i-file-music-1"]')
+        expect(page).to have_css('[data-default-icon="audio-thumbnail-icon"]')
         expect(page).to have_css('button[aria-label="Previous item"][disabled]')
         expect(page).to have_css('button[aria-label="Next item"]')
         expect(page).to have_no_css('button[aria-label="Next item"][disabled]')
@@ -38,7 +38,7 @@ RSpec.describe Media::WrapperComponent, type: :component do
       let(:type) { 'video' }
 
       it 'renders the page' do
-        expect(page).to have_css('[data-default-icon="sul-i-file-video-3"]')
+        expect(page).to have_css('[data-default-icon="video-thumbnail-icon"]')
         expect(page).to have_css('button[aria-label="Previous item"][disabled]')
         expect(page).to have_css('button[aria-label="Next item"]')
         expect(page).to have_no_css('button[aria-label="Next item"][disabled]')
