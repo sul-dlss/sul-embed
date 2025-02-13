@@ -74,6 +74,6 @@ export default class extends Controller {
   }
 
   isSmallViewportWidth() {
-    return screen.width < 800
+    return document.documentElement.clientWidth < 800
   }
 }
