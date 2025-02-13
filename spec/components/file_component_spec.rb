@@ -71,7 +71,7 @@ RSpec.describe FileComponent, type: :component do
     let(:resources) { [build(:resource, :file, files: [build(:resource_file, :document, :stanford_only, filename: 'Title of the PDF.pdf')])] }
 
     it 'adds a Stanford specific embargo message with links still present' do
-      expect(page).to have_css('.sul-embed-embargo-message', visible: :all, text: 'Access is restricted to Stanford-affiliated patrons until 21-Dec-2053')
+      expect(page).to have_css('div[aria-label="Access message"]', visible: :all, text: 'Access is restricted to Stanford-affiliated patrons until 21-Dec-2053')
       expect(page).to have_css('tr[data-tree-role="leaf"] a[href="https://stacks.stanford.edu/file/druid:bc123df4567/Title%20of%20the%20PDF.pdf"]', visible: :all)
     end
 
@@ -88,7 +88,7 @@ RSpec.describe FileComponent, type: :component do
     let(:purl) { build(:purl, :embargoed, contents: resources) }
 
     it 'adds a generalized embargo message and no links are present' do
-      expect(page).to have_css('.sul-embed-embargo-message', visible: :all, text: 'Access is restricted until 21-Dec-2053')
+      expect(page).to have_css('div[aria-label="Access message"]', visible: :all, text: 'Access is restricted until 21-Dec-2053')
       # FIXME: this is a bad spec as it's not checking for visibility false
       expect(page).to have_no_link
     end
