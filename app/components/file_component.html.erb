@@ -18,14 +18,22 @@
     <%= render CompanionWindows::FullscreenButtonComponent.new %>
   <% end %>
 
+  <% component.with_authorization_messages do %>
+    <% if viewer.purl_object.embargoed? %>
+      <div role="banner" aria-label="Access message">
+        <div class="authLinkWrapper">
+          <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+            <path d="m14.5 14.2 2.9 1.7-.8 1.3L13 15v-5h1.5zM22 14c0 4.41-3.59 8-8 8-2.02 0-3.86-.76-5.27-2H4c-1.15 0-2-.85-2-2V9c0-1.12.89-1.96 2-2v-.5C4 4.01 6.01 2 8.5 2c2.34 0 4.24 1.79 4.46 4.08.34-.05.69-.08 1.04-.08 4.41 0 8 3.59 8 8M6 7h5v-.74C10.88 4.99 9.8 4 8.5 4 7.12 4 6 5.12 6 6.5zm14 7c0-3.31-2.69-6-6-6s-6 2.69-6 6 2.69 6 6 6 6-2.69 6-6"></path>
+          </svg>
+          <p class="loginMessage"><%= viewer.embargo_message %></p>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
   <% component.with_body do %>
     <% # background-color: white must be set for full screen when the browser prefers dark mode %>
     <div style="overflow-y: scroll; flex-basis: 100%; background-color: white;" data-fullscreen-target="area">
-      <% if viewer.purl_object.embargoed? %>
-        <div class='sul-embed-embargo-message'>
-          <%= viewer.embargo_message %>
-        </div>
-      <% end %>
       <table class="sul-embed-treegrid" role="treegrid" aria-label="File list" data-action="keydown->tree#navigate" data-tree-target="table">
         <colgroup>
           <col class="sul-embed-treegrid-name">
