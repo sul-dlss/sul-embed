@@ -1,0 +1,70 @@
+@import url("companion_window.css");
+@import url("common.css");
+
+
+.sul-embed-was-seed-content {
+  padding: 10px;
+}
+
+.sul-embed-was-seed-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.sul-embed-was-seed-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 0 12px 12px 12px;
+}
+
+.sul-embed-was-seed-preview {
+  img {
+    max-height: 200px;
+  }
+}
+
+.sul-embed-was-seed-captures {
+  padding-top: 6px;
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+}
+
+.sul-embed-was-seed-info {
+  flex-basis: 200px;
+  max-width: 226px;
+  padding-top: 12px;
+  position: relative;
+
+  a {
+    border: 1px solid var(--border-color);
+    text-align: center;
+  }
+}
+
+.sul-embed-was-seed-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding-top: 12px;
+}
+
+.sul-embed-was-seed-list-item {
+  border: 1px solid var(--border-color);
+  margin: 0 15px 15px 0;
+  min-width: 225px;
+  padding: 10px;
+  position: relative;
+  text-align: center; 
+
+  a {
+    vertical-align: sub;
+  }
+
+  svg {
+    vertical-align: middle;
+  }
+}
