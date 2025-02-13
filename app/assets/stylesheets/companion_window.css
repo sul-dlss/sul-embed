@@ -4,6 +4,21 @@
   --color-fog-light: #f4f4f4;
 }
 
+.tooltip {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 100ms linear;
+  color: #ddd;
+  font-family: "Roboto", Helvetica, sans-serif;
+  font-size: 0.6rem;
+  background-color: #555;
+  padding: 0.3rem;
+  border-radius: 5px;
+  &.show {
+    opacity: 1;
+  }
+}
+
 .authLinkWrapper {
   align-items: center;
   display: flex;
