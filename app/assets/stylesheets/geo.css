@@ -14,7 +14,7 @@
 }
 
 .sul-embed-geo-sidebar {
-  background: var(--stanford-fog-light);
+  background: white;
   min-height: 50px;
   position: absolute;
   right: 0;
