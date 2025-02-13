@@ -262,7 +262,7 @@ export default {
     return `<div class="sul-embed-geo-sidebar">
                   <div class="sul-embed-geo-sidebar-header">
                     <h3>Features</h3>
-                    <i class="sul-i-arrow-up-8"></i>
+                    <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>
                   </div>
                   <div class="sul-embed-geo-sidebar-content">Click the map to inspect features.</div>
                 </div>`
@@ -276,7 +276,7 @@ export default {
       events: {
         click: function (e) {
 
-          if (e.target.localName !== 'i') {
+          if (e.target.localName !== 'svg') {
             return
           }
 
