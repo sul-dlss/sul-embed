@@ -18,7 +18,7 @@
   width: 300px;
 
   &.collapsed {
-    i {
+    svg {
       transform: rotate(180deg);
     }
   }
@@ -27,8 +27,8 @@
 .sul-embed-geo-sidebar-header {
   padding: 10px;
 
-  i {
-    height: 20px;
+  svg {
+    height: 2rem;
     position: absolute;
     right: 10px;
     top: 10px;
