@@ -69,7 +69,7 @@ module Media
     # What class to put on the icon in the "Media content" sidebar when there is no thumbnail
     # Used in media_tag_controller.js
     def default_icon
-      @type == 'audio' ? 'sul-i-file-music-1' : 'sul-i-file-video-3'
+      @type == 'audio' ? 'audio-thumbnail-icon' : 'video-thumbnail-icon'
     end
   end
 end
