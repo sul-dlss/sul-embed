@@ -5,9 +5,7 @@
 }
 
 .tooltip {
-  position: absolute;
-  opacity: 0;
-  transition: opacity 100ms linear;
+  display: none;
   color: #ddd;
   font-family: "Roboto", Helvetica, sans-serif;
   font-size: 0.6rem;
@@ -15,7 +13,7 @@
   padding: 0.3rem;
   border-radius: 5px;
   &.show {
-    opacity: 1;
+    display: block;
   }
 }
 

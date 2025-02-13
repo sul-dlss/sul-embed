@@ -47,3 +47,4 @@ pin "@google/model-viewer", to: "https://cdn.jsdelivr.net/npm/@google/model-view
 pin "three", to: "https://ga.jspm.io/npm:three@0.163.0/build/three.module.js"
 pin "leaflet" # @1.9.4
 pin "Leaflet.Control.Custom"
+pin "popper", to: 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.js'
