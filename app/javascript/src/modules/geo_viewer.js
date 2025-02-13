@@ -248,11 +248,12 @@ export default {
   openSidebarWithContent: function (html) {
 
     const sidebar = this.el.querySelector('.sul-embed-geo-sidebar')
+    const button = sidebar.querySelector('button')
     const sidebarContent = sidebar.querySelector('.sul-embed-geo-sidebar-content')
+    button.setAttribute('aria-expanded', 'true')
 
-    sidebar.classList.remove('collapsed')
+    sidebarContent.classList.add('show')
     sidebarContent.innerHTML = html
-    sidebarContent.style.display = 'block' // Use display instead of jQuery slideDown
     sidebarContent.style.height = (this.map.getSize().y - 90) + 'px'
     sidebarContent.setAttribute('aria-hidden', false)
 
@@ -262,9 +263,11 @@ export default {
     return `<div class="sul-embed-geo-sidebar">
                   <div class="sul-embed-geo-sidebar-header">
                     <h3>Features</h3>
-                    <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>
+                    <button aria-label="expand/collapse" aria-expanded="true" aria-controls="sidebarContent">
+                      <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>
+                    </button>
                   </div>
-                  <div class="sul-embed-geo-sidebar-content">Click the map to inspect features.</div>
+                  <div id="sidebarContent" class="sul-embed-geo-sidebar-content show">Click the map to inspect features.</div>
                 </div>`
   },
 
@@ -275,25 +278,19 @@ export default {
       classes: '',
       events: {
         click: function (e) {
+          const button = e.target.closest('button')
 
-          if (e.target.localName !== 'svg') {
+          if (!button) {
             return
           }
-
-          const container = e.target.parentNode.parentNode
-          const content = container.querySelector('.sul-embed-geo-sidebar-content')
-
-          if (!container.classList.contains('collapsed')) {
-            content.style.display = 'none'
-            container.classList.add('collapsed')
-            content.setAttribute('aria-hidden', true)
-
+          const containerId = button.getAttribute('aria-controls')
+          const container = document.getElementById(containerId)
+          if (button.getAttribute('aria-expanded') === 'true') {
+            container.classList.remove('show')
+            button.setAttribute('aria-expanded', 'false')
           } else {
-            content.style.display = 'block'
-            container.classList.remove('collapsed')
-            content.style.height = (this.map.getSize().y - 90) + 'px'
-            content.setAttribute('aria-hidden', false)
-
+            container.classList.add('show')
+            button.setAttribute('aria-expanded', 'true')
           }
         }.bind(this) // Bind 'this' to access the map instance
       }
