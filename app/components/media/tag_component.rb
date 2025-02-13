@@ -79,7 +79,8 @@ module Media
         poster: poster_url_for,
         controls: 'controls',
         class: 'sul-embed-media-file',
-        crossorigin: 'use-credentials', # So that VTT can be downloaded when download:stanford
+        # So that VTT can be downloaded when download:stanford
+        crossorigin: Rails.env.development? ? '' : 'use-credentials',
         height: '100%'
       ) do
         streaming_source + captions
