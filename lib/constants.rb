@@ -8,6 +8,7 @@ module Constants
     'application/vnd.openxmlformats-officedocument.presentationml.presentation' => Icons::FilePresentComponent,
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => Icons::DescriptionComponent,
     'application/vnd.ms-excel' => Icons::InsertChartComponent,
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => Icons::InsertChartComponent,
     'application/x-compressed-zip' => Icons::FolderZipComponent,
     'application/x-gzip' => Icons::FolderZipComponent,
     'application/x-tar' => Icons::FolderZipComponent,
