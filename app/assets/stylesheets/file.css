@@ -121,6 +121,7 @@
   tr[aria-expanded="true"] > td:first-child::before,
   td[aria-expanded="true"]:first-child::before {
     transform: rotate(90deg);
+    transform-origin: center center;
   }
 
   .sul-embed-filename-cell,
