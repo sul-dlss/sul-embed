@@ -1,0 +1,21 @@
+<%= render ::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth tree fullscreen') do |component| %>
+  <% component.with_header_button do %>
+    <%= render CompanionWindows::ShareButtonComponent.new %>
+  <% end %>
+
+  <% component.with_header_button do %>
+    <%= render CompanionWindows::FullscreenButtonComponent.new %>
+  <% end %>
+
+  <% component.with_body do %>
+    <div class="sul-embed-3d sul-embed-body" data-fullscreen-target="area">
+      <div class="buttons">
+        <button aria-label="Zoom in" class="zoom-in">+</button>
+        <button aria-label="Zoom out" class="zoom-out">-</button>
+      </div>
+      <div id="3d-viewer">
+        <model-viewer auto-rotate camera-controls ar-modes="webxr scene-viewer quick-look" src="<%= viewer.three_dimensional_files.first %>"></model-viewer>
+      </div>
+    </div>
+  <% end %>
+<% end %>
