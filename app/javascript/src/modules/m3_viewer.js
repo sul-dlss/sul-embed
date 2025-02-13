@@ -141,7 +141,7 @@ export default {
 
     window.addEventListener('message', (event) => {
       const regex = /(stanford\.edu|[\w-]+\.stanford\.edu)/
-      console.log(event.origin)
+
       if (regex.exec(event.origin) === null && process.env.RAILS_ENV !== 'development') {
         return
       }
