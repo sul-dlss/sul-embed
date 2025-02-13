@@ -20,7 +20,7 @@
   right: 0;
   width: 300px;
 
-  &.collapsed {
+  [aria-expanded="false"] {
     svg {
       transform: rotate(180deg);
     }
@@ -30,17 +30,23 @@
 .sul-embed-geo-sidebar-header {
   padding: 10px;
 
-  svg {
+  button {
     height: 2rem;
     position: absolute;
     right: 10px;
     top: 10px;
+    border: none;
+    background-color: transparent;
   }
 }
 
 .sul-embed-geo-sidebar-content {
   overflow: scroll;
   padding: 0 10px 10px;
+
+  &:not(.show) {
+    display: none;
+  }
 
   dt {
     font-weight: bold;
