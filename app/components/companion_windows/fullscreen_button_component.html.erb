@@ -1,5 +1,5 @@
-      <button data-controller="tooltip" aria-label="Full screen" data-action="fullscreen#toggle mouseenter->tooltip#show focus->tooltip#show mouseleave->tooltip#hide blur->tooltip#hide">
-          <span class="button-label">
-            <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" tabindex="-1" title="Fullscreen"><path d="M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"></path></svg>
-          </span>
-      </button>
+<%= render CompanionWindows::ControlButtonComponent.new(action: 'fullscreen#toggle', aria: { label: 'Full screen' }, data: { companion_window_target: 'shareButton' }) do %>
+  <span class="button-label">
+    <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24" tabindex="-1" title="Fullscreen"><path d="M7 14H5v5h5v-2H7zm-2-4h2V7h3V5H5zm12 7h-3v2h5v-5h-2zM14 5v2h3v3h2V5z"></path></svg>
+  </span>
+<% end %>

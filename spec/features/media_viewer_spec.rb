@@ -72,7 +72,7 @@ RSpec.describe 'Media viewer', :js do
         expect(find_by_id('rights')).to be_visible
       end
 
-      click_on 'Display sidebar'
+      click_on 'Toggle sidebar'
       expect(page).to have_no_css 'aside.open'
 
       expect(page).to have_css('video', visible: :all)
