@@ -1,0 +1,29 @@
+<div class="prev-next-container">
+  <div class="prev-next-buttons">
+    <%= render CompanionWindows::ControlButtonComponent.new(
+        controller: 'prev-next',
+        action: 'click->prev-next#prevNextMedia',
+        html_class: 'left-arrow',
+        disabled: @resource_index.zero?,
+        aria: { label: 'Previous item' },
+        data: { prev_next_content_list_outlet: '#content-list',
+                prev_next_index_param: @resource_index - 1 }
+      ) do %>
+      <%= arrow %>
+    <% end %>
+    <%= render CompanionWindows::ControlButtonComponent.new(
+        controller: 'prev-next',
+        action: 'click->prev-next#prevNextMedia',
+        html_class: 'right-arrow',
+        disabled: @resource_index + 1 == @size,
+        aria: { label: 'Next item' },
+        data: { prev_next_content_list_outlet: '#content-list',
+                prev_next_index_param: @resource_index + 1 }
+      ) do %>
+      <%= arrow %>
+    <% end %>
+  </div>
+  <div id="current-title">
+    <%= tag.span "#{@resource_index + 1} of #{@size} • #{@file.label_or_filename}" %>
+  </div>
+</div>
