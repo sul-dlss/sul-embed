@@ -6,5 +6,5 @@
     data-controller="content-list"
     data-action="thumbnails-found@window->content-list#drawThumbnails"
     role="tablist">
-    <%= render CompanionWindows::ContentListItemComponent.with_collection(viewer.purl_object.downloadable_files, viewer:) %>
+    <%= render Document::ContentListItemComponent.with_collection(viewer.purl_object.downloadable_files, viewer:) if document_viewer? %>
 </ul>
