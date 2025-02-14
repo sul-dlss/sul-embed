@@ -304,13 +304,20 @@
     justify-content: inherit;
   }
 
-  .MuiSvgIcon-root {
-    fill: currentColor;
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    font-size: 1.5rem;
-    flex-shrink: 0;
+  header nav,
+  .vert-tabs,
+  .left-drawer,
+  .modal-components-popover,
+  .sul-embed-treegrid,
+  .sul-embed-was-seed-list-item {
+    svg {
+      fill: currentColor;
+      width: 1em;
+      height: 1em;
+      display: inline-block;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
   }
 
   .companion-window-component-body {
