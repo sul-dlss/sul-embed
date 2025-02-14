@@ -23,6 +23,7 @@ module Download
     # we will want to group the caption with the media file.
     def grouped_files?
       viewer.is_a?(Embed::Viewer::Geo) ||
+        viewer.is_a?(Embed::Viewer::ModelViewer) ||
         downloadable_files.any? { |file| file.caption? || file.transcript? }
     end
 
@@ -32,7 +33,7 @@ module Download
     end
 
     def prefer_filename
-      viewer.is_a?(Embed::Viewer::Geo)
+      viewer.is_a?(Embed::Viewer::Geo) || viewer.is_a?(Embed::Viewer::ModelViewer)
     end
 
     def pretty_filesize

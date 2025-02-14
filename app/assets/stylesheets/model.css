@@ -1,0 +1,30 @@
+@import url("companion_window.css");
+@import url("common.css");
+
+.sul-embed-3d {
+  position: relative;
+  width: 100%;
+
+  .buttons {
+    left: 10px;
+    position: absolute;
+    top: 10px;
+    z-index: 1;
+  }
+
+  .zoom-in,
+  .zoom-out {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 2em;
+    padding: 5px 13px;
+  }
+
+  model-viewer {
+    background-color: black;
+    width: 100%;
+    height: calc(100vh - 70px);
+  }
+}

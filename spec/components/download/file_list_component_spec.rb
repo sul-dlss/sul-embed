@@ -82,4 +82,31 @@ RSpec.describe Download::FileListComponent, type: :component do
       expect(page).to have_css('h4', text: 'Data')
     end
   end
+
+  context 'with a model viewer' do
+    let(:viewer) do
+      Embed::Viewer::ModelViewer.new(embed_request)
+    end
+
+    let(:downloadable_files) do
+      [
+        instance_double(Embed::Purl::ResourceFile, downloadable?: true, filename: 'bb648mk7250_low.obj', file_url: '//one', caption?: false, transcript?: false, label_or_filename: '3d 1', location_restricted?: false, stanford_only?: false, size: 100),
+        instance_double(Embed::Purl::ResourceFile, downloadable?: true, filename: 'bb648mk7250_low.glb', file_url: '//one', caption?: true, transcript?: false, label_or_filename: '3d 2', location_restricted?: false, stanford_only?: false, size: 100)
+      ]
+    end
+    let(:contents) do
+      [
+        Embed::Purl::Resource.new(description: '3D 1', files: [downloadable_files[0]]),
+        Embed::Purl::Resource.new(description: '3D 2', files: [downloadable_files[1]])
+      ]
+    end
+
+    it 'has download links' do
+      expect(page).to have_link 'Download all 2 files'
+      expect(page).to have_link 'Download bb648mk7250_low.obj'
+      expect(page).to have_link 'Download bb648mk7250_low.glb'
+      expect(page).to have_css('h4', text: '3D 1')
+      expect(page).to have_css('h4', text: '3D 2')
+    end
+  end
 end
