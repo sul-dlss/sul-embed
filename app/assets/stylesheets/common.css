@@ -43,3 +43,8 @@ a:focus {
 .sul-embed-container {
   overflow: scroll;
 }
+
+.logoContainer {
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
