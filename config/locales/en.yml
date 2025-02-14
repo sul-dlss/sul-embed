@@ -23,6 +23,7 @@ en:
   restrictions:
     not_accessible: "This item cannot be accessed online. See Access conditions for more information."
     logged_in: "Logged in."
+    restricted_access: "Access is restricted to the %{location}. See Access conditions for more information."
   date:
     formats:
       sul: "%d-%b-%Y"

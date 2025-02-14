@@ -50,3 +50,13 @@ min_files_to_search_default: 10
 language_subtag_registry:
   path: vendor/data/language-subtag-registry
   url: "https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry"
+
+locations:
+  # Codes from https://github.com/sul-dlss/cocina-models/blob/8fc7b5b9b0e3592a5c81f4c0e4ebff5c926669c6/openapi.yml#L1330-L1339
+  # labels from https://consul.stanford.edu/display/chimera/Rights+Metadata+Locations
+  spec: "Special Collections reading room"
+  music: "Music Library - main area"
+  ars: "Archive of Recorded Sound listening room"
+  art: "Art Library"
+  hoover: "Hoover Library"
+  m&m: "Media & Microtext"
