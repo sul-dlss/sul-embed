@@ -35,7 +35,7 @@ class CompanionWindowsComponent < ViewComponent::Base
 
   def render_content_list_panel?
     # for Document viewer, do not render the content panel if there is just one downloadable file in the object
-    media_viewer? || (document_viewer? && downloadable_files.size == 1)
+    media_viewer? || (document_viewer? && downloadable_files.size > 1)
   end
 
   def display_download?
