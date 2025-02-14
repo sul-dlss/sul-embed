@@ -1,4 +1,5 @@
 @import url("companion_window.css");
+@import url("content_list.css");
 @import url("locked_status.css");
 
 /* VideoJS CSS overrides for responsive layout
@@ -122,13 +123,13 @@
         cursor: pointer;
         width: 1.5rem;
         height: 1.5rem;
-        margin: 0px .25rem;
+        margin: 0px 0.25rem;
         svg {
-          fill: #0000008A;
+          fill: #0000008a;
         }
         &:disabled {
           svg {
-            fill: #0000003D;
+            fill: #0000003d;
           }
         }
       }

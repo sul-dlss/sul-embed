@@ -1,0 +1,83 @@
+/* This is for the content list sidebar, that is use by the document and media viewers */
+#content-list {
+  --thumb-height: 75px;
+
+  .media-thumb,
+  .file-thumb {
+    list-style-type: none;
+    border: 1px solid var(--border-color);
+    margin-bottom: 0.5rem;
+    height: var(--thumb-height);
+    text-align: center;
+
+    &.active {
+      box-shadow: 0px 0px 3px 2px var(--active-media-thumb-color);
+    }
+
+    .default-thumbnail-icon {
+      background-color: black;
+      display: inline-block;
+      float: left;
+      height: var(--thumb-height);
+      mask-repeat: no-repeat;
+      mask-size: 100%;
+      width: 4.6rem;
+      vertical-align: top;
+    }
+
+    .video-thumbnail-icon {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='MuiSvgIcon-root' focusable='false' aria-hidden='true' viewBox='0 0 24 24'%3E%3Cpath d='M14 2H6.01c-1.1 0-2 .89-2 2L4 20c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8zm-1 7V3.5L18.5 9zm1 5 2-1.06v4.12L14 16v1c0 .55-.45 1-1 1H9c-.55 0-1-.45-1-1v-4c0-.55.45-1 1-1h4c.55 0 1 .45 1 1z'%3E%3C/path%3E%3C/svg%3E");
+    }
+
+    .audio-thumbnail-icon {
+      mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='MuiSvgIcon-root' focusable='false' aria-hidden='true' viewBox='0 0 24 24'%3E%3Cpath d='M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8zm2 11h-3v3.75c0 1.24-1.01 2.25-2.25 2.25S8.5 17.99 8.5 16.75s1.01-2.25 2.25-2.25c.46 0 .89.14 1.25.38V11h4zm-3-4V3.5L18.5 9z'%3E%3C/path%3E%3C/svg%3E");
+    }
+
+    /* Stretched links
+           https://github.com/twbs/bootstrap/blob/c28934cb1871d6b6bd6a866660493a1137de17c6/scss/helpers/_stretched-link.scss */
+    .stretched-link {
+      &::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        content: "";
+      }
+    }
+
+    .square-icon {
+      float: left;
+    }
+
+    .sul-embed-thumb-stanford-only {
+      background: url("stanford_s.svg") no-repeat;
+      background-position: bottom left;
+      padding-right: 20px;
+      &.text {
+        height: calc(
+          100% - 0.75rem
+        ); /* positions .sul-embed-thumb-stanford-only */
+      }
+    }
+
+    .text {
+      display: inline-block;
+      margin-top: 0.25rem;
+      vertical-align: top;
+      width: 130px;
+      text-align: left;
+    }
+  }
+
+  .file-thumb {
+    height: auto !important;
+    padding: 0.5rem;
+    text-align: left;
+  }
+
+  .no-bullets {
+    list-style-type: none;
+  }
+}
