@@ -175,3 +175,23 @@
     border-radius: 0.25rem;
   }
 }
+
+.transcript-header {
+  background: var(--stanford-fog-light);
+  padding-bottom: 1.5rem;
+}
+
+.transcript-controls {
+  font-size: 0.8rem;
+  flex-direction: column;
+
+  input {
+    margin-left: 0.6rem;
+  }
+
+  input,
+  select {
+    margin-right: 0.6rem;
+    vertical-align: middle;
+  }
+}
