@@ -18,8 +18,8 @@ class CompanionWindowsComponent < ViewComponent::Base
 
   attr_reader :viewer
 
-  delegate :purl_object, to: :viewer
-  delegate :downloadable_files, :druid, to: :purl_object
+  delegate :purl_object, :display_header?, to: :viewer
+  delegate :downloadable_files, :druid, :title, to: :purl_object
 
   def iiif_v3_manifest_url
     "#{Settings.purl_url}/#{druid}/iiif3/manifest"

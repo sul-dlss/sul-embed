@@ -7,7 +7,7 @@ RSpec.describe FileComponent, type: :component do
     Embed::Request.new(url: 'http://purl.stanford.edu/abc123', min_files_to_search: 1, new_viewer: 'true')
   end
   let(:viewer) { Embed::Viewer::File.new(request) }
-  let(:purl) { build(:purl, contents: resources) }
+  let(:purl) { build(:purl, :file, contents: resources) }
   let(:resources) { [build(:resource, :video, files: [build(:resource_file, :video, :stanford_only, label: 'Second Video')])] }
 
   before do
@@ -15,11 +15,24 @@ RSpec.describe FileComponent, type: :component do
     render_inline(described_class.new(viewer:))
   end
 
-  it 'returns html that has a body wrapped in a container' do
+  it 'displays the page' do
+    within 'header' do
+      expect(page).to have_content 'Title of the object'
+    end
     # visible :all because we display:none the container until we've loaded the CSS.
     expect(page).to have_css 'div.sul-embed-container', visible: :all
     expect(page).to have_content 'Search this list'
     expect(page).to have_css 'button[aria-label="Full screen"]', visible: :all
+  end
+
+  context 'when hide_title is passed' do
+    Embed::Request.new(url: 'http://purl.stanford.edu/abc123', min_files_to_search: 1, new_viewer: 'true', hide_title: 'true')
+
+    it 'displays the page' do
+      within 'header' do
+        expect(page).to have_no_content 'Title of the object'
+      end
+    end
   end
 
   context 'when a version id is supplied' do

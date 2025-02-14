@@ -14,7 +14,7 @@ RSpec.describe MediaComponent, type: :component do
   end
   let(:purl_object) do
     instance_double(Embed::Purl,
-                    title: 'foo',
+                    title: 'Sample title',
                     purl_url: 'https://purl.stanford.edu/123',
                     manifest_json_url: 'https://purl.stanford.edu/123/iiif/manifest',
                     use_and_reproduction: '',
@@ -28,6 +28,9 @@ RSpec.describe MediaComponent, type: :component do
   end
 
   it 'displays the page' do
+    within 'header' do
+      expect(page).to have_content 'Sample title'
+    end
     # Accessabile dialog
     within 'dialog' do
       expect(page).to have_content 'To request a transcript or other accommodation'
@@ -37,5 +40,15 @@ RSpec.describe MediaComponent, type: :component do
     expect(page).to have_content 'Access is restricted to the reading room. See Access conditions for more information.'
     expect(page).to have_content 'Stanford users: log in to access all available features'
     expect(page).to have_content 'Access is restricted until the embargo has elapsed'
+  end
+
+  context 'when hide_title is passed' do
+    let(:embed_request) { Embed::Request.new(hide_title: 'true') }
+
+    it 'displays the page' do
+      within 'header' do
+        expect(page).to have_no_content 'Sample title'
+      end
+    end
   end
 end

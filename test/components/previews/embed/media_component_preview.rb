@@ -38,10 +38,14 @@ module Embed
       render_media_viewer_for(url: 'https://purl.stanford.edu/bc285ff3003')
     end
 
+    def hide_title
+      render_media_viewer_for(url: 'https://purl.stanford.edu/wz015vw6759', hide_title: 'true')
+    end
+
     private
 
-    def render_media_viewer_for(url:)
-      embed_request = Embed::Request.new(url:)
+    def render_media_viewer_for(**params)
+      embed_request = Embed::Request.new(**params)
       viewer = Embed::Viewer::Media.new(embed_request)
       render(MediaComponent.new(viewer:))
     end
