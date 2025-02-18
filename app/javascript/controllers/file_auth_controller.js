@@ -126,7 +126,7 @@ export default class extends Controller {
       .catch((json) => {
         // TODO: deal with media authentication if we abandon media specific auth controllers
         if (json.status == 302) return // media file probe requests return a 302 instead of a 200
-                                       // wuth a link to the media server file location (and media token)
+                                       // with a link to the media server file location (and media token)
                                        // and this can happen with a non-media object that happens to have
                                        // a media file in it, e.g. ds777pr3860
         console.debug("Probe failed or access denied/restricted", json)
