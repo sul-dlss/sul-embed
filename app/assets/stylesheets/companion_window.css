@@ -4,6 +4,10 @@
   --color-fog-light: #f4f4f4;
 }
 
+body {
+  margin: 0;
+}
+
 .tooltip {
   display: none;
   color: white;
@@ -338,8 +342,8 @@
     display: flex;
     flex-grow: 1;
     max-height: calc(
-      100vh - var(--header-size) - 2px
-    ); /* the 2px are for the outer 1px border */
+      100vh - var(--header-size) - 5px
+    ); /* the 5px is for the outer border and the top red border */
 
     #main-display {
       display: flex;
