@@ -57,6 +57,10 @@
 
   th,
   td {
+    a {
+      text-decoration: none;
+    }
+
     &:nth-of-type(2) {
       padding-inline: 1rem;
       text-align: center;

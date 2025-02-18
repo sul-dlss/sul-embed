@@ -36,7 +36,7 @@ export default class {
     return `<li class="media-thumb ${activeClass}" data-action="click->content-list#showMedia" data-content-list-target="listItem" data-content-list-index-param="${index}" style="position: relative;" aria-controls="main-display" role="tab">
         ${thumbnailIcon}
         <a class="stretched-link" href="#">
-          <span class="${labelClass}">
+          <span class="${labelClass} su-underline">
             ${stanfordOnlyScreenreaderText}${restrictedTextMarkup}
             ${this.truncateWithEllipsis(this.fileLabel, maxFileLabelLength)}
           </span>
