@@ -423,6 +423,7 @@
       flex-shrink: 1;
       overflow: hidden auto;
       padding: var(--drawer-content-padding);
+      margin: 0;
     }
 
     .logoContainer {
