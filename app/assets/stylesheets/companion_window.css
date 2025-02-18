@@ -322,6 +322,7 @@
   .left-drawer,
   .modal-components-popover,
   .sul-embed-treegrid .folder-title,
+  .authLinkWrapper,
   .sul-embed-was-seed-list-item {
     svg {
       fill: currentColor;
