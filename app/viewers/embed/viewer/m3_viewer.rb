@@ -14,9 +14,7 @@ module Embed
         'm3.css'
       end
 
-      def manifest_json_url
-        @purl_object.manifest_json_url
-      end
+      delegate :manifest_json_url, to: :@purl_object
 
       def manifest_json
         @manifest_json ||= JSON.parse(@purl_object.manifest_json_response)
