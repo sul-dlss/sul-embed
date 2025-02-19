@@ -339,11 +339,12 @@ body {
   }
 
   .companion-window-component-body {
-    display: flex;
-    flex-grow: 1;
-    max-height: calc(
+    --body-height: calc(
       100vh - var(--header-size) - 5px
     ); /* the 5px is for the outer border and the top red border */
+    display: flex;
+    flex-grow: 1;
+    max-height: var(--body-height);
 
     #main-display {
       display: flex;
