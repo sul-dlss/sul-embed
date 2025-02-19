@@ -8,7 +8,9 @@ module Embed
         @file = file
         @pos_in_set = pos_in_set
         @set_size = set_size
-        @level = level
+        # level needs to be set to -1 for hierarchical files
+        # but causes problems padding problems for non-structured files
+        @level = level.zero? ? 1 : level
       end
 
       attr_reader :viewer, :file, :pos_in_set, :set_size, :level
