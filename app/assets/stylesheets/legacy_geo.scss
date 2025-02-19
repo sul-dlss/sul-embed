@@ -27,6 +27,15 @@
 .sul-embed-geo-sidebar-header {
   padding: 10px;
 
+  svg {
+    fill: currentColor;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
   button {
     height: 2rem;
     position: absolute;
