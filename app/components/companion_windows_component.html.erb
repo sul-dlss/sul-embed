@@ -1,7 +1,9 @@
 <div class="sul-embed-container companion-window-component" id='sul-embed-object' hidden data-controller="companion-window iiif-manifest-loader fullscreen <%= @stimulus_controller %>" data-iiif-manifest-loader-iiif-manifest-value="<%= iiif_v3_manifest_url %>" data-fullscreen-target="area">
   <header aria-label="Embed main">
     <nav aria-label="Embed navigation">
-      <%= render CompanionWindows::ControlButtonComponent.new(action: 'click->companion-window#toggleLeft', aria: { label: 'Toggle sidebar', controls: 'left-drawer' }) do %>
+      <%= render CompanionWindows::ControlButtonComponent.new(action: 'click->companion-window#toggleLeft',
+                                                              aria: { label: 'Toggle sidebar', controls: 'left-drawer' },
+                                                              data: { companion_window_target: 'toggleButton' }) do %>
         <span class="button-label"><svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg></span>
       <% end %>
       <% if display_header? %>

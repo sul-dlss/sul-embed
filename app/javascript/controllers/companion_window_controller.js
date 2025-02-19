@@ -3,7 +3,7 @@ import EmbedThis from 'src/modules/embed_this'
 
 export default class extends Controller {
   // TODO: accessability and transcript should move to a controller just for media.
-  static targets = [ "leftDrawer", "shareButton", "shareModal",
+  static targets = [ "leftDrawer", "toggleButton", "shareButton", "shareModal",
                      "downloadModal", "accessibility", "modalComponentsPopover"]
   connect() {
     this.element.hidden = false
@@ -14,24 +14,31 @@ export default class extends Controller {
     EmbedThis.init()
   }
 
-  toggleLeft() {
+  toggleLeft(evt) {
+    const button = this.toggleButtonTarget
+    button.disabled = true // Prevent additional clicks until all mutations are complete.
+    let action;
     if (this.leftDrawerTarget.classList.contains('open')) {
-      this.closeLeftDrawer()
+      action = this.closeLeftDrawer()
     } else {
-      this.openLeftDrawer()
+      action = this.openLeftDrawer()
     }
+    action.then(() => button.disabled = false) // reenable the button
   }
 
   openLeftDrawer() {
     this.leftDrawerTarget.classList.add('open')
     this.leftDrawerTarget.style.visibility = ''
+    return Promise.resolve()
   }
 
   closeLeftDrawer() {
     this.leftDrawerTarget.classList.remove('open')
-    setTimeout(() => {
-      this.leftDrawerTarget.style.visibility = 'hidden' // remove from accessability tree
-    }, 500)
+    return new Promise(resolve => setTimeout(() => {
+        this.leftDrawerTarget.style.visibility = 'hidden' // remove from accessability tree
+        resolve()
+      }, 500)
+    )
   }
 
   openModalComponentsPopover() {
