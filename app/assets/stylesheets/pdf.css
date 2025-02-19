@@ -2,7 +2,3 @@
 @import url("content_list.css");
 @import url("common.css");
 @import url("locked_status.css");
-
-.sul-embed-pdf {
-  min-height: 90vh;
-}

@@ -1,3 +1,4 @@
+/* For styles shared between the legacy and modern viewers */
 :root {
   --link-color: #006cb8;
 }
@@ -38,9 +39,4 @@ a:focus {
 
 .sul-embed-location-restricted-text {
   color: var(--stanford-digital-red);
-}
-
-.logoContainer {
-  border-top: 1px solid var(--border-color);
-  border-bottom: 1px solid var(--border-color);
 }
