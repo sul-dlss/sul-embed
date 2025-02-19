@@ -35,17 +35,14 @@ en:
   viewers:
     file:
       title: "File viewer"
-      content_list_heading: Unused
     geo:
       title: "Geospatial viewer"
     m3_viewer:
       title: "Image viewer"
     media:
       title: "Media viewer"
-      content_list_heading: Media content
     pdf_viewer:
       title: "PDF viewer"
-      content_list_heading: Contents
     model_viewer:
       title: "3-D object viewer"
     was_seed:
