@@ -368,7 +368,10 @@ body {
   }
 
   .left-drawer {
-    border-right: 1px solid var(--border-color);
+    &.open {
+      border-right: 1px solid var(--border-color);
+    }
+
     display: flex;
 
     .vert-tabs {
