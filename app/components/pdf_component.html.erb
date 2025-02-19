@@ -1,11 +1,11 @@
-<%= render ::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth fullscreen') do |component| %>
+<%= render ::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'file-auth') do |component| %>
   <% component.with_header_button do %>
     <%= render CompanionWindows::ShareButtonComponent.new %>
   <% end %>
 
   <% component.with_header_button do %>
     <%= render CompanionWindows::FullscreenButtonComponent.new  %>
-  <% end unless requested_by_chromium? %>
+  <% end %>
 
   <% component.with_authorization_messages do %>
     <%= render LoginComponent.new %>
@@ -21,7 +21,6 @@
         <% if viewer.available? %>
           <div class="sul-embed-pdf" style="height: 100%"
             data-controller="pdf"
-            data-fullscreen-target="area"
             data-action="iiif-manifest-received@window->file-auth#parseFiles auth-success@window->pdf#show">
           </div>
         <% end %>

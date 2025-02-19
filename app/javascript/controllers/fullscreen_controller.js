@@ -1,9 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ['area']
+  static targets = ['area', 'enterIcon', 'exitIcon']
 
-  toggle () {
+  toggle() {
     if (!document.fullscreenElement) {
       this.areaTarget.requestFullscreen().catch((err) => {
         alert(
@@ -12,6 +12,17 @@ export default class extends Controller {
       })
     } else {
       document.exitFullscreen()
+    }
+  }
+
+  updateButton() {
+    if (document.fullscreenElement !== null) {
+      // The hidden attribute doesn't appear to work on SVG in Firefox
+      this.enterIconTarget.style.display = 'none'
+      this.exitIconTarget.style.display = 'inline-block'
+    } else {
+      this.enterIconTarget.style.display = 'inline-block'
+      this.exitIconTarget.style.display = 'none'
     }
   }
 }
