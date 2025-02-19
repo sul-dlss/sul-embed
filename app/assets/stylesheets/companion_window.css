@@ -237,6 +237,7 @@ body {
     flex-shrink: 0;
 
     nav {
+      isolation: isolate;
       font-size: 15px;
       display: flex;
       flex-direction: row;
