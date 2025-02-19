@@ -7,10 +7,14 @@ export default class extends Controller {
   firstFile = '' // for multiple files we need to be able to render the first on load
 
   addPostCallbackListener() {
+    const permittedOrigins = ["https://stacks.stanford.edu", "https://sul-stacks-stage.stanford.edu", "https://sul-stacks-uat.stanford.edu"]
     window.addEventListener("message", (event) => {
       this.iframe.remove()
       console.debug("Post message", event.data)
-      if (event.origin !== "https://stacks.stanford.edu" && event.origin !== "https://sul-stacks-stage.stanford.edu") return
+      if (!permittedOrigins.include(event.origin)) {
+        console.error(`${event.origin} is not a permitted origin`)
+        return
+      }
       if (event.data.type === "AuthAccessTokenError2") {
         this.displayAccessTokenError(event.data)
       } else {
