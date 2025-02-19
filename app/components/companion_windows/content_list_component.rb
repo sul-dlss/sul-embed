@@ -7,9 +7,5 @@ module CompanionWindows
     end
 
     attr_reader :viewer
-
-    def heading
-      t('content_list_heading', scope: viewer.i18n_path)
-    end
   end
 end

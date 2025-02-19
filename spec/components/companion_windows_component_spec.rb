@@ -33,7 +33,7 @@ RSpec.describe CompanionWindowsComponent, type: :component do
 
   it 'displays the page' do
     expect(page).to have_content 'About this item'
-    expect(page).to have_content 'Media content'
+    expect(page).to have_content 'Contents'
     expect(page).to have_content 'Rights'
   end
 end
