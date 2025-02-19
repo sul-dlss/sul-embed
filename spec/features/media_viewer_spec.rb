@@ -62,13 +62,13 @@ RSpec.describe 'Media viewer', :js do
         expect(page).to have_css('.sul-embed-location-restricted-text', text: '(Restricted)')
         expect(page).to have_css('.media-thumb', text: '(Restricted) First Video')
 
-        # switch to the "About this item" tab
-        click_on 'About this item'
+        # switch to the "Information" tab
+        click_on 'Information'
         expect(find_by_id('about')).to be_visible
         expect(page).to have_css('#object-content', visible: :hidden)
 
         # switch to the "Rights" tab
-        click_on 'Use and reproduction'
+        click_on 'Rights'
         expect(find_by_id('rights')).to be_visible
       end
 
