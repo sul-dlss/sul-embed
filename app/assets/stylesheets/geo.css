@@ -10,7 +10,6 @@
   position: relative;
   display: flex;
   flex-grow: 1;
-  height: calc(100vh - var(--header-size));
 }
 
 .sul-embed-geo-sidebar {
