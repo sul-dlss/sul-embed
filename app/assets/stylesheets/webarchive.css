@@ -1,6 +1,9 @@
 @import url("companion_window.css");
 @import url("common.css");
 
+.sul-embed-was-seed-container {
+  overflow-y: scroll;
+}
 
 .sul-embed-was-seed-content {
   padding: 10px;
