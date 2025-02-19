@@ -6,14 +6,15 @@ export default class extends Controller {
     this.tooltip = document.createElement("div")
     this.tooltip.classList.add('tooltip')
     this.tooltip.innerHTML = this.element.getAttribute('aria-label')
-    document.body.appendChild(this.tooltip);
+    this.tooltip.ariaHidden = 'true'
+    this.element.appendChild(this.tooltip)
 
-    this.popperInstance = createPopper(this.element, this.tooltip);
+    this.popperInstance = createPopper(this.element, this.tooltip)
   }
   show() {
     this.tooltip.classList.add('show')
 
-    this.popperInstance.update();
+    this.popperInstance.update()
   }
 
   hide() {
