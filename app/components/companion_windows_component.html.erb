@@ -1,4 +1,4 @@
-<div class="sul-embed-container companion-window-component" id='sul-embed-object' hidden data-controller="companion-window iiif-manifest-loader fullscreen <%= @stimulus_controller %>" data-iiif-manifest-loader-iiif-manifest-value="<%= iiif_v3_manifest_url %>" data-fullscreen-target="area">
+<div class="sul-embed-container companion-window-component" id='sul-embed-object' hidden data-controller="companion-window iiif-manifest-loader fullscreen <%= @stimulus_controller %>" data-iiif-manifest-loader-iiif-manifest-value="<%= iiif_v3_manifest_url %>" data-fullscreen-target="area" data-fullscreen-close-value="Exit full screen">
   <header aria-label="Embed main">
     <nav aria-label="Embed navigation">
       <%= render CompanionWindows::ControlButtonComponent.new(action: 'click->companion-window#toggleLeft', aria: { label: 'Toggle sidebar', controls: 'left-drawer' }) do %>
