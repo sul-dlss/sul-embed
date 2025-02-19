@@ -211,7 +211,12 @@ export default class extends Controller {
 
   // Show login message and link provided by auth service
   loginNeeded(activeAccessService, messageId) {
-    if (!this.loginPanelTarget.hidden) return // no action needed if the login window is already there
+    // we want to ensure that show the login for the first resource
+    if (this.resources[messageId].contentResourceId !== this.firstFile) return
+
+    // This allows the lock window to show
+    const event = new CustomEvent('auth-denied', { activeAccessService: activeAccessService })
+    window.dispatchEvent(event)
 
     this.messagePanelTarget.hidden = true
     this.loginPanelTarget.hidden = false
