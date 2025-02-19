@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
-:root {
-  --color-fog-light: #f4f4f4;
-}
-
 body {
   margin: 0;
 }
@@ -277,12 +273,12 @@ body {
   }
 
   .transcript-header {
-    background: var(--color-fog-light);
+    background: var(--stanford-fog-light);
     padding-bottom: 1.5rem;
   }
 
   .header-background {
-    background: var(--color-fog-light);
+    background: var(--stanford-fog-light);
     display: flex;
     flex-shrink: 0;
     padding-left: var(--drawer-content-padding);
