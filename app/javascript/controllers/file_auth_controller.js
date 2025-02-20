@@ -55,8 +55,9 @@ export default class extends Controller {
     } else {
       // auth service is present, check the probe service to see what we need to do to access the resource
       const probeService = contentResource.service.find((service) => service.type === "AuthProbeService2")
-      if (probeService)
+      if (probeService) {
         this.checkAuthorization(probeService, contentResource.id)
+      }
       else
         throw(`Access service exists, but no probe service found for ${contentResource.id}`)
     }
@@ -66,6 +67,7 @@ export default class extends Controller {
   // event, and call a method for that partcular content type (e.g. pdf/media) that knows how to render content
   renderViewer(fileUri) {
     if (fileUri == this.firstFile){
+      console.log("Render viewer, file uri = first file")
       window.dispatchEvent(new CustomEvent('auth-success', { detail: fileUri }))
       // use filename because url in contents adds druid: to the data-url
       const filename = fileUri.split("/").slice(-1)[0]
@@ -115,7 +117,6 @@ export default class extends Controller {
     // So we'll just get the token first.
     console.debug("Probe service:", probeService)
     const accessService = this.findAccessService(probeService)
-
     const messageId = Math.random().toString(36).slice(2) // create a random key for this resource to reference later
     this.resources[messageId] = { probeService, contentResourceId }
 
@@ -133,6 +134,12 @@ export default class extends Controller {
                                        // with a link to the media server file location (and media token)
                                        // and this can happen with a non-media object that happens to have
                                        // a media file in it, e.g. ds777pr3860
+        
+        
+        if(this.isLocationRestricted(json)) {
+          this.handleLocationRestricted(json, accessService)
+          return
+        }
         console.debug("Probe failed or access denied/restricted", json)
         // Check if non-expired token already exists in local storage,
         // and if it exists, query probe service with it
@@ -260,5 +267,24 @@ export default class extends Controller {
 
   hideMessagePanel() {
     this.messagePanelTarget.hidden = true
+  }
+
+  // to see if item is restricted by location, check the probe service json response
+  handleLocationRestricted(json, accessService) {
+    this.locationRestrictionTarget.hidden = false
+    // This allows the lock window to show
+    const event = new CustomEvent('auth-denied', { accessService: accessService })
+    window.dispatchEvent(event)
+  }
+
+  isLocationRestricted(json) {
+    console.log("check location restricted")
+    console.log(json)
+    if(json.status == "401" && json.note.en[0] == 'Access restricted') {
+      console.log("The access is restricted")
+      const accessMessage = json.heading.en[0]
+      console.log(accessMessage)
+    }
+    return true
   }
 }
