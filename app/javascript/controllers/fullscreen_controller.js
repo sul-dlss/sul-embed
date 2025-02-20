@@ -8,7 +8,6 @@ export default class extends Controller {
 
   connect() {
     this.openValue = this.buttonTarget.getAttribute('aria-label')
-    console.log("ope is", this.openValue, 'close is ', this.closeValue)
   }
 
   toggle() {
