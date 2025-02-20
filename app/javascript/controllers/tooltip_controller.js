@@ -7,7 +7,10 @@ export default class extends Controller {
     this.tooltip.classList.add('tooltip')
     this.tooltip.innerHTML = this.element.getAttribute('aria-label')
     this.tooltip.ariaHidden = 'true'
-    this.element.appendChild(this.tooltip)
+    // tooltip must be appended to a parent of any part of the viewer
+    // that might otherwise cover it and be within the area shown in
+    // fullscreen mode.
+    this.element.closest('#sul-embed-object').appendChild(this.tooltip)
 
     this.popperInstance = createPopper(this.element, this.tooltip)
   }
