@@ -90,12 +90,22 @@
       &> div {
         margin-inline-end: 1rem;
       }
+      a {
+        color: blue;
+        text-decoration: none;
+      }
+
+      a.visited {
+        color: purple;
+      }
     }
   </style>
   <script>
-     function openPurl(purl) {
+     function openPurl(purl, event) {
        const url = document.getElementById('url-scheme')
        url.value = `https://purl.stanford.edu/${purl}`
+       const linkElement = event.target;  
+       linkElement.classList.add('visited');
        embed.render()
      }
   </script>
@@ -144,37 +154,37 @@
         <h4>Image viewer</h4>
         <ul>
           <li>
-            <a href="#" onclick="openPurl('sg052hd9120')">
+            <a href="#" data-purl="sg052hd9120">
               Single image - sg052hd9120
             </a>
           </li>
           <li>
-            <a href="#" onclick="openPurl('fw090jw3474')">
+            <a href="#" data-purl="fw090jw3474">
               Multi image - fw090jw3474
             </a>
           </li>
           <li>
-            <a href="#" onclick="openPurl('cy496ky1984')">
+            <a href="#" data-purl="cy496ky1984">
               Book (multi image, paged viewing hint) - cy496ky1984
             </a>
           </li>
           <li>
-            <a href="#" onclick="openPurl('bb537hc4022')">
+            <a href="#" data-purl="bb537hc4022">
               Image with restrictions - bb537hc4022
             </a>
           </li>
           <li>
-            <a href="#" onclick="openPurl('dn665vh1697')">
+            <a href="#"  data-purl="dn665vh1697">
               Image with Book download - dn665vh1697
             </a>
           </li>
           <li>
-            <a href="#" onclick="openPurl('bg262qk2288')">
+            <a href="#" data-purl="bg262qk2288">
               Image with pdf and other downloads - bg262qk2288
             </a>
           </li>
           <li>
-            <a href="#" onclick="openPurl('yh887qk5737')">
+            <a href="#" data-purl="yh887qk5737">
               Image (Stanford Only) - yh887qk5737
             </a>
           </li>
@@ -185,22 +195,22 @@
         <h4>Media viewer</h4>
         <ul>
           <li>
-            <a href="#" onclick="openPurl('bb582xs1304')">
+            <a href="#" data-purl="bb582xs1304">
               mp4 - bb582xs1304
             </a>
           </li>
           <li>
-            <a href="#" onclick="openPurl('tn629pk3948')">
+            <a href="#" data-purl="tn629pk3948">
               mp4, jp2 - tn629pk3948
             </a>
           </li>
           <li>
-            <a href="#" onclick="openPurl('bb051hp9404')">
+            <a href="#" data-purl="bb051hp9404">
               mp3 - bb051hp9404
             </a>
           </li>
           <li>
-            <a href="#" onclick="openPurl('vh816yh7318')">
+            <a href="#" data-purl="vh816yh7318">
               mp3 (multiple) - vh816yh7318
             </a>
           </li>
@@ -211,7 +221,7 @@
       <h4>Web archive viewer</h4>
       <ul>
         <li>
-          <a href="#" onclick="openPurl('gb089bd2251')">
+          <a href="#" data-purl="gb089bd2251">
             Warc-seed - gb089bd2251
           </a>
         </li>
@@ -222,25 +232,25 @@
       <h4>Geo viewer</h4>
       <ul>
         <li>
-          <a href="#" onclick="openPurl('cz128vq0535')">Geo (Vector) public - cz128vq0535</a>
+          <a href="#" data-purl="cz128vq0535">Geo (Vector) public - cz128vq0535</a>
         </li>
         <li>
-          <a href="#" onclick="openPurl('fp756wn9369')">Geo (Vector) restricted - fp756wn9369</a>
+          <a href="#" data-purl="fp756wn9369">Geo (Vector) restricted - fp756wn9369</a>
         </li>
         <li>
-          <a href="#" onclick="openPurl('tg926kp6619')">Geo (Raster) public - tg926kp6619</a>
+          <a href="#" data-purl="tg926kp6619">Geo (Raster) public - tg926kp6619</a>
         </li>
         <li>
-          <a href="#" onclick="openPurl('sf815vr1246')">Geo (Raster) restricted - sf815vr1246</a>
+          <a href="#" data-purl="sf815vr1246">Geo (Raster) restricted - sf815vr1246</a>
         </li>
 
         <li>
-          <a href="#" onclick="openPurl('ts545zc6250')">
+          <a href="#" data-purl="ts545zc6250">
             Geo Index map - ts545zc6250
           </a>
         </li>
         <li>
-          <a href="#" onclick="openPurl('bh152hk2665')">
+          <a href="#"data-purl="bh152hk2665">
             Geo with jpg/zip - bh152hk2665
           </a>
         </li>
@@ -251,27 +261,27 @@
       <h4>Document viewer</h4>
       <ul>
         <li>
-          <a href="#" onclick="openPurl('bh502xm3351')">
+          <a href="#" data-purl="bh502xm3351">
             pdf - bh502xm3351
           </a>
         </li>
         <li>
-          <a href="#" onclick="openPurl('bb461xx1037')">
+          <a href="#" data-purl="bb461xx1037">
             pdf (Stanford Only) - bb461xx1037
           </a>
         </li>
         <li>
-          <a href="#" onclick="openPurl('bz673hm0344')">
+          <a href="#" data-purl="bz673hm0344">
             pdf (Citation Only) - bz673hm0344
           </a>
         </li>
         <li>
-          <a href="#" onclick="openPurl('bb990sg8412')">
+          <a href="#" data-purl="bb990sg8412">
             pdf (object emgargoed, file available) - bb990sg8412
           </a>
         </li>
         <li>
-          <a href="#" onclick="openPurl('ds777pr3860')">
+          <a href="#" data-purl="ds777pr3860">
             pdf (multiple files) - ds777pr3860
           </a>
         </li>
@@ -282,32 +292,32 @@
       <h4>File viewer</h4>
       <ul>
         <li>
-          <a href="#" onclick="openPurl('wt101ks3240')">
+          <a href="#" data-purl="wt101ks3240">
             File with text and gzip - wt101ks3240
           </a>
         </li>
         <li>
-          <a href="#" onclick="openPurl('qy869qz5226')">
+          <a href="#" data-purl="qy869qz5226">
             File with many tar - qy869qz5226
           </a>
         </li>
         <li>
-          <a href="#" onclick="openPurl('js533sk1281')">
+          <a href="#" data-purl="js533sk1281">
             File with 2002 files - js533sk1281
           </a>
         </li>
         <li>
-          <a href="#" onclick="openPurl('fg478vy8624')">
+          <a href="#" data-purl="fg478vy8624">
             File with hierarchy - fg478vy8624
           </a>
         </li>
         <li>
-          <a href="#" onclick="openPurl('bb010qz8357')">
+          <a href="#" data-purl="bb010qz8357">
             File stanford only - bb010qz8357
           </a>
         </li>
         <li>
-          <a href="#" onclick="openPurl('bb012jz6387')">
+          <a href="#" data-purl="bb012jz6387">
             File location restricted - bb012jz6387
           </a>
         </li>
@@ -318,7 +328,7 @@
       <h4>3d viewer</h4>
       <ul>
         <li>
-          <a href="#" onclick="openPurl('fs892sr8080')">
+          <a href="#" data-purl="fs892sr8080">
             3d - fs892sr8080
           </a>
         </li>
@@ -440,6 +450,15 @@
       });
     });
 
+  });
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const links = document.querySelectorAll('.examples a');
+    links.forEach(link => {
+      link.addEventListener('click', function(event) {
+        openPurl(link.dataset.purl, event);
+      });
+    });
   });
   </script>
 </body>
