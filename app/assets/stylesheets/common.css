@@ -1,6 +1,7 @@
 /* For styles shared between the legacy and modern viewers */
 :root {
   --link-color: #006cb8;
+  --stanford-40-black: #ababa9;
 }
 /* From Bootstrap 5.3 */
 .visually-hidden-focusable:not(:focus):not(:focus-within):not(caption),
@@ -39,4 +40,8 @@ a:focus {
 
 .sul-embed-location-restricted-text {
   color: var(--stanford-digital-red);
+}
+
+.su-underline {
+  text-decoration: underline dotted var(--stanford-40-black) 1px;
 }

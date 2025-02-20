@@ -1,5 +1,5 @@
 <% if display_download_all? %>
-  <a href='<%= download_url %>' target="_blank" rel="noopener noreferrer nofollow">
+  <a href='<%= download_url %>' target="_blank" class="su-underline" rel="noopener noreferrer nofollow">
     Download all <%= pluralize(downloadable_files.length, "file") %></a>
   <%= render Icons::StanfordOnlyComponent.new if any_stanford_only_files? %>
   (<%= pretty_filesize %>)

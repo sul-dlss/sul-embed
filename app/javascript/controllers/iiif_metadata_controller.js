@@ -17,6 +17,7 @@ export default class extends Controller {
         node.setAttribute('target', '_blank')
         // Prevent https://www.owasp.org/index.php/Reverse_Tabnabbing
         node.setAttribute('rel', 'noopener noreferrer')
+        node.classList.add('su-underline')
         return `<dd>${node.outerHTML}</dd>`
       } else {
         return `<dd>${record}</dd>`

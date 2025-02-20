@@ -1,7 +1,7 @@
 <li class="file-thumb">
   <%= render file_type_icon.new %>
 
-  <a href="#" data-action="click->content-list#<%= show_method %>" data-url="<%= url %>">
+  <a href="#" class="su-underline" data-action="click->content-list#<%= show_method %>" data-url="<%= url %>">
     <%= download_label %>
   </a>
   <%= render 'embed/restrictions_text_for_file', file: file %>
