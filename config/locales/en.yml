@@ -34,19 +34,19 @@ en:
           kb: kB # This is the SI unit for 10^3
   viewers:
     file:
-      title: "File viewer"
+      title: "File viewer: %{title}"
     geo:
-      title: "Geospatial viewer"
+      title: "Geospatial viewer: %{title}"
     m3_viewer:
-      title: "Image viewer"
+      title: "Image viewer: %{title}"
     media:
-      title: "Media viewer"
+      title: "Media viewer: %{title}"
     pdf_viewer:
-      title: "PDF viewer"
+      title: "PDF viewer: %{title}"
     model_viewer:
-      title: "3-D object viewer"
+      title: "3-D object viewer: %{title}"
     was_seed:
-      title: "File viewer"
+      title: "File viewer: %{title}"
   download_files:
     zero: "No file available for download"
     one: "1 file available for download"

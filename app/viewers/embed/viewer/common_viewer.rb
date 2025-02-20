@@ -109,7 +109,7 @@ module Embed
       end
 
       def iframe_title
-        I18n.t('title', default: 'Viewer', scope: i18n_path)
+        I18n.t('title', default: 'Viewer', scope: i18n_path, title: purl_object.title)
       end
 
       private
