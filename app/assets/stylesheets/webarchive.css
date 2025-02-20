@@ -61,7 +61,8 @@
   min-width: 225px;
   padding: 10px;
   position: relative;
-  text-align: center; 
+  text-align: center;
+  color: var(--button-color);
 
   a {
     vertical-align: sub;
