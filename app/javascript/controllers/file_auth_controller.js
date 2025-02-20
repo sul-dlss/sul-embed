@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["container", "loginPanel", "messagePanel", "loginButton", "loginMessage"]
+  static targets = ["container", "loginPanel", "messagePanel", "loginButton", "loginMessage", "locationRestriction", "locationRestrictionMessage"]
 
   resources = {} // Hash of messageIds to resources
   firstFile = '' // for multiple files we need to be able to render the first on load

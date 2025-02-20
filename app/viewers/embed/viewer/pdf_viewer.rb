@@ -31,11 +31,19 @@ module Embed
         document_resource_files.all?(&:location_restricted?)
       end
 
+      def any_documents_location_restricted?
+        document_resource_files.any?(&:location_restricted?)
+      end
+
+      def any_documents_stanford_only_restricted?
+        document_resource_files.any?(&:stanford_only?)
+      end
+
       # this indicates if the PDF is downloadable (though it could be stanford only)
       # Stanford only and location restrictions are handled via a separate authorization flow,
       # since it is possible for people to do something about the restriction
       def available?
-        document_resource_files.first&.downloadable?
+        document_resource_files.first&.downloadable? || document_resource_files.any?(&:location_restricted?)
       end
 
       private
