@@ -190,7 +190,7 @@ body {
   .modal-components-popover {
     border: 0;
     top: 49px;
-    left: calc(100% - 180px);
+    left: calc(100% - 214px);
     box-shadow:
       0px 5px 5px -3px rgba(0, 0, 0, 0.2),
       0px 8px 10px 1px rgba(0, 0, 0, 0.14),
@@ -215,6 +215,7 @@ body {
       width: 100%;
       padding: 1.2rem;
       text-align: left;
+      white-space: nowrap;
 
       .modal-component-label {
         font-size: 1rem;
