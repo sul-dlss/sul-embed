@@ -220,12 +220,13 @@ body {
       .modal-component-label {
         font-size: 1rem;
         line-height: 1.6em;
+        vertical-align: middle;
       }
 
       .modal-component-icon {
         min-width: 32px;
-        vertical-align: middle;
         color: var(--button-color);
+        vertical-align: middle;
       }
 
       &:hover {
