@@ -8,7 +8,7 @@
   <% end %>
 
   <% component.with_authorization_messages do %>
-    <%= render LoginComponent.new if viewer.any_documents_stanford_only_restricted? %>
+    <%= render LoginComponent.new %>
     <%= render ContentNotAvailableComponent.new unless viewer.available? %>
     <%= render LocationRestrictionComponent.new if viewer.any_documents_location_restricted? %>
   <% end %>
