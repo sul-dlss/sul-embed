@@ -9,9 +9,10 @@
 
   <% component.with_authorization_messages do %>
     <div role="banner" aria-label="Access message">
-      <%= render LoginComponent.new %>
+      <%= render LoginComponent.new if viewer.any_documents_stanford_only_restricted? %>
       <%= render CompanionWindows::ContentNotAvailableComponent.new unless viewer.available? %>
     </div>
+    <%= render LocationRestrictionComponent.new if viewer.any_documents_location_restricted? %>
   <% end %>
 
   <% component.with_body do %>
@@ -23,6 +24,9 @@
         <% if viewer.available? %>
           <div class="sul-embed-pdf" style="height: 100%"
             data-controller="pdf"
+            <% if viewer.any_documents_location_restricted? %>
+            data-location-restriction="true"
+            <% end %>
             data-action="iiif-manifest-received@window->file-auth#parseFiles auth-success@window->pdf#show">
           </div>
         <% end %>
