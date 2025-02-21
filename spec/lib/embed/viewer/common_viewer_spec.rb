@@ -65,8 +65,10 @@ RSpec.describe Embed::Viewer::CommonViewer do
   end
 
   describe '#iframe_title' do
+    let(:purl) { build(:purl, title: 'my title') }
+
     it 'determines the title from the class name' do
-      expect(file_viewer.iframe_title).to eq 'File viewer'
+      expect(file_viewer.iframe_title).to eq 'File viewer: my title'
     end
   end
 

@@ -32,7 +32,7 @@ RSpec.describe 'embed this panel', :js do
 
     it 'includes the viewer\'s iframe title' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
-      expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match('title="File viewer"')
+      expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match('title="File viewer: Title of the object"')
     end
   end
 
