@@ -36,6 +36,17 @@ module Embed
                                  @purl_object.contents.map(&:files).flatten.length >= min_files_to_search
       end
 
+      def message
+        return { type: 'embargo', message: embargo_message } if @purl_object.embargoed?
+
+        if @purl_object.location_restriction
+          return { type: 'location-restricted',
+                   message: I18n.t('restrictions.restricted_access', location: @purl_object.restricted_location) }
+        end
+
+        false
+      end
+
       ##
       # Creates an embargo message to be displayed, customized for stanford
       # only embargoed items

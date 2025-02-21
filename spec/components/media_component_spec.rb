@@ -23,6 +23,7 @@ RSpec.describe MediaComponent, type: :component do
                     druid: '123',
                     version_id: nil,
                     contents: [],
+                    restricted_location: 'reading room',
                     downloadable_files: [],
                     downloadable_transcript_files?: false)
   end

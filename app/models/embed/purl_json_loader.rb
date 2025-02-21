@@ -26,6 +26,8 @@ module Embed
         bounding_box:,
         archived_site_url:,
         embargoed:,
+        location_restriction:,
+        restricted_location:,
         stanford_only_unrestricted:,
         controlled_digital_lending:,
         public:
@@ -47,6 +49,20 @@ module Embed
 
     def embargoed
       json.dig('access', 'embargo').present?
+    end
+
+    def location_restriction
+      return 'download' if json.dig('access', 'download') == 'location-based'
+      return 'view' if json.dig('access', 'view') == 'location-based'
+
+      false
+    end
+
+    def restricted_location
+      fallback_message = 'site visitors to the Stanford Libraries'
+      Settings.locations[json.dig('access', 'location')] || fallback_message if location_restriction
+
+      fallback_message
     end
 
     def stanford_only_unrestricted
