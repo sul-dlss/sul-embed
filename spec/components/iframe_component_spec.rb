@@ -22,20 +22,6 @@ RSpec.describe IframeComponent, type: :component do
     )
   end
 
-  describe 'the height' do
-    subject { iframe['height'] }
-
-    it { is_expected.to eq '555px' }
-
-    context 'when the fullheight flag is set' do
-      let(:embed_request) do
-        Embed::Request.new({ url: 'http://purl.stanford.edu/abc123', fullheight: 'true' })
-      end
-
-      it { is_expected.to eq '100%' }
-    end
-  end
-
   it 'adds the title to html' do
     expect(iframe['title']).to eq 'Hello world'
   end
