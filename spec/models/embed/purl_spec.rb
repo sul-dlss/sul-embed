@@ -51,6 +51,22 @@ RSpec.describe Embed::Purl do
     end
   end
 
+  describe '#iiif_v3_manifest_url' do
+    subject { purl.iiif_v3_manifest_url }
+
+    context 'when item lacks a version id' do
+      let(:purl) { described_class.new(druid: 'dz382hy7753') }
+
+      it { is_expected.to eq('https://purl.stanford.edu/dz382hy7753/iiif3/manifest') }
+    end
+
+    context 'when item has a version id' do
+      let(:purl) { described_class.new(druid: 'dz382hy7753', version_id: 2) }
+
+      it { is_expected.to eq('https://purl.stanford.edu/dz382hy7753/version/2/iiif3/manifest') }
+    end
+  end
+
   describe '#public?' do
     context 'when an item is public' do
       subject(:purl) { described_class.new(public: true) }
