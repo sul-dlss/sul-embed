@@ -8,16 +8,11 @@
   <% end %>
 
   <% component.with_authorization_messages do %>
-<<<<<<< HEAD
     <div role="banner" aria-label="Access message">
       <%= render LoginComponent.new if viewer.any_documents_stanford_only_restricted? %>
       <%= render CompanionWindows::ContentNotAvailableComponent.new unless viewer.available? %>
+      <%= render LocationRestrictionComponent.new(viewer.restricted_location) if viewer.location_restricted? %>
     </div>
-=======
-    <%= render LoginComponent.new %>
-    <%= render ContentNotAvailableComponent.new unless viewer.available? %>
->>>>>>> a379ec07 (handling restricted location from auth)
-    <%= render LocationRestrictionComponent.new if viewer.any_documents_location_restricted? %>
   <% end %>
 
   <% component.with_body do %>
@@ -29,7 +24,7 @@
         <% if viewer.available? %>
           <div class="sul-embed-pdf" style="height: 100%"
             data-controller="pdf"
-            <% if viewer.any_documents_location_restricted? %>
+            <% if viewer.location_restricted? %>
             data-location-restriction="true"
             <% end %>
             data-action="iiif-manifest-received@window->file-auth#parseFiles auth-success@window->pdf#show">

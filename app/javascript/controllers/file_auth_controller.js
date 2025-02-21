@@ -55,6 +55,7 @@ export default class extends Controller {
     } else {
       // auth service is present, check the probe service to see what we need to do to access the resource
       const probeService = contentResource.service.find((service) => service.type === "AuthProbeService2")
+
       if (probeService) {
         this.checkAuthorization(probeService, contentResource.id)
       }
@@ -269,22 +270,23 @@ export default class extends Controller {
     this.messagePanelTarget.hidden = true
   }
 
-  // to see if item is restricted by location, check the probe service json response
-  handleLocationRestricted(json, accessService) {
-    this.locationRestrictionTarget.hidden = false
-    // This allows the lock window to show
-    const event = new CustomEvent('auth-denied', { accessService: accessService })
-    window.dispatchEvent(event)
+  // To see if item is restricted by location, check the probe service json response
+  handleLocationRestricted(accessService) {
+    // The probe auth service is called for each file separately
+    // If the restriction message is already visible, we do not need to display it again
+    if(this.locationRestrictionTarget.hidden) {
+      this.locationRestrictionTarget.hidden = false
+      // This allows the lock window to show
+      const event = new CustomEvent('auth-denied', { accessService: accessService })
+      window.dispatchEvent(event)
+    }
   }
 
+  // Checks the result of the probe auth request to see if access is restricted to location
   isLocationRestricted(json) {
-    console.log("check location restricted")
-    console.log(json)
-    if(json.status == "401" && json.note.en[0] == 'Access restricted') {
-      console.log("The access is restricted")
-      const accessMessage = json.heading.en[0]
-      console.log(accessMessage)
-    }
-    return true
+    if(json.status == "401" && 'heading' in json && 'en' in json.heading && json.heading.en.length
+      && json.heading.en[0].startsWith('Content is restricted to location'))
+      return true
+    return false
   }
 }

@@ -60,6 +60,7 @@ module Embed
 
     def restricted_location
       fallback_message = 'site visitors to the Stanford Libraries'
+    
       return Settings.locations[json.dig('access', 'location')] || fallback_message if location_restriction
 
       fallback_message
