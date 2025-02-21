@@ -1,5 +1,3 @@
-'use strict';
-import React from 'react';
 import SvgIcon from '@mui/material/SvgIcon';
 import { withPlugins, WindowTopBarPluginMenu, getContainerId } from 'mirador';
 
@@ -22,7 +20,7 @@ const ShareMenu = (props) => (
 
 const ShareMenuWithPlugins = withPlugins('SulEmbedShareMenu')(ShareMenu);
 
-export default {
+export const shareMenuPlugin = {
   component: ShareMenuWithPlugins,
   config: {
     translations: {
