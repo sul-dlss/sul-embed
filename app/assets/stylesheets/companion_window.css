@@ -350,7 +350,7 @@ body {
     ); /* the 5px is for the outer border and the top red border */
     display: flex;
     flex-grow: 1;
-    max-height: var(--body-height);
+    height: var(--body-height);
 
     #main-display {
       display: flex;
