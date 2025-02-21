@@ -59,7 +59,7 @@ gem 'newrelic_rpm', group: :production
 # Use okcomputer to monitor the application
 gem 'okcomputer'
 
-gem 'shakapacker', '~> 7.0'
+gem 'vite_rails'
 
 gem 'view_component', '~> 3.10'
 
