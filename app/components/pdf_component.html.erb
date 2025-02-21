@@ -10,7 +10,7 @@
   <% component.with_authorization_messages do %>
     <%= render LoginComponent.new %>
     <%= render ContentNotAvailableComponent.new unless viewer.available? %>
-    <%= render LocationRestrictionComponent.new if viewer.any_documents_location_restricted? %>
+    <%= render LocationRestrictionComponent.new(viewer.restricted_location) if viewer.location_restricted? %>
   <% end %>
 
   <% component.with_body do %>
@@ -22,7 +22,7 @@
         <% if viewer.available? %>
           <div class="sul-embed-pdf" style="height: 100%"
             data-controller="pdf"
-            <% if viewer.any_documents_location_restricted? %>
+            <% if viewer.location_restricted? %>
             data-location-restriction="true"
             <% end %>
             data-action="iiif-manifest-received@window->file-auth#parseFiles auth-success@window->pdf#show">
