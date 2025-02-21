@@ -48,7 +48,6 @@
 
     .content {
       padding: 20px;
-      width: 600px;
     }
 
     .viewer {
@@ -74,7 +73,32 @@
     .failed {
       color: red;
     }
+
+    h3, h4 {
+      margin-top: 1rem;
+    }
+
+    li {
+      list-style-type: none;
+      white-space: nowrap;
+    }
+
+    .examples {
+      display: flex;
+      flex-wrap: wrap;
+
+      &> div {
+        margin-inline-end: 1rem;
+      }
+    }
   </style>
+  <script>
+     function openPurl(purl) {
+       const url = document.getElementById('url-scheme')
+       url.value = `https://purl.stanford.edu/${purl}`
+       embed.render()
+     }
+  </script>
 </head>
 
 <body>
@@ -90,6 +114,7 @@
     <label for="">&maxheight=</label><input type="text" class="max-height" size="4" value="">
     <br>
     <label for="hide-title">Hide title?</label> <input type="checkbox" id="hide-title" class="hide-title" />
+    <label for="new-viewer">New viewer?</label> <input type="checkbox" id="new-viewer" class="new-viewer" checked/>
     <label for="hide-search">Hide search?</label> <input type="checkbox" id="hide-search" class="hide-search" />
     <label for="hide-search">Minimum files for search:</label> <input type="text" id="min-files" class="min-files" value="10" length="2" />
     <label for="hide-embed">Hide embed?</label> <input type="checkbox" id="hide-embed" class="hide-embed" />
@@ -114,114 +139,195 @@
       lacinia eget eget eros. Duis in augue augue.
     </p>
     <h3>Useful Druids</h3>
-    <ul>
-      <li>
-        Single image - sg052hd9120
-      </li>
-      <li>
-        Multi image - fw090jw3474
-      </li>
-      <li>
-        Book (multi image, paged viewing hint) - cy496ky1984
-      </li>
-      <li>
-        Image with restrictions - bb537hc4022
-      </li>
-      <li>
-        Image with Book download - dn665vh1697
-      </li>
-      <li>
-        Image with pdf and other downloads - bg262qk2288
-      </li>
-      <li>
-        Image (Stanford Only) - yh887qk5737
-      </li>
-      <li>
-        mp4 - bd786fy6312, bb582xs1304
-      </li>
-      <li>
-        mp4, jp2 - tn629pk3948
-      </li>
-      <li>
-        mp3 - jy496kh1727, bb051hp9404
-      </li>
-      <li>
-        mp3 (multiple) - vh816yh7318
-      </li>
-      <li>
-        Warc-seed - gb089bd2251
-      </li>
-      <li>
-        Geo (Vector)
-        <table>
-          <tr>
-            <td>Public</td>
-            <td>cz128vq0535</td>
-            <td>https://purl.stanford.edu/cz128vq0535</td>
-            <td>https://earthworks.stanford.edu/catalog/stanford-cz128vq0535</td>
-          </tr>
-          <tr>
-            <td>Restricted</td>
-            <td>fp756wn9369</td>
-            <td>https://purl.stanford.edu/fp756wn9369</td>
-            <td>https://earthworks.stanford.edu/catalog/stanford-fp756wn9369</td>
-          </tr>
-        </table>
-      </li>
-      <li>
-        Geo (Raster)
-        <table>
-          <tr>
-            <td>Public</td>
-            <td>tg926kp6619</td>
-            <td>https://purl.stanford.edu/tg926kp6619</td>
-            <td>https://earthworks.stanford.edu/catalog/stanford-tg926kp6619</td>
-          </tr>
-          <tr>
-            <td>Restricted</td>
-            <td>sf815vr1246</td>
-            <td>https://purl.stanford.edu/sf815vr1246</td>
-            <td>https://earthworks.stanford.edu/catalog/stanford-sf815vr1246</td>
-          </tr>
-        </table>
-      </li>
-      <li>
-        Geo Index map - ts545zc6250
-      </li>
-      <li>
-        pdf - bh502xm3351
-      </li>
-      <li>
-        pdf (Stanford Only) - bb461xx1037
-      </li>
-      <li>
-        pdf (Citation Only) - bz673hm0344
-      </li>
-      <li>
-        pdf (object emgargoed, file available) - bb990sg8412
-      </li>
-      <li>
-        pdf (multiple files) - ds777pr3860
-      </li>
-      <li>
-        Geo with jpg/zip - bh152hk2665
-      </li>
-      <li>
-        File with text and gzip - wt101ks3240
-      </li>
-      <li>
-        File with many tar - qy869qz5226
-      </li>
-      <li>
-        File with 2002 files - js533sk1281
-      </li>
-      <li>
-        File with hierarchy - fg478vy8624
-      </li>
-      <li>
-        3d - fs892sr8080
-      </li>
-    </ul>
+    <div class="examples">
+      <div>
+        <h4>Image viewer</h4>
+        <ul>
+          <li>
+            <a href="#" onclick="openPurl('sg052hd9120')">
+              Single image - sg052hd9120
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="openPurl('fw090jw3474')">
+              Multi image - fw090jw3474
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="openPurl('cy496ky1984')">
+              Book (multi image, paged viewing hint) - cy496ky1984
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="openPurl('bb537hc4022')">
+              Image with restrictions - bb537hc4022
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="openPurl('dn665vh1697')">
+              Image with Book download - dn665vh1697
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="openPurl('bg262qk2288')">
+              Image with pdf and other downloads - bg262qk2288
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="openPurl('yh887qk5737')">
+              Image (Stanford Only) - yh887qk5737
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Media viewer</h4>
+        <ul>
+          <li>
+            <a href="#" onclick="openPurl('bb582xs1304')">
+              mp4 - bb582xs1304
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="openPurl('tn629pk3948')">
+              mp4, jp2 - tn629pk3948
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="openPurl('bb051hp9404')">
+              mp3 - bb051hp9404
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="openPurl('vh816yh7318')">
+              mp3 (multiple) - vh816yh7318
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+      <h4>Web archive viewer</h4>
+      <ul>
+        <li>
+          <a href="#" onclick="openPurl('gb089bd2251')">
+            Warc-seed - gb089bd2251
+          </a>
+        </li>
+      </ul>
+      </div>
+
+      <div>
+      <h4>Geo viewer</h4>
+      <ul>
+        <li>
+          <a href="#" onclick="openPurl('cz128vq0535')">Geo (Vector) public - cz128vq0535</a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('fp756wn9369')">Geo (Vector) restricted - fp756wn9369</a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('tg926kp6619')">Geo (Raster) public - tg926kp6619</a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('gk831nh0251')">Geo (Raster) public (crosses 180 longitude) - gk831nh0251</a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('sf815vr1246')">Geo (Raster) restricted - sf815vr1246</a>
+        </li>
+
+        <li>
+          <a href="#" onclick="openPurl('ts545zc6250')">
+            Geo Index map - ts545zc6250
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('bh152hk2665')">
+            Geo with jpg/zip - bh152hk2665
+          </a>
+        </li>
+      </ul>
+      </div>
+
+      <div>
+      <h4>Document viewer</h4>
+      <ul>
+        <li>
+          <a href="#" onclick="openPurl('bh502xm3351')">
+            pdf - bh502xm3351
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('bb461xx1037')">
+            pdf (Stanford Only) - bb461xx1037
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('bz673hm0344')">
+            pdf (Citation Only) - bz673hm0344
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('bb990sg8412')">
+            pdf (object emgargoed, file available) - bb990sg8412
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('ds777pr3860')">
+            pdf (multiple files) - ds777pr3860
+          </a>
+        </li>
+      </ul>
+      </div>
+
+      <div>
+      <h4>File viewer</h4>
+      <ul>
+        <li>
+          <a href="#" onclick="openPurl('wt101ks3240')">
+            File with text and gzip - wt101ks3240
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('qy869qz5226')">
+            File with many tar - qy869qz5226
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('js533sk1281')">
+            File with 2002 files - js533sk1281
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('fg478vy8624')">
+            File with hierarchy - fg478vy8624
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('bb010qz8357')">
+            File stanford only - bb010qz8357
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="openPurl('bb012jz6387')">
+            File location restricted - bb012jz6387
+          </a>
+        </li>
+      </ul>
+      </div>
+
+      <div>
+      <h4>3d viewer</h4>
+      <ul>
+        <li>
+          <a href="#" onclick="openPurl('fs892sr8080')">
+            3d - fs892sr8080
+          </a>
+        </li>
+      </ul>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -238,6 +344,7 @@
       const apiEndpoint = document.querySelector('.api-endpoint').value.trim();
       const urlScheme = document.querySelector('.url-scheme').value.trim();
       const hideTitle = document.querySelector('.hide-title').checked;
+      const newViewer = document.querySelector('.new-viewer').checked;
       const hideSearch = document.querySelector('.hide-search').checked;
       const minFiles = document.querySelector('.min-files').value;
       const hideEmbed = document.querySelector('.hide-embed').checked;
@@ -251,6 +358,7 @@
       if (apiEndpoint !== "" && urlScheme !== "") {
         url = apiEndpoint + "/?url=" + urlScheme + "&format=" + format;
 
+        if (newViewer) url += "&new_viewer=true";
         if (hideTitle) url += "&hide_title=true";
         if (hideSearch) url += "&hide_search=true";
         if (minFiles) url += "&min_files_to_search=" + minFiles;

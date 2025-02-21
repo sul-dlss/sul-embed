@@ -60,7 +60,7 @@ gem 'newrelic_rpm', group: :production
 gem 'okcomputer'
 
 gem 'cssbundling-rails', '~> 1.1'
-gem 'shakapacker', '~> 7.0'
+gem 'vite_rails'
 
 gem 'view_component', '~> 3.10'
 

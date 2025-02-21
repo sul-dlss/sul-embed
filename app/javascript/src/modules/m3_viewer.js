@@ -1,12 +1,10 @@
-'use strict'
-
 import Mirador from 'mirador'
 import { miradorImageToolsPlugin } from 'mirador-image-tools'
 import { miradorSharePlugin, miradorShareDialog as miradorShareDialogPlugin } from 'mirador-share-plugin'
 import { miradorDownloadPlugin, MiradorDownloadDialogPlugin as miradorDownloadDialogPlugin } from 'mirador-dl-plugin'
-import shareMenuPlugin from '../plugins/shareMenuPlugin'
-import embedModePlugin from '../plugins/embedModePlugin'
-import analyticsPlugin from '../plugins/analyticsPlugin'
+import { shareMenuPlugin } from '@/plugins/shareMenuPlugin.jsx'
+import embedModePlugin from '@/plugins/embedModePlugin.js'
+import analyticsPlugin from '@/plugins/analyticsPlugin.js'
 
 export default {
   init: function() {

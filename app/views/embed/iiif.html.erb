@@ -28,8 +28,10 @@
           data-image-tools='<%= @embed_request.image_tools %>'
           style='height:100%; width:100%'>
         </div>
-
-        <%= javascript_pack_tag('m3') %>
+        <% if Rails.env.development? %>
+          <%= vite_react_refresh_tag %>
+        <% end %>
+        <%= vite_javascript_tag 'mirador' %>
       </div>
     </div>
     <%= render 'analytics' %>
