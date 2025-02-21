@@ -236,6 +236,12 @@ body {
     }
   }
 
+  nav {
+    button:focus-visible {
+      outline-offset: -.375rem;
+    }
+  }
+
   & > header {
     border-top: 2px solid var(--active-color);
     border-bottom: 1px solid var(--border-color);
