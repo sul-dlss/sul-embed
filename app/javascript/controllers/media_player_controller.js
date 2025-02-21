@@ -37,6 +37,18 @@ export default class extends Controller {
     })
   }
 
+  // Don't show videojs fullscreen button when sul-embed is in fullscreen
+  // Only used in safari (see #2567)
+  fullscreenChange(event) {
+    if (!/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) return;
+    if (event.srcElement.classList.contains('video-js') || !this.player) return;
+    if (document.fullscreenElement !== null) {
+      this.player.controlBar.fullscreenToggle.hide();
+    } else {
+      this.player.controlBar.fullscreenToggle.show();
+    }
+  }
+
   // Listen for events emitted by cue_controller.js to jump to a particular time
   // "this.player" was returning undefined, so we are relying on the element id to
   // retrieve the player

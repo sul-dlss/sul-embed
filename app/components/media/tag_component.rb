@@ -74,6 +74,7 @@ module Media
           media_tag_target: 'authorizeableResource',
           controller: 'media-player',
           action: 'media-seek@window->media-player#seek ' \
+                  'fullscreenchange@window->media-player#fullscreenChange ' \
                   'auth-success@window->media-player#initializeVideoJSPlayer'
         },
         poster: poster_url_for,
