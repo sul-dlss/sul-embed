@@ -3,7 +3,7 @@ import {
   AllowDragAndDrop,
   CompareDialog,
   CompareMenuItem,
-} from '../components/embedMode'
+} from '@/components/embedMode.jsx'
 import { addWindow, getWindow, updateWindow } from 'mirador'
 
 export default [
