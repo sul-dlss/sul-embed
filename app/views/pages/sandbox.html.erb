@@ -114,6 +114,7 @@
     <label for="">&maxheight=</label><input type="text" class="max-height" size="4" value="">
     <br>
     <label for="hide-title">Hide title?</label> <input type="checkbox" id="hide-title" class="hide-title" />
+    <label for="new-viewer">New viewer?</label> <input type="checkbox" id="new-viewer" class="new-viewer" checked/>
     <label for="hide-search">Hide search?</label> <input type="checkbox" id="hide-search" class="hide-search" />
     <label for="hide-search">Minimum files for search:</label> <input type="text" id="min-files" class="min-files" value="10" length="2" />
     <label for="hide-embed">Hide embed?</label> <input type="checkbox" id="hide-embed" class="hide-embed" />
@@ -176,6 +177,7 @@
       const apiEndpoint = document.querySelector('.api-endpoint').value.trim();
       const urlScheme = document.querySelector('.url-scheme').value.trim();
       const hideTitle = document.querySelector('.hide-title').checked;
+      const newViewer = document.querySelector('.new-viewer').checked;
       const hideSearch = document.querySelector('.hide-search').checked;
       const minFiles = document.querySelector('.min-files').value;
       const hideEmbed = document.querySelector('.hide-embed').checked;
@@ -191,6 +193,7 @@
 
         url = apiEndpoint + "/?url=" + urlScheme + "&format=" + format;
 
+        if (newViewer) url += "&new_viewer=true";
         if (hideTitle) url += "&hide_title=true";
         if (hideSearch) url += "&hide_search=true";
         if (minFiles) url += "&min_files_to_search=" + minFiles;
