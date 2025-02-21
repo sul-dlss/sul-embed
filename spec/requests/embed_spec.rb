@@ -56,12 +56,14 @@ RSpec.describe 'Embed requests' do
       end
     end
 
-    it 'has a 415 status code for an invalid format' do
-      get '/embed', params: { url: 'http://purl.stanford.edu/abc123', format: 'yml' }
-      expect(response).to have_http_status(:unsupported_media_type)
+    context 'when format is invalid' do
+      it 'has a 415 status code' do
+        get '/embed', params: { url: 'http://purl.stanford.edu/abc123', format: 'yml' }
+        expect(response).to have_http_status(:unsupported_media_type)
+      end
     end
 
-    context 'with a valid request (json)' do
+    context 'with a valid request (json) with no extra parameters' do
       it 'has a 200 status code for a matched url scheme param' do
         get '/embed', params: { url: 'http://purl.stanford.edu/fn662rv4961' }
         expect(response).to have_http_status(:ok)
@@ -70,13 +72,23 @@ RSpec.describe 'Embed requests' do
                                                   'provider_name' => 'SUL Embed Service' })
         expect(response.headers.keys).to include('etag', 'last-modified')
       end
+    end
 
+    context 'with a valid request (json) with extra parameters' do
       it 'has a 200 status code and html returns correct parameters' do
         get '/embed', params: { url: 'http://purl.stanford.edu/fn662rv4961', new_viewer: true, hide_title: false, invalid_field: true }
         expect(response).to have_http_status(:ok)
         expect(response.parsed_body['html']).to include('new_viewer=true')
         expect(response.parsed_body['html']).to include('hide_title=false')
         expect(response.parsed_body['html']).not_to include('invalid_field=true')
+      end
+    end
+
+    context 'with a valid request (json) with a version' do
+      it 'has a 200 status code and html returns correct parameters' do
+        get '/embed', params: { url: 'http://purl.stanford.edu/fn662rv4961/version/2' }
+        expect(response).to have_http_status(:ok)
+        expect(Embed::Purl).to have_received(:find).with('fn662rv4961', '2')
       end
     end
 
