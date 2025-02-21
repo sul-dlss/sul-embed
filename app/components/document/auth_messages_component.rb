@@ -13,6 +13,7 @@ module Document
     end
 
     MESSAGE_ICONS = { 'embargo' => Icons::LockClockComponent,
+                      'stanford' => Icons::LockPersonComponent,
                       'location-restricted' => Icons::LockGlobeComponent }.freeze
 
     def render?

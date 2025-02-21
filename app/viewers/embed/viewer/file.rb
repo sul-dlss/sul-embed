@@ -39,6 +39,11 @@ module Embed
       def message
         return { type: 'embargo', message: embargo_message } if @purl_object.embargoed?
 
+        if @purl_object.stanford_only_unrestricted?
+          return { type: 'stanford',
+                   message: I18n.t('restrictions.stanford_only') }
+        end
+
         if @purl_object.location_restriction
           return { type: 'location-restricted',
                    message: I18n.t('restrictions.restricted_access', location: @purl_object.restricted_location) }
