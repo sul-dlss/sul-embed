@@ -87,7 +87,14 @@ NOTE: We can dispense with the sibling directory jazz if we decide to publish th
 
 ## Developing the media player locally without running Stacks
 **This will only work for world downloadable items**
-1. Add line return window.dispatchEvent(new CustomEvent('auth-success')) in 
+1. Add the lines below
+```
+// you need the setTimeout or it only work about 1/2 the time.
+setTimeout(function(){
+    window.dispatchEvent(new CustomEvent('auth-success'))
+}, 1000)
+```
+ before 
 https://github.com/sul-dlss/sul-embed/blob/99ac3d3e471f30518e4e28bdd13afc31e7ffa4d1/app/javascript/controllers/media_tag_controller.js#L15 
 
 ### When working on transcription sidebar
