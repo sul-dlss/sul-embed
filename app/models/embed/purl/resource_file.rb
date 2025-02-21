@@ -51,7 +51,7 @@ module Embed
       end
 
       def label_or_filename
-        return text_representation_label if caption? || transcript?
+        return text_representation_label if (caption? || transcript?) && !pdf? && !image?
 
         label.presence || filename
       end
