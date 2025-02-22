@@ -274,7 +274,7 @@ export default class extends Controller {
   handleLocationRestricted(accessService) {
     // The probe auth service is called for each file separately
     // If the restriction message is already visible, we do not need to display it again
-    if(this.locationRestrictionTarget.hidden) {
+    if(this.locationRestrictionTarget && this.locationRestrictionTarget.hidden) {
       this.locationRestrictionTarget.hidden = false
       // This allows the lock window to show
       const event = new CustomEvent('auth-denied', { accessService: accessService })

@@ -38,7 +38,7 @@ RSpec.describe Embed::Viewer::DocumentViewer do
       let(:purl) do
         instance_double(
           Embed::Purl,
-          location_restriction: true, 
+          location_restriction: true,
           restricted_location: 'spec',
           contents: [
             instance_double(Embed::Purl::Resource, type: 'document', files: [instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', location_restricted?: true)])
@@ -49,7 +49,6 @@ RSpec.describe Embed::Viewer::DocumentViewer do
 
       it { expect(pdf_viewer.location_restricted?).to be true }
       it { expect(pdf_viewer.restricted_location).to eq 'spec' }
-
     end
 
     context 'when the purl object is not location restricted' do
