@@ -350,9 +350,16 @@ body {
     }
   }
 
+
+  [role="banner"]:not([hidden])
+  + .companion-window-component-body {
+    --auth-bar-height: 40px;
+  }
+
   .companion-window-component-body {
+    --auth-bar-height: 0px;
     --body-height: calc(
-      100vh - var(--header-size) - 5px
+      100vh - var(--header-size) - var(--auth-bar-height) - 5px
     ); /* the 5px is for the outer border and the top red border */
     display: flex;
     flex-grow: 1;

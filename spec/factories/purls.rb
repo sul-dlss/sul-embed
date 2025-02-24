@@ -68,7 +68,7 @@ FactoryBot.define do
       type { '3d' }
       druid { 'qf794pv6287' }
       title { 'Title of the object' }
-      contents { [build(:resource, :file, files: [build(:resource_file, :model_3d)])] }
+      contents { [build(:resource, :model_3d, files: [build(:resource_file, :model_3d)])] }
     end
   end
 end
