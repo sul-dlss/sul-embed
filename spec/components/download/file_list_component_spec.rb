@@ -76,7 +76,7 @@ RSpec.describe Download::FileListComponent, type: :component do
     let(:contents) { [Embed::Purl::Resource.new(description: 'Data', files: downloadable_files)] }
 
     it 'has download links' do
-      expect(page).to have_link 'Download all 2 files'
+      expect(page).to have_link 'Download zip of all files'
       expect(page).to have_link 'Download data.zip'
       expect(page).to have_link 'Download data_EPSG_4624.zip'
       expect(page).to have_css('h4', text: 'Data')
@@ -102,7 +102,8 @@ RSpec.describe Download::FileListComponent, type: :component do
     end
 
     it 'has download links' do
-      expect(page).to have_link 'Download all 2 files'
+      puts page.native.inner_html.inspect
+      expect(page).to have_link 'Download zip of all files'
       expect(page).to have_link 'Download bb648mk7250_low.obj'
       expect(page).to have_link 'Download bb648mk7250_low.glb'
       expect(page).to have_css('h4', text: '3D 1')

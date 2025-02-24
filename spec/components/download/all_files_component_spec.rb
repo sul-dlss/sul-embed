@@ -20,7 +20,7 @@ RSpec.describe Download::AllFilesComponent, type: :component do
     let(:contents) { [build(:resource, :image, files: [build(:resource_file, :world_downloadable), build(:resource_file, :world_downloadable)])] }
 
     it 'shows the count' do
-      expect(page).to have_link 'Download all 2 files', href: 'https://stacks.stanford.edu/object/abc123'
+      expect(page).to have_link 'Download zip of all files', href: 'https://stacks.stanford.edu/object/abc123'
     end
   end
 
@@ -29,7 +29,7 @@ RSpec.describe Download::AllFilesComponent, type: :component do
     let(:files) { Array.new(3001) { build(:resource_file, :world_downloadable) } }
 
     it 'shows the not available message' do
-      expect(page).to have_content 'Bulk download not available. The total file size exceeds the download limit. Please download files individually.'
+      expect(page).to have_content 'Bulk download not available. Please contact us if you need help downloading. Total files in this item: 3001, total size: 0 Bytes.'
     end
   end
 
