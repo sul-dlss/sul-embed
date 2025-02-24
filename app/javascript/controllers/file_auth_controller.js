@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["container", "loginPanel", "messagePanel", "loginButton", "loginMessage", "locationRestriction", "locationRestrictionMessage"]
+  static targets = ["container", "loginPanel", "messagePanel", "loginButton", "loginMessage", "locationRestriction"]
 
   resources = {} // Hash of messageIds to resources
   firstFile = '' // for multiple files we need to be able to render the first on load
@@ -68,7 +68,6 @@ export default class extends Controller {
   // event, and call a method for that partcular content type (e.g. pdf/media) that knows how to render content
   renderViewer(fileUri) {
     if (fileUri == this.firstFile){
-      console.log("Render viewer, file uri = first file")
       window.dispatchEvent(new CustomEvent('auth-success', { detail: fileUri }))
       // use filename because url in contents adds druid: to the data-url
       const filename = fileUri.split("/").slice(-1)[0]
@@ -136,9 +135,8 @@ export default class extends Controller {
                                        // and this can happen with a non-media object that happens to have
                                        // a media file in it, e.g. ds777pr3860
         
-        
-        if(this.isLocationRestricted(json)) {
-          this.handleLocationRestricted(json, accessService)
+        if(this.isLocationRestricted(json, contentResourceId)) {
+          this.handleLocationRestricted(accessService, contentResourceId)
           return
         }
         console.debug("Probe failed or access denied/restricted", json)
@@ -271,11 +269,11 @@ export default class extends Controller {
   }
 
   // To see if item is restricted by location, check the probe service json response
-  handleLocationRestricted(accessService) {
+  handleLocationRestricted(accessService, contentResourceId) {
     // The probe auth service is called for each file separately
-    // If the restriction message is already visible, we do not need to display it again
-    if(this.locationRestrictionTarget && this.locationRestrictionTarget.hidden) {
-      this.locationRestrictionTarget.hidden = false
+    // If the location restriction target is available, then trigger auth denied message
+    // We will show the locked icon if the very first item has access denied due to location restriction
+    if(this.firstFile == contentResourceId && this.locationRestrictionTarget) {
       // This allows the lock window to show
       const event = new CustomEvent('auth-denied', { accessService: accessService })
       window.dispatchEvent(event)
