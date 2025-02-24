@@ -20,7 +20,7 @@ RSpec.describe CompanionWindowsComponent, type: :component do
     instance_double(Embed::Purl,
                     title: 'foo',
                     purl_url: 'https://purl.stanford.edu/123',
-                    manifest_json_url: 'https://purl.stanford.edu/123/iiif/manifest',
+                    iiif_v3_manifest_url: 'https://purl.stanford.edu/123/iiif3/manifest',
                     use_and_reproduction: '',
                     copyright: '',
                     license: '',
