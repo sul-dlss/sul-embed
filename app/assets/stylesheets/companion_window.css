@@ -339,6 +339,7 @@ body {
   .sul-embed-treegrid .folder-title,
   .authLinkWrapper,
   .sul-embed-geo-sidebar-header,
+  .copy-to-clipboard,
   .sul-embed-was-seed-list-item {
     svg {
       fill: currentColor;
