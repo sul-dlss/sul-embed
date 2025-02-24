@@ -51,7 +51,7 @@ module Embed
       end
 
       def label_or_filename
-        return text_representation_label if caption? || transcript?
+        return caption_label if caption?
 
         label.presence || filename
       end
@@ -64,9 +64,8 @@ module Embed
         "#{language_label}#{sdr_generated_text}"
       end
 
-      def text_representation_label
-        file_type = caption? ? 'captions' : 'transcript'
-        "#{language_label} #{file_type}#{sdr_generated_text}"
+      def caption_label
+        "#{language_label} captions#{sdr_generated_text}"
       end
 
       def sdr_generated_text
