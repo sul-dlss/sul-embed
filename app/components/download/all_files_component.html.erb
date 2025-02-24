@@ -1,9 +1,9 @@
 <% if display_download_all? %>
   <a href='<%= download_url %>' target="_blank" class="su-underline" rel="noopener noreferrer nofollow">
-    Download all <%= pluralize(downloadable_files.length, "file") %></a>
+    Download zip of all files</a>
   <%= render Icons::StanfordOnlyComponent.new if any_stanford_only_files? %>
-  (<%= pretty_filesize %>)
-
+  (<%= pretty_filesize %> uncompressed)
 <% else %>
-  <p>Bulk download not available. The total file size exceeds the download limit. Please download files individually.</p>
+  <p>Bulk download not available. Please <%= mail_to "sdr-contact@lists.stanford.edu", "contact us", subject: "Download SDR object #{purl_object.druid}" %> if you need help downloading. Total files in this item: <%= downloadable_files.length %>, total size: <%= pretty_filesize %>.
+  </p>
 <% end %>
