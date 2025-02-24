@@ -25,6 +25,12 @@ RSpec.describe PdfComponent, type: :component do
     end
   end
 
+  # Without location restriction returning true from the viewer, the location
+  # restriction banner should not be displayed
+  it 'does not display the location restriction banner if the object is not location restricted' do
+    expect(page).to have_no_css('div[data-file-auth-target="locationRestriction"]')
+  end
+
   context 'when hide_title is passed' do
     let(:embed_request) { Embed::Request.new(url:, hide_title: 'true') }
 
@@ -48,6 +54,17 @@ RSpec.describe PdfComponent, type: :component do
 
     it 'does not render the full screen button' do
       expect(page).to have_no_css('button[aria-label="Full screen"]')
+    end
+  end
+
+  context 'when the purl object is location restricted' do
+    before do
+      allow(viewer).to receive_messages(location_restricted?: true, restricted_location: 'spec')
+      render_inline(described_class.new(viewer:))
+    end
+
+    it 'includes access restriction method section' do
+      expect(page).to have_css('div[data-file-auth-target="locationRestriction"]', visible: :all)
     end
   end
 end
