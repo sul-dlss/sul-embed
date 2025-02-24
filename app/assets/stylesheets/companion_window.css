@@ -24,7 +24,7 @@ body {
   color: white;
   padding: 0.5rem;
 
-  svg {
+  svg:not(button svg) {
     /* Buttons have a left/right padding of 6px */
     /* This aligns auth icons with sidebar icons  */
     margin-left: 3px;
@@ -339,6 +339,7 @@ body {
   .sul-embed-treegrid .folder-title,
   .authLinkWrapper,
   .sul-embed-geo-sidebar-header,
+  .copy-to-clipboard,
   .sul-embed-was-seed-list-item {
     svg {
       fill: currentColor;

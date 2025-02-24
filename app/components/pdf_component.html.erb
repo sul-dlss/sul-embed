@@ -8,9 +8,11 @@
   <% end %>
 
   <% component.with_authorization_messages do %>
-    <%= render LoginComponent.new %>
-    <%= render ContentNotAvailableComponent.new unless viewer.available? %>
-    <%= render LocationRestrictionComponent.new(viewer.restricted_location) if viewer.location_restricted? %>
+     <div role="banner" aria-label="Access message">
+      <%= render LoginComponent.new %>
+      <%= render ContentNotAvailableComponent.new unless viewer.available? %>
+      <%= render LocationRestrictionComponent.new(viewer.restricted_location) if viewer.location_restricted? %>
+    </div>
   <% end %>
 
   <% component.with_body do %>
