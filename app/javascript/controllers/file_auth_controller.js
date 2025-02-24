@@ -11,7 +11,7 @@ export default class extends Controller {
     window.addEventListener("message", (event) => {
       this.iframe.remove()
       console.debug("Post message", event.data)
-      if (!permittedOrigins.include(event.origin)) {
+      if (!permittedOrigins.includes(event.origin)) {
         console.error(`${event.origin} is not a permitted origin`)
         return
       }
