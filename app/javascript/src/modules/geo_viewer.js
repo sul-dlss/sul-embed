@@ -264,7 +264,7 @@ export default {
                   <div class="sul-embed-geo-sidebar-header">
                     <h3>Features</h3>
                     <button aria-label="expand/collapse" aria-expanded="true" aria-controls="sidebarContent">
-                      <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>
+                      <svg class="MuiSvgIcon-root KeyboardArrowUpSharp" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>
                     </button>
                   </div>
                   <div id="sidebarContent" class="sul-embed-geo-sidebar-content show">Click the map to inspect features.</div>
