@@ -67,7 +67,7 @@ module Embed
       end
 
       def default_height
-        493
+        new_viewer? ? super : '493px'
       end
     end
   end

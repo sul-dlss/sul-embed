@@ -11,11 +11,11 @@ class IframeComponent < ViewComponent::Base
   attr_reader :version
 
   def width_style
-    width ? "#{width}px" : '100%'
+    width || '100%'
   end
 
   def height_style
-    embed_request.fullheight? ? '100%' : "#{height}px"
+    embed_request.fullheight? ? '100%' : height
   end
 
   def src
@@ -29,8 +29,12 @@ class IframeComponent < ViewComponent::Base
     segments.join('/')
   end
 
+  def style
+    "height: #{height_style}; width: #{width_style};"
+  end
+
   def call
-    tag.iframe(src:, height: height_style, width: width_style, title: iframe_title,
+    tag.iframe(src:, style:, title: iframe_title,
                frameborder: 0, marginwidth: 0, marginheight: 0, scrolling: 'no', allowfullscreen: true,
                allow: 'clipboard-write')
   end

@@ -14,25 +14,25 @@ RSpec.describe IframeComponent, type: :component do
   let(:viewer) do
     instance_double(
       Embed::Viewer::CommonViewer,
-      height: '555',
-      width: '666',
+      height: '555px',
+      width: '666px',
       embed_request:,
       iframe_title: 'Hello world',
       purl_object:
     )
   end
 
-  describe 'the height' do
-    subject { iframe['height'] }
+  describe 'the style' do
+    subject { iframe['style'] }
 
-    it { is_expected.to eq '555px' }
+    it { is_expected.to eq 'height: 555px; width: 666px;' }
 
     context 'when the fullheight flag is set' do
       let(:embed_request) do
         Embed::Request.new({ url: 'http://purl.stanford.edu/abc123', fullheight: 'true' })
       end
 
-      it { is_expected.to eq '100%' }
+      it { is_expected.to eq 'height: 100%; width: 666px;' }
     end
   end
 

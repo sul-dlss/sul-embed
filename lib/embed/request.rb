@@ -16,14 +16,26 @@ module Embed
       params[:format] || 'json'
     end
 
+    # @return [String] a value with units (e.g. px, vh, rem, em, %)
     def maxheight
-      height = params[:maxheight].to_i
-      height unless height.zero?
+      height = params[:maxheight]
+
+      matchdata = /\A(?<value>\d{1,4})(?<unit>px|vh|rem|em|%)?\Z/.match(height)
+      return unless matchdata
+
+      unit = matchdata[:unit] || 'px'
+      "#{matchdata[:value]}#{unit}"
     end
 
+    # If a unit is not provided, will default to px for backward compatibility
+    # @return [String] a value with units (e.g. px, vw, rem, em, %)
     def maxwidth
-      width = params[:maxwidth].to_i
-      width unless width.zero?
+      width = params[:maxwidth]
+      matchdata = /\A(?<value>\d{1,4})(?<unit>px|vw|rem|em|%)?\Z/.match(width)
+      return unless matchdata
+
+      unit = matchdata[:unit] || 'px'
+      "#{matchdata[:value]}#{unit}"
     end
 
     # This is to support a legacy use

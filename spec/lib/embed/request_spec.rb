@@ -31,12 +31,21 @@ RSpec.describe Embed::Request do
       end
     end
 
-    context 'when a numbers are passed as strings' do
+    context 'when a numbers are passed without units' do
       let(:request) { described_class.new(url: purl, maxheight: '500', maxwidth: '300') }
 
-      it 'are cast to integers' do
-        expect(request.maxheight).to eq 500
-        expect(request.maxwidth).to eq 300
+      it 'converts to px units' do
+        expect(request.maxheight).to eq '500px'
+        expect(request.maxwidth).to eq '300px'
+      end
+    end
+
+    context 'when a numbers are passed with units' do
+      let(:request) { described_class.new(url: purl, maxheight: '50vh', maxwidth: '100vw') }
+
+      it 'preserves the provided units' do
+        expect(request.maxheight).to eq '50vh'
+        expect(request.maxwidth).to eq '100vw'
       end
     end
   end

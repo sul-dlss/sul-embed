@@ -26,24 +26,24 @@ RSpec.describe Embed::Viewer::File do
     end
 
     context 'when the requested maxheight is larger than the default height' do
-      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', maxheight: 600) }
+      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', maxheight: '600') }
 
       it 'is the default height (max is a maximum, we can be smaller)' do
-        expect(file_viewer.height).to eq 257 # 2 files + header
+        expect(file_viewer.height).to eq '257px' # 2 files + header
       end
     end
 
     context 'when the requested maxheight is smaller than the default height' do
-      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', maxheight: 200) }
+      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', maxheight: '200') }
 
       it 'is the requested maxheight' do
-        expect(file_viewer.height).to eq 200
+        expect(file_viewer.height).to eq '200px'
       end
     end
 
     context 'when there is no requested maxheight' do
       it 'is the default height' do
-        expect(file_viewer.height).to eq 257 # 2 files + header
+        expect(file_viewer.height).to eq '257px' # 2 files + header
       end
     end
   end
@@ -66,7 +66,7 @@ RSpec.describe Embed::Viewer::File do
         end
 
         it 'defaults to 323' do
-          expect(file_viewer.send(:default_height)).to eq 323
+          expect(file_viewer.send(:default_height)).to eq '323px'
         end
       end
 
@@ -76,7 +76,7 @@ RSpec.describe Embed::Viewer::File do
         end
 
         it 'reduces the height based on the number of files in the object, but no lower than our min height' do
-          expect(file_viewer.send(:default_height)).to eq 189
+          expect(file_viewer.send(:default_height)).to eq '189px'
         end
       end
 
@@ -89,7 +89,7 @@ RSpec.describe Embed::Viewer::File do
         end
 
         it 'reduces the height based on the number of files in the object' do
-          expect(file_viewer.send(:default_height)).to eq 189
+          expect(file_viewer.send(:default_height)).to eq '189px'
         end
       end
     end
@@ -101,7 +101,7 @@ RSpec.describe Embed::Viewer::File do
       end
 
       it 'adds 44 pixels to the height (to avoid unnecessary scroll)' do
-        expect(file_viewer.send(:default_height)).to eq 189 # minimum height
+        expect(file_viewer.send(:default_height)).to eq '189px' # minimum height
       end
     end
 
@@ -113,7 +113,7 @@ RSpec.describe Embed::Viewer::File do
       let(:purl) { build(:purl, contents: [build(:resource, files: [build(:resource_file)])]) }
 
       it 'adds the necessary height' do
-        expect(file_viewer.send(:default_height)).to eq 190
+        expect(file_viewer.send(:default_height)).to eq '190px'
       end
     end
   end

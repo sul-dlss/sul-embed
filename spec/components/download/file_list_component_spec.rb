@@ -102,7 +102,6 @@ RSpec.describe Download::FileListComponent, type: :component do
     end
 
     it 'has download links' do
-      puts page.native.inner_html.inspect
       expect(page).to have_link 'Download zip of all files'
       expect(page).to have_link 'Download bb648mk7250_low.obj'
       expect(page).to have_link 'Download bb648mk7250_low.glb'
