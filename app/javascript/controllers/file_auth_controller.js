@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["container", "loginPanel", "messagePanel", "loginButton", "loginMessage"]
+  static targets = ["container", "loginPanel", "messagePanel", "loginButton", "loginMessage", "locationRestriction"]
 
   resources = {} // Hash of messageIds to resources
   firstFile = '' // for multiple files we need to be able to render the first on load
@@ -55,8 +55,10 @@ export default class extends Controller {
     } else {
       // auth service is present, check the probe service to see what we need to do to access the resource
       const probeService = contentResource.service.find((service) => service.type === "AuthProbeService2")
-      if (probeService)
+
+      if (probeService) {
         this.checkAuthorization(probeService, contentResource.id)
+      }
       else
         throw(`Access service exists, but no probe service found for ${contentResource.id}`)
     }
@@ -115,7 +117,6 @@ export default class extends Controller {
     // So we'll just get the token first.
     console.debug("Probe service:", probeService)
     const accessService = this.findAccessService(probeService)
-
     const messageId = Math.random().toString(36).slice(2) // create a random key for this resource to reference later
     this.resources[messageId] = { probeService, contentResourceId }
 
@@ -133,6 +134,11 @@ export default class extends Controller {
                                        // with a link to the media server file location (and media token)
                                        // and this can happen with a non-media object that happens to have
                                        // a media file in it, e.g. ds777pr3860
+        
+        if(this.isLocationRestricted(json, contentResourceId)) {
+          this.handleLocationRestricted(accessService, contentResourceId)
+          return
+        }
         console.debug("Probe failed or access denied/restricted", json)
         // Check if non-expired token already exists in local storage,
         // and if it exists, query probe service with it
@@ -260,5 +266,25 @@ export default class extends Controller {
 
   hideMessagePanel() {
     this.messagePanelTarget.hidden = true
+  }
+
+  // To see if item is restricted by location, check the probe service json response
+  handleLocationRestricted(accessService, contentResourceId) {
+    // The probe auth service is called for each file separately
+    // If the location restriction target is available, then trigger auth denied message
+    // We will show the locked icon if the very first item has access denied due to location restriction
+    if(this.firstFile == contentResourceId && this.locationRestrictionTarget) {
+      // This allows the lock window to show
+      const event = new CustomEvent('auth-denied', { accessService: accessService })
+      window.dispatchEvent(event)
+    }
+  }
+
+  // Checks the result of the probe auth request to see if access is restricted to location
+  isLocationRestricted(json) {
+    if(json.status == "401" && 'heading' in json && 'en' in json.heading && json.heading.en.length
+      && json.heading.en[0].startsWith('Content is restricted to location'))
+      return true
+    return false
   }
 }

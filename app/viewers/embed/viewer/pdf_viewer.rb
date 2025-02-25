@@ -3,6 +3,8 @@
 module Embed
   module Viewer
     class PdfViewer < CommonViewer
+      delegate :restricted_location, to: :purl_object
+
       def component
         PdfComponent
       end
@@ -27,15 +29,16 @@ module Embed
         true
       end
 
-      def all_documents_location_restricted?
-        document_resource_files.all?(&:location_restricted?)
+      # At the purl object level, check if there are restrictions
+      def location_restricted?
+        purl_object.location_restriction
       end
 
       # this indicates if the PDF is downloadable (though it could be stanford only)
       # Stanford only and location restrictions are handled via a separate authorization flow,
       # since it is possible for people to do something about the restriction
       def available?
-        document_resource_files.first&.downloadable?
+        document_resource_files.first&.downloadable? || location_restricted?
       end
 
       private

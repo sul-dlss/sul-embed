@@ -1,0 +1,6 @@
+<div data-file-auth-target="locationRestriction">
+    <div class="authLinkWrapper">
+        <%= render Icons::LockGlobeComponent.new %>
+        <p class="loginMessage"><%= I18n.t('restrictions.restricted_access', location: @location) %></p>
+    </div>
+</div>
