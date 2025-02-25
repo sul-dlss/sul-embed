@@ -25,6 +25,7 @@ en:
     logged_in: "Logged in."
     restricted_access: "Access is restricted to the %{location}. See Access conditions for more information."
     stanford_only: "Stanford users: log in to access all available features."
+    stanford_only_file: "Access is restricted to Stanford-affiliated patrons."
   date:
     formats:
       sul: "%d-%b-%Y"

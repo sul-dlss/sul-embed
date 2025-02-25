@@ -41,7 +41,7 @@ module Embed
 
         if @purl_object.stanford_only_unrestricted?
           return { type: 'stanford',
-                   message: I18n.t('restrictions.stanford_only') }
+                   message: I18n.t('restrictions.stanford_only_file') }
         end
 
         if @purl_object.location_restriction
