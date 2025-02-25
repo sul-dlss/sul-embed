@@ -18,13 +18,11 @@ export default class extends Controller {
     window.dispatchEvent(event)
 
     this.listItemTargets.forEach((target) => {
-      target.classList.remove('active')
-      target.setAttribute("aria-selected", false)
+      this.unsetActive(target)
     })
 
     const target = this.listItemTargets.find(element => element.dataset.contentListIndexParam == evt.params.index)
-    target.classList.add('active')
-    target.setAttribute("aria-selected", true)
+    this.setActive(target)
   }
 
   // Show a different PDF when the user selects it in the list
@@ -33,9 +31,22 @@ export default class extends Controller {
     evt.preventDefault()
     const fileUri = evt.currentTarget.dataset.url
     window.dispatchEvent(new CustomEvent('auth-success', { detail: fileUri }))
-    if (document.querySelector('.file-thumb.active')){
-      document.querySelector('.file-thumb.active').classList.remove('active')
+
+    const fileThumbActive = document?.querySelector('.file-thumb.active')
+    if (fileThumbActive){
+      this.unsetActive(fileThumbActive)
     }
-    evt.target.parentElement.classList.add('active')
+
+    this.setActive(evt.currentTarget)
+  }
+
+  setActive(target) {
+    target.setAttribute("aria-selected", true)
+    target.classList.add('active')
+  }
+
+  unsetActive(target) {
+    target.setAttribute("aria-selected", false)
+    target.classList.remove('active')
   }
 }
