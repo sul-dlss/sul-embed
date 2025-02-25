@@ -32,15 +32,12 @@ export default class {
       maxFileLabelLength -= restrictedText.length
     }
 
-    // Note: the "position: relative" is required for the stretched-link style.
-    return `<li class="media-thumb ${activeClass}" data-action="click->content-list#showMedia" data-content-list-target="listItem" data-content-list-index-param="${index}" style="position: relative;" aria-controls="main-display" role="tab">
+    return `<li class="media-thumb ${activeClass}" data-action="click->content-list#showMedia keydown.enter->content-list#showMedia" data-content-list-target="listItem" data-content-list-index-param="${index}" aria-controls="main-display" role="tab" tabindex="0">
         ${thumbnailIcon}
-        <a class="stretched-link" href="#">
-          <span class="${labelClass} su-underline">
-            ${stanfordOnlyScreenreaderText}${restrictedTextMarkup}
-            ${this.truncateWithEllipsis(this.fileLabel, maxFileLabelLength)}
-          </span>
-        </a>
+        <span class="${labelClass} su-underline">
+          ${stanfordOnlyScreenreaderText}${restrictedTextMarkup}
+          ${this.truncateWithEllipsis(this.fileLabel, maxFileLabelLength)}
+        </span>
       </li>`
   }
 
