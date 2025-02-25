@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-module CompanionWindows
+module Document
+  # Draws the content list for the Document viewer
   class ContentListItemComponent < ViewComponent::Base
     def initialize(content_list_item:, viewer:)
       @file = content_list_item
@@ -33,9 +34,7 @@ module CompanionWindows
     # content
     def render?
       # do not render any file that is not a PDF
-      return true if viewer.instance_of?(::Embed::Viewer::PdfViewer) && url.ends_with?('.pdf')
-
-      false
+      url.ends_with?('.pdf')
     end
   end
 end
