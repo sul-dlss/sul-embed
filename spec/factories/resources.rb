@@ -9,6 +9,11 @@ FactoryBot.define do
       description { 'File1 Label' }
     end
 
+    trait :model_3d do
+      type { '3d' }
+      description { 'File1 Label' }
+    end
+
     trait :document do
       type { 'document' }
       description { 'File1 Label' }

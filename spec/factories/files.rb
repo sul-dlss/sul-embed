@@ -57,6 +57,7 @@ FactoryBot.define do
       mimetype { 'model/gltf-binary' }
       filename { 'abc_123.glb' }
       size { 176_218 }
+      world_downloadable
     end
 
     trait :stanford_only do
