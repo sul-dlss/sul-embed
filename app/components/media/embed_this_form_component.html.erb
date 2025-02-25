@@ -3,8 +3,8 @@
     <label for="sul-embed-purl-link" class="form-label" readonly>Share link</label>
     <input type="text" name="sul-embed-purl-link" id='sul-embed-purl-link' data-clipboard-target="value" value="<%= purl_url %>" readonly>
     <button class="button copy-to-clipboard" data-action="clipboard#copy" aria-label="Copy purl link to clipboard">
-      <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
-        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path>
+      <svg class="MuiSvgIcon-root ContentCopySharp" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M16 1H2v16h2V3h12zm5 4H6v18h15zm-2 16H8V7h11z"></path>
       </svg>
     </button>
   </div>
@@ -13,8 +13,8 @@
     <label for='sul-embed-iframe-code' class="form-label">Embed</label>
     <textarea id='sul-embed-iframe-code' data-behavior='iframe-code' data-clipboard-target="value" readonly><%= render IframeComponent.new(viewer:) %></textarea>
     <button class="button copy-to-clipboard" data-action="clipboard#copy" aria-label="Copy iframe code to clipboard">
-      <svg class="MuiSvgIcon-root" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
-        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"></path>
+      <svg class="MuiSvgIcon-root ContentCopySharp" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
+        <path d="M16 1H2v16h2V3h12zm5 4H6v18h15zm-2 16H8V7h11z"></path>
       </svg>
     </button>
   </div>
