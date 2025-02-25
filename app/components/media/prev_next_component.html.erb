@@ -1,4 +1,4 @@
-<div class="prev-next-container">
+<nav class="prev-next-container" aria-label="navigate to previous/next content">
   <div class="prev-next-buttons">
     <%= render CompanionWindows::ControlButtonComponent.new(
         controller: 'prev-next',
@@ -26,4 +26,4 @@
   <div id="current-title">
     <%= tag.span "#{@resource_index + 1} of #{@size} • #{@file.label_or_filename}" %>
   </div>
-</div>
+</nav>
