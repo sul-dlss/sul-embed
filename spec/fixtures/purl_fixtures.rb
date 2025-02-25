@@ -148,6 +148,40 @@ module PurlFixtures # rubocop:disable Metrics/ModuleLength
     JSON
   end
 
+  def location_embargoed_file_purl_json
+    <<~JSON
+      {
+        "type": "https://cocina.sul.stanford.edu/models/object",
+        "label": "File Title",
+        "description": {
+          "title": [
+            {
+              "value": "File Title"
+            }
+          ]
+        },
+        "access": {
+          "view": "location-based",
+          "download": "location-based",
+          "location": "spec",
+          "controlledDigitalLending": false,
+          "copyright": "(c) Copyright 2022 by Millie Aila Salvato",
+          "embargo": {
+              "view": "world",
+              "download": "world",
+              "controlledDigitalLending": false,
+              "releaseDate": "2053-12-21T00:00:00.000+00:00"
+          }
+        },
+        "structural": {
+          "contains": [
+
+          ]
+        }
+      }
+    JSON
+  end
+
   def odc_license_json
     <<~JSON
       {
