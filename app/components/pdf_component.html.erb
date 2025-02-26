@@ -9,7 +9,7 @@
 
   <% component.with_authorization_messages do %>
     <div role="banner" aria-label="Access message">
-      <%= render LoginComponent.new %>
+      <%= render Document::LoginComponent.new %>
       <%= render ContentNotAvailableComponent.new unless viewer.available? %>
     </div>
   <% end %>
