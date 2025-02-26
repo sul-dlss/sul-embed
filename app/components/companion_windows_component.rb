@@ -45,4 +45,24 @@ class CompanionWindowsComponent < ViewComponent::Base
   def fullscreen?
     @fullscreen ||= request.user_agent !~ /#{Settings.fullscreen_hide}/
   end
+
+  def outer_container(&)
+    tag.div(id: 'sul-embed-object',
+            class: 'sul-embed-container companion-window-component',
+            hidden: true,
+            data: outer_container_data,
+            &)
+  end
+
+  def outer_container_data
+    {
+      controller: controllers,
+      iiif_manifest_loader_iiif_manifest_value: iiif_v3_manifest_url
+    }.tap do |data|
+      if fullscreen?
+        data[:fullscreen_target] = 'area'
+        data[:fullscreen_close_value] = 'Exit full screen'
+      end
+    end
+  end
 end
