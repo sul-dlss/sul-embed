@@ -60,3 +60,5 @@ locations:
   art: "Art Library"
   hoover: "Hoover Library"
   m&m: "Media & Microtext"
+
+fullscreen_hide: iPhone|iPad
