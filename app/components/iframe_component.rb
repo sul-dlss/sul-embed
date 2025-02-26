@@ -15,7 +15,7 @@ class IframeComponent < ViewComponent::Base
   end
 
   def height_style
-    embed_request.fullheight? ? '100%' : "#{height}px"
+    "#{height}px"
   end
 
   def src

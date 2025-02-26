@@ -36,7 +36,6 @@ RSpec.describe Embed::Response, type: 'view' do
   describe 'html' do
     before do
       expect(response).to receive(:viewer).at_least(:once).and_return(viewer)
-      expect(embed_request).to receive(:fullheight?).and_return(nil)
       allow(viewer).to receive_messages(height: '100', width: '100', iframe_title: 'Kewl Viewer')
     end
 
@@ -48,7 +47,6 @@ RSpec.describe Embed::Response, type: 'view' do
   describe 'embed hash' do
     before do
       expect(embed_request).to receive(:purl_object).at_least(:once).and_return(purl_object)
-      expect(embed_request).to receive(:fullheight?).and_return(nil)
       expect(purl_object).to receive(:title).and_return('Purl Title')
       expect(response).to receive(:viewer).at_least(:once).and_return(viewer)
       allow(viewer).to receive_messages(height: '100', width: '100', iframe_title: 'Kewl Viewer')
