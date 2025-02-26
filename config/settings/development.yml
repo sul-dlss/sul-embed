@@ -3,3 +3,143 @@
 # stacks_url: "https://sul-stacks-stage.stanford.edu"
 
 stacks_storage_root: "public/file"
+
+
+sandbox:
+  image:
+    - label: 'Single image'
+      purl: 'sg052hd9120'
+    - label: 'Multi image'
+      purl: 'fw090jw3474'
+    - label: Book (multi image, paged viewing hint)
+      purl: cy496ky1984
+    - label: Image with restrictions
+      purl: bb537hc4022
+    - label: Image with Book download
+      purl: dn665vh1697
+    - label: pdf and other download
+      purl: bg262qk2288
+    - label: Image (Stanford Only)
+      purl: yh887qk5737
+    - label: multiple files, no download
+      purl: zy609tw5585
+    - label: stanford only
+      purl: bd117rc5047
+    - label: stanford only, no download
+      purl: fr352bj3947
+    - label: Map - world
+      purl: bc592pz8308
+    - label: Map Multi-image
+      purl: bc151bq1744
+    - label: location restricted - spec 
+      purl: bp158wj7223
+    - label: parent record. 90 viewable children
+      purl: qv033rw8765
+    - label: thumbnail only - citation
+      purl: xq083mf5798
+    - label: thumbnail only multi images - citation
+      purl: xc280tx1177
+  media:
+    - label: mp4
+      purl: bb582xs1304
+    - label: mp4, jp2
+      purl: tn629pk3948
+    - label: mp3
+      purl: bb051hp9404
+    - label: mp3 (multiple)
+      purl: vh816yh7318
+    - label: mp4 (captions)
+      purl: bd699ky6829
+    - label: mp4 (multiple, with captions)
+      purl: zp130dq1795
+    - label: World can stream but not download
+      purl: bc613cf7759
+    - label: Stanford can stream or download
+      purl: bz648kf2662
+    - label: Stanford can stream but not download
+      purl: bc423zx3128
+    - label: Stanford can stream or download
+      purl: bh009rf1857
+    - label: location-restricted spec
+      purl: bb099mt5053
+    - label: location-restricted spec, no download
+      purl: jy960rj2658
+    - label: World can stream but not download
+      purl: bq157mf5624
+    - label: world; jp2 files no-download
+      purl: yj807zw8315
+    - label: citation only
+      purl: dj797xk2883
+    - label: media and captions
+      purl: bb158br2509
+    - label: captions (world - no download)
+      purl: qf378nj5000
+  file:
+    - label: File with text and gzip
+      purl: wt101ks3240
+    - label: File with many tar
+      purl: qy869qz5226
+    - label: File with 2002 files
+      purl: js533sk1281
+    - label: File with hierarchy
+      purl: fg478vy8624
+    - label: File stanford only
+      purl: bb010qz8357
+    - label: File location restricted
+      purl: bb012jz6387
+    - label: File with multiple versions 
+      purl: ck480bd0124/version/1
+    - label: single DOC/X
+      purl: qz826pn3100
+    - label: single PDF
+      purl: nd387jf5675
+    - label: embargo 2027
+      purl: gx074xz5520
+    - label: Stanford only
+      purl: sy486tp5223
+    - label: mixed (TXT, PDF, DOCX, XLSX)
+      purl: ck726bm9949
+    - label: software + images
+      purl: qp740dg4757
+  geo:
+    - label: Vector - public
+      purl: cz128vq0535
+    - label: Vector - restricted
+      purl: fp756wn9369
+    - label: Raster - public
+      purl: tg926kp6619
+    - label: Raster - public (crosses 180 longitude)
+      purl: gk831nh0251
+    - label: Raster - restricted (stanford only)
+      purl: sf815vr1246
+    - label: Index map (OpenIndexMap spec)
+      purl: ts545zc6250
+    - label: topographic Index map
+      purl: bj754sp5315
+    - label: with jpg/zip
+      purl: bh152hk2665
+  document:
+    - label: pdf
+      purl: bh502xm3351
+    - label: pdf 2
+      purl: cd243px7965
+    - label: pdf (Stanford Only)
+      purl: bb461xx1037
+    - label: pdf (Citation Only)
+      purl: bz673hm0344
+    - label: pdf (object embargoed, file available)
+      purl: bb990sg8412
+    - label: pdf (multiple files)
+      purl: ds777pr3860
+    - label: location-restricted music, no download
+      purl: yv090xk3108 
+  3d: 
+    - label: 3d
+      purl: fs892sr8080
+    - label: MTL, OBJ, PLY, PNG
+      purl: qf794pv6287
+  web_archive:
+    - label: Warc-seed
+      purl: gb089bd2251
+    - label: Warc-seed 2
+      purl: bd802vw5233
