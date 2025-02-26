@@ -13,9 +13,12 @@ module Embed
         @json = json
       end
 
+      def cocina_type
+        @json['type'].delete_prefix('https://cocina.sul.stanford.edu/models/resources/')
+      end
+
       def deserialize
         description = @json['label']
-        cocina_type = @json['type'].delete_prefix('https://cocina.sul.stanford.edu/models/resources/')
         Resource.new(
           druid: @druid,
           type: LEGACY_TYPE_MAP.fetch(cocina_type, cocina_type),
@@ -26,7 +29,7 @@ module Embed
 
       def build_files(description)
         @json.dig('structural', 'contains').map do |file|
-          FileJsonDeserializer.new(@druid, description, file).deserialize
+          FileJsonDeserializer.new(@druid, description, file, cocina_type).deserialize
         end
       end
     end

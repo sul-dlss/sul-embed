@@ -6,10 +6,12 @@ module Embed
       # @param [String] druid the identifier of the resource this file belongs to.
       # @param [String] description the label for this file
       # @param [Hash] file cocina file data
-      def initialize(druid, description, file)
+      # @param [String] parent resource type, used for caption/transcript viewing
+      def initialize(druid, description, file, resource_type)
         @druid = druid
         @description = description
         @file = file
+        @resource_type = resource_type
       end
 
       def filename
@@ -52,6 +54,7 @@ module Embed
           size: @file.fetch('size'),
           role: @file['use'],
           language: @file['languageTag'],
+          resource_type: @resource_type,
           filename:,
           stanford_only:,
           location_restricted:,
