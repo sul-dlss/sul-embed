@@ -3,7 +3,7 @@
 class CompanionWindowsComponent < ViewComponent::Base
   # @param [#purl_object] viewer
   # @param [String] stimulus_controller any extra stimulus controllers to initialize on the component.
-  def initialize(viewer:, stimulus_controller: nil)
+  def initialize(viewer:, stimulus_controller: '')
     @viewer = viewer
     @stimulus_controller = stimulus_controller
   end
@@ -36,5 +36,13 @@ class CompanionWindowsComponent < ViewComponent::Base
 
   def display_download?
     !viewer.instance_of?(::Embed::Viewer::WasSeed)
+  end
+
+  def controllers
+    "companion-window iiif-manifest-loader#{fullscreen? ? ' fullscreen ' : ' '}" + @stimulus_controller
+  end
+
+  def fullscreen?
+    @fullscreen ||= request.user_agent !~ /#{Settings.fullscreen_hide}/
   end
 end
