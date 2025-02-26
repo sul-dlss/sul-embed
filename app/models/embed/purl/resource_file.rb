@@ -15,7 +15,7 @@ module Embed
         end
       end
 
-      attr_accessor :druid, :label, :filename, :mimetype, :size, :language, :role, :sdr_generated,
+      attr_accessor :druid, :label, :filename, :mimetype, :size, :language, :role, :sdr_generated, :resource_type,
                     :world_downloadable, :stanford_only, :location_restricted, :stanford_only_downloadable
 
       alias title filename
@@ -51,7 +51,7 @@ module Embed
       end
 
       def label_or_filename
-        return caption_label if caption?
+        return text_representation_label if (caption? || transcript?) && media?
 
         label.presence || filename
       end
@@ -64,8 +64,9 @@ module Embed
         "#{language_label}#{sdr_generated_text}"
       end
 
-      def caption_label
-        "#{language_label} captions#{sdr_generated_text}"
+      def text_representation_label
+        file_type = caption? ? 'captions' : 'transcript'
+        "#{language_label} #{file_type}#{sdr_generated_text}"
       end
 
       def sdr_generated_text
@@ -91,6 +92,10 @@ module Embed
 
       def transcript?
         role == 'transcription'
+      end
+
+      def media?
+        %w[audio video].include?(resource_type)
       end
 
       def pdf?
