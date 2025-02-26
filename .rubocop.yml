@@ -1,11 +1,13 @@
 inherit_from:
   - .rubocop_todo.yml
 
-require:
-  - rubocop-capybara
+plugins:
   - rubocop-rails
   - rubocop-performance
   - rubocop-rspec
+
+require:
+  - rubocop-capybara
   - rubocop-rspec_rails
   - rubocop-factory_bot
 
@@ -573,4 +575,16 @@ Performance/StringBytesize: # new in 1.23
 Lint/ArrayLiteralInRegexp: # new in 1.71
   Enabled: true
 Style/HashSlice: # new in 1.71
+  Enabled: true
+Lint/CopDirectiveSyntax: # new in 1.72
+  Enabled: true
+Lint/RedundantTypeConversion: # new in 1.72
+  Enabled: true
+Lint/SuppressedExceptionInNumberConversion: # new in 1.72
+  Enabled: true
+Lint/UselessConstantScoping: # new in 1.72
+  Enabled: true
+Style/RedundantFormat: # new in 1.72
+  Enabled: true
+Performance/ZipWithoutBlock: # new in 1.24
   Enabled: true
