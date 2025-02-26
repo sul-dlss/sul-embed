@@ -24,10 +24,9 @@ RSpec.describe 'embed this panel', :js do
       expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match(/<iframe.*allowfullscreen/m)
     end
 
-    it 'includes height and width attributes' do
+    it 'includes style attributes' do
       page.find('[data-sul-embed-toggle="sul-embed-embed-this-panel"]', match: :first).click
-      expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match(/<iframe.*height="190px"/m)
-      expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match(/<iframe.*width="100%"/m)
+      expect(page.find('.sul-embed-embed-this-panel textarea', visible: :all).value).to match(/<iframe.*height: 190px; width: 100%;/m)
     end
 
     it 'includes the viewer\'s iframe title' do

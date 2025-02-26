@@ -10,12 +10,6 @@ module Embed
       def importmap
         'media'
       end
-
-      private
-
-      def default_height
-        400
-      end
     end
   end
 end

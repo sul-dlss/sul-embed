@@ -16,7 +16,8 @@ module Embed
       end
 
       def height
-        return default_height if @embed_request.maxheight.to_i > default_height
+        return super if new_viewer?
+        return default_height if @embed_request.maxheight.to_i > default_height.to_i
 
         super
       end
@@ -87,7 +88,10 @@ module Embed
       private
 
       def default_height
-        [file_specific_height + embargo_message_height + header_height, min_height].max
+        return super if new_viewer?
+
+        value = [file_specific_height + embargo_message_height + header_height, min_height].max
+        "#{value}px"
       end
 
       def min_height
