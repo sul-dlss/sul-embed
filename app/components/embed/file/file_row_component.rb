@@ -28,7 +28,7 @@ module Embed
       end
 
       def first_td_style
-        "padding-left: #{((level - 1) * 4) + 2}ch;"
+        "padding-left: #{((level - 1) * 3) + 3.5}ch;"
       end
 
       def download?
