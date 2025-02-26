@@ -30,7 +30,7 @@ RSpec.describe Legacy::Download::GeoComponent, type: :component do
 
   context 'when the file has multiple resources' do
     let(:contents) { [build(:resource, :file, files:), build(:resource, :file, files: [build(:resource_file)])] }
-    let(:files) { [build(:resource_file, :video, :world_downloadable, filename: 'data.zip'), build(:resource_file, :video, :world_downloadable, filename: 'data.zip')] }
+    let(:files) { [build(:resource_file, :world_downloadable, filename: 'data.zip'), build(:resource_file, :world_downloadable, filename: 'data.zip')] }
 
     it 'generates a file list' do
       expect(page).to have_css 'li', visible: :all, count: 3

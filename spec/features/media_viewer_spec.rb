@@ -5,10 +5,10 @@ require 'rails_helper'
 RSpec.describe 'Media viewer', :js do
   let(:purl) do
     build(:purl, :video, contents: [
-            build(:resource, :video, files: [build(:resource_file, :video, :location_restricted, label: 'First Video')]),
-            build(:resource, :video, files: [build(:resource_file, :video, :stanford_only, label: 'Second Video')]),
+            build(:resource, :video, files: [build(:media_file, :video, :location_restricted, label: 'First Video')]),
+            build(:resource, :video, files: [build(:media_file, :video, :stanford_only, label: 'Second Video')]),
             build(:resource, :file),
-            build(:resource, :video, files: [build(:resource_file, :video, :world_downloadable)])
+            build(:resource, :video, files: [build(:media_file, :video, :world_downloadable)])
           ])
   end
   let(:stub_auth) { nil }
@@ -84,7 +84,7 @@ RSpec.describe 'Media viewer', :js do
       build(:purl, :video,
             contents: [
               build(:resource, :video),
-              build(:resource, :image, files: [build(:resource_file, :image, label: 'Image of media (1 of 1)')])
+              build(:resource, :image, files: [build(:media_file, :image, label: 'Image of media (1 of 1)')])
             ])
     end
 
@@ -105,10 +105,10 @@ RSpec.describe 'Media viewer', :js do
     let(:purl) do
       build(:purl, :video, contents: [
               build(:resource, :video, files: [
-                      build(:resource_file, :video, :location_restricted,
+                      build(:media_file, :video, :location_restricted,
                             label: 'The First Video Has An Overly Long Title, With More Words Than Can Practically Be Displayed')
                     ]),
-              build(:resource, :video, files: [build(:resource_file, :video, label: '2nd Video Has A Long Title, But Not Too Long')])
+              build(:resource, :video, files: [build(:media_file, :video, label: '2nd Video Has A Long Title, But Not Too Long')])
             ])
     end
 

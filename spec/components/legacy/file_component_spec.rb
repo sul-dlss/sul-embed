@@ -8,7 +8,7 @@ RSpec.describe Legacy::FileComponent, type: :component do
   end
   let(:viewer) { Embed::Viewer::File.new(request) }
   let(:purl) { build(:purl, contents: resources) }
-  let(:resources) { [build(:resource, :video, files: [build(:resource_file, :video, :stanford_only, label: 'Second Video')])] }
+  let(:resources) { [build(:resource, :file, files: [build(:resource_file, :stanford_only, label: 'Second File')])] }
 
   before do
     allow(Embed::Purl).to receive(:find).and_return(purl)
@@ -97,7 +97,7 @@ RSpec.describe Legacy::FileComponent, type: :component do
   end
 
   describe 'location restricted' do
-    let(:resources) { [build(:resource, :video, files: [build(:resource_file, :video, :location_restricted, label: 'Second Video')])] }
+    let(:resources) { [build(:resource, :file, files: [build(:resource_file, :location_restricted, label: 'Second File')])] }
 
     it 'includes text indicating the file is location restricted' do
       expect(page).to have_css('tr[data-tree-role="leaf"] .sul-embed-location-restricted-text', visible: :all, text: '(Restricted)')
@@ -116,7 +116,7 @@ RSpec.describe Legacy::FileComponent, type: :component do
   end
 
   describe 'media list' do
-    let(:resources) { [build(:resource, :video, files: [build(:resource_file, :video, filename:)])] }
+    let(:resources) { [build(:resource, :file, files: [build(:resource_file, filename:)])] }
 
     context 'with a normal filename' do
       let(:filename) { 'Title_of_the_PDF.pdf' }

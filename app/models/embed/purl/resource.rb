@@ -55,7 +55,7 @@ module Embed
       #
       # @return [Array<ResourceFile>]
       def caption_files
-        files.select(&:caption?).sort_by(&:language_code)
+        files.select(&:caption?)
       end
     end
   end
