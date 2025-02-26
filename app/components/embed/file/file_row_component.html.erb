@@ -1,16 +1,14 @@
 
 <tr role="row" aria-level="<%= level %>" aria-posinset="<%= pos_in_set %>" aria-setsize="<%= set_size %>" tabindex="0" data-tree-role="leaf" data-filepath="<%= filepath %>">
   <td role="gridcell" style="<%= first_td_style %>" class="sul-embed-filename-cell">
-    <div style="display: flex;">
-      <div style="margin-right: 5px;">
-        <%= render file_type_icon.new %>
-      </div>
-      <div style="max-width: 95%; overflow-wrap: break-word;">
-        <%= title %>
-        <% if label %>
-          <p data-tree-role="label" class="tree-label"><%= label %></p>
-        <% end %>
-      </div>
+    <div style="margin-right: 5px;">
+      <%= render file_type_icon.new %>
+    </div>
+    <div style="max-width: 95%; overflow-wrap: break-word;">
+      <%= title %>
+      <% if label %>
+        <p data-tree-role="label" class="tree-label"><%= label %></p>
+      <% end %>
     </div>
   </td>
   <td role="gridcell"><%= file_size_text%></td>
