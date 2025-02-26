@@ -1,10 +1,11 @@
 <div class="header-background">
     <h3>Contents</h3>
 </div>
-<ul class="left-drawer-content"
-    id="content-list"
-    data-controller="content-list"
-    data-action="thumbnails-found@window->content-list#drawThumbnails"
-    role="tablist">
-    <%= render Document::ContentListItemComponent.with_collection(viewer.purl_object.downloadable_files, viewer:) if document_viewer? %>
-</ul>
+<div class="left-drawer-content">
+  <ul id="content-list"
+      data-controller="content-list"
+      data-action="thumbnails-found@window->content-list#drawThumbnails"
+      role="tablist">
+      <%= render Document::ContentListItemComponent.with_collection(viewer.purl_object.downloadable_files, viewer:) if document_viewer? %>
+  </ul>
+</div>
