@@ -145,7 +145,7 @@ body {
       textarea {
         margin-bottom: 1rem;
         padding: 0.375rem 0.75rem;
-        width: calc(100% - 2rem);
+        width: calc(100% - 3rem);
       }
 
       fieldset {
@@ -238,7 +238,7 @@ body {
 
   nav {
     button:focus-visible {
-      outline-offset: -.375rem;
+      outline-offset: -0.375rem;
     }
   }
 
@@ -350,9 +350,7 @@ body {
     }
   }
 
-
-  [role="banner"]:not([hidden])
-  + .companion-window-component-body {
+  [role="banner"]:not([hidden]) + .companion-window-component-body {
     --auth-bar-height: 40px;
   }
 
