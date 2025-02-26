@@ -35,7 +35,7 @@ a:focus {
   display: inline-block;
   height: 15px;
   width: 15px;
-  vertical-align: middle;
+  vertical-align: top;
 }
 
 .sul-embed-location-restricted-text {
@@ -44,4 +44,5 @@ a:focus {
 
 .su-underline {
   text-decoration: underline dotted var(--stanford-40-black) 1px;
+  text-underline-position: under;
 }
