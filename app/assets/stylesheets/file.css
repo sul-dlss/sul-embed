@@ -118,6 +118,17 @@
     transform: rotate(90deg);
   }
 
+  .folder-title {
+    display: flex;
+    align-items: flex-start;
+    svg {
+      margin-left: 0.25rem;
+    }
+    .foldername {
+      margin-left: 0.25rem;
+    }
+  }
+
   .sul-embed-filename-cell,
   .folder-title {
     font-size: 1rem;

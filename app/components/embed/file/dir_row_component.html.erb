@@ -1,7 +1,7 @@
 <% if title.present? %>
   <tr role="row" aria-level="<%= level %>" aria-posinset="<%= pos_in_set %>" aria-setsize="<%= set_size %>" aria-expanded="true" tabindex="0" data-action="click->tree#toggle" data-tree-role="branch">
     <td role="gridcell" style="<%= first_td_style %>" class="folder-title">
-      <%= render Icons::FolderComponent.new %><%= title %>
+      <%= render Icons::FolderComponent.new %><span class="foldername"><%= title %></span>
     </td>
     <td role="gridcell"></td>
     <td role="gridcell"></td>
