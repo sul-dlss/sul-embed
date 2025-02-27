@@ -12,4 +12,8 @@ class ModelComponent < ViewComponent::Base
   def viewable_content?
     viewer.three_dimensional_files.any?
   end
+
+  def message
+    viewer.authorization.message
+  end
 end

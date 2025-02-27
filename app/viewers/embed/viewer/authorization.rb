@@ -12,7 +12,7 @@ module Embed
       def message
         return { type: 'embargo', message: embargo_message } if @purl_object.embargoed?
 
-        if @purl_object.stanford_only_unrestricted?
+        if @purl_object.stanford_only_unrestricted? && @purl_object.type == 'file'
           return { type: 'stanford',
                    message: I18n.t('restrictions.stanford_only_file') }
         end

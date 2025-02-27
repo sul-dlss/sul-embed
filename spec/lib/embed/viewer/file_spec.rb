@@ -48,6 +48,40 @@ RSpec.describe Embed::Viewer::File do
     end
   end
 
+  describe 'message' do
+    context 'with location restricted' do
+      let(:purl) do
+        build(:purl, :location_restriction, :restricted_location, contents: [build(:resource, :file, files: [build(:resource_file)])])
+      end
+
+      it 'has a message of location restricted' do
+        expect(file_viewer.authorization.message[:message]).to eq 'Access is restricted to the Special collections reading room. See Access conditions for more information.'
+        expect(file_viewer.authorization.message[:type]).to eq 'location-restricted'
+      end
+    end
+
+    context 'with location restricted and stanford only' do
+      let(:purl) do
+        build(:purl, :file, :location_restriction, :stanford_only_unrestricted, contents: [build(:resource, :file, files: [build(:resource_file)])])
+      end
+
+      it 'has a message for stanford users' do
+        expect(file_viewer.authorization.message[:message]).to eq 'Access is restricted to Stanford-affiliated patrons.'
+        expect(file_viewer.authorization.message[:type]).to eq 'stanford'
+      end
+    end
+
+    context 'with location restricted on a file' do
+      let(:purl) do
+        build(:purl, contents: [build(:resource, :file, files: [build(:resource_file, :location_restricted)])])
+      end
+
+      it 'has no message' do
+        expect(file_viewer.authorization.message).to be false
+      end
+    end
+  end
+
   describe 'default_height' do
     context 'when title and search is hidden' do
       before do

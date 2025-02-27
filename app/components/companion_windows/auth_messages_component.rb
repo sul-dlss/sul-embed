@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Document
+module CompanionWindows
   class AuthMessagesComponent < ViewComponent::Base
     def initialize(message:)
       @message = message

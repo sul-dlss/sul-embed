@@ -19,7 +19,7 @@
   <% end %>
 
   <% component.with_authorization_messages do %>
-    <%= render Document::AuthMessagesComponent.new(message:) %>
+    <%= render CompanionWindows::AuthMessagesComponent.new(message:) %>
   <% end %>
 
   <% component.with_body do %>
