@@ -26,8 +26,8 @@ RSpec.describe Media::TagComponent, type: :component do
     end
 
     it 'includes a data attribute that includes the url to check the users auth status' do
-      expect(page).to have_css('video[data-auth-url]', visible: :all)
-      auth_url = page.all('video[data-auth-url]', visible: :all).first['data-auth-url']
+      expect(page).to have_css('[data-auth-url]', visible: :all)
+      auth_url = page.all('[data-auth-url]', visible: :all).first['data-auth-url']
       expect(auth_url).to eq(Settings.streaming.auth_url)
     end
 
@@ -41,8 +41,8 @@ RSpec.describe Media::TagComponent, type: :component do
     let(:resource) { build(:resource, :video, files: [build(:media_file, :video, :stanford_only)]) }
 
     it 'includes a data attribute that includes the url to check the users auth status' do
-      expect(page).to have_css('video[data-auth-url]', visible: :all)
-      auth_url = page.all('video[data-auth-url]', visible: :all).first['data-auth-url']
+      expect(page).to have_css('[data-auth-url]', visible: :all)
+      auth_url = page.all('[data-auth-url]', visible: :all).first['data-auth-url']
       expect(auth_url).to eq(Settings.streaming.auth_url)
     end
   end
@@ -52,8 +52,8 @@ RSpec.describe Media::TagComponent, type: :component do
     let(:resource) { build(:resource, :video, files: [build(:media_file, :video, :world_downloadable)]) }
 
     it 'includes a data attribute that includes the url to check the users auth status' do
-      expect(page).to have_css('video[data-auth-url]', visible: :all)
-      auth_url = page.all('video[data-auth-url]', visible: :all).first['data-auth-url']
+      expect(page).to have_css('[data-auth-url]', visible: :all)
+      auth_url = page.all('[data-auth-url]', visible: :all).first['data-auth-url']
       expect(auth_url).to eq(Settings.streaming.auth_url)
     end
 
