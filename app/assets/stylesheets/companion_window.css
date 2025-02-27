@@ -286,11 +286,6 @@ body {
     }
   }
 
-  .transcript-header {
-    background: var(--stanford-fog-light);
-    padding-bottom: 1.5rem;
-  }
-
   .header-background {
     background: var(--stanford-fog-light);
     display: flex;
@@ -306,21 +301,6 @@ body {
       font-weight: 300;
       line-height: 1.6em;
       letter-spacing: 0.015em;
-    }
-
-    &.transcript-controls {
-      font-size: 0.8rem;
-      flex-direction: column;
-
-      input {
-        margin-left: 0.6rem;
-      }
-
-      input,
-      select {
-        margin-right: 0.6rem;
-        vertical-align: middle;
-      }
     }
   }
 
