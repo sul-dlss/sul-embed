@@ -9,12 +9,12 @@ export default class extends Controller {
   addPostCallbackListener() {
     const permittedOrigins = ["https://stacks.stanford.edu", "https://sul-stacks-stage.stanford.edu", "https://sul-stacks-uat.stanford.edu"]
     window.addEventListener("message", (event) => {
-      this.iframe.remove()
       console.debug("Post message", event.data)
       if (!permittedOrigins.includes(event.origin)) {
         console.error(`${event.origin} is not a permitted origin`)
         return
       }
+      this.iframe.remove()
       if (event.data.type === "AuthAccessTokenError2") {
         this.displayAccessTokenError(event.data)
       } else {
