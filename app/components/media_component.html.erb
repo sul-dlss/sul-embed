@@ -89,7 +89,7 @@
 
   <% component.with_body do %>
       <div data-controller="locked-media-poster" data-action="auth-success@window->locked-media-poster#hide auth-denied@window->locked-media-poster#show" role="presentation" style="flex: 1 0 100%;" hidden>
-        <%= LockedStatusComponent.new %>
+        <%= render LockedStatusComponent.new %>
       </div>
 
       <div data-controller="locked-audio-poster" data-action="auth-success@window->locked-audio-poster#hide auth-denied@window->locked-audio-poster#show" role="presentation" style="flex: 1 0 100%;" hidden>
