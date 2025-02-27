@@ -27,7 +27,7 @@ export default class extends Controller {
   }
 
   // iterate over all files in the IIIF manifest and try to draw them
-  // this method is called by stimulus reflex in the content type component after the IIIF manifest is loaded
+  // this method is called by stimulus in the content type component after the IIIF manifest is loaded
   parseFiles(evt) {
     const document = evt.detail
     const canvases = document.items
@@ -62,7 +62,7 @@ export default class extends Controller {
     }
   }
 
-  // Render the resource by sending an event to stimulus reflex; the relevant content type component must catch this
+  // Render the resource by sending an event to stimulus; the relevant content type component must catch this
   // event, and call a method for that partcular content type (e.g. pdf/media) that knows how to render content
   renderViewer(fileUri) {
     if (fileUri == this.firstFile){
@@ -231,7 +231,7 @@ export default class extends Controller {
   }
 
   // Open the login page in a new window and then poll to see if the auth credentials are now active.
-  // This method is triggered by stimulus reflex when the user clicks the login button rendered by `loginNeeded`
+  // This method is triggered by stimulus when the user clicks the login button rendered by `loginNeeded`
   login(evt) {
     this.loginPanelTarget.hidden = true
     const windowReference = window.open(evt.params.url)
