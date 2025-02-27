@@ -36,14 +36,16 @@
         <% end %>
       </nav>
 
-      <div class="inner">
+      <div class="panelContainer">
         <%# If render_content_list_panel? is true, show 'object-content' by default on load
             Otherwise show 'about' as the default. %>
         <section id="about" role="tabpanel" <%= 'hidden' if render_content_list_panel? %>>
           <div class="header-background">
             <h3>About this item</h3>
           </div>
-          <dl data-controller="iiif-metadata" class="metadataList left-drawer-content" data-action="iiif-manifest-received@window->iiif-metadata#drawMetadata"></dl>
+          <div class="left-drawer-content">
+            <dl data-controller="iiif-metadata" class="metadataList" data-action="iiif-manifest-received@window->iiif-metadata#drawMetadata"></dl>
+          </div>
         </section>
 
         <% if render_content_list_panel? %>
