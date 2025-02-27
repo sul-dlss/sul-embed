@@ -109,6 +109,7 @@
       width: 1.5rem;
       display: inline-block;
       vertical-align: middle;
+      flex-shrink: 0;
     }
     font-weight: bold;
   }
@@ -123,9 +124,11 @@
     align-items: flex-start;
     svg {
       margin-left: 0.25rem;
+      flex-shrink: 0;
     }
     .foldername {
       margin-left: 0.25rem;
+      align-self: center;
     }
   }
 
@@ -134,7 +137,6 @@
     font-size: 1rem;
 
     svg {
-      vertical-align: middle;
       fill: var(--button-color);
       width: 1.5rem;
       height: 1.5rem;
