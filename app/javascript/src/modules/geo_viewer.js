@@ -15,6 +15,8 @@ export default {
     const attribution = `&copy <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy <a href="http://carto.com/attributions">Carto</a>`
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png', {
       maxZoom: 19,
+      noWrap: true,
+      bounds: [[-90, -180],[90, 180]],
       attribution: attribution,
     }).addTo(this.map)
     this.highlightLayer = L.layerGroup().addTo(this.map)
@@ -70,7 +72,9 @@ export default {
         format: 'image/png',
         transparent: true,
         opacity: .75,
-        tiled: true
+        tiled: true,
+        noWrap: true,
+        bounds: [[-90, -180],[90, 180]]
       })
       this.layer.addTo(this.map)
       this.setupSidebar()
