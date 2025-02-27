@@ -70,5 +70,17 @@ FactoryBot.define do
       title { 'Title of the object' }
       contents { [build(:resource, :model_3d, files: [build(:resource_file, :model_3d)])] }
     end
+
+    trait :location_restriction do
+      location_restriction { 'download' }
+    end
+
+    trait :restricted_location do
+      restricted_location { 'Special collections reading room' }
+    end
+
+    trait :stanford_only_unrestricted do
+      stanford_only_unrestricted { true }
+    end
   end
 end

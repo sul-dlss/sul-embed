@@ -112,6 +112,16 @@ module Embed
         I18n.t('title', default: 'Viewer', scope: i18n_path, title: purl_object.title)
       end
 
+      def message
+        if @purl_object.location_restriction
+          return { type: 'location-restricted',
+                   message: I18n.t('restrictions.restricted_access',
+                                   location: @purl_object.restricted_location) }
+        end
+
+        false
+      end
+
       private
 
       def default_height

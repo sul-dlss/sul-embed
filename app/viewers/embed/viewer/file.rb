@@ -45,12 +45,7 @@ module Embed
                    message: I18n.t('restrictions.stanford_only_file') }
         end
 
-        if @purl_object.location_restriction
-          return { type: 'location-restricted',
-                   message: I18n.t('restrictions.restricted_access', location: @purl_object.restricted_location) }
-        end
-
-        false
+        super
       end
 
       ##
