@@ -37,10 +37,8 @@ RSpec.describe MediaComponent, type: :component do
       expect(page).to have_content 'To request a transcript or other accommodation'
     end
 
-    # Auth components
-    expect(page).to have_content 'Access is restricted to the reading room. See Access conditions for more information.'
+    # Auth component
     expect(page).to have_content 'Stanford users: log in to access all available features'
-    expect(page).to have_content 'Access is restricted until the embargo has elapsed'
   end
 
   context 'when hide_title is passed' do

@@ -134,9 +134,7 @@
   }
 }
 
-/* Second selector is for citation-only banner. First selector is for all the other auth restrictions. */
-[data-controller="auth-restriction"]:not([hidden])
-  + .companion-window-component-body,
+/* selector is for citation-only banner */
 .authLinkWrapper + .companion-window-component-body {
   --auth-bar-height: 40px;
   max-height: calc(
