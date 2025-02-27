@@ -2,7 +2,18 @@ import { Controller } from "@hotwired/stimulus"
 import videojs from 'video.js'
 
 export default class extends Controller {
-  initializeVideoJSPlayer() {
+  static values = {
+    uri: String
+  }
+
+  // Every media player receives every auth-success event
+  initializeVideoJSPlayer(evt) {
+    console.debug("evt.detail.fileUri: ", evt.detail.fileUri, " this.uriValue:", this.uriValue)
+    // We only take action if this event is for this element
+    if (evt.detail.fileUri != this.uriValue)
+      return
+
+    this.writeToken(evt.detail)
     this.videoElement().classList.add('video-js', 'vjs-default-skin')
     this.player = videojs(this.videoElement().id,
                           { responsive: true,
@@ -56,6 +67,16 @@ export default class extends Controller {
     }
   }
 
+  writeToken({fileUri, location}) {
+    console.log("Looking for ", `source[src="${fileUri}"]`)
+
+    // The current event may be for a different video on the page, so see if it's ours
+    const source = this.videoElement().querySelector(`source[src="${fileUri}"]`)
+    console.log("Found", source)
+    source?.setAttribute('src', location)
+  }
+
+  // We don't use a stimulus target here, because videoJS makes a duplicate node, so the target attribute would be duplicated
   videoElement() {
     return this.element.querySelector('video')
   }

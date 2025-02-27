@@ -11,30 +11,10 @@ RSpec.describe 'Media viewer', :js do
             build(:resource, :video, files: [build(:media_file, :video, :world_downloadable)])
           ])
   end
-  let(:stub_auth) { nil }
 
   before do
-    stub_auth
     allow(Embed::Purl).to receive(:find).and_return(purl)
     visit_iframe_response
-  end
-
-  context 'when the file has Stanford login access' do
-    context 'when the user can access the file' do
-      let(:stub_auth) { StubAuthEndpoint.set_success! }
-
-      it 'hides the link' do
-        expect(page).to have_no_button('login')
-      end
-    end
-
-    context 'when the user cannot access the file' do
-      let(:stub_auth) { StubAuthEndpoint.set_stanford! }
-
-      it 'shows the Stanford link' do
-        expect(page).to have_button 'Log in'
-      end
-    end
   end
 
   context 'with multiple A/V files' do

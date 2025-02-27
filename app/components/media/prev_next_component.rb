@@ -2,6 +2,7 @@
 
 module Media
   class PrevNextComponent < ViewComponent::Base
+    # @param [Embed::Purl::MediaFile] file
     def initialize(file:, resource_index:, size:)
       @file = file
       @resource_index = resource_index
