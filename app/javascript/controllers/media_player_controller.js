@@ -8,9 +8,12 @@ export default class extends Controller {
                           { responsive: true,
                             userActions: { hotkeys: true }
                           })
-    this.player.on('loadedmetadata', () => {
-      const event = new CustomEvent('media-loaded', { detail: this.player })
-      window.dispatchEvent(event)
+    this.player.on('loadedmetadata', (evt) => {
+      // for multiple media items, we only want to load the first (visible) item
+      if (evt.target.player.index == 0){
+        const event = new CustomEvent('media-loaded', { detail: this.player })
+        window.dispatchEvent(event)
+      }
     })
 
     // occurs when time of the video changes.
