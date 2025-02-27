@@ -9,7 +9,7 @@
 
   <% component.with_authorization_messages do %>
     <div role="banner" aria-label="Access message">
-      <%= render ContentNotAvailableComponent.new unless viewable_content? %>
+      <%= render CompanionWindows::ContentNotAvailableComponent.new unless viewable_content? %>
     </div>
   <% end %>
 
