@@ -71,7 +71,7 @@ RSpec.describe Embed::Purl::Resource do
     context 'when it does not have a caption file' do
       subject { resource.caption_files }
 
-      let(:resource) { build(:resource, :video, files: [build(:resource_file, :video)]) }
+      let(:resource) { build(:resource, :video, files: [build(:media_file, :video)]) }
 
       it { is_expected.to be_empty }
     end

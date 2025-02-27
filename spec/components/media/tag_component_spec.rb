@@ -19,7 +19,7 @@ RSpec.describe Media::TagComponent, type: :component do
   end
 
   context 'with a location restricted video' do
-    let(:resource) { build(:resource, :video, files: [build(:resource_file, :video, :location_restricted)]) }
+    let(:resource) { build(:resource, :video, files: [build(:media_file, :video, :location_restricted)]) }
 
     it 'includes the file label as a data attribute' do
       expect(page).to have_css('[data-file-label="First Video"]')
@@ -38,7 +38,7 @@ RSpec.describe Media::TagComponent, type: :component do
 
   context 'with a stanford only video' do
     let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1, size: 4) }
-    let(:resource) { build(:resource, :video, files: [build(:resource_file, :video, :stanford_only)]) }
+    let(:resource) { build(:resource, :video, files: [build(:media_file, :video, :stanford_only)]) }
 
     it 'includes a data attribute that includes the url to check the users auth status' do
       expect(page).to have_css('video[data-auth-url]', visible: :all)
@@ -49,7 +49,7 @@ RSpec.describe Media::TagComponent, type: :component do
 
   context 'with a world access video' do
     let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 3, size: 3) }
-    let(:resource) { build(:resource, :video, files: [build(:resource_file, :video, :world_downloadable)]) }
+    let(:resource) { build(:resource, :video, files: [build(:media_file, :video, :world_downloadable)]) }
 
     it 'includes a data attribute that includes the url to check the users auth status' do
       expect(page).to have_css('video[data-auth-url]', visible: :all)
@@ -83,7 +83,7 @@ RSpec.describe Media::TagComponent, type: :component do
 
     context 'with a resource that has a jpg, but no jp2' do
       let(:resource) do
-        build(:resource, :video, files: [build(:resource_file, :video), build(:resource_file, :image, mimetype: 'image/jpeg')])
+        build(:resource, :video, files: [build(:media_file, :video), build(:media_file, :image, mimetype: 'image/jpeg')])
       end
 
       it 'does not use secondary files like jpgs as thumbnails' do
@@ -96,7 +96,7 @@ RSpec.describe Media::TagComponent, type: :component do
 
   context 'with image files within media objects' do
     let(:resource) do
-      build(:resource, :image, files: [build(:resource_file, :image)])
+      build(:resource, :image, files: [build(:media_file, :image)])
     end
 
     it 'are included as top level objects' do
@@ -119,8 +119,8 @@ RSpec.describe Media::TagComponent, type: :component do
       let(:resource) do
         build(:resource, :video,
               files: [
-                build(:resource_file, :video),
-                build(:resource_file, :image, :world_downloadable, filename: 'video_1.jp2')
+                build(:media_file, :video),
+                build(:media_file, :image, :world_downloadable, filename: 'video_1.jp2')
               ])
       end
 
@@ -133,7 +133,7 @@ RSpec.describe Media::TagComponent, type: :component do
     context 'when a file level thumbnail is not present' do
       let(:resource) do
         build(:resource, :video,
-              files: [build(:resource_file, :video)])
+              files: [build(:media_file, :video)])
       end
 
       it 'does not include a poster attribute' do
@@ -147,7 +147,7 @@ RSpec.describe Media::TagComponent, type: :component do
 
     context 'when a file level thumbnail is not present' do
       let(:resource) do
-        build(:resource, :audio, files: [build(:resource_file, :audio)])
+        build(:resource, :audio, files: [build(:media_file, :audio)])
       end
 
       it 'includes the default poster attribute' do
@@ -166,9 +166,9 @@ RSpec.describe Media::TagComponent, type: :component do
 
     context 'with captions for multiple languages' do
       let(:resource) do
-        build(:resource, :video, files: [build(:resource_file, :video),
-                                         build(:resource_file, :caption, language: 'en'),
-                                         build(:resource_file, :caption, language: 'ru')])
+        build(:resource, :video, files: [build(:media_file, :video),
+                                         build(:media_file, :caption, language: 'en'),
+                                         build(:media_file, :caption, language: 'ru')])
       end
 
       it 'has track elements with multiple languages' do
@@ -179,8 +179,8 @@ RSpec.describe Media::TagComponent, type: :component do
 
     context 'with caption with no specified language' do
       let(:resource) do
-        build(:resource, :video, files: [build(:resource_file, :video),
-                                         build(:resource_file, :caption)])
+        build(:resource, :video, files: [build(:media_file, :video),
+                                         build(:media_file, :caption)])
       end
 
       it 'has a track element with code and label for English' do

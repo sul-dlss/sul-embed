@@ -103,7 +103,7 @@ module Media
       # We also want the different language options to be listed alphabetically.
       # For Safari, we must ensure a track is selected by default to allow the track cues to be available.
       safe_join(
-        @resource.caption_files.map.with_index do |caption_file, i|
+        caption_files.map.with_index do |caption_file, i|
           tag.track(src: caption_file.file_url, kind: 'captions',
                     srclang: caption_file.language_code, label: caption_file.media_caption_label,
                     default: (i.zero? && !caption_file.sdr_generated? ? '' : nil))
@@ -111,8 +111,12 @@ module Media
       )
     end
 
+    def caption_files
+      @caption_files ||= @resource.caption_files.sort_by(&:language_code)
+    end
+
     def render_captions?
-      @resource.caption_files.any?
+      caption_files.any?
     end
 
     def authentication_url

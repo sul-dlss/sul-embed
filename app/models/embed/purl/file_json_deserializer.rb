@@ -47,21 +47,32 @@ module Embed
       end
 
       def deserialize # rubocop:disable Metrics/MethodLength
-        ResourceFile.new(
+        klass = case @resource_type
+                when 'audio', 'video'
+                  MediaFile
+                else
+                  ResourceFile
+                end
+        result = klass.new(
           druid: @druid,
           label: @description,
           mimetype: @file.fetch('hasMimeType'),
           size: @file.fetch('size'),
           role: @file['use'],
-          language: @file['languageTag'],
-          resource_type: @resource_type,
           filename:,
           stanford_only:,
           location_restricted:,
           world_downloadable:,
-          sdr_generated:,
           stanford_only_downloadable:
         )
+
+        if klass == MediaFile
+          result.language = @file['languageTag']
+          # Note that `sdr_generated' is not a media specific field in SDR, but in sul-embed, we only use it for media.
+          result.sdr_generated = sdr_generated
+        end
+
+        result
       end
     end
   end

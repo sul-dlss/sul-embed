@@ -15,7 +15,7 @@ module Embed
         end
       end
 
-      attr_accessor :druid, :label, :filename, :mimetype, :size, :language, :role, :sdr_generated, :resource_type,
+      attr_accessor :druid, :label, :filename, :mimetype, :size, :role,
                     :world_downloadable, :stanford_only, :location_restricted, :stanford_only_downloadable
 
       alias title filename
@@ -23,7 +23,6 @@ module Embed
       alias stanford_only? stanford_only
       alias location_restricted? location_restricted
       alias stanford_only_downloadable? stanford_only_downloadable
-      alias sdr_generated? sdr_generated
 
       ##
       # Creates a file url for stacks
@@ -51,35 +50,12 @@ module Embed
       end
 
       def label_or_filename
-        return text_representation_label if (caption? || transcript?) && media?
-
         label.presence || filename
-      end
-
-      def language_label
-        Bcp47::Registry.resolve(language_code) || 'Unknown'
-      end
-
-      def media_caption_label
-        "#{language_label}#{sdr_generated_text}"
-      end
-
-      def text_representation_label
-        file_type = caption? ? 'captions' : 'transcript'
-        "#{language_label} #{file_type}#{sdr_generated_text}"
-      end
-
-      def sdr_generated_text
-        sdr_generated? ? ' (auto-generated)' : ''
       end
 
       def downloadable?
         (world_downloadable? || stanford_only_downloadable?) &&
           NON_DOWNLOADABLE_ROLES.exclude?(role)
-      end
-
-      def language_code
-        language.presence || 'en'
       end
 
       def hierarchical_title
@@ -92,10 +68,6 @@ module Embed
 
       def transcript?
         role == 'transcription'
-      end
-
-      def media?
-        %w[audio video].include?(resource_type)
       end
 
       def pdf?
