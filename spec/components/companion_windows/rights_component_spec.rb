@@ -20,7 +20,8 @@ RSpec.describe CompanionWindows::RightsComponent, type: :component do
     expect(page).to have_content 'cc-0'
     expect(page).to have_content 'The Board of Trustees of the Leland Stanford Junior University'
     expect(page).to have_no_content 'Provided by the Stanford University Libraries'
-    expect(page).to have_css('img.attributionLogo')
+    # visible :all because we display:none because this isn't the default tab.
+    expect(page).to have_css('img.attributionLogo', visible: :all)
   end
 
   context 'when object has no rights information' do

@@ -39,26 +39,17 @@
       <div class="panelContainer">
         <%# If render_content_list_panel? is true, show 'object-content' by default on load
             Otherwise show 'about' as the default. %>
-        <section id="about" role="tabpanel" <%= 'hidden' if render_content_list_panel? %>>
-          <div class="header-background">
-            <h3>About this item</h3>
-          </div>
-          <div class="left-drawer-content">
-            <dl data-controller="iiif-metadata" class="metadataList" data-action="iiif-manifest-received@window->iiif-metadata#drawMetadata"></dl>
-          </div>
-        </section>
 
-        <% if render_content_list_panel? %>
-          <section id="object-content" role="tabpanel">
-            <%= render CompanionWindows::ContentListComponent.new(viewer:) %>
-          </section>
+        <%= render TabpanelComponent.new(id: 'about', hidden: render_content_list_panel?, title: 'About this item') do |component| %>
+          <% component.with_body do %>
+            <dl data-controller="iiif-metadata" class="metadataList" data-action="iiif-manifest-received@window->iiif-metadata#drawMetadata"></dl>
+          <% end %>
         <% end %>
 
-        <%= drawer_content %>
+        <%= render CompanionWindows::ContentListComponent.new(viewer:) if render_content_list_panel? %>
 
-        <section id="rights" role="tabpanel" hidden>
-          <%= render CompanionWindows::RightsComponent.new(viewer:) %>
-        </section>
+        <%= drawer_content %>
+        <%= render CompanionWindows::RightsComponent.new(viewer:) %>
       </div>
     </aside>
     <div id='main-display' role='main'>
