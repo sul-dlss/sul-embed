@@ -104,19 +104,28 @@
   <% end %>
 
   <% component.with_dialog do %>
-    <dialog class="modal-container" data-companion-window-target="accessibility" data-action="click->companion-window#handleBackdropClicks" id="accessibility">
-      <header>Accessibility</header>
-      <% if downloadable_transcript_files? %>
-        <p>A transcript is available for download. Click the share & download icon to download a transcript.</p>
-      <% else %>
-        <p>To request a transcript or other accommodation for this media item,
-          please send a request along with a link to this item to
-          <a href="mailto:purl-feedback@lists.stanford.edu">purl-feedback@lists.stanford.edu</a>.</p>
+    <%= render DialogComponent.new(dialog_id: 'accessibility', stimulus_target: 'accessibility') do |component| %>
+      <%= component.with_header do %>
+        Accessibility
       <% end %>
-      <form method="dialog">
-        <button>Close</button>
-      </form>
-    </dialog>
+
+      <%= component.with_main do %>
+        <% if downloadable_transcript_files? %>
+          <p>A transcript is available for download. Click the share & download icon to download a transcript.</p>
+        <% else %>
+          <p>To request a transcript or other accommodation for this media item,
+            please send a request along with a link to this item to
+            <a href="mailto:purl-feedback@lists.stanford.edu">purl-feedback@lists.stanford.edu</a>.</p>
+        <% end %>
+      <% end %>
+
+      <%= component.with_footer do %>
+        <form method="dialog">
+          <button>Close</button>
+        </form>
+      <% end %>
+    <% end %>
+
     <link href="https://vjs.zencdn.net/8.6.1/video-js.css" rel="stylesheet" />
   <% end %>
 <% end %>
