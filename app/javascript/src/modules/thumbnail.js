@@ -1,6 +1,8 @@
 // This draws thumbnails in the content list of the companion window component
+// Called by media_tag_controller.js
 export default class {
-  constructor({isStanfordOnly, thumbnailUrl, defaultIcon, isLocationRestricted, fileLabel}) {
+  constructor({fileUri, isStanfordOnly, thumbnailUrl, defaultIcon, isLocationRestricted, fileLabel}) {
+    this.fileUri = fileUri
     this.isStanfordOnly = isStanfordOnly
     this.thumbnailUrl = thumbnailUrl
     this.defaultIcon = defaultIcon
@@ -32,7 +34,10 @@ export default class {
       maxFileLabelLength -= restrictedText.length
     }
 
-    return `<li class="media-thumb ${activeClass}" data-action="click->content-list#showMedia keydown.enter->content-list#showMedia" data-content-list-target="listItem" data-content-list-index-param="${index}" aria-controls="main-display" role="tab" tabindex="0">
+    return `<li class="media-thumb ${activeClass}" data-action="click->content-list#showMedia keydown.enter->content-list#showMedia"
+                data-content-list-target="listItem" data-content-list-index-param="${index}"
+                data-url="${this.fileUri}"
+                aria-controls="main-display" role="tab" tabindex="0">
         ${thumbnailIcon}
         <span class="${labelClass} su-underline">
           ${stanfordOnlyScreenreaderText}${restrictedTextMarkup}

@@ -9,9 +9,9 @@ enable_media_viewer?: <%= true %>
 geo_external_url: "https://earthworks.stanford.edu/catalog/stanford-"
 geo_wms_url: "https://geowebservices.stanford.edu/geoserver/wms/"
 geo_viewer_colors:
-  selected: 'yellow'
-  available: '#006CB8'
-  unavailable: '#B1040E'
+  selected: "yellow"
+  available: "#006CB8"
+  unavailable: "#B1040E"
 resource_types_that_contain_thumbnails:
   - audio
   - file
@@ -28,8 +28,6 @@ primary_mimetypes:
   video:
     - video/mp4
     - video/quicktime
-streaming:
-  auth_url: "%{host}/media/%{druid}/%{title}/auth_check"
 stream:
   url: sul-mediaserver.stanford.edu/stacks/_definst_
 # Mapping from file extensions to Wowza streaming prefixes

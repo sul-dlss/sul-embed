@@ -22,7 +22,6 @@ export default class extends Controller {
     this.clearRestrictedMessage()
   }
 
-
   // Called when switching to a new file
   clearRestrictedMessage() {
     this.restrictedContainerTarget.hidden = true

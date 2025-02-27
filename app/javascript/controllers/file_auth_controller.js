@@ -64,8 +64,9 @@ export default class extends Controller {
       const probeService = contentResource.service.find((service) => service.type === "AuthProbeService2")
       if (probeService)
         this.checkAuthorization(probeService, contentResource.id)
-      else
-        throw(`Access service exists, but no probe service found for ${contentResource.id}`)
+      else {
+        console.warn(`Access service exists, but no probe service found for ${contentResource.id}`)
+      }
     }
   }
 
@@ -74,6 +75,7 @@ export default class extends Controller {
   // event, and call a method for that partcular content type (e.g. pdf/media) that knows how to render content
   renderViewer(result) {
     const fileUri = result.fileUri
+    console.log("Auth-success event", fileUri)
     window.dispatchEvent(new CustomEvent('auth-success', { detail: { fileUri: fileUri, location: result.location } }))
     // use filename because url in contents adds druid: to the data-url
     const filename = fileUri.split("/").slice(-1)[0]
@@ -120,7 +122,7 @@ export default class extends Controller {
   checkAuthorization(probeService, contentResourceId) {
     // We're going to make the assumption that calling the probe without a token is going to fail.
     // So we'll just get the token first.
-    console.debug("Probe service:", probeService)
+    console.debug("Found probe service:", probeService)
     const accessService = this.findAccessService(probeService)
 
     const messageId = Math.random().toString(36).slice(2) // create a random key for this resource to reference later
@@ -198,14 +200,17 @@ export default class extends Controller {
   // NOTE: Token is optional
   queryProbeService(messageId, token) {
     const resource = this.resources[messageId]
-    console.debug("Trying probe service with ", token)
+    console.debug("Trying probe service with token: ", token)
     const headers = {}
     if (token) {
       headers['Authorization'] = `Bearer ${token}`
     }
+    console.debug("Fetching probe service", resource.probeService.id)
     return fetch(resource.probeService.id, { headers })
       .then((response) => response.json())
-      .then((json) => new Promise((resolve, reject) => json.status === 200 || json.status === 302 ? resolve({ fileUri: resource.contentResourceId, location: json.location?.id }) : reject(json)))
+      .then((json) => new Promise((resolve, reject) => {
+        return (json.status === 200 || json.status === 302) ? resolve({ fileUri: resource.contentResourceId, location: json.location?.id }) : reject(json)
+      } ) )
   }
 
   // Fetch a token for the provided resource
