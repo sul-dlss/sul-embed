@@ -13,7 +13,7 @@
   </td>
   <td role="gridcell"><%= file_size_text%></td>
   <td role="gridcell">
-    <% if download? %>
+    <% unless no_download? %>
       <a href="<%= url %>" target='_blank' rel='noopener noreferrer' download>
         <%= render Icons::DownloadComponent.new(classes: 'download-icon') %>
         <span class="su-underline">Download</span>

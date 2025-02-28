@@ -57,6 +57,10 @@ module Embed
         view == 'stanford'
       end
 
+      def no_download?
+        download == 'none'
+      end
+
       def location_restricted?
         download == 'location-based'
       end
