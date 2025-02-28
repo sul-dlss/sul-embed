@@ -3,7 +3,7 @@
   <div class='sul-embed-body sul-embed-file'>
     <% if viewer.purl_object.embargoed? %>
       <div class='sul-embed-embargo-message'>
-        <%= viewer.embargo_message %>
+        <%= viewer.authorization.embargo_message %>
       </div>
     <% end %>
     <table class="sul-embed-treegrid" role="treegrid" aria-label="File list" data-action="keydown->tree#navigate" data-tree-target="table">

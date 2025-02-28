@@ -7,13 +7,15 @@ module Embed
       include Embed::PrettyFilesize
       include Embed::StacksImage
 
-      attr_reader :purl_object, :embed_request
+      attr_reader :purl_object, :embed_request, :authorization
 
       delegate :new_viewer?, to: :embed_request
+      delegate :any_stanford_only_files?, to: :authorization
 
       def initialize(embed_request)
         @embed_request = embed_request
         @purl_object = embed_request.purl_object
+        @authorization = Authorization.new(@purl_object)
       end
 
       def height
@@ -26,10 +28,6 @@ module Embed
 
       def external_url
         nil
-      end
-
-      def any_stanford_only_files?
-        @purl_object.all_resource_files.any?(&:stanford_only?)
       end
 
       # indicates if viewer should display the Download All link in footer (override in specific viewer classes)
@@ -59,14 +57,6 @@ module Embed
       end
 
       ##
-      # Creates a pretty date in a standardized sul way
-      # @param [String] date_string
-      # @return [String]
-      def sul_pretty_date(date_string)
-        I18n.l(Date.parse(date_string), format: :sul) if date_string.present?
-      end
-
-      ##
       # Should the download toolbar be shown?
       # @return [Boolean]
       def show_download?
@@ -75,14 +65,6 @@ module Embed
 
       def self.show_download?
         false
-      end
-
-      def tooltip_text(file)
-        return unless file.stanford_only?
-
-        ['Available only to Stanford-affiliated patrons',
-         sul_pretty_date(@purl_object.embargo_release_date)]
-          .compact.join(' until ')
       end
 
       def fullscreen?

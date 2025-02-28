@@ -31,16 +31,6 @@ RSpec.describe Embed::Viewer::CommonViewer do
     end
   end
 
-  describe '#sul_pretty_date' do
-    it 'parses a date into a standardized format' do
-      expect(file_viewer.sul_pretty_date(Time.zone.now.to_s)).to match(/^\d{2}-\w{3}-\d{4}$/)
-    end
-
-    it 'checks for a blank string' do
-      expect(file_viewer.sul_pretty_date(nil)).to be_nil
-    end
-  end
-
   describe '#show_download?' do
     it 'false for file viewers' do
       expect(file_viewer).not_to be_show_download

@@ -37,39 +37,6 @@ module Embed
                                  @purl_object.contents.map(&:files).flatten.length >= min_files_to_search
       end
 
-      def message
-        return { type: 'embargo', message: embargo_message } if @purl_object.embargoed?
-
-        if @purl_object.stanford_only_unrestricted?
-          return { type: 'stanford',
-                   message: I18n.t('restrictions.stanford_only_file') }
-        end
-
-        if @purl_object.location_restriction
-          return { type: 'location-restricted',
-                   message: I18n.t('restrictions.restricted_access', location: @purl_object.restricted_location) }
-        end
-
-        false
-      end
-
-      ##
-      # Creates an embargo message to be displayed, customized for stanford
-      # only embargoed items
-      # @return [String]
-      def embargo_message
-        message = []
-
-        message << if @purl_object.stanford_only_unrestricted?
-                     'Access is restricted to Stanford-affiliated patrons'
-                   else
-                     'Access is restricted'
-                   end
-
-        message << pretty_embargo_date
-        message.compact.join(' until ')
-      end
-
       def display_header?
         super || display_file_search?
       end
@@ -120,13 +87,6 @@ module Embed
         items_to_account_for = [file_count, 4].min
 
         55 + (items_to_account_for * 67)
-      end
-
-      ##
-      # Creates a pretty date for display
-      # @return [String] date in dd-mon-year format
-      def pretty_embargo_date
-        sul_pretty_date(@purl_object.embargo_release_date)
       end
     end
   end
