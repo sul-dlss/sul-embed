@@ -73,6 +73,10 @@ module Embed
         download == 'stanford'
       end
 
+      def not_no_download?
+        download != 'none'
+      end
+
       def hierarchical_title
         title.split('/').last
       end
