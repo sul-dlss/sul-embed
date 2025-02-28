@@ -22,7 +22,7 @@ module Document
     # defined below in content_list_controller.js will be trigged when the user clicks on the file, and it will be
     # passed the URL
     def show_method
-      'showPdf' if viewer.instance_of?(::Embed::Viewer::PdfViewer)
+      'showPdf' if viewer.instance_of?(::Embed::Viewer::DocumentViewer)
     end
 
     def file_type_icon

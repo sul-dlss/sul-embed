@@ -40,7 +40,7 @@ RSpec.describe Legacy::FooterComponent, type: :component do
 
   describe 'fullscreen button' do
     context 'when the viewer is configured to use the local fullscreen function' do
-      let(:viewer) { Embed::Viewer::PdfViewer.new(request) }
+      let(:viewer) { Embed::Viewer::DocumentViewer.new(request) }
 
       it { expect(page).to have_css('button#full-screen-button') }
     end

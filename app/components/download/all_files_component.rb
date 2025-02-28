@@ -14,7 +14,7 @@ module Download
 
     def render?
       !viewer.is_a?(Embed::Viewer::Media) &&
-        !viewer.is_a?(Embed::Viewer::PdfViewer)
+        !viewer.is_a?(Embed::Viewer::DocumentViewer)
     end
 
     # Returns true or false whether the viewer should display the Download All
