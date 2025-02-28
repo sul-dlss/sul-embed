@@ -176,14 +176,10 @@
   }
 }
 
-.transcript-header {
-  background: var(--stanford-fog-light);
-  padding-bottom: 1.5rem;
-}
-
 .transcript-controls {
   font-size: 0.8rem;
   flex-direction: column;
+  padding-bottom: 1.5rem;
 
   input {
     margin-left: 0.6rem;

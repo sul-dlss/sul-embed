@@ -21,11 +21,8 @@
   <% end %>
 
   <% component.with_drawer_content do %>
-    <section id="transcript" data-companion-window-target="transcript" role="tabpanel" hidden>
-      <div class="transcript-header">
-        <div class="header-background">
-          <h3>Transcript</h3>
-        </div>
+    <%= render TabpanelComponent.new(id: 'transcript', hidden: true, title: 'Transcript', data: { companion_window_target: 'transcript' }) do |component| %>
+      <% component.with_subheading do %>
         <div class="transcript-controls header-background">
           <div class="transcript-autoscroll">
             <label for="autoscroll">Auto scroll</label>
@@ -38,12 +35,12 @@
             </select>
           </div>
         </div>
-      </div>
-      <div class="left-drawer-content">
-       <div class="transcript" data-action="media-loaded@window->transcript#persistPlayer switch-transcript@window->transcript#switchTranscript media-data-loaded@window->transcript#load time-update@window->transcript#highlightCue" data-transcript-target="outlet">
-       </div>
-      </div>
-    </section>
+      <% end %>
+      <% component.with_body do %>
+        <div class="transcript" data-action="media-loaded@window->transcript#persistPlayer switch-transcript@window->transcript#switchTranscript media-data-loaded@window->transcript#load time-update@window->transcript#highlightCue" data-transcript-target="outlet">
+        </div>
+      <% end %>
+    <% end %>
   <% end %>
 
   <% component.with_authorization_messages do %>

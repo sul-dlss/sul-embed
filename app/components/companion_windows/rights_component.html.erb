@@ -1,26 +1,25 @@
-<div class="header-background">
-  <h3>Rights</h3>
-</div>
-<div class="left-drawer-content">
-  <dl class="rightsList">
-    <% if use_and_reproduction.present? %>
-      <dt>Use and reproduction</dt>
-      <dd><%= use_and_reproduction %></dd>
-    <% end %>
-    <% if copyright.present? %>
-      <dt>Copyright</dt>
-      <dd><%= copyright %></dd>
-    <% end %>
-    <% if license.present? %>
-      <dt>License</dt>
-      <dd><%= license %></dd>
-    <% end %>
-    <% if no_rights_information_present? %>
-      <dt>Attribution</dt>
-      <dd><%= default_attribution %></dd>
-    <% end %>
-  </dl>
-  <div class="logoContainer">
-    <%= image_tag 'sul_stacked_color.svg', alt: "Stanford Libraries logo", role: "presentation", class: "attributionLogo" %>
-  </div>
-</div>
+<%= render TabpanelComponent.new(id: 'rights', hidden: true, title: 'Rights') do |component| %>
+  <% component.with_body do %>
+    <dl class="rightsList">
+      <% if use_and_reproduction.present? %>
+        <dt>Use and reproduction</dt>
+        <dd><%= use_and_reproduction %></dd>
+      <% end %>
+      <% if copyright.present? %>
+        <dt>Copyright</dt>
+        <dd><%= copyright %></dd>
+      <% end %>
+      <% if license.present? %>
+        <dt>License</dt>
+        <dd><%= license %></dd>
+      <% end %>
+      <% if no_rights_information_present? %>
+        <dt>Attribution</dt>
+        <dd><%= default_attribution %></dd>
+      <% end %>
+    </dl>
+    <div class="logoContainer">
+      <%= image_tag 'sul_stacked_color.svg', alt: "Stanford Libraries logo", role: "presentation", class: "attributionLogo" %>
+    </div>
+  <% end %>
+<% end %>
