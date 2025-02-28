@@ -79,6 +79,16 @@ RSpec.describe FileComponent, type: :component do
     end
   end
 
+  context 'when access is no-download' do
+    let(:resources) do
+      [build(:resource, :image, files: [build(:resource_file, download: 'none')])]
+    end
+
+    it 'does not have a link' do
+      expect(page).to have_no_link 'Download', visible: :all
+    end
+  end
+
   describe 'embargo/Stanford only' do
     let(:purl) { build(:purl, :embargoed_stanford, contents: resources) }
     let(:resources) { [build(:resource, :file, files: [build(:resource_file, :document, :stanford_only, filename: 'Title of the PDF.pdf')])] }

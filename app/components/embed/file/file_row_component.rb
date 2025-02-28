@@ -15,7 +15,7 @@ module Embed
 
       attr_reader :viewer, :file, :pos_in_set, :set_size, :level
 
-      delegate :label, to: :file
+      delegate :label, :no_download?, to: :file
 
       def file_size_text
         viewer.file_size_text(file.size)
@@ -31,10 +31,6 @@ module Embed
 
       def first_td_style
         "padding-left: #{((level - 1) * 3) + 3.5}ch;"
-      end
-
-      def download?
-        !viewer.embargoed_to_world?(file)
       end
 
       def version
