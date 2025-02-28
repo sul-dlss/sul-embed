@@ -18,26 +18,25 @@ FactoryBot.define do
       stanford_only_unrestricted { true }
     end
 
-    trait :public do
-      public { true }
-    end
-
     trait :file do
       type { 'file' }
       title { 'Title of the object' }
       contents { [build(:resource, :file)] }
+      access { :access }
     end
 
     trait :document do
       type { 'document' }
       title { 'Title of the object' }
       contents { [build(:resource, :document)] }
+      access { :access }
     end
 
     trait :document_no_download do
       type { 'document' }
       title { 'Title of the object' }
       contents { [build(:resource, :document_no_download)] }
+      access { :access }
     end
 
     trait :was_seed do
@@ -45,23 +44,26 @@ FactoryBot.define do
       archived_site_url { 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/' }
       external_url { 'https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/' }
       contents { [build(:resource, :image)] }
+      access { :access }
     end
 
     trait :geo do
       druid { 'cz128vq0535' }
       type { 'geo' }
       bounding_box { [['-1.478794', '29.572742'], ['4.234077', '35.000308']] }
-      public { true }
+      access { :access }
       contents { [build(:resource, :file, files: [build(:resource_file, :world_downloadable, filename: 'data.zip'), build(:resource_file, :world_downloadable, filename: 'data_EPSG_4326.zip')]), build(:resource, :image)] }
     end
 
     trait :media do
       type { 'media' }
+      access { :access }
     end
 
     trait :video do
       media
       contents { [build(:resource, :video)] }
+      access { :access }
     end
 
     trait :model_3d do
@@ -69,6 +71,15 @@ FactoryBot.define do
       druid { 'qf794pv6287' }
       title { 'Title of the object' }
       contents { [build(:resource, :model_3d, files: [build(:resource_file, :model_3d)])] }
+      access { :access }
+    end
+
+    trait :access do 
+      { "controlledDigitalLending": false,
+      "download": "world",
+      "license": "https://creativecommons.org/publicdomain/mark/1.0/",
+      "useAndReproductionStatement": "Materials are in the public domain.",
+      "view": "world" }
     end
   end
 end

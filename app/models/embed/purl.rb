@@ -14,20 +14,67 @@ module Embed
       end
     end
 
-    attr_accessor :druid, :version_id, :type, :title, :use_and_reproduction, :copyright, :contents, :collections,
-                  :license, :bounding_box, :embargo_release_date, :archived_site_url, :external_url,
-                  :embargoed, :stanford_only_unrestricted, :public, :controlled_digital_lending,
-                  :etag, :last_modified, :location_restriction, :restricted_location
-
-    alias embargoed? embargoed
-    alias stanford_only_unrestricted? stanford_only_unrestricted
-    alias public? public
-    alias controlled_digital_lending? controlled_digital_lending
+    attr_accessor :druid, :version_id, :type, :title, :contents, :collections,
+                  :bounding_box, :archived_site_url, :external_url,
+                  :access, :etag, :last_modified
 
     # @param [String] druid a druid without a namespace (e.g. "sx925dc9385")
     def self.find(druid, version_id = nil)
       loader = PurlJsonLoader.new(druid, version_id)
       new(etag: loader.etag, last_modified: loader.last_modified, **loader.load)
+    end
+
+    def embargoed?
+      access['embargo'].present?
+    end
+
+    def location_restriction
+      return 'download' if access['download'] == 'location-based'
+      return 'view' if access['view'] == 'location-based'
+
+      false
+    end
+
+    def restricted_location
+      fallback_message = 'site visitors to the Stanford Libraries'
+      return Settings.locations[access['location']] || fallback_message if location_restriction
+
+      fallback_message
+    end
+
+    def stanford_only_unrestricted?
+      access['download'] == 'stanford'
+    end
+
+    def controlled_digital_lending?
+      access['controlledDigitalLending']
+    end
+
+    def public?
+      access['download'] == 'world'
+    end
+
+    def use_and_reproduction
+      access['useAndReproductionStatement']
+    end
+
+    def copyright
+      access['copyright']
+    end
+
+    def citation_only?
+      access['view'] == 'citation-only' || access['download'] == 'citation-only'
+    end
+
+    def license
+      license_uri = access['license']
+      return unless license_uri
+
+      Rails.application.config_for(:licenses, env: 'production').dig(license_uri, :description)
+    end
+
+    def embargo_release_date
+      access.dig('embargo', 'releaseDate')&.sub(/T.*/, '') # Trim the time off the end.
     end
 
     # @returns [Bool] does this have any resources that can be embeded?
