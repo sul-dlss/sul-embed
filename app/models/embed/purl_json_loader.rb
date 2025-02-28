@@ -19,19 +19,14 @@ module Embed
         title:,
         contents:,
         collections:,
-        copyright:,
-        license:,
-        use_and_reproduction:,
-        embargo_release_date:,
         bounding_box:,
         archived_site_url:,
-        embargoed:,
-        location_restriction:,
-        restricted_location:,
-        stanford_only_unrestricted:,
-        controlled_digital_lending:,
-        public:
+        access:
       }
+    end
+
+    def access
+      json['access']
     end
 
     def etag
@@ -46,36 +41,6 @@ module Embed
     end
 
     private
-
-    def embargoed
-      json.dig('access', 'embargo').present?
-    end
-
-    def location_restriction
-      return 'download' if json.dig('access', 'download') == 'location-based'
-      return 'view' if json.dig('access', 'view') == 'location-based'
-
-      false
-    end
-
-    def restricted_location
-      fallback_message = 'site visitors to the Stanford Libraries'
-      return Settings.locations[json.dig('access', 'location')] || fallback_message if location_restriction
-
-      fallback_message
-    end
-
-    def stanford_only_unrestricted
-      json.dig('access', 'download') == 'stanford'
-    end
-
-    def controlled_digital_lending
-      json.dig('access', 'controlledDigitalLending')
-    end
-
-    def public
-      json.dig('access', 'download') == 'world'
-    end
 
     def archived_site_url
       Array(json.dig('description', 'access', 'url')).find do |url|
@@ -103,10 +68,6 @@ module Embed
       points.find { |point| point['type'] == direction }&.fetch('value')
     end
 
-    def embargo_release_date
-      json.dig('access', 'embargo', 'releaseDate')&.sub(/T.*/, '') # Trim the time off the end.
-    end
-
     def contents
       # NOTE: collections don't have structural
       return [] unless json['structural']
@@ -129,13 +90,6 @@ module Embed
       end
     end
 
-    def license
-      license_uri = json.dig('access', 'license')
-      return unless license_uri
-
-      Rails.application.config_for(:licenses, env: 'production').dig(license_uri, :description)
-    end
-
     def type
       cocina_type = json.fetch('type').delete_prefix('https://cocina.sul.stanford.edu/models/')
       LEGACY_TYPE_MAP.fetch(cocina_type, cocina_type)
@@ -143,14 +97,6 @@ module Embed
 
     def title
       json.fetch('label')
-    end
-
-    def use_and_reproduction
-      json.dig('access', 'useAndReproductionStatement')
-    end
-
-    def copyright
-      json.dig('access', 'copyright')
     end
 
     def json
