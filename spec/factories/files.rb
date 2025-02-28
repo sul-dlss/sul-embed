@@ -101,19 +101,19 @@ FactoryBot.define do
   end
 
   trait :stanford_only do
-    stanford_only { true }
-    stanford_only_downloadable { true }
+    view { 'stanford' }
+    download { 'stanford' }
   end
 
   trait :world_downloadable do
-    world_downloadable { true }
+    download { 'world' }
   end
 
   trait :no_download do
-    world_downloadable { false }
+    download { 'none' }
   end
 
   trait :location_restricted do
-    location_restricted { true }
+    download { 'location-based' }
   end
 end

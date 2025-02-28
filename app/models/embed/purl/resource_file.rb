@@ -15,14 +15,9 @@ module Embed
         end
       end
 
-      attr_accessor :druid, :label, :filename, :mimetype, :size, :role,
-                    :world_downloadable, :stanford_only, :location_restricted, :stanford_only_downloadable
+      attr_accessor :druid, :label, :filename, :mimetype, :size, :role, :download, :view
 
       alias title filename
-      alias world_downloadable? world_downloadable
-      alias stanford_only? stanford_only
-      alias location_restricted? location_restricted
-      alias stanford_only_downloadable? stanford_only_downloadable
 
       ##
       # Creates a file url for stacks
@@ -56,6 +51,22 @@ module Embed
       def downloadable?
         (world_downloadable? || stanford_only_downloadable?) &&
           NON_DOWNLOADABLE_ROLES.exclude?(role)
+      end
+
+      def stanford_only?
+        view == 'stanford'
+      end
+
+      def location_restricted?
+        download == 'location-based'
+      end
+
+      def world_downloadable?
+        download == 'world'
+      end
+
+      def stanford_only_downloadable?
+        download == 'stanford'
       end
 
       def hierarchical_title
