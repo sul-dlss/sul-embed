@@ -862,7 +862,7 @@
   resolved "https://registry.yarnpkg.com/@edsilv/http-status-codes/-/http-status-codes-1.0.3.tgz#a1b767c552ac43f2983ab2b9ee20e9c73b79960b"
   integrity sha512-HLK2FS5sZqxPqD53D6hhZxC6C8THTVwlyZDZ7J0iWsrB8JmMA69m/CQuNKZc1kki9WSVeck2fXna26NL0SE7cg==
 
-"@emotion/babel-plugin@^11.11.0", "@emotion/babel-plugin@^11.13.5":
+"@emotion/babel-plugin@^11.13.5":
   version "11.13.5"
   resolved "https://registry.yarnpkg.com/@emotion/babel-plugin/-/babel-plugin-11.13.5.tgz#eab8d65dbded74e0ecfd28dc218e75607c4e7bc0"
   integrity sha512-pxHCpT2ex+0q+HH91/zsdHkw/lXd468DIN2zvfvLtPKLLMo6gQj7oLObq8PhkrxOZb/gGCq03S3Z7PDhS8pduQ==
@@ -1173,7 +1173,7 @@
   dependencies:
     "@babel/runtime" "^7.23.9"
 
-"@mui/material@^5.13.5":
+"@mui/material@^5.x":
   version "5.16.14"
   resolved "https://registry.yarnpkg.com/@mui/material/-/material-5.16.14.tgz#da8a75822f039d8c1b0ab7fb4146d767c2f9248a"
   integrity sha512-eSXQVCMKU2xc7EcTxe/X/rC9QsV2jUe8eLM3MUCPYbo6V52eCE436akRIvELq/AqZpxx2bwkq7HC0cRhLB+yaw==
@@ -1210,7 +1210,7 @@
     csstype "^3.1.3"
     prop-types "^15.8.1"
 
-"@mui/system@^5.16.14":
+"@mui/system@^5.16.14", "@mui/system@^5.x":
   version "5.16.14"
   resolved "https://registry.yarnpkg.com/@mui/system/-/system-5.16.14.tgz#92765ba01a3d1f8ee4967248cb00077d7aed225b"
   integrity sha512-KBxMwCb8mSIABnKvoGbvM33XHyT+sN0BzEBG+rsSc0lLQGzs7127KWkCA6/H8h6LZ00XpBEME5MAj8mZLiQ1tw==
@@ -1242,9 +1242,9 @@
     react-is "^19.0.0"
 
 "@mui/utils@^6.4.1":
-  version "6.4.2"
-  resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-6.4.2.tgz#eeba878bf55fbe0a72bd6adb361f5737a489ec52"
-  integrity sha512-5NkhzlJkmR5+5RSs/Irqin1GPy2Z8vbLk/UzQrH9FEAnm6OA9SvuXjzgklxUs7N65VwEkGpKK1jMZ5K84hRdzQ==
+  version "6.4.6"
+  resolved "https://registry.yarnpkg.com/@mui/utils/-/utils-6.4.6.tgz#307828bee501d30ed5cd1e339ca28c9efcc4e3f9"
+  integrity sha512-43nZeE1pJF2anGafNydUcYFPtHwAqiBiauRtaMvurdrZI3YrUjHkAu43RBsxef7OFtJMXGiHFvq43kb7lig0sA==
   dependencies:
     "@babel/runtime" "^7.26.0"
     "@mui/types" "^7.2.21"
@@ -2993,7 +2993,7 @@ human-signals@^2.1.0:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-2.1.0.tgz#dc91fcba42e4d06e4abaed33b3e7a3c02f514ea0"
   integrity sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==
 
-"i18next@^21.0.0 || ^22.0.0 || ^23.0.0":
+"i18next@^21.0.0 || ^22.0.0 || ^23.0.0", i18next@^23.0:
   version "23.16.8"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-23.16.8.tgz#3ae1373d344c2393f465556f394aba5a9233b93a"
   integrity sha512-06r/TitrM88Mg5FdUXAKL96dJMzgqLE5dv3ryBAra4KCwD9mJ4ndOTS95ZuymIGoE+2hzfdaMak2X11/es7ZWg==
@@ -3458,39 +3458,27 @@ minimatch@^3.1.1, minimatch@^3.1.2:
   dependencies:
     brace-expansion "^1.1.7"
 
-mirador-dl-plugin@^1.0.0-alpha.2:
+mirador-dl-plugin@^1.0.0-alpha.4:
+  version "1.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-1.0.0-alpha.4.tgz#3a7d6c34c262787b7641a3df969248aa8d3ba89a"
+  integrity sha512-l3QEhiUaSRYiANVkdErptr2Q5Qsm3RYUKzMuh2A+JapmjcOUyVwmeZ1k/gWfU7lPHEE3iox2HI0YctMGaDSdnw==
+
+mirador-image-tools@^1.0.0-alpha.3:
   version "1.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-1.0.0-alpha.3.tgz#38023838827c5553af0e89b83696508bebb7f505"
-  integrity sha512-BkIe71nf2oYBGXSUFEiKBdFhwFakkfoCta/okX2HiBLVGjXJ4Ysatc4NCwPOlemGq0YZrNmLFTRs3zdvw3T+tg==
-  dependencies:
-    "@emotion/cache" "^11.11.0"
-    "@emotion/react" "^11.10.6"
-    "@emotion/styled" "^11.10.6"
+  resolved "https://registry.yarnpkg.com/mirador-image-tools/-/mirador-image-tools-1.0.0-alpha.3.tgz#8698086e4038e1d801f213b91137ffca8251711f"
+  integrity sha512-osNbACfC+c/Pqf6eMTLKAlKjcSZOuvyT17bD4yylGP5ba60IJcWySNS3Kw/I4bjjzeQURJQHcAReby1p9i4/+w==
 
-mirador-image-tools@^1.0.0-alpha.1:
-  version "1.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/mirador-image-tools/-/mirador-image-tools-1.0.0-alpha.1.tgz#349e656ae56656d6e2a569448c52e1e10621ae9f"
-  integrity sha512-I3sG0rnyhC/m0+BBLST4ufRVgo2QoCcOCTfnNrEIcEPXQsHc+3L8fJFtPRVfXHUmhXTA7kmD8BD9/XyBp/+qNg==
+mirador-share-plugin@^1.0.0-alpha.4:
+  version "1.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/mirador-share-plugin/-/mirador-share-plugin-1.0.0-alpha.4.tgz#e7994f12190acbb2c43496ac65bf2ef19dd7955e"
+  integrity sha512-59JgnyFQHtCFk+2J1OrULEMnPnmiNV/zPT2PBcWj//IpZ0UHTLPmz3neSQWgC1wyfbCEnxq8weco3m1XpI2MAw==
   dependencies:
-    "@emotion/babel-plugin" "^11.11.0"
-    "@emotion/cache" "^11.11.0"
-    "@emotion/react" "^11.10.6"
-    "@emotion/styled" "^11.10.6"
-
-mirador-share-plugin@^1.0.0-alpha.1:
-  version "1.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/mirador-share-plugin/-/mirador-share-plugin-1.0.0-alpha.1.tgz#ffa9fc88c325b3afe8232f7e5b8855e3ec9ba0a3"
-  integrity sha512-aE0//XrsGlxhWJldYkP0aFK9E8GhYsn19ERIcS5Qhk+j3t7FckEpMmy+ydAb9c+ZUv+4XDbArokVPppIaWG3kQ==
-  dependencies:
-    "@emotion/cache" "^11.11.0"
-    "@emotion/react" "^11.10.6"
-    "@emotion/styled" "^11.10.6"
     notistack "^3.0.1"
 
-mirador@^4.0.0-alpha.9:
-  version "4.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/mirador/-/mirador-4.0.0-alpha.9.tgz#195dc74479d8bbb0a8543353d8d1fe6293628011"
-  integrity sha512-Sc5ICONg9ru6Pmq04Yfn1dH1OIQJqBgJ2gcVcSBjGTC90MZtKpcFHo/holZazX14klzSAdKtmZz6LFnnxPmMAg==
+mirador@^4.0.0-alpha.14:
+  version "4.0.0-alpha.14"
+  resolved "https://registry.yarnpkg.com/mirador/-/mirador-4.0.0-alpha.14.tgz#e73b3130228e5a74e458150cdff1a0a9e0374582"
+  integrity sha512-t3iDf6z+RWmr78XJSDrxt4lEMbHPdDxS7BLmdY0mCmCHneoKYPEWYASguOe4Qlq9UIw39kPlmlVQrYBed9mQcQ==
   dependencies:
     "@custom-react-hooks/use-element-size" "^1.5.1"
     "@emotion/cache" "^11.11.0"
@@ -3498,7 +3486,6 @@ mirador@^4.0.0-alpha.9:
     "@emotion/styled" "^11.10.6"
     "@hello-pangea/dnd" "^16.0.1 || ^17.0.0"
     "@mui/icons-material" "^5.11.16"
-    "@mui/material" "^5.13.5"
     "@mui/utils" "^5.13.1"
     "@mui/x-tree-view" "^6.17.0"
     "@react-aria/live-announcer" "^3.1.2"
@@ -3522,13 +3509,12 @@ mirador@^4.0.0-alpha.9:
     react-dnd-touch-backend "^16.0.0"
     react-error-boundary "^4.1.2"
     react-full-screen "^1.1.1"
-    react-i18next "^13.0.0 || ^14.0.0 || ^15.0.0"
     react-image "^4.0.1"
     react-intersection-observer "^9.0.0"
     react-mosaic-component2 "^6.0.0"
     react-redux "^8.0.0 || ^9.0.0"
     react-resize-observer "^1.1.1"
-    react-rnd "^10.1"
+    react-rnd "~10.4.0"
     react-virtualized-auto-sizer "^1.0.2"
     react-window "^1.8.5"
     redux "^5.0.0"
@@ -3901,10 +3887,10 @@ re-reselect@^5.0.0:
   resolved "https://registry.yarnpkg.com/re-reselect/-/re-reselect-5.1.0.tgz#60d06beab016ccf9f710fce36a077b9017cefcf5"
   integrity sha512-3ZHxFOvhIqBTrHzXKQEGxjUYzL78w6JhLJGvZas/Fmb7eju7pKDbRZFZgvTnJ1X9X6LWvYUOvLveAl0s/JAJvg==
 
-re-resizable@6.11.0:
-  version "6.11.0"
-  resolved "https://registry.yarnpkg.com/re-resizable/-/re-resizable-6.11.0.tgz#2b7b55ec4d061e882aeea50cda15d4c74933e777"
-  integrity sha512-XwaQX5Yk+JEvyGwX1nlLWaZUDr+8gz+Joys5lF4i+7Jy33wShJ0VYQUoFceiSKqUnjVEEz+zf3YkCTyT04R3AA==
+re-resizable@6.10.3:
+  version "6.10.3"
+  resolved "https://registry.yarnpkg.com/re-resizable/-/re-resizable-6.10.3.tgz#72c42532ede0cbcaf93308bcbfed782abbf97e79"
+  integrity sha512-zvWb7X3RJMA4cuSrqoxgs3KR+D+pEXnGrD2FAD6BMYAULnZsSF4b7AOVyG6pC3VVNVOtlagGDCDmZSwWLjjBBw==
 
 react-copy-to-clipboard@^5.0.1:
   version "5.1.0"
@@ -3984,9 +3970,9 @@ react-full-screen@^1.1.1:
     fscreen "^1.0.2"
 
 "react-i18next@^13.0.0 || ^14.0.0 || ^15.0.0":
-  version "15.4.0"
-  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-15.4.0.tgz#87c755fb6d7a567eec134e4759b022a0baacb19e"
-  integrity sha512-Py6UkX3zV08RTvL6ZANRoBh9sL/ne6rQq79XlkHEdd82cZr2H9usbWpUNVadJntIZP2pu3M2rL1CN+5rQYfYFw==
+  version "15.4.1"
+  resolved "https://registry.yarnpkg.com/react-i18next/-/react-i18next-15.4.1.tgz#33f3e89c2f6c68e2bfcbf9aa59986ad42fe78758"
+  integrity sha512-ahGab+IaSgZmNPYXdV1n+OYky95TGpFwnKRflX/16dY04DsYYKHtVLjeny7sBSCREEcoMbAgSkFiGLF5g5Oofw==
   dependencies:
     "@babel/runtime" "^7.25.0"
     html-parse-stringify "^3.0.1"
@@ -4046,12 +4032,12 @@ react-resize-observer@^1.1.1:
   resolved "https://registry.yarnpkg.com/react-resize-observer/-/react-resize-observer-1.1.1.tgz#641dfa2e0f4bd2549a8ab4bbbaf43b68f3dcaf76"
   integrity sha512-3R+90Hou90Mr3wJYc+unsySC8Pn91V4nmjO32NKvUvjphRUbq9HisyLg7bDyGBE7xlMrrM6Fax7iNQaFdc/FYA==
 
-react-rnd@^10.1:
-  version "10.5.1"
-  resolved "https://registry.yarnpkg.com/react-rnd/-/react-rnd-10.5.1.tgz#cf975a2b841e01c2b9095fae7651553bca0b57c4"
-  integrity sha512-jzIdsDywCnrPETLkMnodawOtbL3VmDcym4xgpwW8ANxIj0cDyRAzWDBYdfjK3KzVl06eNLWrB5CHBrW96lLhQw==
+react-rnd@~10.4.0:
+  version "10.4.14"
+  resolved "https://registry.yarnpkg.com/react-rnd/-/react-rnd-10.4.14.tgz#c0ce3051cce7da46ccb80be617d818f0dae1e5ec"
+  integrity sha512-NLGc3IymymumPfHy3DXiHNIMOiTlj6xBNb2boHqrtwCgYDasNarpg8tdUY36JlJbrs0E4BvjYBkfEGqUPBsukg==
   dependencies:
-    re-resizable "6.11.0"
+    re-resizable "6.10.3"
     react-draggable "4.4.6"
     tslib "2.6.2"
 
@@ -4579,9 +4565,9 @@ stylis@4.2.0:
   integrity sha512-Orov6g6BB1sDfYgzWfTHDOxamtX1bE/zo104Dh9e6fqJ3PooipYyfJ0pUmrZO2wAvO8YbEyeFrkV91XTsGMSrw==
 
 stylis@^4.3.0:
-  version "4.3.5"
-  resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.3.5.tgz#432cc99c81e28d7062c88d979d2163891e860489"
-  integrity sha512-K7npNOKGRYuhAFFzkzMGfxFDpN6gDwf8hcMiE+uveTVbBgm93HrNP3ZDUpKqzZ4pG7TP6fmb+EMAQPjq9FqqvA==
+  version "4.3.6"
+  resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.3.6.tgz#7c7b97191cb4f195f03ecab7d52f7902ed378320"
+  integrity sha512-yQ3rwFWRfwNUY7H5vpU0wfdkNSnvnJinhF9830Swlaxl03zsOjCfmX0ugac+3LtK0lYSgwL/KXc8oYL3mG4YFQ==
 
 supports-color@^7.1.0:
   version "7.2.0"
@@ -4743,9 +4729,9 @@ unpipe@1.0.0, unpipe@~1.0.0:
   integrity sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==
 
 update-browserslist-db@^1.1.1:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.1.2.tgz#97e9c96ab0ae7bcac08e9ae5151d26e6bc6b5580"
-  integrity sha512-PPypAm5qvlD7XMZC3BujecnaOxwhrtoFR+Dqkk5Aa/6DssiH0ibKoketaj9w8LP7Bont1rYeoV5plxD7RTEPRg==
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/update-browserslist-db/-/update-browserslist-db-1.1.3.tgz#348377dd245216f9e7060ff50b15a1b740b75420"
+  integrity sha512-UxhIZQ+QInVdunkDAaiazvvT/+fXL5Osr0JZlJulepYu6Jd7qJtDZjlur0emRlT71EN3ScPoE7gvsuIKKNavKw==
   dependencies:
     escalade "^3.2.0"
     picocolors "^1.1.1"
@@ -4796,9 +4782,9 @@ utils-merge@1.0.1:
   integrity sha512-pMZTvIkT1d+TFGvDOqodOclx0QWkkgi6Tdoa8gC8ffGAAqz9pzPTZWAybbsHHoED/ztMtkv/VoYTYyShUn81hA==
 
 "uuid@^8.1.0 || ^9.0.0 || ^10.0.0 || ^11.0.0":
-  version "11.0.5"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-11.0.5.tgz#07b46bdfa6310c92c3fb3953a8720f170427fc62"
-  integrity sha512-508e6IcKLrhxKdBbcA2b4KQZlLVp2+J5UwQ6F7Drckkc5N9ZJwFa4TgWtsww9UG8fGHbm6gbV19TdM5pQ4GaIA==
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-11.1.0.tgz#9549028be1753bb934fc96e2bca09bb4105ae912"
+  integrity sha512-0/A9rDy9P7cJ+8w1c9WD9V//9Wj15Ce2MPz8Ri6032usz+NfePxx5AcN3bN+r6ZL6jEo066/yNYB3tn4pQEx+A==
 
 uuid@^8.3.2:
   version "8.3.2"
