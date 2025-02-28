@@ -18,22 +18,6 @@ module Embed
         @filename ||= @file.fetch('filename')
       end
 
-      def stanford_only
-        view == 'stanford'
-      end
-
-      def location_restricted
-        download == 'location-based'
-      end
-
-      def world_downloadable
-        download == 'world'
-      end
-
-      def stanford_only_downloadable
-        download == 'stanford'
-      end
-
       def download
         @file.fetch('access').fetch('download')
       end
@@ -60,10 +44,8 @@ module Embed
           size: @file.fetch('size'),
           role: @file['use'],
           filename:,
-          stanford_only:,
-          location_restricted:,
-          world_downloadable:,
-          stanford_only_downloadable:
+          download:,
+          view:
         )
 
         if klass == MediaFile

@@ -3,6 +3,8 @@
 module Embed
   module File
     class FileRowComponent < ViewComponent::Base
+      # @param [Embed::Viewer::File]
+      # @param [Embed::Purl::ResourceFile] file
       def initialize(viewer:, file:, pos_in_set: nil, set_size: nil, level: 0)
         @viewer = viewer
         @file = file
