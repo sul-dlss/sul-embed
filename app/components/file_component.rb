@@ -7,6 +7,7 @@ class FileComponent < ViewComponent::Base
 
   attr_reader :viewer
 
-  delegate :purl_object, to: :viewer
-  delegate :druid, to: :purl_object
+  def message
+    viewer.authorization.message
+  end
 end
