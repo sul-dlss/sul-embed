@@ -3,8 +3,8 @@ import videojs from 'video.js'
 
 export default class extends Controller {
   initializeVideoJSPlayer() {
-    this.element.classList.add('video-js', 'vjs-default-skin')
-    this.player = videojs(this.element.id,
+    this.videoElement().classList.add('video-js', 'vjs-default-skin')
+    this.player = videojs(this.videoElement().id,
                           { responsive: true,
                             userActions: { hotkeys: true }
                           })
@@ -22,7 +22,7 @@ export default class extends Controller {
       const event = new CustomEvent('time-update', { detail: timestamp })
       window.dispatchEvent(event)
     })
-    
+
     this.player.index = this.element.dataset.index;
 
     this.player.on('loadedmetadata', (evt) => {
@@ -59,9 +59,13 @@ export default class extends Controller {
   // "this.player" was returning undefined, so we are relying on the element id to
   // retrieve the player
   seek(event) {
-    const playerObject =  videojs(this.element.id)
+    const playerObject =  videojs(this.videoElement().id)
     if (playerObject) {
       playerObject.currentTime(event.detail)
     }
+  }
+
+  videoElement() {
+    return this.element.querySelector('video')
   }
 }

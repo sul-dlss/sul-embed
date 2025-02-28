@@ -49,11 +49,26 @@ module Media
       asset_url('waveform-audio-poster.svg')
     end
 
-    def media_element
+    def media_element # rubocop:disable Metrics/MethodLength
       render WrapperComponent.new(thumbnail: thumbnail_url, file:, type:,
                                   size: @resource_iteration.size,
                                   resource_index: @resource_iteration.index) do
-        media_tag
+        # We use this div, to hold stimulus controller/actions, because videoJS duplicates these attributes if they are
+        # on the <video> tag directly
+        tag.div(
+          style: 'height: 100%',
+          data: {
+            auth_url: authentication_url,
+            index: @resource_iteration.index,
+            media_tag_target: 'authorizeableResource',
+            controller: 'media-player',
+            action: 'media-seek@window->media-player#seek ' \
+                    'fullscreenchange@window->media-player#fullscreenChange ' \
+                    'auth-success@window->media-player#initializeVideoJSPlayer'
+          }
+        ) do
+          media_tag
+        end
       end
     end
 
@@ -68,15 +83,6 @@ module Media
       tag.video(
         preload: restricted? ? 'none' : 'auto',
         id: "sul-embed-media-#{@resource_iteration.index}",
-        data: {
-          auth_url: authentication_url,
-          index: @resource_iteration.index,
-          media_tag_target: 'authorizeableResource',
-          controller: 'media-player',
-          action: 'media-seek@window->media-player#seek ' \
-                  'fullscreenchange@window->media-player#fullscreenChange ' \
-                  'auth-success@window->media-player#initializeVideoJSPlayer'
-        },
         poster: poster_url_for,
         controls: 'controls',
         class: 'sul-embed-media-file',
