@@ -2,8 +2,8 @@
 
 import Mirador, { getExportableState } from 'mirador'
 import { miradorImageToolsPlugin } from 'mirador-image-tools'
-import { miradorSharePlugin, miradorShareDialog as miradorShareDialogPlugin } from 'mirador-share-plugin'
-import { miradorDownloadPlugin, MiradorDownloadDialogPlugin as miradorDownloadDialogPlugin } from 'mirador-dl-plugin'
+import { miradorSharePlugin, miradorShareDialogPlugin } from 'mirador-share-plugin'
+import { miradorDownloadPlugin, miradorDownloadDialogPlugin } from 'mirador-dl-plugin'
 import shareMenuPlugin from '../plugins/shareMenuPlugin'
 import embedModePlugin from '../plugins/embedModePlugin'
 import analyticsPlugin from '../plugins/analyticsPlugin'
