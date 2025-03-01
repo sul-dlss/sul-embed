@@ -7,7 +7,7 @@ export default class extends Controller {
   firstFile = '' // for multiple files we need to be able to render the first on load
 
   addPostCallbackListener() {
-    const permittedOrigins = ["https://stacks.stanford.edu", "https://sul-stacks-stage.stanford.edu", "https://sul-stacks-uat.stanford.edu"]
+    const permittedOrigins = ["https://stacks.stanford.edu", "https://sul-stacks-stage.stanford.edu", "https://stacks-uat.stanford.edu"]
     window.addEventListener("message", (event) => {
       console.debug("Post message", event.data)
       if (!permittedOrigins.includes(event.origin)) {
@@ -20,7 +20,7 @@ export default class extends Controller {
       } else {
         this.cacheToken(event.data.accessToken, event.data.expiresIn)
         this.queryProbeService(event.data.messageId, event.data.accessToken)
-          .then((contentResourceId) => this.renderViewer(contentResourceId))
+          .then((result) => this.renderViewer(result))
           .catch((json) => console.error("no access", json))
       }
     }, false)
@@ -29,8 +29,8 @@ export default class extends Controller {
   // iterate over all files in the IIIF manifest and try to draw them
   // this method is called by stimulus in the content type component after the IIIF manifest is loaded
   parseFiles(evt) {
-    const document = evt.detail
-    const canvases = document.items
+    const manifest = evt.detail
+    const canvases = manifest.items
     this.addPostCallbackListener()
     const resources = canvases.flatMap((canvas) => {
       const annotationPages = canvas.items
@@ -51,22 +51,28 @@ export default class extends Controller {
     console.debug("Now figure out if we can render", contentResource)
     if (!contentResource.service) {
       // no auth service is present, just render the resource
-      this.renderViewer(contentResource.id)
+      this.renderViewer({ contentResourceId: contentResource.id })
     } else {
       // auth service is present, check the probe service to see what we need to do to access the resource
       const probeService = contentResource.service.find((service) => service.type === "AuthProbeService2")
       if (probeService)
         this.checkAuthorization(probeService, contentResource.id)
-      else
-        throw(`Access service exists, but no probe service found for ${contentResource.id}`)
+      else {
+        console.warn(`Access service exists, but no probe service found for ${contentResource.id}`)
+      }
     }
   }
 
   // Render the resource by sending an event to stimulus; the relevant content type component must catch this
   // event, and call a method for that partcular content type (e.g. pdf/media) that knows how to render content
-  renderViewer(fileUri) {
+  // If location is provided, we should use that url to access the resource. https://iiif.io/api/auth/2.0/#location
+  renderViewer(result) {
+    const fileUri = result.contentResourceId
+    console.log("In render viewer")
     if (fileUri == this.firstFile){
-      window.dispatchEvent(new CustomEvent('auth-success', { detail: fileUri }))
+      console.log("Sending auth-success event ", result.location)
+
+      window.dispatchEvent(new CustomEvent('auth-success', { detail: { fileUri: fileUri, location: result.location } }))
       // use filename because url in contents adds druid: to the data-url
       const filename = fileUri.split("/").slice(-1)[0]
       const contentItem = document.querySelector(`[data-url*="${filename}"]`)
@@ -113,7 +119,7 @@ export default class extends Controller {
   checkAuthorization(probeService, contentResourceId) {
     // We're going to make the assumption that calling the probe without a token is going to fail.
     // So we'll just get the token first.
-    console.debug("Probe service:", probeService)
+    console.debug("Found probe service:", probeService)
     const accessService = this.findAccessService(probeService)
 
     const messageId = Math.random().toString(36).slice(2) // create a random key for this resource to reference later
@@ -126,20 +132,15 @@ export default class extends Controller {
     // to get the login message and URL needed to show to the user.
     // https://stacks.stanford.edu/iiif/auth/v2/probe?id=FULL_PATH_TO_FILE
     this.queryProbeService(messageId)
-      .then((contentResourceId) => this.renderViewer(contentResourceId))
+      .then((result) => this.renderViewer(result))
       .catch((json) => {
-        // TODO: deal with media authentication if we abandon media specific auth controllers
-        if (json.status == 302) return // media file probe requests return a 302 instead of a 200
-                                       // with a link to the media server file location (and media token)
-                                       // and this can happen with a non-media object that happens to have
-                                       // a media file in it, e.g. ds777pr3860
         console.debug("Probe failed or access denied/restricted", json)
         // Check if non-expired token already exists in local storage,
         // and if it exists, query probe service with it
         const token = this.getCachedToken()
         if (token) {
           this.queryProbeService(messageId, token)
-            .then((contentResourceId) => this.renderViewer(contentResourceId))
+            .then((result) => this.renderViewer(result))
             .catch((json) => {
               console.debug("Probe with cached token failed", json)
               this.queryAccessService(accessService, messageId)
@@ -192,15 +193,18 @@ export default class extends Controller {
   // NOTE: Token is optional
   queryProbeService(messageId, token) {
     const resource = this.resources[messageId]
-    console.debug("Trying probe service with ", token)
+    console.debug("Trying probe service with token: ", token)
     const headers = {}
     if (token) {
       headers['Authorization'] = `Bearer ${token}`
     }
     const contentResourceId = resource.contentResourceId
+    console.log("Fetching probe service", resource.probeService.id)
     return fetch(resource.probeService.id, { headers })
       .then((response) => response.json())
-      .then((json) => new Promise((resolve, reject) => json.status === 200 ? resolve(contentResourceId) : reject(json)))
+      .then((json) => new Promise((resolve, reject) => {
+        return (json.status === 200 || json.status === 302) ? resolve({ contentResourceId, location: json.location?.id }) : reject(json)
+      } ) )
   }
 
   // Fetch a token for the provided resource
