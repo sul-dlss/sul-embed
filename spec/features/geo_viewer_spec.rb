@@ -33,17 +33,14 @@ RSpec.describe 'geo viewer', :js do
     end
 
     it 'download toolbar/panel is present with download links' do
-      find('button#sul-embed-download-panel-toggle').click
-      expect(find('.sul-embed-download-panel', visible: :all).find('.sul-embed-panel-body', visible: :all)).to have_css('li', count: 1, text: 'data.zip')
-    end
+      click_on 'Share & download'
+      click_on 'Download'
+      within 'dialog' do
+        expect(page).to have_link 'Download data.zip'
+        expect(page).to have_link 'Download zip of all files'
 
-    it 'includes proper attributes for a _blank target on the download links' do
-      find('button#sul-embed-download-panel-toggle').click
-      expect(find('.sul-embed-download-panel', visible: :all).find('.sul-embed-panel-body', visible: :all)).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 3)
-    end
-
-    it 'download all file link is present' do
-      expect(page).to have_css('#sul-embed-footer-download-all')
+        expect(page).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 2)
+      end
     end
 
     it 'shows the sidebar with attribute information after map is clicked', skip: 'flappy; see https://github.com/sul-dlss/sul-embed/issues/2141' do

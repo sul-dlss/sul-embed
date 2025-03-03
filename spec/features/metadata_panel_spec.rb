@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'metadata panel', :js do
+RSpec.describe 'metadata panel', :js, skip: 'legacy only' do
   let(:request) do
     Embed::Request.new(
       { url: 'http://purl.stanford.edu/abc123' },
