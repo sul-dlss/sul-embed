@@ -105,7 +105,7 @@ body {
     max-width: var(--modal-max-width);
     width: 79vw;
     max-height: 79vh;
-    padding: 2rem;
+    padding: 0px;
     margin: auto;
     border: none;
     border-radius: var(--modal-border-radius);
@@ -115,21 +115,43 @@ body {
       background-color: rgba(0, 0, 0, 0.5);
     }
 
-    header {
+    .modal-header {
       color: var(--text-color);
       font-weight: 400;
       font-size: 18pt;
-      margin-bottom: 1rem;
+      padding: 2rem 2rem 1rem;
+    }
+
+    .modal-main {
+      color: var(--text-color);
+      max-height: 35vh;
+      overflow-y: auto;
+      padding: 0 2rem;
+
+      svg {
+        vertical-align: middle;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0px;
+
+        li {
+          margin-left: var(--drawer-content-padding);
+          margin-bottom: 1rem;
+        }
+      }
+    }
+
+    .modal-footer {
+      button {
+        padding: 1rem 2rem 2rem;
+      }
     }
 
     .sul-embed-options-label {
       margin-top: 1rem;
       margin-bottom: 1rem;
-    }
-
-    .sul-embed-embed-this-form,
-    .sul-embed-downloads {
-      color: var(--text-color);
     }
 
     .sul-embed-embed-this-form {
@@ -154,22 +176,6 @@ body {
 
       #sul-embed-iframe-code {
         height: 7rem;
-      }
-    }
-
-    .sul-embed-downloads {
-      height: auto;
-      overflow-y: scroll;
-      margin-bottom: 1rem;
-
-      ul {
-        list-style: none;
-        padding: 0px;
-
-        li {
-          margin-left: var(--drawer-content-padding);
-          margin-bottom: 1rem;
-        }
       }
     }
 

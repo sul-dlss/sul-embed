@@ -74,18 +74,32 @@
     <% end %>
   </dialog>
 
-  <dialog aria-labelledby="share-modal-header" class="modal-container" data-companion-window-target="shareModal" data-action="click->companion-window#handleBackdropClicks" id="share">
-    <header class="modal-header" id="share-modal-header">
+  <%= render DialogComponent.new(dialog_id: 'share', stimulus_target: 'shareModal') do |component| %>
+    <%= component.with_header do %>
       Share
-    </header>
+    <% end %>
 
-    <%= render Media::EmbedThisFormComponent.new(viewer:) %>
+    <%= component.with_main do %>
+      <%= render Media::EmbedThisFormComponent.new(viewer:) %>
+    <% end %>
 
-    <button data-action="click->companion-window#closeModal">Close</button>
-  </dialog>
+    <%= component.with_footer do %>
+      <button data-action="click->companion-window#closeModal">Close</button>
+    <% end %>
+  <% end %>
 
-  <%= render Download::DialogComponent.new do %>
-    <%= render Download::FileListComponent.new(viewer:) %>
+  <%= render DialogComponent.new(dialog_id: 'download', stimulus_target: 'downloadModal') do |component| %>
+    <%= component.with_header do %>
+      Download
+    <% end %>
+
+    <%= component.with_main do %>
+      <%= render Download::FileListComponent.new(viewer:) %>
+    <% end %>
+
+    <%= component.with_footer do %>
+      <button data-action="click->companion-window#closeModal">Close</button>
+    <% end %>
   <% end %>
 
   <%= dialog %>
