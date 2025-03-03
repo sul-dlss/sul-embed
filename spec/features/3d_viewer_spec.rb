@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe '3D Viewer', :js do
-  let(:purl) { build(:purl, type: '3d') }
+  let(:purl) { build(:purl, :model_3d) }
 
   before do
     allow(Embed::Purl).to receive(:find).and_return(purl)
