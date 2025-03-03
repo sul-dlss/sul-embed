@@ -60,5 +60,6 @@ locations:
   art: "Art Library"
   hoover: "Hoover Library"
   m&m: "Media & Microtext"
+  fallback: site visitors to the Stanford Libraries # value used if no other value is found
 
 fullscreen_hide: iPhone|iPad
