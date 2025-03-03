@@ -9,11 +9,11 @@
 
   <% component.with_authorization_messages do %>
     <div role="banner" aria-label="Access message">
-      <%- This banner includes a login component that JavaScript will display if login is required -%>
+      <%# This banner includes a login component that JavaScript will display if login is required. %>
       <%= render LoginComponent.new %>
-      <%- If the viewer content is not available at all, the content not available banner will display. -%>
+      <%# If the viewer content is not available at all, the content not available banner will display. %>
       <%= render CompanionWindows::ContentNotAvailableComponent.new unless viewer.available? %>
-      <%- If the object is location restricted, we will show the location restriction banner even if the user is at the location. -%>
+      <%# If the object is location restricted, we will show the location restriction banner even if the user is at the location. %>
       <%= render LocationRestrictionComponent.new(viewer.restricted_location) if viewer.location_restricted? %>
     </div>
   <% end %>
