@@ -1,4 +1,5 @@
 .locked-status {
+  display: block;
   overflow: hidden;
   height: 100%;
   text-align: center;
