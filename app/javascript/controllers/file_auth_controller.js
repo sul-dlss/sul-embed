@@ -281,6 +281,8 @@ export default class extends Controller {
   }
 
   // Checks the result of the probe auth request to see if access is restricted to location
+  // This code depends on the text returned by probe service, so changes to the heading
+  // should be reflected here as well.
   isLocationRestricted(json) {
     if(json.status == "401" && 'heading' in json && 'en' in json.heading && json.heading.en.length
       && json.heading.en[0].startsWith('Content is restricted to location'))
