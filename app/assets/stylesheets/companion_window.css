@@ -126,6 +126,22 @@ body {
       max-height: 60vh;
       overflow-y: auto;
       padding: 0 2rem;
+    
+      /* Scroll hint borrowed from Mirador */
+      /* https://github.com/ProjectMirador/mirador/blob/5b8f60b4d0c923979c2ece2c4bbc07a0110b3638/src/components/ScrollIndicatedDialogContent.jsx#L29 */
+      background:
+        linear-gradient(rgb(255,255,255) 30%, rgba(255, 255, 255, 0)), 
+        linear-gradient(rgba(255, 255, 255, 0), rgb(255,255,255) 70%) 0 100%,
+        radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)),
+        radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, .2), rgba(0, 0, 0, 0)) 0 100%;
+      background-attachment: local, local, scroll, scroll;
+      background-repeat: no-repeat;
+      background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
+
+      textarea, input {
+        /* Needed to allow the scroll hint to appear through the textarea and input */
+        background: none;
+      }
 
       svg {
         vertical-align: middle;
