@@ -41,6 +41,10 @@ module Embed
       download == 'world'
     end
 
+    def citation_only?
+      view == 'citation-only'
+    end
+
     def hierarchical_contents
       @hierarchical_contents ||= Embed::HierarchicalContents.contents(contents)
     end

@@ -20,6 +20,7 @@
 
   <% component.with_authorization_messages do %>
     <%= render Document::AuthMessagesComponent.new(message:) %>
+    <%= render CompanionWindows::ContentNotAvailableComponent.new if viewer.purl_object.citation_only? %>
   <% end %>
 
   <% component.with_body do %>
