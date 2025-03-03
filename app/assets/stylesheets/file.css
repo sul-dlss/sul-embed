@@ -5,6 +5,12 @@
   color: gray;
 }
 
+#sul-embed-min_files_to_search {
+  width: 2em;
+  padding: 0;
+  margin: 0;
+}
+
 .search-query-form {
   border: 1px solid #ababa9;
   border-radius: 0.25rem;
