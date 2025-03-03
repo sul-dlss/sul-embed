@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe EmbedPanelComponent, type: :component do
+RSpec.describe Legacy::EmbedPanelComponent, type: :component do
   before do
     render_inline(described_class.new(viewer:)) { 'Added Panel Content' }
   end
