@@ -12,7 +12,7 @@ module Embed
       def message
         return { type: 'embargo', message: embargo_message } if @purl_object.embargoed?
 
-        if @purl_object.stanford_only_unrestricted?
+        if @purl_object.stanford_download?
           return { type: 'stanford',
                    message: I18n.t('restrictions.stanford_only_file') }
         end
@@ -37,7 +37,7 @@ module Embed
       def embargo_message
         message = []
 
-        message << if @purl_object.stanford_only_unrestricted?
+        message << if @purl_object.stanford_download?
                      'Access is restricted to Stanford-affiliated patrons'
                    else
                      'Access is restricted'
