@@ -10,7 +10,7 @@ RSpec.describe Embed::Viewer::ModelViewer do
       Embed::Purl,
       contents: [
         instance_double(Embed::Purl::Resource, three_dimensional?: true,
-                                               files: [instance_double(Embed::Purl::ResourceFile, title: 'obj1.glb', file_url: '//file/druid:abc123/obj1.glb', downloadable?: true)])
+                                               files: [instance_double(Embed::Purl::ResourceFile, title: 'obj1.glb', file_url: '//file/druid:abc123/obj1.glb', no_download?: false)])
       ],
       druid: 'abc123'
     )
