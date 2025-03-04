@@ -15,10 +15,10 @@
 
 .sul-embed-geo-sidebar {
   background: white;
-  min-height: 50px;
+  height: auto;
   position: absolute;
   right: 0;
-  width: 300px;
+  width: 250px;
 
   [aria-expanded="false"] {
     svg {
@@ -28,7 +28,7 @@
 }
 
 .sul-embed-geo-sidebar-header {
-  padding: 10px;
+  padding: 0px 10px;
 
   button {
     height: 2rem;
@@ -60,13 +60,13 @@
     width: 100%;
 
     dt {
-      flex: 0 0 33%;
+      flex: 0 0 35%;
       overflow: scroll;
       text-overflow: ellipsis;
     }
 
     dd {
-      flex: 0 0 66%;
+      flex: 0 0 64%;
       margin-left: auto;
       overflow: scroll;
       text-align: left;
