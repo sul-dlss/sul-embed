@@ -60,7 +60,7 @@ RSpec.describe 'geo viewer', :js do
   end
 
   context 'with restricted purl' do
-    let(:purl) { build(:purl, :geo, public: false) }
+    let(:purl) { build(:purl, :geo, download: 'stanford') }
 
     before do
       visit_iframe_response

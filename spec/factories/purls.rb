@@ -15,11 +15,7 @@ FactoryBot.define do
 
     trait :embargoed_stanford do
       embargoed
-      stanford_only_unrestricted { true }
-    end
-
-    trait :public do
-      public { true }
+      download { 'stanford' }
     end
 
     trait :file do
@@ -51,7 +47,7 @@ FactoryBot.define do
       druid { 'cz128vq0535' }
       type { 'geo' }
       bounding_box { [['-1.478794', '29.572742'], ['4.234077', '35.000308']] }
-      public { true }
+      download { 'world' }
       contents { [build(:resource, :file, files: [build(:resource_file, :world_downloadable, filename: 'data.zip'), build(:resource_file, :world_downloadable, filename: 'data_EPSG_4326.zip')]), build(:resource, :image)] }
     end
 

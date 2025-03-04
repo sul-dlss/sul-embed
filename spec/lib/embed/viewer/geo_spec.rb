@@ -21,7 +21,7 @@ RSpec.describe Embed::Viewer::Geo do
     subject(:options) { geo_viewer.map_element_options }
 
     context 'with public content' do
-      let(:purl) { build(:purl, bounding_box: [['-1.478794', '29.572742'], ['4.234077', '35.000308']], public: true) }
+      let(:purl) { build(:purl, bounding_box: [['-1.478794', '29.572742'], ['4.234077', '35.000308']], download: 'world') }
 
       it 'has the required options' do
         expect(options).to include({ style: 'flex: 1', id: 'sul-embed-geo-map',
@@ -32,7 +32,7 @@ RSpec.describe Embed::Viewer::Geo do
     end
 
     context 'with restricted content' do
-      let(:purl) { build(:purl, bounding_box: [['38.298673', '-123.387626'], ['39.399103', '-122.528843']], public: false) }
+      let(:purl) { build(:purl, bounding_box: [['38.298673', '-123.387626'], ['39.399103', '-122.528843']], download: 'stanford') }
 
       it 'has the required options' do
         expect(options).to include({ style: 'flex: 1', id: 'sul-embed-geo-map',
