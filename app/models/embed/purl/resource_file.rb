@@ -36,8 +36,10 @@ module Embed
         uri.to_s
       end
 
+      # @return [String] the URL for the file in stacks.  We don't add a druid: prefix, so that the file URLs are
+      #                  consistent with how the URLs are formed in a IIIF manifest
       def stacks_url
-        "#{Settings.stacks_url}/file/druid:#{@druid}"
+        "#{Settings.stacks_url}/file/#{@druid}"
       end
 
       def versioned_stacks_url

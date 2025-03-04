@@ -34,7 +34,7 @@ RSpec.describe Legacy::Download::GeoComponent, type: :component do
 
     it 'generates a file list' do
       expect(page).to have_css 'li', visible: :all, count: 3
-      expect(page).to have_link href: 'https://stacks.stanford.edu/file/druid:bc123df4567/data.zip?download=true', visible: :all
+      expect(page).to have_link href: 'https://stacks.stanford.edu/file/bc123df4567/data.zip?download=true', visible: :all
     end
   end
 
