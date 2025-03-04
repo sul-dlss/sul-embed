@@ -7,7 +7,7 @@ export default class extends Controller {
   firstFile = '' // for multiple files we need to be able to render the first on load
 
   addPostCallbackListener() {
-    const permittedOrigins = ["https://stacks.stanford.edu", "https://sul-stacks-stage.stanford.edu", "https://sul-stacks-uat.stanford.edu"]
+    const permittedOrigins = ["https://stacks.stanford.edu", "https://sul-stacks-stage.stanford.edu", "https://stacks-uat.stanford.edu"]
     window.addEventListener("message", (event) => {
       console.debug("Post message", event.data)
       if (!permittedOrigins.includes(event.origin)) {
