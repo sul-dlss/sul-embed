@@ -3,11 +3,12 @@
 module Document
   # Draws the content list for the Document viewer
   class ContentListItemComponent < ViewComponent::Base
-    def initialize(content_list_item:, viewer:)
+    def initialize(content_list_item:, viewer:, content_list_item_counter:)
       @file = content_list_item
       @viewer = viewer
+      @index = content_list_item_counter
     end
-    attr_reader :file, :viewer
+    attr_reader :file, :viewer, :index
 
     def url
       file.file_url
@@ -15,6 +16,13 @@ module Document
 
     def download_label
       file.label_or_filename
+    end
+
+    def classes
+      default_classes = 'file-thumb'
+      return default_classes unless index.zero?
+
+      "#{default_classes} active"
     end
 
     # NOTE: when other content types make use of this component, add other JS methods to the content_list_controller.js

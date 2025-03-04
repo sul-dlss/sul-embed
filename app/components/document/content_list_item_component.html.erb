@@ -1,6 +1,5 @@
-<li class="file-thumb" aria-controls="main-display" data-action="click->content-list#<%= show_method %> keydown.enter->content-list#<%= show_method %>" data-url="<%= url %>" role="tab" tabindex="0">
+<li class="<%= classes %>" aria-controls="main-display" <%= 'aria-selected=true' if index.zero? %> data-action="click->content-list#<%= show_method %> keydown.enter->content-list#<%= show_method %>" data-url="<%= url %>" role="tab" tabindex="0">
   <%= render file_type_icon.new %>
-
   <span class="su-underline">
     <%= download_label %>
   </span>
