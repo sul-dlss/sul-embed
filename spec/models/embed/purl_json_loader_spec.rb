@@ -66,6 +66,12 @@ RSpec.describe Embed::PurlJsonLoader do
         it { is_expected.to include({ embargoed: true, restricted_location: 'Special Collections reading room', embargo_release_date: '2053-12-21', download: 'location-based' }) }
       end
 
+      context "with a location we don't know about" do
+        let(:json) { location_embargoed_file_purl_json.sub('spec', 'spork') }
+
+        it { is_expected.to include({ embargoed: true, restricted_location: 'site visitors to the Stanford Libraries' }) }
+      end
+
       context 'with a was seed' do
         let(:json) { was_seed_purl_json }
 
