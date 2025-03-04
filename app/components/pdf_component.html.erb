@@ -21,7 +21,7 @@
         <% if viewer.available? %>
           <div class="sul-embed-pdf" style="height: 100%"
             data-controller="pdf"
-            data-action="iiif-manifest-received@window->file-auth#parseFiles auth-success@window->pdf#show">
+            data-action="thumbnail-clicked@window->file-auth#authFileAndDisplay iiif-manifest-received@window->file-auth#parseFiles auth-success@window->pdf#show">
           </div>
         <% end %>
       </div>

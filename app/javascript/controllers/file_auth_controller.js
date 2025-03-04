@@ -4,7 +4,6 @@ export default class extends Controller {
   static targets = ["container", "loginPanel", "messagePanel", "loginButton", "loginMessage"]
 
   resources = {} // Hash of messageIds to resources
-  firstFile = '' // for multiple files we need to be able to render the first on load
 
   addPostCallbackListener() {
     const permittedOrigins = ["https://stacks.stanford.edu", "https://sul-stacks-stage.stanford.edu", "https://sul-stacks-uat.stanford.edu"]
@@ -32,18 +31,26 @@ export default class extends Controller {
     const manifest = evt.detail
     const canvases = manifest.items
     this.addPostCallbackListener()
-    const resources = canvases.flatMap((canvas) => {
+    this.documents = canvases.flatMap((canvas) => {
       const annotationPages = canvas.items
       return annotationPages.flatMap((annotationPage) => {
         const paintingAnnotations = annotationPage.items.filter((annotation) => annotation.motivation === "painting")
         return paintingAnnotations.map((annotation) => {
           const contentResource = annotation.body
-          this.maybeDrawContentResource(contentResource)
           return contentResource
         })
       })
     })
-    this.firstFile = resources[0]['id']
+    this.maybeDrawContentResource(this.documents[0]) // cause login to first resource
+  }
+
+  // Triggered when clicking on a thumbnail
+  authFileAndDisplay(event) {
+    const document = this.documents.find((document) => document.id == event.detail.fileUri)
+    if (document)
+      this.maybeDrawContentResource(document)
+    else
+      throw("No document found for", event.detail.fileUri)
   }
 
   // Try to render the resource, checks for any required authorization and shows login window if needed
@@ -62,17 +69,16 @@ export default class extends Controller {
     }
   }
 
+  // This is called after we have done authorization and we want to display the first resource to the user.
   // Render the resource by sending an event to stimulus; the relevant content type component must catch this
   // event, and call a method for that partcular content type (e.g. pdf/media) that knows how to render content
   renderViewer(fileUri) {
-    if (fileUri == this.firstFile){
-      window.dispatchEvent(new CustomEvent('auth-success', { detail: fileUri }))
-      // use filename because url in contents adds druid: to the data-url
-      const filename = fileUri.split("/").slice(-1)[0]
-      const contentItem = document.querySelector(`[data-url*="${filename}"]`)
-      if (contentItem){
-        contentItem.parentElement.classList.add('active')
-      }
+    window.dispatchEvent(new CustomEvent('auth-success', { detail: fileUri }))
+    // use filename because url in contents adds druid: to the data-url
+    const filename = fileUri.split("/").slice(-1)[0]
+    const contentItem = document.querySelector(`[data-url*="${filename}"]`)
+    if (contentItem){
+      contentItem.parentElement.classList.add('active')
     }
   }
 
@@ -215,9 +221,6 @@ export default class extends Controller {
 
   // Show login message and link provided by auth service
   loginNeeded(activeAccessService, messageId) {
-    // we want to ensure that show the login for the first resource
-    if (this.resources[messageId].contentResourceId !== this.firstFile) return
-
     // This allows the lock window to show
     const event = new CustomEvent('auth-denied', { activeAccessService: activeAccessService })
     window.dispatchEvent(event)
