@@ -30,7 +30,8 @@ export default class extends Controller {
   showPdf(evt) {
     evt.preventDefault()
     const fileUri = evt.currentTarget.dataset.url
-    window.dispatchEvent(new CustomEvent('auth-success', { detail: fileUri }))
+    const event = new CustomEvent('thumbnail-clicked', { detail: { index: evt.params.index, fileUri: fileUri } })
+    window.dispatchEvent(event)
 
     const fileThumbActive = document?.querySelector('.file-thumb.active')
     if (fileThumbActive){
