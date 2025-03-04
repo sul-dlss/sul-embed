@@ -29,8 +29,8 @@ export default class extends Controller {
   // iterate over all files in the IIIF manifest and try to draw them
   // this method is called by stimulus in the content type component after the IIIF manifest is loaded
   parseFiles(evt) {
-    const document = evt.detail
-    const canvases = document.items
+    const manifest = evt.detail
+    const canvases = manifest.items
     this.addPostCallbackListener()
     const resources = canvases.flatMap((canvas) => {
       const annotationPages = canvas.items

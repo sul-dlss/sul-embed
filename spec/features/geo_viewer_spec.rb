@@ -60,7 +60,7 @@ RSpec.describe 'geo viewer', :js do
   end
 
   context 'with restricted purl' do
-    let(:purl) { build(:purl, :geo, public: false) }
+    let(:purl) { build(:purl, :geo, download: 'stanford') }
 
     before do
       visit_iframe_response
@@ -106,7 +106,7 @@ RSpec.describe 'geo viewer', :js do
           # find this svg element on the page.
           # We also need to explicitly wait for the JS to run.
           expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
-          expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/druid:ts545zc6250/#{filename}\"]"
+          expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/ts545zc6250/#{filename}\"]"
           # only count paths within .leaflet-overlay-pane for testing
           # (page.body contains SVG logos we don't care to count)
           find '.leaflet-overlay-pane'
@@ -124,7 +124,7 @@ RSpec.describe 'geo viewer', :js do
           # find this svg element on the page.
           # We also need to explicitly wait for the JS to run.
           expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
-          expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/druid:ts545zc6250/#{filename}\"]"
+          expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/ts545zc6250/#{filename}\"]"
         end
       end
     end

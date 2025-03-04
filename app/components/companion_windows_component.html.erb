@@ -17,7 +17,9 @@
     </nav>
   </header>
 
-  <%= authorization_messages %>
+  <div role="banner" aria-label="Access message">
+    <%= authorization_messages %>
+  </div>
 
   <div class="companion-window-component-body">
     <aside class="left-drawer collapse" data-companion-window-target="leftDrawer" id="left-drawer" aria-label="Sidebar" style="visibility: hidden">
@@ -80,7 +82,7 @@
     <% end %>
 
     <%= component.with_main do %>
-      <%= render Media::EmbedThisFormComponent.new(viewer:) %>
+      <%= render EmbedThisFormComponent.new(viewer:) %>
     <% end %>
 
     <%= component.with_footer do %>

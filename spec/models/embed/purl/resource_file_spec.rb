@@ -28,19 +28,19 @@ RSpec.describe Embed::Purl::ResourceFile do
     let(:resource) { instance_double(Embed::Purl::Resource, druid: 'abc123') }
     let(:resource_file) { described_class.new(druid: 'abc123', filename:) }
 
-    it 'creates a stacks file url' do
-      expect(resource_file.file_url).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file'
+    it 'creates a stacks file url without a prefix' do
+      expect(resource_file.file_url).to eq 'https://stacks.stanford.edu/file/abc123/cool_file'
     end
 
     it 'adds a download param' do
-      expect(resource_file.file_url(download: true)).to eq 'https://stacks.stanford.edu/file/druid:abc123/cool_file?download=true'
+      expect(resource_file.file_url(download: true)).to eq 'https://stacks.stanford.edu/file/abc123/cool_file?download=true'
     end
 
     context 'when there are special characters in the file name' do
       let(:filename) { '[Dissertation] micro-TEC vfinal (for submission)-augmented.pdf' }
 
       it 'escapes them' do
-        expect(resource_file.file_url).to eq 'https://stacks.stanford.edu/file/druid:abc123/%5BDissertation%5D%20micro-TEC%20vfinal%20%28for%20submission%29-augmented.pdf'
+        expect(resource_file.file_url).to eq 'https://stacks.stanford.edu/file/abc123/%5BDissertation%5D%20micro-TEC%20vfinal%20%28for%20submission%29-augmented.pdf'
       end
     end
 
@@ -49,7 +49,7 @@ RSpec.describe Embed::Purl::ResourceFile do
 
       it 'allows them' do
         expect(resource_file.file_url)
-          .to eq 'https://stacks.stanford.edu/file/druid:abc123/path/to/%5BDissertation%5D%20micro-TEC%20vfinal%20%28for%20submission%29-augmented.pdf'
+          .to eq 'https://stacks.stanford.edu/file/abc123/path/to/%5BDissertation%5D%20micro-TEC%20vfinal%20%28for%20submission%29-augmented.pdf'
       end
     end
   end

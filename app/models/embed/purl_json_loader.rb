@@ -28,9 +28,9 @@ module Embed
         embargoed:,
         location_restriction:,
         restricted_location:,
-        stanford_only_unrestricted:,
-        controlled_digital_lending:,
-        public:
+        download:,
+        view:,
+        controlled_digital_lending:
       }
     end
 
@@ -66,16 +66,16 @@ module Embed
       fallback_message
     end
 
-    def stanford_only_unrestricted
-      json.dig('access', 'download') == 'stanford'
+    def download
+      json.dig('access', 'download')
+    end
+
+    def view
+      json.dig('access', 'view')
     end
 
     def controlled_digital_lending
       json.dig('access', 'controlledDigitalLending')
-    end
-
-    def public
-      json.dig('access', 'download') == 'world'
     end
 
     def archived_site_url

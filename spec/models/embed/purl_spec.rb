@@ -67,20 +67,6 @@ RSpec.describe Embed::Purl do
     end
   end
 
-  describe '#public?' do
-    context 'when an item is public' do
-      subject(:purl) { described_class.new(public: true) }
-
-      it { is_expected.to be_public }
-    end
-
-    context 'when an item is not public' do
-      subject(:purl) { described_class.new(public: false) }
-
-      it { is_expected.not_to be_public }
-    end
-  end
-
   describe 'embargo_release_date' do
     let(:purl) { described_class.new(embargo_release_date: '2053-12-21') }
 

@@ -44,11 +44,11 @@
   <% end %>
 
   <% component.with_authorization_messages do %>
-    <div data-controller="auth-restriction" data-action="auth-denied@window->auth-restriction#displayMessage auth-stanford-restricted@window->auth-restriction#displayStanfordRestriction auth-success@window->auth-restriction#hideLoginPrompt" hidden="true" role="banner" aria-label="Access message">
+    <div data-controller="auth-restriction" data-action="auth-denied@window->auth-restriction#displayMessage auth-stanford-restricted@window->auth-restriction#displayStanfordRestriction auth-success@window->auth-restriction#hideLoginPrompt" hidden="true">
       <div data-auth-restriction-target="locationRestriction" hidden>
         <div class="authLinkWrapper">
           <%= render Icons::LockGlobeComponent.new %>
-          <p class="loginMessage"><%= I18n.t('restrictions.restricted_access', location: purl_object.restricted_location) %></p>
+          <p class="loginMessage">Access is restricted to the reading room. See Access conditions for more information.</p>
         </div>
       </div>
       <div data-auth-restriction-target="stanfordRestriction" hidden>

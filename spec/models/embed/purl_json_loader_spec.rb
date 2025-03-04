@@ -31,7 +31,7 @@ RSpec.describe Embed::PurlJsonLoader do
       context 'with a public purl with file type' do
         let(:json) { file_purl_json }
 
-        it { is_expected.to include({ title: 'File Title', type: 'file', embargoed: false, public: true }) }
+        it { is_expected.to include({ title: 'File Title', type: 'file', embargoed: false, download: 'world' }) }
 
         it 'has contents' do
           expect(data[:contents]).to all(be_a(Embed::Purl::Resource))
@@ -41,7 +41,7 @@ RSpec.describe Embed::PurlJsonLoader do
       context 'with a public purl with collection type' do
         let(:json) { collection_purl_json }
 
-        it { is_expected.to include({ title: 'captioned media', type: 'collection', embargoed: false, public: false }) }
+        it { is_expected.to include({ title: 'captioned media', type: 'collection', embargoed: false, download: nil }) }
 
         it 'has empty contents' do
           expect(data[:contents]).to all(be_a(Embed::Purl::Resource))
@@ -51,19 +51,19 @@ RSpec.describe Embed::PurlJsonLoader do
       context 'with a stanford only purl with file type' do
         let(:json) { stanford_restricted_file_purl_json }
 
-        it { is_expected.to include({ type: 'file', embargoed: false, public: false, stanford_only_unrestricted: true }) }
+        it { is_expected.to include({ type: 'file', embargoed: false, download: 'stanford', view: 'stanford' }) }
       end
 
       context 'with an embargoed purl with file type' do
         let(:json) { embargoed_file_purl_json }
 
-        it { is_expected.to include({ embargoed: true, embargo_release_date: '2053-12-21', public: false }) }
+        it { is_expected.to include({ embargoed: true, embargo_release_date: '2053-12-21', download: 'stanford' }) }
       end
 
       context 'with a location based embargoed purl' do
         let(:json) { location_embargoed_file_purl_json }
 
-        it { is_expected.to include({ embargoed: true, restricted_location: 'Special Collections reading room', embargo_release_date: '2053-12-21', public: false }) }
+        it { is_expected.to include({ embargoed: true, restricted_location: 'Special Collections reading room', embargo_release_date: '2053-12-21', download: 'location-based' }) }
       end
 
       context 'with a was seed' do

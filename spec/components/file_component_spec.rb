@@ -95,7 +95,7 @@ RSpec.describe FileComponent, type: :component do
 
     it 'adds a Stanford specific embargo message with links still present' do
       expect(page).to have_css('div[aria-label="Access message"]', visible: :all, text: 'Access is restricted to Stanford-affiliated patrons until 21-Dec-2053')
-      expect(page).to have_css('tr[data-tree-role="leaf"] a[href="https://stacks.stanford.edu/file/druid:bc123df4567/Title%20of%20the%20PDF.pdf"]', visible: :all)
+      expect(page).to have_css('tr[data-tree-role="leaf"] a[href="https://stacks.stanford.edu/file/bc123df4567/Title%20of%20the%20PDF.pdf"]', visible: :all)
     end
 
     it 'includes an element with a stanford icon class (with screen reader text)' do
@@ -133,7 +133,7 @@ RSpec.describe FileComponent, type: :component do
 
       it 'leaves correctly formatted filenames alone' do
         link = page.find('tr[data-tree-role="leaf"] a', match: :first, visible: :all)
-        expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:bc123df4567/Title_of_the_PDF.pdf')
+        expect(link['href']).to eq('https://stacks.stanford.edu/file/bc123df4567/Title_of_the_PDF.pdf')
       end
     end
 
@@ -142,7 +142,7 @@ RSpec.describe FileComponent, type: :component do
 
       it 'encodes them' do
         link = page.find('tr[data-tree-role="leaf"] a', match: :first, visible: :all)
-        expect(link['href']).to eq('https://stacks.stanford.edu/file/druid:bc123df4567/%23Title%20of%20the%20PDF.pdf')
+        expect(link['href']).to eq('https://stacks.stanford.edu/file/bc123df4567/%23Title%20of%20the%20PDF.pdf')
       end
     end
   end

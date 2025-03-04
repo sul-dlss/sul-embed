@@ -17,7 +17,7 @@ module Embed
 
       def three_dimensional_files
         # we need downloadable files for the model viewer to render
-        purl_object.contents.select(&:three_dimensional?).map(&:files).flatten.select(&:downloadable?).map(&:file_url)
+        purl_object.contents.select(&:three_dimensional?).map(&:files).flatten.reject(&:no_download?).map(&:file_url)
       end
 
       def fullscreen?

@@ -9,7 +9,7 @@ RSpec.describe 'PDF Viewer', :js do
   end
 
   context 'when world visible' do
-    let(:purl) { build(:purl, :public, :document) }
+    let(:purl) { build(:purl, :document, download: 'world') }
 
     it 'renders the PDF viewer for documents' do
       expect(page).to have_css('.sul-embed-pdf')

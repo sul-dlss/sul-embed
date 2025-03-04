@@ -16,12 +16,10 @@ module Embed
 
     attr_accessor :druid, :version_id, :type, :title, :use_and_reproduction, :copyright, :contents, :collections,
                   :license, :bounding_box, :embargo_release_date, :archived_site_url, :external_url,
-                  :embargoed, :stanford_only_unrestricted, :public, :controlled_digital_lending,
+                  :embargoed, :download, :view, :controlled_digital_lending,
                   :etag, :last_modified, :location_restriction, :restricted_location
 
     alias embargoed? embargoed
-    alias stanford_only_unrestricted? stanford_only_unrestricted
-    alias public? public
     alias controlled_digital_lending? controlled_digital_lending
 
     # @param [String] druid a druid without a namespace (e.g. "sx925dc9385")
@@ -33,6 +31,18 @@ module Embed
     # @returns [Bool] does this have any resources that can be embeded?
     def valid?
       contents.any?
+    end
+
+    def stanford_download?
+      download == 'stanford'
+    end
+
+    def public?
+      download == 'world'
+    end
+
+    def citation_only?
+      view == 'citation-only'
     end
 
     def hierarchical_contents
