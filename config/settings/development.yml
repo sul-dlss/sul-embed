@@ -100,6 +100,8 @@ sandbox:
       purl: ck726bm9949
     - label: software + images
       purl: qp740dg4757
+    - label: location-restricted music, no download
+      purl: yv090xk3108
   geo:
     - label: Vector - public
       purl: cz128vq0535
@@ -132,8 +134,6 @@ sandbox:
       purl: ds777pr3860
     - label: multiple files, Stanford
       purl: gq661wq7355
-    - label: location-restricted music, no download
-      purl: yv090xk3108
   3d:
     - label: 3d
       purl: fs892sr8080
