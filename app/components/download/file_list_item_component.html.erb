@@ -2,6 +2,6 @@
   <a href='<%= url %>' target='_blank' rel='noopener noreferrer' class='su-underline' download>
     Download <%= download_label %>
   </a>
-  <%= render 'embed/restrictions_text_for_file', file: file %>
+  <%= render DownloadAccessComponent.new(file:) %>
   <%= file_size %>
 </li>

@@ -1,0 +1,7 @@
+  <% if file.location_restricted? %>
+    <span class="sul-embed-location-restricted-text">(Restricted)</span>
+  <% elsif file.stanford_only_downloadable? %>
+    <span class="sul-embed-stanford-only-text">
+      <span class="sul-embed-text-hide visually-hidden">Stanford only</span>
+    </span>
+  <% end %>

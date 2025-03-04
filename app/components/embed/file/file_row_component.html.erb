@@ -19,7 +19,7 @@
         <span class="su-underline">Download</span>
         <span class="sul-embed-sr-only visually-hidden"><%= title %></span>
       </a>
-      <%= render 'embed/restrictions_text_for_file', file: file %>
+      <%= render DownloadAccessComponent.new(file:) %>
     <% end %>
   </td>
 </tr>

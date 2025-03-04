@@ -4,5 +4,6 @@
   <span class="su-underline">
     <%= download_label %>
   </span>
-  <%= render 'embed/restrictions_text_for_file', file: file %>
+  <%# TODO, we should be using thumbnail.js instead of ViewAccessComponent. Currently only media is. %>
+  <%= render ViewAccessComponent.new(file:) %>
 </li>
