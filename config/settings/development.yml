@@ -4,13 +4,12 @@
 
 stacks_storage_root: "public/file"
 
-
 sandbox:
   image:
-    - label: 'Single image'
-      purl: 'sg052hd9120'
-    - label: 'Multi image'
-      purl: 'fw090jw3474'
+    - label: Single image
+      purl: sg052hd9120
+    - label: Multi image
+      purl: fw090jw3474
     - label: Book (multi image, paged viewing hint)
       purl: cy496ky1984
     - label: Image with restrictions
@@ -31,7 +30,7 @@ sandbox:
       purl: bc592pz8308
     - label: Map Multi-image
       purl: bc151bq1744
-    - label: location restricted - spec 
+    - label: location restricted - spec
       purl: bp158wj7223
     - label: parent record. 90 viewable children
       purl: qv033rw8765
@@ -87,7 +86,7 @@ sandbox:
       purl: bb010qz8357
     - label: File location restricted
       purl: bb012jz6387
-    - label: File with multiple versions 
+    - label: File with multiple versions
       purl: ck480bd0124/version/1
     - label: single DOC/X
       purl: qz826pn3100
@@ -119,21 +118,23 @@ sandbox:
     - label: with jpg/zip
       purl: bh152hk2665
   document:
-    - label: pdf
+    - label: single file, world
       purl: bh502xm3351
-    - label: pdf 2
+    - label: single file, world, spaces in filename
       purl: cd243px7965
-    - label: pdf (Stanford Only)
+    - label: single file, Stanford
       purl: bb461xx1037
-    - label: pdf (Citation Only)
+    - label: single file, citation-only
       purl: bz673hm0344
-    - label: pdf (object embargoed, file available)
+    - label: object embargoed, file available
       purl: bb990sg8412
-    - label: pdf (multiple files)
+    - label: multiple files, world
       purl: ds777pr3860
+    - label: multiple files, Stanford
+      purl: gq661wq7355
     - label: location-restricted music, no download
-      purl: yv090xk3108 
-  3d: 
+      purl: yv090xk3108
+  3d:
     - label: 3d
       purl: fs892sr8080
     - label: MTL, OBJ, PLY, PNG
