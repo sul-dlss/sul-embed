@@ -8,10 +8,8 @@
   <% end %>
 
   <% component.with_authorization_messages do %>
-    <div role="banner" aria-label="Access message">
-      <%= render LoginComponent.new %>
-      <%= render CompanionWindows::ContentNotAvailableComponent.new unless viewer.available? %>
-    </div>
+    <%= render LoginComponent.new %>
+    <%= render CompanionWindows::ContentNotAvailableComponent.new unless viewer.available? %>
   <% end %>
 
   <% component.with_body do %>
