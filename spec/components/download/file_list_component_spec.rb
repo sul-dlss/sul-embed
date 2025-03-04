@@ -37,8 +37,8 @@ RSpec.describe Download::FileListComponent, type: :component do
     let(:viewer) do
       Embed::Viewer::Media.new(embed_request)
     end
-    let(:media_file) { instance_double(Embed::Purl::ResourceFile, downloadable?: true, title: 'file-abc123.pdf', file_url: '//one', caption?: false, transcript?: false, label_or_filename: 'media filename', location_restricted?: false, stanford_only?: false, size: 100) }
-    let(:caption_file) { instance_double(Embed::Purl::ResourceFile, downloadable?: true, title: 'file-abc123.vtt', file_url: '//one', caption?: true, transcript?: false, label_or_filename: 'caption filename', location_restricted?: false, stanford_only?: false, size: 100) }
+    let(:media_file) { instance_double(Embed::Purl::ResourceFile, downloadable?: true, title: 'file-abc123.pdf', file_url: '//one', caption?: false, transcript?: false, label_or_filename: 'media filename', location_restricted?: false, stanford_only_downloadable?: false, size: 100) }
+    let(:caption_file) { instance_double(Embed::Purl::ResourceFile, downloadable?: true, title: 'file-abc123.vtt', file_url: '//one', caption?: true, transcript?: false, label_or_filename: 'caption filename', location_restricted?: false, stanford_only_downloadable?: false, size: 100) }
 
     context 'when there are no media files' do
       let(:downloadable_files) { [media_file] }
@@ -69,8 +69,8 @@ RSpec.describe Download::FileListComponent, type: :component do
 
     let(:downloadable_files) do
       [
-        instance_double(Embed::Purl::ResourceFile, downloadable?: true, filename: 'data.zip', file_url: '//one', caption?: false, transcript?: false, label_or_filename: 'Data', location_restricted?: false, stanford_only?: false, size: 100),
-        instance_double(Embed::Purl::ResourceFile, downloadable?: true, filename: 'data_EPSG_4624.zip', file_url: '//one', caption?: true, transcript?: false, label_or_filename: 'Data', location_restricted?: false, stanford_only?: false, size: 100)
+        instance_double(Embed::Purl::ResourceFile, downloadable?: true, filename: 'data.zip', file_url: '//one', caption?: false, transcript?: false, label_or_filename: 'Data', location_restricted?: false, stanford_only_downloadable?: false, size: 100),
+        instance_double(Embed::Purl::ResourceFile, downloadable?: true, filename: 'data_EPSG_4624.zip', file_url: '//one', caption?: true, transcript?: false, label_or_filename: 'Data', location_restricted?: false, stanford_only_downloadable?: false, size: 100)
       ]
     end
     let(:contents) { [Embed::Purl::Resource.new(description: 'Data', files: downloadable_files)] }
@@ -90,8 +90,8 @@ RSpec.describe Download::FileListComponent, type: :component do
 
     let(:downloadable_files) do
       [
-        instance_double(Embed::Purl::ResourceFile, downloadable?: true, filename: 'bb648mk7250_low.obj', file_url: '//one', caption?: false, transcript?: false, label_or_filename: '3d 1', location_restricted?: false, stanford_only?: false, size: 100),
-        instance_double(Embed::Purl::ResourceFile, downloadable?: true, filename: 'bb648mk7250_low.glb', file_url: '//one', caption?: true, transcript?: false, label_or_filename: '3d 2', location_restricted?: false, stanford_only?: false, size: 100)
+        instance_double(Embed::Purl::ResourceFile, downloadable?: true, filename: 'bb648mk7250_low.obj', file_url: '//one', caption?: false, transcript?: false, label_or_filename: '3d 1', location_restricted?: false, stanford_only_downloadable?: false, size: 100),
+        instance_double(Embed::Purl::ResourceFile, downloadable?: true, filename: 'bb648mk7250_low.glb', file_url: '//one', caption?: true, transcript?: false, label_or_filename: '3d 2', location_restricted?: false, stanford_only_downloadable?: false, size: 100)
       ]
     end
     let(:contents) do
