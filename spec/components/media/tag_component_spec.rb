@@ -161,7 +161,7 @@ RSpec.describe Media::TagComponent, type: :component do
     let(:resource) { build(:resource, :video) }
 
     it 'has a track element' do
-      expect(page).to have_css('track[src="https://stacks.stanford.edu/file/druid:bc123df4567/abc_123_cap.vtt"]')
+      expect(page).to have_css('track[src="https://stacks.stanford.edu/file/bc123df4567/abc_123_cap.vtt"]')
     end
 
     context 'with captions for multiple languages' do
