@@ -193,7 +193,7 @@ export default {
           if (data.exceptions && data.exceptions.length > 0) {
             return
           }
-          let html = '<dl class="inline-flex">'
+          let html = '<dl class="inline-flex" style="margin-top: 0">'
           data.features.forEach(function (val) {
             Object.keys(val.properties).forEach(function (key) {
               html += L.Util.template('<dt>{k}</dt><dd>{v}</dd>', { k: key, v: val.properties[key] })
@@ -258,7 +258,7 @@ export default {
 
     sidebarContent.classList.add('show')
     sidebarContent.innerHTML = html
-    sidebarContent.style.height = (this.map.getSize().y - 90) + 'px'
+    sidebarContent.style.maxHeight = (this.map.getSize().y - 90) + 'px'
     sidebarContent.setAttribute('aria-hidden', false)
 
 
