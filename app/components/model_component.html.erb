@@ -8,9 +8,7 @@
   <% end %>
 
   <% component.with_authorization_messages do %>
-    <%= render LoginComponent.new %>
-    <%= render LocationRestrictionComponent.new %>
-    <%= render CompanionWindows::ContentNotAvailableComponent.new unless viewable_content? %>
+    <%= render CompanionWindows::AuthorizationMessagesComponent.new(available: viewable_content?) %>
   <% end %>
 
   <% component.with_body do %>
