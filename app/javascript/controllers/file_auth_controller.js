@@ -275,11 +275,12 @@ export default class extends Controller {
     // This allows the lock window to show
     const event = new CustomEvent('auth-denied', { accessService: accessService })
     window.dispatchEvent(event)
+    // Hide the login panel if that is visible
+    this.loginPanelTarget.hidden = true
     // Make the location restricted banner visible
     this.locationRestrictionTarget.hidden = false
     // Display the location restriction message based on the authorization response
     this.locationRestrictionMessageTarget.innerHTML = this.retrieveRestrictedLocationMessage(json)
-
   }
 
   // Checks the result of the probe auth request to see if access is restricted to location
