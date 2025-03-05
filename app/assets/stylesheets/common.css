@@ -29,13 +29,18 @@ a:focus {
 
 /* TODO: Remove this class and replace with Icons::StanfordOnlyComponent when we remove legacy file viewer */
 .sul-embed-stanford-only-text {
+  --vertical-align-position: top;
   background:
     url("stanford_s.svg") no-repeat left,
     none;
   display: inline-block;
   height: 15px;
   width: 15px;
-  vertical-align: top;
+  vertical-align: var(--vertical-align-position);
+}
+
+.left-drawer .sul-embed-stanford-only-text {
+  --vertical-align-position: sub;
 }
 
 .sul-embed-location-restricted-text {
