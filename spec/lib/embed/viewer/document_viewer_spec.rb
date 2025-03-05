@@ -34,12 +34,12 @@ RSpec.describe Embed::Viewer::DocumentViewer do
   end
 
   describe '#available?' do
-    context 'when the first file in the documents is location restricted and not downloadable' do
+    context 'when the first file in the documents is location restricted and downloadable' do
       let(:purl) do
         instance_double(
           Embed::Purl,
           contents: [
-            instance_double(Embed::Purl::Resource, type: 'document', files: [instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', location_restricted?: true, downloadable?: false)])
+            instance_double(Embed::Purl::Resource, type: 'document', files: [instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', location_restricted?: true, no_download?: false)])
           ],
           druid: 'abc123'
         )
@@ -48,18 +48,31 @@ RSpec.describe Embed::Viewer::DocumentViewer do
       it { expect(pdf_viewer.available?).to be true }
     end
 
-    context 'when the first file in the document is downloadable and not location restricted' do
+    context 'when the first file in the document is not location restricted and downloadable' do
       let(:purl) do
         instance_double(
           Embed::Purl,
           contents: [
-            instance_double(Embed::Purl::Resource, type: 'document', files: [instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', location_restricted?: false, downloadable?: true)])
+            instance_double(Embed::Purl::Resource, type: 'document', files: [instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', location_restricted?: false, no_download?: false)])
           ],
           druid: 'abc123'
         )
       end
 
       it { expect(pdf_viewer.available?).to be true }
+    end
+    context 'when the first file in the document is not downloadable' do
+      let(:purl) do
+        instance_double(
+          Embed::Purl,
+          contents: [
+            instance_double(Embed::Purl::Resource, type: 'document', files: [instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', location_restricted?: false, no_download?: true)])
+          ],
+          druid: 'abc123'
+        )
+      end
+
+      it { expect(pdf_viewer.available?).to be false }
     end
   end
 end

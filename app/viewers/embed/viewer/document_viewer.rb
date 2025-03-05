@@ -31,7 +31,7 @@ module Embed
       # as well as location restricted.  Authorization for other documents will be
       # checked as the user clicks on items in the content side bar.
       def available?
-        document_resource_files.first&.downloadable? || document_resource_files.first&.location_restricted?
+        !(document_resource_files.first&.no_download?)
       end
 
       private

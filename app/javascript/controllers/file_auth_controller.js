@@ -286,22 +286,11 @@ export default class extends Controller {
   // This code depends on the text returned by probe service, so changes to the heading
   // should be reflected here as well.
   isLocationRestricted(json) {
-    if(json.status == '401' && 'heading' in json && 'en' in json.heading && json.heading.en.length
-      && json.heading.en[0].startsWith('Content is restricted to location'))
-      return true
-    return false
-  }
-
-  // Extract just the location from the message
-  extractRestrictedLocation(accessMessage) {
-    const probeServicePrefix = 'Content is restricted to location '
-    if(accessMessage != null && accessMessage.startsWith(probeServicePrefix))
-      return accessMessage.substring(probeServicePrefix.length, accessMessage.length)
-
-    return 'site visitors to the Stanford libraries'
+    return json.status == '401' && 'heading' in json && 'en' in json.heading && json.heading.en.length
+      && json.heading.en[0].startsWith('Access is restricted to the')
   }
 
   retrieveRestrictedLocationMessage(json) {
-    return 'Access is restricted to the ' + this.extractRestrictedLocation(json.heading.en[0]) + '. See Access conditions for more information.'
+    return json.heading.en[0]
   }
 }
