@@ -61,6 +61,7 @@ RSpec.describe Embed::Viewer::DocumentViewer do
 
       it { expect(pdf_viewer.available?).to be true }
     end
+
     context 'when the first file in the document is not downloadable' do
       let(:purl) do
         instance_double(
