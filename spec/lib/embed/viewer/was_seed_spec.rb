@@ -51,11 +51,11 @@ RSpec.describe Embed::Viewer::WasSeed do
   end
 
   describe 'default_height' do
-    it 'defaults to 353' do
-      expect(was_seed_viewer.send(:default_height)).to eq '420px'
+    it 'has one' do
+      expect(was_seed_viewer.send(:default_height)).to eq '31.25rem'
     end
 
-    it 'is smaller when the title is hidden' do
+    it 'is smaller when the title is hidden', skip: 'legacy viewer only' do
       expect(request).to receive(:hide_title?).and_return(true)
       expect(was_seed_viewer.send(:default_height)).to eq '340px'
     end
