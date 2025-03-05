@@ -1,8 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["container", "loginPanel", "messagePanel", "loginButton", "loginMessage", "locationRestriction", "locationRestrictionMessage"]
-
   resources = {} // Hash of messageIds to resources
 
   addPostCallbackListener() {
@@ -57,8 +55,6 @@ export default class extends Controller {
   // Try to render the resource, checks for any required authorization and shows login window if needed
   maybeDrawContentResource(contentResource) {
     console.debug("Now figure out if we can render", contentResource)
-    // Ensure location restriction banner is hidden by default in case it was visible for the previous document 
-    this.locationRestrictionTarget.hidden = true
     if (!contentResource.service) {
       // no auth service is present, just render the resource
       this.renderViewer({ fileUri: contentResource.id })
@@ -137,12 +133,13 @@ export default class extends Controller {
     // https://stacks.stanford.edu/iiif/auth/v2/probe?id=FULL_PATH_TO_FILE
     this.queryProbeService(messageId)
       .then((result) => this.renderViewer(result))
-      .catch((json) => {
-        if(this.isLocationRestricted(json)) {
-          this.handleLocationRestricted(json, accessService)
-          return
-        }
-        console.debug("Probe failed or access denied/restricted", json)
+      .catch((authResponse) => {
+
+        // Intercept the response and check for location restriction before trying to log in, because
+        // logging in won't help the fact that we're not in an authorized location.
+        if (this.isLocationRestricted(authResponse))
+          return this.handleLocationRestricted(authResponse, accessService)
+
         // Check if non-expired token already exists in local storage,
         // and if it exists, query probe service with it
         const token = this.getCachedToken()
@@ -224,21 +221,13 @@ export default class extends Controller {
   // Show login message and link provided by auth service
   loginNeeded(activeAccessService, messageId) {
     // This allows the lock window to show
-    const event = new CustomEvent('auth-denied', { activeAccessService: activeAccessService })
+    const event = new CustomEvent('needs-login', { detail: { activeAccessService: activeAccessService, messageId: messageId } })
     window.dispatchEvent(event)
-
-    this.messagePanelTarget.hidden = true
-    this.loginPanelTarget.hidden = false
-    this.loginButtonTarget.innerHTML = activeAccessService.confirmLabel.en[0]
-    this.loginButtonTarget.setAttribute('data-file-auth-messageId-param', messageId)
-    this.loginButtonTarget.setAttribute('data-file-auth-url-param', activeAccessService.id)
-    this.loginMessageTarget.innerHTML = activeAccessService.label.en[0]
   }
 
   // Open the login page in a new window and then poll to see if the auth credentials are now active.
   // This method is triggered by stimulus when the user clicks the login button rendered by `loginNeeded`
   login(evt) {
-    this.loginPanelTarget.hidden = true
     const windowReference = window.open(evt.params.url)
     let loginStart = Date.now()
     console.debug("window reference", windowReference)
@@ -258,28 +247,17 @@ export default class extends Controller {
     console.debug("Done waiting on the login window")
     const probeService = this.resources[messageId].probeService
     const accessService = this.findAccessService(probeService)
-    this.messagePanelTarget.hidden = false
 
     this.initiateTokenRequest(accessService, messageId)
   }
 
-  hideMessagePanel() {
-    this.messagePanelTarget.hidden = true
-  }
-
   // To see if item is restricted by location, check the probe service json response
-  handleLocationRestricted(json, accessService) {
+  handleLocationRestricted(authResponse, accessService) {
     // The probe auth service is called for each file separately.
     // If the location restriction target is available, then trigger auth denied message.
     // The event will lead to the locked icon being displayed for this item
-    // This allows the lock window to show
-    const event = new CustomEvent('auth-denied', { accessService: accessService })
+    const event = new CustomEvent('auth-denied', { detail: { accessService, authResponse } } )
     window.dispatchEvent(event)
-    // Make the location restricted banner visible
-    this.locationRestrictionTarget.hidden = false
-    // Display the location restriction message based on the authorization response
-    this.locationRestrictionMessageTarget.innerHTML = this.retrieveRestrictedLocationMessage(json)
-
   }
 
   // Checks the result of the probe auth request to see if access is restricted to location
@@ -288,9 +266,5 @@ export default class extends Controller {
   isLocationRestricted(json) {
     return json.status == '401' && 'heading' in json && 'en' in json.heading && json.heading.en.length
       && json.heading.en[0].startsWith('Access is restricted to the')
-  }
-
-  retrieveRestrictedLocationMessage(json) {
-    return json.heading.en[0]
   }
 }
