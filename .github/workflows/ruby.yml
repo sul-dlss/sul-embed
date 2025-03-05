@@ -21,7 +21,7 @@ jobs:
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
       - uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 22
       - name: Run tests
         run: bin/rake
         env:
