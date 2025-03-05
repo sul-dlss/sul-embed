@@ -27,15 +27,11 @@ module Embed
         true
       end
 
-      def all_documents_location_restricted?
-        document_resource_files.all?(&:location_restricted?)
-      end
-
-      # this indicates if the PDF is downloadable (though it could be stanford only)
-      # Stanford only and location restrictions are handled via a separate authorization flow,
-      # since it is possible for people to do something about the restriction
+      # This indicates if the first PDF is downloadable (though it could be stanford only)
+      # as well as location restricted.  Authorization for other documents will be
+      # checked as the user clicks on items in the content side bar.
       def available?
-        document_resource_files.first&.downloadable?
+        !document_resource_files.first&.no_download?
       end
 
       private
