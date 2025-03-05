@@ -8,15 +8,16 @@
   <% end %>
 
   <% component.with_authorization_messages do %>
+    <%= render LocationRestrictionComponent.new %>
     <%= render CompanionWindows::ContentNotAvailableComponent.new unless viewable_content? %>
   <% end %>
 
   <% component.with_body do %>
-    <div style="flex: 1 0 100%; text-align: center;" <%= 'hidden' if viewable_content? %>>
+    <div data-controller="locked-poster" data-action="auth-success@window->locked-poster#hide auth-denied@window->locked-poster#show" role="presentation" style="flex: 1 0 100%; text-align: center;" <%= 'hidden' if viewable_content? %>>
       <%= render LockedStatusComponent.new %>
     </div>
     <% if viewable_content? %>
-      <div class="sul-embed-3d sul-embed-body">
+      <div class="sul-embed-3d sul-embed-body" data-action="iiif-manifest-received@window->file-auth#parseFiles">
         <div class="buttons">
           <button aria-label="Zoom in" class="zoom-in">+</button>
           <button aria-label="Zoom out" class="zoom-out">-</button>
