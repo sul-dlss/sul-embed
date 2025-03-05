@@ -4,17 +4,15 @@
   <% end %>
 
   <% component.with_header_button do %>
-    <%= render CompanionWindows::FullscreenButtonComponent.new  %>
+    <%= render CompanionWindows::FullscreenButtonComponent.new %>
   <% end %>
 
   <% component.with_authorization_messages do %>
-    <%= render LoginComponent.new %>
-    <%= render LocationRestrictionComponent.new %>
-    <%= render CompanionWindows::ContentNotAvailableComponent.new unless viewer.available? %>
+    <%= render CompanionWindows::AuthorizationMessagesComponent.new(available: viewer.available?) %>
   <% end %>
 
   <% component.with_body do %>
-    <div data-controller="locked-poster" data-action="auth-success@window->locked-poster#hide auth-denied@window->locked-poster#show" role="presentation" style="flex: 1 0 100%; text-align: center;" <%= 'hidden' if viewer.available? %>>
+    <div data-controller="locked-poster" data-action="auth-success@window->locked-poster#hide auth-denied@window->locked-poster#show needs-login@window->locked-poster#show" role="presentation" style="flex: 1 0 100%; text-align: center;" <%= 'hidden' if viewer.available? %>>
       <%= render LockedStatusComponent.new %>
     </div>
     <div class="sul-embed-body" style="flex-basis: 100%">

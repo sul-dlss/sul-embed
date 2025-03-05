@@ -9,10 +9,10 @@ RSpec.describe LocationRestrictionComponent, type: :component do
 
   # The location restriction banner is hidden so search with visible: :all
   it 'renders banner target for the file auth controller' do
-    expect(page).to have_css('div[data-file-auth-target="locationRestriction"]', visible: :all)
+    expect(page).to have_css('div[data-iiif-auth-restriction-target="locationRestriction"]', visible: :all)
   end
 
   it 'renders message target for the file auth controller' do
-    expect(page).to have_css('p[data-file-auth-target="locationRestrictionMessage"]', visible: :all)
+    expect(page).to have_css('p[data-iiif-auth-restriction-target="locationRestrictionMessage"]', visible: :all)
   end
 end
