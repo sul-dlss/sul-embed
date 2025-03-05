@@ -33,33 +33,33 @@ RSpec.describe Embed::Viewer::DocumentViewer do
     end
   end
 
-  describe '#all_documents_location_restricted?' do
-    context 'when all the files in the documents are location restricted' do
+  describe '#available?' do
+    context 'when the first file in the documents is location restricted and not downloadable' do
       let(:purl) do
         instance_double(
           Embed::Purl,
           contents: [
-            instance_double(Embed::Purl::Resource, type: 'document', files: [instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', location_restricted?: true)])
+            instance_double(Embed::Purl::Resource, type: 'document', files: [instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', location_restricted?: true, downloadable?: false)])
           ],
           druid: 'abc123'
         )
       end
 
-      it { expect(pdf_viewer.all_documents_location_restricted?).to be true }
+      it { expect(pdf_viewer.available?).to be true }
     end
 
-    context 'when all the files in the documents are not location restricted' do
+    context 'when the first file in the document is downloadable and not location restricted' do
       let(:purl) do
         instance_double(
           Embed::Purl,
           contents: [
-            instance_double(Embed::Purl::Resource, type: 'document', files: [instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', location_restricted?: false)])
+            instance_double(Embed::Purl::Resource, type: 'document', files: [instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', location_restricted?: false, downloadable?: true)])
           ],
           druid: 'abc123'
         )
       end
 
-      it { expect(pdf_viewer.all_documents_location_restricted?).to be false }
+      it { expect(pdf_viewer.available?).to be true }
     end
   end
 end
