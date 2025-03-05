@@ -8,6 +8,7 @@
   <% end %>
 
   <% component.with_authorization_messages do %>
+    <%= render LoginComponent.new %>
     <%= render LocationRestrictionComponent.new %>
     <%= render CompanionWindows::ContentNotAvailableComponent.new unless viewable_content? %>
   <% end %>
@@ -22,8 +23,7 @@
           <button aria-label="Zoom in" class="zoom-in">+</button>
           <button aria-label="Zoom out" class="zoom-out">-</button>
         </div>
-        <div id="3d-viewer">
-          <model-viewer auto-rotate camera-controls ar-modes="webxr scene-viewer quick-look" src="<%= viewer.three_dimensional_files.first %>"></model-viewer>
+        <div id="3d-viewer" data-controller="model" data-action="auth-success@window->model#show">
         </div>
       </div>
     <% end %>
