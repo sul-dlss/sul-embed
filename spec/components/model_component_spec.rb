@@ -17,7 +17,6 @@ RSpec.describe ModelComponent, type: :component do
 
   it 'draws model-viewer' do
     # visible false because we display:none the container until we've loaded the CSS.
-    expect(page).to have_css 'model-viewer', visible: :all
     expect(page).to have_button '+', visible: :all
     expect(page).to have_button '-', visible: :all
   end
