@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
 
   show(evt) {
-    const fileUri = evt.detail
+    const fileUri = evt.detail.fileUri
     this.element.innerHTML = `
       <object data="${fileUri}" type="application/pdf" style="height: 100%; width: 100%">
         <div class="authLinkWrapper">

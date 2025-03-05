@@ -19,7 +19,7 @@ export default class extends Controller {
       } else {
         this.cacheToken(event.data.accessToken, event.data.expiresIn)
         this.queryProbeService(event.data.messageId, event.data.accessToken)
-          .then((contentResourceId) => this.renderViewer(contentResourceId))
+          .then((result) => this.renderViewer(result))
           .catch((json) => console.error("no access", json))
       }
     }, false)
@@ -58,7 +58,7 @@ export default class extends Controller {
     console.debug("Now figure out if we can render", contentResource)
     if (!contentResource.service) {
       // no auth service is present, just render the resource
-      this.renderViewer(contentResource.id)
+      this.renderViewer({ fileUri: contentResource.id })
     } else {
       // auth service is present, check the probe service to see what we need to do to access the resource
       const probeService = contentResource.service.find((service) => service.type === "AuthProbeService2")
@@ -72,12 +72,13 @@ export default class extends Controller {
   // This is called after we have done authorization and we want to display the first resource to the user.
   // Render the resource by sending an event to stimulus; the relevant content type component must catch this
   // event, and call a method for that partcular content type (e.g. pdf/media) that knows how to render content
-  renderViewer(fileUri) {
-    window.dispatchEvent(new CustomEvent('auth-success', { detail: fileUri }))
+  renderViewer(result) {
+    const fileUri = result.fileUri
+    window.dispatchEvent(new CustomEvent('auth-success', { detail: { fileUri: fileUri, location: result.location } }))
     // use filename because url in contents adds druid: to the data-url
     const filename = fileUri.split("/").slice(-1)[0]
     const contentItem = document.querySelector(`[data-url*="${filename}"]`)
-    if (contentItem){
+    if (contentItem) {
       contentItem.parentElement.classList.add('active')
     }
   }
@@ -132,20 +133,15 @@ export default class extends Controller {
     // to get the login message and URL needed to show to the user.
     // https://stacks.stanford.edu/iiif/auth/v2/probe?id=FULL_PATH_TO_FILE
     this.queryProbeService(messageId)
-      .then((contentResourceId) => this.renderViewer(contentResourceId))
+      .then((result) => this.renderViewer(result))
       .catch((json) => {
-        // TODO: deal with media authentication if we abandon media specific auth controllers
-        if (json.status == 302) return // media file probe requests return a 302 instead of a 200
-                                       // with a link to the media server file location (and media token)
-                                       // and this can happen with a non-media object that happens to have
-                                       // a media file in it, e.g. ds777pr3860
         console.debug("Probe failed or access denied/restricted", json)
         // Check if non-expired token already exists in local storage,
         // and if it exists, query probe service with it
         const token = this.getCachedToken()
         if (token) {
           this.queryProbeService(messageId, token)
-            .then((contentResourceId) => this.renderViewer(contentResourceId))
+            .then((result) => this.renderViewer(result))
             .catch((json) => {
               console.debug("Probe with cached token failed", json)
               this.queryAccessService(accessService, messageId)
@@ -203,10 +199,9 @@ export default class extends Controller {
     if (token) {
       headers['Authorization'] = `Bearer ${token}`
     }
-    const contentResourceId = resource.contentResourceId
     return fetch(resource.probeService.id, { headers })
       .then((response) => response.json())
-      .then((json) => new Promise((resolve, reject) => json.status === 200 ? resolve(contentResourceId) : reject(json)))
+      .then((json) => new Promise((resolve, reject) => json.status === 200 ? resolve({ fileUri: resource.contentResourceId, location: json.location?.id }) : reject(json)))
   }
 
   // Fetch a token for the provided resource
