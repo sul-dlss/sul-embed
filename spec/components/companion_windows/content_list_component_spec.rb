@@ -14,7 +14,7 @@ RSpec.describe CompanionWindows::ContentListComponent, type: :component do
         files: [no_download_file, download_file],
         druid: 'abc123'
       ),
-      all_resource_files: [no_download_file, download_file]
+      resource_files: [no_download_file, download_file]
     )
   end
 
