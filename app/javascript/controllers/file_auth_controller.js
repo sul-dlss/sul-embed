@@ -59,6 +59,8 @@ export default class extends Controller {
     console.debug("Now figure out if we can render", contentResource)
     // Ensure location restriction banner is hidden by default in case it was visible for the previous document 
     this.locationRestrictionTarget.hidden = true
+    // Ensure the login banner is hidden by default in case it was visible for the prior resource
+    this.loginPanelTarget.hidden = true
     if (!contentResource.service) {
       // no auth service is present, just render the resource
       this.renderViewer({ fileUri: contentResource.id })
@@ -275,8 +277,6 @@ export default class extends Controller {
     // This allows the lock window to show
     const event = new CustomEvent('auth-denied', { accessService: accessService })
     window.dispatchEvent(event)
-    // Hide the login panel if that is visible
-    this.loginPanelTarget.hidden = true
     // Make the location restricted banner visible
     this.locationRestrictionTarget.hidden = false
     // Display the location restriction message based on the authorization response
