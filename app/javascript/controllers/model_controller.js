@@ -8,7 +8,7 @@ export default class extends Controller {
     // with-credentials breaks things for local development
     // we should figure out how to set up auth to not check if the file is open, then we can fix this
     this.element.innerHTML = `
-      <model-viewer with-credentials="true" auto-rotate camera-controls ar-modes="webxr scene-viewer quick-look" src="${fileUri}"></model-viewer>
+      <model-viewer with-credentials auto-rotate camera-controls ar-modes="webxr scene-viewer quick-look" src="${fileUri}"></model-viewer>
     `
     ModelViewer.init()
   }
