@@ -279,6 +279,7 @@ export default class extends Controller {
     this.locationRestrictionTarget.hidden = false
     // Display the location restriction message based on the authorization response
     this.locationRestrictionMessageTarget.innerHTML = this.retrieveRestrictedLocationMessage(json)
+  
   }
 
   // Checks the result of the probe auth request to see if access is restricted to location
