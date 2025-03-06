@@ -19,7 +19,7 @@
   <% end %>
 
   <% component.with_authorization_messages do %>
-    <%= render Document::AuthMessagesComponent.new(message:) %>
+    <%= render Embed::File::AuthMessagesComponent.new(message:) %>
     <%= render CompanionWindows::ContentNotAvailableComponent.new if viewer.purl_object.citation_only? %>
   <% end %>
 
