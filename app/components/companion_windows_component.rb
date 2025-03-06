@@ -31,7 +31,7 @@ class CompanionWindowsComponent < ViewComponent::Base
 
   def render_content_list_panel?
     # for Document viewer, do not render the content panel if there only one file that isn't no_download?
-    media_viewer? || (document_viewer? && all_resource_files.reject(&:no_download?).size > 1)
+    media_viewer? || (document_viewer? && all_resource_files.count { |element| !element.no_download? } > 1)
   end
 
   def display_download?
