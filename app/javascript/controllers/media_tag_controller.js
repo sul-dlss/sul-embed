@@ -25,9 +25,11 @@ export default class extends Controller {
       if (result.authResponse.access_restrictions.stanford_restricted === true)
         window.dispatchEvent(new CustomEvent('auth-stanford-restricted'))
       window.dispatchEvent(new CustomEvent('auth-success'))
+      console.log('auth-success', result.authResponse)
     } else {
       const event = new CustomEvent('auth-denied', { detail: result.authResponse })
       window.dispatchEvent(event)
+      console.log('auth-denied', result.authResponse)
     }
 
     if(typeof(completeCallback) === 'function') {

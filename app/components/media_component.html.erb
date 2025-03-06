@@ -86,11 +86,11 @@
   <% end %>
 
   <% component.with_body do %>
-      <div data-controller="locked-media-poster" data-action="auth-success@window->locked-media-poster#hide auth-denied@window->locked-media-poster#show" role="presentation" style="flex: 1 0 100%;" hidden>
+      <div data-controller="locked-media-poster" data-action="auth-success@window->locked-media-poster#hide auth-denied@window->locked-media-poster#show auth-stanford-restricted@window->locked-media-poster#show" role="presentation" style="flex: 1 0 100%;" hidden>
         <%= render LockedStatusComponent.new %>
       </div>
 
-      <div data-controller="locked-audio-poster" data-action="auth-success@window->locked-audio-poster#hide auth-denied@window->locked-audio-poster#show" role="presentation" style="flex: 1 0 100%;" hidden>
+      <div data-controller="locked-audio-poster" data-action="auth-success@window->locked-audio-poster#hide auth-denied@window->locked-audio-poster#show auth-stanford-restricted@window->locked-media-poster#show" role="presentation" style="flex: 1 0 100%;" hidden>
         <picture class="locked-status">
           <%# The explicitly empty alt is preferred here, since this image merely adds visual decoration. %>
           <%= image_tag 'waveform-audio-poster.svg', loading: 'lazy', alt: '', data: { locked_audio_poster_target: 'poster' } %>
