@@ -59,8 +59,6 @@ export default class extends Controller {
     console.debug("Now figure out if we can render", contentResource)
     // Ensure location restriction banner is hidden by default in case it was visible for the previous document 
     this.locationRestrictionTarget.hidden = true
-    // Ensure the login banner is hidden by default in case it was visible for the prior resource
-    this.loginPanelTarget.hidden = true
     if (!contentResource.service) {
       // no auth service is present, just render the resource
       this.renderViewer({ fileUri: contentResource.id })
