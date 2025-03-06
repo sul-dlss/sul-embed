@@ -11,5 +11,9 @@ module CompanionWindows
     def document_viewer?
       viewer.instance_of?(::Embed::Viewer::DocumentViewer)
     end
+
+    def resource_files_collection
+      viewer.purl_object.all_resource_files.reject(&:no_download?)
+    end
   end
 end

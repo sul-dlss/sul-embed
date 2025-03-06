@@ -4,7 +4,7 @@
           data-controller="content-list"
           data-action="thumbnails-found@window->content-list#drawThumbnails"
           role="tablist">
-          <%= render Document::ContentListItemComponent.with_collection(viewer.purl_object.all_resource_files.reject(&:no_download?), viewer:) if document_viewer? %>
+          <%= render Document::ContentListItemComponent.with_collection(resource_files_collection, viewer:) if document_viewer? %>
       </ul>
   <% end %>
 <% end %>
