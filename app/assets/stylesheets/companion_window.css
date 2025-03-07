@@ -23,6 +23,7 @@ body {
   background-color: var(--active-color);
   color: white;
   padding: 0.5rem;
+  height: var(--visible-auth-bar-height);
 
   svg:not(button svg) {
     /* Buttons have a left/right padding of 6px */
@@ -84,6 +85,8 @@ body {
   --modal-max-width: 600px;
   --active-media-thumb-color: #016895;
   --box-shadow-color: #00000040;
+
+  --visible-auth-bar-height: 40px;
 
   border: 1px solid var(--border-color);
   background-color: var(--background-color);
@@ -353,7 +356,7 @@ body {
   }
 
   [role="banner"]:not([hidden]) + .companion-window-component-body {
-    --auth-bar-height: 40px;
+    --auth-bar-height: var(--visible-auth-bar-height);
   }
 
   .companion-window-component-body {
