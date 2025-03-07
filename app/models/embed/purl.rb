@@ -75,6 +75,10 @@ module Embed
       "#{Settings.purl_url}/#{@druid}/version/#{@version_id}"
     end
 
+    def meta_json_url
+      "#{purl_url}.meta_json"
+    end
+
     def first_collection_url
       return if collections.blank?
 
