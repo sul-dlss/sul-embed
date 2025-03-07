@@ -16,12 +16,12 @@ RSpec.describe 'file viewer search bar', :js do
     it 'limits shown files' do
       visit_iframe_response('abc123', min_files_to_search: 1)
       expect(page).to have_css('tr[data-tree-role="leaf"]', count: 1)
-      expect(page).to have_css '.sul-embed-item-count', text: '1 file'
+      expect(page).to have_css '.item-count', text: '1 file'
       fill_in 'Search this list', with: 'test'
       expect(page).to have_no_css('tr[data-tree-role="leaf"]')
-      expect(page).to have_css '.sul-embed-item-count', text: '0 files'
+      expect(page).to have_css '.item-count', text: '0 files'
       fill_in 'Search this list', with: 'File1'
-      expect(page).to have_css '.sul-embed-item-count', text: '1 file'
+      expect(page).to have_css '.item-count', text: '1 file'
     end
   end
 
@@ -36,7 +36,7 @@ RSpec.describe 'file viewer search bar', :js do
 
     it 'hides empty directories' do
       visit_iframe_response('abc123', min_files_to_search: 1)
-      expect(page).to have_css '.sul-embed-item-count', text: '2 files'
+      expect(page).to have_css '.item-count', text: '2 files'
       expect(page).to have_content('dir1')
       expect(page).to have_content('dir2')
       expect(page).to have_content('Title_of_2_PDF')
@@ -48,7 +48,7 @@ RSpec.describe 'file viewer search bar', :js do
       expect(page).to have_no_content('Title_of_2_PDF')
       expect(page).to have_content('Title_of_the_PDF')
 
-      expect(page).to have_css '.sul-embed-item-count', text: '1 file'
+      expect(page).to have_css '.item-count', text: '1 file'
     end
   end
 

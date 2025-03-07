@@ -18,10 +18,6 @@ RSpec.describe 'File viewer', :js do
 
     it 'makes purl embed request and embed' do
       expect(page).to have_css('.sul-embed-container')
-      expect(page).to have_css('.sul-embed-header')
-      expect(page).to have_css('.sul-embed-header-title')
-      expect(page).to have_css('.sul-embed-body')
-      expect(page).to have_css('.sul-embed-footer')
 
       expect(page).to have_css('tr[data-tree-role="leaf"] a', text: 'Download')
       expect(page).to have_css('*[data-tree-role="label"]', text: 'File1 Label')
