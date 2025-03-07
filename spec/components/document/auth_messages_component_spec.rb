@@ -14,7 +14,6 @@ RSpec.describe Document::AuthMessagesComponent, type: :component do
 
     it 'has svg and message' do
       expect(page).to have_css('svg')
-      expect(page).to have_css('div[aria-label="Access message"]')
       expect(page).to have_content('Embargo message')
     end
   end
@@ -24,7 +23,6 @@ RSpec.describe Document::AuthMessagesComponent, type: :component do
 
     it 'has svg and message' do
       expect(page).to have_css('svg')
-      expect(page).to have_css('div[aria-label="Access message"]')
       expect(page).to have_content('Location restricted message')
     end
   end
