@@ -89,7 +89,7 @@ RSpec.describe FileComponent, type: :component do
     end
   end
 
-  describe 'embargo/Stanford only' do
+  context 'with an embargo and Stanford only' do
     let(:purl) { build(:purl, :embargoed_stanford, contents: resources) }
     let(:resources) { [build(:resource, :file, files: [build(:resource_file, :document, :stanford_only, filename: 'Title of the PDF.pdf')])] }
 
@@ -107,13 +107,31 @@ RSpec.describe FileComponent, type: :component do
     end
   end
 
-  describe 'embargoed to world' do
+  context 'when embargoed to world' do
     let(:purl) { build(:purl, :embargoed, contents: resources) }
 
     it 'adds a generalized embargo message and no links are present' do
       expect(page).to have_css('div[aria-label="Access message"]', visible: :all, text: 'Access is restricted until 21-Dec-2053')
       # FIXME: this is a bad spec as it's not checking for visibility false
       expect(page).to have_no_link
+    end
+  end
+
+  context 'with an embargo and citation-only' do
+    # Note gx074xz5520 is a prod example of this case
+    let(:purl) { build(:purl, :citation_only, :embargoed, contents: resources) }
+
+    it 'adds an embargo message' do
+      expect(page).to have_content('Access is restricted until 21-Dec-2053')
+      expect(page).to have_no_content('This item cannot be accessed online')
+    end
+  end
+
+  context 'when citation-only' do
+    let(:purl) { build(:purl, :citation_only, contents: resources) }
+
+    it 'adds an not available message' do
+      expect(page).to have_content('This item cannot be accessed online')
     end
   end
 
