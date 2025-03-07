@@ -83,7 +83,7 @@ module Embed
       # will give us extra whitespace below the embed viewer unless we do this)
       # Each item is 67px tall w/ a base of 55px we determine heights by: (item count * 67px) + 55px
       def file_specific_height
-        file_count = @purl_object.all_resource_files.count
+        file_count = @purl_object.resource_files.count
         items_to_account_for = [file_count, 4].min
 
         55 + (items_to_account_for * 67)
