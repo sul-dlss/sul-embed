@@ -3,11 +3,14 @@ import EmbedThis from 'src/modules/embed_this'
 
 export default class extends Controller {
   // TODO: accessability and transcript should move to a controller just for media.
+  static values = {
+    autoExpand: Boolean
+  }
   static targets = [ "leftDrawer", "toggleButton", "shareButton", "shareModal",
                      "downloadModal", "accessibility", "modalComponentsPopover"]
   connect() {
     this.element.hidden = false
-    if (!this.isSmallViewportWidth()) {
+    if (!this.isSmallViewportWidth() && this.autoExpandValue) {
       // Open the drawer on load
       this.openLeftDrawer()
     }
