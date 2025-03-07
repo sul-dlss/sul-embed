@@ -8,6 +8,10 @@ FactoryBot.define do
     etag { "W/\"#{Time.zone.now.to_f}\"" }
     last_modified { Time.zone.now }
 
+    trait :citation_only do
+      view { 'citation-only' }
+    end
+
     trait :embargoed do
       embargoed { true }
       embargo_release_date { '2053-12-21' }
