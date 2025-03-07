@@ -143,17 +143,19 @@ body {
         background: none;
       }
 
-      svg {
-        vertical-align: middle;
-      }
+      .sul-embed-embed-this-form {
+        svg {
+          vertical-align: middle;
+        }
 
-      ul {
-        list-style: none;
-        padding: 0px;
+        ul {
+          list-style: none;
+          padding: 0px;
 
-        li {
-          margin-left: var(--drawer-content-padding);
-          margin-bottom: 1rem;
+          li {
+            margin-left: var(--drawer-content-padding);
+            margin-bottom: 1rem;
+          }
         }
       }
     }
