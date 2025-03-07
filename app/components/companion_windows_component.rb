@@ -63,6 +63,7 @@ class CompanionWindowsComponent < ViewComponent::Base
         data[:fullscreen_target] = 'area'
         data[:fullscreen_close_value] = 'Exit full screen'
       end
+      data[:companion_window_auto_expand_value] = render_content_list_panel?
     end
   end
 end
