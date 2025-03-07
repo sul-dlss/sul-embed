@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Document::AuthMessagesComponent, type: :component do
+RSpec.describe Embed::File::AuthMessagesComponent, type: :component do
   subject(:component) { described_class.new(message:) }
 
   before do
