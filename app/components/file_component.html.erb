@@ -20,7 +20,7 @@
 
   <% component.with_authorization_messages do %>
     <%= render Embed::File::AuthMessagesComponent.new(message:) %>
-    <%= render CompanionWindows::ContentNotAvailableComponent.new if viewer.purl_object.citation_only? %>
+    <%= render CompanionWindows::ContentNotAvailableComponent.new if display_not_available_banner? %>
   <% end %>
 
   <% component.with_body do %>
