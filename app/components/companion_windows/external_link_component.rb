@@ -10,5 +10,11 @@ module CompanionWindows
     attr_reader :viewer, :label
 
     delegate :external_url, to: :viewer
+
+    def stimulus_attributes
+      return unless viewer.instance_of?(::Embed::Viewer::Geo)
+
+      { controller: 'meta-check', meta_check_url_value: viewer.purl_object.meta_json_url }
+    end
   end
 end

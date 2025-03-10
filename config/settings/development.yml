@@ -119,6 +119,8 @@ sandbox:
       purl: bj754sp5315
     - label: with jpg/zip
       purl: bh152hk2665
+    - label: not released to EarthWorks
+      purl: gh138gt7402
   document:
     - label: single file, world
       purl: bh502xm3351
