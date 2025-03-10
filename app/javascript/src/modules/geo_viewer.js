@@ -26,6 +26,12 @@ export default {
     this.map.invalidateSize()
   },
 
+  updateVisualizationLayer: function(location) {
+    this.map.removeLayer(this.layer);
+    this.dataAttributes.wmsUrl = location;
+    this.addVisualizationLayer();
+  },
+
   addVisualizationLayer: function () {
     const dataAttributes = this.dataAttributes
     const hasWmsUrl = this.isDefined(dataAttributes.wmsUrl)
@@ -82,7 +88,8 @@ export default {
       this.map.addControl(new L.Control.LayerOpacity(this.layer))
     } else {
       // Restricted layers
-      L.rectangle(JSON.parse(this.dataAttributes.boundingBox), { color: '#0000FF', weight: 4 }).addTo(this.map)
+      this.layer = L.rectangle(JSON.parse(this.dataAttributes.boundingBox), { color: '#0000FF', weight: 4 })
+      this.layer.addTo(this.map)
     }
   },
 
