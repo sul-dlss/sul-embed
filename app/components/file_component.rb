@@ -8,7 +8,7 @@ class FileComponent < ViewComponent::Base
   attr_reader :viewer
 
   delegate :purl_object, to: :viewer
-  delegate :citation_only?, :embargoed?, to: :purl_object
+  delegate :citation_only?, to: :purl_object
 
   def message
     viewer.authorization.message
@@ -17,6 +17,6 @@ class FileComponent < ViewComponent::Base
   # If this method is false, then display the "content not available" banner
   # We exclude the embargoed state, because we prefer to show the embargo banner and we don't want two banners
   def display_not_available_banner?
-    citation_only? && !embargoed?
+    citation_only? && message.blank?
   end
 end
