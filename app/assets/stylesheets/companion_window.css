@@ -354,7 +354,8 @@ body {
   }
 
   [role="banner"]:has(> .authLinkWrapper:not([hidden])) + .companion-window-component-body,
-  [role="banner"]:has(> .media-auth-wrapper:not([hidden])) + .companion-window-component-body {
+  [role="banner"]:has(> .media-auth-wrapper:not([hidden])) + .companion-window-component-body,
+  [role="banner"]:has(> div:not([hidden]) .authLinkWrapper) + .companion-window-component-body {
     --auth-bar-height: 48px;
   }
 
