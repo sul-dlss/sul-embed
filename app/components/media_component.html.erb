@@ -44,7 +44,7 @@
   <% end %>
 
   <% component.with_authorization_messages do %>
-    <div data-controller="auth-restriction" data-action="auth-denied@window->auth-restriction#displayMessage auth-stanford-restricted@window->auth-restriction#displayStanfordRestriction auth-success@window->auth-restriction#hideLoginPrompt" hidden="true">
+    <div class="media-auth-wrapper" data-controller="auth-restriction" data-action="auth-denied@window->auth-restriction#displayMessage auth-stanford-restricted@window->auth-restriction#displayStanfordRestriction auth-success@window->auth-restriction#hideLoginPrompt" hidden="true">
       <div data-auth-restriction-target="locationRestriction" hidden>
         <div class="authLinkWrapper">
           <%= render Icons::LockGlobeComponent.new %>

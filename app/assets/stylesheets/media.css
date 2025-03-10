@@ -134,16 +134,6 @@
   }
 }
 
-/* Second selector is for citation-only banner. First selector is for all the other auth restrictions. */
-[data-controller="auth-restriction"]:not([hidden])
-  + .companion-window-component-body,
-.authLinkWrapper + .companion-window-component-body {
-  --auth-bar-height: 40px;
-  max-height: calc(
-    100vh - var(--header-size) - var(--auth-bar-height) - 5px
-  ); /* Scroll height for metadata when the auth wrapper is displaying */
-}
-
 .transcript {
   --highlight-background-color: rgb(243, 249, 255);
   --highlight-border-color: rgb(131, 193, 250);

@@ -22,7 +22,8 @@ body {
   display: flex;
   background-color: var(--active-color);
   color: white;
-  padding: 0.5rem;
+  padding: 0.75rem;
+  font-size: 1.125rem;
 
   svg:not(button svg) {
     /* Buttons have a left/right padding of 6px */
@@ -42,7 +43,7 @@ body {
     color: var(--active-color);
     border: 0;
     border-radius: 5px;
-    padding: 0.2rem 0.4rem;
+    padding: 0.3rem 0.6rem;
     text-transform: uppercase;
     &:hover {
       cursor: pointer;
@@ -51,7 +52,7 @@ body {
   }
 
   .dismissButton {
-    padding: 0.2rem;
+    padding: 0 0.1rem;
     svg {
       font-size: 1rem;
       vertical-align: bottom;
@@ -352,8 +353,9 @@ body {
     }
   }
 
-  [role="banner"]:not([hidden]) + .companion-window-component-body {
-    --auth-bar-height: 40px;
+  [role="banner"]:has(> .authLinkWrapper:not([hidden])) + .companion-window-component-body,
+  [role="banner"]:has(> .media-auth-wrapper:not([hidden])) + .companion-window-component-body {
+    --auth-bar-height: 48px;
   }
 
   .companion-window-component-body {
