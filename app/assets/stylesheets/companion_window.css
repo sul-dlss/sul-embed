@@ -22,13 +22,8 @@ body {
   display: flex;
   background-color: var(--active-color);
   color: white;
-  padding: 0.5rem;
-
-  svg:not(button svg) {
-    /* Buttons have a left/right padding of 6px */
-    /* This aligns auth icons with sidebar icons  */
-    margin-left: 3px;
-  }
+  padding: 0.75rem;
+  font-size: 1.125rem;
 
   .loginMessage {
     margin-bottom: 0;
@@ -51,7 +46,7 @@ body {
   }
 
   .dismissButton {
-    padding: 0.2rem;
+    padding: 0 0.1rem;
     svg {
       font-size: 1rem;
       vertical-align: bottom;
@@ -353,7 +348,7 @@ body {
   }
 
   [role="banner"]:not([hidden]) + .companion-window-component-body {
-    --auth-bar-height: 40px;
+    --auth-bar-height: 48px;
   }
 
   .companion-window-component-body {
