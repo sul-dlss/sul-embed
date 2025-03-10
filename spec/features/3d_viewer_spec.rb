@@ -15,6 +15,8 @@ RSpec.describe '3D Viewer', :js do
   end
 
   it 'has working panels' do
+    expect(page).to have_no_content('About this item')
+    page.find('[aria-controls="left-drawer"]').click
     expect(page).to have_content('About this item')
   end
 end
