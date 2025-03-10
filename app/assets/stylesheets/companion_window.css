@@ -352,8 +352,9 @@ body {
     }
   }
 
-  [role="banner"]:not([hidden]) + .companion-window-component-body {
-    --auth-bar-height: 40px;
+  [role="banner"]:has(> .authLinkWrapper:not([hidden])) + .companion-window-component-body,
+  [role="banner"]:has(> .media-auth-wrapper:not([hidden])) + .companion-window-component-body {
+    --auth-bar-height: 48px;
   }
 
   .companion-window-component-body {
