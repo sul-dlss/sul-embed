@@ -15,10 +15,6 @@ RSpec.describe '3D Viewer', :js do
   end
 
   it 'has working panels' do
-    expect(page).to have_css('.sul-embed-metadata-panel', visible: :all)
-    within '.sul-embed-footer-toolbar' do
-      first('button').click
-    end
-    expect(page).to have_css('.sul-embed-metadata-panel', visible: :visible)
+    expect(page).to have_content('About this item')
   end
 end

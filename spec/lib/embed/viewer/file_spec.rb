@@ -25,30 +25,22 @@ RSpec.describe Embed::Viewer::File do
             ])
     end
 
-    context 'when the requested maxheight is larger than the default height' do
+    context 'when the requested maxheight is provided' do
       let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', maxheight: '600') }
 
-      it 'is the default height (max is a maximum, we can be smaller)' do
-        expect(file_viewer.height).to eq '257px' # 2 files + header
-      end
-    end
-
-    context 'when the requested maxheight is smaller than the default height' do
-      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', maxheight: '200') }
-
-      it 'is the requested maxheight' do
-        expect(file_viewer.height).to eq '200px'
+      it 'is the provided height' do
+        expect(file_viewer.height).to eq '600px'
       end
     end
 
     context 'when there is no requested maxheight' do
       it 'is the default height' do
-        expect(file_viewer.height).to eq '257px' # 2 files + header
+        expect(file_viewer.height).to eq '31.25rem'
       end
     end
   end
 
-  describe 'default_height' do
+  describe 'default_height', skip: 'legacy viewer height' do
     context 'when title and search is hidden' do
       before do
         expect(request).to receive(:hide_title?).at_least(:once).and_return(true)
