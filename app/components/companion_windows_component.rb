@@ -57,7 +57,8 @@ class CompanionWindowsComponent < ViewComponent::Base
   def outer_container_data
     {
       controller: controllers,
-      iiif_manifest_loader_iiif_manifest_value: iiif_v3_manifest_url
+      iiif_manifest_loader_iiif_manifest_value: iiif_v3_manifest_url,
+      companion_window_auto_expand_value: render_content_list_panel?
     }.tap do |data|
       if fullscreen?
         data[:fullscreen_target] = 'area'
