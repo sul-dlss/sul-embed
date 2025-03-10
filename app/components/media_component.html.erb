@@ -45,39 +45,31 @@
 
   <% component.with_authorization_messages do %>
     <div data-controller="auth-restriction" data-action="auth-denied@window->auth-restriction#displayMessage auth-stanford-restricted@window->auth-restriction#displayStanfordRestriction auth-success@window->auth-restriction#hideLoginPrompt" hidden="true">
-      <div data-auth-restriction-target="locationRestriction" hidden>
-        <div class="authLinkWrapper">
-          <%= render Icons::LockGlobeComponent.new %>
-          <p class="loginMessage">Access is restricted to the reading room. See Access conditions for more information.</p>
-        </div>
+      <div class="authLinkWrapper" data-auth-restriction-target="locationRestriction" hidden>
+        <%= render Icons::LockGlobeComponent.new %>
+        <p class="loginMessage">Access is restricted to the reading room. See Access conditions for more information.</p>
       </div>
-      <div data-auth-restriction-target="stanfordRestriction" hidden>
-        <div class="authLinkWrapper">
-          <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
-            # LockSharp
-            <path data-auth-restriction-target="stanfordRestrictionNotLoggedInIcon" d="M20 8h-3V6.21c0-2.61-1.91-4.94-4.51-5.19C9.51.74 7 3.08 7 6v2H4v14h16zm-8 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2z"></path>
-            # LockOpenSharp
-            <path data-auth-restriction-target="stanfordRestrictionLoggedInIcon" hidden d="M20 8h-3V6.21c0-2.61-1.91-4.94-4.51-5.19C9.51.74 7 3.08 7 6h2c0-1.13.6-2.24 1.64-2.7C12.85 2.31 15 3.9 15 6v2H4v14h16zm-2 12H6V10h12zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2"></path>
-          </svg>
-          <p class="loginMessage" data-auth-restriction-target="stanfordRestrictionMessage"><%= I18n.t('restrictions.stanford_only') %></p>
-          <button data-auth-restriction-target="stanfordLoginButton" data-action="media-tag#logIn">Log in</button>
-          <button class="dismissButton" hidden data-auth-restriction-target="stanfordRestrictionDismissButton" data-action="auth-restriction#hideAuthRestrictionMessages" aria-label="Close access message">
-            <svg class="MuiSvgIcon-root CloseSharp" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
-          </button>
-        </div>
+      <div class="authLinkWrapper" data-auth-restriction-target="stanfordRestriction" hidden>
+        <svg class="MuiSvgIcon-root" focusable="false" viewBox="0 0 24 24" aria-hidden="true">
+          # LockSharp
+          <path data-auth-restriction-target="stanfordRestrictionNotLoggedInIcon" d="M20 8h-3V6.21c0-2.61-1.91-4.94-4.51-5.19C9.51.74 7 3.08 7 6v2H4v14h16zm-8 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2M9 8V6c0-1.66 1.34-3 3-3s3 1.34 3 3v2z"></path>
+          # LockOpenSharp
+          <path data-auth-restriction-target="stanfordRestrictionLoggedInIcon" hidden d="M20 8h-3V6.21c0-2.61-1.91-4.94-4.51-5.19C9.51.74 7 3.08 7 6h2c0-1.13.6-2.24 1.64-2.7C12.85 2.31 15 3.9 15 6v2H4v14h16zm-2 12H6V10h12zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2"></path>
+        </svg>
+        <p class="loginMessage" data-auth-restriction-target="stanfordRestrictionMessage"><%= I18n.t('restrictions.stanford_only') %></p>
+        <button data-auth-restriction-target="stanfordLoginButton" data-action="media-tag#logIn">Log in</button>
+        <button class="dismissButton" hidden data-auth-restriction-target="stanfordRestrictionDismissButton" data-action="auth-restriction#hideAuthRestrictionMessages" aria-label="Close access message">
+          <svg class="MuiSvgIcon-root CloseSharp" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+        </button>
       </div>
-      <div data-auth-restriction-target="embargoRestriction" hidden>
-        <div class="authLinkWrapper">
-          <%= render Icons::LockClockComponent.new %>
-          <p class="loginMessage">Access is restricted until the embargo has elapsed</p>
-        </div>
+      <div class="authLinkWrapper" data-auth-restriction-target="embargoRestriction" hidden>
+        <%= render Icons::LockClockComponent.new %>
+        <p class="loginMessage">Access is restricted until the embargo has elapsed</p>
       </div>
-      <div data-auth-restriction-target="embargoAndStanfordRestriction" hidden>
-        <div class="authLinkWrapper">
-          <%= render Icons::LockClockComponent.new %>
-          <p class="loginMessage"><%= I18n.t('restrictions.stanford_only') %></p>
-          <button data-auth-restriction-target="embargoLoginButton" data-action="media-tag#logIn">Log in</button>
-        </div>
+      <div class="authLinkWrapper" data-auth-restriction-target="embargoAndStanfordRestriction" hidden>
+        <%= render Icons::LockClockComponent.new %>
+        <p class="loginMessage"><%= I18n.t('restrictions.stanford_only') %></p>
+        <button data-auth-restriction-target="embargoLoginButton" data-action="media-tag#logIn">Log in</button>
       </div>
       <div data-auth-restriction-target="noAccess" hidden>
          <%= render CompanionWindows::ContentNotAvailableComponent.new %>
