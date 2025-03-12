@@ -125,6 +125,15 @@
     transform: rotate(90deg);
   }
 
+  /* Zebra stripes for file row */
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background-color: var(--stanford-fog-light)
+      }
+    }
+  }
+
   .folder-title {
     display: flex;
     align-items: flex-start;
