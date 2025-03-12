@@ -121,7 +121,7 @@ export default {
       }
     }, [
       ...((cdl && cdlAuthPlugin) || []),
-      ...((imageTools && miradorImageToolsPlugin) || []),
+      ...miradorImageToolsPlugin,
       (!cdl && shareMenuPlugin),
       miradorZoomBugPlugin,
       ...((imageTools && embedModePlugin) || []),
