@@ -8,6 +8,7 @@ RSpec.describe MediaComponent, type: :component do
     render_inline(described_class.new(viewer:))
   end
 
+  let(:downloadable_caption_files) { true }
   let(:embed_request) { Embed::Request.new({}) }
   let(:viewer) do
     Embed::Viewer::Media.new(embed_request)
@@ -25,6 +26,7 @@ RSpec.describe MediaComponent, type: :component do
                     contents: [],
                     restricted_location: 'reading room',
                     downloadable_files: [],
+                    downloadable_caption_files?: :downloadable_caption_files,
                     downloadable_transcript_files?: false)
   end
 
@@ -41,6 +43,22 @@ RSpec.describe MediaComponent, type: :component do
     expect(page).to have_content 'Access is restricted to the reading room. See Access conditions for more information.'
     expect(page).to have_content 'Stanford users: log in to access all available features'
     expect(page).to have_content 'Access is restricted until the embargo has elapsed'
+
+    within '.sul-embed-container' do
+      click_on 'Toggle sidebar'
+      expect(page).to have_css('[aria-label="Transcript"]', visible: :visible)
+    end
+  end
+
+  context 'when it does not have caption files' do
+    let(:downloadable_caption_files?) { false }
+
+    it 'does not display transcript sidebar' do
+      within '.sul-embed-container' do
+        click_on 'Toggle sidebar'
+        expect(page).to have_css('[aria-label="Transcript"]', visible: :hidden)
+      end
+    end
   end
 
   context 'when hide_title is passed' do
