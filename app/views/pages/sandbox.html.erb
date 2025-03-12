@@ -167,6 +167,12 @@
       }
     }
 
+    function updateSandboxUrl(purl_url) {
+      const currentUrl = new URL(window.location.href);
+      currentUrl.searchParams.set('url', purl_url);
+      history.pushState(null, '', currentUrl);
+    }
+
     function isValidUrl() {
       const apiEndpoint = document.querySelector('.api-endpoint').value.trim();
       const urlScheme = document.querySelector('.url-scheme').value.trim();
@@ -183,6 +189,8 @@
       format = document.getElementById('select-format').value;
 
       if (apiEndpoint !== "" && urlScheme !== "") {
+        updateSandboxUrl(urlScheme)
+
         url = apiEndpoint + "/?url=" + urlScheme + "&format=" + format;
 
         if (newViewer) url += "&new_viewer=true";
@@ -260,6 +268,9 @@
   })();
 
   document.addEventListener('DOMContentLoaded', () => {
+    if (new URLSearchParams(window.location.search).has('url')) {
+      embed.render();
+    }
     document.querySelector('.btn-render').addEventListener('click', embed.render);
     const inputs = document.querySelectorAll('input');
     inputs.forEach(input => {
