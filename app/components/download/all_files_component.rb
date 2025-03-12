@@ -13,8 +13,7 @@ module Download
     delegate :downloadable_files, to: :purl_object
 
     def render?
-      !viewer.is_a?(Embed::Viewer::Media) &&
-        !viewer.is_a?(Embed::Viewer::DocumentViewer)
+      !viewer.is_a?(Embed::Viewer::Media)
     end
 
     # Returns true or false whether the viewer should display the Download All
