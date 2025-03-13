@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ 'table', 'count' ]
+  static targets = [ 'table', 'count', 'stripes' ]
 
   connect() {
     this.updateCount()
@@ -38,6 +38,9 @@ export default class extends Controller {
         }
       })
     }
+
+    // Update styling of background based on number of visible rows
+    this.updateStripesStyling(this.visibleRows.length);
   }
 
   search(event) {
@@ -242,5 +245,11 @@ export default class extends Controller {
     } else {
       trElement.hidden = false
     }
+  }
+
+  // Update the styling of the zebra stripes section of the page
+  updateStripesStyling(visibleRowCount) {
+    const stripesClass = (visibleRowCount % 2) === 0 ? 'even': 'odd'
+    this.stripesTarget.className = "stripes-background " + stripesClass
   }
 }

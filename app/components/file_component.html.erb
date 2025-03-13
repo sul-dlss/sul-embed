@@ -43,7 +43,7 @@
           <%= render Embed::File::DirRowComponent.new(viewer: viewer, dir: viewer.purl_object.hierarchical_contents)%>
         </tbody>
       </table>
-      <div class="stripes-background <%=stripes_class(viewer.purl_object.hierarchical_contents)%>">
+      <div data-tree-target="stripes" class="stripes-background <%=stripes_class(viewer.purl_object.hierarchical_contents)%>">
       </div>
     </div>
   <% end %>
