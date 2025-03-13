@@ -126,14 +126,10 @@
   }
 
   /* Zebra stripes for file row */
-  tbody {
-    tr {
-      &:nth-child(odd) {
-        background-color: var(--stanford-fog-light)
-      }
-    }
+  tbody > tr:nth-child(odd of :not([hidden])) {
+    background-color: var(--stanford-fog-light)
   }
-
+  
   .folder-title {
     display: flex;
     align-items: flex-start;
@@ -168,6 +164,21 @@
       margin: 0;
     }
   }
+}
+
+/* The background applied relies on the number of rows displayed in the file viewer */
+.stripes-background {
+  height:100%;
+}
+
+/* Display this background if the number of rows in the file contents table is even */
+.stripes-background.even {
+  background: repeating-linear-gradient(#f4f4f4,#f4f4f4 37px,#d5d5d4 37px,#d5d5d4 38px,#fff 38px,#fff 75px, #d5d5d4 75px,#d5d5d4 76px)
+}
+
+/* Display this background if the number of rows in the file contents table is odd */
+.stripes-background.odd {
+  background: repeating-linear-gradient(#fff,#fff 37px,#d5d5d4 37px,#d5d5d4 38px,#f4f4f4 38px,#f4f4f4 75px, #d5d5d4 75px,#d5d5d4 76px)
 }
 
 .sul-embed-downloads svg {
