@@ -3,7 +3,9 @@
 @import url("locked_status.css");
 
 .sul-embed-3d {
+  display: inline-block;
   position: relative;
+  height: 100%;
   width: 100%;
 
   .buttons {
@@ -23,9 +25,12 @@
     padding: 5px 13px;
   }
 
+  .model-viewer-container, model-viewer {
+    height: 100%;
+    width: 100%;
+  }
+
   model-viewer {
     background-color: black;
-    width: 100%;
-    height: var(--body-height);
   }
 }
