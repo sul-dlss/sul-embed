@@ -126,7 +126,7 @@
   }
 
   /* Zebra stripes for file row */
-  tbody > tr:nth-child(odd of :not([hidden])) {
+  tbody > tr:nth-child(even of :not([hidden])) {
     background-color: var(--stanford-fog-light)
   }
   
@@ -171,13 +171,13 @@
   height:100%;
 }
 
-/* Display this background if the number of rows in the file contents table is even */
-.stripes-background.even {
+/* Display this background if the number of rows in the file contents table is odd */
+.stripes-background.odd {
   background: repeating-linear-gradient(#f4f4f4,#f4f4f4 37px,#d5d5d4 37px,#d5d5d4 38px,#fff 38px,#fff 75px, #d5d5d4 75px,#d5d5d4 76px)
 }
 
-/* Display this background if the number of rows in the file contents table is odd */
-.stripes-background.odd {
+/* Display this background if the number of rows in the file contents table is even */
+.stripes-background.even {
   background: repeating-linear-gradient(#fff,#fff 37px,#d5d5d4 37px,#d5d5d4 38px,#f4f4f4 38px,#f4f4f4 75px, #d5d5d4 75px,#d5d5d4 76px)
 }
 
