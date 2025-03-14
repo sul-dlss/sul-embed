@@ -43,7 +43,7 @@ a:focus {
   --vertical-align-position: sub;
 }
 
-.sul-embed-location-restricted-text {
+.sul-embed-location-restricted-text, .stanford-digital-red {
   color: var(--stanford-digital-red);
 }
 
