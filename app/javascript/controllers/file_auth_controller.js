@@ -57,8 +57,10 @@ export default class extends Controller {
   // Try to render the resource, checks for any required authorization and shows login window if needed
   maybeDrawContentResource(contentResource) {
     console.debug("Now figure out if we can render", contentResource)
-    // Ensure location restriction banner is hidden by default in case it was visible for the previous document 
+    // Ensure any messages are hidden in case one was visible for the previous document 
     this.locationRestrictionTarget.hidden = true
+    this.loginPanelTarget.hidden = true
+    this.messagePanelTarget.hidden = true
     if (!contentResource.service) {
       // no auth service is present, just render the resource
       this.renderViewer({ fileUri: contentResource.id })
