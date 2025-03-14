@@ -1,10 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ 'table', 'count' ]
+  static targets = [ 'table', 'count', 'stripes' ]
 
   connect() {
     this.updateCount()
+    this.updateStripesStyling()
   }
 
   get visibleRows() {
@@ -38,6 +39,9 @@ export default class extends Controller {
         }
       })
     }
+
+    // Update styling of background based on number of visible rows
+    this.updateStripesStyling();
   }
 
   search(event) {
@@ -242,5 +246,25 @@ export default class extends Controller {
     } else {
       trElement.hidden = false
     }
+  }
+
+  // Update the styling of the zebra stripes section of the page
+  updateStripesStyling() {
+    // Set the correct class
+    const stripesClass = (this.visibleRows.length % 2) === 0 ? 'even': 'odd'
+    this.stripesTarget.className = "stripes-background-" + stripesClass
+    // Update the height as well
+    this.updateStripesHeight()
+  }
+
+  updateStripesHeight() {
+    // Get distance between top of window and bottom of table
+    const boundingRecY = this.tableTarget.getBoundingClientRect().bottom
+    // Get distance between top of window and the bottom of the parent div for stripes background
+    const parentY = this.stripesTarget.parentElement.getBoundingClientRect().bottom
+    // Calculate the difference i.e. the remaining space for the parent div
+    const diff = parentY - boundingRecY
+    // Set height for stripes div to fill in the remaining space
+    this.stripesTarget.style.height = diff + "px"
   }
 }
