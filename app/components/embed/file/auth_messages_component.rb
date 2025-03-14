@@ -14,7 +14,7 @@ module Embed
       end
 
       MESSAGE_ICONS = { 'embargo' => Icons::LockClockComponent,
-                        'stanford' => Icons::LockPersonComponent,
+                        'stanford' => Icons::LockComponent,
                         'location-restricted' => Icons::LockGlobeComponent }.freeze
 
       def render?
