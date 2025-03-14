@@ -79,6 +79,7 @@ body {
   --modal-max-width: 600px;
   --active-media-thumb-color: #016895;
   --box-shadow-color: #00000040;
+  --focus-outline-offset: -0.375rem;
 
   border: 1px solid var(--border-color);
   background-color: var(--background-color);
@@ -234,6 +235,9 @@ body {
       padding: 1.2rem;
       text-align: left;
       white-space: nowrap;
+      &:focus-visible {
+        outline-offset: var(--focus-outline-offset);
+      }
 
       .modal-component-label {
         font-size: 1rem;
@@ -256,7 +260,7 @@ body {
 
   nav {
     button:focus-visible {
-      outline-offset: -0.375rem;
+      outline-offset: var(--focus-outline-offset);
     }
   }
 
