@@ -1,5 +1,4 @@
 <div data-controller="iiif-auth-restriction" data-action="<%= authorization_actions %>">
   <%= render LoginComponent.new %>
-  <%= render LocationRestrictionComponent.new %>
-  <%= render CompanionWindows::ContentNotAvailableComponent.new unless available? %>
+  <%= render RestrictedMessageComponent.new %>
 </div>

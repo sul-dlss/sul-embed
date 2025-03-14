@@ -13,7 +13,7 @@ module CompanionWindows
     end
 
     def resource_files_collection
-      viewer.purl_object.resource_files.reject(&:no_download?)
+      viewer.purl_object.resource_files
     end
   end
 end
