@@ -170,18 +170,13 @@
   }
 }
 
-/* The background applied relies on the number of rows displayed in the file viewer */
-.stripes-background {
-  height:100%;
-}
-
 /* Display this background if the number of rows in the file contents table is odd */
-.stripes-background.odd {
+.stripes-background-odd {
   background: repeating-linear-gradient(rgba(244, 244, 244, 0.7),rgba(244, 244, 244, 0.7) 38px,#fff 38px,#fff 76px)
 }
 
 /* Display this background if the number of rows in the file contents table is even */
-.stripes-background.even {
+.stripes-background-even {
   background: repeating-linear-gradient(#fff,#fff 38px,rgba(244, 244, 244, 0.7) 38px,rgba(244, 244, 244, 0.7) 76px)
 }
 

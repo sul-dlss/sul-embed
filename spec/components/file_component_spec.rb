@@ -69,48 +69,6 @@ RSpec.describe FileComponent, type: :component do
     end
   end
 
-  context 'with varying hierarchical contents structure' do
-    context 'with an odd number of files' do
-      let(:resources) do
-        [
-          build(:resource, :file,
-                files: [
-                  build(:resource_file, :document, size: 12_345),
-                  build(:resource_file, :document, size: 12_346)
-                ]),
-          build(:resource, :file,
-                files: [
-                  build(:resource_file, :document, size: 12_345)
-                ])
-        ]
-      end
-
-      it 'displays the odd stripes class' do
-        expect(page).to have_css('div.stripes-background.odd', visible: :all)
-      end
-    end
-
-    context 'with even number of files and directories with titles' do
-      let(:resources) do
-        [
-          build(:resource, :file,
-                files: [
-                  build(:resource_file, filename: 'mycollection/test.pdf'),
-                  build(:resource_file, :document, size: 12_346)
-                ]),
-          build(:resource, :file,
-                files: [
-                  build(:resource_file, :document, size: 12_345)
-                ])
-        ]
-      end
-
-      it 'displays the even stripes class' do
-        expect(page).to have_css('div.stripes-background.even', visible: :all)
-      end
-    end
-  end
-
   context 'when file size is zero' do
     let(:resources) do
       [build(:resource, :image, files: [build(:resource_file, :image, size: 0)])]

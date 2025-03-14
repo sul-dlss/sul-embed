@@ -19,32 +19,4 @@ class FileComponent < ViewComponent::Base
   def display_not_available_banner?
     citation_only? && message.blank?
   end
-
-  # Display of zebra stripes for remaining space depends on number of rows displayed
-  def display_row_count(hierarchical_contents)
-    counter = 0
-    # A resource directory can have both directories at the top level
-    # as well as files. We start with the directories.
-    hierarchical_contents.dirs.each do |entry|
-      # A row is displayed for the directory name, otherwise no row is displayed
-      counter += 1 if entry.title.present?
-      # Each file in a directory gets its own row for display
-      counter += entry.files.size
-
-      # If entry has no directories, we are done
-      next if entry.dirs.empty?
-
-      # For each directory, we can calculate the number of rows to display
-      dir_count = display_row_count(entry)
-      counter += dir_count
-    end
-
-    # We also want to add the number of files at the directory top level
-    counter += hierarchical_contents.files.size
-    counter
-  end
-
-  def stripes_class(hierarchical_contents)
-    display_row_count(hierarchical_contents).odd? ? 'odd' : 'even'
-  end
 end
