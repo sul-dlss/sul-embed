@@ -15,7 +15,7 @@
   <% end %>
 
   <% component.with_drawer_button do %>
-    <%= render CompanionWindows::ControlButtonComponent.new(action: 'click->tab#switch', controller: 'tab', aria: { label: 'Transcript', controls: 'transcript' }, role: 'tab', data: { transcript_target: 'button' }, hidden: true) do %>
+    <%= render CompanionWindows::ControlButtonComponent.new(action: 'click->tab#switch', controller: 'tab', aria: { label: 'Transcript', controls: 'transcript' }, role: 'tab', data: { transcript_target: 'button' }, hidden: !downloadable_caption_files?) do %>
       <%= render Icons::DescriptionComponent.new %>
     <% end %>
   <% end %>
@@ -38,6 +38,7 @@
       <% end %>
       <% component.with_body do %>
         <div class="transcript" data-action="media-loaded@window->transcript#persistPlayer switch-transcript@window->transcript#switchTranscript media-data-loaded@window->transcript#load time-update@window->transcript#highlightCue" data-transcript-target="outlet">
+          <%= transcript_message %>
         </div>
       <% end %>
     <% end %>
