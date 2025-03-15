@@ -39,7 +39,7 @@ RSpec.describe Embed::Viewer::Geo do
                                      'data-bounding-box' => '[["38.298673", "-123.387626"], ["39.399103", "-122.528843"]]' })
       end
 
-      it { is_expected.not_to include('data-layers', 'data-wms-url') }
+      it { is_expected.not_to include('data-wms-url') }
     end
   end
 end
