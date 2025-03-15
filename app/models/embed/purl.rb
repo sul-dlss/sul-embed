@@ -57,12 +57,12 @@ module Embed
       contents.sum(&:size)
     end
 
-    def all_resource_files
+    def resource_files
       contents.flat_map(&:files)
     end
 
     def downloadable_files
-      all_resource_files.select(&:downloadable?)
+      resource_files.select(&:downloadable?)
     end
 
     def downloadable_transcript_files?

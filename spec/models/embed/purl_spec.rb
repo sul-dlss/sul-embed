@@ -93,7 +93,9 @@ RSpec.describe Embed::Purl do
     end
   end
 
-  describe 'all_resource_files' do
+  describe '#resource_files' do
+    subject(:resource_files) { purl.resource_files }
+
     let(:purl) do
       described_class.new(contents: [
                             build(:resource, files: [build(:resource_file, :image), build(:resource_file, :image)]),
@@ -102,9 +104,8 @@ RSpec.describe Embed::Purl do
     end
 
     it 'returns a flattened array of resource files' do
-      df = purl.all_resource_files
-      expect(df).to all(be_a Embed::Purl::ResourceFile)
-      expect(df.count).to eq 4
+      expect(resource_files).to all(be_a Embed::Purl::ResourceFile)
+      expect(resource_files.count).to eq 4
     end
   end
 

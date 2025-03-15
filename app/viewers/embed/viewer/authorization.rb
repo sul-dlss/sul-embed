@@ -26,7 +26,7 @@ module Embed
       end
 
       def any_stanford_only_files?
-        @purl_object.all_resource_files.any?(&:stanford_only?)
+        @purl_object.resource_files.any?(&:stanford_only?)
       end
 
       ##
