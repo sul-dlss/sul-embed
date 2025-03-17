@@ -40,5 +40,9 @@ module Download
     def pretty_filesize
       viewer.pretty_filesize(purl_object.size)
     end
+
+    def version
+      purl_object.version_id
+    end
   end
 end
