@@ -29,7 +29,7 @@ RSpec.describe Download::FileListComponent, type: :component do
                     size: 200,
                     contents:,
                     downloadable_files:,
-                    all_resource_files: [],
+                    resource_files: [],
                     downloadable_transcript_files?: false)
   end
 
