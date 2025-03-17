@@ -6,15 +6,15 @@ module Embed
       delegate :druid, to: :@purl_object
 
       def component
-        new_viewer? ? WebArchiveComponent : ::Legacy::WasSeedComponent
+        WebArchiveComponent
       end
 
       def importmap
-        new_viewer? ? 'webarchive' : 'legacy_webarchive'
+        'webarchive'
       end
 
       def stylesheet
-        new_viewer? ? 'webarchive.css' : 'legacy_was_seed.css'
+        'webarchive.css'
       end
 
       def capture_list
@@ -53,15 +53,6 @@ module Embed
         @purl_object.archived_site_url.tap do |url|
           Honeybadger.notify("WasSeed#archived_site_url blank for #{druid}") if url.blank?
         end
-      end
-
-      private
-
-      def default_height
-        return super if new_viewer?
-        return '340px' if embed_request.hide_title?
-
-        '420px'
       end
     end
   end

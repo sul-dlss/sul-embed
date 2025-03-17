@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'embed this panel', :js do
-  let(:iframe_options) { { new_viewer: 'true' } }
+  let(:iframe_options) { {} }
   let(:purl) do
     build(:purl, :file,
           contents: [build(:resource, files: [build(:resource_file, :document, label: 'File1 Label')])])
@@ -42,7 +42,7 @@ RSpec.describe 'embed this panel', :js do
   end
 
   context 'with a customized request' do
-    let(:iframe_options) { { hide_title: true, new_viewer: 'true' } }
+    let(:iframe_options) { { hide_title: true } }
 
     it "defaults to the options from the current viewer's request" do
       textarea_value = page.find('textarea').value

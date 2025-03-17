@@ -62,11 +62,6 @@ module Embed
       params[:hide_search] == 'true'
     end
 
-    # This is a temporary method that allows us to test new viewers before making them the default
-    def new_viewer?
-      true
-    end
-
     def min_files_to_search
       params[:min_files_to_search]
     end
@@ -91,7 +86,6 @@ module Embed
     def as_url_params
       p = params.slice(
         :hide_title, :hide_embed, :hide_search, :hide_download,
-        :new_viewer,
         :min_files_to_search,
         :canvas_id, :canvas_index,
         :search, :suggested_search,

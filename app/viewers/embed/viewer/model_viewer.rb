@@ -4,15 +4,15 @@ module Embed
   module Viewer
     class ModelViewer < CommonViewer
       def component
-        new_viewer? ? ModelComponent : ::Legacy::ModelComponent
+        ModelComponent
       end
 
       def importmap
-        new_viewer? ? 'model' :  'legacy_3d'
+        'model'
       end
 
       def stylesheet
-        new_viewer? ? 'model' :  'legacy_model.css'
+        'model'
       end
 
       def three_dimensional_files
@@ -26,12 +26,6 @@ module Embed
 
       def self.show_download?
         true
-      end
-
-      private
-
-      def default_height
-        new_viewer? ? super : '513px'
       end
     end
   end

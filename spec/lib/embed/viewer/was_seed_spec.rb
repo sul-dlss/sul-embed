@@ -50,17 +50,6 @@ RSpec.describe Embed::Viewer::WasSeed do
     end
   end
 
-  describe 'default_height' do
-    it 'has one' do
-      expect(was_seed_viewer.send(:default_height)).to eq '31.25rem'
-    end
-
-    it 'is smaller when the title is hidden', skip: 'legacy viewer only' do
-      expect(request).to receive(:hide_title?).and_return(true)
-      expect(was_seed_viewer.send(:default_height)).to eq '340px'
-    end
-  end
-
   describe '.external_url' do
     it 'builds the external url based on wayback url as extracted from prul' do
       expect(was_seed_viewer.external_url).to eq('https://swap.stanford.edu/*/http://naca.central.cranfield.ac.uk/')

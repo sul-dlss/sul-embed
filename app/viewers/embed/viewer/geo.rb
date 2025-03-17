@@ -4,15 +4,15 @@ module Embed
   module Viewer
     class Geo < CommonViewer
       def component
-        new_viewer? ? GeoComponent : ::Legacy::GeoComponent
+        GeoComponent
       end
 
       def importmap
-        new_viewer? ? 'geo' : 'legacy_geo'
+        'geo'
       end
 
       def stylesheet
-        new_viewer? ? 'geo.css' : 'legacy_geo.css'
+        'geo.css'
       end
 
       ##
@@ -64,10 +64,6 @@ module Embed
 
       def index_map_files
         %w[index_map.geojson index_map.json]
-      end
-
-      def default_height
-        new_viewer? ? super : '493px'
       end
     end
   end
