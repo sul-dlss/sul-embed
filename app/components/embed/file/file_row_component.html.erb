@@ -20,6 +20,8 @@
         <span class="sul-embed-sr-only visually-hidden"><%= title %></span>
       </a>
       <%= render DownloadAccessComponent.new(file:) %>
+    <% else %>
+      <span class="stanford-digital-red">(Download unavailable)</span>
     <% end %>
   </td>
 </tr>
