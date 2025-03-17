@@ -137,6 +137,7 @@
   .folder-title {
     display: flex;
     align-items: flex-start;
+    min-height: 38px;
     svg {
       margin-left: 0.25rem;
       flex-shrink: 0;
