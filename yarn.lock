@@ -3311,7 +3311,7 @@ minimatch@^3.1.1, minimatch@^3.1.2:
   dependencies:
     brace-expansion "^1.1.7"
 
-mirador-dl-plugin@^1.0.0-alpha.2:
+mirador-dl-plugin@^1.0.0-alpha.3:
   version "1.0.0-alpha.3"
   resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-1.0.0-alpha.3.tgz#38023838827c5553af0e89b83696508bebb7f505"
   integrity sha512-BkIe71nf2oYBGXSUFEiKBdFhwFakkfoCta/okX2HiBLVGjXJ4Ysatc4NCwPOlemGq0YZrNmLFTRs3zdvw3T+tg==
@@ -3320,7 +3320,7 @@ mirador-dl-plugin@^1.0.0-alpha.2:
     "@emotion/react" "^11.10.6"
     "@emotion/styled" "^11.10.6"
 
-mirador-image-tools@^1.0.0-alpha.1:
+mirador-image-tools@^1.0.0-alpha.2:
   version "1.0.0-alpha.2"
   resolved "https://registry.yarnpkg.com/mirador-image-tools/-/mirador-image-tools-1.0.0-alpha.2.tgz#0e8999cef35c2fcd0cc20771dac0925537b2c36e"
   integrity sha512-PucDnpLIaTAzlNElKbPHy63C24v+NeVrSodVsWPUVyHSeBCTzm+UMRXuzzE/zQ0bISPnrXoLrObZpOYQxH5jIA==
@@ -3329,7 +3329,7 @@ mirador-image-tools@^1.0.0-alpha.1:
     "@emotion/react" "^11.10.6"
     "@emotion/styled" "^11.10.6"
 
-mirador-share-plugin@^1.0.0-alpha.1:
+mirador-share-plugin@1.0.0-alpha.3:
   version "1.0.0-alpha.3"
   resolved "https://registry.yarnpkg.com/mirador-share-plugin/-/mirador-share-plugin-1.0.0-alpha.3.tgz#0d91f230fa1e1459fdba13508c0d37987df39363"
   integrity sha512-kDQEOYfV70e9rcr6qbL/RwMi0WWTiaUdwV0GjtmE6PzwJA7Py95c1z5tGnN5SHt+i90SmJhlN1vzaySD+7+m2w==
@@ -3339,7 +3339,7 @@ mirador-share-plugin@^1.0.0-alpha.1:
     "@emotion/styled" "^11.10.6"
     notistack "^3.0.1"
 
-mirador@^4.0.0-alpha.9:
+mirador@^4.0.0-alpha.10:
   version "4.0.0-alpha.16"
   resolved "https://registry.yarnpkg.com/mirador/-/mirador-4.0.0-alpha.16.tgz#87394673af034c09c5743a4d7cd553b242b12683"
   integrity sha512-o6Kr85tHetFMUBFRzokPcItZB0JB/3RUETXALi0cc6Nq8EF862tQPyog33CCJAELBbJ3nArudCX4gxXBwkJaeg==
