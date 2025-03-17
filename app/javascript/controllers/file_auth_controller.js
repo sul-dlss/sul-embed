@@ -58,9 +58,7 @@ export default class extends Controller {
   maybeDrawContentResource(contentResource) {
     console.debug("Now figure out if we can render", contentResource)
     // Ensure any messages are hidden in case one was visible for the previous document 
-    this.locationRestrictionTarget.hidden = true
-    this.loginPanelTarget.hidden = true
-    this.messagePanelTarget.hidden = true
+    this.resetMessages()
     if (!contentResource.service) {
       // no auth service is present, just render the resource
       this.renderViewer({ fileUri: contentResource.id })
@@ -266,6 +264,12 @@ export default class extends Controller {
   }
 
   hideMessagePanel() {
+    this.messagePanelTarget.hidden = true
+  }
+
+  resetMessages() {
+    this.locationRestrictionTarget.hidden = true
+    this.loginPanelTarget.hidden = true
     this.messagePanelTarget.hidden = true
   }
 
