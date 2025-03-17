@@ -8,7 +8,15 @@ class MediaComponent < ViewComponent::Base
   attr_reader :viewer
 
   delegate :purl_object, to: :viewer
-  delegate :druid, :downloadable_transcript_files?, to: :purl_object
+  delegate :druid, :downloadable_transcript_files?, :downloadable_caption_files?, :downloadable_files, to: :purl_object
+
+  def transcript_message
+    return unless downloadable_caption_files?
+
+    return unless downloadable_files.any? { it.caption? && it.stanford_only? }
+
+    'Login in to view transcript'
+  end
 
   def resources_with_primary_file
     @resources_with_primary_file ||= purl_object.contents.select do |purl_resource|

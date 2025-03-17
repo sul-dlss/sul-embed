@@ -69,6 +69,10 @@ module Embed
       downloadable_files.any?(&:transcript?)
     end
 
+    def downloadable_caption_files?
+      downloadable_files.any?(&:caption?)
+    end
+
     def purl_url
       return "#{Settings.purl_url}/#{@druid}" if @version_id.blank?
 
