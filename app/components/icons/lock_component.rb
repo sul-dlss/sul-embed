@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 module Icons
-  class LockPersonComponent < ViewComponent::Base
+  class LockComponent < ViewComponent::Base
   end
 end
