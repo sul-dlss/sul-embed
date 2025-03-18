@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
+// This is only used for media auth
 export default class extends Controller {
   static targets = ["stanfordRestriction", "stanfordRestrictionMessage", "stanfordRestrictionNotLoggedInIcon",
                     "stanfordRestrictionLoggedInIcon", "stanfordRestrictionDismissButton", "stanfordLoginButton",

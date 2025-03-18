@@ -26,7 +26,7 @@ RSpec.describe PdfComponent, type: :component do
   end
 
   it 'includes access restriction method section' do
-    expect(page).to have_css('div[data-file-auth-target="locationRestriction"]', visible: :all)
+    expect(page).to have_css('div[data-iiif-auth-restriction-target="locationRestriction"]', visible: :all)
   end
 
   context 'when hide_title is passed' do
