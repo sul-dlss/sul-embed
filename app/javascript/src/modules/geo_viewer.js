@@ -12,6 +12,8 @@ export default {
     const resizeObserver = new ResizeObserver(() => this.map.invalidateSize())
     resizeObserver.observe(this.el)
 
+    this.updateFitBounds()
+
     const attribution = `&copy <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy <a href="http://carto.com/attributions">Carto</a>`
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png', {
       maxZoom: 19,
@@ -24,6 +26,20 @@ export default {
     this.addVisualizationLayer()
 
     this.map.invalidateSize()
+  },
+
+  updateFitBounds: function () {
+    const leftDrawer = document.getElementById('left-drawer')
+
+    if (!leftDrawer || !leftDrawer.classList.contains('open')) return false
+
+    // The left drawer opens with a transition that changes the width of the
+    // viewer. After the transition is complete we need to recalculate the
+    // bounds of the map to fit the new width. We only do this once so we don't
+    // disturb the user's view if they have panned or zoomed the map.
+    leftDrawer.addEventListener("transitionend", () => {
+      this.map.fitBounds(JSON.parse(this.dataAttributes.boundingBox))
+    }, { once: true })
   },
 
   addVisualizationLayer: function () {
