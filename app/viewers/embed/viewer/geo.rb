@@ -24,10 +24,8 @@ module Embed
           style: 'flex: 1',
           'data-bounding-box' => @purl_object.bounding_box.to_s
         }
-        if @purl_object.public?
-          options['data-wms-url'] = Settings.geo_wms_url
-          options['data-layers'] = "druid:#{@purl_object.druid}"
-        end
+        options['data-wms-url'] = Settings.geo_wms_url if @purl_object.public?
+        options['data-layers'] = "druid:#{@purl_object.druid}"
         options['data-index-map'] = index_map.file_url if index_map?
         options['data-geo-viewer-colors'] = Settings.geo_viewer_colors.to_json
         options

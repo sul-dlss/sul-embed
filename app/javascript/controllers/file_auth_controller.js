@@ -206,7 +206,7 @@ export default class extends Controller {
     }
     return fetch(resource.probeService.id, { headers })
       .then((response) => response.json())
-      .then((json) => new Promise((resolve, reject) => json.status === 200 ? resolve({ fileUri: resource.contentResourceId, location: json.location?.id }) : reject(json)))
+      .then((json) => new Promise((resolve, reject) => json.status === 200 || json.status === 302 ? resolve({ fileUri: resource.contentResourceId, location: json.location?.id }) : reject(json)))
   }
 
   // Fetch a token for the provided resource

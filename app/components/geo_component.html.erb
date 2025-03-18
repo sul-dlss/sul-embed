@@ -7,12 +7,16 @@
     <%= render CompanionWindows::FullscreenButtonComponent.new %>
   <% end %>
 
+  <% component.with_authorization_messages do %>
+    <%= render CompanionWindows::AuthorizationMessagesComponent.new(available: true) %>
+  <% end %>
+
   <% component.with_share_menu_button do %>
     <%= render CompanionWindows::ExternalLinkComponent.new(viewer:, label: 'EarthWorks') %>
   <% end %>
 
   <% component.with_body do %>
-    <div class='sul-embed-geo'>
+    <div class='sul-embed-geo' data-controller="geo" data-action="iiif-manifest-received@window->file-auth#parseFiles auth-success@window->geo#show">
       <div id="sul-embed-geo-sidebar" class="" style="display: none;">
       </div>
       <%= content_tag :div, viewer.map_element_options do %>

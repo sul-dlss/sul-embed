@@ -26,6 +26,14 @@ export default {
     this.map.invalidateSize()
   },
 
+  updateVisualizationLayer: function(location) {
+    if (this.replacementLayer){
+      this.map.removeLayer(this.replacementLayer);
+      this.dataAttributes.wmsUrl = location;
+      this.addVisualizationLayer();
+    }
+  },
+
   addVisualizationLayer: function () {
     const dataAttributes = this.dataAttributes
     const hasWmsUrl = this.isDefined(dataAttributes.wmsUrl)
@@ -82,7 +90,8 @@ export default {
       this.map.addControl(new L.Control.LayerOpacity(this.layer))
     } else {
       // Restricted layers
-      L.rectangle(JSON.parse(this.dataAttributes.boundingBox), { color: '#0000FF', weight: 4 }).addTo(this.map)
+      this.replacementLayer = L.rectangle(JSON.parse(this.dataAttributes.boundingBox), { color: '#0000FF', weight: 4 })
+      this.replacementLayer.addTo(this.map)
     }
   },
 
@@ -184,7 +193,7 @@ export default {
       })
 
       const url = new URL(_this.dataAttributes.wmsUrl);
-      url.search = wmsoptions.toString();
+      url.search += (url.search ? "&" : "") + wmsoptions.toString();
 
       fetch(url.toString())
       .then(response => response.json())
