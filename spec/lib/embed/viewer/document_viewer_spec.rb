@@ -16,11 +16,12 @@ RSpec.describe Embed::Viewer::DocumentViewer do
                                                ]),
         instance_double(Embed::Purl::Resource, type: 'document',
                                                files: [
-                                                 instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', file_url: '//file/druid:abc123/doc-abc123.pdf'),
-                                                 instance_double(Embed::Purl::ResourceFile, title: 'doc-xyz321.pdf', file_url: '//file/druid:abc123/doc-xyz321.pdf')
+                                                 instance_double(Embed::Purl::ResourceFile, title: 'doc-abc123.pdf', file_url: '//file/druid:abc123/version/1/doc-abc123.pdf'),
+                                                 instance_double(Embed::Purl::ResourceFile, title: 'doc-xyz321.pdf', file_url: '//file/druid:abc123/version/1/doc-xyz321.pdf')
                                                ])
       ],
-      druid: 'abc123'
+      druid: 'abc123',
+      version_id: '1'
     )
   end
   let(:request) { instance_double(Embed::Request, purl_object: purl) }
@@ -28,8 +29,8 @@ RSpec.describe Embed::Viewer::DocumentViewer do
   describe '#pdf_files' do
     it 'returns the full file URL for the PDFs in an object' do
       expect(pdf_viewer.pdf_files.length).to eq 2
-      expect(pdf_viewer.pdf_files.first).to match(%r{/file/druid:abc123/doc-abc123\.pdf$})
-      expect(pdf_viewer.pdf_files.last).to match(%r{/file/druid:abc123/doc-xyz321\.pdf})
+      expect(pdf_viewer.pdf_files.first).to match(%r{/file/druid:abc123/version/1/doc-abc123\.pdf$})
+      expect(pdf_viewer.pdf_files.last).to match(%r{/file/druid:abc123/version/1/doc-xyz321\.pdf})
     end
   end
 
