@@ -20,7 +20,7 @@ RSpec.describe 'Embed requests' do
       end
     end
 
-    context 'when a Purl that is not embeddable is requested' do
+    context 'when a Purl that is not embeddable (no contents) is requested' do
       let(:purl) do
         build(:purl, contents: [])
       end
@@ -28,6 +28,17 @@ RSpec.describe 'Embed requests' do
       it 'has a 400 status' do
         get '/embed', params: { url: 'http://purl.stanford.edu/tz959sb6952' }
         expect(response).to have_http_status(:bad_request)
+      end
+    end
+
+    context 'when a Purl is a virual object (no contents) is requested' do
+      let(:purl) do
+        build(:purl, :image, contents: [], constituents: ['druid:gw001pr5505'])
+      end
+
+      it 'has a 200 status' do
+        get '/embed', params: { url: 'http://purl.stanford.edu/tz959sb6952' }
+        expect(response).to have_http_status(:ok)
       end
     end
 

@@ -14,8 +14,8 @@ module Embed
       end
     end
 
-    attr_accessor :druid, :version_id, :type, :title, :use_and_reproduction, :copyright, :contents, :collections,
-                  :license, :bounding_box, :embargo_release_date, :archived_site_url, :external_url,
+    attr_accessor :druid, :version_id, :type, :title, :use_and_reproduction, :copyright, :contents, :constituents,
+                  :collections, :license, :bounding_box, :embargo_release_date, :archived_site_url, :external_url,
                   :embargoed, :download, :view, :controlled_digital_lending,
                   :etag, :last_modified, :location_restriction, :restricted_location
 
@@ -30,7 +30,7 @@ module Embed
 
     # @returns [Bool] does this have any resources that can be embeded?
     def valid?
-      contents.any?
+      contents.any? || constituents.any?
     end
 
     def stanford_download?
