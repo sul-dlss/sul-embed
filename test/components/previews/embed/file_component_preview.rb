@@ -13,7 +13,7 @@ module Embed
     private
 
     def render_viewer_for(url:)
-      embed_request = Embed::Request.new(url:, new_viewer: 'true')
+      embed_request = Embed::Request.new(url:)
       viewer = Embed::Viewer::File.new(embed_request)
       render(viewer.component.new(viewer:))
     end

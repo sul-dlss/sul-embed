@@ -51,15 +51,14 @@ RSpec.configure do |config|
 end
 
 def visit_iframe_response(druid = 'ignored', min_files_to_search: nil, hide_search: nil, hide_title: nil,
-                          hide_download: nil, fullheight: nil, new_viewer: false)
+                          hide_download: nil, fullheight: nil)
   visit iframe_path(
     url: "#{Settings.purl_url}/#{druid}",
     min_files_to_search:,
     hide_search:,
     hide_title:,
     hide_download:,
-    fullheight:,
-    new_viewer:
+    fullheight:
   )
   expect(page).to have_css('.sul-embed-container')
 end

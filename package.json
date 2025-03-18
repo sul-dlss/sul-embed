@@ -11,9 +11,7 @@
   "bugs": {
     "url": "https://github.com/sul-dlss/sul-embed/issues"
   },
-  "scripts": {
-    "build:css": "sass ./app/assets/stylesheets/legacy_file.scss:./app/assets/builds/legacy_file.css ./app/assets/stylesheets/legacy_geo.scss:./app/assets/builds/legacy_geo.css ./app/assets/stylesheets/legacy_model.scss:./app/assets/builds/legacy_model.css ./app/assets/stylesheets/legacy_was_seed.scss:./app/assets/builds/legacy_was_seed.css ./app/assets/stylesheets/sul_icons.scss:./app/assets/builds/sul_icons.css --no-source-map --load-path=node_modules --load-path=vendor/assets/javascripts"
-  },
+  "scripts": {},
   "private": true,
   "dependencies": {
     "@babel/core": "7",
@@ -27,7 +25,6 @@
     "babel-plugin-macros": "^3.1.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "compression-webpack-plugin": "9",
-    "jquery": "^3.7.1",
     "mirador": "^3.3.0",
     "mirador-dl-plugin": "^0.13.0",
     "mirador-image-tools": "^0.8.0",
@@ -35,7 +32,6 @@
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "sass": "^1.57.1",
     "shakapacker": "7",
     "terser-webpack-plugin": "5",
     "webpack": "5",

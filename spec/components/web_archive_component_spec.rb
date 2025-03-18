@@ -40,7 +40,7 @@ RSpec.describe WebArchiveComponent, type: :component do
       end
 
       it do
-        expect(page).to have_no_css '.sul-embed-header', visible: :all
+        expect(page).to have_no_css 'h2', visible: :all
       end
     end
   end
@@ -70,7 +70,7 @@ RSpec.describe WebArchiveComponent, type: :component do
       end
 
       it do
-        expect(page).to have_no_css '.sul-embed-header', visible: :all
+        expect(page).to have_no_css 'h2', visible: :all
       end
     end
   end

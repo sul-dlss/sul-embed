@@ -9,7 +9,6 @@ module Embed
 
       attr_reader :purl_object, :embed_request, :authorization
 
-      delegate :new_viewer?, to: :embed_request
       delegate :any_stanford_only_files?, to: :authorization
 
       def initialize(embed_request)

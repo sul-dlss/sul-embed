@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe FileComponent, type: :component do
   let(:request) do
-    Embed::Request.new(url: 'http://purl.stanford.edu/abc123', min_files_to_search: 1, new_viewer: 'true')
+    Embed::Request.new(url: 'http://purl.stanford.edu/abc123', min_files_to_search: 1)
   end
   let(:viewer) { Embed::Viewer::File.new(request) }
   let(:purl) { build(:purl, :file, contents: resources) }
@@ -26,7 +26,7 @@ RSpec.describe FileComponent, type: :component do
   end
 
   context 'when hide_title is passed' do
-    Embed::Request.new(url: 'http://purl.stanford.edu/abc123', min_files_to_search: 1, new_viewer: 'true', hide_title: 'true')
+    Embed::Request.new(url: 'http://purl.stanford.edu/abc123', min_files_to_search: 1, hide_title: 'true')
 
     it 'displays the page' do
       within 'header' do

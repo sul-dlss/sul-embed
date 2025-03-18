@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-        crossorigin="anonymous"></script>
-    <script>
-      <%= 'if (window.jQuery) { jQuery.fx.off = true; }' if Rails.env.test? %>
-    </script>
     <script src="//js.honeybadger.io/v6.5/honeybadger.min.js" type="text/javascript"></script>
     <script type="text/javascript">
       Honeybadger.configure({
@@ -19,7 +13,6 @@
     <%= render 'analytics' %>
     <%= javascript_importmap_tags @embed_response.viewer.importmap if @embed_response.viewer.importmap %>
     <%= stylesheet_link_tag @embed_response.viewer.stylesheet %>
-    <%= stylesheet_link_tag 'sul_icons.css' %>
     <%= tag :link, rel: "up", href: @embed_response.request.purl_object.first_collection_url if @embed_response && @embed_response.request.purl_object.first_collection_url %>
   </head>
   <body>

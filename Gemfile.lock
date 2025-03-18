@@ -124,8 +124,6 @@ GEM
       bigdecimal
       rexml
     crass (1.0.6)
-    cssbundling-rails (1.4.3)
-      railties (>= 6.0.0)
     date (3.4.1)
     debug (1.10.0)
       irb (~> 1.10)
@@ -409,7 +407,6 @@ DEPENDENCIES
   capistrano-shared_configs
   capybara
   config
-  cssbundling-rails (~> 1.1)
   debug
   dlss-capistrano
   dor-rights-auth

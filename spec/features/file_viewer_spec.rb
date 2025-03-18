@@ -18,6 +18,8 @@ RSpec.describe 'File viewer', :js do
 
     it 'makes purl embed request and embed' do
       expect(page).to have_css('.sul-embed-container')
+      expect(page).to have_css('h2')
+      expect(page).to have_css('#main-display')
 
       expect(page).to have_css('tr[data-tree-role="leaf"] a', text: 'Download')
       expect(page).to have_css('*[data-tree-role="label"]', text: 'File1 Label')
@@ -45,7 +47,7 @@ RSpec.describe 'File viewer', :js do
     end
 
     it 'hides the title' do
-      expect(page).to have_no_css('.sul-embed-header-title')
+      expect(page).to have_no_css('h2')
     end
   end
 end

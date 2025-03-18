@@ -1,9 +1,0 @@
-<% unless viewer.embed_request.hide_download? %>
-  <%= render Legacy::DownloadPanelComponent.new do %>
-    <% viewer.purl_object.contents.each do |resource| %>
-      <ul class='sul-embed-download-list'>
-        <%= render Download::FileListItemComponent.with_collection(resource.files, prefer_filename: true) %>
-      </ul>
-    <% end %>
-  <% end %>
-<% end %>

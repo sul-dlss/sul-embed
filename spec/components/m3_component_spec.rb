@@ -16,16 +16,6 @@ RSpec.describe M3Component, type: :component do
     expect(page).to have_css '#sul-embed-m3', visible: :all
   end
 
-  context 'with hidden title' do
-    let(:request) do
-      Embed::Request.new(url: 'http://purl.stanford.edu/abc123', hide_title: 'true')
-    end
-
-    it do
-      expect(page).to have_no_css '.sul-embed-header', visible: :all
-    end
-  end
-
   it 'passes along canvas index' do
     expect(page).to have_css '[data-canvas-index="3"]', visible: :all
   end
