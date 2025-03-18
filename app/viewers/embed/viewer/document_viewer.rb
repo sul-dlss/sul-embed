@@ -16,7 +16,9 @@ module Embed
       end
 
       def pdf_files
-        document_resource_files.map(&:file_url)
+        document_resource_files.map do |file|
+          file.file_url(version: purl_object.version_id)
+        end
       end
 
       def self.show_download?
