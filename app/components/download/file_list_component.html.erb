@@ -10,13 +10,13 @@
         <% if content.files.any? %>
           <h4><%= content.label %></h4>
           <ul>
-            <%= render Download::FileListItemComponent.with_collection(content.files, prefer_filename:) %>
+            <%= render Download::FileListItemComponent.with_collection(content.files, prefer_filename:, version:) %>
           </ul>
         <% end %>
       <% end %>
     <% else %>
       <ul>
-        <%= render Download::FileListItemComponent.with_collection(downloadable_files, prefer_filename:) %>
+        <%= render Download::FileListItemComponent.with_collection(downloadable_files, prefer_filename:, version:) %>
       </ul>
     <% end %>
   <% end %>

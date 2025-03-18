@@ -52,6 +52,12 @@ RSpec.describe Embed::Purl::ResourceFile do
           .to eq 'https://stacks.stanford.edu/file/abc123/path/to/%5BDissertation%5D%20micro-TEC%20vfinal%20%28for%20submission%29-augmented.pdf'
       end
     end
+
+    context 'when a version is supplied' do
+      it 'creates a versioned stacks file url' do
+        expect(resource_file.file_url(version: '2')).to eq 'https://stacks.stanford.edu/v2/file/abc123/version/2/cool_file'
+      end
+    end
   end
 
   describe '#hierarchical_title' do
