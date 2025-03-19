@@ -12,7 +12,7 @@
   <% end %>
 
   <% component.with_body do %>
-    <div data-controller="locked-poster" data-action="auth-success@window->locked-poster#hide auth-denied@window->locked-poster#show needs-login@window->locked-poster#show" role="presentation" style="flex: 1 0 100%; text-align: center;" <%= 'hidden' if viewer.available? %>>
+    <div data-controller="locked-poster" data-action="auth-success@window->locked-poster#hide needs-login@window->locked-poster#show auth-denied@window->locked-poster#show needs-login@window->locked-poster#show" role="presentation" style="flex: 1 0 100%; text-align: center;" <%= 'hidden' if viewer.available? %>>
       <%= render LockedStatusComponent.new %>
     </div>
     <div class="sul-embed-body" style="flex-basis: 100%">
