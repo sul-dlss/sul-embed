@@ -1,29 +1,24 @@
-const { generateWebpackConfig, merge } = require('shakapacker')
-const webpack = require('webpack')
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
+const { env, webpackConfig } = require('shakapacker')
+const { existsSync } = require('fs')
+const { resolve } = require('path')
 
-const isDevelopment = process.env.NODE_ENV !== 'production'
-const baseWebpackConfig = generateWebpackConfig()
-const options = {
-  resolve: {
-      fallback: {
-        url: false
-      }
-  },
-  plugins: [
-    new webpack.IgnorePlugin({
-      resourceRegExp: /@blueprintjs\/(core|icons)/, // ignore optional UI framework dependencies
-    }),
-  ],
-}
-if (baseWebpackConfig.devServer) {
-  options.plugins.push(
-    new ReactRefreshWebpackPlugin({
-      overlay: {
-        sockPort: baseWebpackConfig.devServer.port,
-      },
-    })
-  )
+const envSpecificConfig = () => {
+  const path = resolve(__dirname, `${env.nodeEnv}.js`)
+  if (existsSync(path)) {
+    console.log(`Loading ENV specific webpack configuration file ${path}`)
+    return require(path)
+  } else {
+    return webpackConfig
+  }
 }
 
-module.exports = merge({}, baseWebpackConfig, options)
+const webpackConfiguration = envSpecificConfig()
+
+// To debug the webpack configuration
+// 1. Uncomment debugger line below
+// 2. Run `bin/shakapacker --debug-shakapacker`
+// 3. Examine the webpackConfiguration variable
+// 4. Consider adding a 'debugger` line to the beginning of this file.
+// debugger
+
+module.exports = webpackConfiguration
