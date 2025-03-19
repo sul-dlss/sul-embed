@@ -116,4 +116,12 @@ FactoryBot.define do
   trait :location_restricted do
     download { 'location-based' }
   end
+
+  trait :view_location_restricted do
+    view { 'location-based' }
+  end
+
+  trait :view_world do
+    view { 'world' }
+  end
 end
