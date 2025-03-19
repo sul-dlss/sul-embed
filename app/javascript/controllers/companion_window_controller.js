@@ -52,14 +52,14 @@ export default class extends Controller {
     this.modalComponentsPopoverTarget.close()
   }
 
-  closeModal() {
-    this.downloadModalTarget.close()
-    this.shareModalTarget.close()
+  closeModal(event) {
+    event.target.closest('dialog')?.close()
 
     // After closing the modal, we need to put the focus back to the button that launched the
     // original interaction.  We need to do this because the immediately preceeding action was
-    //  on the popover, which has already been closed.
-    this.shareButtonTarget.focus()
+    // on the popover, which has already been closed.
+    // We only want to do this for users using the keyboard and not users using the mouse
+    this.returnFocusButton?.focus()
   }
 
   handleBackdropClicks(event) {
@@ -71,16 +71,19 @@ export default class extends Controller {
     if (!clickWithinDialog) modal.close()
   }
 
-  openShareModal() {
-    this.shareModalTarget.showModal()
+  openModal(event) {
+    const clickedButton = event.currentTarget.closest('button')
+    this.setReturnFocusButton(clickedButton)
+    const modalName = clickedButton.dataset.target
+    this[`${modalName}Target`].showModal()
   }
 
-  openDownloadModal() {
-    this.downloadModalTarget.showModal()
-  }
-
-  displayAccessibility() {
-    this.accessibilityTarget.showModal()
+  setReturnFocusButton(button) {
+    this.returnFocusButton = undefined
+    // we want the focus to return to share/download button not to the closed dropdown menu
+    if (button.parentElement.tagName !== 'DIALOG' && button.matches(':focus-visible')){
+      this.returnFocusButton = button
+    }
   }
 
   isSmallViewportWidth() {
