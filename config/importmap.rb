@@ -1,13 +1,9 @@
 # Pin npm packages by running ./bin/importmap
 
 pin "media", preload: true
-pin "legacy_webarchive", preload: true
-pin "legacy_file", preload: true
 pin "file", preload: true
 pin "document", preload: true
-pin "legacy_3d", preload: true
 pin "model", preload: true
-pin "legacy_geo", preload: true
 pin "geo", preload: true
 pin "webarchive", preload: true
 
