@@ -120,4 +120,8 @@ FactoryBot.define do
   trait :view_location_restricted do
     view { 'location-based' }
   end
+
+  trait :view_world do
+    view { 'world' }
+  end
 end
