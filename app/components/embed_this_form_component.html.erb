@@ -1,4 +1,4 @@
-<div class='sul-embed-embed-this-form'>
+<div class='sul-embed-embed-this-form' data-controller="embed-this">
   <div data-controller="clipboard">
     <label for="sul-embed-purl-link" class="form-label" readonly>Share link</label>
     <input type="text" name="sul-embed-purl-link" id='sul-embed-purl-link' data-clipboard-target="value" value="<%= purl_url %>" readonly>
@@ -11,7 +11,7 @@
 
   <div data-controller="clipboard">
     <label for='sul-embed-iframe-code' class="form-label">Embed</label>
-    <textarea id='sul-embed-iframe-code' data-behavior='iframe-code' data-clipboard-target="value" readonly><%= render IframeComponent.new(viewer:) %></textarea>
+    <textarea id='sul-embed-iframe-code' data-embed-this-target='output' data-clipboard-target="value" readonly><%= render IframeComponent.new(viewer:) %></textarea>
     <button class="button copy-to-clipboard" data-action="clipboard#copy" aria-label="Copy iframe code to clipboard">
       <svg class="MuiSvgIcon-root ContentCopySharp" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
         <path d="M16 1H2v16h2V3h12zm5 4H6v18h15zm-2 16H8V7h11z"></path>
@@ -25,7 +25,8 @@
       <input
         type='checkbox'
         id='sul-embed-embed-title'
-        data-embed-attr='hide_title'
+        data-embed-this-target='title'
+        data-action="embed-this#change"
       <%= 'checked' unless embed_request.hide_title? %>
       />
       <label for='sul-embed-embed-title'>title (<%= purl_object_title %>)</label>
@@ -33,13 +34,16 @@
 
     <% if file? %>
       <div class='form-check'>
-        <% checkbox_options = { type: 'checkbox', id: 'sul-embed-embed-search', 'data-embed-attr': 'hide_search' } %>
+        <% checkbox_options = { type: 'checkbox', id: 'sul-embed-embed-search',
+                                data: { embed_this_target: 'search', action: 'embed-this#change' } } %>
         <% checkbox_options[:checked] = 'checked' unless embed_request.hide_search? %>
         <%= tag :input, checkbox_options %>
         <label for='sul-embed-embed-search'>add search box</label>
         <label for='sul-embed-min_files_to_search'>
           for
-          <%= tag :input, type: 'text', id: 'sul-embed-min_files_to_search', 'data-embed-attr': 'min_files_to_search', value: viewer.min_files_to_search %>
+          <%= tag :input, type: 'text', id: 'sul-embed-min_files_to_search',
+                          data: { embed_this_target: 'searchMinFiles', action: 'embed-this#change' },
+                          value: viewer.min_files_to_search %>
           or more files
         </label>
       </div>
@@ -49,7 +53,8 @@
       <input
         type='checkbox'
         id='sul-embed-embed'
-        data-embed-attr='hide_embed'
+        data-embed-this-target='embed'
+        data-action="embed-this#change"
       <%= 'checked' unless embed_request.hide_embed_this? %>
       />
       <label for='sul-embed-embed'>embed</label>
