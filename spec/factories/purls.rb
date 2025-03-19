@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :purl, class: 'Embed::Purl' do
     druid { 'abc123' }
     contents { [build(:resource, :file)] }
+    constituents { [] }
     collections { [] }
     etag { "W/\"#{Time.zone.now.to_f}\"" }
     last_modified { Time.zone.now }
@@ -57,6 +58,10 @@ FactoryBot.define do
 
     trait :media do
       type { 'media' }
+    end
+
+    trait :image do
+      type { 'image' }
     end
 
     trait :video do

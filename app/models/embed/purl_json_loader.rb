@@ -18,6 +18,7 @@ module Embed
         type:,
         title:,
         contents:,
+        constituents:, # identifiers for virtual object members
         collections:,
         copyright:,
         license:,
@@ -113,20 +114,12 @@ module Embed
 
       Array(json.dig('structural', 'contains')).map do |file_set_json|
         Purl::ResourceJsonDeserializer.new(@druid, file_set_json).deserialize
-      end + external_resources(Array(json.dig('structural', 'hasMemberOrders', 0, 'members')))
+      end
     end
 
-    def external_resources(identifiers)
-      identifiers.map do |identifier|
-        druid = identifier.delete_prefix('druid:')
-        component = Embed::Purl.find(druid)
-        Purl::Resource.new(
-          druid:,
-          type: component.type,
-          description: component.title,
-          files: []
-        )
-      end
+    # @return [Array<String>] the list of identifiers for virtual object constituents
+    def constituents
+      Array(json.dig('structural', 'hasMemberOrders', 0, 'members'))
     end
 
     def license
