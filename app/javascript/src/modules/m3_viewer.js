@@ -20,7 +20,7 @@ export default {
     const data = el.dataset
     const showAttribution = (data.showAttribution === 'true')
     const hideWindowTitle = (data.hideTitle === 'true')
-    const imageTools = (data.imageTools === 'true')
+    const enableComparison = (data.enableComparison === 'true')
     const cdl = (data.cdl === 'true')
 
     // Determine which panel should be open
@@ -114,7 +114,7 @@ export default {
       },
       workspace: {
         showZoomControls: true,
-        type: imageTools ? 'mosaic' : 'single',
+        type: enableComparison ? 'mosaic' : 'single',
       },
       workspaceControlPanel: {
         enabled: false,
@@ -124,7 +124,7 @@ export default {
       ...miradorImageToolsPlugin,
       (!cdl && shareMenuPlugin),
       miradorZoomBugPlugin,
-      ...((imageTools && embedModePlugin) || []),
+      ...((enableComparison && embedModePlugin) || []),
       {
         ...miradorSharePlugin,
         target: 'WindowTopBarShareMenu',

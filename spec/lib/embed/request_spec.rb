@@ -86,6 +86,20 @@ RSpec.describe Embed::Request do
     end
   end
 
+  describe 'enable_comparison?' do
+    it 'defaults to false' do
+      expect(described_class.new(url: purl)).not_to be_enable_comparison
+    end
+
+    it 'is true when the incoming request asks to enable_comparison' do
+      expect(described_class.new(url: purl, enable_comparison: 'true')).to be_enable_comparison
+    end
+
+    it 'is true when the incoming request uses the deprecated image_tools parameter' do
+      expect(described_class.new(url: purl, image_tools: 'true')).to be_enable_comparison
+    end
+  end
+
   describe 'as_url_params' do
     let(:url_params) do
       described_class.new(url: purl, hide_title: 'true', arbitrary_param: 'something').as_url_params
