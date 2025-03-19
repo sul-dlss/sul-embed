@@ -1,18 +1,10 @@
-'use strict'
-
-import Mirador from 'mirador/dist/es/src/index.js'
-import miradorImageToolsPlugin from 'mirador-image-tools/es/plugins/miradorImageToolsPlugin.js'
-import miradorShareDialogPlugin from 'mirador-share-plugin/es/MiradorShareDialog.js'
-import miradorSharePlugin from 'mirador-share-plugin/es/miradorSharePlugin.js'
-import miradorDownloadPlugin from 'mirador-dl-plugin/es/miradorDownloadPlugin.js'
-import miradorDownloadDialogPlugin from 'mirador-dl-plugin/es/MiradorDownloadDialog.js'
-import shareMenuPlugin from '../plugins/shareMenuPlugin'
-import miradorZoomBugPlugin from '../plugins/miradorZoomBugPlugin'
-import embedModePlugin from '../plugins/embedModePlugin'
-import analyticsPlugin from '../plugins/analyticsPlugin'
-import cdlAuthPlugin from '../plugins/cdlAuthPlugin'
-import xywhPlugin from '../plugins/xywhPlugin'
-import { getExportableState } from 'mirador/dist/es/src/state/selectors'
+import Mirador, { getExportableState } from 'mirador'
+import { miradorImageToolsPlugin } from 'mirador-image-tools'
+import { miradorSharePlugin, miradorShareDialog as miradorShareDialogPlugin } from 'mirador-share-plugin'
+import { miradorDownloadPlugin, MiradorDownloadDialogPlugin as miradorDownloadDialogPlugin } from 'mirador-dl-plugin'
+import { shareMenuPlugin } from '@/plugins/shareMenuPlugin.jsx'
+import embedModePlugin from '@/plugins/embedModePlugin.js'
+import analyticsPlugin from '@/plugins/analyticsPlugin.js'
 
 export default {
   init: function() {
@@ -21,7 +13,6 @@ export default {
     const showAttribution = (data.showAttribution === 'true')
     const hideWindowTitle = (data.hideTitle === 'true')
     const imageTools = (data.imageTools === 'true')
-    const cdl = (data.cdl === 'true')
 
     // Determine which panel should be open
     var sideBarPanel = 'info'
@@ -84,11 +75,6 @@ export default {
         canvasIndex: Number(data.canvasIndex),
         ...(data.viewerConfig && { initialViewerConfig: JSON.parse(data.viewerConfig) }),
         canvasId: data.canvasId,
-        ...(cdl && {
-          cdl: {
-            cdlHoldRecordId: data.cdlHoldRecordId && data.cdlHoldRecordId.toString(),
-          }
-        }),
       }],
       window: {
         allowClose: false,
@@ -120,20 +106,20 @@ export default {
         enabled: false,
       }
     }, [
-      ...((cdl && cdlAuthPlugin) || []),
       ...miradorImageToolsPlugin,
-      (!cdl && shareMenuPlugin),
-      miradorZoomBugPlugin,
+      // shareMenuPlugin is the customized menu in the top bar containing the share and download plugin buttons
+      // shareMenuPlugin exposes the SulEmbedShareMenu component
+      shareMenuPlugin,
       ...((imageTools && embedModePlugin) || []),
       {
         ...miradorSharePlugin,
-        target: 'WindowTopBarShareMenu',
+        target: 'SulEmbedShareMenu',
       },
       miradorShareDialogPlugin,
       miradorDownloadDialogPlugin,
       {
         ...miradorDownloadPlugin,
-        target: 'WindowTopBarShareMenu',
+        target: 'SulEmbedShareMenu',
       },
       analyticsPlugin,
       xywhPlugin,
