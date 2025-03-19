@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Media viewer', :js do
   let(:purl) do
     build(:purl, :video, contents: [
-            build(:resource, :video, files: [build(:media_file, :video, :location_restricted, label: 'First Video')]),
+            build(:resource, :video, files: [build(:media_file, :video, :view_location_restricted, label: 'First Video')]),
             build(:resource, :video, files: [build(:media_file, :video, :stanford_only, label: 'Second Video')]),
             build(:resource, :file),
             build(:resource, :video, files: [build(:media_file, :video, :world_downloadable)])
@@ -105,7 +105,7 @@ RSpec.describe 'Media viewer', :js do
     let(:purl) do
       build(:purl, :video, contents: [
               build(:resource, :video, files: [
-                      build(:media_file, :video, :location_restricted,
+                      build(:media_file, :video, :view_location_restricted,
                             label: 'The First Video Has An Overly Long Title, With More Words Than Can Practically Be Displayed')
                     ]),
               build(:resource, :video, files: [build(:media_file, :video, label: '2nd Video Has A Long Title, But Not Too Long')])
