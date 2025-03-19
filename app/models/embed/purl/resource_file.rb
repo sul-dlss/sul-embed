@@ -67,6 +67,10 @@ module Embed
         download == 'location-based'
       end
 
+      def view_location_restricted?
+        view == 'location-based'
+      end
+
       def world_downloadable?
         download == 'world'
       end

@@ -21,7 +21,7 @@ module Media
                 media_wrapper_index_value: @resource_index,
                 action: 'thumbnail-clicked@window->media-wrapper#toggleVisibility',
                 stanford_only: @file.stanford_only?,
-                location_restricted: @file.location_restricted?,
+                location_restricted: @file.location_restricted? || @file.view_location_restricted?,
                 file_label: @file.label_or_filename,
                 media_tag_target: 'mediaWrapper',
                 thumbnail_url: @thumbnail.presence,
