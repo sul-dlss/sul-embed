@@ -106,6 +106,9 @@
     flex-direction: column;
     justify-content: center; /* Centers content vertically */
     align-items: center; /* Centers content horizontally */
+    #current-title {
+      font-size: 0.875rem;
+    }
     .prev-next-buttons {
       display: flex;
       .left-arrow svg {

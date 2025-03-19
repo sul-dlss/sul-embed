@@ -63,7 +63,7 @@ body {
 
   --active-color: var(--stanford-cardinal);
   --drawer-width: 310px;
-  --font-size-base: 14px;
+  --font-size-base: 1rem;
   --tab-width: 48px;
   --tab-height: 48px;
   --drawer-content-padding: 0.7rem;
@@ -274,7 +274,6 @@ body {
 
     nav {
       isolation: isolate;
-      font-size: 15px;
       display: flex;
       flex-direction: row;
       min-height: 32px;
