@@ -16,12 +16,12 @@
       <%= render LockedStatusComponent.new %>
     </div>
     <% if viewable_content? %>
-      <div class="sul-embed-3d sul-embed-body" data-action="iiif-manifest-received@window->file-auth#parseFiles">
+      <div class="sul-embed-3d sul-embed-body" data-controller="model" data-action="iiif-manifest-received@window->file-auth#parseFiles">
         <div class="buttons">
-          <button aria-label="Zoom in" class="zoom-in">+</button>
-          <button aria-label="Zoom out" class="zoom-out">-</button>
+          <button aria-label="Zoom in" data-action="model#zoomIn" class="zoom-in">+</button>
+          <button aria-label="Zoom out" data-action="model#zoomOut" class="zoom-out">-</button>
         </div>
-        <div id="3d-viewer" class="model-viewer-container" data-controller="model" data-action="auth-success@window->model#show">
+        <div data-model-target="modelViewerContainer" class="model-viewer-container" data-action="auth-success@window->model#show">
         </div>
       </div>
     <% end %>
