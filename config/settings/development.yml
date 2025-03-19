@@ -143,6 +143,8 @@ sandbox:
       purl: fs892sr8080
     - label: MTL, OBJ, PLY, PNG
       purl: qf794pv6287
+    - label: stanford only 3d
+      purl: bx715my3000
   web_archive:
     - label: Warc-seed
       purl: gb089bd2251

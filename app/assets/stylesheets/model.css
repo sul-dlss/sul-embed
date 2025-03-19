@@ -2,6 +2,11 @@
 @import url("common.css");
 @import url("locked_status.css");
 
+/* stops scroll for lock icon which is caused by sul-embed-3d position: relative */
+#main-display {
+  overflow: hidden;
+}
+
 .sul-embed-3d {
   display: inline-block;
   position: relative;
