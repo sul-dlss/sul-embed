@@ -59,7 +59,6 @@ module Media
           style: 'height: 100%',
           data: {
             auth_url: authentication_url,
-            index: @resource_iteration.index,
             media_tag_target: 'authorizeableResource',
             controller: 'media-player',
             action: 'media-seek@window->media-player#seek ' \
@@ -85,6 +84,7 @@ module Media
         id: "sul-embed-media-#{@resource_iteration.index}",
         poster: poster_url_for,
         controls: 'controls',
+        data: { index: @resource_iteration.index },
         class: 'sul-embed-media-file',
         # So that VTT can be downloaded when download:stanford
         crossorigin: Rails.env.development? ? '' : 'use-credentials',

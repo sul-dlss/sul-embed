@@ -10,7 +10,7 @@ export default class extends Controller {
                           })
     this.player.on('loadedmetadata', (evt) => {
       // for multiple media items, we only want to load the first (visible) item
-      if (evt.target.player.index == 0){
+      if (evt.target.dataset.index == '0'){
         const event = new CustomEvent('media-loaded', { detail: this.player })
         window.dispatchEvent(event)
       }
@@ -23,20 +23,10 @@ export default class extends Controller {
       window.dispatchEvent(event)
     })
 
-    this.player.index = this.element.dataset.index;
-
-    this.player.on('loadedmetadata', (evt) => {
-      // only load media for the first player
-      if (evt.target.player.index == 0){
-        const event = new CustomEvent('media-loaded', { detail: this.player });
-        window.dispatchEvent(event);
-      }
-    })
-
     // The loadeddata event occurs when the first frame of the video is available, and
     // happens after loadedmetadata
     this.player.on('loadeddata', (evt) => {
-      if (evt.target.player.index == 0){
+      if (evt.target.dataset.index == '0'){
         const event = new CustomEvent('media-data-loaded');
         window.dispatchEvent(event);
       }
