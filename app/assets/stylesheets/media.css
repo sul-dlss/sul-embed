@@ -3,6 +3,9 @@
 @import url("locked_status.css");
 @import url("common.css"); /* needed for .sul-embed-stanford-only-text on download */
 
+#main-display {
+  overflow: hidden;
+}
 /* VideoJS CSS overrides for responsive layout
    See http://andreassauer.name/experimente/video-js/demo.html */
 .video-js {
