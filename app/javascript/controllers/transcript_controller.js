@@ -152,6 +152,7 @@ export default class extends Controller {
   }
 
   setupTranscriptLanguageSwitching() {
+    console.log(this.captionTracks)
     this.captionLanguageSelectTarget.innerHTML = this.captionTracks.map(track => `<option value="${track.language}" ${this.selectedDropdownLang(track.language) ? ' selected' : ''}>${track.label}</option>`).join("");
   }
 

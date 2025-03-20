@@ -4,8 +4,10 @@ import videojs from 'video.js'
 export default class extends Controller {
   initializeVideoJSPlayer() {
     this.videoElement().classList.add('video-js', 'vjs-default-skin')
+    console.log(this.videoElement())
     this.player = videojs(this.videoElement().id,
                           { responsive: true,
+                            preload: 'auto',
                             userActions: { hotkeys: true }
                           })
     this.player.on('loadedmetadata', (evt) => {
@@ -36,7 +38,10 @@ export default class extends Controller {
     // The loadeddata event occurs when the first frame of the video is available, and
     // happens after loadedmetadata
     this.player.on('loadeddata', (evt) => {
-      if (evt.target.player.index == 0){
+      console.log(evt.target.player)
+      console.log(evt.target.dataset.index)
+      console.log(evt.target.dataset.index == '0')
+      if (evt.target.dataset.index == '0'){
         const event = new CustomEvent('media-data-loaded');
         window.dispatchEvent(event);
       }
