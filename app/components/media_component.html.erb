@@ -3,7 +3,7 @@
     <%= render CompanionWindows::ShareButtonComponent.new %>
   <% end %>
   <% component.with_header_button do %>
-    <%= render CompanionWindows::ControlButtonComponent.new(action: 'click->companion-window#displayAccessibility', aria: { label: 'Accessibility', controls: 'accessibility' }) do %>
+    <%= render CompanionWindows::ControlButtonComponent.new(action: 'click->companion-window#openModal', data: { target: 'accessibility' }, aria: { label: 'Accessibility', controls: 'accessibility' }) do %>
       <span class="button-label"><svg class="MuiSvgIcon-root AccessibilitySharp" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
         <path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2m9 7h-6v13h-2v-6h-2v6H9V9H3V7h18z"></path>
       </svg></span>
@@ -110,9 +110,7 @@
       <% end %>
 
       <%= component.with_footer do %>
-        <form method="dialog">
-          <button>Close</button>
-        </form>
+        <button data-action="click->companion-window#closeModal">Close</button>
       <% end %>
     <% end %>
 
