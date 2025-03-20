@@ -5,11 +5,11 @@ require 'rails_helper'
 RSpec.describe 'geo viewer', :js do
   before do
     allow(Embed::Purl).to receive(:find).and_return(purl)
-    visit_iframe_response('cz128vq0535')
+    visit_iframe_response(purl.druid)
   end
 
   context 'with public purl' do
-    let(:purl) { build(:purl, :geo) }
+    let(:purl) { build(:purl, :geo, druid: 'cz128vq0535') }
 
     it 'has geo specific attributes' do
       expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
@@ -57,11 +57,7 @@ RSpec.describe 'geo viewer', :js do
   end
 
   context 'with restricted purl' do
-    let(:purl) { build(:purl, :geo, download: 'stanford', view: 'stanford') }
-
-    before do
-      visit_iframe_response
-    end
+    let(:purl) { build(:purl, :geo, druid: 'fp756wn9369', download: 'stanford', view: 'stanford') }
 
     describe 'loads viewer' do
       it 'shows the bounding box' do
@@ -88,10 +84,6 @@ RSpec.describe 'geo viewer', :js do
                                  ]),
                            build(:resource, :image)
                          ])
-    end
-
-    before do
-      visit_iframe_response 'ts545zc6250'
     end
 
     context 'when index_map.json' do
