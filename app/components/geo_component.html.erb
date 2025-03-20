@@ -16,12 +16,12 @@
   <% end %>
 
   <% component.with_body do %>
-    <div class='sul-embed-geo' data-controller="geo" data-action="iiif-manifest-received@window->file-auth#parseFiles auth-success@window->geo#show">
+    <%= content_tag :div, class: 'sul-embed-geo', data: {controller: 'geo', action: data_actions} do %>
       <div id="sul-embed-geo-sidebar" class="" style="display: none;">
       </div>
       <%= content_tag :div, viewer.map_element_options do %>
 
       <% end %>
-    </div>
+    <% end %>
   <% end %>
 <% end %>

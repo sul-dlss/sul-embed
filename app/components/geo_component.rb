@@ -8,5 +8,11 @@ class GeoComponent < ViewComponent::Base
   attr_reader :viewer
 
   delegate :purl_object, to: :viewer
-  delegate :druid, to: :purl_object
+  delegate :druid, :public?, to: :purl_object
+
+  def data_actions
+    return if public?
+
+    'iiif-manifest-received@window->file-auth#parseFiles auth-success@window->geo#show'
+  end
 end
