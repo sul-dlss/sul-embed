@@ -6,6 +6,7 @@ export default class extends Controller {
     this.videoElement().classList.add('video-js', 'vjs-default-skin')
     this.player = videojs(this.videoElement().id,
                           { responsive: true,
+                            preload: 'auto', // we need to preload video for the transcript panel
                             userActions: { hotkeys: true }
                           })
     this.player.on('loadedmetadata', (evt) => {
