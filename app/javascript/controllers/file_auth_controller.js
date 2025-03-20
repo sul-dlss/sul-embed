@@ -136,10 +136,9 @@ export default class extends Controller {
       .then((result) => this.renderViewer(result))
       .catch((authResponse) => {
 
-        // Intercept the response and check for location restriction before trying to log in, because
-        // logging in won't help the fact that we're not in an authorized location.
-        if (this.isLocationRestricted(authResponse))
-          return this.authDenied(authResponse, accessService)
+        // Intercept the response and check for files that can't be accessed before trying to log in, because
+        // logging in won't help the fact that we're not in an authorized location/file is no download/embargoed (without stanford login).
+        if (authResponse.status == '403') return this.authDenied(authResponse, accessService)
 
         // Check if non-expired token already exists in local storage,
         // and if it exists, query probe service with it
@@ -257,13 +256,5 @@ export default class extends Controller {
     // This event will lead to the banner message and locked icon being displayed
     const event = new CustomEvent('auth-denied', { detail: { accessService, authResponse } } )
     window.dispatchEvent(event)
-  }
-
-  // Checks the result of the probe auth request to see if access is restricted to location
-  // This code depends on the text returned by probe service, so changes to the heading
-  // should be reflected here as well.
-  isLocationRestricted(json) {
-    return json.status == '401' && 'heading' in json && 'en' in json.heading && json.heading.en.length
-      && json.heading.en[0].startsWith('Access is restricted to the')
   }
 }

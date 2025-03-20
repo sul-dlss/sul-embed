@@ -337,18 +337,24 @@ body {
   .vert-tabs,
   .left-drawer,
   .modal-components-popover,
+  .authLinkWrapper span,
   .authLinkWrapper,
   .sul-embed-geo-sidebar-header,
   .copy-to-clipboard,
   .sul-embed-was-seed-list-item {
+    --display: inline-block;
     svg {
       fill: currentColor;
       width: 1em;
       height: 1em;
-      display: inline-block;
+      display: var(--display);
       font-size: 1.5rem;
       flex-shrink: 0;
     }
+  }
+
+  .authLinkWrapper span {
+    --display: block;
   }
 
   .companion-window-component-body {

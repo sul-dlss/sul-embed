@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Display auth controls for the file_auth_controller.js
 export default class extends Controller {
-  static targets = ["locationRestriction", "locationRestrictionMessage", "messagePanel", "loginPanel",
+  static targets = ["restrictedContainer", "restrictedMessage", "restrictedIcon", "messagePanel", "loginPanel",
                     "loginButton", "loginMessage"]
 
   // Bound to auth-denied CustomEvents
@@ -11,20 +11,21 @@ export default class extends Controller {
     this.resetMessages()
 
     const detail = event.detail
-    this.locationRestrictionTarget.hidden = false
-    this.locationRestrictionMessageTarget.innerHTML = this.#retrieveAuthResponseMessage(detail.authResponse)
+    this.restrictedContainerTarget.hidden = false
+    this.restrictedMessageTarget.innerHTML = this.#retrieveAuthResponseMessage(detail.authResponse)
+    this.restrictedIconTarget.innerHTML = detail.authResponse['icon']
   }
 
   resetMessages() {
     this.hideLoginPrompt()
     this.hideMessagePanel()
-    this.clearLocationRestriction()
+    this.clearRestrictedMessage()
   }
 
 
   // Called when switching to a new file
-  clearLocationRestriction() {
-    this.locationRestrictionTarget.hidden = true
+  clearRestrictedMessage() {
+    this.restrictedContainerTarget.hidden = true
   }
 
   // Allow the user to dismiss the message

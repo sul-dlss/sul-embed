@@ -40,8 +40,8 @@ RSpec.describe CompanionWindows::ContentListComponent, type: :component do
   end
 
   describe '#resource_files_collection' do
-    it 'returns a list of all purl objects that do not have no_download? returning true' do
-      expect(component.resource_files_collection).to eq([download_file])
+    it 'returns a list of all purl objects' do
+      expect(component.resource_files_collection).to eq([no_download_file, download_file])
     end
   end
 end

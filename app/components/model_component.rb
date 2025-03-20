@@ -8,8 +8,4 @@ class ModelComponent < ViewComponent::Base
   attr_reader :viewer
 
   delegate :purl_object, to: :viewer
-
-  def viewable_content?
-    viewer.three_dimensional_files.any?
-  end
 end
