@@ -65,6 +65,8 @@ RSpec.describe 'geo viewer', :js do
 
     describe 'loads viewer' do
       it 'shows the bounding box' do
+        # we need to wait for the stimulus controller to connect
+        page.evaluate_script('document.querySelector("[data-controller=\'geo\']")?.__stimulusControllers?.length > 0')
         # This is a hack, but there is no other way (that we know of) to
         # find this svg element on the page.
         # We also need to explicitly wait for the JS to run.
