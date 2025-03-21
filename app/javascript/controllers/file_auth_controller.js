@@ -65,11 +65,12 @@ export default class extends Controller {
       if (probeService)
         this.checkAuthorization(probeService, contentResource.id)
       else {
-        console.warn(`Access service exists, but no probe service found for ${contentResource.id}`)
+        console.debug(`Access service exists, but no probe service found for ${contentResource.id}`)
         const imageService = contentResource.service.find((service) => service.type === "ImageService2")
         if (imageService) { // handle legacy ImageService2
           if (imageService.service[0]?.failureDescription) {
-            this.authDenied({ icon: '', heading: { en: ['no access'] } })
+            const error = imageService.service[0]
+            this.authDenied({ icon: '', heading: { en: [error.failureDescription] } })
           }
         } else {
           console.warn(`No imageservice found for ${contentResource.id}`)
