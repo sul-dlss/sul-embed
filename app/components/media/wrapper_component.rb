@@ -2,6 +2,10 @@
 
 module Media
   class WrapperComponent < ViewComponent::Base
+    include Embed::StacksImage
+
+    # @param [Embed::Purl::MediaFile] file
+    # @param [String] type
     def initialize(file:, type:, resource_index:, thumbnail:, size:)
       @file = file
       @type = type
@@ -23,6 +27,7 @@ module Media
                 stanford_only: @file.stanford_only?,
                 location_restricted: @file.view_location_restricted?,
                 file_label: @file.label_or_filename,
+                file_uri:,
                 media_tag_target: 'mediaWrapper',
                 thumbnail_url: @thumbnail.presence,
                 default_icon:
@@ -34,6 +39,14 @@ module Media
             render(Media::PrevNextComponent.new(file:, resource_index:, size:))
         end
       end
+    end
+
+    # If the file is an image, transform to the IIIF full size url,
+    # This allows the URL for the file to match the URL in the IIIF manifest
+    def file_uri
+      return @file.file_url if @type != 'image'
+
+      stacks_thumb_url(@file.druid, @file.filename, size: 'full')
     end
 
     # What class to put on the icon in the "Media content" sidebar when there is no thumbnail

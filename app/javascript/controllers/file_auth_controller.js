@@ -57,15 +57,28 @@ export default class extends Controller {
   maybeDrawContentResource(contentResource) {
     console.debug("Now figure out if we can render", contentResource)
     if (!contentResource.service) {
-      // no auth service is present, just render the resource
+      // no service is present, just render the resource
       this.renderViewer({ fileUri: contentResource.id })
     } else {
-      // auth service is present, check the probe service to see what we need to do to access the resource
+      // see if there is a probe service to see what we need to do to access the resource
       const probeService = contentResource.service.find((service) => service.type === "AuthProbeService2")
       if (probeService)
         this.checkAuthorization(probeService, contentResource.id)
-      else
-        throw(`Access service exists, but no probe service found for ${contentResource.id}`)
+      else {
+        console.debug(`Access service exists, but no probe service found for ${contentResource.id}`)
+        const imageService = contentResource.service.find((service) => service.type === "ImageService2")
+        if (imageService) { // handle legacy ImageService2
+          if (imageService.service[0]?.failureDescription) {
+            const error = imageService.service[0]
+            this.authDenied({
+              icon: '<svg class="MuiSvgIcon-root VpnLockSharp" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M19 13c0 2.08-.8 3.97-2.1 5.39V17H14v-4H7v-2h3V8h4V3.46c-.95-.3-1.95-.46-3-.46C5.48 3 1 7.48 1 13s4.48 10 10 10 10-4.48 10-10c0-.34-.02-.67-.05-1h-2.03c.04.33.08.66.08 1m-9 7.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L8 16v3h2zM22 4v-.36c0-1.31-.94-2.5-2.24-2.63C18.26.86 17 2.03 17 3.5V4h-1v6h7V4zm-1 0h-3v-.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5z"></path></svg>',
+              heading: { en: [error.failureDescription]}
+            })
+          }
+        } else {
+          console.warn(`No imageservice found for ${contentResource.id}`)
+        }
+      }
     }
   }
 
@@ -74,6 +87,7 @@ export default class extends Controller {
   // event, and call a method for that partcular content type (e.g. pdf/media) that knows how to render content
   renderViewer(result) {
     const fileUri = result.fileUri
+    console.log("Auth-success event", fileUri)
     window.dispatchEvent(new CustomEvent('auth-success', { detail: { fileUri: fileUri, location: result.location } }))
     // use filename because url in contents adds druid: to the data-url
     const filename = fileUri.split("/").slice(-1)[0]
@@ -120,7 +134,7 @@ export default class extends Controller {
   checkAuthorization(probeService, contentResourceId) {
     // We're going to make the assumption that calling the probe without a token is going to fail.
     // So we'll just get the token first.
-    console.debug("Probe service:", probeService)
+    console.debug("Found probe service:", probeService)
     const accessService = this.findAccessService(probeService)
 
     const messageId = Math.random().toString(36).slice(2) // create a random key for this resource to reference later
@@ -138,7 +152,7 @@ export default class extends Controller {
 
         // Intercept the response and check for files that can't be accessed before trying to log in, because
         // logging in won't help the fact that we're not in an authorized location/file is no download/embargoed (without stanford login).
-        if (authResponse.status == '403') return this.authDenied(authResponse, accessService)
+        if (authResponse.status == '403') return this.authDenied(authResponse)
 
         // Check if non-expired token already exists in local storage,
         // and if it exists, query probe service with it
@@ -198,14 +212,17 @@ export default class extends Controller {
   // NOTE: Token is optional
   queryProbeService(messageId, token) {
     const resource = this.resources[messageId]
-    console.debug("Trying probe service with ", token)
+    console.debug("Trying probe service with token: ", token)
     const headers = {}
     if (token) {
       headers['Authorization'] = `Bearer ${token}`
     }
+    console.debug("Fetching probe service", resource.probeService.id)
     return fetch(resource.probeService.id, { headers })
       .then((response) => response.json())
-      .then((json) => new Promise((resolve, reject) => json.status === 200 || json.status === 302 ? resolve({ fileUri: resource.contentResourceId, location: json.location?.id }) : reject(json)))
+      .then((json) => new Promise((resolve, reject) => {
+        return (json.status === 200 || json.status === 302) ? resolve({ fileUri: resource.contentResourceId, location: json.location?.id }) : reject(json)
+      } ) )
   }
 
   // Fetch a token for the provided resource
@@ -252,9 +269,9 @@ export default class extends Controller {
   }
 
 
-  authDenied(authResponse, accessService) {
+  authDenied(authResponse) {
     // This event will lead to the banner message and locked icon being displayed
-    const event = new CustomEvent('auth-denied', { detail: { accessService, authResponse } } )
+    const event = new CustomEvent('auth-denied', { detail: { authResponse } } )
     window.dispatchEvent(event)
   }
 }
