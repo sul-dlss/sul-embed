@@ -136,8 +136,9 @@ RSpec.describe Media::TagComponent, type: :component do
               files: [build(:media_file, :video)])
       end
 
-      it 'does not include a poster attribute' do
-        expect(page).to have_no_css('video[poster]', visible: :all)
+      it 'shows the locked icon' do
+        video = page.find('video[poster]', visible: :all)
+        expect(video['poster']).to match(/locked-media-poster/)
       end
     end
   end

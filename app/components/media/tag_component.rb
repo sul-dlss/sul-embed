@@ -36,7 +36,7 @@ module Media
 
     def poster_url_for
       return default_audio_thumbnail if type == 'audio' && !@resource.thumbnail
-      return unless @resource.thumbnail
+      return default_video_thumbnail unless @resource.thumbnail
 
       if @resource.thumbnail.world_downloadable?
         stacks_thumb_url(druid, @resource.thumbnail.title, size: '!800,600')
@@ -47,6 +47,10 @@ module Media
 
     def default_audio_thumbnail
       asset_url('waveform-audio-poster.svg')
+    end
+
+    def default_video_thumbnail
+      asset_url('locked-media-poster.svg')
     end
 
     def media_element # rubocop:disable Metrics/MethodLength
