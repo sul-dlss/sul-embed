@@ -11,29 +11,87 @@ RSpec.describe CompanionWindowsComponent, type: :component do
   end
 
   let(:embed_request) { Embed::Request.new({}) }
-  let(:viewer) do
-    Embed::Viewer::Media.new(embed_request)
+
+  describe 'Media viewer' do
+    let(:viewer) do
+      Embed::Viewer::Media.new(embed_request)
+    end
+
+    let(:purl_object) do
+      instance_double(Embed::Purl,
+                      title: 'foo',
+                      purl_url: 'https://purl.stanford.edu/123',
+                      iiif_v3_manifest_url: 'https://purl.stanford.edu/123/iiif3/manifest',
+                      use_and_reproduction: '',
+                      copyright: '',
+                      license: '',
+                      druid: '123',
+                      version_id: nil,
+                      contents: [],
+                      downloadable_files: [],
+                      downloadable_transcript_files?: false)
+    end
+
+    it 'displays the page' do
+      expect(page).to have_content 'About this item'
+      expect(page).to have_content 'Contents'
+      expect(page).to have_content 'Rights'
+    end
   end
 
-  let(:downloadable_files) { [] }
-  let(:purl_object) do
-    instance_double(Embed::Purl,
-                    title: 'foo',
-                    purl_url: 'https://purl.stanford.edu/123',
-                    iiif_v3_manifest_url: 'https://purl.stanford.edu/123/iiif3/manifest',
-                    use_and_reproduction: '',
-                    copyright: '',
-                    license: '',
-                    druid: '123',
-                    version_id: nil,
-                    contents: [],
-                    downloadable_files:,
-                    downloadable_transcript_files?: false)
-  end
+  describe 'Document viewer' do
+    let(:viewer) do
+      Embed::Viewer::DocumentViewer.new(embed_request)
+    end
 
-  it 'displays the page' do
-    expect(page).to have_content 'About this item'
-    expect(page).to have_content 'Contents'
-    expect(page).to have_content 'Rights'
+    let(:purl_object) do
+      instance_double(Embed::Purl,
+                      title: 'foo',
+                      purl_url: 'https://purl.stanford.edu/123',
+                      iiif_v3_manifest_url: 'https://purl.stanford.edu/123/iiif3/manifest',
+                      use_and_reproduction: '',
+                      copyright: '',
+                      license: '',
+                      druid: '123',
+                      version_id: nil,
+                      contents:,
+                      downloadable_files: [],
+                      resource_files: files,
+                      downloadable_transcript_files?: false)
+    end
+
+    let(:resource_file) { instance_double(Embed::Purl::Resource) }
+    let(:file) { instance_double(Embed::Purl::ResourceFile, file_url: '/url') }
+    let(:files) { [file, file] }
+
+    context 'when purl object has no contents' do
+      let(:contents) { [] }
+
+      it 'displays the page without contents' do
+        expect(page).to have_content 'About this item'
+        expect(page).to have_no_content 'Contents'
+        expect(page).to have_content 'Rights'
+      end
+    end
+
+    context 'when purl object has 2 files and 1 resource' do
+      let(:contents) { [resource_file] }
+
+      it 'displays the page without contents' do
+        expect(page).to have_content 'About this item'
+        expect(page).to have_no_content 'Contents'
+        expect(page).to have_content 'Rights'
+      end
+    end
+
+    context 'when purl object has 2 resources' do
+      let(:contents) { [resource_file, resource_file] }
+
+      it 'displays the page without contents' do
+        expect(page).to have_content 'About this item'
+        expect(page).to have_content 'Contents'
+        expect(page).to have_content 'Rights'
+      end
+    end
   end
 end

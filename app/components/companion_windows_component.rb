@@ -19,7 +19,7 @@ class CompanionWindowsComponent < ViewComponent::Base
   attr_reader :viewer
 
   delegate :purl_object, :display_header?, to: :viewer
-  delegate :downloadable_files, :resource_files, :druid, :title, :iiif_v3_manifest_url, to: :purl_object
+  delegate :downloadable_files, :contents, :druid, :title, :iiif_v3_manifest_url, to: :purl_object
 
   def media_viewer?
     viewer.instance_of?(::Embed::Viewer::Media)
@@ -30,8 +30,10 @@ class CompanionWindowsComponent < ViewComponent::Base
   end
 
   def render_content_list_panel?
-    # for Document viewer, do not render the content panel if there only one file
-    media_viewer? || (document_viewer? && resource_files.count > 1)
+    # for Document viewer, do not render the content panel if there only one item
+    # we use contents because resource_files is a flat map of files that includes
+    # supporting content (i.e. txt transcript, webvtt) that do not get put in the contents panel
+    media_viewer? || (document_viewer? && contents.count > 1)
   end
 
   def display_download?
