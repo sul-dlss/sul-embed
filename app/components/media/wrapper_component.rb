@@ -41,9 +41,10 @@ module Media
       end
     end
 
-    # If the file is an image, transform to the IIIF full size url
+    # If the file is an image, transform to the IIIF full size url,
+    # This allows the URL for the file to match the URL in the IIIF manifest
     def file_uri
-      @file.file_url if @type != 'image'
+      return @file.file_url if @type != 'image'
 
       stacks_thumb_url(@file.druid, @file.filename, size: 'full')
     end

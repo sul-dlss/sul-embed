@@ -57,15 +57,23 @@ export default class extends Controller {
   maybeDrawContentResource(contentResource) {
     console.debug("Now figure out if we can render", contentResource)
     if (!contentResource.service) {
-      // no auth service is present, just render the resource
+      // no service is present, just render the resource
       this.renderViewer({ fileUri: contentResource.id })
     } else {
-      // auth service is present, check the probe service to see what we need to do to access the resource
+      // see if there is a probe service to see what we need to do to access the resource
       const probeService = contentResource.service.find((service) => service.type === "AuthProbeService2")
       if (probeService)
         this.checkAuthorization(probeService, contentResource.id)
       else {
         console.warn(`Access service exists, but no probe service found for ${contentResource.id}`)
+        const imageService = contentResource.service.find((service) => service.type === "ImageService2")
+        if (imageService) { // handle legacy ImageService2
+          if (imageService.service[0]?.failureDescription) {
+            this.authDenied({ icon: '', heading: { en: ['no access'] } })
+          }
+        } else {
+          console.warn(`No imageservice found for ${contentResource.id}`)
+        }
       }
     }
   }
@@ -140,7 +148,7 @@ export default class extends Controller {
 
         // Intercept the response and check for files that can't be accessed before trying to log in, because
         // logging in won't help the fact that we're not in an authorized location/file is no download/embargoed (without stanford login).
-        if (authResponse.status == '403') return this.authDenied(authResponse, accessService)
+        if (authResponse.status == '403') return this.authDenied(authResponse)
 
         // Check if non-expired token already exists in local storage,
         // and if it exists, query probe service with it
@@ -257,9 +265,9 @@ export default class extends Controller {
   }
 
 
-  authDenied(authResponse, accessService) {
+  authDenied(authResponse) {
     // This event will lead to the banner message and locked icon being displayed
-    const event = new CustomEvent('auth-denied', { detail: { accessService, authResponse } } )
+    const event = new CustomEvent('auth-denied', { detail: { authResponse } } )
     window.dispatchEvent(event)
   }
 }

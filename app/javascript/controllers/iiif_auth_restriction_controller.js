@@ -10,10 +10,10 @@ export default class extends Controller {
     // If they switched to a thumbnail with location restriction access, clear out login or logged in messages
     this.resetMessages()
 
-    const detail = event.detail
+    const authResponse = event.detail.authResponse
     this.restrictedContainerTarget.hidden = false
-    this.restrictedMessageTarget.innerHTML = this.#retrieveAuthResponseMessage(detail.authResponse)
-    this.restrictedIconTarget.innerHTML = detail.authResponse['icon']
+    this.restrictedMessageTarget.innerHTML = this.#retrieveAuthResponseMessage(authResponse)
+    this.restrictedIconTarget.innerHTML = authResponse.icon
   }
 
   resetMessages() {
