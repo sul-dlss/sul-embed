@@ -59,6 +59,10 @@ module Embed
         view == 'stanford'
       end
 
+      def world_viewable?
+        view == 'world'
+      end
+
       def no_download?
         download == 'none'
       end
