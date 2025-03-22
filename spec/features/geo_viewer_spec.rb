@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 
+# NOTE: This test hits the production geowebserivces & stacks servers (via javascript)
 RSpec.describe 'geo viewer', :js do
   before do
     allow(Embed::Purl).to receive(:find).and_return(purl)
