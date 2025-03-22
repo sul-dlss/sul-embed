@@ -79,18 +79,9 @@
   <% end %>
 
   <% component.with_body do %>
-      <div data-controller="locked-media-poster" data-action="auth-success@window->locked-media-poster#hide needs-login@window->locked-media-poster#show auth-denied@window->locked-media-poster#show" role="presentation" style="flex: 1 0 100%;" hidden>
-        <%= render LockedStatusComponent.new %>
-      </div>
-
-      <div data-controller="locked-audio-poster" data-action="auth-success@window->locked-audio-poster#hide needs-login@window->locked-audio-poster#show auth-denied@window->locked-audio-poster#show" role="presentation" style="flex: 1 0 100%;" hidden>
-        <picture class="locked-status">
-          <%# The explicitly empty alt is preferred here, since this image merely adds visual decoration. %>
-          <%= image_tag 'waveform-audio-poster.svg', loading: 'lazy', alt: '', data: { locked_audio_poster_target: 'poster' } %>
-        </picture>
-      </div>
-
+    <div data-controller="locked-media-poster" data-action="auth-success@window->locked-media-poster#hide" style="width: 100%; display: flex;">
       <%= render Media::TagComponent.with_collection(resources_with_primary_file, druid:) %>
+    </div>
   <% end %>
 
   <% component.with_dialog do %>
