@@ -7,7 +7,7 @@ module CompanionWindows
       %w[auth-denied@window->iiif-auth-restriction#displayMessage
          needs-login@window->iiif-auth-restriction#displayLoginPrompt
          auth-success@window->iiif-auth-restriction#hideLoginPrompt
-         login-success@window->iiif-auth-restriction#showMessagePanel
+         show-message-panel@window->iiif-auth-restriction#showMessagePanel
          thumbnail-clicked@window->iiif-auth-restriction#clearRestrictedMessage].join(' ')
     end
   end

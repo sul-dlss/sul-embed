@@ -16,7 +16,7 @@ export default class extends Controller {
         this.displayAccessTokenError(event.data)
       } else {
         this.cacheToken(event.data.accessToken, event.data.expiresIn)
-        window.dispatchEvent(new CustomEvent('login-success', { detail: {} }))
+        window.dispatchEvent(new CustomEvent('show-message-panel', { detail: {} }))
         this.queryProbeService(event.data.messageId, event.data.accessToken)
           .then((result) => this.renderViewer(result))
           .catch((json) => console.error("no access", json))
@@ -145,7 +145,10 @@ export default class extends Controller {
         const token = this.getCachedToken()
         if (token) {
           this.queryProbeService(messageId, token)
-            .then((result) => this.renderViewer(result))
+            .then((result) => {
+              this.showLoggedInBanner(authResponse)
+              this.renderViewer(result)
+            })
             .catch((json) => {
               console.debug("Probe with cached token failed", json)
               this.queryAccessService(accessService, messageId)
@@ -155,6 +158,15 @@ export default class extends Controller {
           this.queryAccessService(accessService, messageId)
         }
       })
+  }
+
+  // check to see if the item is stanford restricted
+  // if it is and the user is already logged in, show the logged in banner
+  // We need to do this check because the response with token will return a 200 and no other information.
+  showLoggedInBanner(prevAuthResponse) {
+    if (prevAuthResponse.status == 401 && prevAuthResponse.heading.en[0].includes('log in')){
+      window.dispatchEvent(new CustomEvent('show-message-panel', { detail: {} }))
+    }
   }
 
   // query the accessService to see if a login is needed first; else just request a token
