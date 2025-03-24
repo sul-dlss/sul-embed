@@ -35,8 +35,7 @@ module Media
     end
 
     def poster_url_for
-      return default_audio_thumbnail if type == 'audio' && !@resource.thumbnail
-      return unless @resource.thumbnail
+      return default_poster unless @resource.thumbnail
 
       if @resource.thumbnail.world_downloadable?
         stacks_thumb_url(druid, @resource.thumbnail.title, size: '!800,600')
@@ -45,8 +44,20 @@ module Media
       end
     end
 
+    def default_poster
+      return default_audio_thumbnail if type == 'audio'
+
+      return default_video_thumbnail unless @file.world_viewable?
+
+      nil
+    end
+
     def default_audio_thumbnail
       asset_url('waveform-audio-poster.svg')
+    end
+
+    def default_video_thumbnail
+      asset_url('locked-media-poster.svg')
     end
 
     def media_element # rubocop:disable Metrics/MethodLength
@@ -102,7 +113,7 @@ module Media
 
     # Generate the video caption elements
     def captions
-      return unless render_captions?
+      return unless caption_files.any?
 
       # A video clip may have multiple caption files in different languages.
       # We want to enable the user to select from any of these options.
@@ -119,10 +130,6 @@ module Media
 
     def caption_files
       @caption_files ||= @resource.caption_files.sort_by(&:language_code)
-    end
-
-    def render_captions?
-      caption_files.any?
     end
 
     def authentication_url
