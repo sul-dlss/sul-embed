@@ -36,13 +36,13 @@ purl_url: 'http://localhost:3000/'
 stacks_url: 'http://localhost:3000/'
 ```
 
-Then you will need to place the "public XML" metadata for an object in the `public` directory `public/{druid}.xml` and the items stacks files in a directory `public/file/druid:{druid}`. For example, for a druid `bk914zc7842` you would have a `public` directory structure that looks something like:
+Then you will need to place the "public XML" metadata for an object in the `public` directory `public/{druid}.xml` and the items stacks files in a directory `public/file/{druid}`. For example, for a druid `bk914zc7842` you would have a `public` directory structure that looks something like:
 
 ```
 public
 ├── bk914zc7842.xml
 └── file
-    └── druid:bk914zc7842
+    └── bk914zc7842
         ├── bk914zc7842_low.glb
         ├── bk914zc7842_low.mtl
         ├── bk914zc7842_low.obj
