@@ -20,10 +20,4 @@ RSpec.describe 'IIIF Embed', :js do
 
     expect(page).to have_css('[data-enable-comparison="true"]')
   end
-
-  it 'sets the enable-comparison data attribute when image_tools (deprecated) is requested' do
-    visit iiif_path(url: 'https://purl.stanford.edu/fr426cg9537/iiif/manifest', image_tools: 'true')
-
-    expect(page).to have_css('[data-enable-comparison="true"]')
-  end
 end

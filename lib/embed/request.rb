@@ -90,7 +90,6 @@ module Embed
         :canvas_id, :canvas_index,
         :search, :suggested_search,
         :enable_comparison,
-        :image_tools,
         :iiif_initial_viewer_config
       )
 
@@ -117,9 +116,8 @@ module Embed
       params[:suggested_search]
     end
 
-    # TODO: Remove deprecated image_tools parameter when exhibits is updated to use enable_comparison
     def enable_comparison?
-      params[:enable_comparison] == 'true' || params[:image_tools] == 'true'
+      params[:enable_comparison] == 'true'
     end
 
     def iiif_initial_viewer_config
