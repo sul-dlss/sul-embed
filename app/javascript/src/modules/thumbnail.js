@@ -19,7 +19,7 @@ export default class {
 
     let thumbnailIcon = ''
     if (this.thumbnailUrl) {
-      thumbnailIcon = `<img class="square-icon" src="${this.thumbnailUrl}" alt="" />`
+      thumbnailIcon = `<img data-controller="image" data-action="error->image#handleError auth-success@window->image#updateImage" class="square-icon" src="${this.thumbnailUrl}" alt="" />`
     } else {
       thumbnailIcon = `<i class="${this.defaultIcon} default-thumbnail-icon"></i>`
     }
