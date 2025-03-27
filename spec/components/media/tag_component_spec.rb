@@ -25,37 +25,14 @@ RSpec.describe Media::TagComponent, type: :component do
       expect(page).to have_css('[data-file-label="First Video"]')
     end
 
-    it 'includes a data attribute that includes the url to check the users auth status' do
-      expect(page).to have_css('[data-auth-url]', visible: :all)
-      auth_url = page.all('[data-auth-url]', visible: :all).first['data-auth-url']
-      expect(auth_url).to eq(Settings.streaming.auth_url)
-    end
-
     it 'includes a 100% height attribute' do
       expect(page).to have_css("video[height='100%']", visible: :all)
-    end
-  end
-
-  context 'with a stanford only video' do
-    let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 1, size: 4) }
-    let(:resource) { build(:resource, :video, files: [build(:media_file, :video, :stanford_only)]) }
-
-    it 'includes a data attribute that includes the url to check the users auth status' do
-      expect(page).to have_css('[data-auth-url]', visible: :all)
-      auth_url = page.all('[data-auth-url]', visible: :all).first['data-auth-url']
-      expect(auth_url).to eq(Settings.streaming.auth_url)
     end
   end
 
   context 'with a world access video' do
     let(:resource_iteration) { instance_double(ActionView::PartialIteration, index: 3, size: 3) }
     let(:resource) { build(:resource, :video, files: [build(:media_file, :video, :world_downloadable)]) }
-
-    it 'includes a data attribute that includes the url to check the users auth status' do
-      expect(page).to have_css('[data-auth-url]', visible: :all)
-      auth_url = page.all('[data-auth-url]', visible: :all).first['data-auth-url']
-      expect(auth_url).to eq(Settings.streaming.auth_url)
-    end
 
     it 'does not show any location restricted messages' do
       expect(page).to have_no_css('.sul-embed-media-access-restricted .line1', text: 'Restricted media cannot be played in your location')

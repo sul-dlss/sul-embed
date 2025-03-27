@@ -8,7 +8,7 @@
   <% end %>
 
   <% component.with_authorization_messages do %>
-    <%= render CompanionWindows::AuthorizationMessagesComponent.new(available: true) %>
+    <%= render CompanionWindows::AuthorizationMessagesComponent.new %>
   <% end %>
 
   <% component.with_share_menu_button do %>

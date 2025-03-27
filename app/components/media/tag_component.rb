@@ -69,10 +69,11 @@ module Media
         tag.div(
           style: 'height: 100%',
           data: {
-            auth_url: authentication_url,
-            media_tag_target: 'authorizeableResource',
+            index: @resource_iteration.index,
             controller: 'media-player',
-            action: 'media-seek@window->media-player#seek ' \
+            media_player_uri_value: file.file_url,
+            action: 'iiif-manifest-received@window->file-auth#parseFiles ' \
+                    'media-seek@window->media-player#seek ' \
                     'fullscreenchange@window->media-player#fullscreenChange ' \
                     'auth-success@window->media-player#initializeVideoJSPlayer'
           }
@@ -107,8 +108,8 @@ module Media
 
     def streaming_source
       type = Rails.env.development? ? file.mimetype : 'application/x-mpegURL'
-      stacks_media_stream = Embed::StacksMediaStream.new(druid:, file:)
-      tag.source(src: stacks_media_stream.to_playlist_url, type:)
+      src = "#{Settings.stacks_url}/file/#{druid}/#{file.filename}"
+      tag.source(src: src, type:)
     end
 
     # Generate the video caption elements
@@ -130,11 +131,6 @@ module Media
 
     def caption_files
       @caption_files ||= @resource.caption_files.sort_by(&:language_code)
-    end
-
-    def authentication_url
-      attributes = { host: Settings.stacks_url, druid:, title: file.title }
-      Settings.streaming.auth_url % attributes
     end
   end
 end

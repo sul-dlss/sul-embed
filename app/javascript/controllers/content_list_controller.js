@@ -14,8 +14,7 @@ export default class extends Controller {
   // Sends an event that tells the MediaWrapperController to display the selected media.
   showMedia(evt) {
     evt.preventDefault()
-    const event = new CustomEvent('thumbnail-clicked', { detail: { index: evt.params.index } })
-    window.dispatchEvent(event)
+    this.sendThubmnailClickedEvent(evt.params.index, evt.currentTarget.dataset.url)
 
     this.listItemTargets.forEach((target) => {
       this.unsetActive(target)
@@ -29,9 +28,7 @@ export default class extends Controller {
   // Sends an event that tells the PDFController to display the selected PDF.
   showPdf(evt) {
     evt.preventDefault()
-    const fileUri = evt.currentTarget.dataset.url
-    const event = new CustomEvent('thumbnail-clicked', { detail: { index: evt.params.index, fileUri: fileUri } })
-    window.dispatchEvent(event)
+    this.sendThubmnailClickedEvent(evt.params.index, evt.currentTarget.dataset.url)
 
     const fileThumbActive = document?.querySelector('.file-thumb.active')
     if (fileThumbActive){
@@ -39,6 +36,11 @@ export default class extends Controller {
     }
 
     this.setActive(evt.currentTarget)
+  }
+
+  sendThubmnailClickedEvent(index, fileUri) {
+    const event = new CustomEvent('thumbnail-clicked', { detail: { index: index, fileUri: fileUri } })
+    window.dispatchEvent(event)
   }
 
   setActive(target) {
