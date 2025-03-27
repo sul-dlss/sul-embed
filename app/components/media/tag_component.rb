@@ -96,7 +96,7 @@ module Media
         id: "sul-embed-media-#{@resource_iteration.index}",
         poster: poster_url_for,
         controls: 'controls',
-        data: { index: @resource_iteration.index },
+        data: { index: @resource_iteration.index, fallback_poster: default_video_thumbnail },
         class: 'sul-embed-media-file',
         # So that VTT can be downloaded when download:stanford
         crossorigin: Rails.env.development? ? '' : 'use-credentials',
