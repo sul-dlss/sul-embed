@@ -20,12 +20,9 @@ export default class extends Controller {
                             preload: 'auto', // we need to preload video for the transcript panel
                             userActions: { hotkeys: true }
                           })
-    this.player.on('loadedmetadata', (evt) => {
-      // for multiple media items, we only want to load the first (visible) item
-      if (evt.target.dataset.index == '0'){
-        const event = new CustomEvent('media-loaded', { detail: this.player })
-        window.dispatchEvent(event)
-      }
+    this.player.on('loadedmetadata', () => {
+      const event = new CustomEvent('media-loaded', { detail: this.player })
+      window.dispatchEvent(event)
     })
 
     // occurs when time of the video changes.
@@ -37,11 +34,9 @@ export default class extends Controller {
 
     // The loadeddata event occurs when the first frame of the video is available, and
     // happens after loadedmetadata
-    this.player.on('loadeddata', (evt) => {
-      if (evt.target.dataset.index == '0'){
-        const event = new CustomEvent('media-data-loaded');
-        window.dispatchEvent(event);
-      }
+    this.player.on('loadeddata', () => {
+      const event = new CustomEvent('media-data-loaded');
+      window.dispatchEvent(event);
     })
   }
 
