@@ -19,13 +19,13 @@ export default class extends Controller {
     // Return if this method has already been called, there are no caption tracks
     // or no cues for the tracks.  In the case of Safari, we need to wait to check,
     // hence the async/await combination for checkCues.
-    if (this.loaded || !(await this.checkCues()))
+    if (this.player.loaded || !(await this.checkCues()))
       return
 
     this.revealButton()
     this.setupTranscriptLanguageSwitching()
     this.renderCues()
-    this.loaded = true
+    this.player.loaded = true
   }
 
   // event called when switch-transcript event is fired.
