@@ -14,10 +14,6 @@ class IframeComponent < ViewComponent::Base
     width || '100%'
   end
 
-  def height_style
-    embed_request.fullheight? ? '100%' : height
-  end
-
   def src
     query_params = embed_request.as_url_params.merge(version ? { _v: version } : {}).to_query
     "#{iframe_url}?url=#{Settings.purl_url}/#{path_segments}&#{query_params}"
@@ -30,7 +26,7 @@ class IframeComponent < ViewComponent::Base
   end
 
   def style
-    "height: #{height_style}; width: #{width_style};"
+    "height: #{height}; width: #{width_style};"
   end
 
   def call

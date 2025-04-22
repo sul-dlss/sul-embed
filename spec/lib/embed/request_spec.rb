@@ -76,16 +76,6 @@ RSpec.describe Embed::Request do
     end
   end
 
-  describe 'fullheight?' do
-    it 'default to false' do
-      expect(described_class.new(url: purl)).not_to be_fullheight
-    end
-
-    it 'is true when the incoming request asks to use fullheight mode' do
-      expect(described_class.new(url: purl, fullheight: 'true')).to be_fullheight
-    end
-  end
-
   describe 'enable_comparison?' do
     it 'defaults to false' do
       expect(described_class.new(url: purl)).not_to be_enable_comparison
