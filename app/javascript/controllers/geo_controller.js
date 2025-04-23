@@ -135,9 +135,6 @@ export default class extends Controller {
     if (data.downloadUrl) {
       output += `<dt>Download</dt><dd><a target="_blank" href="${data.downloadUrl}" rel="noopener noreferrer">${data.downloadUrl}</a></dd>`
     }
-    if (data.recordIdentifier) {
-      output += `<dt>Record Identifier</dt><dd><a target="_blank" href="${data.recordIdentifier}" rel="noopener noreferrer">${data.recordIdentifier}</a></dd>`
-    }
     if (data.label) {
       output += `<dt>Label</dt><dd>${data.label}</dd>`
     }
