@@ -66,7 +66,7 @@ export default class extends Controller {
     console.log("Looking for ", `source[src="${fileUri}"]`)
 
     // The current event may be for a different video on the page, so see if it's ours
-    const source = this.videoElement().querySelector(`source[src="${fileUri}"]`)
+    const source = this.videoElement().querySelector(`source[src="${decodeURIComponent(fileUri)}"]`)
     console.log("Found", source)
     source?.setAttribute('src', location)
   }
