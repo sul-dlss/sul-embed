@@ -180,7 +180,7 @@ export default class extends Controller {
 
     // For transcript cue highlighting to take effect, the companion window should be showing the transcript
     // and there must be cues present within the transcript.
-    if (!this.loaded || (cues.list.length === 0))
+    if (!this.player.loaded || (cues.list.length === 0))
       return
 
     // this.minStartTime and this.lastCueEndTime represent the starting and end point of all cues
