@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect } from 'react';
 
 /** OSD returns negative and float bounds */
 const convertToIIIFCoords = (bounds) => {
@@ -19,10 +19,10 @@ const onViewportChange = (event) => {
   const itemCount = viewport.viewer.world.getItemCount();
 
   if (itemCount > 1){
-    const page1 = viewport.viewer.world.getItemAt(0);
-    const page2 = viewport.viewer.world.getItemAt(1);
-    const page1_vars = {x: 0, y: 0, height: page1.source.height, width: page1.source.width, id: page1.source._id}
-    const page2_vars = {x: page1_vars['width'], y: page1_vars['height'], height: page2.source.height, width: page2.source.width, id: page2.source._id}
+    const item1 = viewport.viewer.world.getItemAt(0);
+    const item2 = viewport.viewer.world.getItemAt(1);
+    // item which is on the left is page1
+    const [page1, page2] = item1.getBounds().x <= item2.getBounds().x ? [item1, item2] : [item2, item1];
     let page1_bounds = page1.viewportToImageRectangle(viewport.getBounds());
     let page2_bounds = page2.viewportToImageRectangle(viewport.getBounds());
     let visible_pages =[]
