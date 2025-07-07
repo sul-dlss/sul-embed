@@ -149,7 +149,7 @@ GEM
     factory_bot_rails (6.5.0)
       factory_bot (~> 6.5)
       railties (>= 6.1.0)
-    faraday (2.13.1)
+    faraday (2.13.2)
       faraday-net_http (>= 2.0, < 3.5)
       json
       logger
@@ -161,7 +161,7 @@ GEM
       activesupport (>= 6.1)
     hashdiff (1.2.0)
     high_voltage (4.0.0)
-    honeybadger (5.28.0)
+    honeybadger (5.29.1)
       logger
       ostruct
     i18n (1.14.7)
@@ -281,7 +281,7 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.3.0)
-    rdoc (6.14.1)
+    rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
     regexp_parser (2.10.0)
