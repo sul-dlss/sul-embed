@@ -76,12 +76,12 @@ RSpec.describe 'geo viewer', :js do
 
   context 'with an index map' do
     let(:purl) do
-      build(:purl, :geo, druid: 'ts545zc6250',
+      build(:purl, :geo, druid: 'mf519gg2738',
                          contents: [
                            build(:resource, :file, files: [
                                    build(:resource_file, filename: 'data.zip'),
                                    build(:resource_file, filename: 'data_EPSG_4326.zip'),
-                                   build(:resource_file, druid: 'ts545zc6250', filename:)
+                                   build(:resource_file, druid: 'mf519gg2738', filename:)
                                  ]),
                            build(:resource, :image)
                          ])
@@ -96,11 +96,11 @@ RSpec.describe 'geo viewer', :js do
           # find this svg element on the page.
           # We also need to explicitly wait for the JS to run.
           expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
-          expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/ts545zc6250/#{filename}\"]"
+          expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/mf519gg2738/#{filename}\"]"
           # only count paths within .leaflet-overlay-pane for testing
           # (page.body contains SVG logos we don't care to count)
           find '.leaflet-overlay-pane'
-          expect(Nokogiri::HTML.parse(page.body).search('.leaflet-overlay-pane').css('path').length).to eq 480
+          expect(Nokogiri::HTML.parse(page.body).search('.leaflet-overlay-pane').css('path').length).to eq 22
         end
       end
     end
@@ -114,7 +114,7 @@ RSpec.describe 'geo viewer', :js do
           # find this svg element on the page.
           # We also need to explicitly wait for the JS to run.
           expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
-          expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/ts545zc6250/#{filename}\"]"
+          expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/mf519gg2738/#{filename}\"]"
         end
       end
     end
