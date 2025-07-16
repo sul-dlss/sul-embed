@@ -15,7 +15,7 @@
     <%= stylesheet_link_tag @embed_response.viewer.stylesheet %>
     <%= tag :link, rel: "up", href: @embed_response.request.purl_object.first_collection_url if @embed_response && @embed_response.request.purl_object.first_collection_url %>
   </head>
-  <body>
+  <body style="margin: 0">
     <%= render @embed_response.viewer.component.new(viewer: @embed_response.viewer) %>
   </body>
 </html>
