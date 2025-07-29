@@ -59,7 +59,8 @@ export default class extends Controller {
               layer.customProperty = { geoJSON: true }
               // Add a hover label for the label property
               if (feature.properties.label !== null) {
-                layer.bindTooltip(feature.properties.label)
+                // without String, numbers break tooltip
+                layer.bindTooltip(String(feature.properties.label))
               }
               // If it is available add clickable info
               if (feature.properties.available !== null) {
