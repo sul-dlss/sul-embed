@@ -18,7 +18,7 @@ module Embed
         end
       end
 
-      attr_accessor :druid, :type, :description, :files
+      attr_accessor :druid, :type, :description, :files, :version
 
       # In deserialize, description is the label
       # https://github.com/sul-dlss/sul-embed/blob/784e6dd51fd9fbe18d11ff63e2640bea010ab0dc/app/models/embed/purl/resource_json_deserializer.rb#L17

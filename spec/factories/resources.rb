@@ -29,6 +29,7 @@ FactoryBot.define do
     trait :video do
       type { 'video' }
       description { 'First Video' }
+      version { 1 }
       files { [build(:media_file, :video, :world_downloadable), build(:media_file, :caption, :world_downloadable), build(:media_file, :image, :world_downloadable, filename: 'video_1.jp2')] }
     end
 
