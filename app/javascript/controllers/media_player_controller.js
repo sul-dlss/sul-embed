@@ -10,11 +10,7 @@ export default class extends Controller {
   initializeVideoJSPlayer(evt) {
     console.debug("evt.detail.fileUri: ", evt.detail.fileUri, " this.uriValue:", this.uriValue)
     // We only take action if this event is for this element
-    // We need to strip out the url parameters because purl always builds version urls
-    // i.e. /v2/file/bc123df4567/version/1/abc_123.mp4
-    // sul-embed isn't aware of file version paths unless the user provides it
-    // i.e. /file/bc123df4567/abc_123.mp4 (this still gets the latest version)
-    if (this.fileName(evt.detail.fileUri) != this.fileName(this.uriValue))
+    if (evt.detail.fileUri != this.uriValue)
       return
 
     this.writeToken(evt.detail)
@@ -42,12 +38,6 @@ export default class extends Controller {
       const event = new CustomEvent('media-data-loaded');
       window.dispatchEvent(event);
     })
-  }
-
-  // we use regex to allow for nested filepaths (i.e. /file/movie1, /file2/movie1)
-  fileName(filepath){
-    const regex = /\/(v2\/)?file\/\w{11,16}\/(version\/\d+\/)?(.*)/gm;
-    return regex.exec(filepath)[3]
   }
 
   // Don't show videojs fullscreen button when sul-embed is in fullscreen
