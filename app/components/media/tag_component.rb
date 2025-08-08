@@ -63,7 +63,6 @@ module Media
     def media_element # rubocop:disable Metrics/MethodLength
       render WrapperComponent.new(thumbnail: thumbnail_url, file:, type:,
                                   size: @resource_iteration.size,
-                                  purl_version: @resource.version,
                                   resource_index: @resource_iteration.index) do
         # We use this div, to hold stimulus controller/actions, because videoJS duplicates these attributes if they are
         # on the <video> tag directly
@@ -72,7 +71,7 @@ module Media
           data: {
             index: @resource_iteration.index,
             controller: 'media-player',
-            media_player_uri_value: file.file_url(version: @resource.version),
+            media_player_uri_value: file.file_url,
             action: 'iiif-manifest-received@window->file-auth#parseFiles ' \
                     'media-seek@window->media-player#seek ' \
                     'fullscreenchange@window->media-player#fullscreenChange ' \
@@ -109,7 +108,7 @@ module Media
 
     def streaming_source
       type = Rails.env.development? ? file.mimetype : 'application/x-mpegURL'
-      tag.source(src: file.file_url(version: @resource.version), type:)
+      tag.source(src: file.file_url, type:)
     end
 
     # Generate the video caption elements
@@ -122,7 +121,7 @@ module Media
       # For Safari, we must ensure a track is selected by default to allow the track cues to be available.
       safe_join(
         caption_files.map.with_index do |caption_file, i|
-          tag.track(src: caption_file.file_url(version: @resource.version), kind: 'captions',
+          tag.track(src: caption_file.file_url, kind: 'captions',
                     srclang: caption_file.language_code, label: caption_file.media_caption_label,
                     default: (i.zero? && !caption_file.sdr_generated? ? '' : nil))
         end
