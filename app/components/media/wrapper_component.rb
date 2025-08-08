@@ -6,13 +6,12 @@ module Media
 
     # @param [Embed::Purl::MediaFile] file
     # @param [String] type
-    def initialize(file:, type:, resource_index:, thumbnail:, size:, purl_version: nil)
+    def initialize(file:, type:, resource_index:, thumbnail:, size:)
       @file = file
       @type = type
       @resource_index = resource_index
       @thumbnail = thumbnail
       @size = size
-      @purl_version = purl_version
     end
 
     attr_reader :file, :resource_index, :size
@@ -45,7 +44,7 @@ module Media
     # If the file is an image, transform to the IIIF full size url,
     # This allows the URL for the file to match the URL in the IIIF manifest
     def file_uri
-      return @file.file_url(version: @purl_version) if @type != 'image'
+      return @file.file_url if @type != 'image'
 
       stacks_thumb_url(@file.druid, @file.filename, size: 'full')
     end

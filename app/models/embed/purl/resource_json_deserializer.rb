@@ -23,7 +23,6 @@ module Embed
           druid: @druid,
           type: LEGACY_TYPE_MAP.fetch(cocina_type, cocina_type),
           description:,
-          version: @json['version'],
           files: build_files(description)
         )
       end
