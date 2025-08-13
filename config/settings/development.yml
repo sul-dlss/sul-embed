@@ -36,8 +36,6 @@ sandbox:
       purl: qv033rw8765
     - label: thumbnail only - citation
       purl: xq083mf5798
-    - label: thumbnail only multi images - citation
-      purl: xc280tx1177
   media:
     - label: mp4
       purl: bb582xs1304
