@@ -5,6 +5,9 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   // RubyPlugin links with the config/vite.json file,
   plugins: [react(), RubyPlugin()],
+  define: {
+    'process.env.RAILS_ENV': JSON.stringify(process.env.RAILS_ENV || 'production'),
+  },
   build: {
     emptyOutDir: true,
     manifest: true,

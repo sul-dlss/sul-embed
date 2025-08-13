@@ -1,10 +1,12 @@
 import Mirador, { getExportableState } from 'mirador'
 import { miradorImageToolsPlugin } from 'mirador-image-tools'
-import { miradorSharePlugin, miradorShareDialog as miradorShareDialogPlugin } from 'mirador-share-plugin'
-import { miradorDownloadPlugin, MiradorDownloadDialogPlugin as miradorDownloadDialogPlugin } from 'mirador-dl-plugin'
+import { miradorSharePlugin, miradorShareDialogPlugin } from 'mirador-share-plugin'
+import { miradorDownloadPlugin, miradorDownloadDialogPlugin } from 'mirador-dl-plugin'
 import { shareMenuPlugin } from '@/plugins/shareMenuPlugin.jsx'
 import embedModePlugin from '@/plugins/embedModePlugin.js'
 import analyticsPlugin from '@/plugins/analyticsPlugin.js'
+// TODO: remove this?
+import xywhPlugin from '@/plugins/xywhPlugin'
 
 export default {
   init: function() {
@@ -12,12 +14,7 @@ export default {
     const data = el.dataset
     const showAttribution = (data.showAttribution === 'true')
     const hideWindowTitle = (data.hideTitle === 'true')
-<<<<<<< HEAD
     const enableComparison = (data.enableComparison === 'true')
-    const cdl = (data.cdl === 'true')
-=======
-    const imageTools = (data.imageTools === 'true')
->>>>>>> 65c5f1a5 (Remove CDL mirador plugins.)
 
     // Determine which panel should be open
     var sideBarPanel = 'info'
@@ -115,12 +112,7 @@ export default {
       // shareMenuPlugin is the customized menu in the top bar containing the share and download plugin buttons
       // shareMenuPlugin exposes the SulEmbedShareMenu component
       shareMenuPlugin,
-<<<<<<< HEAD
-      miradorZoomBugPlugin,
       ...((enableComparison && embedModePlugin) || []),
-=======
-      ...((imageTools && embedModePlugin) || []),
->>>>>>> a6b7bab9 (Remove mirador zoom button patch.)
       {
         ...miradorSharePlugin,
         target: 'SulEmbedShareMenu',
