@@ -18,7 +18,7 @@ RSpec.describe MediaComponent, type: :component do
     instance_double(Embed::Purl,
                     title: 'Sample title',
                     purl_url: 'https://purl.stanford.edu/123',
-                    iiif_v3_manifest_url: 'https://purl.stanford.edu/123/iiif/manifest',
+                    manifest_json_url: 'https://purl.stanford.edu/123/iiif3/manifest',
                     use_and_reproduction: '',
                     copyright: '',
                     license: '',
