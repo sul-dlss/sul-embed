@@ -7,6 +7,7 @@ class EmbedController < ApplicationController
   # See https://github.com/rails/importmap-rails#include-a-digest-of-the-import-map-in-your-etag
   etag { Rails.application.importmap.digest(resolver: helpers) if request.format&.html? }
 
+  before_action :updated_canvas_id
   before_action :embed_request
   before_action :set_cache, only: %i[iiif]
   before_action :fix_etag_header, only: %i[get iframe]
@@ -58,6 +59,11 @@ class EmbedController < ApplicationController
                   :hide_title, :hide_embed, :hide_download, :hide_search, :min_files_to_search,
                   :canvas_id, :canvas_index, :search, :suggested_search,
                   :enable_comparison, :cdl_hold_record_id)
+  end
+
+  # this is necessary to support v2 canvas_ids most likely in exhibits
+  def updated_canvas_id
+    params[:canvas_id] = params[:canvas_id]&.gsub('/iiif/', '/iiif3/')
   end
 
   rescue_from Embed::Request::NoURLProvided do |e|

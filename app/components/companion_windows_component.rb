@@ -19,7 +19,7 @@ class CompanionWindowsComponent < ViewComponent::Base
   attr_reader :viewer
 
   delegate :purl_object, :display_header?, to: :viewer
-  delegate :downloadable_files, :contents, :druid, :title, :iiif_v3_manifest_url, to: :purl_object
+  delegate :downloadable_files, :contents, :druid, :title, :manifest_json_url, to: :purl_object
 
   def media_viewer?
     viewer.instance_of?(::Embed::Viewer::Media)
@@ -59,7 +59,7 @@ class CompanionWindowsComponent < ViewComponent::Base
   def outer_container_data
     {
       controller: controllers,
-      iiif_manifest_loader_iiif_manifest_value: iiif_v3_manifest_url,
+      iiif_manifest_loader_iiif_manifest_value: manifest_json_url,
       companion_window_auto_expand_value: render_content_list_panel?
     }.tap do |data|
       if fullscreen?
