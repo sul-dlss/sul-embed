@@ -88,7 +88,7 @@ module Embed
       end
 
       def caption?
-        role == 'caption'
+        role == 'caption' && !no_download?
       end
 
       def transcript?
