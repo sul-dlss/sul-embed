@@ -31,6 +31,11 @@ export default class extends Controller {
     return typeof obj !== 'undefined'
   }
 
+  // Are we dealing with an index map?
+  isIndexMap() {
+    return this.isDefined(this.dataAttributes.indexMap) && this.dataAttributes.indexMap !== ''
+  }
+
   show(evt) {
     if (this.replacementLayer) {
       this.map.removeLayer(this.replacementLayer)
@@ -45,7 +50,7 @@ export default class extends Controller {
     const hasLayers = this.isDefined(dataAttributes.layers)
     const indexMapUrl = dataAttributes.indexMap
 
-    if (this.isDefined(indexMapUrl)) {
+    if (this.isIndexMap()) {
       // Index map viewer
       const _this = this
       fetch(indexMapUrl)
@@ -121,27 +126,31 @@ export default class extends Controller {
   }
 
   indexMapInfo(data) {
-    let output = '<div class="index-map-info">'
-    if (data.title) {
-      output += `<h3>${data.title}</h3>`
-    }
-    output += "<div>"
+    // Template HTML we are iteratively building
+    let output = '<div class="index-map-info"><div>'
+
+    // If we have a thumbnail and a link, make the thumbnail clickable
+    // If thumbnail but no link, just show the thumbnail
     if (data.thumbnailUrl) {
-      output += `<img src="${data.thumbnailUrl}" style="max-width: 100%; height: auto" alt="">`
+      const thumbnailImg = `<img src="${data.thumbnailUrl}" style="max-width: 100%; height: auto" alt="">`
+      if (data.websiteUrl) {
+        output += `<a href="${data.websiteUrl}" title="View this map" target="_blank">${thumbnailImg}</a>`
+      } else {
+        output += thumbnailImg
+      }
     }
+    
+    // Attributes section
     output += "<dl>"
-    if (data.websiteUrl) {
-      output += `<a target="_blank" href="${data.websiteUrl}" rel="noopener noreferrer">View this map</a>`
-    }
-    if (data.downloadUrl) {
-      output += `<dt>Download</dt><dd><a target="_blank" href="${data.downloadUrl}" rel="noopener noreferrer">${data.downloadUrl}</a></dd>`
-    }
-    if (data.label) {
-      output += `<dt>Label</dt><dd>${data.label}</dd>`
-    }
-    if (data.note) {
-      output += `<dt>Note</dt><dd>${data.note}</dd>`
-    }
+    if (data.sheet) output += `<dt>Sheet</dt><dd>${data.sheet}</dd>`
+    if (data.label) output += `<dt>Label</dt><dd>${data.label}</dd>`
+    if (data.note) output += `<dt>Note</dt><dd>${data.note}</dd>`
+    if (data.call_num) output += `<dt>Call number</dt><dd>${data.call_num}</dd>`
+    if (data.websiteUrl) output += `<dt>Web link</dt><dd><a target="_blank" href="${data.websiteUrl}">View this map</a></dd>`
+    if (data.downloadUrl) output += `<dt>Download</dt><dd><a target="_blank" href="${data.downloadUrl}">Download this map</a></dd>`
+    if (data.iiifUrl) output += `<dt>IIIF manifest</dt><dd><a target="_blank" href="${data.iiifUrl}">View manifest</a></dd>`
+    
+    // Close elements
     return output + "</dl></div></div>"
   }
 
@@ -271,14 +280,18 @@ export default class extends Controller {
   }
 
   geoSidebar() {
+    // Set up the sidebar content based on whether it's an index map or not
+    const sidebarTitle = this.isIndexMap() ? 'Map Sheet' : 'Features'
+    const sidebarContent = this.isIndexMap() ? 'Click the map to inspect a sheet.' : 'Click the map to inspect features.'
+
     return `<div class="sul-embed-geo-sidebar">
                   <div class="sul-embed-geo-sidebar-header">
-                    <h3>Features</h3>
+                    <h3>${sidebarTitle}</h3>
                     <button aria-label="expand/collapse" aria-expanded="true" aria-controls="sidebarContent">
                       <svg class="MuiSvgIcon-root KeyboardArrowUpSharp" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M7.41 15.41 12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>
                     </button>
                   </div>
-                  <div id="sidebarContent" class="sul-embed-geo-sidebar-content show">Click the map to inspect features.</div>
+                  <div id="sidebarContent" class="sul-embed-geo-sidebar-content show">${sidebarContent}</div>
                 </div>`
   }
 
