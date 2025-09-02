@@ -111,10 +111,8 @@ sandbox:
       purl: gk831nh0251
     - label: Raster - restricted (stanford only)
       purl: sf815vr1246
-    - label: Index map (OpenIndexMap spec)
-      purl: ts545zc6250
-    - label: topographic Index map
-      purl: bj754sp5315
+    - label: Index map
+      purl: kh860qj3406
     - label: with jpg/zip
       purl: bh152hk2665
     - label: not released to EarthWorks
