@@ -1,3 +1,8 @@
+/**
+ * As of Septemeber 2025, we believe this plugin is only used in the 
+ * Parker exhibits site. You can see it within the three-dot top bar menu,
+ * by clicking "Compare To" and adding a second manifest.
+ *  */ 
 import CompareDialog from '@/mirador/components/CompareDialog.jsx';
 import CompareMenuItem from '@/mirador/components/CompareMenuItem.jsx';
 import AllowTopBarClose from '@/mirador/components/AllowTopBarClose.jsx';
