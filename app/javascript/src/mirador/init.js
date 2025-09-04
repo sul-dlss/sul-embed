@@ -6,7 +6,7 @@ import { miradorDownloadPlugin, miradorDownloadDialogPlugin } from 'mirador-dl-p
 import { sulTheme, viewerViews, defaultWorkspace } from '@/mirador/config.js';
 import { handleViewerPostMessage } from '@/mirador/postMessageHandler.js';
 
-import embedModePlugin from '@/mirador/plugins/embedModePlugin.js';
+import comparisonPlugin from '@/mirador/plugins/comparisonPlugin.js';
 import analyticsPlugin from '@/mirador/plugins/analyticsPlugin.js';
 import xywhPlugin from '@/mirador/plugins/xywhPlugin.js';
 import customMenuPlugin from '@/mirador/plugins/customMenuPlugin.jsx';
@@ -67,7 +67,7 @@ export default {
       },
     },
     [
-      ...(enableComparison ? embedModePlugin : []),
+      ...(enableComparison ? comparisonPlugin : []),
       analyticsPlugin,
       xywhPlugin,
       customMenuPlugin,
