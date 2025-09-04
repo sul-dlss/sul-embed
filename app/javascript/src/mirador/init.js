@@ -62,6 +62,23 @@ export default {
       workspaceControlPanel: {
         enabled: false,
       },
+      miradorSharePlugin: {
+        embedOption: {
+          enabled: true,
+          embedUrlReplacePattern: [
+            /.*\.edu\/(\w+)\/iiif\d?\/manifest/,
+            'https://embed.stanford.edu/iframe?url=https://purl.stanford.edu/$1',
+          ],
+        },
+        dragAndDropInfoLink: 'https://library.stanford.edu/iiif',
+        shareLink: {
+          enabled: true,
+          manifestIdReplacePattern: [
+            /(purl.*.stanford.edu.*)\/iiif\d?\/manifest(.json)?$/,
+            '$1',
+          ],
+        },
+      },
       miradorDownloadPlugin: {
         restrictDownloadOnSizeDefinition: true,
       },
