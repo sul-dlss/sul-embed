@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Dialog, DialogTitle, DialogContent,
-  DialogActions, Button, Typography, TextField,
+  DialogActions, Button, TextField,
 } from '@mui/material';
 
 export default function CompareDialog({ addWindow, handleClose, show = false, updateWindow, windowId }) {
@@ -17,8 +17,8 @@ export default function CompareDialog({ addWindow, handleClose, show = false, up
 
   return (
     <Dialog open={show} onClose={() => updateWindow(windowId, { showCompareDialog: false })}>
-      <DialogTitle disableTypography>
-        <Typography variant="h2">Compare to...</Typography>
+      <DialogTitle variant="h2">
+        Compare to...
       </DialogTitle>
       <form onSubmit={handleSubmit}>
         <DialogContent>
