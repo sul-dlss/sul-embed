@@ -2644,6 +2644,7 @@ html-parse-stringify@^3.0.1:
   dependencies:
     void-elements "3.1.0"
 
+<<<<<<< HEAD
 http-deceiver@^1.2.7:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/http-deceiver/-/http-deceiver-1.2.7.tgz#fa7168944ab9a519d337cb0bec7284dc3e723d87"
@@ -2653,6 +2654,12 @@ http-errors@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-2.0.0.tgz#b7774a1486ef73cf7667ac9ae0858c012c57b9d3"
   integrity sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==
+=======
+"i18next@^21.0.0 || ^22.0.0 || ^23.0.0 || ^24.0.0 || ^25.0.0":
+  version "25.5.2"
+  resolved "https://registry.yarnpkg.com/i18next/-/i18next-25.5.2.tgz#16efa309e154d46dac7583e6a315ccb47e3e3a10"
+  integrity sha512-lW8Zeh37i/o0zVr+NoCHfNnfvVw+M6FQbRp36ZZ/NyHDJ3NJVpp2HhAUyU9WafL5AssymNoOjMRB48mmx2P6Hw==
+>>>>>>> aeb5b8aa (Get lockfiles up to date after rebase)
   dependencies:
     depd "2.0.0"
     inherits "2.0.4"

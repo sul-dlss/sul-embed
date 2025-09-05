@@ -286,7 +286,11 @@ GEM
     regexp_parser (2.11.3)
     reline (0.6.2)
       io-console (~> 0.5)
+<<<<<<< HEAD
     rexml (3.4.4)
+=======
+    rexml (3.4.2)
+>>>>>>> aeb5b8aa (Get lockfiles up to date after rebase)
     rspec (3.13.1)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
@@ -346,7 +350,11 @@ GEM
       rubocop (~> 1.72, >= 1.72.1)
       rubocop-rspec (~> 3.5)
     ruby-progressbar (1.13.0)
+<<<<<<< HEAD
     rubyzip (3.1.0)
+=======
+    rubyzip (3.0.2)
+>>>>>>> aeb5b8aa (Get lockfiles up to date after rebase)
     securerandom (0.4.1)
     selenium-webdriver (4.35.0)
       base64 (~> 0.2)
@@ -375,9 +383,15 @@ GEM
     timeout (0.4.3)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+<<<<<<< HEAD
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.1.0)
+=======
+    unicode-display_width (3.1.5)
+      unicode-emoji (~> 4.0, >= 4.0.4)
+    unicode-emoji (4.0.4)
+>>>>>>> aeb5b8aa (Get lockfiles up to date after rebase)
     uri (1.0.3)
     useragent (0.16.11)
     view_component (3.23.2)
