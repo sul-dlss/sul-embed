@@ -14,8 +14,9 @@ export default defineConfig({
     minify: false,
     sourcemap: "inline",
     rollupOptions: {
-      // Externalize deps that shouldn't be bundled
-      external: ["react", "react-dom", "react/jsx-runtime"],
+      // TODO: App doesn't work in production without bundling React. 
+      // Is this OK?
+      // external: ["react", "react-dom", "react/jsx-runtime"],
       output: {
         // Provide global variables to use in the UMD build for externalized deps
         globals: {
