@@ -2,16 +2,16 @@
 
 module Embed
   module Viewer
-    class M3Viewer < CommonViewer
+    class MiradorViewer < CommonViewer
       delegate :search, :suggested_search, :cdl_hold_record_id, :iiif_initial_viewer_config,
                to: :embed_request
 
       def component
-        M3Component
+        MiradorComponent
       end
 
       def stylesheet
-        'm3.css'
+        'mirador.css'
       end
 
       delegate :manifest_json_url, to: :@purl_object

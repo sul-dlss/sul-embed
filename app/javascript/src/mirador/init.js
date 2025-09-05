@@ -14,7 +14,7 @@ import customMenuPlugin from '@/mirador/plugins/customMenuPlugin.jsx';
 export default {
 
   init: function () {
-    const el = document.getElementById('sul-embed-m3');
+    const el = document.getElementById('sul-embed-mirador');
     const data = el.dataset;
 
     const showAttribution = data.showAttribution === 'true';
@@ -27,13 +27,13 @@ export default {
     if (showAttribution) sideBarPanel = 'attribution';
 
     const viewerInstance = Mirador.viewer({
-      id: 'sul-embed-m3',
+      id: 'sul-embed-mirador',
       selectedTheme: 'sul',
       themes: sulTheme,
       windows: [
         {
           id: 'main',
-          loadedManifest: data.m3Uri,
+          loadedManifest: data.miradorUri,
           canvasIndex: Number(data.canvasIndex),
           canvasId: data.canvasId,
           defaultSearchQuery: data.search?.length > 0 ? data.search : undefined,

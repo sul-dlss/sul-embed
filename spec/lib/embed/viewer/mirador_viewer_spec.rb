@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Embed::Viewer::M3Viewer do
-  subject(:m3_viewer) { described_class.new(request) }
+RSpec.describe Embed::Viewer::MiradorViewer do
+  subject(:mirador_viewer) { described_class.new(request) }
 
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:purl) { build(:purl) }
@@ -13,9 +13,9 @@ RSpec.describe Embed::Viewer::M3Viewer do
   end
 
   describe 'initialize' do
-    it 'is an Embed::Viewer::M3Viewer' do
+    it 'is an Embed::Viewer::MiradorViewer' do
       expect(request).to receive(:purl_object).and_return(nil)
-      expect(m3_viewer).to be_an described_class
+      expect(mirador_viewer).to be_an described_class
     end
   end
 
@@ -24,7 +24,7 @@ RSpec.describe Embed::Viewer::M3Viewer do
       let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123', canvas_index: 5) }
 
       it 'passes through the requested canvas index' do
-        expect(m3_viewer.canvas_index).to eq 5
+        expect(mirador_viewer.canvas_index).to eq 5
       end
     end
 
@@ -46,7 +46,7 @@ RSpec.describe Embed::Viewer::M3Viewer do
 
       it 'finds the requested canvas index in the IIIF manifest' do
         allow_any_instance_of(Embed::Purl).to receive(:manifest_json_response).and_return(manifest_json_response)
-        expect(m3_viewer.canvas_index).to eq 1
+        expect(mirador_viewer.canvas_index).to eq 1
       end
     end
 
@@ -68,7 +68,7 @@ RSpec.describe Embed::Viewer::M3Viewer do
 
       it 'finds the requested canvas index in the IIIF manifest' do
         allow_any_instance_of(Embed::Purl).to receive(:manifest_json_response).and_return(manifest_json_response)
-        expect(m3_viewer.canvas_index).to be_nil
+        expect(mirador_viewer.canvas_index).to be_nil
       end
     end
 
@@ -90,7 +90,7 @@ RSpec.describe Embed::Viewer::M3Viewer do
 
       it 'finds the requested canvas index in the IIIF manifest' do
         allow_any_instance_of(Embed::Purl).to receive(:manifest_json_response).and_return(manifest_json_response)
-        expect(m3_viewer.canvas_index).to eq 15
+        expect(mirador_viewer.canvas_index).to eq 15
       end
     end
   end
@@ -117,7 +117,7 @@ RSpec.describe Embed::Viewer::M3Viewer do
       end
 
       it 'returns the canvas id' do
-        expect(m3_viewer.canvas_id).to eq 'something'
+        expect(mirador_viewer.canvas_id).to eq 'something'
       end
     end
 
@@ -137,7 +137,7 @@ RSpec.describe Embed::Viewer::M3Viewer do
       end
 
       it 'rewrites the requested canvas ids to new-style cocina canvas ids' do
-        expect(m3_viewer.canvas_id).to eq 'https://purl.stanford.edu/gm059ft3590/iiif/canvas/cocina-fileSet-gm059ft3590-gm059ft3590_1'
+        expect(mirador_viewer.canvas_id).to eq 'https://purl.stanford.edu/gm059ft3590/iiif/canvas/cocina-fileSet-gm059ft3590-gm059ft3590_1'
       end
     end
 
@@ -158,7 +158,7 @@ RSpec.describe Embed::Viewer::M3Viewer do
       end
 
       it 'returns nil' do
-        expect(m3_viewer.canvas_id).to be_nil
+        expect(mirador_viewer.canvas_id).to be_nil
       end
     end
   end
@@ -167,7 +167,7 @@ RSpec.describe Embed::Viewer::M3Viewer do
     let(:purl) { instance_double(Embed::Purl, collections: %w[abc 123]) }
 
     it 'based off of a purls collection being specified in settings' do
-      expect(m3_viewer.show_attribution_panel?).to be true
+      expect(mirador_viewer.show_attribution_panel?).to be true
     end
   end
 end

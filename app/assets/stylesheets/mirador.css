@@ -29,7 +29,7 @@
   margin: 0 1px 3px 0;
   position: relative;
 
-  /* For single-window M3 embeds, this will be overriden by Mirador 3's
+  /* For single-window Mirador embeds, this will be overriden by Mirador 3's
      selected window top-bar styling, but if there are mulitple
      windows, it will give the unselected windows a visible border. */
   .mirador-window-top-bar {
