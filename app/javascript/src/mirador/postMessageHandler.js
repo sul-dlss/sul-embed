@@ -38,7 +38,7 @@ export function handleViewerPostMessage(viewerInstance) {
             iiif_images: imageUrl,
             canvas_index: canvasIndex,
           },
-          source: 'sul-embed-m3',
+          source: 'sul-embed-mirador',
         }),
         event.origin
       );
