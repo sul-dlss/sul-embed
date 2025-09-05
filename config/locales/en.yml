@@ -40,7 +40,7 @@ en:
       title: "File viewer: %{title}"
     geo:
       title: "Geospatial viewer: %{title}"
-    m3_viewer:
+    mirador_viewer:
       title: "Image viewer: %{title}"
     media:
       title: "Media viewer: %{title}"

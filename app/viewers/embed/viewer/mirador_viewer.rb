@@ -1,0 +1,84 @@
+# frozen_string_literal: true
+
+module Embed
+  module Viewer
+    class MiradorViewer < CommonViewer
+      delegate :search, :suggested_search, :cdl_hold_record_id, :iiif_initial_viewer_config,
+               to: :embed_request
+
+      def component
+        MiradorComponent
+      end
+
+      def stylesheet
+        'mirador.css'
+      end
+
+      delegate :manifest_json_url, to: :@purl_object
+
+      def manifest_json
+        @manifest_json ||= JSON.parse(@purl_object.manifest_json_response)
+      end
+
+      def show_attribution_panel?
+        purl_object.collections.any? do |druid|
+          Settings.collections_to_show_attribution.include?(druid)
+        end
+      end
+
+      def cdl?
+        purl_object.controlled_digital_lending?
+      end
+
+      # We rewrite the provided canvas ids to:
+      # - ensure it exists in the manifest (if they don't, mirador puts the user into a weird initial state)
+      # - rewrite pre-cocina canvas ids to post-cocina canvas ids as appropriate
+      #        (to avoid breaking embeds that used to work)
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      def canvas_id
+        return if embed_request.canvas_id.blank?
+
+        if canvases.any? { |canvas| canvas['@id'] == embed_request.canvas_id }
+          embed_request.canvas_id
+        elsif cocinafied_canvases? && embed_request.canvas_id.exclude?('cocina-fileSet')
+          cocinafied_canvas_id
+        else
+          Honeybadger.notify(
+            "Unable to find requested canvas id '#{embed_request.canvas_id}' in manifest for #{purl_object.druid}"
+          )
+
+          nil
+        end
+      end
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+      def canvas_index
+        if canvas_id
+          canvases.index { |canvas| canvas['@id'] == canvas_id } || embed_request.canvas_index
+        else
+          embed_request.canvas_index
+        end
+      end
+
+      private
+
+      def canvases
+        manifest_json.fetch('sequences', []).pick('canvases')
+      end
+
+      def cocinafied_canvases?
+        canvases.any? do |canvas|
+          canvas['@id'].include?('cocina-fileSet')
+        end
+      end
+
+      def cocinafied_canvas_id
+        base, _, resource_id = embed_request.canvas_id.rpartition('/')
+
+        potential_canvas_id = base + "/cocina-fileSet-#{purl_object.druid}-#{resource_id}"
+
+        potential_canvas_id if canvases.any? { |canvas| canvas['@id'] == potential_canvas_id }
+      end
+    end
+  end
+end
