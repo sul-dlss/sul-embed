@@ -34,7 +34,7 @@ module Embed
       # - ensure it exists in the manifest (if they don't, mirador puts the user into a weird initial state)
       # - rewrite pre-cocina canvas ids to post-cocina canvas ids as appropriate
       #        (to avoid breaking embeds that used to work)
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def canvas_id
         return if embed_request.canvas_id.blank?
 
@@ -50,7 +50,7 @@ module Embed
           nil
         end
       end
-      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
       def canvas_index
         if canvas_id
