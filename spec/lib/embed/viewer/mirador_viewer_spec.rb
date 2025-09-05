@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-
+# rubocop:disable RSpec/AnyInstance, RSpec/MessageSpies, RSpec/StubbedMock
 RSpec.describe Embed::Viewer::MiradorViewer do
   subject(:mirador_viewer) { described_class.new(request) }
 
@@ -171,3 +171,4 @@ RSpec.describe Embed::Viewer::MiradorViewer do
     end
   end
 end
+# rubocop:enable RSpec/AnyInstance, RSpec/MessageSpies, RSpec/StubbedMock
