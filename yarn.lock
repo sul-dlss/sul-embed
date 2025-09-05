@@ -3247,9 +3247,9 @@ mirador-share-plugin@1.0.0-rc.1:
     copy-to-clipboard "^3.3.0"
     notistack "^3.0.1"
 
-"mirador@file:../mirador/mirador-4.0.0-rc.1.pluginTarget.tgz":
+"mirador@file:./vendor/javascript/mirador-4.0.0-rc.1.pluginTarget.tgz":
   version "4.0.0-rc.1"
-  resolved "file:../mirador/mirador-4.0.0-rc.1.pluginTarget.tgz#f734077ded3a969427754c792f5e44f12fa1781b"
+  resolved "file:./vendor/javascript/mirador-4.0.0-rc.1.pluginTarget.tgz#f734077ded3a969427754c792f5e44f12fa1781b"
   dependencies:
     "@custom-react-hooks/use-element-size" "^1.5.1"
     "@emotion/cache" "^11.11.0"
