@@ -2644,7 +2644,6 @@ html-parse-stringify@^3.0.1:
   dependencies:
     void-elements "3.1.0"
 
-<<<<<<< HEAD
 http-deceiver@^1.2.7:
   version "1.2.7"
   resolved "https://registry.yarnpkg.com/http-deceiver/-/http-deceiver-1.2.7.tgz#fa7168944ab9a519d337cb0bec7284dc3e723d87"
@@ -2654,12 +2653,6 @@ http-errors@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-2.0.0.tgz#b7774a1486ef73cf7667ac9ae0858c012c57b9d3"
   integrity sha512-FtwrG/euBzaEjYeRqOgly7G0qviiXoJWnvEH2Z1plBdXgbyjv34pHTSb9zoeHMyDy33+DWy5Wt9Wo+TURtOYSQ==
-=======
-"i18next@^21.0.0 || ^22.0.0 || ^23.0.0 || ^24.0.0 || ^25.0.0":
-  version "25.5.2"
-  resolved "https://registry.yarnpkg.com/i18next/-/i18next-25.5.2.tgz#16efa309e154d46dac7583e6a315ccb47e3e3a10"
-  integrity sha512-lW8Zeh37i/o0zVr+NoCHfNnfvVw+M6FQbRp36ZZ/NyHDJ3NJVpp2HhAUyU9WafL5AssymNoOjMRB48mmx2P6Hw==
->>>>>>> aeb5b8aa (Get lockfiles up to date after rebase)
   dependencies:
     depd "2.0.0"
     inherits "2.0.4"
@@ -3268,55 +3261,10 @@ mirador@^3.3.0:
   resolved "https://registry.yarnpkg.com/mirador/-/mirador-3.4.3.tgz#1b083bd037b851d1389758f3c86eb94832b00ec6"
   integrity sha512-yHoug0MHy4e9apykbbBhK+4CmbZS94zMxmugw2E2VX6iB0b2PKKY0JfYr/QfXh9P29YnWAbymaXJVpgbHVpTVw==
   dependencies:
-<<<<<<< HEAD
     "@material-ui/core" "^4.12.3"
     "@material-ui/icons" "^4.9.1"
     "@material-ui/lab" "^4.0.0-alpha.53"
     "@researchgate/react-intersection-observer" "^1.0.0"
-=======
-    brace-expansion "^2.0.1"
-
-minimist@^1.2.0, minimist@^1.2.6:
-  version "1.2.8"
-  resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.8.tgz#c1a464e7693302e082a075cee0c057741ac4772c"
-  integrity sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==
-
-"minipass@^5.0.0 || ^6.0.2 || ^7.0.0", minipass@^7.1.2:
-  version "7.1.2"
-  resolved "https://registry.yarnpkg.com/minipass/-/minipass-7.1.2.tgz#93a9626ce5e5e66bd4db86849e7515e92340a707"
-  integrity sha512-qOOzS1cBTWYF4BH8fVePDBOO9iptMnGUEZwNc/cMWnTV2nVLZ7VoNWEPHkYczZA0pdoA7dl6e7FL659nX9S2aw==
-
-mirador-dl-plugin@1.0.0-rc.1:
-  version "1.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-1.0.0-rc.1.tgz#eb3d673479e157fc38d82fd89e4b0aecbedf42f6"
-  integrity sha512-MGRJTPKqAzgzJAs5Ei12gn8bpqunamTQn3Xf/dC0L7Qk/nZ8Y5wdGCRV10+InM1twLSWSb7P48ExQjddX7FO1A==
-
-mirador-image-tools@1.0.0-rc.1:
-  version "1.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/mirador-image-tools/-/mirador-image-tools-1.0.0-rc.1.tgz#6acae5e771b549882fd3a013bc0e467c3790dbb0"
-  integrity sha512-hMIO7j9GRnh3f+8o9iF+G/oNjuonD4H1egaDRHJh9rFmVAYjXuf9A609JcnhFULaCL2p/Pv9dbaWJLfntsx6fA==
-
-mirador-share-plugin@1.0.0-rc.1:
-  version "1.0.0-rc.1"
-  resolved "https://registry.yarnpkg.com/mirador-share-plugin/-/mirador-share-plugin-1.0.0-rc.1.tgz#3e9270a47dd71f173fc5f814afd499183d79fc02"
-  integrity sha512-to5Ewz1VzzWdUHn070VXixef0qQY5hl5SeXO1SuqhZ64bVU9cZCjG8pG3lCmzultI4CzNLi1xGS6rrudFq1juQ==
-  dependencies:
-    copy-to-clipboard "^3.3.0"
-    notistack "^3.0.1"
-
-"mirador@file:./vendor/javascript/mirador-4.0.0-rc.1.pluginTarget.tgz":
-  version "4.0.0-rc.1"
-  resolved "file:./vendor/javascript/mirador-4.0.0-rc.1.pluginTarget.tgz#f734077ded3a969427754c792f5e44f12fa1781b"
-  dependencies:
-    "@custom-react-hooks/use-element-size" "^1.5.1"
-    "@emotion/cache" "^11.11.0"
-    "@hello-pangea/dnd" "^16.0.1 || ^17.0.0 || ^18.0.0"
-    "@mui/icons-material" "^7.0.0"
-    "@mui/utils" "^7.0.0"
-    "@mui/x-tree-view" "^7.25.0"
-    "@react-aria/live-announcer" "^3.1.2"
-    "@redux-devtools/extension" "^3.3.0"
->>>>>>> cabc446b (Temporarily use local mirador)
     classnames "^2.2.6"
     clsx "^1.0.4"
     deepmerge "^4.2.2"
