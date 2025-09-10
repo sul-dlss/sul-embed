@@ -38,7 +38,7 @@ module Embed
       def canvas_id
         return if embed_request.canvas_id.blank?
 
-        if canvases.any? { |canvas| canvas['@id'] == embed_request.canvas_id }
+        if canvases.any? { |canvas| (canvas['@id'] || canvas['id']) == embed_request.canvas_id }
           embed_request.canvas_id
         elsif cocinafied_canvases? && embed_request.canvas_id.exclude?('cocina-fileSet')
           cocinafied_canvas_id
@@ -63,12 +63,12 @@ module Embed
       private
 
       def canvases
-        manifest_json.fetch('sequences', []).pick('canvases')
+        manifest_json.fetch('sequences', []).pick('canvases') || manifest_json.fetch('items', [])
       end
 
       def cocinafied_canvases?
         canvases.any? do |canvas|
-          canvas['@id'].include?('cocina-fileSet')
+          (canvas['id'] || canvas['@id']).include?('cocina-fileSet')
         end
       end
 
@@ -77,7 +77,7 @@ module Embed
 
         potential_canvas_id = base + "/cocina-fileSet-#{purl_object.druid}-#{resource_id}"
 
-        potential_canvas_id if canvases.any? { |canvas| canvas['@id'] == potential_canvas_id }
+        potential_canvas_id if canvases.any? { |canvas| (canvas['id'] || canvas['@id']) == potential_canvas_id }
       end
     end
   end
