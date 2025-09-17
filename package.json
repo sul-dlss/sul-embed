@@ -25,7 +25,7 @@
     "@mui/system": "^7.0.0",
     "dnd-core": "^16.0.1",
     "leaflet": "^1.9.3",
-    "mirador": "4.0.0-rc.2",
+    "mirador": "4.0.0-rc.4",
     "mirador-dl-plugin": "1.0.0-rc.1",
     "mirador-image-tools": "1.0.0-rc.1",
     "mirador-share-plugin": "1.0.0-rc.1",
