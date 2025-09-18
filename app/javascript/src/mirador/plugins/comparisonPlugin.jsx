@@ -5,20 +5,18 @@
  *  */ 
 import CompareDialog from '@/mirador/components/CompareDialog.jsx';
 import CompareMenuItem from '@/mirador/components/CompareMenuItem.jsx';
-import AllowTopBarClose from '@/mirador/components/AllowTopBarClose.jsx';
-import AllowDragAndDrop from '@/mirador/components/AllowDragAndDrop.jsx';
 import { addWindow, getWindow, updateWindow } from 'mirador';
 
 export default [
   {
-    component: AllowTopBarClose,
+    component: function AllowTopBarClose({ targetProps: props, TargetComponent }) {
+      // Wrap the target WindowTopBar in order to set `allowClose`
+      // This will show the 'x' close button for non-main comparison windows,
+      // i.e. windows that have been added for comparison.
+      return <TargetComponent {...props} allowClose={props.windowId !== 'main'} />;
+    },
     mode: 'wrap',
     target: 'WindowTopBar',
-  },
-  {
-    component: AllowDragAndDrop,
-    mode: 'wrap',
-    target: 'Workspace',
   },
   {
     component: CompareMenuItem,

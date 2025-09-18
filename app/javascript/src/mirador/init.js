@@ -6,7 +6,7 @@ import { miradorDownloadPlugin, miradorDownloadDialogPlugin } from 'mirador-dl-p
 import { sulTheme, viewerViews, defaultWorkspace } from '@/mirador/config.js';
 import { handleViewerPostMessage } from '@/mirador/postMessageHandler.js';
 
-import comparisonPlugin from '@/mirador/plugins/comparisonPlugin.js';
+import comparisonPlugin from '@/mirador/plugins/comparisonPlugin.jsx';
 import analyticsPlugin from '@/mirador/plugins/analyticsPlugin.js';
 import xywhPlugin from '@/mirador/plugins/xywhPlugin.js';
 import customMenuPlugin from '@/mirador/plugins/customMenuPlugin.jsx';
@@ -19,7 +19,7 @@ export default {
 
     const showAttribution = data.showAttribution === 'true';
     const hideWindowTitle = data.hideTitle === 'true';
-    const enableComparison = data.enableComparison === 'true';
+    const enableComparison = 'true';
 
     // Determine which sidebar panel to show
     let sideBarPanel = 'info';
