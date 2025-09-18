@@ -1,9 +1,8 @@
 <div class="sul-embed-container" id='sul-embed-object' hidden>
-  <div class='sul-embed-body sul-embed-m3'>
     <div
-      id='sul-embed-m3'
-      class='m3'
-      data-m3-uri='<%= viewer.manifest_json_url %>'
+      id='sul-embed-mirador'
+      class='mirador'
+      data-mirador-uri='<%= viewer.manifest_json_url %>'
       data-viewer-config='<%= viewer.iiif_initial_viewer_config %>'
       data-canvas-id='<%= viewer.canvas_id %>'
       data-canvas-index='<%= viewer.canvas_index %>'
@@ -15,6 +14,9 @@
       data-suggested-search='<%= viewer.suggested_search %>'>
     </div>
 
-    <%= javascript_pack_tag('m3') %>
-  </div>
+    <% if Rails.env.development? %>
+      <%= vite_react_refresh_tag %>
+    <% end %>
+    <%= vite_javascript_tag 'mirador' %>
+
 </div>

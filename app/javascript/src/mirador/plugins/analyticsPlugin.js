@@ -1,8 +1,7 @@
 import {
   all, put, select, takeEvery,
 } from 'redux-saga/effects'
-import ActionTypes from 'mirador/dist/es/src/state/actions/action-types.js'
-import { getManifest, getCompanionWindow } from 'mirador/dist/es/src/state/selectors/index.js'
+import { ActionTypes, getManifest, getCompanionWindow } from 'mirador';
 
 function* onSetCanvas({ type, windowId, canvasId }) {
   const { id: manifestId } = yield select(getManifest, { windowId })

@@ -31,7 +31,7 @@ set :log_level, :info
 set :linked_files, %w(config/honeybadger.yml config/newrelic.yml)
 
 # Default value for linked_dirs is []
-set :linked_dirs, %w(config/settings log node_modules tmp/pids tmp/cache tmp/sockets vendor/bundle public/packs public/system)
+set :linked_dirs, %w(config/settings log node_modules tmp/pids tmp/cache tmp/sockets vendor/bundle public/vite public/system)
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }

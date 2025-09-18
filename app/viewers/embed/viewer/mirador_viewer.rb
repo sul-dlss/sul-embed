@@ -2,16 +2,16 @@
 
 module Embed
   module Viewer
-    class M3Viewer < CommonViewer
+    class MiradorViewer < CommonViewer
       delegate :search, :suggested_search, :cdl_hold_record_id, :iiif_initial_viewer_config,
                to: :embed_request
 
       def component
-        M3Component
+        MiradorComponent
       end
 
       def stylesheet
-        'm3.css'
+        'mirador.css'
       end
 
       delegate :manifest_json_url, to: :@purl_object
@@ -34,7 +34,7 @@ module Embed
       # - ensure it exists in the manifest (if they don't, mirador puts the user into a weird initial state)
       # - rewrite pre-cocina canvas ids to post-cocina canvas ids as appropriate
       #        (to avoid breaking embeds that used to work)
-      # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       def canvas_id
         return if embed_request.canvas_id.blank?
 
@@ -50,7 +50,7 @@ module Embed
           nil
         end
       end
-      # rubocop:enable Metrics/AbcSize
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
       def canvas_index
         if canvas_id
