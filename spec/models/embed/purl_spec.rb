@@ -51,8 +51,8 @@ RSpec.describe Embed::Purl do
     end
   end
 
-  describe '#iiif_v3_manifest_url' do
-    subject { purl.iiif_v3_manifest_url }
+  describe '#manifest_json_url' do
+    subject { purl.manifest_json_url }
 
     context 'when item lacks a version id' do
       let(:purl) { described_class.new(druid: 'dz382hy7753') }
@@ -192,14 +192,6 @@ RSpec.describe Embed::Purl do
       expect(purl.hierarchical_contents).to be root_dir
       expect(Embed::HierarchicalContents).to have_received(:contents).with(purl.contents)
     end
-  end
-
-  describe '#manifest_json_url' do
-    subject { purl.manifest_json_url }
-
-    let(:purl) { described_class.new(druid: '12345') }
-
-    it { is_expected.to eq 'https://purl.stanford.edu/12345/iiif/manifest' }
   end
 
   describe '#manifest_json_response' do
