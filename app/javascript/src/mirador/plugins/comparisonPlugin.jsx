@@ -8,14 +8,16 @@ import CompareMenuItem from '@/mirador/components/CompareMenuItem.jsx';
 import { addWindow, getWindow, updateWindow } from 'mirador';
 
 export default [
-  // {
-  //   // Wrap the target Workspace in order to allow drag and drop of manifests 
-  //   component: function AllowDragAndDrop({ targetProps: props, TargetComponent }) {
-  //     return <TargetComponent {...props} classes={{ ...props.classes, workspaceWithControlPanel: '' }} />;
-  //   },
-  //   mode: 'wrap',
-  //   target: 'Workspace',
-  // },
+  {
+    // Wrap the target Workspace in order to allow drag and drop of manifests 
+    // TODO: explore whether wrapping Workspace is still needed in Mirador 4
+    // Believe we can delete this first plugin object
+    component: function AllowDragAndDrop({ targetProps: props, TargetComponent }) {
+      return <TargetComponent {...props} classes={{ ...props.classes, workspaceWithControlPanel: '' }} />;
+    },
+    mode: 'wrap',
+    target: 'Workspace',
+  },
   {
     component: function AllowTopBarClose({ targetProps: props, TargetComponent }) {
       // Wrap the target WindowTopBar in order to set `allowClose`
