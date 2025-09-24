@@ -21,7 +21,7 @@ module Embed
       when 'geo'
         Embed::Viewer::Geo
       when 'image', 'manuscript', 'map', 'book'
-        Embed::Viewer::M3Viewer
+        Embed::Viewer::MiradorViewer
       when 'document'
         Embed::Viewer::DocumentViewer
       when '3d'

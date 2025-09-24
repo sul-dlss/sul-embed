@@ -10,15 +10,15 @@
         bottom: 3px;
       }
     </style>
-    <%= stylesheet_link_tag 'm3.css' %>
+    <%= stylesheet_link_tag 'mirador.css' %>
   </head>
   <body>
     <div class="sul-embed-container" id='sul-embed-object'>
-      <div class='sul-embed-body sul-embed-m3' style="max-height:100%;">
+      <div class='sul-embed-body sul-embed-mirador' style="max-height:100%;">
         <div
-          id='sul-embed-m3'
-          class='m3'
-          data-m3-uri='<%= @embed_request.url %>'
+          id='sul-embed-mirador'
+          class='mirador'
+          data-mirador-uri='<%= @embed_request.url %>'
           data-canvas-id='<%= @embed_request.canvas_id %>'
           data-canvas-index='<%= @embed_request.canvas_index %>'
           data-hide-title='<%= @embed_request.hide_title? %>'
@@ -29,8 +29,10 @@
           data-viewer-config='<%= @embed_request.iiif_initial_viewer_config %>'
           style='height:100%; width:100%'>
         </div>
-
-        <%= javascript_pack_tag('m3') %>
+        <% if Rails.env.development? %>
+          <%= vite_react_refresh_tag %>
+        <% end %>
+        <%= vite_javascript_tag 'mirador' %>
       </div>
     </div>
     <%= render 'analytics' %>

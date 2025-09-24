@@ -32,7 +32,7 @@ RSpec.describe Embed::ViewerFactory do
     let(:purl) { Embed::Purl.new(type: 'image', contents: [build(:resource)]) }
 
     context 'when the request has a type' do
-      it { is_expected.to be_a Embed::Viewer::M3Viewer }
+      it { is_expected.to be_a Embed::Viewer::MiradorViewer }
     end
   end
 end
