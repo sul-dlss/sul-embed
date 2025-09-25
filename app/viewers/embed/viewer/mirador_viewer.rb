@@ -3,7 +3,7 @@
 module Embed
   module Viewer
     class MiradorViewer < CommonViewer
-      delegate :search, :suggested_search, :cdl_hold_record_id, :iiif_initial_viewer_config,
+      delegate :search, :suggested_search, :iiif_initial_viewer_config,
                to: :embed_request
 
       def component
