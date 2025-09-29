@@ -35,8 +35,19 @@ const onViewportChange = (event) => {
     }
     full_image = visible_pages.join("*")
   } else {
-    const imageBounds = viewport.viewportToImageRectangle(viewport.getBounds());
-    full_image = convertToRegionUrl(imageBounds, viewport.viewer.source._id)
+    try {
+      const imageBounds = viewport.viewportToImageRectangle(viewport.getBounds());
+      const source = viewport.viewer.source;
+
+      if (source && source._id) {
+        full_image = convertToRegionUrl(imageBounds, source._id);
+      } else {
+        throw new Error('Missing viewer source or _id');
+      }
+    } catch (err) {
+      console.error(`Error in xywhPlugin onViewPortChange: ${err.message}`, err);
+      return;
+    }
   }
   viewer.element.parentNode.setAttribute('data-full-image', full_image);
 };

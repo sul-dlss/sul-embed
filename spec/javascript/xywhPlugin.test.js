@@ -69,9 +69,49 @@ describe('xywhPlugin', () => {
     );
   });
 
+  it('handles missing source and does not throw to window.onerror', () => {
+    let animationFinishHandler;
+
+    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+    viewerMock.addHandler.mockImplementation((eventName, handler) => {
+      if (eventName === 'animation-finish') animationFinishHandler = handler;
+    });
+
+    render(<XywhPluginComponent viewer={viewerMock} windowId="abc123" />);
+
+    // Simulate the animation-finish event with missing source
+    const mockEvent = {
+      eventSource: {
+        element: { parentNode },
+        viewport: {
+          getBounds: () => ({ x: 0, y: 0, width: 100, height: 200 }),
+          viewportToImageRectangle: () => ({ x: 0, y: 0, width: 100, height: 200 }),
+          viewer: {
+            source: null, // Missing source
+            world: { getItemCount: () => 1 },
+          },
+        },
+      },
+    };
+
+    expect(() => animationFinishHandler(mockEvent)).not.toThrow();
+
+    expect(consoleErrorSpy).toHaveBeenCalledWith(
+      expect.stringContaining('Error in xywhPlugin onViewPortChange'),
+      expect.any(Error)
+    );
+
+    // Ensure no data-full-image attribute was set
+    expect(parentNode.hasAttribute('data-full-image')).toBe(false);
+
+    consoleErrorSpy.mockRestore();
+  });
+
+
   it('removes animation-finish handler on unmount', () => {
     const { unmount } = render(<XywhPluginComponent viewer={viewerMock} windowId="abc123" />);
     unmount();
     expect(viewerMock.removeHandler).toHaveBeenCalledWith('animation-finish', expect.any(Function));
-  });
+  });  
 });
