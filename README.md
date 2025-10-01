@@ -106,3 +106,7 @@ https://github.com/sul-dlss/sul-embed/blob/99ac3d3e471f30518e4e28bdd13afc31e7ffa
 ## Updating language tags
 
 sul-embed uses the IANA language subtag registry to resolve user-provided file language codes (e.g., 'en-US') onto user-friendly labels (e.g., "English"), primarily for captions in the media player. This file lives on the web and changes every so often. We cache this file in `vendor/data/language-subtag-registry`, and it can be updated via `rake update_language_tags`.
+
+## Testing javascript
+
+We have `vitest` installed for javascript testing. These tests can be viewed in `spec/javascript`. The setup file is `spec/javascript/setupVitest.js`. These tests could be expanded but for now minimally test our customizations/plugins. These tests do not currently run in CI but can be run locally with `npx vitest`. 
