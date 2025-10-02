@@ -7,9 +7,9 @@
     <td role="gridcell"></td>
   </tr>
 <% end %>
-<% dirs.each_with_index do |dir, index| %>
-  <%= render Embed::File::DirRowComponent.new(viewer: viewer, dir: dir, pos_in_set: index + 1, set_size: child_set_size, level: level + 1)%>
-<% end %>
 <% files.each_with_index do |file, index| %>
   <%= render Embed::File::FileRowComponent.new(viewer: viewer, file: file, pos_in_set: dirs.size + index + 1, set_size: child_set_size, level: level + 1)%>
+<% end %>
+<% dirs.each_with_index do |dir, index| %>
+  <%= render Embed::File::DirRowComponent.new(viewer: viewer, dir: dir, pos_in_set: index + 1, set_size: child_set_size, level: level + 1)%>
 <% end %>
