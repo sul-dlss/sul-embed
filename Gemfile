@@ -16,7 +16,6 @@ gem 'faraday', '~> 2'
 gem 'faraday-follow_redirects'
 
 gem 'config'
-gem 'dor-rights-auth'
 gem 'nokogiri', '>= 1.7.1'
 
 group :development, :test do
