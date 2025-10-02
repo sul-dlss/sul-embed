@@ -24,7 +24,12 @@ export default class extends Controller {
     } else {
       action = this.openLeftDrawer()
     }
-    action.then(() => button.disabled = false) // reenable the button
+    action.then(() => {
+      button.disabled = false // reenable the button
+      this.leftDrawerTarget.addEventListener('transitionend', () => {
+        window.dispatchEvent(new CustomEvent('drawer-toggled')) // send event for table stripes
+      });
+    })
   }
 
   openLeftDrawer() {

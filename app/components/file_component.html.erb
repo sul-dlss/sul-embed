@@ -25,7 +25,7 @@
 
   <% component.with_body do %>
     <% # background-color: white must be set for full screen when the browser prefers dark mode %>
-    <div data-action="resize@window->tree#updateStripesHeight" style="overflow-y: scroll; flex-basis: 100%;">
+    <div data-action="resize@window->tree#updateStripes drawer-toggled@window->tree#updateStripes" style="overflow-y: scroll; flex-basis: 100%;">
       <table class="sul-embed-treegrid" role="treegrid" aria-label="File list" data-action="keydown->tree#navigate" data-tree-target="table">
         <colgroup>
           <col class="sul-embed-treegrid-name">
