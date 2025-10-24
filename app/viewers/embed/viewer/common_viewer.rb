@@ -22,7 +22,7 @@ module Embed
       end
 
       def width
-        embed_request.maxwidth
+        embed_request.maxwidth || default_width
       end
 
       def external_url
@@ -95,8 +95,12 @@ module Embed
 
       private
 
+      def default_width
+        '100%'
+      end
+
       def default_height
-        '31.25rem' # equivalent to 500px at root font-size of 16px
+        '500px'
       end
     end
   end
