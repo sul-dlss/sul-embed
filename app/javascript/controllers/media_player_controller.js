@@ -8,6 +8,7 @@ export default class extends Controller {
 
   // Every media player receives every auth-success event
   initializeVideoJSPlayer(evt) {
+    this.updatePoster()
     console.debug("evt.detail.fileUri: ", evt.detail.fileUri, " this.uriValue:", this.uriValue)
     // We only take action if this event is for this element
     if (evt.detail.fileUri != this.uriValue)
@@ -60,6 +61,16 @@ export default class extends Controller {
     if (playerObject) {
       playerObject.currentTime(event.detail)
     }
+  }
+
+  updatePoster() {
+    if(!this.videoElement().dataset.fallbackPoster) return;
+
+    const fallbackPoster = this.videoElement().dataset.fallbackPoster;
+    delete this.videoElement().dataset.fallbackPoster;
+    if (fallbackPoster.includes('locked')) return;
+
+    this.videoElement().setAttribute('poster', fallbackPoster)
   }
 
   writeToken({fileUri, location}) {
