@@ -22,10 +22,16 @@ RSpec.describe IframeComponent, type: :component do
     )
   end
 
-  describe 'the style' do
-    subject { iframe['style'] }
+  describe 'the width' do
+    subject { iframe['width'] }
 
-    it { is_expected.to eq 'height: 555px; width: 666px;' }
+    it { is_expected.to eq '666px' }
+  end
+
+  describe 'the height' do
+    subject { iframe['height'] }
+
+    it { is_expected.to eq '555px' }
   end
 
   it 'adds the title to html' do
