@@ -58,7 +58,7 @@ gem 'newrelic_rpm', group: :production
 # Use okcomputer to monitor the application
 gem 'okcomputer'
 
-gem 'vite_rails'
+gem 'vite_rails', '3.0.19'
 
 gem 'view_component', '~> 3.10'
 
