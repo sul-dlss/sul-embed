@@ -55,7 +55,7 @@
     "eslint-plugin-testing-library": "^6.2.0",
     "happy-dom": "^18.0.1",
     "vite": "^5.0.0",
-    "vite-plugin-ruby": "^5.1.1",
+    "vite-plugin-ruby": "5.1.1",
     "vitest": "^3.0.5",
     "vitest-fetch-mock": "^0.4.2"
   }
