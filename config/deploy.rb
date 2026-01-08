@@ -42,5 +42,8 @@ set :linked_dirs, %w(config/settings log node_modules tmp/pids tmp/cache tmp/soc
 # honeybadger_env otherwise defaults to rails_env
 set :honeybadger_env, fetch(:stage)
 
+# See https://github.com/capistrano/bundler/pull/137
+set :bundle_version, 4
+
 # update shared_configs before restarting app
 before 'deploy:restart', 'shared_configs:update'
