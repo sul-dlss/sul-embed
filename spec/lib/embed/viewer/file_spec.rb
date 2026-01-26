@@ -28,7 +28,7 @@ RSpec.describe Embed::Viewer::File do
 
     context 'when there is no requested maxheight' do
       it 'is the default height' do
-        expect(file_viewer.height).to eq '31.25rem'
+        expect(file_viewer.height).to eq '500px'
       end
     end
   end
