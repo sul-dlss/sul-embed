@@ -44,6 +44,17 @@
       background: url("stanford_s.svg") no-repeat;
       background-position: bottom left;
       padding-right: 20px;
+
+      .label-text {
+        display: -webkit-box;
+        height: 2.5rem;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 150px;
+      }
+
       &.text {
         height: calc(
           100% - 0.75rem
