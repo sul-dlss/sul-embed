@@ -176,6 +176,12 @@ export default class extends Controller {
   }
 
   highlightCue(evt) {
+    // This method is called when the time-updated event is triggered
+    // In Chrome, the event may be called even before the player is loaded
+    // If the player has not been loaded, we will return to prevent errors
+    if(!this.loaded)
+      return
+
     const cues = this.currentCues()
 
     // For transcript cue highlighting to take effect, the companion window should be showing the transcript
