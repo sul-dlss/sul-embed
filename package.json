@@ -24,7 +24,6 @@
     "@mui/material": "^7.0.0",
     "@mui/system": "^7.0.0",
     "dnd-core": "^16.0.1",
-    "leaflet": "^1.9.3",
     "mirador": "^4.0.0",
     "mirador-dl-plugin": "^1.0.0",
     "mirador-image-tools": "^1.0.0",

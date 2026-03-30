@@ -41,6 +41,5 @@ pin "openseadragon", to: "https://ga.jspm.io/npm:openseadragon@4.1.0/build/opens
 pin "fscreen", to: "https://ga.jspm.io/npm:fscreen@1.2.0/dist/fscreen.cjs.js"
 pin "@google/model-viewer", to: "https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer-module.min.js"
 pin "three", to: "https://ga.jspm.io/npm:three@0.163.0/build/three.module.js"
-pin "leaflet" # @1.9.4
-pin "Leaflet.Control.Custom"
 pin "popper", to: 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.js'
+pin "maplibre-gl" # @5.21.1
