@@ -99,6 +99,10 @@ module Embed
         mimetype == 'application/pdf'
       end
 
+      def geo_json?
+        mimetype == 'application/geo+json'
+      end
+
       def image?
         mimetype =~ %r{image/jp2}i
       end

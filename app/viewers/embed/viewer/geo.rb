@@ -22,11 +22,15 @@ module Embed
         options = {
           id: 'sul-embed-geo-map',
           style: 'flex: 1',
-          'data-bounding-box' => @purl_object.bounding_box.to_s
+          'data-bounding-box' => @purl_object.bounding_box.to_s,
+          'data-geo-viewer-colors' => Settings.geo_viewer_colors.to_json
         }.compact_blank
-        options['data-wms-url'] = Settings.geo_wms_url if @purl_object.public?
-        options['data-index-map'] = index_map.file_url if index_map?
-        options['data-geo-viewer-colors'] = Settings.geo_viewer_colors.to_json
+
+        if index_map?
+          options['data-index-map'] = index_map.file_url
+        elsif geo_json?
+          options['data-geo-json'] = geo_json.file_url
+        end
         options
       end
 
@@ -40,6 +44,14 @@ module Embed
 
       def index_map?
         index_map.present?
+      end
+
+      def geo_json?
+        geo_json.present?
+      end
+
+      def geo_json
+        purl_object.contents.map(&:files).flatten.find(&:geo_json?)
       end
 
       # Returns true or false whether the viewer should display the Download All

@@ -60,14 +60,40 @@ export default class extends Controller {
     )
   }
 
+  // Are we dealing with GeoJSON?
+  isGeoJSON() {
+    return (
+      this.isDefined(this.dataAttributes.geoJson) &&
+      this.dataAttributes.geoJson !== ""
+    )
+  }
+
   addVisualizationLayer() {
     if (this.isIndexMap()) {
       fetch(this.dataAttributes.indexMap)
         .then(response => response.json())
         .then(data => this.renderIndexMap(data))
+    } else if (this.isGeoJSON()) {
+      fetch(this.dataAttributes.geoJson)
+        .then(response => response.json())
+        .then(data => this.renderGeoJSON(data))
     } else {
       this.renderReplacementRectangle()
     }
+  }
+
+  renderGeoJSON(data) {
+    console.log("adding geojson data")
+    this.map.addSource("geo-json-source", { type: "geojson", data: data })
+    this.map.addLayer({
+      id: "geo-json-fill",
+      type: "circle",
+      source: "geo-json-source",
+      paint: {
+        "circle-color": "#4264fb",
+        "circle-radius": 8
+      }
+    })
   }
 
   renderIndexMap(data) {
