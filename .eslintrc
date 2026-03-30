@@ -17,7 +17,7 @@
     "page": true,
     "vi": true
   },
-  "ignorePatterns": ["vendor/**/*.*", "public/**/*.*", "tmp/**/*.*"],
+  "ignorePatterns": ["vendor/**/*.*", "public/**/*.*", "tmp/**/*.*", "app/javascript/controllers/**/*.*"],
 
   "rules": {
     "import/prefer-default-export": "off",
@@ -64,6 +64,6 @@
         "allowSamePrecedence": false
       }
     ],
-    
+
   }
 }
