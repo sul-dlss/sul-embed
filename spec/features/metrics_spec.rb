@@ -48,7 +48,7 @@ RSpec.describe 'metrics tracking', :js do
     end
   end
 
-  describe 'leaflet viewer' do
+  describe 'geo viewer' do
     let(:druid) { 'cz128vq0535' }
     let(:purl) { build(:purl, :geo, druid:) }
 
