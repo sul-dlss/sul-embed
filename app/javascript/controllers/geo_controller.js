@@ -6,6 +6,17 @@ export default class extends Controller {
     this.el = document.getElementById("sul-embed-geo-map")
     this.dataAttributes = this.el.dataset
 
+    this.map = this.createMap()
+
+    this.map.addControl(new maplibregl.NavigationControl(), "top-left")
+    this.map.on("load", () => this.addVisualizationLayer())
+  }
+
+  disconnect() {
+    this.map?.remove()
+  }
+
+  createMap() {
     // Bounding box is stored in Leaflet format: [[south, west], [north, east]]
     // MapLibre fitBounds expects: [[west, south], [east, north]]
     const bb = JSON.parse(this.dataAttributes.boundingBox)
@@ -14,39 +25,19 @@ export default class extends Controller {
       [bb[1][1], bb[1][0]]
     ]
 
-    const attribution =
-      '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-      '&copy; <a href="http://carto.com/attributions">Carto</a>'
+    const prefersDark =
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
 
-    this.map = new maplibregl.Map({
+    const style = prefersDark
+      ? "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
+      : "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+
+    return new maplibregl.Map({
       container: "sul-embed-geo-map",
-      style: {
-        version: 8,
-        sources: {
-          "carto-source": {
-            type: "raster",
-            tiles: [
-              "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-              "https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-              "https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png",
-              "https://d.basemaps.cartocdn.com/light_all/{z}/{x}/{y}@2x.png"
-            ],
-            tileSize: 256,
-            attribution,
-            maxzoom: 19
-          }
-        },
-        layers: [{ id: "carto-layer", type: "raster", source: "carto-source" }]
-      },
+      style: style,
       bounds: initialBounds
     })
-
-    this.map.addControl(new maplibregl.NavigationControl(), "top-left")
-    this.map.on("load", () => this.addVisualizationLayer())
-  }
-
-  disconnect() {
-    this.map?.remove()
   }
 
   isDefined(obj) {
