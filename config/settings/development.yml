@@ -101,18 +101,22 @@ sandbox:
     - label: location-restricted music, no download
       purl: yv090xk3108
   geo:
-    - label: Vector - public
-      purl: cz128vq0535
-    - label: Vector - restricted
-      purl: fp756wn9369
-    - label: Raster - public
-      purl: tg926kp6619
-    - label: Raster - public (crosses 180 longitude)
-      purl: gk831nh0251
-    - label: Raster - restricted (stanford only)
-      purl: sf815vr1246
+    # - label: Vector - public
+    #   purl: cz128vq0535
+    # - label: Vector - restricted
+    #   purl: fp756wn9369
+    # - label: Raster - public
+    #   purl: tg926kp6619
+    # - label: Raster - public (crosses 180 longitude)
+    #   purl: gk831nh0251
+    # - label: Raster - restricted (stanford only)
+    #   purl: sf815vr1246
     - label: Index map
       purl: kh860qj3406
+    - label: PMTiles
+      purl: hf224mw4004
+    - label: GeoJSON (slow to load)
+      purl: qp917dm2243
     - label: with jpg/zip
       purl: bh152hk2665
     - label: not released to EarthWorks
