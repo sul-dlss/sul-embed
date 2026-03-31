@@ -95,6 +95,10 @@ module Embed
         role == 'transcription'
       end
 
+      def pmtiles?
+        mimetype == 'application/vnd.pmtiles'
+      end
+
       def pdf?
         mimetype == 'application/pdf'
       end
