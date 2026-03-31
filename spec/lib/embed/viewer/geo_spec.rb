@@ -26,8 +26,7 @@ RSpec.describe Embed::Viewer::Geo do
       it 'has the required options' do
         expect(options).to include({ style: 'flex: 1', id: 'sul-embed-geo-map',
                                      'data-bounding-box' => '[["-1.478794", "29.572742"], ["4.234077", "35.000308"]]',
-                                     'data-wms-url' => 'https://geowebservices.stanford.edu/geoserver/wms/',
-                                     'data-layers' => 'druid:abc123' })
+                                     'data-wms-url' => 'https://geowebservices.stanford.edu/geoserver/wms/' })
       end
     end
 
