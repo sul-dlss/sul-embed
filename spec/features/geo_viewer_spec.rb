@@ -112,6 +112,7 @@ RSpec.describe 'geo viewer', :js do
         it 'shows the geojson' do
           expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
           expect(page).to have_css "[data-geo-json=\"https://stacks.stanford.edu/file/qp917dm2243/#{filename}\"]"
+          expect(page).to have_css '[data-layer-type="circle"]'
         end
       end
     end

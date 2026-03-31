@@ -52,6 +52,7 @@ FactoryBot.define do
       druid { 'cz128vq0535' }
       type { 'geo' }
       bounding_box { [['-1.478794', '29.572742'], ['4.234077', '35.000308']] }
+      layer_type { 'circle' }
       download { 'world' }
       view { 'world' }
       contents { [build(:resource, :file, files: [build(:resource_file, :world_downloadable, :view_world, filename: 'data.zip'), build(:resource_file, :world_downloadable, :view_world, filename: 'data_EPSG_4326.zip')]), build(:resource, :image)] }

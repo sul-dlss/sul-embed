@@ -30,6 +30,7 @@ module Embed
           options['data-index-map'] = index_map.file_url
         elsif geo_json?
           options['data-geo-json'] = geo_json.file_url
+          options['data-layer-type'] = @purl_object.layer_type
         end
         options
       end

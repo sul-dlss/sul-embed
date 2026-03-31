@@ -11,7 +11,7 @@ module Embed
       @version_id = version_id
     end
 
-    def load # rubocop:disable Metrics/MethodLength
+    def load # rubocop:disable Metrics/MethodLength,Metrics/AbcSize
       {
         druid: @druid,
         version_id: @version_id,
@@ -25,6 +25,7 @@ module Embed
         use_and_reproduction:,
         embargo_release_date:,
         bounding_box:,
+        layer_type:,
         archived_site_url:,
         embargoed:,
         location_restriction:,
@@ -89,7 +90,7 @@ module Embed
     end
 
     def bounding_box
-      subjects = Array(json.dig('description', 'geographic')).flat_map do |geo|
+      subjects = geographic.flat_map do |geo|
         geo['subject']
       end
       box_coords = subjects.find { |subj| subj['type'] == 'bounding box coordinates' }
@@ -102,6 +103,33 @@ module Embed
 
     def find_point(points, direction)
       points.find { |point| point['type'] == direction }&.fetch('value')
+    end
+
+    def geographic
+      @geographic ||= Array(json.dig('description', 'geographic'))
+    end
+
+    # Decode the value of geographic form with "type: 'type'", into a MapLibre layer type.
+    # Expected values are:
+    #   Dataset#Polygon: Polygon data
+    #   Dataset#Raster: Raster data
+    #   Dataset#Point: Point data
+    #   Dataset#Line: Line data
+    #   Dataset#LineString: Line data
+    def layer_type # rubocop:disable Metrics/MethodLength
+      forms = geographic.flat_map { |geo| geo['form'] }
+
+      form_type = forms.find { |form| form['type'] == 'type' }
+      return unless form_type
+
+      case form_type['value']
+      when 'Dataset#Point'
+        'circle'
+      when 'Dataset#Line', 'Dataset#LineString'
+        'line'
+      else
+        'fill'
+      end
     end
 
     def embargo_release_date
