@@ -70,7 +70,8 @@ RSpec.describe 'geo viewer', :js do
                                    resource_file
                                  ]),
                            build(:resource, :image)
-                         ])
+                         ],
+                         bounding_box: [['46.666667', '115'], ['50', '120']])
     end
     let(:resource_file) { build(:resource_file, druid: 'mf519gg2738', filename:) }
 
@@ -81,11 +82,15 @@ RSpec.describe 'geo viewer', :js do
         expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
         expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/mf519gg2738/#{filename}\"]"
         expect(page).to have_css('#sidebarContent')
+        within('.sul-embed-geo-sidebar') do
+          expect(page).to have_content('Map Sheet')
+        end
+        expect(page).to match_screenshot('index_map')
       end
     end
 
     context 'when the file has name index_map.geojson' do
-      let(:filename) { 'index_map.geojson' }
+      let(:filename) { 'index_map.geojson' } # NOTE: Not a real file on Stacks
 
       it 'lists the geojson' do
         expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
@@ -105,16 +110,12 @@ RSpec.describe 'geo viewer', :js do
                          ])
     end
 
-    context 'when the file is geojson' do
-      let(:filename) { 'Stanford_Temperature_Model_0km.geojson' }
+    let(:filename) { 'Stanford_Temperature_Model_0km.geojson' }
 
-      describe 'loads viewer' do
-        it 'shows the geojson' do
-          expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
-          expect(page).to have_css "[data-geo-json=\"https://stacks.stanford.edu/file/qp917dm2243/#{filename}\"]"
-          expect(page).to have_css '[data-layer-type="circle"]'
-        end
-      end
+    it 'shows the geojson' do
+      expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
+      expect(page).to have_css "[data-geo-json=\"https://stacks.stanford.edu/file/qp917dm2243/#{filename}\"]"
+      expect(page).to have_css '[data-layer-type="circle"]'
     end
   end
 end
