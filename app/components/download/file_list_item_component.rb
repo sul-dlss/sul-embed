@@ -3,6 +3,7 @@
 module Download
   class FileListItemComponent < ViewComponent::Base
     include Embed::PrettyFilesize
+
     def initialize(file_list_item:, prefer_filename: false, version: nil)
       @file = file_list_item
       @prefer_filename = prefer_filename

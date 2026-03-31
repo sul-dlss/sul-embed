@@ -43,7 +43,7 @@ RSpec.describe FileComponent, type: :component do
     let(:resources) { [build(:resource, :file, druid: 'bc123df456', files: [build(:resource_file, label: 'A File')])] }
 
     it 'returns a versioned stacks url' do
-      link = page.find('tr[data-tree-role="leaf"] a', match: :first, visible: :all)
+      link = page.first('tr[data-tree-role="leaf"] a', visible: :all)
       expect(link['href']).to eq('https://stacks.stanford.edu/v2/file/bc123df4567/version/1/data.zip')
     end
   end
@@ -150,7 +150,7 @@ RSpec.describe FileComponent, type: :component do
       let(:filename) { 'Title_of_the_PDF.pdf' }
 
       it 'leaves correctly formatted filenames alone' do
-        link = page.find('tr[data-tree-role="leaf"] a', match: :first, visible: :all)
+        link = page.first('tr[data-tree-role="leaf"] a', visible: :all)
         expect(link['href']).to eq('https://stacks.stanford.edu/file/bc123df4567/Title_of_the_PDF.pdf')
       end
     end
@@ -159,7 +159,7 @@ RSpec.describe FileComponent, type: :component do
       let(:filename) { '#Title of the PDF.pdf' }
 
       it 'encodes them' do
-        link = page.find('tr[data-tree-role="leaf"] a', match: :first, visible: :all)
+        link = page.first('tr[data-tree-role="leaf"] a', visible: :all)
         expect(link['href']).to eq('https://stacks.stanford.edu/file/bc123df4567/%23Title%20of%20the%20PDF.pdf')
       end
     end

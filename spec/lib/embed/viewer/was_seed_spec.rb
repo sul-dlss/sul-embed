@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Embed::Viewer::WasSeed do
   include WasTimeMapFixtures
+
   let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc123') }
   let(:was_seed_viewer) { described_class.new(request) }
   let(:purl) { build(:purl, :was_seed) }

@@ -28,7 +28,7 @@ RSpec.describe 'file viewer with hierarchy', :js do
     expect(page).to have_css('tr[data-tree-role="leaf"]', count: 2)
     all('tr[aria-expanded="true"]').last.click
     expect(page).to have_css('tr[data-tree-role="leaf"]', count: 1)
-    all('tr[data-tree-role="branch"][aria-expanded="false"]').first.click
+    first('tr[data-tree-role="branch"][aria-expanded="false"]').click
     expect(page).to have_css('tr[data-tree-role="leaf"]', count: 2)
   end
 end

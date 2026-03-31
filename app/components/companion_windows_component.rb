@@ -33,7 +33,7 @@ class CompanionWindowsComponent < ViewComponent::Base
     # for Document viewer, do not render the content panel if there only one item
     # we use contents because resource_files is a flat map of files that includes
     # supporting content (i.e. txt transcript, webvtt) that do not get put in the contents panel
-    media_viewer? || (document_viewer? && contents.count > 1)
+    media_viewer? || (document_viewer? && contents.many?)
   end
 
   def display_download?
