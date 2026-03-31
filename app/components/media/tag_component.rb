@@ -3,6 +3,7 @@
 module Media
   class TagComponent < ViewComponent::Base
     include Embed::StacksImage
+
     with_collection_parameter :resource
     SUPPORTED_MEDIA_TYPES = %i[audio video].freeze
 

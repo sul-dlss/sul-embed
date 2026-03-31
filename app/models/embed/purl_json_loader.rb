@@ -48,7 +48,7 @@ module Embed
 
     private
 
-    def embargoed
+    def embargoed # rubocop:disable Naming/PredicateMethod
       json.dig('access', 'embargo').present?
     end
 

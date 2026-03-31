@@ -33,7 +33,7 @@ module Download
       !viewer.is_a?(Embed::Viewer::File)
     end
 
-    def prefer_filename
+    def prefer_filename # rubocop:disable Naming/PredicateMethod
       viewer.is_a?(Embed::Viewer::Geo) || viewer.is_a?(Embed::Viewer::ModelViewer)
     end
 
