@@ -43,13 +43,9 @@ export default class extends Controller {
 
     this.map.addControl(new maplibregl.NavigationControl(), "top-left")
     this.map.on("load", () => this.addVisualizationLayer())
-
-    this.resizeObserver = new ResizeObserver(() => this.map.resize())
-    this.resizeObserver.observe(this.el)
   }
 
   disconnect() {
-    this.resizeObserver?.disconnect()
     this.map?.remove()
   }
 
