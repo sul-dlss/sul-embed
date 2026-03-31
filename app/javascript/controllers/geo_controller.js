@@ -17,14 +17,6 @@ export default class extends Controller {
   }
 
   createMap() {
-    // Bounding box is stored in Leaflet format: [[south, west], [north, east]]
-    // MapLibre fitBounds expects: [[west, south], [east, north]]
-    const bb = JSON.parse(this.dataAttributes.boundingBox)
-    const initialBounds = [
-      [bb[0][1], bb[0][0]],
-      [bb[1][1], bb[1][0]]
-    ]
-
     const prefersDark =
       window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches
@@ -36,8 +28,24 @@ export default class extends Controller {
     return new maplibregl.Map({
       container: "sul-embed-geo-map",
       style: style,
-      bounds: initialBounds
+      bounds: this.boundingBox()
     })
+  }
+
+  // Bounding box is stored in Leaflet format: [[south, west], [north, east]]
+  // MapLibre fitBounds expects: [[west, south], [east, north]]
+  boundingBox() {
+    if (!this.dataAttributes.boundingBox) {
+      return [
+        [-180, -90],
+        [180, 90]
+      ]
+    }
+    const bb = JSON.parse(this.dataAttributes.boundingBox)
+    return [
+      [bb[0][1], bb[0][0]],
+      [bb[1][1], bb[1][0]]
+    ]
   }
 
   isDefined(obj) {
@@ -154,9 +162,9 @@ export default class extends Controller {
 
   renderReplacementRectangle() {
     // Restricted layer: show the bounding box outline instead of the real layer
-    const bb = JSON.parse(this.dataAttributes.boundingBox)
-    const [south, west] = bb[0]
-    const [north, east] = bb[1]
+    const bb = this.boundingBox()
+    const [west, south] = bb[0]
+    const [east, north] = bb[1]
 
     this.map.addSource("replacement-source", {
       type: "geojson",
