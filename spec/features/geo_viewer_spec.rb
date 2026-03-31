@@ -99,7 +99,7 @@ RSpec.describe 'geo viewer', :js do
       build(:purl, :geo, druid: 'qp917dm2243',
                          contents: [
                            build(:resource, :file, files: [
-                                   build(:resource_file, druid: 'qp917dm2243', filename:, mimetype: 'application/geo+json')
+                                   build(:geojson, druid: 'qp917dm2243', filename:)
                                  ]),
                            build(:resource, :image)
                          ])
@@ -108,12 +108,31 @@ RSpec.describe 'geo viewer', :js do
     context 'when the file is geojson' do
       let(:filename) { 'Stanford_Temperature_Model_0km.geojson' }
 
-      describe 'loads viewer' do
-        it 'shows the geojson' do
-          expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
-          expect(page).to have_css "[data-geo-json=\"https://stacks.stanford.edu/file/qp917dm2243/#{filename}\"]"
-          expect(page).to have_css '[data-layer-type="circle"]'
-        end
+      it 'loads the viewer' do
+        expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
+        expect(page).to have_css "[data-geo-json=\"https://stacks.stanford.edu/file/qp917dm2243/#{filename}\"]"
+        expect(page).to have_css '[data-layer-type="circle"]'
+      end
+    end
+  end
+
+  context 'with pmtiles data' do
+    let(:purl) do
+      build(:purl, :geo, druid: 'hf224mw4004',
+                         contents: [
+                           build(:resource, :file, files: [
+                                   build(:pmtiles, druid: 'hf224mw4004', filename:)
+                                 ]),
+                           build(:resource, :image)
+                         ])
+    end
+
+    context 'when the file is geojson' do
+      let(:filename) { '20231116.pmtiles' }
+
+      it 'loads the viewer' do
+        expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
+        expect(page).to have_css "[data-pmtiles=\"https://stacks.stanford.edu/file/hf224mw4004/#{filename}\"]"
       end
     end
   end

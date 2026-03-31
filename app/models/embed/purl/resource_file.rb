@@ -95,6 +95,14 @@ module Embed
         role == 'transcription'
       end
 
+      def pmtiles?
+        mimetype == 'application/vnd.pmtiles'
+      end
+
+      def geotiff?
+        mimetype.start_with?('image/tiff') && filename.include?('_COG_')
+      end
+
       def pdf?
         mimetype == 'application/pdf'
       end

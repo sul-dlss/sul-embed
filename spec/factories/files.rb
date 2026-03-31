@@ -4,6 +4,8 @@ FactoryBot.define do
   factory :resource_file, class: 'Embed::Purl::ResourceFile' do
     druid { 'bc123df4567' }
     filename { 'data.zip' }
+    mimetype { 'application/zip' }
+
     size { 0 }
 
     trait :document do
@@ -36,6 +38,27 @@ FactoryBot.define do
       druid { 'qf794pv6287' }
       mimetype { 'model/gltf-binary' }
       filename { 'abc_123.glb' }
+      size { 176_218 }
+      world_downloadable
+    end
+
+    factory :geotiff do
+      mimetype { 'image/tiff' }
+      filename { 'cog.tif' }
+      size { 176_218 }
+      world_downloadable
+    end
+
+    factory :geojson do
+      mimetype { 'application/geo+json' }
+      filename { 'file.geojson' }
+      size { 176_218 }
+      world_downloadable
+    end
+
+    factory :pmtiles do
+      mimetype { 'application/vnd.pmtiles' }
+      filename { 'tiles.pmtiles' }
       size { 176_218 }
       world_downloadable
     end

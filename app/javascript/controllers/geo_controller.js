@@ -1,5 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 import "maplibre-gl"
+import * as pmtiles from "pmtiles"
+import "jcoyne-maplibre-cog-protocol"
 
 export default class extends Controller {
   connect() {
@@ -77,6 +79,11 @@ export default class extends Controller {
       fetch(this.dataAttributes.geoJson)
         .then(response => response.json())
         .then(data => this.renderGeoJSON(data))
+    } else if (this.isDefined(this.dataAttributes.pmtiles)) {
+      this.renderPmtiles()
+    } else if (this.isDefined(this.dataAttributes.geotiff)) {
+      this.renderGeoTiff(this.dataAttributes.geotiff)
+      // this.renderGeoTiff("http://localhost:3000/cog.tif")
     } else {
       this.renderReplacementRectangle()
     }
@@ -91,6 +98,64 @@ export default class extends Controller {
       paint: {
         "circle-color": "#4264fb",
         "circle-radius": 8
+      }
+    })
+  }
+
+  async renderGeoTiff(geotiffUrl) {
+    maplibregl.addProtocol("cog", MaplibreCOGProtocol.cogProtocol)
+
+    // getCogMetadata is marked [unstable] in the maplibre-cog-protocol API
+    const metadata = await MaplibreCOGProtocol.getCogMetadata(geotiffUrl)
+    console.log("Bounding box", metadata)
+    if (metadata?.bbox)
+      this.map.fitBounds(metadata.bbox, { padding: 20, animate: false })
+
+    console.log("Current zoom", this.map.getZoom())
+    this.map.addSource("cog-source", {
+      type: "raster",
+      url: `cog://${geotiffUrl}`,
+      tileSize: 256
+    })
+    this.map.addLayer({
+      id: "geo-tiff-fill",
+      type: "raster",
+      source: "cog-source"
+    })
+  }
+
+  renderPmtiles() {
+    const pmtilesUrl = this.dataAttributes.pmtiles
+    // add the PMTiles plugin to the maplibregl global.
+    const protocol = new pmtiles.Protocol()
+    maplibregl.addProtocol("pmtiles", protocol.tile)
+
+    const p = new pmtiles.PMTiles(pmtilesUrl)
+
+    // this is so we share one instance across the JS code and the map renderer
+    protocol.add(p)
+
+    // we first fetch the header so we can get the bounding box of the map.
+    p.getHeader().then(h => {
+      const bounds = new maplibregl.LngLatBounds(
+        [h.minLon, h.minLat],
+        [h.maxLon, h.maxLat]
+      )
+      if (!bounds.isEmpty()) this.map.fitBounds(bounds, { padding: 20 })
+    })
+
+    this.map.addSource("pmtiles-source", {
+      type: "vector",
+      url: `pmtiles://${pmtilesUrl}`
+    })
+    this.map.addLayer({
+      id: "pmtiles-layer",
+      type: "line",
+      source: "pmtiles-source",
+      "source-layer": "landuse",
+      type: "fill",
+      paint: {
+        "fill-color": "steelblue"
       }
     })
   }

@@ -18,7 +18,7 @@ module Embed
       ##
       # Options for the map element tag
       # @return [Hash]
-      def map_element_options
+      def map_element_options # rubocop:disable Metrics/AbcSize
         options = {
           id: 'sul-embed-geo-map',
           style: 'flex: 1',
@@ -31,12 +31,32 @@ module Embed
         elsif geo_json?
           options['data-geo-json'] = geo_json.file_url
           options['data-layer-type'] = @purl_object.layer_type
+        elsif pmtiles?
+          options['data-pmtiles'] = pmtiles.file_url
+        elsif geotiff?
+          options['data-geotiff'] = geotiff.file_url
         end
         options
       end
 
       def self.show_download?
         true
+      end
+
+      def pmtiles?
+        pmtiles.present?
+      end
+
+      def pmtiles
+        purl_object.contents.map(&:files).flatten.find(&:pmtiles?)
+      end
+
+      def geotiff?
+        geotiff.present?
+      end
+
+      def geotiff
+        purl_object.contents.map(&:files).flatten.find(&:geotiff?)
       end
 
       def index_map

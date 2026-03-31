@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="//js.honeybadger.io/v6.5/honeybadger.min.js" type="text/javascript"></script>
+    <!--<script src="//js.honeybadger.io/v6.5/honeybadger.min.js" type="text/javascript"></script>
     <script type="text/javascript">
       Honeybadger.configure({
         apiKey: '<%= Honeybadger.config.get(:api_key) %>',
@@ -9,7 +9,7 @@
         debug: false,
         onerror: true
       });
-    </script>
+    </script>-->
     <%= render 'analytics' %>
     <%= javascript_importmap_tags @embed_response.viewer.importmap if @embed_response.viewer.importmap %>
     <%= stylesheet_link_tag @embed_response.viewer.stylesheet %>

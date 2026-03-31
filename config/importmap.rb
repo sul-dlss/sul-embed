@@ -43,3 +43,6 @@ pin "@google/model-viewer", to: "https://cdn.jsdelivr.net/npm/@google/model-view
 pin "three", to: "https://ga.jspm.io/npm:three@0.163.0/build/three.module.js"
 pin "popper", to: 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.js'
 pin "maplibre-gl" # @5.21.1
+pin "pmtiles" # @4.4.0
+pin "fflate" # @0.8.2
+pin "jcoyne-maplibre-cog-protocol"
