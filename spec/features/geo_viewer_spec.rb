@@ -67,34 +67,52 @@ RSpec.describe 'geo viewer', :js do
                            build(:resource, :file, files: [
                                    build(:resource_file, filename: 'data.zip'),
                                    build(:resource_file, filename: 'data_EPSG_4326.zip'),
-                                   build(:resource_file, druid: 'mf519gg2738', filename:)
+                                   resource_file
+                                 ]),
+                           build(:resource, :image)
+                         ])
+    end
+    let(:resource_file) { build(:resource_file, druid: 'mf519gg2738', filename:) }
+
+    context 'when the file has name index_map.json' do
+      let(:filename) { 'index_map.json' }
+
+      it 'shows the geojson' do
+        expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
+        expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/mf519gg2738/#{filename}\"]"
+        expect(page).to have_css('#sidebarContent')
+      end
+    end
+
+    context 'when the file has name index_map.geojson' do
+      let(:filename) { 'index_map.geojson' }
+
+      it 'lists the geojson' do
+        expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
+        expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/mf519gg2738/#{filename}\"]"
+      end
+    end
+  end
+
+  context 'with geojson data' do
+    let(:purl) do
+      build(:purl, :geo, druid: 'qp917dm2243',
+                         contents: [
+                           build(:resource, :file, files: [
+                                   build(:resource_file, druid: 'qp917dm2243', filename:, mimetype: 'application/geo+json')
                                  ]),
                            build(:resource, :image)
                          ])
     end
 
-    context 'when index map geojson' do
-      let(:filename) { 'index_map.json' }
+    context 'when the file is geojson' do
+      let(:filename) { 'Stanford_Temperature_Model_0km.geojson' }
 
       describe 'loads viewer' do
         it 'shows the geojson' do
           expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
-          expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/mf519gg2738/#{filename}\"]"
-          expect(page).to have_css('#sidebarContent')
-        end
-      end
-    end
-
-    context 'when index_map.geojson' do
-      let(:filename) { 'index_map.geojson' }
-
-      describe 'loads viewer' do
-        it 'lists the geojson' do
-          # This is a hack, but there is no other way (that we know of) to
-          # find this svg element on the page.
-          # We also need to explicitly wait for the JS to run.
-          expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
-          expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/mf519gg2738/#{filename}\"]"
+          expect(page).to have_css "[data-geo-json=\"https://stacks.stanford.edu/file/qp917dm2243/#{filename}\"]"
+          expect(page).to have_css '[data-layer-type="circle"]'
         end
       end
     end

@@ -15,9 +15,9 @@ module Embed
     end
 
     attr_accessor :druid, :version_id, :type, :title, :use_and_reproduction, :copyright, :contents, :constituents,
-                  :collections, :license, :bounding_box, :embargo_release_date, :archived_site_url, :external_url,
-                  :embargoed, :download, :view, :controlled_digital_lending,
-                  :etag, :last_modified, :location_restriction, :restricted_location
+                  :collections, :license, :bounding_box, :layer_type, :embargo_release_date, :archived_site_url,
+                  :external_url, :embargoed, :download, :view, :controlled_digital_lending, :etag, :last_modified,
+                  :location_restriction, :restricted_location
 
     alias embargoed? embargoed
     alias controlled_digital_lending? controlled_digital_lending
