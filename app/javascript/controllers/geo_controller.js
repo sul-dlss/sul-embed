@@ -161,7 +161,7 @@ export default class extends Controller {
       type: "fill",
       source: "index-map-source",
       filter: ["==", ["geometry-type"], "Polygon"],
-      paint: { "fill-color": colorExpr, "fill-opacity": 0.75 }
+      paint: { "fill-color": colorExpr, "fill-opacity": 0.2 }
     })
 
     this.map.addLayer({
