@@ -110,6 +110,10 @@ module Embed
       def image?
         mimetype =~ %r{image/jp2}i
       end
+
+      def cog?
+        mimetype == 'image/tiff; application=geotiff; profile=cloud-optimized'
+      end
     end
   end
 end

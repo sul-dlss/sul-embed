@@ -1,0 +1,1 @@
+import{t as e}from"webgl-device";export{e as WebGLDevice};
