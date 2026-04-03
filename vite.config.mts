@@ -6,7 +6,9 @@ export default defineConfig({
   // RubyPlugin links with the config/vite.json file,
   plugins: [react(), RubyPlugin()],
   define: {
-    'process.env.RAILS_ENV': JSON.stringify(process.env.RAILS_ENV || 'production'),
+    "process.env.RAILS_ENV": JSON.stringify(
+      process.env.RAILS_ENV || "production",
+    ),
   },
   build: {
     emptyOutDir: true,

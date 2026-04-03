@@ -115,6 +115,8 @@ sandbox:
       purl: kh860qj3406
     - label: PMTiles
       purl: jx110jn7648
+    - label: PMTiles
+      purl: hf224mw4004
     - label: GeoJSON points
       purl: nz577hv6134
     - label: GeoJSON lines
@@ -123,6 +125,8 @@ sandbox:
       purl: ch787ty4618
     - label: GeoJSON points (slow to load)
       purl: qp917dm2243
+    - label: Cloud Optimized GeoTIFF
+      purl: vq494qx9344
     - label: with jpg/zip
       purl: bh152hk2665
     - label: not released to EarthWorks

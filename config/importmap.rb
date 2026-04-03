@@ -45,3 +45,13 @@ pin "popper", to: 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/p
 pin "maplibre-gl" # @5.21.1
 pin "pmtiles" # @4.4.0
 pin "fflate" # @0.8.2
+
+# These files are built by https://github.com/sul-dlss/deck-gl-web
+# we have copied them into the `vendor` directory
+pin "deck-gl-web" # renamed from index.js
+pin "decode"
+pin "deflate"
+pin "lerc"
+pin "LercDecode.es"
+pin "webgl-device"
+pin "webgl-device2"

@@ -73,6 +73,13 @@ export default class extends Controller {
     )
   }
 
+  isCOG() {
+    return (
+      this.isDefined(this.dataAttributes.cogUrl) &&
+      this.dataAttributes.cogUrl !== ""
+    )
+  }
+
   addVisualizationLayer() {
     if (this.isIndexMap()) {
       fetch(this.dataAttributes.indexMap)
@@ -84,6 +91,8 @@ export default class extends Controller {
         .then(data => this.renderGeoJSON(data))
     } else if (this.isDefined(this.dataAttributes.pmtiles)) {
       this.renderPmtiles()
+    } else if (this.isCOG()) {
+      this.renderCOG(this.dataAttributes.cogUrl)
     } else {
       this.renderReplacementRectangle()
     }
@@ -111,6 +120,13 @@ export default class extends Controller {
   setupSidebar() {
     this.sidebarControl = new SidebarControl(`${this.el.clientHeight - 100}px`)
     this.map.addControl(this.sidebarControl, "top-right")
+  }
+
+  async renderCOG() {
+    const { CogRenderer } = await import("geo/cog_renderer")
+
+    const renderer = new CogRenderer(this.map, this.dataAttributes.cogUrl)
+    renderer.render()
   }
 
   // Reimplements L.Control.LayerOpacity as a vanilla-JS MapLibre IControl,

@@ -1,0 +1,1 @@
+function e(e){if(e.byteOffset===0&&e.byteLength===e.buffer.byteLength)return e.buffer;let t=new Uint8Array(e.byteLength);return t.set(e),t.buffer}export{e as t};
