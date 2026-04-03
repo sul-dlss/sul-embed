@@ -123,6 +123,8 @@ sandbox:
       purl: ch787ty4618
     - label: GeoJSON points (slow to load)
       purl: qp917dm2243
+    - label: Cloud Optimized GeoTIFF
+      purl: vq494qx9344
     - label: with jpg/zip
       purl: bh152hk2665
     - label: not released to EarthWorks

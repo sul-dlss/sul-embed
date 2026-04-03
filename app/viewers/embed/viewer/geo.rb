@@ -33,6 +33,8 @@ module Embed
           options['data-layer-type'] = @purl_object.layer_type
         elsif pmtiles?
           options['data-pmtiles'] = pmtiles.file_url
+        elsif cog?
+          options['data-cog-url'] = cog_url
         end
         options
       end
@@ -63,6 +65,14 @@ module Embed
 
       def geo_json
         purl_object.contents.map(&:files).flatten.find(&:geo_json?)
+      end
+
+      def cog_url
+        purl_object.contents.map(&:files).flatten.find(&:cog?)&.file_url
+      end
+
+      def cog?
+        cog_url.present?
       end
 
       # Returns true or false whether the viewer should display the Download All
