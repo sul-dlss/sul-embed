@@ -87,14 +87,20 @@ export default class extends Controller {
 
   renderGeoJSON(data) {
     this.map.addSource("geo-json-source", { type: "geojson", data: data })
+    const paint = {}
+    if (this.layerType() === "fill") {
+      paint["fill-color"] = "#4264fb"
+    } else if (this.layerType() === "line") {
+      paint["line-color"] = "#4264fb"
+    } else if (this.layerType() === "circle") {
+      paint["circle-color"] = "#4264fb"
+      paint["circle-radius"] = 8
+    }
     this.map.addLayer({
       id: "geo-json-fill",
       type: this.layerType(),
       source: "geo-json-source",
-      paint: {
-        "circle-color": "#4264fb",
-        "circle-radius": 8
-      }
+      paint: paint
     })
   }
 
