@@ -115,7 +115,13 @@ sandbox:
       purl: kh860qj3406
     - label: PMTiles
       purl: hf224mw4004
-    - label: GeoJSON (slow to load)
+    - label: GeoJSON points
+      purl: nz577hv6134
+    - label: GeoJSON lines
+      purl: yt111kw1413
+    - label: GeoJSON polygons
+      purl: ch787ty4618
+    - label: GeoJSON points (slow to load)
       purl: qp917dm2243
     - label: with jpg/zip
       purl: bh152hk2665
