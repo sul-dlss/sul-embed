@@ -188,26 +188,31 @@ export default class extends Controller {
     const bounds = this.getBoundsFromGeoJSON(data)
     if (!bounds.isEmpty()) this.map.fitBounds(bounds, { padding: 20 })
 
-    // Hover tooltip popup (replaces bindTooltip)
     const popup = new maplibregl.Popup({
       closeButton: false,
       closeOnClick: false
     })
 
-    const showTooltip = e => {
-      this.map.getCanvas().style.cursor = "pointer"
-      const { label } = e.features[0].properties
-      if (label != null)
-        popup.setLngLat(e.lngLat).setHTML(String(label)).addTo(this.map)
-    }
-    const hideTooltip = () => {
-      this.map.getCanvas().style.cursor = ""
-      popup.remove()
-    }
+    const interactiveLayers = ["index-map-fill", "index-map-circle"]
 
-    for (const layerId of ["index-map-fill", "index-map-circle"]) {
-      this.map.on("mouseenter", layerId, showTooltip)
-      this.map.on("mouseleave", layerId, hideTooltip)
+    // Show a tooltip on mouse move
+    this.map.on("mousemove", e => {
+      const features = this.map.queryRenderedFeatures(e.point, {
+        layers: interactiveLayers
+      })
+      if (features.length > 0) {
+        this.map.getCanvas().style.cursor = "pointer"
+        const { label } = features[0].properties
+        if (label != null) {
+          popup.setLngLat(e.lngLat).setHTML(String(label)).addTo(this.map)
+        }
+      } else {
+        this.map.getCanvas().style.cursor = ""
+        popup.remove()
+      }
+    })
+
+    for (const layerId of interactiveLayers) {
       this.map.on("click", layerId, e => {
         const feature = e.features[0]
         const { available } = feature.properties
