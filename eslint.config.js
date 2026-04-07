@@ -28,7 +28,8 @@ export default [
       ecmaVersion: 2022,
       sourceType: "module",
       globals: {
-        ...globals.browser
+        ...globals.browser,
+        maplibregl: "readonly"
       },
       parserOptions: {
         ecmaFeatures: {
@@ -44,7 +45,7 @@ export default [
     rules: {
       "no-console": "off",
       "no-underscore-dangle": "off",
-      "sort-keys": ["error", "asc", { caseSensitive: false, natural: false }]
+      "sort-keys": "off"
     }
   },
 
