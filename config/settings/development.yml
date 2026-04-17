@@ -125,6 +125,8 @@ sandbox:
       purl: qp917dm2243
     - label: with jpg/zip
       purl: bh152hk2665
+    - label: XYZ Tiles
+      purl: nn217br6628
     - label: not released to EarthWorks
       purl: gh138gt7402
   document:

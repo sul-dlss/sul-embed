@@ -83,9 +83,31 @@ export default class extends Controller {
         .then(data => this.renderGeoJSON(data))
     } else if (this.isDefined(this.dataAttributes.pmtiles)) {
       this.renderPmtiles()
+    } else if (this.isXYZTiles()) {
+      this.renderXYZTiles()
     } else {
       this.renderReplacementRectangle()
     }
+  }
+
+  isXYZTiles() {
+    return this.isDefined(this.dataAttributes.xyzTiles)
+  }
+
+  renderXYZTiles() {
+    const xyzTiles = this.dataAttributes.xyzTiles
+    this.map.addSource("xyz-tiles-source", {
+      type: "raster",
+      url: xyzTiles
+    })
+    this.map.addLayer({
+      id: "xyz-tiles-layer",
+      type: "raster",
+      source: "xyz-tiles-source",
+      paint: {
+        "raster-opacity": 1
+      }
+    })
   }
 
   renderIndexMap(data) {
