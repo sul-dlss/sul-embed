@@ -1,7 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 import "maplibre-gl"
-import * as pmtiles from "pmtiles"
 import { IndexMapRenderer } from "geo/index_map_renderer"
+import { PmtilesRenderer } from "geo/pmtiles_renderer"
+import { SidebarControl } from "geo/sidebar_control"
+import { OpacityControl } from "geo/opacity_control"
 
 export default class extends Controller {
   connect() {
@@ -90,9 +92,33 @@ export default class extends Controller {
     const renderer = new IndexMapRenderer(
       this.map,
       this.dataAttributes,
-      this.el
+      this.openSidebarWithContent.bind(this),
+      this.highlightFeature.bind(this)
     )
     renderer.render(data)
+
+    this.setupSidebar()
+    this.addOpacityControl(
+      [
+        { id: "index-map-fill", property: "fill-opacity" },
+        { id: "index-map-circle", property: "circle-opacity" }
+      ],
+      0.75
+    )
+  }
+
+  setupSidebar() {
+    this.sidebarControl = new SidebarControl(`${this.el.clientHeight - 100}px`)
+    this.map.addControl(this.sidebarControl, "top-right")
+  }
+
+  // Reimplements L.Control.LayerOpacity as a vanilla-JS MapLibre IControl,
+  // reusing the existing .opacity-control CSS from geo.css.
+  addOpacityControl(layerSpecs, initialOpacity = 0.75) {
+    this.map.addControl(
+      new OpacityControl(layerSpecs, initialOpacity),
+      "top-left"
+    )
   }
 
   renderGeoJSON(data) {
@@ -118,39 +144,80 @@ export default class extends Controller {
   }
 
   renderPmtiles() {
-    const pmtilesUrl = this.dataAttributes.pmtiles
-    // add the PMTiles plugin to the maplibregl global.
-    const protocol = new pmtiles.Protocol()
-    maplibregl.addProtocol("pmtiles", protocol.tile)
+    const renderer = new PmtilesRenderer(
+      this.map,
+      this.dataAttributes.pmtiles,
+      this.openSidebarWithContent.bind(this),
+      this.highlightFeature.bind(this)
+    )
+    renderer.render()
 
-    const p = new pmtiles.PMTiles(pmtilesUrl)
+    this.setupSidebar()
+    this.addOpacityControl(
+      [{ id: "pmtiles-layer", property: "fill-opacity" }],
+      0.75
+    )
+  }
 
-    // this is so we share one instance across the JS code and the map renderer
-    protocol.add(p)
-
-    // we first fetch the header so we can get the bounding box of the map.
-    p.getHeader().then(h => {
-      const bounds = new maplibregl.LngLatBounds(
-        [h.minLon, h.minLat],
-        [h.maxLon, h.maxLat]
-      )
-      if (!bounds.isEmpty()) this.map.fitBounds(bounds, { padding: 20 })
+  // Highlight a single GeoJSON feature (e.g. from an index map click).
+  // e.features[0] is a MapGeoJSONFeature (a MapLibre-specific class), not a
+  // plain object. Reconstruct it as plain GeoJSON so MapLibre can serialize it
+  // to its web worker when adding it as a GeoJSON source.
+  highlightFeature(feature) {
+    this.setHighlightData({
+      type: "FeatureCollection",
+      features: [
+        {
+          type: "Feature",
+          geometry: feature.geometry,
+          properties: { ...feature.properties }
+        }
+      ]
     })
+  }
 
-    this.map.addSource("pmtiles-source", {
-      type: "vector",
-      url: `pmtiles://${pmtilesUrl}`
-    })
-    this.map.addLayer({
-      id: "pmtiles-layer",
-      type: "line",
-      source: "pmtiles-source",
-      "source-layer": "landuse",
-      type: "fill",
-      paint: {
-        "fill-color": "steelblue"
-      }
-    })
+  setHighlightData(geojsonData) {
+    const color = JSON.parse(this.dataAttributes.geoViewerColors).selected
+
+    if (this.map.getSource("highlight-source")) {
+      this.map.getSource("highlight-source").setData(geojsonData)
+    } else {
+      this.map.addSource("highlight-source", {
+        type: "geojson",
+        data: geojsonData
+      })
+
+      this.map.addLayer({
+        id: "highlight-fill",
+        type: "fill",
+        source: "highlight-source",
+        filter: ["==", ["geometry-type"], "Polygon"],
+        paint: { "fill-color": color, "fill-opacity": 0.5 }
+      })
+
+      this.map.addLayer({
+        id: "highlight-line",
+        type: "line",
+        source: "highlight-source",
+        paint: { "line-color": color, "line-width": 2 }
+      })
+
+      this.map.addLayer({
+        id: "highlight-circle",
+        type: "circle",
+        source: "highlight-source",
+        filter: ["==", ["geometry-type"], "Point"],
+        paint: {
+          "circle-radius": 8,
+          "circle-color": color,
+          "circle-opacity": 0.7
+        }
+      })
+    }
+  }
+
+  openSidebarWithContent(html) {
+    this.sidebarControl.openWithContent(html)
   }
 
   layerType() {
