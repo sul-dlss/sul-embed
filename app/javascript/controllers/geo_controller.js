@@ -90,10 +90,13 @@ export default class extends Controller {
     const paint = {}
     if (this.layerType() === "fill") {
       paint["fill-color"] = "#4264fb"
+      paint["fill-outline-color"] = "#fff"
     } else if (this.layerType() === "line") {
       paint["line-color"] = "#4264fb"
     } else if (this.layerType() === "circle") {
       paint["circle-color"] = "#4264fb"
+      paint["circle-stroke-color"] = "#fff"
+      paint["circle-stroke-width"] = 1
       paint["circle-radius"] = 8
     }
     this.map.addLayer({
