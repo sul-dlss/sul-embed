@@ -90,23 +90,7 @@ module Embed
     end
 
     def bounding_box
-      subjects = geographic.flat_map do |geo|
-        geo['subject']
-      end
-      box_coords = subjects.find { |subj| subj['type'] == 'bounding box coordinates' }
-      return unless box_coords
-
-      points = box_coords['structuredValue']
-      [[find_point(points, 'south'), find_point(points, 'west')],
-       [find_point(points, 'north'), find_point(points, 'east')]]
-    end
-
-    def find_point(points, direction)
-      points.find { |point| point['type'] == direction }&.fetch('value')
-    end
-
-    def geographic
-      @geographic ||= Array(json.dig('description', 'geographic'))
+      cocina_record.coordinates_as_bbox.first
     end
 
     # Decode the value of geographic form with "type: 'type'", into a MapLibre layer type.
@@ -116,13 +100,11 @@ module Embed
     #   Dataset#Point: Point data
     #   Dataset#Line: Line data
     #   Dataset#LineString: Line data
-    def layer_type # rubocop:disable Metrics/MethodLength
-      forms = geographic.flat_map { |geo| geo['form'] }
+    def layer_type
+      form_value = cocina_record.path("$.description.geographic.*.form[?@.type == 'type'].value").first
+      return unless form_value
 
-      form_type = forms.find { |form| form['type'] == 'type' }
-      return unless form_type
-
-      case form_type['value']
+      case form_value
       when 'Dataset#Point'
         'circle'
       when 'Dataset#Line', 'Dataset#LineString'
@@ -176,6 +158,10 @@ module Embed
 
     def json
       @json ||= JSON.parse(response)
+    end
+
+    def cocina_record
+      @cocina_record ||= CocinaDisplay::CocinaRecord.new(json)
     end
 
     def purl_json_url
