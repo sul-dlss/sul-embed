@@ -147,6 +147,7 @@ export class IndexMapRenderer {
     const data = { ...properties }
 
     const thumbPromise = new Promise(resolve => {
+      // If there is a IIIF URL, use it to fetch a thumbnail image
       if (data.iiifUrl) {
         fetch(data.iiifUrl)
           .then(r => r.json())
@@ -156,7 +157,16 @@ export class IndexMapRenderer {
             resolve()
           })
           .catch(resolve)
-      } else {
+      }
+      // Otherwise if there is a druid, fetch its thumbnail (preview.jpg)
+      else if (data.Druid) {
+        const stacksUrl = new URL(data.websiteUrl.replace("purl", "stacks"))
+        stacksUrl.pathname = `file/${data.Druid}/preview.jpg`
+        data.thumbnailUrl = stacksUrl.toString()
+        resolve()
+      }
+      // Bail out
+      else {
         resolve()
       }
     })
