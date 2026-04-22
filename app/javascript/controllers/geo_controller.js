@@ -2,6 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 import "maplibre-gl"
 import { IndexMapRenderer } from "geo/index_map_renderer"
 import { PmtilesRenderer } from "geo/pmtiles_renderer"
+import { GeoJsonRenderer } from "geo/geo_json_renderer"
 import { SidebarControl } from "geo/sidebar_control"
 import { OpacityControl } from "geo/opacity_control"
 
@@ -122,25 +123,15 @@ export default class extends Controller {
   }
 
   renderGeoJSON(data) {
-    this.map.addSource("geo-json-source", { type: "geojson", data: data })
-    const paint = {}
-    if (this.layerType() === "fill") {
-      paint["fill-color"] = "#4264fb"
-      paint["fill-outline-color"] = "#fff"
-    } else if (this.layerType() === "line") {
-      paint["line-color"] = "#4264fb"
-    } else if (this.layerType() === "circle") {
-      paint["circle-color"] = "#4264fb"
-      paint["circle-stroke-color"] = "#fff"
-      paint["circle-stroke-width"] = 1
-      paint["circle-radius"] = 8
-    }
-    this.map.addLayer({
-      id: "geo-json-fill",
-      type: this.layerType(),
-      source: "geo-json-source",
-      paint: paint
-    })
+    const renderer = new GeoJsonRenderer(
+      this.map,
+      this.dataAttributes,
+      this.openSidebarWithContent.bind(this),
+      this.highlightFeature.bind(this),
+      this.setupSidebar.bind(this),
+      this.addOpacityControl.bind(this)
+    )
+    renderer.render(data)
   }
 
   renderPmtiles() {
@@ -218,10 +209,6 @@ export default class extends Controller {
 
   openSidebarWithContent(html) {
     this.sidebarControl.openWithContent(html)
-  }
-
-  layerType() {
-    return this.dataAttributes.layerType || "circle"
   }
 
   renderReplacementRectangle() {
