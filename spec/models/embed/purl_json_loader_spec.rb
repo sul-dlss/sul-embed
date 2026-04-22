@@ -85,8 +85,11 @@ RSpec.describe Embed::PurlJsonLoader do
         let(:json) { geo_purl_public_json }
 
         it 'creates a bounding_box and layer_type' do
-          expect(data).to include({ bounding_box: [['-1.478794', '29.572742'], ['4.234077', '35.000308']],
-                                    layer_type: 'fill' })
+          expect(data[:bounding_box]).to eq([[-1.478794, 29.572742], [4.234077, 35.000308]])
+        end
+
+        it 'creates a layer_type' do
+          expect(data[:layer_type]).to eq('fill')
         end
       end
 

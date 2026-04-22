@@ -65,3 +65,5 @@ gem 'view_component', '~> 3.10'
 gem 'importmap-rails', '~> 2.0'
 
 gem 'stimulus-rails', '~> 1.3'
+
+gem 'cocina_display', '~> 2.4'
