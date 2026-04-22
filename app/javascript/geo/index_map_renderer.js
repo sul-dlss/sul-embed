@@ -145,6 +145,7 @@ export class IndexMapRenderer {
   indexMapInspection(properties) {
     // Spread into a plain object so we can safely attach thumbnailUrl
     const data = { ...properties }
+    const druid = data.Druid || data.recordIdentifier;
 
     const thumbPromise = new Promise(resolve => {
       // If there is a IIIF URL, use it to fetch a thumbnail image
@@ -158,13 +159,15 @@ export class IndexMapRenderer {
           })
           .catch(resolve)
       }
+
       // Otherwise if there is a druid, fetch its thumbnail (preview.jpg)
-      else if (data.Druid) {
+      else if (druid) {
         const stacksUrl = new URL(data.websiteUrl.replace("purl", "stacks"))
-        stacksUrl.pathname = `file/${data.Druid}/preview.jpg`
+        stacksUrl.pathname = `file/${druid}/preview.jpg`
         data.thumbnailUrl = stacksUrl.toString()
         resolve()
       }
+      
       // Bail out
       else {
         resolve()
