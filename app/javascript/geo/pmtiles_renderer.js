@@ -60,26 +60,30 @@ export class PmtilesRenderer {
         closeOnClick: false
       })
 
-      const showTooltip = e => {
-        this.map.getCanvas().style.cursor = "pointer"
-        const feature = e.features[0]
-        // Try to find a suitable property to display as label
-        const label =
-          feature.properties.name ||
-          feature.properties.label ||
-          feature.properties.title ||
-          `Feature ID: ${feature.id || "Unknown"}`
+      const interactiveLayers = ["pmtiles-layer"]
 
-        popup.setLngLat(e.lngLat).setHTML(String(label)).addTo(this.map)
-      }
+      // Show a tooltip on mouse move
+      this.map.on("mousemove", e => {
+        const features = this.map.queryRenderedFeatures(e.point, {
+          layers: interactiveLayers
+        })
+        if (features.length > 0) {
+          this.map.getCanvas().style.cursor = "pointer"
+          const feature = features[0]
 
-      const hideTooltip = () => {
-        this.map.getCanvas().style.cursor = ""
-        popup.remove()
-      }
-
-      this.map.on("mouseenter", "pmtiles-layer", showTooltip)
-      this.map.on("mouseleave", "pmtiles-layer", hideTooltip)
+          const label =
+            feature.properties.name ||
+            feature.properties.label ||
+            feature.properties.title ||
+            `Feature ID: ${feature.id || "Unknown"}`
+          if (label != null) {
+            popup.setLngLat(e.lngLat).setHTML(String(label)).addTo(this.map)
+          }
+        } else {
+          this.map.getCanvas().style.cursor = ""
+          popup.remove()
+        }
+      })
 
       this.map.on("click", "pmtiles-layer", e => {
         const feature = e.features[0]
