@@ -136,7 +136,7 @@ export class IndexMapRenderer {
       output += `<dt>Web link</dt><dd><a target="_blank" href="${data.websiteUrl}">View this map</a></dd>`
     if (data.downloadUrl)
       output += `<dt>Download</dt><dd><a target="_blank" href="${data.downloadUrl}">Download this map</a></dd>`
-    if (data.iiifUrl)
+    if (data.available && data.iiifUrl)
       output += `<dt>IIIF manifest</dt><dd><a target="_blank" href="${data.iiifUrl}">View manifest</a></dd>`
 
     return output + "</dl></div></div>"
