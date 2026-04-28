@@ -14,13 +14,23 @@ module Embed
 
     private
 
+    def iiif_annotations?
+      @embed_request.purl_object.iiif_annotations?
+    end
+
     def viewer_class # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
       case @embed_request.purl_object.type
       when 'file'
         Embed::Viewer::File
       when 'geo'
         Embed::Viewer::Geo
-      when 'image', 'manuscript', 'map', 'book'
+      when 'map'
+        if iiif_annotations?
+          Embed::Viewer::Geo
+        else
+          Embed::Viewer::MiradorViewer
+        end
+      when 'image', 'manuscript', 'book'
         Embed::Viewer::MiradorViewer
       when 'document'
         Embed::Viewer::DocumentViewer

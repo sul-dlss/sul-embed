@@ -29,10 +29,27 @@ RSpec.describe Embed::ViewerFactory do
   describe '#viewer' do
     subject { instance.viewer }
 
-    let(:purl) { Embed::Purl.new(type: 'image', contents: [build(:resource)]) }
+    context 'when the request has an image type' do
+      let(:purl) { Embed::Purl.new(type: 'image', contents: [build(:resource)]) }
 
-    context 'when the request has a type' do
       it { is_expected.to be_a Embed::Viewer::MiradorViewer }
+    end
+
+    context 'when the request has a map type' do
+      let(:purl) { Embed::Purl.new(type: 'map', contents: [build(:resource)]) }
+
+      it { is_expected.to be_a Embed::Viewer::MiradorViewer }
+    end
+
+    context 'when the request has a map type and an annotation' do
+      let(:purl) do
+        Embed::Purl.new(type: 'map',
+                        contents: [
+                          build(:resource, files: [build(:resource_file, :world_downloadable, :annotations)])
+                        ])
+      end
+
+      it { is_expected.to be_a Embed::Viewer::Geo }
     end
   end
 end

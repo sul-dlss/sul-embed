@@ -80,11 +80,20 @@ export default class extends Controller {
     )
   }
 
+  isIIIFAnnotation() {
+    return (
+      this.isDefined(this.dataAttributes.annotationsUrl) &&
+      this.dataAttributes.annotationsUrl !== ""
+    )
+  }
+
   addVisualizationLayer() {
     if (this.isIndexMap()) {
       fetch(this.dataAttributes.indexMap)
         .then(response => response.json())
         .then(data => this.renderIndexMap(data))
+    } else if (this.isIIIFAnnotation()) {
+      this.renderIIIFAnnotation(this.dataAttributes.annotationsUrl)
     } else if (this.isGeoJSON()) {
       fetch(this.dataAttributes.geoJson)
         .then(response => response.json())
@@ -164,6 +173,14 @@ export default class extends Controller {
       [{ id: "pmtiles-layer", property: "fill-opacity" }],
       0.75
     )
+  }
+
+  async renderIIIFAnnotation(annotationUrl) {
+    const { WarpedMapLayer } = await import("allmaps")
+
+    const warpedMapLayer = new WarpedMapLayer()
+    this.map.addLayer(warpedMapLayer)
+    warpedMapLayer.addGeoreferenceAnnotationByUrl(annotationUrl)
   }
 
   // Highlight a single GeoJSON feature (e.g. from an index map click).
