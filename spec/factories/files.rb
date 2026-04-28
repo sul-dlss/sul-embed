@@ -26,6 +26,13 @@ FactoryBot.define do
       role { 'transcription' }
     end
 
+    trait :annotations do
+      mimetype { 'application/json' }
+      filename { 'bb013fz9675_0001.json' }
+      size { 7_200 }
+      role { 'annotations' }
+    end
+
     trait :image do
       mimetype { 'image/jp2' }
       filename { 'image_001.jp2' }

@@ -35,6 +35,8 @@ module Embed
           options['data-pmtiles'] = pmtiles.file_url
         elsif cog?
           options['data-cog-url'] = cog_url
+        elsif iiif_annotations?
+          options['data-annotations-url'] = annotations_url
         end
         options
       end
@@ -73,6 +75,12 @@ module Embed
 
       def cog?
         cog_url.present?
+      end
+
+      delegate :iiif_annotations?, to: :purl_object
+
+      def annotations_url
+        @annotations_url ||= purl_object.downloadable_files.find(&:annotations?)&.file_url
       end
 
       # Returns true or false whether the viewer should display the Download All

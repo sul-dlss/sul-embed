@@ -55,3 +55,7 @@ pin "lerc"
 pin "LercDecode.es"
 pin "webgl-device"
 pin "webgl-device2"
+
+pin "allmaps" # Derived from @allmaps/maplibre
+pin "chunk"
+pin "lib"

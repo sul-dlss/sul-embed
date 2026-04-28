@@ -29,6 +29,21 @@ RSpec.describe Embed::Viewer::Geo do
       end
     end
 
+    context 'with a map type and annotations' do
+      let(:purl) do
+        Embed::Purl.new(type: 'map',
+                        contents: [
+                          build(:resource, files: [build(:resource_file, :world_downloadable, :annotations)])
+                        ])
+      end
+
+      it 'has the required options' do
+        expect(options).to include({
+                                     'data-annotations-url' => 'https://stacks.stanford.edu/file/bc123df4567/bb013fz9675_0001.json'
+                                   })
+      end
+    end
+
     context 'with restricted content' do
       let(:purl) { build(:purl, bounding_box: [['38.298673', '-123.387626'], ['39.399103', '-122.528843']], download: 'stanford') }
 

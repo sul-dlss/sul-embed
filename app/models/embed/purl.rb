@@ -73,6 +73,10 @@ module Embed
       downloadable_files.any?(&:caption?)
     end
 
+    def iiif_annotations?
+      downloadable_files.any?(&:annotations?)
+    end
+
     def purl_url
       return "#{Settings.purl_url}/#{@druid}" if @version_id.blank?
 

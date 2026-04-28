@@ -95,6 +95,10 @@ module Embed
         role == 'transcription'
       end
 
+      def annotations?
+        role == 'annotations'
+      end
+
       def pmtiles?
         mimetype == 'application/vnd.pmtiles'
       end
