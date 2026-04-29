@@ -41,7 +41,7 @@ export default class {
         ${thumbnailIcon}
         <span class="${labelClass} su-underline">
           ${stanfordOnlyScreenreaderText}${restrictedTextMarkup}
-          ${this.truncateWithEllipsis(this.fileLabel, maxFileLabelLength)}
+          <span class="label-text">${this.truncateWithEllipsis(this.fileLabel, maxFileLabelLength)}</span>
         </span>
       </li>`
   }
