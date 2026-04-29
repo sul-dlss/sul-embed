@@ -180,7 +180,8 @@ export default class extends Controller {
 
     const warpedMapLayer = new WarpedMapLayer()
     this.map.addLayer(warpedMapLayer)
-    warpedMapLayer.addGeoreferenceAnnotationByUrl(annotationUrl)
+    await warpedMapLayer.addGeoreferenceAnnotationByUrl(annotationUrl)
+    this.map.fitBounds(warpedMapLayer.getBounds(), { padding: 20 })
   }
 
   // Highlight a single GeoJSON feature (e.g. from an index map click).
