@@ -18,6 +18,15 @@ export class CogRenderer {
     const deckLayer = new this.cogLayer({
       id: "cog-deck-layer",
       geotiff: this.cogUrl,
+      onGeoTIFFLoad: (_, { geographicBounds }) => {
+        this.map.fitBounds(
+          [
+            [geographicBounds["west"], geographicBounds["south"]],
+            [geographicBounds["east"], geographicBounds["north"]]
+          ],
+          { padding: 20 }
+        )
+      },
       // Disable the web worker decoder pool; this appears to cause errors because
       // it can't find /worker.js?
       // See: https://github.com/developmentseed/deck.gl-raster/blob/d3ab42a2f3e8d18d35443097136ed7f8056dabf0/packages/geotiff/package.json#L15
