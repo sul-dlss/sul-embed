@@ -115,8 +115,6 @@ sandbox:
       purl: kh860qj3406
     - label: PMTiles
       purl: jx110jn7648
-    - label: PMTiles
-      purl: hf224mw4004
     - label: GeoJSON points
       purl: nz577hv6134
     - label: GeoJSON lines
