@@ -1,6 +1,6 @@
 export class OpacityControl {
-  constructor(layerSpecs, initialOpacity = 0.75) {
-    this.layerSpecs = layerSpecs
+  constructor(callback, initialOpacity = 0.75) {
+    this.callback = callback
     this.initialOpacity = initialOpacity
     this.mouseMoveHandler = null
     this.mouseUpHandler = null
@@ -37,11 +37,7 @@ export class OpacityControl {
     this.container.addEventListener("click", e => e.stopPropagation())
     this.container.addEventListener("mousedown", e => e.stopPropagation())
 
-    const updateOpacity = opacity => {
-      this.layerSpecs.forEach(({ id, property }) => {
-        if (map.getLayer(id)) map.setPaintProperty(id, property, opacity)
-      })
-    }
+    const updateOpacity = opacity => this.callback(opacity)
 
     let dragStart = null
     let dragStartTop

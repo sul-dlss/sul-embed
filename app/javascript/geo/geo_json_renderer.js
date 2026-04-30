@@ -92,7 +92,10 @@ export class GeoJsonRenderer {
     }[type]
 
     this.setupSidebar()
-    this.addOpacityControl([{ id: layerId, property: opacityProperty }], 0.75)
+    this.addOpacityControl(
+      opacity => this.map.setPaintProperty(layerId, opacityProperty, opacity),
+      0.75
+    )
   }
 
   inspection(properties) {
