@@ -117,13 +117,10 @@ export default class extends Controller {
     renderer.render(data)
 
     this.setupSidebar()
-    this.addOpacityControl(
-      [
-        { id: "index-map-fill", property: "fill-opacity" },
-        { id: "index-map-circle", property: "circle-opacity" }
-      ],
-      0.75
-    )
+    this.addOpacityControl(opacity => {
+      this.map.setPaintProperty("index-map-fill", "fill-opacity", opacity)
+      this.map.setPaintProperty("index-map-circle", "circle-opacity", opacity)
+    }, 0.75)
   }
 
   setupSidebar() {
@@ -134,15 +131,19 @@ export default class extends Controller {
   async renderCOG() {
     const { CogRenderer } = await import("geo/cog_renderer")
 
-    const renderer = new CogRenderer(this.map, this.dataAttributes.cogUrl)
+    const renderer = new CogRenderer(
+      this.map,
+      this.dataAttributes.cogUrl,
+      this.addOpacityControl.bind(this)
+    )
     renderer.render()
   }
 
   // Reimplements L.Control.LayerOpacity as a vanilla-JS MapLibre IControl,
   // reusing the existing .opacity-control CSS from geo.css.
-  addOpacityControl(layerSpecs, initialOpacity = 0.75) {
+  addOpacityControl(callback, initialOpacity = 0.75) {
     this.map.addControl(
-      new OpacityControl(layerSpecs, initialOpacity),
+      new OpacityControl(callback, initialOpacity),
       "top-left"
     )
   }
@@ -170,7 +171,8 @@ export default class extends Controller {
 
     this.setupSidebar()
     this.addOpacityControl(
-      [{ id: "pmtiles-layer", property: "fill-opacity" }],
+      opacity =>
+        this.map.setPaintProperty("pmtiles-layer", "fill-opacity", opacity),
       0.75
     )
   }
@@ -181,6 +183,7 @@ export default class extends Controller {
     const warpedMapLayer = new WarpedMapLayer()
     this.map.addLayer(warpedMapLayer)
     await warpedMapLayer.addGeoreferenceAnnotationByUrl(annotationUrl)
+    this.addOpacityControl(opacity => warpedMapLayer.setOpacity(opacity), 1.0)
     this.map.fitBounds(warpedMapLayer.getBounds(), { padding: 20 })
   }
 
