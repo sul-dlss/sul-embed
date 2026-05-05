@@ -3,6 +3,7 @@ import "maplibre-gl"
 import { IndexMapRenderer } from "geo/index_map_renderer"
 import { PmtilesRenderer } from "geo/pmtiles_renderer"
 import { GeoJsonRenderer } from "geo/geo_json_renderer"
+import { IiifGeoreferenceRenderer } from "geo/iiif_georeference_renderer"
 import { SidebarControl } from "geo/sidebar_control"
 import { OpacityControl } from "geo/opacity_control"
 
@@ -178,13 +179,12 @@ export default class extends Controller {
   }
 
   async renderIIIFAnnotation(annotationUrl) {
-    const { WarpedMapLayer } = await import("allmaps")
-
-    const warpedMapLayer = new WarpedMapLayer()
-    this.map.addLayer(warpedMapLayer)
-    await warpedMapLayer.addGeoreferenceAnnotationByUrl(annotationUrl)
-    this.addOpacityControl(opacity => warpedMapLayer.setOpacity(opacity), 1.0)
-    this.map.fitBounds(warpedMapLayer.getBounds(), { padding: 20 })
+    const renderer = new IiifGeoreferenceRenderer(
+      this.map,
+      annotationUrl,
+      this.addOpacityControl.bind(this)
+    )
+    renderer.render()
   }
 
   // Highlight a single GeoJSON feature (e.g. from an index map click).
