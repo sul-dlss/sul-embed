@@ -1,6 +1,8 @@
-@import url("companion_window.css");
-@import url("common.css");
-@import url("https://unpkg.com/maplibre-gl@5.21.1/dist/maplibre-gl.css");
+@layer layout, common, framework;
+@import url("companion_window.css") layer(layout);
+@import url("common.css") layer(common);
+@import url("https://unpkg.com/maplibre-gl@5.21.1/dist/maplibre-gl.css")
+layer(framework);
 
 .sul-embed-geo {
   isolation: isolate; /* So that tooltips can hover above Leaflet.js */
@@ -160,4 +162,71 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+
+.mask-toggle-control {
+  margin-top: 2.5em;
+  clear: left;
+
+  .checkbox-container {
+    background-color: white;
+    border-radius: 0.25rem;
+    padding: 0.45rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+
+    /* Hide the default checkbox */
+    input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    /* Custom checkbox icon container */
+    .checkbox-icon {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    /* Hide both icons by default */
+    .icon-unchecked,
+    .icon-checked {
+      display: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Show unchecked icon when checkbox is unchecked */
+    input[type="checkbox"]:not(:checked) ~ .checkbox-icon .icon-unchecked {
+      display: block;
+    }
+
+    /* Show checked icon when checkbox is checked */
+
+    input[type="checkbox"]:checked ~ .checkbox-icon .icon-checked {
+      display: block;
+    }
+
+    &:hover {
+      background-color: var(--stanford-fog-light);
+
+      .checkbox-icon {
+        transform: scale(1.1);
+      }
+    }
+
+    /* Add focus styles for accessibility */
+    &:has(input[type="checkbox"]:focus) {
+      outline: 2px solid #4a90e2;
+    }
+  }
 }
