@@ -60,7 +60,7 @@ gem 'okcomputer'
 
 gem 'vite_rails'
 
-gem 'view_component', '~> 3.10'
+gem 'view_component', '~> 4.9'
 
 gem 'importmap-rails', '~> 2.0'
 

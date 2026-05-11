@@ -12,7 +12,7 @@ module CompanionWindows
       @role = role
       @hidden = hidden
       @disabled = disabled
-      super
+      super()
     end
     attr_reader :data, :aria, :html_class, :role, :hidden, :disabled
 

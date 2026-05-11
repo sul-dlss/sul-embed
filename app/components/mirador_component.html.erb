@@ -14,8 +14,8 @@
     </div>
 
     <% if Rails.env.development? %>
-      <%= vite_react_refresh_tag %>
+      <%= helpers.vite_react_refresh_tag %>
     <% end %>
-    <%= vite_javascript_tag 'mirador' %>
+    <%= helpers.vite_javascript_tag 'mirador' %>
 
 </div>
