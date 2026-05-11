@@ -7,7 +7,7 @@ module Media
       @file = file
       @resource_index = resource_index
       @size = size
-      super
+      super()
     end
 
     def arrow
