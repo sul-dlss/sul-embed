@@ -11,7 +11,11 @@ export default class extends Controller {
   connect() {
     this.el = document.getElementById("sul-embed-geo-map")
     this.dataAttributes = this.el.dataset
+    this.show()
+  }
 
+  // Called after authorization success (by stimulus)
+  show() {
     this.map = this.createMap()
 
     this.map.addControl(new maplibregl.NavigationControl(), "top-left")
