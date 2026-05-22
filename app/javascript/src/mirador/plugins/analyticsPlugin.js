@@ -7,6 +7,7 @@ import {
   getManifestTitle,
   getCanvases,
   getCompanionWindow,
+  getWindow,
 } from 'mirador'
 
 function deriveManifestType(json = {}) {
@@ -55,6 +56,9 @@ function* onSetCanvas({ type, windowId, canvasId }) {
   const metadata =
     yield* manifestAnalytics({ windowId })
 
+  const allCanvases = yield select(getCanvases, { windowId })
+  const canvasIndex = allCanvases?.findIndex(c => c.id === canvasId)
+
   yield put({
     type: 'mirador/analytics',
     payload: {
@@ -63,7 +67,9 @@ function* onSetCanvas({ type, windowId, canvasId }) {
       eventLabel: canvasId,
       // new semantic fields
       eventAction: type,
+      interactionType: 'canvas',
       canvasId,
+      canvasIndex,
       ...metadata
     },
   })
@@ -77,6 +83,7 @@ function* onAddResource({ type, manifestId }) {
       eventCategory: manifestId,
       // new semantic fields
       eventAction: type,
+      interactionType: 'resource',
       manifestId
     }
   })
@@ -108,6 +115,7 @@ function* onAddCompanionWindow({ payload: { position, content }, type, windowId 
       eventLabel: `${content}/${position}`,
       // new semantic fields
       eventAction: type,
+      interactionType: 'companion',
       companionWindow: content,
       ...metadata,
     }
@@ -133,7 +141,28 @@ function* onUpdateCompanionWindow({ id, payload: { position, content }, type, wi
       eventLabel: `${resolvedContent}/${position}`,
       // new semantic fields
       eventAction: type,
+      interactionType: 'companion',
       companionWindow: resolvedContent,
+      ...metadata,
+    }
+  })
+}
+
+function* onToggleSideBar({ type, windowId }) {
+  const win = yield select(getWindow, { windowId })
+  if (!win?.sideBarOpen) return
+
+  const metadata =
+    yield* manifestAnalytics({ windowId })
+
+  yield put({
+    type: 'mirador/analytics',
+    payload: {
+      // legacy/compatibility
+      eventCategory: metadata.manifestId,
+      // new semantic fields
+      eventAction: type,
+      interactionType: 'companion',
       ...metadata,
     }
   })
@@ -167,7 +196,32 @@ function* onRequestSearch({ query, type, windowId }) {
       eventLabel: query,
       // new semantic fields
       eventAction: type,
+      interactionType: 'search',
       searchTerm: query,
+      ...metadata,
+    }
+  })
+}
+
+function* onReceiveSearch({ searchJson, type, windowId }) {
+  const metadata =
+    yield* manifestAnalytics({ windowId })
+
+  const searchResultCount =
+    searchJson?.resources?.length ??
+    searchJson?.items?.length ??
+    0
+
+  yield put({
+    type: 'mirador/analytics',
+    payload: {
+      // legacy/compatibility
+      eventCategory: metadata.manifestId,
+      eventValue: searchResultCount,
+      // new semantic fields
+      eventAction: type,
+      interactionType: 'search',
+      searchResultCount,
       ...metadata,
     }
   })
@@ -199,6 +253,7 @@ function* onMaximizeWindow({ type, windowId }) {
       eventCategory: metadata.manifestId,
       eventAction: type,
       // new semantic fields
+      interactionType: 'window',
       ...metadata,
     }
   })
@@ -235,6 +290,7 @@ function* onSelectAnnotation({ annotationId, type, windowId }) {
       // new semantic fields
       annotationId,
       eventAction: type,
+      interactionType: 'annotation',
       ...metadata,
     }
   })
@@ -245,6 +301,7 @@ function* onSetWorkspaceAction({ type }) {
     type: 'mirador/analytics',
     payload: {
       eventAction: type,
+      interactionType: 'workspace',
     }
   })
 }
@@ -256,8 +313,9 @@ function* onSetWorkspaceActionLayout({ layout, type }) {
       // legacy/compatibility
       eventCategory: layout,
       // new semantic fields
-      layout,
       eventAction: type,
+      interactionType: 'layout',
+      layout,
     }
   })
 }
@@ -277,8 +335,9 @@ function* onAddAuthRequest({ id, type, windowId }) {
       eventCategory: metadata.manifestId,
       eventLabel: id,
       // new semantic fields
-      authId: id,
       eventAction: type,
+      interactionType: 'auth',
+      authId: id,
       ...metadata,
     }
   })
@@ -297,9 +356,10 @@ function* onResetAuthState({ id, type }) {
       eventLabel: id,
       eventValue: sessionMinutes,
       // new semantic fields
+      eventAction: type,
+      interactionType: 'auth',
       authId: id,
       sessionMinutes,
-      eventAction: type,
     }
   })
 }
@@ -321,9 +381,10 @@ function* onTokenRequest({ type, authId }) {
       eventLabel: authId,
       eventValue: tokenRequests[authId],
       // new semantic fields
+      eventAction: type,
+      interactionType: 'auth',
       authId,
       tokenRequestCount: tokenRequests[authId],
-      eventAction: type,
     }
   })
 }
@@ -342,9 +403,10 @@ function* onTokenFailure({ type, authId }) {
       eventCategory: authStatus,
       eventLabel: authId,
       // new semantic fields
+      eventAction: type,
+      interactionType: 'auth',
       authId,
       authStatus,
-      eventAction: type,
     }
   })
 }
@@ -362,8 +424,11 @@ function* sendAnalyticsEvent({ payload }) {
     manifestType,
 
     canvasId,
+    canvasIndex,
     companionWindow,
+    companionWindowOpenCount,
     searchTerm,
+    searchResultCount,
     viewType,
     annotationId,
     authId,
@@ -371,6 +436,7 @@ function* sendAnalyticsEvent({ payload }) {
     sessionMinutes,
     tokenRequestCount,
     layout,
+    interactionType,
   } = payload
 
   const eventParams = clean({
@@ -384,8 +450,11 @@ function* sendAnalyticsEvent({ payload }) {
     manifest_type: manifestType,
 
     canvas_id: canvasId,
+    canvas_index: canvasIndex,
     companion_window_type: companionWindow,
+    companion_window_open_count: companionWindowOpenCount,
     search_term: searchTerm,
+    search_result_count: searchResultCount,
     view_type: viewType,
     annotation_id: annotationId,
 
@@ -395,6 +464,7 @@ function* sendAnalyticsEvent({ payload }) {
     token_request_count: tokenRequestCount,
 
     layout,
+    interaction_type: interactionType,
   })
 
   window.gtag && window.gtag('event', eventAction, eventParams)
@@ -416,8 +486,10 @@ function* analyticsSaga() {
     takeEvery(ActionTypes.ADD_RESOURCE, onAddResource),
     takeEvery(ActionTypes.ADD_COMPANION_WINDOW, onAddCompanionWindow),
     takeEvery(ActionTypes.UPDATE_COMPANION_WINDOW, onUpdateCompanionWindow),
+    takeEvery(ActionTypes.TOGGLE_WINDOW_SIDE_BAR, onToggleSideBar),
     takeEvery(ActionTypes.RECEIVE_MANIFEST, onReceiveManifest),
     takeEvery(ActionTypes.REQUEST_SEARCH, onRequestSearch),
+    takeEvery(ActionTypes.RECEIVE_SEARCH, onReceiveSearch),
     takeEvery(ActionTypes.ADD_WINDOW, onAddWindow),
     takeEvery(ActionTypes.MAXIMIZE_WINDOW, onMaximizeWindow),
     takeEvery(ActionTypes.SET_WINDOW_VIEW_TYPE, onSetWindowViewType),
