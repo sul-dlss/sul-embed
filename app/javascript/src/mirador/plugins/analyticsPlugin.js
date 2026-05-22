@@ -10,7 +10,7 @@ import {
   getWindow,
 } from 'mirador'
 
-function deriveManifestType(json = {}) {
+export function deriveManifestType(json = {}) {
   const type = json.type || json['@type'] || ''
 
   if (/collection/i.test(type)) return 'collection'
@@ -470,7 +470,7 @@ function* sendAnalyticsEvent({ payload }) {
   window.gtag && window.gtag('event', eventAction, eventParams)
 }
 
-function clean(obj) {
+export function clean(obj) {
   return Object.fromEntries(
     Object.entries(obj).filter(([, v]) =>
       v !== undefined &&
