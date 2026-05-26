@@ -99,6 +99,10 @@ module Embed
         role == 'annotations'
       end
 
+      def georeference_annotations?
+        role == 'georeference'
+      end
+
       def pmtiles?
         mimetype == 'application/vnd.pmtiles'
       end

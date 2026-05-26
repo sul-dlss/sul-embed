@@ -45,7 +45,7 @@ RSpec.describe Embed::ViewerFactory do
       let(:purl) do
         Embed::Purl.new(type: 'map',
                         contents: [
-                          build(:resource, files: [build(:resource_file, :world_downloadable, :annotations)])
+                          build(:resource, files: [build(:resource_file, :world_downloadable, :georeference_annotations)])
                         ])
       end
 

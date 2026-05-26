@@ -35,8 +35,8 @@ module Embed
           options['data-pmtiles'] = pmtiles.file_url
         elsif cog?
           options['data-cog-url'] = cog_url
-        elsif iiif_annotations?
-          options['data-annotations-url'] = annotations_url
+        elsif georeference_annotations?
+          options['data-annotations-url'] = georeference_annotations_url
         end
         options
       end
@@ -77,10 +77,12 @@ module Embed
         cog_url.present?
       end
 
-      delegate :iiif_annotations?, to: :purl_object
+      def georeference_annotations_url
+        @georeference_annotations_url ||= purl_object.downloadable_files.find(&:georeference_annotations?)&.file_url
+      end
 
-      def annotations_url
-        @annotations_url ||= purl_object.downloadable_files.find(&:annotations?)&.file_url
+      def georeference_annotations?
+        georeference_annotations_url.present?
       end
 
       # Returns true or false whether the viewer should display the Download All
