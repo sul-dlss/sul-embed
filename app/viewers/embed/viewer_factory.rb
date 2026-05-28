@@ -14,8 +14,8 @@ module Embed
 
     private
 
-    def iiif_annotations?
-      @embed_request.purl_object.iiif_annotations?
+    def georeferenced?
+      @embed_request.purl_object.iiif_georeference_annotations?
     end
 
     def viewer_class # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
@@ -25,7 +25,7 @@ module Embed
       when 'geo'
         Embed::Viewer::Geo
       when 'map'
-        if iiif_annotations?
+        if georeferenced?
           Embed::Viewer::Geo
         else
           Embed::Viewer::MiradorViewer

@@ -33,6 +33,13 @@ FactoryBot.define do
       role { 'annotations' }
     end
 
+    trait :georeference_annotations do
+      mimetype { 'application/json' }
+      filename { 'bb013fz9675_0001.json' }
+      size { 7_200 }
+      role { 'georeference' }
+    end
+
     trait :image do
       mimetype { 'image/jp2' }
       filename { 'image_001.jp2' }

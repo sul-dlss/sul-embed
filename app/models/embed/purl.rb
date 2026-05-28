@@ -77,6 +77,10 @@ module Embed
       downloadable_files.any?(&:annotations?)
     end
 
+    def iiif_georeference_annotations?
+      downloadable_files.any?(&:georeference_annotations?)
+    end
+
     def purl_url
       return "#{Settings.purl_url}/#{@druid}" if @version_id.blank?
 
