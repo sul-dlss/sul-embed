@@ -84,7 +84,7 @@ GEM
     bcrypt_pbkdf (1.1.2)
     benchmark (0.5.0)
     bigdecimal (4.1.2)
-    bootsnap (1.24.5)
+    bootsnap (1.24.6)
       msgpack (~> 1.2)
     builder (3.3.0)
     capistrano (3.20.1)
@@ -111,13 +111,13 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
-    cocina_display (2.5.0)
+    cocina_display (2.6.0)
       activesupport (>= 7)
       edtf (~> 3.2)
       geo_coord (~> 0.2)
       i18n
       iso8601 (~> 0.13.0)
-      janeway-jsonpath (~> 0.6)
+      janeway-jsonpath (>= 0.6, < 2)
       zeitwerk (~> 2.7)
     concurrent-ruby (1.3.6)
     config (5.6.1)
@@ -159,14 +159,14 @@ GEM
       logger
     faraday-follow_redirects (0.5.0)
       faraday (>= 1, < 3)
-    faraday-net_http (3.4.3)
+    faraday-net_http (3.4.4)
       net-http (~> 0.5)
     geo_coord (0.2.0)
     globalid (1.3.0)
       activesupport (>= 6.1)
     hashdiff (1.2.1)
     high_voltage (5.0.0)
-    honeybadger (6.6.2)
+    honeybadger (6.7.0)
       logger
       ostruct
     i18n (1.14.8)
@@ -182,8 +182,8 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     iso8601 (0.13.0)
-    janeway-jsonpath (0.6.0)
-    json (2.19.7)
+    janeway-jsonpath (1.0.0)
+    json (2.19.8)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
     logger (1.7.0)
@@ -252,7 +252,7 @@ GEM
       actionpack (>= 7.0.0)
       activesupport (>= 7.0.0)
       rack
-    psych (5.3.1)
+    psych (5.4.0)
       date
       stringio
     public_suffix (7.0.5)
@@ -354,15 +354,16 @@ GEM
       lint_roller (~> 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.47.1, < 2.0)
-    rubocop-rails (2.35.3)
+    rubocop-rails (2.35.4)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
       rack (>= 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.44.0, < 2.0)
-    rubocop-rspec (3.9.0)
+    rubocop-rspec (3.10.2)
       lint_roller (~> 1.1)
-      rubocop (~> 1.81)
+      regexp_parser (>= 2.0)
+      rubocop (~> 1.86, >= 1.86.2)
     rubocop-rspec_rails (2.32.0)
       lint_roller (~> 1.1)
       rubocop (~> 1.72, >= 1.72.1)
@@ -396,7 +397,7 @@ GEM
     unicode-emoji (4.2.0)
     uri (1.1.1)
     useragent (0.16.11)
-    view_component (4.11.0)
+    view_component (4.12.0)
       actionview (>= 7.1.0)
       activesupport (>= 7.1.0)
       concurrent-ruby (~> 1)
@@ -414,7 +415,7 @@ GEM
       crack (>= 0.3.2)
       hashdiff (>= 0.4.0, < 2.0.0)
     websocket (1.2.11)
-    websocket-driver (0.8.0)
+    websocket-driver (0.8.1)
       base64
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -474,4 +475,4 @@ DEPENDENCIES
   webmock (~> 3.19)
 
 BUNDLED WITH
-  4.0.12
+  4.0.13
