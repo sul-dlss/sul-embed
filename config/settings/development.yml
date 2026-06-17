@@ -113,8 +113,12 @@ sandbox:
     #   purl: sf815vr1246
     - label: Index map
       purl: kh860qj3406
-    - label: PMTiles
+    - label: PMTiles polygons
       purl: jx110jn7648
+    - label: PMTiles points
+      purl: bs277kf6370
+    - label: PMTiles many layers
+      purl: hf224mw4004
     - label: GeoJSON points
       purl: nz577hv6134
     - label: GeoJSON lines
