@@ -42,25 +42,15 @@ export class PmtilesRenderer {
         url: `pmtiles://${this.pmtilesUrl}`
       })
 
-      // use the first layer found
-      this.map.addLayer({
-        id: "pmtiles-layer",
-        type: "fill",
-        source: "pmtiles-source",
-        "source-layer": metadata.vector_layers[0].id,
-        paint: {
-          "fill-color": "steelblue",
-          "fill-opacity": 0.75
-        }
-      })
+      const interactiveLayers = this.drawLayers(
+        metadata.vector_layers.map(layer => layer.id)
+      )
 
       // Hover tooltip popup
       const popup = new maplibregl.Popup({
         closeButton: false,
         closeOnClick: false
       })
-
-      const interactiveLayers = ["pmtiles-layer"]
 
       // Show a tooltip on mouse move
       this.map.on("mousemove", e => {
@@ -85,14 +75,77 @@ export class PmtilesRenderer {
         }
       })
 
-      this.map.on("click", "pmtiles-layer", e => {
-        const feature = e.features[0]
-        this.highlightFeature(feature)
-        this.inspection(feature.properties)
+      interactiveLayers.forEach(layer => {
+        this.map.on("click", layer, e => {
+          const feature = e.features[0]
+          this.highlightFeature(feature)
+          this.inspection(feature.properties)
+        })
       })
     })
   }
 
+  drawLayers(layers) {
+    const ids = []
+    layers.forEach((vectorLayer, i) => {
+      this.map.addLayer({
+        id: `pmtiles-fill-${i}`,
+        type: "fill",
+        source: "pmtiles-source",
+        "source-layer": vectorLayer,
+        paint: {
+          "fill-color": this.colorForIdx(i),
+          "fill-opacity": 0.75
+        },
+        filter: ["==", ["geometry-type"], "Polygon"]
+      })
+
+      this.map.addLayer({
+        id: `pmtiles-line-${i}`,
+        type: "line",
+        source: "pmtiles-source",
+        "source-layer": vectorLayer,
+        paint: {
+          "line-color": this.colorForIdx(i),
+          "line-width": [
+            "case",
+            ["boolean", ["feature-state", "hover"], false],
+            2,
+            0.5
+          ]
+        },
+        filter: ["==", ["geometry-type"], "LineString"]
+      })
+
+      this.map.addLayer({
+        id: `pmtiles-circle-${i}`,
+        type: "circle",
+        source: "pmtiles-source",
+        "source-layer": vectorLayer,
+        paint: {
+          "circle-color": this.colorForIdx(i),
+          "circle-radius": ["interpolate", ["linear"], ["zoom"], 4, 2, 12, 4],
+          "circle-opacity": 0.5,
+          "circle-stroke-color": "white",
+          "circle-stroke-width": [
+            "case",
+            ["boolean", ["feature-state", "hover"], false],
+            3,
+            0
+          ]
+        },
+        filter: ["==", ["geometry-type"], "Point"]
+      })
+      ids.push(`pmtiles-circle-${i}`, `pmtiles-line-${i}`, `pmtiles-fill-${i}`)
+    })
+    return ids
+  }
+
+  colorForIdx(i) {
+    const colors = ["steelblue", "tomato", "sandybrown", "palevioletred"]
+    const color = colors[i % colors.length]
+    return color
+  }
   inspection(properties) {
     const data = { ...properties }
     this.openSidebarWithContent(this.info(data))
