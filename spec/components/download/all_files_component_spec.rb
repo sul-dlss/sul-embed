@@ -29,7 +29,7 @@ RSpec.describe Download::AllFilesComponent, type: :component do
     let(:files) { Array.new(3001) { build(:resource_file, :world_downloadable) } }
 
     it 'shows the not available message' do
-      expect(page).to have_content 'Bulk download not available. Please contact us if you need help downloading. Total files in this item: 3001, total size: 0 Bytes.'
+      expect(page).to have_text 'Bulk download not available. Please contact us if you need help downloading. Total files in this item: 3001, total size: 0 Bytes.'
     end
   end
 

@@ -76,7 +76,7 @@ RSpec.describe 'Media viewer', :js do
 
         # Setting blank alt text apparently makes the component invisible in copybara
         expect(page).to have_css('.square-icon', visible: :all)
-        expect(page).to have_content('Image of media (1 of 1)')
+        expect(page).to have_text('Image of media (1 of 1)')
       end
     end
   end

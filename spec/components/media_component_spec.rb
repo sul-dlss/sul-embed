@@ -33,15 +33,15 @@ RSpec.describe MediaComponent, type: :component do
 
   it 'displays the page' do
     within 'header' do
-      expect(page).to have_content 'Sample title'
+      expect(page).to have_text 'Sample title'
     end
     # Accessabile dialog
     within 'dialog' do
-      expect(page).to have_content 'To request a transcript or other accommodation'
+      expect(page).to have_text 'To request a transcript or other accommodation'
     end
 
     # Auth component
-    expect(page).to have_content 'Stanford users: log in to access all available features'
+    expect(page).to have_text 'Stanford users: log in to access all available features'
 
     within '.sul-embed-container' do
       click_on 'Toggle sidebar'
@@ -54,7 +54,7 @@ RSpec.describe MediaComponent, type: :component do
 
     it 'displays transcript sidebar with login message' do
       expect(page).to have_css('[aria-label="Transcript"]', visible: :all)
-      expect(page).to have_content('Login in to view transcript')
+      expect(page).to have_text('Login in to view transcript')
     end
   end
 
@@ -71,7 +71,7 @@ RSpec.describe MediaComponent, type: :component do
 
     it 'displays the page' do
       within 'header' do
-        expect(page).to have_no_content 'Sample title'
+        expect(page).to have_no_text 'Sample title'
       end
     end
   end

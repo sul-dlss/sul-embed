@@ -33,9 +33,9 @@ RSpec.describe CompanionWindowsComponent, type: :component do
     end
 
     it 'displays the page' do
-      expect(page).to have_content 'About this item'
-      expect(page).to have_content 'Contents'
-      expect(page).to have_content 'Rights'
+      expect(page).to have_text 'About this item'
+      expect(page).to have_text 'Contents'
+      expect(page).to have_text 'Rights'
     end
   end
 
@@ -68,9 +68,9 @@ RSpec.describe CompanionWindowsComponent, type: :component do
       let(:contents) { [] }
 
       it 'displays the page without contents' do
-        expect(page).to have_content 'About this item'
-        expect(page).to have_no_content 'Contents'
-        expect(page).to have_content 'Rights'
+        expect(page).to have_text 'About this item'
+        expect(page).to have_no_text 'Contents'
+        expect(page).to have_text 'Rights'
       end
     end
 
@@ -78,9 +78,9 @@ RSpec.describe CompanionWindowsComponent, type: :component do
       let(:contents) { [resource_file] }
 
       it 'displays the page without contents' do
-        expect(page).to have_content 'About this item'
-        expect(page).to have_no_content 'Contents'
-        expect(page).to have_content 'Rights'
+        expect(page).to have_text 'About this item'
+        expect(page).to have_no_text 'Contents'
+        expect(page).to have_text 'Rights'
       end
     end
 
@@ -88,9 +88,9 @@ RSpec.describe CompanionWindowsComponent, type: :component do
       let(:contents) { [resource_file, resource_file] }
 
       it 'displays the page without contents' do
-        expect(page).to have_content 'About this item'
-        expect(page).to have_content 'Contents'
-        expect(page).to have_content 'Rights'
+        expect(page).to have_text 'About this item'
+        expect(page).to have_text 'Contents'
+        expect(page).to have_text 'Rights'
       end
     end
   end

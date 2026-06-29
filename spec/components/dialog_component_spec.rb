@@ -21,9 +21,9 @@ RSpec.describe DialogComponent, type: :component do
     end
   end
 
-  it { expect(page).to have_content 'This Dialog' }
-  it { expect(page).to have_content 'Some information' }
-  it { expect(page).to have_content 'Close' }
+  it { expect(page).to have_text 'This Dialog' }
+  it { expect(page).to have_text 'Some information' }
+  it { expect(page).to have_text 'Close' }
   it { expect(page).to have_css '#this-dialog' }
   it { expect(page).to have_css '#this-dialog-modal-header' }
   it { expect(page).to have_css '[data-companion-window-target="thisDialog"]' }
