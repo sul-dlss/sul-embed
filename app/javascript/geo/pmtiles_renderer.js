@@ -1,11 +1,12 @@
 import * as pmtiles from "pmtiles"
 
 export class PmtilesRenderer {
-  constructor(map, pmtilesUrl, openSidebarWithContent, highlightFeature) {
+  constructor(map, pmtilesUrl, openSidebarWithContent, highlightFeature, authToken) {
     this.map = map
     this.pmtilesUrl = pmtilesUrl
     this.openSidebarWithContent = openSidebarWithContent
     this.highlightFeature = highlightFeature
+    this.authToken = authToken
   }
 
   render() {
@@ -13,7 +14,11 @@ export class PmtilesRenderer {
     const protocol = new pmtiles.Protocol()
     maplibregl.addProtocol("pmtiles", protocol.tile)
 
-    const p = new pmtiles.PMTiles(this.pmtilesUrl)
+    let source = this.pmtilesUrl
+    if (this.authToken) {
+      source = this.credentialedSource(this.pmtilesUrl)
+    }
+    const p = new pmtiles.PMTiles(source)
 
     // this is so we share one instance across the JS code and the map renderer
     protocol.add(p)
@@ -162,5 +167,26 @@ export class PmtilesRenderer {
     })
 
     return output + "</dl></div></div>"
+  }
+
+  // A pmtiles Source that sends cookies so restricted files are served directly
+  // without a redirect to the (CORS-incompatible) /file/auth/ path
+  credentialedSource(url) {
+    return {
+      getKey: () => url,
+      getBytes: async (offset, length, signal) => {
+        const resp = await fetch(url, {
+          headers: { Range: `bytes=${offset}-${offset + length - 1}` },
+          signal,
+          credentials: "include"
+        })
+        return {
+          data: await resp.arrayBuffer(),
+          etag: resp.headers.get("ETag") || undefined,
+          expires: resp.headers.get("Expires") || undefined,
+          cacheControl: resp.headers.get("Cache-Control") || undefined
+        }
+      }
+    }
   }
 }

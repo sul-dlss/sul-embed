@@ -13,6 +13,8 @@ class GeoComponent < ViewComponent::Base
   def data_actions
     return if public?
 
-    'iiif-manifest-received@window->file-auth#parseFiles auth-success@window->geo#show'
+    'iiif-manifest-received@window->file-auth#parseFiles ' \
+      'thumbnail-clicked@window->file-auth#authFileAndDisplay ' \
+      'auth-success@window->geo#show'
   end
 end

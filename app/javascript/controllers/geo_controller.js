@@ -11,19 +11,120 @@ export default class extends Controller {
   connect() {
     this.el = document.getElementById("sul-embed-geo-map")
     this.dataAttributes = this.el.dataset
-    this.show()
-  }
-
-  // Called after authorization success (by stimulus)
-  show() {
+    this.loaded = false
     this.map = this.createMap()
 
     this.map.addControl(new maplibregl.NavigationControl(), "top-left")
-    this.map.on("load", () => this.addVisualizationLayer())
+    this.map.on("load", () => {
+      this.loaded = true
+      // For restricted content, show the bounding-box placeholder until auth succeeds.
+      // For public content, load the visualization immediately.
+      if (this.restricted) {
+        this.renderReplacementRectangle()
+      } else {
+        this.addVisualizationLayer()
+      }
+    })
+  }
+
+  // Called after authorization success (by stimulus) for restricted content.
+  // The IIIF manifest's painting body may be a different file (e.g., a .shp)
+  // than the one the geo viewer renders (e.g., a .pmtiles).  When auth succeeds
+  // for the wrong file, we request auth for the visualization file we actually
+  // need.  Once that succeeds we update the URL with the authorized location and
+  // load the visualization layer.
+  show(evt) {
+    const fileUri = evt.detail.fileUri
+
+    // Auth was for a file the geo viewer doesn't render — request auth for the
+    // file we actually need (e.g., pmtiles instead of shp).
+    if (!this.matchesVisualizationUrl(fileUri)) {
+      if (!this.authRequested) {
+        const vizUrl = this.visualizationUrl()
+        if (vizUrl) {
+          this.authRequested = true
+          window.dispatchEvent(new CustomEvent("thumbnail-clicked", { detail: { fileUri: vizUrl } }))
+        }
+      }
+      return
+    }
+
+    this.applyAuthorizedLocation(fileUri, evt.detail.location)
+
+    const loadVisualization = () => {
+      this.removeReplacementLayers()
+      this.addVisualizationLayer()
+    }
+    if (this.loaded) {
+      loadVisualization()
+    } else {
+      this.map.once("load", loadVisualization)
+    }
   }
 
   disconnect() {
     this.map?.remove()
+  }
+
+  // The data-action attribute is only set for restricted content (see GeoComponent#data_actions)
+  get restricted() {
+    return !!this.element.dataset.action
+  }
+
+  // Read the IIIF auth v2 bearer token cached by file-auth-controller
+  get authToken() {
+    const json = localStorage.getItem("accessToken")
+    if (!json) return null
+    try {
+      const { accessToken, expires } = JSON.parse(json)
+      if (new Date() < new Date(expires)) return accessToken
+    } catch {
+      // ignore broken storage
+    }
+    return null
+  }
+
+  // Request options that include credentials so restricted files are served
+  // directly via the stacks auth cookie (avoids CORS preflight issues that
+  // arise from using an Authorization header)
+  authedFetchOptions() {
+    const token = this.authToken
+    return token ? { credentials: "include" } : {}
+  }
+
+  // Replace the data-attribute URL matching fileUri with the authorized location
+  applyAuthorizedLocation(fileUri, location) {
+    if (!location) return
+    const urlKeys = ["indexMap", "geoJson", "pmtiles", "cogUrl", "annotationsUrl"]
+    for (const key of urlKeys) {
+      if (this.dataAttributes[key] === fileUri) {
+        this.el.dataset[key] = location
+      }
+    }
+  }
+
+  // The data-attribute keys that hold visualization file URLs
+  visualizationUrlKeys() {
+    return ["indexMap", "geoJson", "pmtiles", "cogUrl", "annotationsUrl"]
+  }
+
+  // Whether the given URL matches one of the visualization data attributes
+  matchesVisualizationUrl(url) {
+    return this.visualizationUrlKeys().some(key => this.dataAttributes[key] === url)
+  }
+
+  // The URL of the primary visualization file the geo viewer renders
+  visualizationUrl() {
+    for (const key of this.visualizationUrlKeys()) {
+      if (this.dataAttributes[key]) return this.dataAttributes[key]
+    }
+  }
+
+  // Remove the placeholder rectangle layers shown while content is locked
+  removeReplacementLayers() {
+    if (this.map.getLayer("replacement-fill")) this.map.removeLayer("replacement-fill")
+    if (this.map.getLayer("replacement-line")) this.map.removeLayer("replacement-line")
+    if (this.map.getSource("replacement-source")) this.map.removeSource("replacement-source")
   }
 
   createMap() {
@@ -94,13 +195,13 @@ export default class extends Controller {
 
   addVisualizationLayer() {
     if (this.isIndexMap()) {
-      fetch(this.dataAttributes.indexMap)
+      fetch(this.dataAttributes.indexMap, this.authedFetchOptions())
         .then(response => response.json())
         .then(data => this.renderIndexMap(data))
     } else if (this.isIIIFAnnotation()) {
       this.renderIIIFAnnotation(this.dataAttributes.annotationsUrl)
     } else if (this.isGeoJSON()) {
-      fetch(this.dataAttributes.geoJson)
+      fetch(this.dataAttributes.geoJson, this.authedFetchOptions())
         .then(response => response.json())
         .then(data => this.renderGeoJSON(data))
     } else if (this.isDefined(this.dataAttributes.pmtiles)) {
@@ -170,7 +271,8 @@ export default class extends Controller {
       this.map,
       this.dataAttributes.pmtiles,
       this.openSidebarWithContent.bind(this),
-      this.highlightFeature.bind(this)
+      this.highlightFeature.bind(this),
+      this.authToken
     )
     renderer.render()
 
