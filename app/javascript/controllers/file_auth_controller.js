@@ -32,13 +32,14 @@ export default class extends Controller {
     this.addPostCallbackListener()
     this.documents = canvases.flatMap((canvas) => {
       const annotationPages = canvas.items
-      return annotationPages.flatMap((annotationPage) => {
+      const paintingResources = annotationPages.flatMap((annotationPage) => {
         const paintingAnnotations = annotationPage.items.filter((annotation) => annotation.motivation === "painting")
-        return paintingAnnotations.map((annotation) => {
-          const contentResource = annotation.body
-          return contentResource
-        })
+        return paintingAnnotations.map((annotation) => annotation.body)
       })
+      // Also include rendering resources (e.g., pmtiles/cog files for the geo
+      // viewer) so they can be authorized via thumbnail-clicked events
+      const renderingResources = canvas.rendering || []
+      return [...paintingResources, ...renderingResources]
     })
     this.maybeDrawContentResource(this.documents[0]) // cause login to first resource
   }
