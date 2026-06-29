@@ -52,7 +52,9 @@ pin "deck-gl-web" # renamed from index.js
 pin "decode"
 pin "deflate"
 pin "lerc"
+pin "lzw"
 pin "LercDecode.es"
+pin "utils"
 pin "webgl-device"
 pin "webgl-device2"
 
