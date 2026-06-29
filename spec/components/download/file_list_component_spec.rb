@@ -45,7 +45,7 @@ RSpec.describe Download::FileListComponent, type: :component do
       let(:contents) { [instance_double(Embed::Purl::Resource)] }
 
       it 'does not have extra headings' do
-        expect(page).to have_content 'Download media filename'
+        expect(page).to have_text 'Download media filename'
         expect(page).to have_no_css('h4', text: 'media filename')
       end
     end

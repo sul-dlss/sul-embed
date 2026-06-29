@@ -21,7 +21,7 @@ RSpec.describe PdfComponent, type: :component do
     # The component has a hidden attribute which is removed by the javascript, so search with `visibile: :all'
     expect(page).to have_css('button[aria-label="Full screen"]', visible: :all)
     within 'header' do
-      expect(page).to have_content 'Fantasia Apocalyptica musical score (manuscript) : Four trumpets. Chapter 8'
+      expect(page).to have_text 'Fantasia Apocalyptica musical score (manuscript) : Four trumpets. Chapter 8'
     end
   end
 
@@ -34,7 +34,7 @@ RSpec.describe PdfComponent, type: :component do
 
     it 'displays the page' do
       within 'header' do
-        expect(page).to have_no_content 'Fantasia Apocalyptica musical score (manuscript) : Four trumpets. Chapter 8'
+        expect(page).to have_no_text 'Fantasia Apocalyptica musical score (manuscript) : Four trumpets. Chapter 8'
       end
     end
   end

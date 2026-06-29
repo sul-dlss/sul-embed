@@ -21,7 +21,7 @@ RSpec.describe 'geo viewer', :js do
       expect(page).to have_css('.maplibregl-ctrl-zoom-out', count: 1, visible: :visible)
 
       within '.maplibregl-ctrl-attrib' do
-        expect(page).to have_content('OpenStreetMap contributors')
+        expect(page).to have_text('OpenStreetMap contributors')
       end
     end
 

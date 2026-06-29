@@ -17,7 +17,7 @@ RSpec.describe EmbedThisFormComponent, type: :component do
   end
 
   it 'has the form elements for updating the embed code' do
-    expect(page).to have_content('Select options:')
+    expect(page).to have_text('Select options:')
     expect(page).to have_css('input#sul-embed-embed-title[type="checkbox"]')
     expect(page).to have_css('input#sul-embed-embed[type="checkbox"]')
     expect(page).to have_css('textarea#sul-embed-iframe-code')

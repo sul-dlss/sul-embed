@@ -17,11 +17,11 @@ RSpec.describe FileComponent, type: :component do
 
   it 'displays the page' do
     within 'header' do
-      expect(page).to have_content 'Title of the object'
+      expect(page).to have_text 'Title of the object'
     end
     # visible :all because we display:none the container until we've loaded the CSS.
     expect(page).to have_css 'div.sul-embed-container', visible: :all
-    expect(page).to have_content 'Search this list'
+    expect(page).to have_text 'Search this list'
     expect(page).to have_css 'button[aria-label="Full screen"]', visible: :all
   end
 
@@ -30,7 +30,7 @@ RSpec.describe FileComponent, type: :component do
 
     it 'displays the page' do
       within 'header' do
-        expect(page).to have_no_content 'Title of the object'
+        expect(page).to have_no_text 'Title of the object'
       end
     end
   end
@@ -122,8 +122,8 @@ RSpec.describe FileComponent, type: :component do
     let(:purl) { build(:purl, :citation_only, :embargoed, contents: resources) }
 
     it 'adds an embargo message' do
-      expect(page).to have_content('Access is restricted until 21-Dec-2053')
-      expect(page).to have_no_content('This item cannot be accessed online')
+      expect(page).to have_text('Access is restricted until 21-Dec-2053')
+      expect(page).to have_no_text('This item cannot be accessed online')
     end
   end
 
@@ -131,7 +131,7 @@ RSpec.describe FileComponent, type: :component do
     let(:purl) { build(:purl, :citation_only, contents: resources) }
 
     it 'adds an not available message' do
-      expect(page).to have_content('This item cannot be accessed online')
+      expect(page).to have_text('This item cannot be accessed online')
     end
   end
 

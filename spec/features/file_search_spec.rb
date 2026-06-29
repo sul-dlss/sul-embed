@@ -37,16 +37,16 @@ RSpec.describe 'file viewer search bar', :js do
     it 'hides empty directories' do
       visit_iframe_response('abc123', min_files_to_search: 1)
       expect(page).to have_css '.item-count', text: '2 files'
-      expect(page).to have_content('dir1')
-      expect(page).to have_content('dir2')
-      expect(page).to have_content('Title_of_2_PDF')
-      expect(page).to have_content('Title_of_the_PDF')
+      expect(page).to have_text('dir1')
+      expect(page).to have_text('dir2')
+      expect(page).to have_text('Title_of_2_PDF')
+      expect(page).to have_text('Title_of_the_PDF')
 
       fill_in 'Search this list', with: 'Title_of_the_PDF'
-      expect(page).to have_no_content('dir1')
-      expect(page).to have_no_content('dir2')
-      expect(page).to have_no_content('Title_of_2_PDF')
-      expect(page).to have_content('Title_of_the_PDF')
+      expect(page).to have_no_text('dir1')
+      expect(page).to have_no_text('dir2')
+      expect(page).to have_no_text('Title_of_2_PDF')
+      expect(page).to have_text('Title_of_the_PDF')
 
       expect(page).to have_css '.item-count', text: '1 file'
     end

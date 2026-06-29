@@ -17,7 +17,7 @@ RSpec.describe 'file viewer with hierarchy', :js do
 
   it 'renders hierarchy' do
     visit_iframe_response
-    expect(page).to have_content('2 files')
+    expect(page).to have_text('2 files')
     # There are 2 files
     expect(page).to have_css('tr[data-tree-role="leaf"]', count: 2)
     # There are 2 directories
