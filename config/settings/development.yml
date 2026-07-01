@@ -101,22 +101,22 @@ sandbox:
     - label: location-restricted music, no download
       purl: yv090xk3108
   geo:
-    # - label: Vector - public
-    #   purl: cz128vq0535
-    # - label: Vector - restricted
-    #   purl: fp756wn9369
-    # - label: Raster - public
-    #   purl: tg926kp6619
-    # - label: Raster - public (crosses 180 longitude)
-    #   purl: gk831nh0251
-    # - label: Raster - restricted (stanford only)
-    #   purl: sf815vr1246
     - label: Index map
       purl: kh860qj3406
-    - label: PMTiles polygons
-      purl: jx110jn7648
-    - label: PMTiles points
-      purl: bs277kf6370
+    - label: Shapefile polygons
+      purl: cr288qn9438
+    - label: Shapefile polygons (restricted)
+      purl: bb099zb1450
+    - label: Shapefile polygons (crosses 180 longitude)
+      purl: gk831nh0251
+    - label: Shapefile points
+      purl: bb434sw7474
+    - label: Shapefile points (restricted)
+      purl: mx498nz6026
+    - label: Shapefile lines
+      purl: zc952cn1722
+    - label: Shapefile lines (restricted)
+      purl: wn662ny6315
     - label: PMTiles many layers
       purl: hf224mw4004
     - label: GeoJSON points
@@ -127,14 +127,14 @@ sandbox:
       purl: ch787ty4618
     - label: GeoJSON points (slow to load)
       purl: qp917dm2243
-    - label: Cloud Optimized GeoTIFF
-      purl: vq494qx9344
-    - label: Warped IIIF map layer
+    - label: GeoTIFF (EPSG::32735)
+      purl: bb223nv3920
+    - label: GeoTIFF (EPSG::4326, restricted)
+      purl: bb021mm7809
+    - label: GeoTIFF (EPSG::4326, 'nodata' configured)
+      purl: kq996gp6880
+    - label: IIIF map with georeference annotation
       purl: bb013fz9675
-    - label: with jpg/zip
-      purl: bh152hk2665
-    - label: not released to EarthWorks
-      purl: gh138gt7402
   document:
     - label: single file, world
       purl: bh502xm3351
