@@ -240,7 +240,8 @@ export default class extends Controller {
     const renderer = new CogRenderer(
       this.map,
       this.dataAttributes.cogUrl,
-      this.addOpacityControl.bind(this)
+      this.addOpacityControl.bind(this),
+      this.authToken
     )
     renderer.render()
   }
