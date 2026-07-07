@@ -62,7 +62,7 @@ RSpec.describe 'geo viewer', :js do
 
   context 'with an index map' do
     let(:purl) do
-      build(:purl, :geo, druid: 'mf519gg2738',
+      build(:purl, :geo, druid: 'bc576pk4911',
                          contents: [
                            build(:resource, :file, files: [
                                    build(:resource_file, filename: 'data.zip'),
@@ -72,24 +72,15 @@ RSpec.describe 'geo viewer', :js do
                            build(:resource, :image)
                          ])
     end
-    let(:resource_file) { build(:resource_file, druid: 'mf519gg2738', filename:) }
-
-    context 'when the file has name index_map.json' do
-      let(:filename) { 'index_map.json' }
-
-      it 'shows the geojson' do
-        expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
-        expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/mf519gg2738/#{filename}\"]"
-        expect(page).to have_css('#sidebarContent')
-      end
-    end
+    let(:resource_file) { build(:resource_file, druid: 'bc576pk4911', filename:) }
 
     context 'when the file has name index_map.geojson' do
       let(:filename) { 'index_map.geojson' }
 
       it 'lists the geojson' do
         expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
-        expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/mf519gg2738/#{filename}\"]"
+        expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/bc576pk4911/#{filename}\"]"
+        expect(page).to have_css('#sidebarContent')
       end
     end
   end

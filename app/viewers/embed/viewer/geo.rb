@@ -103,7 +103,7 @@ module Embed
       private
 
       def index_map_files
-        %w[index_map.geojson index_map.json]
+        %w[index_map.geojson]
       end
     end
   end
