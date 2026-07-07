@@ -34,6 +34,7 @@ export default defineConfig({
     alias: {
       '@tests': fileURLToPath(new URL('./spec/javascript', import.meta.url)),
       '@': path.resolve(__dirname, 'app/javascript/src'),
+      'deck-gl-web': path.resolve(__dirname, 'spec/javascript/stubs/deck-gl-web.js'),
     },
   },
   test: {
