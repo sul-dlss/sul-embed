@@ -6,79 +6,11 @@
 #main-display {
   overflow: hidden;
 }
-/* VideoJS CSS overrides for responsive layout
-   See http://andreassauer.name/experimente/video-js/demo.html */
-.video-js {
-  width: 100% !important;
-
-  &::after {
-    content: ".";
-    display: block;
-    height: 0;
-    margin: 0 0 0 -100%;
-    padding: 0;
-    padding-top: 40.1%;
-    position: relative;
-    visibility: hidden;
-  }
-
-  /* Ensure fullscreen media is as large as possible. */
-  &.vjs-fullscreen {
-    audio,
-    video {
-      height: 100% !important;
-      width: 100% !important;
-    }
-  }
-
-  .vjs-poster {
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
-  /* Style the CC button when they have captions enabled
-     This won't work on Firefox unless enabled by layout.css.has-selector.enabled in about:config
-     Other than this, there doesn't seem to be a way to style the state */
-  .vjs-subs-caps-button:has(
-      + .vjs-menu > .vjs-menu-content > .vjs-selected.vjs-captions-menu-item
-    ) {
-    border-bottom: 2px solid red;
-  }
-
-  .vjs-text-track-settings {
-    background: white !important;
-    border-radius: var(--modal-border-radius);
-    box-shadow: 5px 10px 5px #0000001e;
-    height: auto !important;
-    margin: auto;
-    max-width: 72vw;
-    position: relative !important;
-    z-index: 5;
-
-    .vjs-modal-dialog-content {
-      position: relative;
-
-      label,
-      legend {
-        color: #000;
-      }
-
-      .vjs-track-settings-controls button {
-        color: var(--active-color);
-        background-image: none;
-        font-size: 1.2em;
-        padding: 3px;
-        text-transform: uppercase;
-      }
-    }
-  }
-}
-
-.video-js .vjs-tech {
-  position: relative;
+video-skin {
+  --media-border-radius: 0;
+  display: block;
+  height: 100%;
+  width: 100%;
 }
 
 .sul-embed-media-file {
