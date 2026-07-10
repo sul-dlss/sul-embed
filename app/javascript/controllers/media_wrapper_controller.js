@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import videojs from "video.js"
 
 export default class extends Controller {
   static targets = []
@@ -15,13 +14,12 @@ export default class extends Controller {
 
   // switch transcript if media object index is the same as the visible index.
   pauseAllMedia(index) {
-    const mediaObject = this.element.querySelector(".video-js")
+    const mediaObject = this.element.querySelector("hlsjs-video")
     if (mediaObject) {
-      const playerObject = videojs(mediaObject.id)
-      playerObject.pause()
+      mediaObject.pause()
       if (mediaObject.dataset.index == index) {
         window.dispatchEvent(
-          new CustomEvent("switch-transcript", { detail: playerObject }),
+          new CustomEvent("switch-transcript", { detail: mediaObject }),
         )
       }
     }
