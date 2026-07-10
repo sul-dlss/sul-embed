@@ -1,4 +1,3 @@
-import React from 'react';
 import { MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 import CompareIcon from '@mui/icons-material/Compare';
 

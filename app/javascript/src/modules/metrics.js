@@ -23,7 +23,7 @@ const getDruid = () => {
       const path = new URL(purlUrl).pathname
       const match = path.match(/(\w{2}\d{3}\w{2}\d{4})/)
       if (match) return match[0]
-    } catch (e) {
+    } catch {
       return ""
     }
   }
@@ -37,7 +37,7 @@ const getEmbedLocation = () => {
       url: embedUrl.toString(),
       page: embedUrl.pathname,
     }
-  } catch (e) {
+  } catch {
     return {
       url: "",
       page: "",
