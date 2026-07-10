@@ -5,6 +5,7 @@ import reactHooks from "eslint-plugin-react-hooks"
 import jsxA11y from "eslint-plugin-jsx-a11y"
 import testingLibrary from "eslint-plugin-testing-library"
 import jestDom from "eslint-plugin-jest-dom"
+import prettier from "eslint-config-prettier"
 
 export default [
   {
@@ -12,8 +13,8 @@ export default [
       "vendor/**",
       "public/**",
       "tmp/**",
-      "app/javascript/controllers/**"
-    ]
+      "app/javascript/controllers/**",
+    ],
   },
 
   js.configs.recommended,
@@ -29,42 +30,45 @@ export default [
       sourceType: "module",
       globals: {
         ...globals.browser,
-        maplibregl: "readonly"
+        maplibregl: "readonly",
       },
       parserOptions: {
         ecmaFeatures: {
-          jsx: true
-        }
-      }
+          jsx: true,
+        },
+      },
     },
     settings: {
       react: {
-        version: "19"
-      }
+        version: "19",
+      },
     },
     rules: {
       "no-console": "off",
       "no-underscore-dangle": "off",
-      "sort-keys": "off"
-    }
+      "sort-keys": "off",
+    },
   },
 
   {
     files: ["**/*.test.{js,jsx}", "spec/**/*.{js,jsx}"],
     plugins: {
       "testing-library": testingLibrary,
-      "jest-dom": jestDom
+      "jest-dom": jestDom,
     },
     rules: {
       ...testingLibrary.configs.react.rules,
-      ...jestDom.configs["flat/recommended"].rules
+      ...jestDom.configs["flat/recommended"].rules,
     },
     languageOptions: {
       globals: {
         ...globals.browser,
         vi: true,
-        page: true
-      }
-    }
-  }
+        page: true,
+      },
+    },
+  },
+
+  // Disable ESLint rules that conflict with Prettier. Must be last.
+  prettier,
 ]

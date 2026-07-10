@@ -43,7 +43,11 @@ export default class extends Controller {
         const vizUrl = this.visualizationUrl()
         if (vizUrl) {
           this.authRequested = true
-          window.dispatchEvent(new CustomEvent("thumbnail-clicked", { detail: { fileUri: vizUrl } }))
+          window.dispatchEvent(
+            new CustomEvent("thumbnail-clicked", {
+              detail: { fileUri: vizUrl },
+            }),
+          )
         }
       }
       return
@@ -95,7 +99,13 @@ export default class extends Controller {
   // Replace the data-attribute URL matching fileUri with the authorized location
   applyAuthorizedLocation(fileUri, location) {
     if (!location) return
-    const urlKeys = ["indexMap", "geoJson", "pmtiles", "cogUrl", "annotationsUrl"]
+    const urlKeys = [
+      "indexMap",
+      "geoJson",
+      "pmtiles",
+      "cogUrl",
+      "annotationsUrl",
+    ]
     for (const key of urlKeys) {
       if (this.dataAttributes[key] === fileUri) {
         this.el.dataset[key] = location
@@ -110,7 +120,9 @@ export default class extends Controller {
 
   // Whether the given URL matches one of the visualization data attributes
   matchesVisualizationUrl(url) {
-    return this.visualizationUrlKeys().some(key => this.dataAttributes[key] === url)
+    return this.visualizationUrlKeys().some(
+      key => this.dataAttributes[key] === url,
+    )
   }
 
   // The URL of the primary visualization file the geo viewer renders
@@ -122,9 +134,12 @@ export default class extends Controller {
 
   // Remove the placeholder rectangle layers shown while content is locked
   removeReplacementLayers() {
-    if (this.map.getLayer("replacement-fill")) this.map.removeLayer("replacement-fill")
-    if (this.map.getLayer("replacement-line")) this.map.removeLayer("replacement-line")
-    if (this.map.getSource("replacement-source")) this.map.removeSource("replacement-source")
+    if (this.map.getLayer("replacement-fill"))
+      this.map.removeLayer("replacement-fill")
+    if (this.map.getLayer("replacement-line"))
+      this.map.removeLayer("replacement-line")
+    if (this.map.getSource("replacement-source"))
+      this.map.removeSource("replacement-source")
   }
 
   createMap() {
@@ -139,7 +154,7 @@ export default class extends Controller {
     return new maplibregl.Map({
       container: "sul-embed-geo-map",
       style: style,
-      bounds: this.boundingBox()
+      bounds: this.boundingBox(),
     })
   }
 
@@ -149,13 +164,13 @@ export default class extends Controller {
     if (!this.dataAttributes.boundingBox) {
       return [
         [-180, -90],
-        [180, 90]
+        [180, 90],
       ]
     }
     const bb = JSON.parse(this.dataAttributes.boundingBox)
     return [
       [bb[0][1], bb[0][0]],
-      [bb[1][1], bb[1][0]]
+      [bb[1][1], bb[1][0]],
     ]
   }
 
@@ -218,7 +233,7 @@ export default class extends Controller {
       this.map,
       this.dataAttributes,
       this.openSidebarWithContent.bind(this),
-      this.highlightFeature.bind(this)
+      this.highlightFeature.bind(this),
     )
     renderer.render(data)
 
@@ -241,7 +256,7 @@ export default class extends Controller {
       this.map,
       this.dataAttributes.cogUrl,
       this.addOpacityControl.bind(this),
-      this.authToken
+      this.authToken,
     )
     renderer.render()
   }
@@ -251,7 +266,7 @@ export default class extends Controller {
   addOpacityControl(callback, initialOpacity = 0.75) {
     this.map.addControl(
       new OpacityControl(callback, initialOpacity),
-      "top-left"
+      "top-left",
     )
   }
 
@@ -262,7 +277,7 @@ export default class extends Controller {
       this.openSidebarWithContent.bind(this),
       this.highlightFeature.bind(this),
       this.setupSidebar.bind(this),
-      this.addOpacityControl.bind(this)
+      this.addOpacityControl.bind(this),
     )
     renderer.render(data)
   }
@@ -273,7 +288,7 @@ export default class extends Controller {
       this.dataAttributes.pmtiles,
       this.openSidebarWithContent.bind(this),
       this.highlightFeature.bind(this),
-      this.authToken
+      this.authToken,
     )
     renderer.render()
 
@@ -281,7 +296,7 @@ export default class extends Controller {
     this.addOpacityControl(
       opacity =>
         this.map.setPaintProperty("pmtiles-layer", "fill-opacity", opacity),
-      0.75
+      0.75,
     )
   }
 
@@ -289,7 +304,7 @@ export default class extends Controller {
     const renderer = new IiifGeoreferenceRenderer(
       this.map,
       annotationUrl,
-      this.addOpacityControl.bind(this)
+      this.addOpacityControl.bind(this),
     )
     renderer.render()
   }
@@ -305,9 +320,9 @@ export default class extends Controller {
         {
           type: "Feature",
           geometry: feature.geometry,
-          properties: { ...feature.properties }
-        }
-      ]
+          properties: { ...feature.properties },
+        },
+      ],
     })
   }
 
@@ -319,7 +334,7 @@ export default class extends Controller {
     } else {
       this.map.addSource("highlight-source", {
         type: "geojson",
-        data: geojsonData
+        data: geojsonData,
       })
 
       this.map.addLayer({
@@ -327,14 +342,14 @@ export default class extends Controller {
         type: "fill",
         source: "highlight-source",
         filter: ["==", ["geometry-type"], "Polygon"],
-        paint: { "fill-color": color, "fill-opacity": 0.5 }
+        paint: { "fill-color": color, "fill-opacity": 0.5 },
       })
 
       this.map.addLayer({
         id: "highlight-line",
         type: "line",
         source: "highlight-source",
-        paint: { "line-color": color, "line-width": 2 }
+        paint: { "line-color": color, "line-width": 2 },
       })
 
       this.map.addLayer({
@@ -345,8 +360,8 @@ export default class extends Controller {
         paint: {
           "circle-radius": 8,
           "circle-color": color,
-          "circle-opacity": 0.7
-        }
+          "circle-opacity": 0.7,
+        },
       })
     }
   }
@@ -373,25 +388,25 @@ export default class extends Controller {
               [east, south],
               [east, north],
               [west, north],
-              [west, south]
-            ]
-          ]
-        }
-      }
+              [west, south],
+            ],
+          ],
+        },
+      },
     })
 
     this.map.addLayer({
       id: "replacement-fill",
       type: "fill",
       source: "replacement-source",
-      paint: { "fill-color": "#0000FF", "fill-opacity": 0.05 }
+      paint: { "fill-color": "#0000FF", "fill-opacity": 0.05 },
     })
 
     this.map.addLayer({
       id: "replacement-line",
       type: "line",
       source: "replacement-source",
-      paint: { "line-color": "#0000FF", "line-width": 4 }
+      paint: { "line-color": "#0000FF", "line-width": 4 },
     })
 
     this.replacementLayerAdded = true

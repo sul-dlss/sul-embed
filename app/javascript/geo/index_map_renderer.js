@@ -19,7 +19,7 @@ export class IndexMapRenderer {
       "#3388ff",
       ["get", "available"],
       colors.available,
-      colors.unavailable
+      colors.unavailable,
     ]
 
     this.map.addSource("index-map-source", { type: "geojson", data })
@@ -29,14 +29,14 @@ export class IndexMapRenderer {
       type: "fill",
       filter: ["==", ["geometry-type"], "Polygon"],
       source: "index-map-source",
-      paint: { "fill-color": colorExpr, "fill-opacity": 0.2 }
+      paint: { "fill-color": colorExpr, "fill-opacity": 0.2 },
     })
 
     this.map.addLayer({
       id: "index-map-line",
       type: "line",
       source: "index-map-source",
-      paint: { "line-color": colorExpr, "line-width": 1 }
+      paint: { "line-color": colorExpr, "line-width": 1 },
     })
 
     this.map.addLayer({
@@ -49,8 +49,8 @@ export class IndexMapRenderer {
         "circle-color": colorExpr,
         "circle-stroke-width": 1,
         "circle-stroke-color": "#fff",
-        "circle-opacity": 0.75
-      }
+        "circle-opacity": 0.75,
+      },
     })
 
     const bounds = this.getBoundsFromGeoJSON(data)
@@ -58,7 +58,7 @@ export class IndexMapRenderer {
 
     const popup = new maplibregl.Popup({
       closeButton: false,
-      closeOnClick: false
+      closeOnClick: false,
     })
 
     const interactiveLayers = ["index-map-fill", "index-map-circle"]
@@ -66,7 +66,7 @@ export class IndexMapRenderer {
     // Show a tooltip on mouse move
     this.map.on("mousemove", e => {
       const features = this.map.queryRenderedFeatures(e.point, {
-        layers: interactiveLayers
+        layers: interactiveLayers,
       })
       if (features.length > 0) {
         this.map.getCanvas().style.cursor = "pointer"
@@ -110,7 +110,7 @@ export class IndexMapRenderer {
       coordinates.forEach(ring => ring.forEach(c => bounds.extend(c)))
     } else if (type === "MultiPolygon") {
       coordinates.forEach(poly =>
-        poly.forEach(ring => ring.forEach(c => bounds.extend(c)))
+        poly.forEach(ring => ring.forEach(c => bounds.extend(c))),
       )
     } else if (type === "GeometryCollection") {
       geometry.geometries.forEach(g => this.extendBounds(bounds, g))
@@ -145,7 +145,7 @@ export class IndexMapRenderer {
   indexMapInspection(properties) {
     // Spread into a plain object so we can safely attach thumbnailUrl
     const data = { ...properties }
-    const druid = data.Druid || data.recordIdentifier;
+    const druid = data.Druid || data.recordIdentifier
 
     const thumbPromise = new Promise(resolve => {
       // If there is a IIIF URL, use it to fetch a thumbnail image
@@ -167,7 +167,7 @@ export class IndexMapRenderer {
         data.thumbnailUrl = stacksUrl.toString()
         resolve()
       }
-      
+
       // Bail out
       else {
         resolve()
@@ -175,7 +175,7 @@ export class IndexMapRenderer {
     })
 
     thumbPromise.then(() =>
-      this.openSidebarWithContent(this.indexMapInfo(data))
+      this.openSidebarWithContent(this.indexMapInfo(data)),
     )
   }
 }

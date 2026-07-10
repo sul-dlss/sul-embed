@@ -1,6 +1,6 @@
-import RubyPlugin from "vite-plugin-ruby";
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import RubyPlugin from "vite-plugin-ruby"
+import { defineConfig } from "vite"
+import react from "@vitejs/plugin-react"
 
 export default defineConfig({
   // RubyPlugin links with the config/vite.json file,
@@ -26,4 +26,4 @@ export default defineConfig({
       },
     },
   },
-});
+})

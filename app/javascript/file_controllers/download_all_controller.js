@@ -13,7 +13,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   download(event) {
     const el = event.target
-    if (el.localName == 'button') {
+    if (el.localName == "button") {
       el.disabled = true
       el.innerText = " Initializing download..."
 

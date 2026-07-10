@@ -17,9 +17,9 @@ export class IiifGeoreferenceRenderer {
     this.addOpacityControl(opacity => warpedMapLayer.setOpacity(opacity), 1.0)
     this.map.addControl(
       new MaskToggleControl(masked =>
-        warpedMapLayer.setLayerOptions({ applyMask: masked })
+        warpedMapLayer.setLayerOptions({ applyMask: masked }),
       ),
-      "top-left"
+      "top-left",
     )
     this.map.fitBounds(warpedMapLayer.getBounds(), { padding: 20 })
   }

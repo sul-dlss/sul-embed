@@ -1,7 +1,13 @@
 import * as pmtiles from "pmtiles"
 
 export class PmtilesRenderer {
-  constructor(map, pmtilesUrl, openSidebarWithContent, highlightFeature, authToken) {
+  constructor(
+    map,
+    pmtilesUrl,
+    openSidebarWithContent,
+    highlightFeature,
+    authToken,
+  ) {
     this.map = map
     this.pmtilesUrl = pmtilesUrl
     this.openSidebarWithContent = openSidebarWithContent
@@ -27,7 +33,7 @@ export class PmtilesRenderer {
     p.getHeader().then(h => {
       const bounds = new maplibregl.LngLatBounds(
         [h.minLon, h.minLat],
-        [h.maxLon, h.maxLat]
+        [h.maxLon, h.maxLat],
       )
       if (!bounds.isEmpty()) this.map.fitBounds(bounds, { padding: 20 })
     })
@@ -44,23 +50,23 @@ export class PmtilesRenderer {
       // add a source
       this.map.addSource("pmtiles-source", {
         type: "vector",
-        url: `pmtiles://${this.pmtilesUrl}`
+        url: `pmtiles://${this.pmtilesUrl}`,
       })
 
       const interactiveLayers = this.drawLayers(
-        metadata.vector_layers.map(layer => layer.id)
+        metadata.vector_layers.map(layer => layer.id),
       )
 
       // Hover tooltip popup
       const popup = new maplibregl.Popup({
         closeButton: false,
-        closeOnClick: false
+        closeOnClick: false,
       })
 
       // Show a tooltip on mouse move
       this.map.on("mousemove", e => {
         const features = this.map.queryRenderedFeatures(e.point, {
-          layers: interactiveLayers
+          layers: interactiveLayers,
         })
         if (features.length > 0) {
           this.map.getCanvas().style.cursor = "pointer"
@@ -100,9 +106,9 @@ export class PmtilesRenderer {
         "source-layer": vectorLayer,
         paint: {
           "fill-color": this.colorForIdx(i),
-          "fill-opacity": 0.75
+          "fill-opacity": 0.75,
         },
-        filter: ["==", ["geometry-type"], "Polygon"]
+        filter: ["==", ["geometry-type"], "Polygon"],
       })
 
       this.map.addLayer({
@@ -116,10 +122,10 @@ export class PmtilesRenderer {
             "case",
             ["boolean", ["feature-state", "hover"], false],
             2,
-            0.5
-          ]
+            0.5,
+          ],
         },
-        filter: ["==", ["geometry-type"], "LineString"]
+        filter: ["==", ["geometry-type"], "LineString"],
       })
 
       this.map.addLayer({
@@ -136,10 +142,10 @@ export class PmtilesRenderer {
             "case",
             ["boolean", ["feature-state", "hover"], false],
             3,
-            0
-          ]
+            0,
+          ],
         },
-        filter: ["==", ["geometry-type"], "Point"]
+        filter: ["==", ["geometry-type"], "Point"],
       })
       ids.push(`pmtiles-circle-${i}`, `pmtiles-line-${i}`, `pmtiles-fill-${i}`)
     })
@@ -178,15 +184,15 @@ export class PmtilesRenderer {
         const resp = await fetch(url, {
           headers: { Range: `bytes=${offset}-${offset + length - 1}` },
           signal,
-          credentials: "include"
+          credentials: "include",
         })
         return {
           data: await resp.arrayBuffer(),
           etag: resp.headers.get("ETag") || undefined,
           expires: resp.headers.get("Expires") || undefined,
-          cacheControl: resp.headers.get("Cache-Control") || undefined
+          cacheControl: resp.headers.get("Cache-Control") || undefined,
         }
-      }
+      },
     }
   }
 }

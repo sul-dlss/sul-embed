@@ -1,29 +1,29 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import { fileURLToPath } from 'url';
-import fs from 'fs/promises';
-import path from 'path';
+import { defineConfig } from "vite"
+import react from "@vitejs/plugin-react"
+import { fileURLToPath } from "url"
+import fs from "fs/promises"
+import path from "path"
 
 export default defineConfig({
   esbuild: {
     exclude: [],
     include: [
-      /spec\/javascript\/.*\.jsx?$/,          // your tests
+      /spec\/javascript\/.*\.jsx?$/, // your tests
       /app\/javascript\/src\/.*\.jsx?$/, // your source files
     ],
-    loader: 'jsx',
+    loader: "jsx",
   },
   optimizeDeps: {
     esbuildOptions: {
       plugins: [
         {
-          name: 'load-js-files-as-jsx',
+          name: "load-js-files-as-jsx",
           setup(build) {
-            build.onLoad({ filter: /spec\/react\/.*\.js$/ }, async (args) => ({
-              contents: await fs.readFile(args.path, 'utf8'),
-              loader: 'jsx',
-            }));
+            build.onLoad({ filter: /spec\/react\/.*\.js$/ }, async args => ({
+              contents: await fs.readFile(args.path, "utf8"),
+              loader: "jsx",
+            }))
           },
         },
       ],
@@ -32,19 +32,22 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@tests': fileURLToPath(new URL('./spec/javascript', import.meta.url)),
-      '@': path.resolve(__dirname, 'app/javascript/src'),
-      'deck-gl-web': path.resolve(__dirname, 'spec/javascript/stubs/deck-gl-web.js'),
+      "@tests": fileURLToPath(new URL("./spec/javascript", import.meta.url)),
+      "@": path.resolve(__dirname, "app/javascript/src"),
+      "deck-gl-web": path.resolve(
+        __dirname,
+        "spec/javascript/stubs/deck-gl-web.js",
+      ),
     },
   },
   test: {
-    environment: 'happy-dom',
-    exclude: ['node_modules'],
+    environment: "happy-dom",
+    exclude: ["node_modules"],
     globals: true,
-    include: ['spec/javascript/**/*.test.js', 'spec/javascript/**/*.test.jsx'],
+    include: ["spec/javascript/**/*.test.js", "spec/javascript/**/*.test.jsx"],
     sequence: {
       shuffle: true,
     },
-    setupFiles: ['./spec/javascript/setupVitest.js'],
+    setupFiles: ["./spec/javascript/setupVitest.js"],
   },
-});
+})

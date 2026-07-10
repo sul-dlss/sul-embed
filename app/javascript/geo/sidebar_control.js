@@ -22,14 +22,14 @@ export class SidebarControl {
 
     this.button = this.container.querySelector("button")
     this.content = this.container.querySelector(
-      ".sul-embed-geo-sidebar-content"
+      ".sul-embed-geo-sidebar-content",
     )
 
     this.container.addEventListener("click", e => {
       const button = e.target.closest("button")
       if (!button) return
       const contentEl = document.getElementById(
-        button.getAttribute("aria-controls")
+        button.getAttribute("aria-controls"),
       )
       const expanded = button.getAttribute("aria-expanded") === "true"
       contentEl.classList.toggle("show", !expanded)

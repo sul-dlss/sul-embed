@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = [ 'table', 'count', 'stripes' ]
+  static targets = ["table", "count", "stripes"]
 
   connect() {
     this.updateCount()
@@ -9,31 +9,35 @@ export default class extends Controller {
   }
 
   get visibleRows() {
-    return this.tableTarget.querySelectorAll('tbody > tr:not([hidden])')
+    return this.tableTarget.querySelectorAll("tbody > tr:not([hidden])")
   }
 
   toggle(event) {
-    const dirTrElement = event.target.closest('tr')
-    if(dirTrElement.getAttribute('aria-expanded') === 'true') {
+    const dirTrElement = event.target.closest("tr")
+    if (dirTrElement.getAttribute("aria-expanded") === "true") {
       // Contract
-      dirTrElement.setAttribute('aria-expanded', 'false')
-      this.childTrElements(dirTrElement).forEach((childTrElement) => {
+      dirTrElement.setAttribute("aria-expanded", "false")
+      this.childTrElements(dirTrElement).forEach(childTrElement => {
         childTrElement.dataset.expandHidden = true
         this.toggleHide(childTrElement)
       })
     } else {
       // Expand
-      dirTrElement.setAttribute('aria-expanded', 'true')
+      dirTrElement.setAttribute("aria-expanded", "true")
       let closedBranchLevel = null
-      this.childTrElements(dirTrElement).forEach((childTrElement) => {
+      this.childTrElements(dirTrElement).forEach(childTrElement => {
         // Keeps nested closed branches closed and children hidden.
-        if(closedBranchLevel && childTrElement.getAttribute('aria-level') > closedBranchLevel) return
+        if (
+          closedBranchLevel &&
+          childTrElement.getAttribute("aria-level") > closedBranchLevel
+        )
+          return
 
         delete childTrElement.dataset.expandHidden
         this.toggleHide(childTrElement)
 
-        if(this.isClosedBranch(childTrElement)) {
-          closedBranchLevel = childTrElement.getAttribute('aria-level')
+        if (this.isClosedBranch(childTrElement)) {
+          closedBranchLevel = childTrElement.getAttribute("aria-level")
         } else {
           closedBranchLevel = null
         }
@@ -41,37 +45,39 @@ export default class extends Controller {
     }
 
     // Update styling of background based on number of visible rows
-    this.updateStripesStyling();
+    this.updateStripesStyling()
   }
 
   search(event) {
-    if(event.key === 'Tab') return
+    if (event.key === "Tab") return
 
     const search = event.target.value.toLowerCase()
 
-    if(search === '') return this.clearSearch()
+    if (search === "") return this.clearSearch()
 
-    const rowElements = Array.from(this.tableTarget.querySelectorAll('tbody > tr')).reverse()
+    const rowElements = Array.from(
+      this.tableTarget.querySelectorAll("tbody > tr"),
+    ).reverse()
     const levelMatches = []
-    rowElements.forEach((rowElement) => {
-      const thisLevel = rowElement.getAttribute('aria-level')
-      if(rowElement.dataset.treeRole === 'leaf') {
-        if(this.searchMatch(rowElement, search)) {
+    rowElements.forEach(rowElement => {
+      const thisLevel = rowElement.getAttribute("aria-level")
+      if (rowElement.dataset.treeRole === "leaf") {
+        if (this.searchMatch(rowElement, search)) {
           delete rowElement.dataset.searchHidden
           this.toggleHide(rowElement)
-          if(this.lastLevelMatch(levelMatches) != thisLevel) {
-            levelMatches.push(thisLevel-1)
+          if (this.lastLevelMatch(levelMatches) != thisLevel) {
+            levelMatches.push(thisLevel - 1)
           }
         } else {
           rowElement.dataset.searchHidden = true
           this.toggleHide(rowElement)
         }
       } else {
-        if(this.lastLevelMatch(levelMatches) == thisLevel) {
+        if (this.lastLevelMatch(levelMatches) == thisLevel) {
           delete rowElement.dataset.searchHidden
           this.toggleHide(rowElement)
           levelMatches.pop()
-          levelMatches.push(thisLevel-1)
+          levelMatches.push(thisLevel - 1)
         } else {
           rowElement.dataset.searchHidden = true
           this.toggleHide(rowElement)
@@ -86,11 +92,17 @@ export default class extends Controller {
   }
 
   searchMatch(rowElement, search) {
-    return rowElement.dataset.filepath.includes(search) || rowElement.querySelector('*[data-tree-role="label"]')?.textContent.toLowerCase().includes(search)
+    return (
+      rowElement.dataset.filepath.includes(search) ||
+      rowElement
+        .querySelector('*[data-tree-role="label"]')
+        ?.textContent.toLowerCase()
+        .includes(search)
+    )
   }
 
   clearSearch() {
-    this.tableTarget.querySelectorAll('tbody > tr').forEach((rowElement) => {
+    this.tableTarget.querySelectorAll("tbody > tr").forEach(rowElement => {
       delete rowElement.dataset.searchHidden
       this.toggleHide(rowElement)
     })
@@ -100,10 +112,14 @@ export default class extends Controller {
   childTrElements(trElement) {
     const childTrElements = []
     let nextTrElement = trElement.nextElementSibling
-    while(nextTrElement) {
+    while (nextTrElement) {
       childTrElements.push(nextTrElement)
       nextTrElement = nextTrElement.nextElementSibling
-      if(nextTrElement && nextTrElement.getAttribute('aria-level') <= trElement.getAttribute('aria-level')) {
+      if (
+        nextTrElement &&
+        nextTrElement.getAttribute("aria-level") <=
+          trElement.getAttribute("aria-level")
+      ) {
         nextTrElement = null
       }
     }
@@ -111,64 +127,65 @@ export default class extends Controller {
   }
 
   navigate(event) {
-    switch(true) {
-      case event.key === 'Enter' && this.isBranch(event.target):
+    switch (true) {
+      case event.key === "Enter" && this.isBranch(event.target):
         event.preventDefault()
         this.toggle(event)
         break
-      case event.key === 'Enter' && this.isLeaf(event.target):
+      case event.key === "Enter" && this.isLeaf(event.target):
         // Perform the default action (download the file)
         const downloadElement = this.downloadElement(event.target)
-        if(!downloadElement) break
+        if (!downloadElement) break
 
         event.preventDefault()
         downloadElement.click()
         break
-      case event.key === 'ArrowRight' && this.isClosedBranch(event.target):
+      case event.key === "ArrowRight" && this.isClosedBranch(event.target):
         // When a closed node, opens the node
         event.preventDefault()
         this.toggle(event)
         break
-      case event.key === 'ArrowRight' && this.isOpenBranch(event.target):
+      case event.key === "ArrowRight" && this.isOpenBranch(event.target):
         // When an open node, moves focus to the first child node
         event.preventDefault()
         event.target.nextElementSibling.focus()
         break
-      case event.key === 'ArrowLeft' && this.isOpenBranch(event.target):
+      case event.key === "ArrowLeft" && this.isOpenBranch(event.target):
         // When an open node, closes the node
         event.preventDefault()
         this.toggle(event)
         break
-      case event.key === 'ArrowLeft' && event.target.getAttribute('aria-level') > 1:
+      case event.key === "ArrowLeft" &&
+        event.target.getAttribute("aria-level") > 1:
         // When a closed node, moves focus to the node's parent node
         const parentBranchRowElement = this.parentBranchRowElement(event.target)
-        if(!parentBranchRowElement) break
+        if (!parentBranchRowElement) break
 
         event.preventDefault()
         parentBranchRowElement.focus()
         break
-      case event.key === 'ArrowUp':
+      case event.key === "ArrowUp":
         // Move to the previous node without opening or closing
         const previousRowElement = this.previousBranchRowElement(event.target)
-        if(!previousRowElement) break
+        if (!previousRowElement) break
 
         event.preventDefault()
         previousRowElement.focus()
         break
-      case event.key === 'ArrowDown':
+      case event.key === "ArrowDown":
         // Move to the next node without opening or closing
         const nextRowElement = this.nextBranchRowElement(event.target)
-        if(!nextRowElement) break
+        if (!nextRowElement) break
 
         event.preventDefault()
         nextRowElement.focus()
         break
-      case event.key === 'Home':
+      case event.key === "Home":
         // Move to the first node without opening or closing
         event.preventDefault()
         this.visibleRows[0].focus()
         break
-      case event.key === 'End':
+      case event.key === "End":
         // Move to the last node without opening or closing
         event.preventDefault()
         const rowElements = this.visibleRows
@@ -178,29 +195,36 @@ export default class extends Controller {
   }
 
   isBranch(element) {
-    return element.dataset.treeRole === 'branch'
+    return element.dataset.treeRole === "branch"
   }
 
   isClosedBranch(element) {
-    return this.isBranch(element) && element.getAttribute('aria-expanded') !== 'true'
+    return (
+      this.isBranch(element) && element.getAttribute("aria-expanded") !== "true"
+    )
   }
 
   isOpenBranch(element) {
-    return this.isBranch(element) && element.getAttribute('aria-expanded') === 'true'
+    return (
+      this.isBranch(element) && element.getAttribute("aria-expanded") === "true"
+    )
   }
 
   isLeaf(element) {
-    return element.dataset.treeRole === 'leaf'
+    return element.dataset.treeRole === "leaf"
   }
 
   downloadElement(rowElement) {
-    return rowElement.querySelector('a')
+    return rowElement.querySelector("a")
   }
 
   parentBranchRowElement(rowElement) {
     let previousElementSibling = rowElement.previousElementSibling
-    while(previousElementSibling) {
-      if(previousElementSibling.getAttribute('aria-level') == rowElement.getAttribute('aria-level') - 1) {
+    while (previousElementSibling) {
+      if (
+        previousElementSibling.getAttribute("aria-level") ==
+        rowElement.getAttribute("aria-level") - 1
+      ) {
         return previousElementSibling
       }
       previousElementSibling = previousElementSibling.previousElementSibling
@@ -210,8 +234,8 @@ export default class extends Controller {
 
   nextBranchRowElement(rowElement) {
     let siblingElement = rowElement.nextElementSibling
-    while(siblingElement) {
-      if(!siblingElement.hidden) {
+    while (siblingElement) {
+      if (!siblingElement.hidden) {
         return siblingElement
       }
       siblingElement = siblingElement.nextElementSibling
@@ -221,8 +245,8 @@ export default class extends Controller {
 
   previousBranchRowElement(rowElement) {
     let siblingElement = rowElement.previousElementSibling
-    while(siblingElement) {
-      if(!siblingElement.hidden) {
+    while (siblingElement) {
+      if (!siblingElement.hidden) {
         return siblingElement
       }
       siblingElement = siblingElement.previousElementSibling
@@ -231,17 +255,23 @@ export default class extends Controller {
   }
 
   updateCount() {
-    if(!this.hasCountTarget) return
-    const count = this.countTarget.textContent = this.tableTarget.querySelectorAll('tbody > tr[data-tree-role="leaf"]:not([data-search-hidden])').length
+    if (!this.hasCountTarget) return
+    const count = (this.countTarget.textContent =
+      this.tableTarget.querySelectorAll(
+        'tbody > tr[data-tree-role="leaf"]:not([data-search-hidden])',
+      ).length)
     if (count == 1) {
-      this.countTarget.textContent = '1 file'
+      this.countTarget.textContent = "1 file"
     } else {
       this.countTarget.textContent = `${count} files`
     }
   }
 
   toggleHide(trElement) {
-    if(trElement.dataset.searchHidden === 'true' || trElement.dataset.expandHidden === 'true') {
+    if (
+      trElement.dataset.searchHidden === "true" ||
+      trElement.dataset.expandHidden === "true"
+    ) {
       trElement.hidden = true
     } else {
       trElement.hidden = false
@@ -251,7 +281,7 @@ export default class extends Controller {
   // Update the styling of the zebra stripes section of the page
   updateStripesStyling() {
     // Set the correct class
-    const stripesClass = (this.visibleRows.length % 2) === 0 ? 'even': 'odd'
+    const stripesClass = this.visibleRows.length % 2 === 0 ? "even" : "odd"
     this.stripesTarget.className = "stripes-background-" + stripesClass
     // Update the height as well
     this.updateStripes()
@@ -261,12 +291,14 @@ export default class extends Controller {
     // Get distance between top of window and bottom of table
     const boundingRecY = this.tableTarget.getBoundingClientRect().bottom
     // Get distance between top of window and the bottom of the parent div for stripes background
-    const parentY = this.stripesTarget.parentElement.getBoundingClientRect().bottom
+    const parentY =
+      this.stripesTarget.parentElement.getBoundingClientRect().bottom
     // Calculate the difference i.e. the remaining space for the parent div
     const diff = parentY - boundingRecY
     // Set height for stripes div to fill in the remaining space
     this.stripesTarget.style.height = diff + "px"
     // set width of stripes (needed when drawer is opened/closed)
-    this.stripesTarget.style.width = this.tableTarget.getBoundingClientRect().width + 'px';
+    this.stripesTarget.style.width =
+      this.tableTarget.getBoundingClientRect().width + "px"
   }
 }
