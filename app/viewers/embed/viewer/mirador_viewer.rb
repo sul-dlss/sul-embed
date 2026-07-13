@@ -21,9 +21,7 @@ module Embed
       end
 
       def show_attribution_panel?
-        purl_object.collections.any? do |druid|
-          Settings.collections_to_show_attribution.include?(druid)
-        end
+        purl_object.collections.intersect?(Settings.collections_to_show_attribution)
       end
 
       def cdl?
