@@ -15,7 +15,7 @@ const onViewportChange = (event) => {
   const viewer = event.eventSource;
   const { viewport } = viewer;
 
-  let full_image = ''
+  let full_image
   const itemCount = viewport.viewer.world.getItemCount();
 
   if (itemCount > 1){

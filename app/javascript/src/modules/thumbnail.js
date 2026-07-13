@@ -19,7 +19,7 @@ export default class {
       stanfordOnlyScreenreaderText = '<span class="visually-hidden">Stanford only</span>'
     }
 
-    let thumbnailIcon = ''
+    let thumbnailIcon
     if (this.thumbnailUrl) {
       thumbnailIcon = `<img data-controller="image" data-action="error->image#handleError auth-success@window->image#updateImage" class="square-icon" src="${this.thumbnailUrl}" alt="" />`
     } else {

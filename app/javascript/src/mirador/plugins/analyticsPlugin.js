@@ -30,7 +30,7 @@ function* manifestAnalytics({ windowId, manifestId } = {}) {
   const manifestTitle =
     yield select(getManifestTitle, { windowId, manifestId })
 
-  let canvasCount = 0
+  let canvasCount
 
   if (windowId) {
     const canvases = yield select(getCanvases, { windowId })
