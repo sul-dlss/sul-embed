@@ -4,7 +4,7 @@ import {
   DialogActions, Button, TextField,
 } from '@mui/material';
 
-export default function CompareDialog({ addWindow, handleClose, show = false, updateWindow, windowId }) {
+export default function CompareDialog({ addWindow, show = false, updateWindow, windowId }) {
   const [url, setUrl] = React.useState('');
 
   const handleSubmit = (e) => {

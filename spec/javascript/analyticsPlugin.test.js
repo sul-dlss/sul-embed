@@ -1,5 +1,4 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { put } from 'redux-saga/effects'
 import analyticsPlugin, { deriveManifestType, clean } from '@/mirador/plugins/analyticsPlugin.js'
 
 describe('deriveManifestType', () => {
