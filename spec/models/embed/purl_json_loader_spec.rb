@@ -41,7 +41,7 @@ RSpec.describe Embed::PurlJsonLoader do
       context 'with a public purl with collection type' do
         let(:json) { collection_purl_json }
 
-        it { is_expected.to include({ title: 'captioned media', type: 'collection', embargoed: false, download: nil }) }
+        it { is_expected.to include({ title: 'Captioned media', type: 'collection', embargoed: false, download: nil }) }
 
         it 'has empty contents' do
           expect(data[:contents]).to all(be_a(Embed::Purl::Resource))

@@ -145,7 +145,7 @@ module Embed
     end
 
     def title
-      json.fetch('label')
+      cocina_record.display_title
     end
 
     def use_and_reproduction
