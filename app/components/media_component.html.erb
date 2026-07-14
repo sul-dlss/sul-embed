@@ -49,7 +49,7 @@
   <% end %>
 
   <% component.with_body do %>
-    <div data-controller="locked-media-poster" data-action="auth-success@window->locked-media-poster#hide thumbnail-clicked@window->file-auth#authFileAndDisplay" style="width: 100%; display: flex;">
+    <div data-action="thumbnail-clicked@window->file-auth#authFileAndDisplay" style="width: 100%; display: flex;">
       <%= render Media::TagComponent.with_collection(resources_with_primary_file, druid:) %>
     </div>
   <% end %>
