@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
-import OpenSeadragon from 'openseadragon'
+import OpenSeadragon from "openseadragon"
 
 export default class extends Controller {
   static values = {
@@ -13,25 +13,28 @@ export default class extends Controller {
     // https://github.com/ProjectMirador/mirador/issues/3789
 
     // setTimeout is needed, because without it, the viewer initializes before the drawer fully opens and the zoom is off.
-    if (this.element.dataset.index == 0){
+    if (this.element.dataset.index == 0) {
       setTimeout(() => {
-        const event = new CustomEvent('thumbnail-clicked', { detail: { index: 0, fileUri: this.urlValue } })
+        const event = new CustomEvent("thumbnail-clicked", {
+          detail: { index: 0, fileUri: this.urlValue },
+        })
         this.initializeViewer(event)
-      }, 500);
+      }, 500)
     }
   }
 
   initializeViewer(evt) {
     // Customize the error message displayed to users:
-    OpenSeadragon.setString('Errors.OpenFailed', 'Restricted')
+    OpenSeadragon.setString("Errors.OpenFailed", "Restricted")
 
     // only load viewer if the image has been clicked in the sidebar
     // and the viewer has never been initialized.
-    if (this.viewer || this.element.dataset.index != String(evt.detail.index)) return;
+    if (this.viewer || this.element.dataset.index != String(evt.detail.index))
+      return
     this.viewer = OpenSeadragon({
       id: this.element.id,
       tileSources: [this.urlValue],
-      prefixUrl: '',
+      prefixUrl: "",
       navImages: this.navImagesValue,
     })
   }

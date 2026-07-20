@@ -9,9 +9,10 @@ export class CredentialedHttpSource {
   head() {
     this._head ||= fetch(this.url, {
       method: "HEAD",
-      credentials: "include"
+      credentials: "include",
     }).then(response => {
-      if (!response.ok) throw new Error(`Failed to HEAD ${this.url.href}: ${response.status}`)
+      if (!response.ok)
+        throw new Error(`Failed to HEAD ${this.url.href}: ${response.status}`)
 
       this.metadata = this.metadataFrom(response)
       return this.metadata
@@ -24,10 +25,11 @@ export class CredentialedHttpSource {
     const response = await fetch(this.url, {
       headers: { Range: `bytes=${offset}-${offset + length - 1}` },
       signal: options.signal,
-      credentials: "include"
+      credentials: "include",
     })
 
-    if (!response.ok) throw new Error(`Failed to fetch ${this.url.href}: ${response.status}`)
+    if (!response.ok)
+      throw new Error(`Failed to fetch ${this.url.href}: ${response.status}`)
 
     this.metadata ||= this.metadataFrom(response)
     return response.arrayBuffer()
@@ -39,13 +41,16 @@ export class CredentialedHttpSource {
     const contentRange = response.headers.get("content-range")
 
     if (contentLength) metadata.size = parseInt(contentLength, 10)
-    if (contentRange) metadata.size = parseInt(contentRange.split("/").pop(), 10)
+    if (contentRange)
+      metadata.size = parseInt(contentRange.split("/").pop(), 10)
 
     metadata.eTag = response.headers.get("etag") || undefined
     metadata.contentType = response.headers.get("content-type") || undefined
-    metadata.contentDisposition = response.headers.get("content-disposition") || undefined
+    metadata.contentDisposition =
+      response.headers.get("content-disposition") || undefined
     metadata.cacheControl = response.headers.get("cache-control") || undefined
-    metadata.contentEncoding = response.headers.get("content-encoding") || undefined
+    metadata.contentEncoding =
+      response.headers.get("content-encoding") || undefined
 
     return metadata
   }
@@ -81,9 +86,9 @@ export class CogRenderer {
           this.map.fitBounds(
             [
               [geographicBounds["west"], geographicBounds["south"]],
-              [geographicBounds["east"], geographicBounds["north"]]
+              [geographicBounds["east"], geographicBounds["north"]],
             ],
-            { padding: 20 }
+            { padding: 20 },
           )
         },
         // Disable the web worker decoder pool; this appears to cause errors because
@@ -92,8 +97,8 @@ export class CogRenderer {
         // See: https://developmentseed.org/deck.gl-raster/api/geotiff/type-aliases/DecoderPoolOptions/
         // See also: https://github.com/developmentseed/deck.gl-raster/issues/364
         pool: new this.DecoderPool({
-          createWorker: null
-        })
+          createWorker: null,
+        }),
       })
 
     this.deckOverlay.setProps({ layers: [buildLayer(initialOpacity)] })
@@ -101,7 +106,7 @@ export class CogRenderer {
     if (this.addOpacityControl) {
       this.addOpacityControl(
         opacity => this.deckOverlay.setProps({ layers: [buildLayer(opacity)] }),
-        initialOpacity
+        initialOpacity,
       )
     }
   }
@@ -113,7 +118,7 @@ export class CogRenderer {
       const source = new CredentialedHttpSource(this.cogUrl)
       this._geotiffSource = this.GeoTIFF.open({
         dataSource: source,
-        headerSource: source
+        headerSource: source,
       })
     }
 

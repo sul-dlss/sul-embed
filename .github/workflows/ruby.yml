@@ -27,3 +27,14 @@ jobs:
         run: bin/rake
         env:
           RAILS_ENV: test
+
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - run: yarn install --frozen-lockfile
+      - name: Check JavaScript formatting
+        run: yarn format:check

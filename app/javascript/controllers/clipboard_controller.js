@@ -1,9 +1,9 @@
-import { Controller } from '@hotwired/stimulus'
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ['value']
+  static targets = ["value"]
 
-  copy () {
+  copy() {
     navigator.clipboard.writeText(this.valueTarget.value)
   }
 }

@@ -5,7 +5,7 @@ export class GeoJsonRenderer {
     openSidebarWithContent,
     highlightFeature,
     setupSidebar,
-    addOpacityControl
+    addOpacityControl,
   ) {
     this.map = map
     this.dataAttributes = dataAttributes
@@ -45,13 +45,13 @@ export class GeoJsonRenderer {
       id: layerId,
       type,
       source: "geo-json-source",
-      paint
+      paint,
     })
 
     // Hover tooltip
     const popup = new maplibregl.Popup({
       closeButton: false,
-      closeOnClick: false
+      closeOnClick: false,
     })
 
     const interactiveLayers = [layerId]
@@ -59,7 +59,7 @@ export class GeoJsonRenderer {
     // Show a tooltip on mouse move
     this.map.on("mousemove", e => {
       const features = this.map.queryRenderedFeatures(e.point, {
-        layers: interactiveLayers
+        layers: interactiveLayers,
       })
       if (features.length > 0) {
         this.map.getCanvas().style.cursor = "pointer"
@@ -88,13 +88,13 @@ export class GeoJsonRenderer {
     const opacityProperty = {
       fill: "fill-opacity",
       line: "line-opacity",
-      circle: "circle-opacity"
+      circle: "circle-opacity",
     }[type]
 
     this.setupSidebar()
     this.addOpacityControl(
       opacity => this.map.setPaintProperty(layerId, opacityProperty, opacity),
-      0.75
+      0.75,
     )
   }
 

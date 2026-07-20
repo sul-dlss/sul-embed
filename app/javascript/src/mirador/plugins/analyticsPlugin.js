@@ -1,6 +1,4 @@
-import {
-  all, put, select, takeEvery,
-} from 'redux-saga/effects'
+import { all, put, select, takeEvery } from "redux-saga/effects"
 import {
   ActionTypes,
   getManifest,
@@ -8,27 +6,26 @@ import {
   getCanvases,
   getCompanionWindow,
   getWindow,
-} from 'mirador'
+} from "mirador"
 
 export function deriveManifestType(json = {}) {
-  const type = json.type || json['@type'] || ''
+  const type = json.type || json["@type"] || ""
 
-  if (/collection/i.test(type)) return 'collection'
-  if (/manifest/i.test(type)) return 'manifest'
+  if (/collection/i.test(type)) return "collection"
+  if (/manifest/i.test(type)) return "manifest"
 
-  return 'unknown'
+  return "unknown"
 }
 
 function* manifestAnalytics({ windowId, manifestId } = {}) {
   const manifest = yield select(
     getManifest,
-    windowId ? { windowId } : { manifestId }
+    windowId ? { windowId } : { manifestId },
   )
 
   const json = manifest?.json || {}
 
-  const manifestTitle =
-    yield select(getManifestTitle, { windowId, manifestId })
+  const manifestTitle = yield select(getManifestTitle, { windowId, manifestId })
 
   let canvasCount
 
@@ -36,56 +33,52 @@ function* manifestAnalytics({ windowId, manifestId } = {}) {
     const canvases = yield select(getCanvases, { windowId })
     canvasCount = canvases?.length ?? 0
   } else {
-    const canvases =
-      json.items ??
-      json.sequences?.[0]?.canvases ??
-      []
+    const canvases = json.items ?? json.sequences?.[0]?.canvases ?? []
 
     canvasCount = canvases.length ?? 0
   }
 
   return {
     manifestId: manifest?.id,
-    manifestTitle: manifestTitle || '',
+    manifestTitle: manifestTitle || "",
     canvasCount,
     manifestType: deriveManifestType(json),
   }
 }
 
 function* onSetCanvas({ type, windowId, canvasId }) {
-  const metadata =
-    yield* manifestAnalytics({ windowId })
+  const metadata = yield* manifestAnalytics({ windowId })
 
   const allCanvases = yield select(getCanvases, { windowId })
   const canvasIndex = allCanvases?.findIndex(c => c.id === canvasId)
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: metadata.manifestId,
       eventLabel: canvasId,
       // new semantic fields
       eventAction: type,
-      interactionType: 'canvas',
+      interactionType: "canvas",
       canvasId,
       canvasIndex,
-      ...metadata
+      ...metadata,
     },
   })
 }
 
 function* onAddResource({ type, manifestId }) {
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: manifestId,
       // new semantic fields
       eventAction: type,
-      interactionType: 'resource',
-      manifestId
-    }
+      interactionType: "resource",
+      manifestId,
+    },
   })
 }
 
@@ -101,50 +94,58 @@ function* onAddResource({ type, manifestId }) {
 
 * TODO: remove ultimately remove position param
 */
-function* onAddCompanionWindow({ payload: { position, content }, type, windowId }) {
+function* onAddCompanionWindow({
+  payload: { position, content },
+  type,
+  windowId,
+}) {
   if (!windowId) return
 
-  const metadata =
-    yield* manifestAnalytics({ windowId })
+  const metadata = yield* manifestAnalytics({ windowId })
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: metadata.manifestId,
       eventLabel: `${content}/${position}`,
       // new semantic fields
       eventAction: type,
-      interactionType: 'companion',
+      interactionType: "companion",
       companionWindow: content,
       ...metadata,
-    }
+    },
   })
 }
 
-function* onUpdateCompanionWindow({ id, payload: { position, content }, type, windowId }) {
+function* onUpdateCompanionWindow({
+  id,
+  payload: { position, content },
+  type,
+  windowId,
+}) {
   if (!windowId) return
 
-  const metadata =
-    yield* manifestAnalytics({ windowId })
+  const metadata = yield* manifestAnalytics({ windowId })
 
-  const { content: existingContent } =
-    yield select(getCompanionWindow, { companionWindowId: id })
+  const { content: existingContent } = yield select(getCompanionWindow, {
+    companionWindowId: id,
+  })
 
   const resolvedContent = content || existingContent
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: metadata.manifestId,
       eventLabel: `${resolvedContent}/${position}`,
       // new semantic fields
       eventAction: type,
-      interactionType: 'companion',
+      interactionType: "companion",
       companionWindow: resolvedContent,
       ...metadata,
-    }
+    },
   })
 }
 
@@ -152,84 +153,78 @@ function* onToggleSideBar({ type, windowId }) {
   const win = yield select(getWindow, { windowId })
   if (!win?.sideBarOpen) return
 
-  const metadata =
-    yield* manifestAnalytics({ windowId })
+  const metadata = yield* manifestAnalytics({ windowId })
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: metadata.manifestId,
       // new semantic fields
       eventAction: type,
-      interactionType: 'companion',
+      interactionType: "companion",
       ...metadata,
-    }
+    },
   })
 }
 
 function* onReceiveManifest({ manifestId, type }) {
-  const metadata =
-    yield* manifestAnalytics({ manifestId })
+  const metadata = yield* manifestAnalytics({ manifestId })
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: manifestId,
       // new semantic fields
       eventAction: type,
       ...metadata,
-    }
+    },
   })
 }
 
 function* onRequestSearch({ query, type, windowId }) {
-  const metadata =
-    yield* manifestAnalytics({ windowId })
+  const metadata = yield* manifestAnalytics({ windowId })
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: metadata.manifestId,
       eventLabel: query,
       // new semantic fields
       eventAction: type,
-      interactionType: 'search',
+      interactionType: "search",
       searchTerm: query,
       ...metadata,
-    }
+    },
   })
 }
 
 function* onReceiveSearch({ searchJson, type, windowId }) {
-  const metadata =
-    yield* manifestAnalytics({ windowId })
+  const metadata = yield* manifestAnalytics({ windowId })
 
   const searchResultCount =
-    searchJson?.resources?.length ??
-    searchJson?.items?.length ??
-    0
+    searchJson?.resources?.length ?? searchJson?.items?.length ?? 0
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: metadata.manifestId,
       eventValue: searchResultCount,
       // new semantic fields
       eventAction: type,
-      interactionType: 'search',
+      interactionType: "search",
       searchResultCount,
       ...metadata,
-    }
+    },
   })
 }
 
 function* onAddWindow({ type, window: { canvasId, manifestId } }) {
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: manifestId,
@@ -238,33 +233,31 @@ function* onAddWindow({ type, window: { canvasId, manifestId } }) {
       eventAction: type,
       canvasId,
       manifestId,
-    }
+    },
   })
 }
 
 function* onMaximizeWindow({ type, windowId }) {
-  const metadata =
-    yield* manifestAnalytics({ windowId })
+  const metadata = yield* manifestAnalytics({ windowId })
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: metadata.manifestId,
       eventAction: type,
       // new semantic fields
-      interactionType: 'window',
+      interactionType: "window",
       ...metadata,
-    }
+    },
   })
 }
 
 function* onSetWindowViewType({ type, viewType, windowId }) {
-  const metadata =
-    yield* manifestAnalytics({ windowId })
+  const metadata = yield* manifestAnalytics({ windowId })
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: metadata.manifestId,
@@ -273,16 +266,15 @@ function* onSetWindowViewType({ type, viewType, windowId }) {
       viewType,
       eventAction: type,
       ...metadata,
-    }
+    },
   })
 }
 
 function* onSelectAnnotation({ annotationId, type, windowId }) {
-  const metadata =
-    yield* manifestAnalytics({ windowId })
+  const metadata = yield* manifestAnalytics({ windowId })
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: metadata.manifestId,
@@ -290,124 +282,125 @@ function* onSelectAnnotation({ annotationId, type, windowId }) {
       // new semantic fields
       annotationId,
       eventAction: type,
-      interactionType: 'annotation',
+      interactionType: "annotation",
       ...metadata,
-    }
+    },
   })
 }
 
 function* onSetWorkspaceAction({ type }) {
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       eventAction: type,
-      interactionType: 'workspace',
-    }
+      interactionType: "workspace",
+    },
   })
 }
 
 function* onSetWorkspaceActionLayout({ layout, type }) {
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: layout,
       // new semantic fields
       eventAction: type,
-      interactionType: 'layout',
+      interactionType: "layout",
       layout,
-    }
+    },
   })
 }
 
 const authTimes = {}
 
 function* onAddAuthRequest({ id, type, windowId }) {
-  const metadata =
-    yield* manifestAnalytics({ windowId })
+  const metadata = yield* manifestAnalytics({ windowId })
 
   authTimes[id] = Date.now()
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: metadata.manifestId,
       eventLabel: id,
       // new semantic fields
       eventAction: type,
-      interactionType: 'auth',
+      interactionType: "auth",
       authId: id,
       ...metadata,
-    }
+    },
   })
 }
 
 function* onResetAuthState({ id, type }) {
-  const sessionMinutes =
-    Math.ceil((Date.now() - (authTimes[id] || Date.now())) / 1000 / 60)
+  const sessionMinutes = Math.ceil(
+    (Date.now() - (authTimes[id] || Date.now())) / 1000 / 60,
+  )
 
   authTimes[id] = undefined
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventLabel: id,
       eventValue: sessionMinutes,
       // new semantic fields
       eventAction: type,
-      interactionType: 'auth',
+      interactionType: "auth",
       authId: id,
       sessionMinutes,
-    }
+    },
   })
 }
 
 const tokenRequests = {}
 
 function* onTokenRequest({ type, authId }) {
-  const sessionMinutes =
-    Math.ceil((Date.now() - (authTimes[authId] || Date.now())) / 1000 / 60)
+  const sessionMinutes = Math.ceil(
+    (Date.now() - (authTimes[authId] || Date.now())) / 1000 / 60,
+  )
 
   if (sessionMinutes < 5) return
 
   tokenRequests[authId] = (tokenRequests[authId] || 0) + 1
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventLabel: authId,
       eventValue: tokenRequests[authId],
       // new semantic fields
       eventAction: type,
-      interactionType: 'auth',
+      interactionType: "auth",
       authId,
       tokenRequestCount: tokenRequests[authId],
-    }
+    },
   })
 }
 
 function* onTokenFailure({ type, authId }) {
-  const sessionMinutes =
-    Math.ceil((Date.now() - (authTimes[authId] || Date.now())) / 1000 / 60)
+  const sessionMinutes = Math.ceil(
+    (Date.now() - (authTimes[authId] || Date.now())) / 1000 / 60,
+  )
 
-  const authStatus =
-    sessionMinutes < 5 ? 'login failed' : 'expired'
+  const authStatus = sessionMinutes < 5 ? "login failed" : "expired"
 
   yield put({
-    type: 'mirador/analytics',
+    type: "mirador/analytics",
     payload: {
       // legacy/compatibility
       eventCategory: authStatus,
       eventLabel: authId,
       // new semantic fields
       eventAction: type,
-      interactionType: 'auth',
+      interactionType: "auth",
       authId,
       authStatus,
-    }
+    },
   })
 }
 
@@ -467,16 +460,14 @@ function* sendAnalyticsEvent({ payload }) {
     interaction_type: interactionType,
   })
 
-  window.gtag && window.gtag('event', eventAction, eventParams)
+  window.gtag && window.gtag("event", eventAction, eventParams)
 }
 
 export function clean(obj) {
   return Object.fromEntries(
-    Object.entries(obj).filter(([, v]) =>
-      v !== undefined &&
-      v !== null &&
-      v !== ''
-    )
+    Object.entries(obj).filter(
+      ([, v]) => v !== undefined && v !== null && v !== "",
+    ),
   )
 }
 
@@ -496,16 +487,19 @@ function* analyticsSaga() {
     takeEvery(ActionTypes.SELECT_ANNOTATION, onSelectAnnotation),
     takeEvery(ActionTypes.SET_WORKSPACE_FULLSCREEN, onSetWorkspaceAction),
     takeEvery(ActionTypes.SET_WORKSPACE_ADD_VISIBILITY, onSetWorkspaceAction),
-    takeEvery(ActionTypes.UPDATE_WORKSPACE_MOSAIC_LAYOUT, onSetWorkspaceActionLayout),
+    takeEvery(
+      ActionTypes.UPDATE_WORKSPACE_MOSAIC_LAYOUT,
+      onSetWorkspaceActionLayout,
+    ),
     takeEvery(ActionTypes.ADD_AUTHENTICATION_REQUEST, onAddAuthRequest),
     takeEvery(ActionTypes.RESET_AUTHENTICATION_STATE, onResetAuthState),
     takeEvery(ActionTypes.REQUEST_ACCESS_TOKEN, onTokenRequest),
     takeEvery(ActionTypes.RECEIVE_ACCESS_TOKEN_FAILURE, onTokenFailure),
-    takeEvery('mirador/analytics', sendAnalyticsEvent),
+    takeEvery("mirador/analytics", sendAnalyticsEvent),
   ])
 }
 
 export default {
-  component: () => { },
+  component: () => {},
   saga: analyticsSaga,
 }

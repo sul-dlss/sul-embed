@@ -1,7 +1,14 @@
 // This draws thumbnails in the content list of the companion window component
 // Called by media_tag_controller.js
 export default class {
-  constructor({fileUri, isStanfordOnly, thumbnailUrl, defaultIcon, isLocationRestricted, fileLabel}) {
+  constructor({
+    fileUri,
+    isStanfordOnly,
+    thumbnailUrl,
+    defaultIcon,
+    isLocationRestricted,
+    fileLabel,
+  }) {
     this.fileUri = fileUri
     this.isStanfordOnly = isStanfordOnly
     this.thumbnailUrl = thumbnailUrl
@@ -11,12 +18,13 @@ export default class {
   }
 
   build(index) {
-    const activeClass = index === 0 ? 'active' : ''
-    let labelClass = 'text'
-    let stanfordOnlyScreenreaderText = ''
+    const activeClass = index === 0 ? "active" : ""
+    let labelClass = "text"
+    let stanfordOnlyScreenreaderText = ""
     if (this.isStanfordOnly) {
-      labelClass += ' sul-embed-thumb-stanford-only'
-      stanfordOnlyScreenreaderText = '<span class="visually-hidden">Stanford only</span>'
+      labelClass += " sul-embed-thumb-stanford-only"
+      stanfordOnlyScreenreaderText =
+        '<span class="visually-hidden">Stanford only</span>'
     }
 
     let thumbnailIcon
@@ -26,10 +34,10 @@ export default class {
       thumbnailIcon = `<i class="${this.defaultIcon} default-thumbnail-icon"></i>`
     }
 
-    let restrictedTextMarkup = ''
+    let restrictedTextMarkup = ""
     let maxFileLabelLength = 45
-    if(this.isLocationRestricted) {
-      const restrictedText = '(Restricted)'
+    if (this.isLocationRestricted) {
+      const restrictedText = "(Restricted)"
       restrictedTextMarkup = `<span class="sul-embed-location-restricted-text">${restrictedText}</span>`
       maxFileLabelLength -= restrictedText.length
     }
@@ -47,6 +55,6 @@ export default class {
   }
 
   truncateWithEllipsis(text, maxLen) {
-    return text.substr(0, maxLen - 1) + (text.length > maxLen ? '&hellip;' : '')
+    return text.substr(0, maxLen - 1) + (text.length > maxLen ? "&hellip;" : "")
   }
 }
