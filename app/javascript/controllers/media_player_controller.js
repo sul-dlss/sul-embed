@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import { reloadTextTracks } from "src/modules/reloadTextTracks"
 
 export default class extends Controller {
   static values = {
@@ -73,6 +74,7 @@ export default class extends Controller {
     // Preload the media so the transcript panel has access to its text tracks.
     this.player.preload = "auto"
     this.player.src = src
+    reloadTextTracks(this.player)
   }
 
   // Don't show the player fullscreen button when sul-embed is in fullscreen.
