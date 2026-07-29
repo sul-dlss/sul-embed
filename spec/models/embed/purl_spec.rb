@@ -77,7 +77,7 @@ RSpec.describe Embed::Purl do
 
   describe 'valid?' do
     context 'with empty content metadata' do
-      let(:purl) { described_class.new(contents: [], constituents: []) }
+      let(:purl) { described_class.new(contents: [], virtual_object: false) }
 
       it 'is false' do
         expect(purl).not_to be_valid

@@ -101,8 +101,8 @@ RSpec.describe Embed::PurlJsonLoader do
           allow(Embed::Purl).to receive(:find).with('kq126jw7402').and_return(associate)
         end
 
-        it 'has constituents' do
-          expect(data[:constituents]).to eq ['druid:kq126jw7402']
+        it 'has virtual_object' do
+          expect(data[:virtual_object]).to be true
         end
       end
 

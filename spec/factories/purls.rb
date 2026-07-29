@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :purl, class: 'Embed::Purl' do
     druid { 'abc123' }
     contents { [build(:resource, :file)] }
-    constituents { [] }
+    virtual_object { false }
     collections { [] }
     etag { "W/\"#{Time.zone.now.to_f}\"" }
     last_modified { Time.zone.now }

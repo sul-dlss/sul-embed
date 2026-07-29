@@ -10,7 +10,7 @@ RSpec.describe Embed::ViewerFactory do
     subject { instance }
 
     context 'invalid Purl object' do
-      let(:purl) { Embed::Purl.new(type: 'image', contents: [], constituents: []) }
+      let(:purl) { Embed::Purl.new(type: 'image', contents: [], virtual_object: false) }
 
       it 'raises an error' do
         expect { subject }.to raise_error(Embed::Purl::ResourceNotEmbeddable)
