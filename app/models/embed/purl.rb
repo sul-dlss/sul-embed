@@ -14,13 +14,14 @@ module Embed
       end
     end
 
-    attr_accessor :druid, :version_id, :type, :title, :use_and_reproduction, :copyright, :contents, :constituents,
+    attr_accessor :druid, :version_id, :type, :title, :use_and_reproduction, :copyright, :contents, :virtual_object,
                   :collections, :license, :bounding_box, :layer_type, :embargo_release_date, :archived_site_url,
                   :external_url, :embargoed, :download, :view, :controlled_digital_lending, :etag, :last_modified,
                   :location_restriction, :restricted_location
 
     alias embargoed? embargoed
     alias controlled_digital_lending? controlled_digital_lending
+    alias virtual_object? virtual_object
 
     # @param [String] druid a druid without a namespace (e.g. "sx925dc9385")
     def self.find(druid, version_id = nil)
@@ -30,7 +31,7 @@ module Embed
 
     # @returns [Bool] does this have any resources that can be embeded?
     def valid?
-      contents.any? || constituents.any?
+      contents.any? || virtual_object?
     end
 
     def stanford_download?

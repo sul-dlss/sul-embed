@@ -16,12 +16,12 @@ module Embed
         druid: @druid,
         version_id: @version_id,
         type:,
-        title:,
+        title: display_title,
         contents:,
-        constituents:, # identifiers for virtual object members
-        collections:,
+        virtual_object: virtual_object?,
+        collections: containing_collections,
         copyright:,
-        license:,
+        license: license_description,
         use_and_reproduction:,
         embargo_release_date:,
         bounding_box:,
@@ -30,8 +30,8 @@ module Embed
         embargoed:,
         location_restriction:,
         restricted_location:,
-        download:,
-        view:,
+        download: download_rights,
+        view: view_rights,
         controlled_digital_lending:
       }
     end
@@ -49,13 +49,16 @@ module Embed
 
     private
 
+    delegate :containing_collections, :copyright, :display_title, :download_rights, :license_description,
+             :use_and_reproduction, :view_rights, :virtual_object?, to: :cocina_record, private: true
+
     def embargoed # rubocop:disable Naming/PredicateMethod
-      json.dig('access', 'embargo').present?
+      cocina_record.path('$.access.embargo').any?
     end
 
     def location_restriction
-      return 'download' if json.dig('access', 'download') == 'location-based'
-      return 'view' if json.dig('access', 'view') == 'location-based'
+      return 'download' if cocina_record.location_only_downloadable?
+      return 'view' if cocina_record.location_only_viewable?
 
       false
     end
@@ -64,29 +67,15 @@ module Embed
       return unless location_restriction
 
       locations = Settings.locations
-      locations[json.dig('access', 'location')] || locations[:fallback]
-    end
-
-    def download
-      json.dig('access', 'download')
-    end
-
-    def view
-      json.dig('access', 'view')
+      locations[cocina_record.location_rights] || locations[:fallback]
     end
 
     def controlled_digital_lending
-      json.dig('access', 'controlledDigitalLending')
+      cocina_record.path('$.access.controlledDigitalLending').first
     end
 
     def archived_site_url
-      Array(json.dig('description', 'access', 'url')).find do |url|
-        url['displayLabel'] == 'Archived website'
-      end&.fetch('value')
-    end
-
-    def collections
-      Array(json.dig('structural', 'isMemberOf')).map { |id| id.delete_prefix('druid:') }
+      cocina_record.urls.find { |url| url.link_text == 'Archived website' }&.to_s
     end
 
     def bounding_box
@@ -115,53 +104,22 @@ module Embed
     end
 
     def embargo_release_date
-      json.dig('access', 'embargo', 'releaseDate')&.sub(/T.*/, '') # Trim the time off the end.
+      cocina_record.path('$.access.embargo.releaseDate').first&.sub(/T.*/, '') # Trim the time off the end.
     end
 
     def contents
-      # NOTE: collections don't have structural
-      return [] unless json['structural']
-
-      Array(json.dig('structural', 'contains')).map do |file_set_json|
-        Purl::ResourceJsonDeserializer.new(@druid, file_set_json).deserialize
+      cocina_record.filesets.map do |file_set|
+        Purl::ResourceJsonDeserializer.new(@druid, file_set.cocina).deserialize
       end
     end
 
-    # @return [Array<String>] the list of identifiers for virtual object constituents
-    def constituents
-      Array(json.dig('structural', 'hasMemberOrders', 0, 'members'))
-    end
-
-    def license
-      license_uri = json.dig('access', 'license')
-      return unless license_uri
-
-      Rails.application.config_for(:licenses, env: 'production').dig(license_uri, :description)
-    end
-
     def type
-      cocina_type = json.fetch('type').delete_prefix('https://cocina.sul.stanford.edu/models/')
+      cocina_type = cocina_record.content_type
       LEGACY_TYPE_MAP.fetch(cocina_type, cocina_type)
     end
 
-    def title
-      cocina_record.display_title
-    end
-
-    def use_and_reproduction
-      json.dig('access', 'useAndReproductionStatement')
-    end
-
-    def copyright
-      json.dig('access', 'copyright')
-    end
-
-    def json
-      @json ||= JSON.parse(response)
-    end
-
     def cocina_record
-      @cocina_record ||= CocinaDisplay::CocinaRecord.new(json)
+      @cocina_record ||= CocinaDisplay::CocinaRecord.from_json(response)
     end
 
     def purl_json_url

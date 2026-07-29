@@ -33,7 +33,7 @@ RSpec.describe 'Embed requests' do
 
     context 'when a Purl is a virual object (no contents) is requested' do
       let(:purl) do
-        build(:purl, :image, contents: [], constituents: ['druid:gw001pr5505'])
+        build(:purl, :image, contents: [], virtual_object: true)
       end
 
       it 'has a 200 status' do
