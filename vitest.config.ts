@@ -38,6 +38,10 @@ export default defineConfig({
         __dirname,
         "spec/javascript/stubs/deck-gl-web.js",
       ),
+      "@hotwired/stimulus": path.resolve(
+        __dirname,
+        "spec/javascript/stubs/stimulus.js",
+      ),
     },
   },
   test: {
