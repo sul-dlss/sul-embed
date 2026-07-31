@@ -4,34 +4,53 @@ export default class extends Controller {
   resources = {} // Hash of messageIds to resources
 
   addPostCallbackListener() {
+    if (this.postCallbackListener) return
+
+    this.postCallbackListener = event => this.handlePostCallback(event)
+    window.addEventListener("message", this.postCallbackListener, false)
+  }
+
+  disconnect() {
+    if (!this.postCallbackListener) return
+
+    window.removeEventListener("message", this.postCallbackListener, false)
+    this.postCallbackListener = undefined
+  }
+
+  handlePostCallback(event) {
     const permittedOrigins = [
       "https://stacks.stanford.edu",
       "https://sul-stacks-stage.stanford.edu",
       "https://stacks-uat.stanford.edu",
     ]
-    window.addEventListener(
-      "message",
-      event => {
-        console.debug("Post message", event.data)
-        if (!permittedOrigins.includes(event.origin)) {
-          console.error(`${event.origin} is not a permitted origin`)
-          return
-        }
-        this.iframe.remove()
-        if (event.data.type === "AuthAccessTokenError2") {
-          this.displayAccessTokenError(event.data)
-        } else {
-          this.cacheToken(event.data.accessToken, event.data.expiresIn)
-          window.dispatchEvent(
-            new CustomEvent("show-message-panel", { detail: {} }),
-          )
-          this.queryProbeService(event.data.messageId, event.data.accessToken)
-            .then(result => this.renderViewer(result))
-            .catch(json => console.error("no access", json))
-        }
-      },
-      false,
+    console.debug("Post message", event.data)
+    if (!permittedOrigins.includes(event.origin)) {
+      console.error(`${event.origin} is not a permitted origin`)
+      return
+    }
+
+    const tokenResponseTypes = ["AuthAccessToken2", "AuthAccessTokenError2"]
+    // `message` is a shared channel. Embedded content may post unrelated messages
+    // from the same origin, and IIIF Auth requires ignoring unrecognized messageIds.
+    if (
+      !tokenResponseTypes.includes(event.data?.type) ||
+      !this.resources[event.data.messageId]
     )
+      return
+
+    this.iframe?.remove()
+    this.iframe = undefined
+    if (event.data.type === "AuthAccessTokenError2") {
+      this.displayAccessTokenError(event.data)
+    } else {
+      this.cacheToken(event.data.accessToken, event.data.expiresIn)
+      window.dispatchEvent(
+        new CustomEvent("show-message-panel", { detail: {} }),
+      )
+      this.queryProbeService(event.data.messageId, event.data.accessToken)
+        .then(result => this.renderViewer(result))
+        .catch(json => console.error("no access", json))
+    }
   }
 
   // iterate over all files in the IIIF manifest and try to draw them
