@@ -65,8 +65,6 @@ module Media
       render WrapperComponent.new(thumbnail: thumbnail_url, file:, type:,
                                   size: @resource_iteration.size,
                                   resource_index: @resource_iteration.index) do
-        # We use this div, to hold stimulus controller/actions, because videoJS duplicates these attributes if they are
-        # on the <video> tag directly
         tag.div(
           style: 'height: 100%',
           data: {
@@ -76,10 +74,14 @@ module Media
             action: 'iiif-manifest-received@window->file-auth#parseFiles ' \
                     'media-seek@window->media-player#seek ' \
                     'fullscreenchange@window->media-player#fullscreenChange ' \
-                    'auth-success@window->media-player#initializeVideoJSPlayer'
+                    'auth-success@window->media-player#initializePlayer'
           }
         ) do
-          media_tag
+          tag.video_player do
+            tag.video_skin do
+              media_tag
+            end
+          end
         end
       end
     end
@@ -88,28 +90,23 @@ module Media
       @file.stanford_only? || @file.location_restricted?
     end
 
-    # We render a video tag, even if it's an audio, because we may have VTT to display and
-    # we want the control bar to fade away to not conflict with the captions display.
-    # Audio tags don't fade the control bar.
+    # We use the video preset for audio too, preserving the fading controls and
+    # poster behavior that the previous Video.js integration provided.
     def media_tag # rubocop:disable Metrics/MethodLength
-      tag.video(
+      tag.hlsjs_video(
         preload: restricted? ? 'none' : 'auto',
         id: "sul-embed-media-#{@resource_iteration.index}",
         poster: poster_url_for,
-        controls: 'controls',
-        data: { index: @resource_iteration.index },
+        playsinline: true,
+        # content_type describes the direct file (media_src fallback). The streamed URL provided by
+        # the probe service is always HLS, so the player controller overrides the type in that case.
+        data: { content_type: file.mimetype, index: @resource_iteration.index, media_src: file.file_url },
         class: 'sul-embed-media-file',
         # So that VTT can be downloaded when download:stanford
-        crossorigin: Rails.env.development? ? '' : 'use-credentials',
-        height: '100%'
+        crossorigin: Rails.env.development? ? '' : 'use-credentials'
       ) do
-        streaming_source + captions
+        captions
       end
-    end
-
-    def streaming_source
-      type = Rails.env.development? ? file.mimetype : 'application/x-mpegURL'
-      tag.source(src: file.file_url, type:)
     end
 
     # Generate the video caption elements
