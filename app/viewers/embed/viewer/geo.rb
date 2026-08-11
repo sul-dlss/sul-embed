@@ -22,8 +22,7 @@ module Embed
         options = {
           id: 'sul-embed-geo-map',
           style: 'flex: 1',
-          'data-bounding-box' => @purl_object.bounding_box.to_s,
-          'data-geo-viewer-colors' => Settings.geo_viewer_colors.to_json
+          'data-bounding-box' => @purl_object.bounding_box.to_s
         }.compact_blank
 
         if index_map?
@@ -37,6 +36,10 @@ module Embed
           options['data-cog-url'] = cog_url
         elsif georeference_annotations?
           options['data-annotations-url'] = georeference_annotations_url
+          # TODO: shift handling of this back to the Mirador viewer, and
+          # add a map tab for it, so that we aren't handling IIIF objects
+          # in this path. See: https://github.com/sul-dlss/sul-embed/issues/3124
+          options['data-iiif-manifest'] = @purl_object.iiif_v3_manifest_url
         end
         options
       end

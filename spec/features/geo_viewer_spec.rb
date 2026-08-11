@@ -2,11 +2,16 @@
 
 require 'rails_helper'
 
-# NOTE: This test hits the production geowebserivces & stacks servers (via javascript)
+# NOTE: This test hits the production purl & stacks servers, and CARTO's basemap CDN (via javascript)
 RSpec.describe 'geo viewer', :js do
   before do
     allow(Embed::Purl).to receive(:find).and_return(purl)
     visit_iframe_response(purl.druid)
+  end
+
+  # ogm-viewer components use shadow DOM, so we need to traverse it
+  def map_shadow_root
+    find('ogm-preview').shadow_root.find('ogm-map').shadow_root
   end
 
   context 'with public purl' do
@@ -17,12 +22,9 @@ RSpec.describe 'geo viewer', :js do
     end
 
     it 'shows the map controls' do
-      expect(page).to have_css('.maplibregl-ctrl-zoom-in', count: 1, visible: :visible)
-      expect(page).to have_css('.maplibregl-ctrl-zoom-out', count: 1, visible: :visible)
-
-      within '.maplibregl-ctrl-attrib' do
-        expect(page).to have_text('OpenStreetMap contributors')
-      end
+      expect(map_shadow_root).to have_css('.maplibregl-ctrl-zoom-in', count: 1)
+      expect(map_shadow_root).to have_css('.maplibregl-ctrl-zoom-out', count: 1)
+      expect(map_shadow_root).to have_css('.maplibregl-ctrl-attrib', text: 'OpenStreetMap contributors', visible: :all)
     end
 
     it 'download toolbar/panel is present with download links' do
@@ -35,18 +37,6 @@ RSpec.describe 'geo viewer', :js do
         expect(page).to have_css('li a[target="_blank"][rel="noopener noreferrer"]', count: 2)
       end
     end
-
-    it 'shows the sidebar with attribute information after map is clicked', skip: 'flappy; see https://github.com/sul-dlss/sul-embed/issues/2141' do
-      page.driver.browser.action.move_to(find_by_id('sul-embed-geo-map').native).click.perform
-      using_wait_time 20 do
-        expect(page).to have_css '.sul-embed-geo-sidebar-header h3', text: 'Features', visible: :all
-        expect(page).to have_css '.sul-embed-geo-sidebar-content dt', text: 's_02_id', visible: :all
-        expect(page).to have_css '.sul-embed-geo-sidebar-content dd', visible: :all
-      end
-      find('.sul-embed-geo-sidebar-header i').click
-      # use find('body') to force Capybara to load content with find
-      expect(find('body')).to have_css('.sul-embed-geo-sidebar-content dt', text: 's_02_id', visible: :all)
-    end
   end
 
   context 'with restricted purl' do
@@ -55,7 +45,7 @@ RSpec.describe 'geo viewer', :js do
     describe 'loads viewer' do
       it 'shows the canvas' do
         expect(page).to have_text('Stanford users: log in to access all available features')
-        expect(page).to have_css('canvas', count: 1, visible: :visible)
+        expect(map_shadow_root).to have_css('canvas', count: 1)
       end
     end
   end
@@ -80,7 +70,7 @@ RSpec.describe 'geo viewer', :js do
       it 'lists the geojson' do
         expect(page).to have_css('.sul-embed-geo', count: 1, visible: :visible)
         expect(page).to have_css "[data-index-map=\"https://stacks.stanford.edu/file/bc576pk4911/#{filename}\"]"
-        expect(page).to have_css('#sidebarContent')
+        expect(map_shadow_root).to have_css('canvas', count: 1)
       end
     end
   end

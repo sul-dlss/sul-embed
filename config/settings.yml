@@ -7,11 +7,6 @@ stacks_url: "https://stacks.stanford.edu"
 iiif_info_url: "https://library.stanford.edu/iiif"
 enable_media_viewer?: <%= true %>
 geo_external_url: "https://earthworks.stanford.edu/catalog/stanford-"
-geo_wms_url: "https://geowebservices.stanford.edu/geoserver/wms/"
-geo_viewer_colors:
-  selected: "yellow"
-  available: "#006CB8"
-  unavailable: "#B1040E"
 resource_types_that_contain_thumbnails:
   - audio
   - file

@@ -1,164 +1,17 @@
-@layer layout, common, framework;
+@layer layout, common;
 @import url("companion_window.css") layer(layout);
 @import url("common.css") layer(common);
-@import url("https://unpkg.com/maplibre-gl@5.21.1/dist/maplibre-gl.css")
-layer(framework);
 
 .sul-embed-geo {
-  isolation: isolate; /* So that tooltips can hover above Leaflet.js */
+  isolation: isolate; /* So that tooltips can hover above the map */
   position: relative;
   display: flex;
   flex-grow: 1;
-}
 
-.sul-embed-geo-sidebar {
-  background: white;
-  height: auto;
-  position: absolute;
-  right: 0;
-  width: 250px;
-
-  [aria-expanded="false"] {
-    svg {
-      transform: rotate(180deg);
-    }
-  }
-}
-
-.sul-embed-geo-sidebar-header {
-  padding: 0px 10px;
-
-  button {
-    height: 2rem;
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    border: none;
-    background-color: transparent;
-  }
-}
-
-.sul-embed-geo-sidebar-content {
-  overflow: scroll;
-  padding: 0 10px 10px;
-
-  &:not(.show) {
-    display: none;
-  }
-
-  dt {
-    font-weight: bold;
-  }
-
-  .inline-flex {
-    display: flex;
-    flex-flow: row;
-    flex-wrap: wrap;
-    overflow: visible;
-    width: 100%;
-
-    dt {
-      flex: 0 0 35%;
-      overflow: scroll;
-      text-overflow: ellipsis;
-    }
-
-    dd {
-      flex: 0 0 64%;
-      margin-left: auto;
-      overflow: scroll;
-      text-align: left;
-    }
-  }
-}
-
-.opacity-control {
-  padding-inline-start: 2px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-
-  .opacity-label {
-    font-size: 11px;
-    color: #333;
-  }
-
-  .opacity-slider {
-    width: 80px;
-    cursor: pointer;
-    /* Modern standard approach (works in Firefox and some newer Chrome versions) */
-    writing-mode: vertical-lr;
-    rotate: 180deg;
-
-    /* Explicit sizing is usually required when oriented vertically */
-    width: 20px;
-    height: 150px;
-  }
-}
-
-.mask-toggle-control {
-  margin-top: 2.5em;
-  clear: left;
-
-  .checkbox-container {
-    background-color: white;
-    border-radius: 0.25rem;
-    padding: 0.45rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    user-select: none;
-
-    /* Hide the default checkbox */
-    input[type="checkbox"] {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer;
-      height: 0;
-      width: 0;
-    }
-
-    /* Custom checkbox icon container */
-    .checkbox-icon {
-      width: 16px;
-      height: 16px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-    }
-
-    /* Hide both icons by default */
-    .icon-unchecked,
-    .icon-checked {
-      display: none;
-      width: 100%;
-      height: 100%;
-    }
-
-    /* Show unchecked icon when checkbox is unchecked */
-    input[type="checkbox"]:not(:checked) ~ .checkbox-icon .icon-unchecked {
-      display: block;
-    }
-
-    /* Show checked icon when checkbox is checked */
-
-    input[type="checkbox"]:checked ~ .checkbox-icon .icon-checked {
-      display: block;
-    }
-
-    &:hover {
-      background-color: var(--stanford-fog-light);
-
-      .checkbox-icon {
-        transform: scale(1.1);
-      }
-    }
-
-    /* Add focus styles for accessibility */
-    &:has(input[type="checkbox"]:focus) {
-      outline: 2px solid #4a90e2;
-    }
-  }
+  /* Styling; see ogm-viewer README for more details */
+  --ogm-data-color: #006cb8;
+  --ogm-invalid-color: #b1040e;
+  --ogm-selected-color: yellow;
+  --ogm-data-opacity: 0.75;
+  --ogm-bounds-opacity: 0.2;
 }

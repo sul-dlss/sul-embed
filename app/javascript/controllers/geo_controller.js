@@ -1,30 +1,59 @@
 import { Controller } from "@hotwired/stimulus"
-import "maplibre-gl"
-import { IndexMapRenderer } from "geo/index_map_renderer"
-import { PmtilesRenderer } from "geo/pmtiles_renderer"
-import { GeoJsonRenderer } from "geo/geo_json_renderer"
-import { IiifGeoreferenceRenderer } from "geo/iiif_georeference_renderer"
-import { SidebarControl } from "geo/sidebar_control"
-import { OpacityControl } from "geo/opacity_control"
+// Defines <ogm-preview> and the rest of the elements. Side-effect only: one import registers all
+// eleven, each guarded by customElements.get().
+import "ogm-viewer"
+// The same classes the elements use internally, from the same chunk graph - both pins point into
+// one dist directory, so there is a single copy of maplibre-gl and a previewer built here is the
+// same kind of object <ogm-map> would have built for itself.
+import {
+  CogResource,
+  GeoJsonResource,
+  IIIFManifestResource,
+  LocationResource,
+  OpenIndexMapResource,
+  PMTilesResource,
+  previewersFor,
+} from "ogm-viewer/lib"
+
+// Which data attribute holds the file, and what kind of thing is at it. Checked in this order, which
+// is the order the Ruby side writes them in (see Embed::Viewer::Geo#map_element_options) - a record
+// only ever carries one.
+const SOURCES = [
+  { key: "indexMap", Resource: OpenIndexMapResource },
+  {
+    key: "annotationsUrl",
+    Resource: IIIFManifestResource,
+    urlKey: "iiifManifest",
+  },
+  { key: "geoJson", Resource: GeoJsonResource },
+  { key: "pmtiles", Resource: PMTilesResource },
+  { key: "cogUrl", Resource: CogResource },
+]
+
+// The data attributes that hold a visualization file URL, for the auth handshake to match against
+const URL_KEYS = SOURCES.map(source => source.key)
 
 export default class extends Controller {
   connect() {
     this.el = document.getElementById("sul-embed-geo-map")
     this.dataAttributes = this.el.dataset
-    this.loaded = false
-    this.map = this.createMap()
+    // Distinguishes each resource this controller builds, so the authorized reload doesn't collide
+    // with the layer ids the outline before it left behind
+    this.generation = 0
 
-    this.map.addControl(new maplibregl.NavigationControl(), "top-left")
-    this.map.on("load", () => {
-      this.loaded = true
-      // For restricted content, show the bounding-box placeholder until auth succeeds.
-      // For public content, load the visualization immediately.
-      if (this.restricted) {
-        this.renderReplacementRectangle()
-      } else {
-        this.addVisualizationLayer()
-      }
-    })
+    // Create the preview and add to the DOM. We don't support dark mode overall
+    // in sul-embed, so force light mode in the preview.
+    this.preview = document.createElement("ogm-preview")
+    this.preview.theme = "light"
+    this.el.appendChild(this.preview)
+
+    // For restricted content, outline where the record is until auth succeeds.
+    // For public content, load the visualization immediately.
+    if (this.restricted) {
+      this.showLocation()
+    } else {
+      this.showVisualization()
+    }
   }
 
   // Called after authorization success (by stimulus) for restricted content.
@@ -54,20 +83,11 @@ export default class extends Controller {
     }
 
     this.applyAuthorizedLocation(fileUri, evt.detail.location)
-
-    const loadVisualization = () => {
-      this.removeReplacementLayers()
-      this.addVisualizationLayer()
-    }
-    if (this.loaded) {
-      loadVisualization()
-    } else {
-      this.map.once("load", loadVisualization)
-    }
+    this.showVisualization()
   }
 
   disconnect() {
-    this.map?.remove()
+    this.preview?.remove()
   }
 
   // The data-action attribute is only set for restricted content (see GeoComponent#data_actions)
@@ -88,327 +108,111 @@ export default class extends Controller {
     return null
   }
 
-  // Request options that include credentials so restricted files are served
-  // directly via the stacks auth cookie (avoids CORS preflight issues that
-  // arise from using an Authorization header)
-  authedFetchOptions() {
-    const token = this.authToken
-    return token ? { credentials: "include" } : {}
+  // Applied to every request the resource makes and, once its previewer attaches, to MapLibre's own
+  // tile requests too. Credentials rather than the bearer token we hold: stacks answers a preflight
+  // allowing Range and not Authorization, and it only sends back an allow-origin a credentialed
+  // request can use when the Origin is one it knows - so a token would be refused before it was read.
+  requestTransform() {
+    if (!this.authToken) return undefined
+    return () => ({ credentials: "include" })
   }
 
   // Replace the data-attribute URL matching fileUri with the authorized location
   applyAuthorizedLocation(fileUri, location) {
     if (!location) return
-    const urlKeys = [
-      "indexMap",
-      "geoJson",
-      "pmtiles",
-      "cogUrl",
-      "annotationsUrl",
-    ]
-    for (const key of urlKeys) {
+    for (const key of URL_KEYS) {
       if (this.dataAttributes[key] === fileUri) {
         this.el.dataset[key] = location
       }
     }
   }
 
-  // The data-attribute keys that hold visualization file URLs
-  visualizationUrlKeys() {
-    return ["indexMap", "geoJson", "pmtiles", "cogUrl", "annotationsUrl"]
-  }
-
   // Whether the given URL matches one of the visualization data attributes
   matchesVisualizationUrl(url) {
-    return this.visualizationUrlKeys().some(
-      key => this.dataAttributes[key] === url,
-    )
+    return URL_KEYS.some(key => this.dataAttributes[key] === url)
   }
 
   // The URL of the primary visualization file the geo viewer renders
   visualizationUrl() {
-    for (const key of this.visualizationUrlKeys()) {
+    for (const key of URL_KEYS) {
       if (this.dataAttributes[key]) return this.dataAttributes[key]
     }
   }
 
-  // Remove the placeholder rectangle layers shown while content is locked
-  removeReplacementLayers() {
-    if (this.map.getLayer("replacement-fill"))
-      this.map.removeLayer("replacement-fill")
-    if (this.map.getLayer("replacement-line"))
-      this.map.removeLayer("replacement-line")
-    if (this.map.getSource("replacement-source"))
-      this.map.removeSource("replacement-source")
+  // Which of the data attributes this record carries, and the resource to read it with. A
+  // georeferenced scan is the one that doesn't name its own file: the annotation lives inside the
+  // IIIF manifest, so the manifest is what gets read and data-annotations-url only says that there
+  // is one to find.
+  source() {
+    return SOURCES.find(({ key }) => this.dataAttributes[key])
   }
 
-  createMap() {
-    const prefersDark =
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
+  // Build the resource this record points at, or nothing if it points at none - in which case the
+  // outline of where it is stays up, the same as it did before.
+  buildResource() {
+    const source = this.source()
+    if (!source) return undefined
 
-    const style = prefersDark
-      ? "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
-      : "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
+    const url = this.dataAttributes[source.urlKey ?? source.key]
+    if (!url) return undefined
 
-    return new maplibregl.Map({
-      container: "sul-embed-geo-map",
-      style: style,
-      bounds: this.boundingBox(),
-    })
+    return new source.Resource(
+      `sul-embed-geo-${this.generation++}`,
+      url,
+      this.boundingBox(),
+      this.requestTransform(),
+    )
+  }
+
+  async showVisualization() {
+    const resource = this.buildResource()
+    if (!resource) return this.showLocation()
+
+    await this.showResource(resource)
+  }
+
+  // Hand the preview whichever of the resource's previews draws a map. Usually there is exactly one;
+  // a georeferenced manifest offers the scan as an image first and the map second, and here it is
+  // the map we came for - the image is what the IIIF viewer is already for.
+  async showResource(resource) {
+    const previewers = await previewersFor(resource)
+    const previewer =
+      previewers.find(candidate => candidate.renderer === "map") ??
+      previewers[0]
+    if (!previewer) return
+
+    // A DOM property, never an attribute - a previewer is an object. Set after the element is
+    // defined and mounted: assigning before the map has loaded its style reaches addSource() too
+    // early and MapLibre refuses with "Style is not done loading."
+    await customElements.whenDefined("ogm-preview")
+    await this.preview.componentOnReady?.()
+    this.preview.previewer = previewer
+  }
+
+  // Where the record is, when what it holds can't be shown: restricted content waiting on
+  // authorization, or a record pointing at no file this viewer reads. The one resource made from a
+  // shape rather than a URL, so it needs nothing fetched and can't fail, and the one drawn as a frame
+  // around the extent rather than as data filling it - which is the difference between saying where a
+  // thing is and appearing to show it. Nothing to click either: the box carries no properties, so a
+  // popup would open on an empty table.
+  showLocation() {
+    const bounds = this.boundingBox()
+    if (!bounds) return
+
+    this.showResource(
+      new LocationResource(`sul-embed-geo-${this.generation++}`, bounds),
+    )
   }
 
   // Bounding box is stored in Leaflet format: [[south, west], [north, east]]
-  // MapLibre fitBounds expects: [[west, south], [east, north]]
+  // MapLibre expects: [[west, south], [east, north]]
   boundingBox() {
-    if (!this.dataAttributes.boundingBox) {
-      return [
-        [-180, -90],
-        [180, 90],
-      ]
-    }
+    if (!this.dataAttributes.boundingBox) return undefined
+
     const bb = JSON.parse(this.dataAttributes.boundingBox)
     return [
-      [bb[0][1], bb[0][0]],
-      [bb[1][1], bb[1][0]],
+      [Number(bb[0][1]), Number(bb[0][0])],
+      [Number(bb[1][1]), Number(bb[1][0])],
     ]
-  }
-
-  isDefined(obj) {
-    return typeof obj !== "undefined"
-  }
-
-  // Are we dealing with an index map?
-  isIndexMap() {
-    return (
-      this.isDefined(this.dataAttributes.indexMap) &&
-      this.dataAttributes.indexMap !== ""
-    )
-  }
-
-  // Are we dealing with GeoJSON?
-  isGeoJSON() {
-    return (
-      this.isDefined(this.dataAttributes.geoJson) &&
-      this.dataAttributes.geoJson !== ""
-    )
-  }
-
-  isCOG() {
-    return (
-      this.isDefined(this.dataAttributes.cogUrl) &&
-      this.dataAttributes.cogUrl !== ""
-    )
-  }
-
-  isIIIFAnnotation() {
-    return (
-      this.isDefined(this.dataAttributes.annotationsUrl) &&
-      this.dataAttributes.annotationsUrl !== ""
-    )
-  }
-
-  addVisualizationLayer() {
-    if (this.isIndexMap()) {
-      fetch(this.dataAttributes.indexMap, this.authedFetchOptions())
-        .then(response => response.json())
-        .then(data => this.renderIndexMap(data))
-    } else if (this.isIIIFAnnotation()) {
-      this.renderIIIFAnnotation(this.dataAttributes.annotationsUrl)
-    } else if (this.isGeoJSON()) {
-      fetch(this.dataAttributes.geoJson, this.authedFetchOptions())
-        .then(response => response.json())
-        .then(data => this.renderGeoJSON(data))
-    } else if (this.isDefined(this.dataAttributes.pmtiles)) {
-      this.renderPmtiles()
-    } else if (this.isCOG()) {
-      this.renderCOG(this.dataAttributes.cogUrl)
-    } else {
-      this.renderReplacementRectangle()
-    }
-  }
-
-  renderIndexMap(data) {
-    const renderer = new IndexMapRenderer(
-      this.map,
-      this.dataAttributes,
-      this.openSidebarWithContent.bind(this),
-      this.highlightFeature.bind(this),
-    )
-    renderer.render(data)
-
-    this.setupSidebar()
-    this.addOpacityControl(opacity => {
-      this.map.setPaintProperty("index-map-fill", "fill-opacity", opacity)
-      this.map.setPaintProperty("index-map-circle", "circle-opacity", opacity)
-    }, 0.75)
-  }
-
-  setupSidebar() {
-    this.sidebarControl = new SidebarControl(`${this.el.clientHeight - 100}px`)
-    this.map.addControl(this.sidebarControl, "top-right")
-  }
-
-  async renderCOG() {
-    const { CogRenderer } = await import("geo/cog_renderer")
-
-    const renderer = new CogRenderer(
-      this.map,
-      this.dataAttributes.cogUrl,
-      this.addOpacityControl.bind(this),
-      this.authToken,
-    )
-    renderer.render()
-  }
-
-  // Reimplements L.Control.LayerOpacity as a vanilla-JS MapLibre IControl,
-  // reusing the existing .opacity-control CSS from geo.css.
-  addOpacityControl(callback, initialOpacity = 0.75) {
-    this.map.addControl(
-      new OpacityControl(callback, initialOpacity),
-      "top-left",
-    )
-  }
-
-  renderGeoJSON(data) {
-    const renderer = new GeoJsonRenderer(
-      this.map,
-      this.dataAttributes,
-      this.openSidebarWithContent.bind(this),
-      this.highlightFeature.bind(this),
-      this.setupSidebar.bind(this),
-      this.addOpacityControl.bind(this),
-    )
-    renderer.render(data)
-  }
-
-  renderPmtiles() {
-    const renderer = new PmtilesRenderer(
-      this.map,
-      this.dataAttributes.pmtiles,
-      this.openSidebarWithContent.bind(this),
-      this.highlightFeature.bind(this),
-      this.authToken,
-    )
-    renderer.render()
-
-    this.setupSidebar()
-    this.addOpacityControl(
-      opacity =>
-        this.map.setPaintProperty("pmtiles-layer", "fill-opacity", opacity),
-      0.75,
-    )
-  }
-
-  async renderIIIFAnnotation(annotationUrl) {
-    const renderer = new IiifGeoreferenceRenderer(
-      this.map,
-      annotationUrl,
-      this.addOpacityControl.bind(this),
-    )
-    renderer.render()
-  }
-
-  // Highlight a single GeoJSON feature (e.g. from an index map click).
-  // e.features[0] is a MapGeoJSONFeature (a MapLibre-specific class), not a
-  // plain object. Reconstruct it as plain GeoJSON so MapLibre can serialize it
-  // to its web worker when adding it as a GeoJSON source.
-  highlightFeature(feature) {
-    this.setHighlightData({
-      type: "FeatureCollection",
-      features: [
-        {
-          type: "Feature",
-          geometry: feature.geometry,
-          properties: { ...feature.properties },
-        },
-      ],
-    })
-  }
-
-  setHighlightData(geojsonData) {
-    const color = JSON.parse(this.dataAttributes.geoViewerColors).selected
-
-    if (this.map.getSource("highlight-source")) {
-      this.map.getSource("highlight-source").setData(geojsonData)
-    } else {
-      this.map.addSource("highlight-source", {
-        type: "geojson",
-        data: geojsonData,
-      })
-
-      this.map.addLayer({
-        id: "highlight-fill",
-        type: "fill",
-        source: "highlight-source",
-        filter: ["==", ["geometry-type"], "Polygon"],
-        paint: { "fill-color": color, "fill-opacity": 0.5 },
-      })
-
-      this.map.addLayer({
-        id: "highlight-line",
-        type: "line",
-        source: "highlight-source",
-        paint: { "line-color": color, "line-width": 2 },
-      })
-
-      this.map.addLayer({
-        id: "highlight-circle",
-        type: "circle",
-        source: "highlight-source",
-        filter: ["==", ["geometry-type"], "Point"],
-        paint: {
-          "circle-radius": 8,
-          "circle-color": color,
-          "circle-opacity": 0.7,
-        },
-      })
-    }
-  }
-
-  openSidebarWithContent(html) {
-    this.sidebarControl.openWithContent(html)
-  }
-
-  renderReplacementRectangle() {
-    // Restricted layer: show the bounding box outline instead of the real layer
-    const bb = this.boundingBox()
-    const [west, south] = bb[0]
-    const [east, north] = bb[1]
-
-    this.map.addSource("replacement-source", {
-      type: "geojson",
-      data: {
-        type: "Feature",
-        geometry: {
-          type: "Polygon",
-          coordinates: [
-            [
-              [west, south],
-              [east, south],
-              [east, north],
-              [west, north],
-              [west, south],
-            ],
-          ],
-        },
-      },
-    })
-
-    this.map.addLayer({
-      id: "replacement-fill",
-      type: "fill",
-      source: "replacement-source",
-      paint: { "fill-color": "#0000FF", "fill-opacity": 0.05 },
-    })
-
-    this.map.addLayer({
-      id: "replacement-line",
-      type: "line",
-      source: "replacement-source",
-      paint: { "line-color": "#0000FF", "line-width": 4 },
-    })
-
-    this.replacementLayerAdded = true
   }
 }

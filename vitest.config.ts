@@ -2,42 +2,17 @@
 import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 import { fileURLToPath } from "url"
-import fs from "fs/promises"
 import path from "path"
 
+// Vite transforms with oxc now rather than esbuild, and oxc decides whether to parse JSX from the
+// file extension. The esbuild block that used to live here forced the jsx loader onto .js files and
+// is ignored under oxc, which is why anything with JSX in a .js file has to be named .jsx.
 export default defineConfig({
-  esbuild: {
-    exclude: [],
-    include: [
-      /spec\/javascript\/.*\.jsx?$/, // your tests
-      /app\/javascript\/src\/.*\.jsx?$/, // your source files
-    ],
-    loader: "jsx",
-  },
-  optimizeDeps: {
-    esbuildOptions: {
-      plugins: [
-        {
-          name: "load-js-files-as-jsx",
-          setup(build) {
-            build.onLoad({ filter: /spec\/react\/.*\.js$/ }, async args => ({
-              contents: await fs.readFile(args.path, "utf8"),
-              loader: "jsx",
-            }))
-          },
-        },
-      ],
-    },
-  },
   plugins: [react()],
   resolve: {
     alias: {
       "@tests": fileURLToPath(new URL("./spec/javascript", import.meta.url)),
       "@": path.resolve(__dirname, "app/javascript/src"),
-      "deck-gl-web": path.resolve(
-        __dirname,
-        "spec/javascript/stubs/deck-gl-web.js",
-      ),
     },
   },
   test: {
