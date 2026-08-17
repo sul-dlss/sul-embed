@@ -2,17 +2,7 @@
 
 module Embed
   class Purl
-    def initialize(etag: nil, last_modified: nil, **attributes)
-      @etag = etag
-      @last_modified = last_modified
-      self.attributes = attributes
-    end
-
-    def attributes=(hash)
-      hash.each do |key, value|
-        public_send(:"#{key}=", value)
-      end
-    end
+    include ActiveModel::Model
 
     attr_accessor :druid, :version_id, :type, :title, :use_and_reproduction, :copyright, :contents, :virtual_object,
                   :collections, :license, :bounding_box, :layer_type, :embargo_release_date, :archived_site_url,
