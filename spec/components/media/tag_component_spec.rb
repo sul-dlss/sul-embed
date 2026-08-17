@@ -25,8 +25,8 @@ RSpec.describe Media::TagComponent, type: :component do
       expect(page).to have_css('[data-file-label="First Video"]')
     end
 
-    it 'includes a 100% height attribute' do
-      expect(page).to have_css("video[height='100%']", visible: :all)
+    it 'uses the Video.js v10 custom elements' do
+      expect(page).to have_css('video-player video-skin hlsjs-video', visible: :all)
     end
   end
 
@@ -86,8 +86,8 @@ RSpec.describe Media::TagComponent, type: :component do
       let(:resource) { build(:resource, :video) }
 
       it 'includes a poster attribute' do
-        expect(page).to have_css('video[poster]', visible: :all)
-        video = page.find('video[poster]', visible: :all)
+        expect(page).to have_css('hlsjs-video[poster]', visible: :all)
+        video = page.find('hlsjs-video[poster]', visible: :all)
         expect(video['poster']).to match(%r{/bc123df4567%2Fvideo_1/full/})
       end
     end
@@ -102,7 +102,7 @@ RSpec.describe Media::TagComponent, type: :component do
       end
 
       it 'uses a large thumbnail' do
-        video = page.find('video[poster]', visible: :all)
+        video = page.find('hlsjs-video[poster]', visible: :all)
         expect(video['poster']).to match(%r{/full/!800,600/})
       end
     end
@@ -114,7 +114,7 @@ RSpec.describe Media::TagComponent, type: :component do
       end
 
       it 'shows the locked icon' do
-        video = page.find('video[poster]', visible: :all)
+        video = page.find('hlsjs-video[poster]', visible: :all)
         expect(video['poster']).to match(/locked-media-poster/)
       end
     end
@@ -129,7 +129,7 @@ RSpec.describe Media::TagComponent, type: :component do
       end
 
       it 'includes the default poster attribute' do
-        audio = page.find('video[poster]', visible: :all)
+        audio = page.find('hlsjs-video[poster]', visible: :all)
         expect(audio['poster']).to match(/waveform-audio-poster/)
       end
     end
@@ -142,8 +142,11 @@ RSpec.describe Media::TagComponent, type: :component do
       expect(page).to have_css('track[src="https://stacks.stanford.edu/file/bc123df4567/abc_123_cap.vtt"]')
     end
 
-    it 'has a source element' do
-      expect(page).to have_css('source[src="https://stacks.stanford.edu/file/bc123df4567/abc_123.mp4"]')
+    it 'configures the media source for authorization' do
+      expect(page).to have_css(
+        'hlsjs-video[data-media-src="https://stacks.stanford.edu/file/bc123df4567/abc_123.mp4"]',
+        visible: :all
+      )
     end
 
     context 'with captions for multiple languages' do
