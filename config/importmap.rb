@@ -10,7 +10,6 @@ pin "webarchive", preload: true
 pin "@hotwired/stimulus", to: "stimulus.min.js", preload: true
 pin "@hotwired/stimulus-loading", to: "stimulus-loading.js", preload: true
 pin_all_from "app/javascript/controllers", under: "controllers"
-pin_all_from 'app/javascript/geo', under: 'geo'
 pin_all_from "app/javascript/file_controllers", under: "file_controllers"
 pin_all_from 'app/javascript/src', under: 'src', to: 'src'
 
@@ -42,22 +41,9 @@ pin "fscreen", to: "https://ga.jspm.io/npm:fscreen@1.2.0/dist/fscreen.cjs.js"
 pin "@google/model-viewer", to: "https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer-module.min.js"
 pin "three", to: "https://ga.jspm.io/npm:three@0.163.0/build/three.module.js"
 pin "popper", to: 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.js'
-pin "maplibre-gl" # @5.21.1
-pin "pmtiles" # @4.4.0
-pin "fflate" # @0.8.2
 
-# These files are built by https://github.com/sul-dlss/deck-gl-web
-# we have copied them into the `vendor` directory
-pin "deck-gl-web" # renamed from index.js
-pin "decode"
-pin "deflate"
-pin "lerc"
-pin "lzw"
-pin "LercDecode.es"
-pin "utils"
-pin "webgl-device"
-pin "webgl-device2"
-
-pin "allmaps" # Derived from @allmaps/maplibre
-pin "chunk"
-pin "lib"
+# Two pins that go into the same location: one is the components, the other is
+# the classes used to build Resources and Previewers to put into them. Pinning
+# into the same path means we only get one copy of maplibre-gl.
+pin "ogm-viewer", to: "https://cdn.jsdelivr.net/npm/ogm-viewer@0.10.0/dist/components/ogm-viewer.js"
+pin "ogm-viewer/lib", to: "https://cdn.jsdelivr.net/npm/ogm-viewer@0.10.0/dist/components/index.js"

@@ -17,8 +17,6 @@ RSpec.describe 'application and dependency monitoring' do
         .to_return(status: 200, body: '', headers: {})
       stub_request(:get, 'https://sul-mediaserver.stanford.edu/stacks/ServerVersion')
         .to_return(status: 200, body: '', headers: {})
-      stub_request(:get, 'https://geowebservices.stanford.edu/geoserver/wms/')
-        .to_return(status: 200, body: '', headers: {})
       stub_request(:get, 'https://earthworks.stanford.edu/catalog')
         .to_return(status: 200, body: '', headers: {})
     end
@@ -29,7 +27,7 @@ RSpec.describe 'application and dependency monitoring' do
       expect(page).to have_text('HTTP check successful')
       expect(page).to have_text('purl_url')
       expect(page).to have_text('stacks_url')
-      expect(page).to have_text('geo_web_services_url') # non-crucial
+      expect(page).to have_text('geo_external_url') # non-crucial
     end
   end
 

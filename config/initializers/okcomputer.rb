@@ -29,12 +29,10 @@ if Settings.enable_media_viewer?
   OkComputer.make_optional ['streaming_url']
 end
 
-OkComputer::Registry.register 'geo_web_services_url', OkComputer::HttpCheck.new(Settings.geo_wms_url)
-
 # Geo objects use this to link out to Earthworks'
 # check geo_external_url without the last part after the slash
 geo_ext_url_pieces = Settings.geo_external_url.split('/')
 url_to_check = geo_ext_url_pieces[0..-2].join('/')
 OkComputer::Registry.register 'geo_external_url', OkComputer::HttpCheck.new(url_to_check)
 
-OkComputer.make_optional %w(geo_web_services_url geo_external_url)
+OkComputer.make_optional ['geo_external_url']
