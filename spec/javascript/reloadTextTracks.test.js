@@ -6,7 +6,7 @@ describe("reloadTextTracks", () => {
     vi.useRealTimers()
   })
 
-  it("leaves enough time for the internal tracks to unload", () => {
+  it("replaces the track elements so the player clones new ones", () => {
     vi.useFakeTimers()
     const player = document.createElement("hlsjs-video")
     const english = document.createElement("track")
@@ -17,19 +17,32 @@ describe("reloadTextTracks", () => {
 
     reloadTextTracks(player)
 
-    expect(english).not.toHaveAttribute("src")
-    expect(russian).not.toHaveAttribute("src")
+    expect(player.querySelectorAll("track")).toHaveLength(0)
 
     vi.advanceTimersByTime(99)
-    expect(english).not.toHaveAttribute("src")
-    expect(russian).not.toHaveAttribute("src")
+    expect(player.querySelectorAll("track")).toHaveLength(0)
 
     vi.advanceTimersByTime(1)
-    expect(english.src).toBe("https://example.com/english.vtt")
-    expect(russian.src).toBe("https://example.com/russian.vtt")
+    expect(Array.from(player.querySelectorAll("track"))).toEqual([
+      english,
+      russian,
+    ])
   })
 
-  it("does not change nested or source-less tracks", () => {
+  it("keeps each track's source", () => {
+    vi.useFakeTimers()
+    const player = document.createElement("hlsjs-video")
+    const english = document.createElement("track")
+    english.src = "https://example.com/english.vtt"
+    player.append(english)
+
+    reloadTextTracks(player)
+    vi.runAllTimers()
+
+    expect(english.src).toBe("https://example.com/english.vtt")
+  })
+
+  it("does not touch nested or source-less tracks", () => {
     vi.useFakeTimers()
     const player = document.createElement("hlsjs-video")
     const sourceLessTrack = document.createElement("track")
@@ -42,7 +55,7 @@ describe("reloadTextTracks", () => {
     reloadTextTracks(player)
     vi.runAllTimers()
 
-    expect(sourceLessTrack).not.toHaveAttribute("src")
-    expect(nestedTrack.src).toBe("https://example.com/nested.vtt")
+    expect(sourceLessTrack.parentNode).toBe(player)
+    expect(nestedTrack.parentNode).toBe(wrapper)
   })
 })
