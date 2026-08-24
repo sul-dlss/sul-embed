@@ -160,6 +160,19 @@ RSpec.describe Media::TagComponent, type: :component do
         expect(page).to have_css('track[srclang="en"][label="English"]')
         expect(page).to have_css('track[srclang="ru"][label="Russian"]')
       end
+
+      # The transcript panel fetches these itself rather than reading the player's text
+      # tracks, which only expose the cues of the language currently on screen.
+      it 'lists every caption file for the transcript panel' do
+        captions = JSON.parse(page.find('hlsjs-video', visible: :all)['data-captions'])
+
+        expect(captions).to eq [
+          { 'language' => 'en', 'label' => 'English',
+            'url' => 'https://stacks.stanford.edu/file/bc123df4567/abc_123_cap.vtt' },
+          { 'language' => 'ru', 'label' => 'Russian',
+            'url' => 'https://stacks.stanford.edu/file/bc123df4567/abc_123_cap.vtt' }
+        ]
+      end
     end
 
     context 'with caption with no specified language' do
