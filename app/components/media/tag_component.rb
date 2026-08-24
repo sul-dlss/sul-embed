@@ -100,7 +100,8 @@ module Media
         playsinline: true,
         # content_type describes the direct file (media_src fallback). The streamed URL provided by
         # the probe service is always HLS, so the player controller overrides the type in that case.
-        data: { content_type: file.mimetype, index: @resource_iteration.index, media_src: file.file_url },
+        data: { content_type: file.mimetype, index: @resource_iteration.index, media_src: file.file_url,
+                captions: caption_data },
         class: 'sul-embed-media-file',
         # So that VTT can be downloaded when download:stanford
         crossorigin: Rails.env.development? ? '' : 'use-credentials'
@@ -124,6 +125,16 @@ module Media
                     default: (i.zero? && !caption_file.sdr_generated? ? '' : nil))
         end
       )
+    end
+
+    # The transcript panel fetches and parses the caption files itself instead of reading the
+    # player's text tracks, which only ever expose the cues of the language on screen. It
+    # needs the whole list up front, independently of the track elements above, which the
+    # player detaches and re-clones while it loads.
+    def caption_data
+      caption_files.map do |caption|
+        { language: caption.language_code, label: caption.media_caption_label, url: caption.file_url }
+      end.to_json
     end
 
     def caption_files
