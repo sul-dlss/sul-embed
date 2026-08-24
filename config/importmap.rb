@@ -13,8 +13,8 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 pin_all_from "app/javascript/file_controllers", under: "file_controllers"
 pin_all_from 'app/javascript/src', under: 'src', to: 'src'
 
-pin "@videojs/html/video", to: "https://cdn.jsdelivr.net/npm/@videojs/html@10.0.0-beta.25/cdn/video.js"
-pin "@videojs/html/media/hlsjs-video", to: "https://cdn.jsdelivr.net/npm/@videojs/html@10.0.0-beta.25/cdn/media/hlsjs-video.js"
+pin "@videojs/html/video", to: "https://cdn.jsdelivr.net/npm/@videojs/html@10.0.0-beta.31/cdn/video.js"
+pin "@videojs/html/media/hlsjs-video", to: "https://cdn.jsdelivr.net/npm/@videojs/html@10.0.0-beta.31/cdn/media/hlsjs-video.js"
 
 pin "openseadragon", to: "https://ga.jspm.io/npm:openseadragon@4.1.0/build/openseadragon/openseadragon.js"
 pin "fscreen", to: "https://ga.jspm.io/npm:fscreen@1.2.0/dist/fscreen.cjs.js"
