@@ -42,6 +42,10 @@ en:
       title: "Geospatial viewer: %{title}"
     mirador_viewer:
       title: "Image viewer: %{title}"
+      # Names of the tabs the georeference plugin draws for a scan that also belongs on a map
+      views:
+        image: "Image"
+        map: "Georeferenced Map"
     media:
       title: "Media viewer: %{title}"
     document_viewer:

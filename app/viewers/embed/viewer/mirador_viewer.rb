@@ -16,6 +16,21 @@ module Embed
 
       delegate :manifest_json_url, to: :@purl_object
 
+      # A scanned map may carry a georeference annotation saying where on a map it belongs. When it
+      # does, the viewer offers the map as a second way of looking at the same object - see
+      # georeferencePlugin. The v3 manifest goes along because a manifest can carry the annotation
+      # itself, and that copy is the more current of the two when both exist.
+      delegate :iiif_georeference_annotations?, :georeference_annotations_url, :iiif_v3_manifest_url,
+               to: :purl_object
+
+      # What to call each of those views. Translated here rather than written into the plugin because
+      # the Vite bundle has no way to read Rails' translations, and this is where the rest of
+      # sul-embed's strings live. JSON so one attribute carries however many views there turn out to
+      # be, the same way data-viewer-config carries Mirador's own.
+      def view_labels
+        I18n.t('views', scope: i18n_path).to_json if iiif_georeference_annotations?
+      end
+
       def manifest_json
         @manifest_json ||= JSON.parse(@purl_object.manifest_json_response)
       end

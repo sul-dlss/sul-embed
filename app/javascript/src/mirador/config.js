@@ -1,7 +1,7 @@
 export const sulTheme = {
   sul: {
     palette: {
-      type: "light",
+      mode: "light",
       primary: { main: "#8c1515", contrastText: "#fff" },
       secondary: { main: "#8c1515", contrastText: "#fff" },
       shades: {
