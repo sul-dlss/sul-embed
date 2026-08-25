@@ -1,37 +1,35 @@
 import { Controller } from "@hotwired/stimulus"
-// Defines <ogm-preview> and the rest of the elements. Side-effect only: one import registers all
-// eleven, each guarded by customElements.get().
-import "ogm-viewer"
-// The same classes the elements use internally, from the same chunk graph - both pins point into
-// one dist directory, so there is a single copy of maplibre-gl and a previewer built here is the
-// same kind of object <ogm-map> would have built for itself.
-import {
-  CogResource,
-  GeoJsonResource,
-  IIIFManifestResource,
-  LocationResource,
-  OpenIndexMapResource,
-  PMTilesResource,
-  previewersFor,
-} from "ogm-viewer/lib"
 
 // Which data attribute holds the file, and what kind of thing is at it. Checked in this order, which
 // is the order the Ruby side writes them in (see Embed::Viewer::Geo#map_element_options) - a record
-// only ever carries one.
+// only ever carries one. The resource is named rather than imported: the module it comes from is
+// fetched on demand, so at parse time there is no class here to point at.
 const SOURCES = [
-  { key: "indexMap", Resource: OpenIndexMapResource },
-  {
-    key: "annotationsUrl",
-    Resource: IIIFManifestResource,
-    urlKey: "iiifManifest",
-  },
-  { key: "geoJson", Resource: GeoJsonResource },
-  { key: "pmtiles", Resource: PMTilesResource },
-  { key: "cogUrl", Resource: CogResource },
+  { key: "indexMap", resource: "OpenIndexMapResource" },
+  { key: "geoJson", resource: "GeoJsonResource" },
+  { key: "pmtiles", resource: "PMTilesResource" },
+  { key: "cogUrl", resource: "CogResource" },
 ]
 
 // The data attributes that hold a visualization file URL, for the auth handshake to match against
 const URL_KEYS = SOURCES.map(source => source.key)
+
+// The viewer is about a megabyte gzipped across both pins, and every viewer in sul-embed loads the
+// controllers index, which registers this file - so importing it at the top meant a 3D object's page
+// downloaded a map it was never going to draw. Fetched once instead, by the first map that needs it:
+// the first import defines the eleven elements as a side effect, and the second hands back the
+// classes those elements use internally. Both pins point into one dist directory, so there is a
+// single copy of maplibre-gl and a previewer built here is the same kind of object <ogm-map> would
+// have built for itself.
+let viewerModule
+function loadViewer() {
+  viewerModule ||= Promise.all([
+    import("ogm-viewer"),
+    import("ogm-viewer/lib"),
+  ]).then(([, lib]) => lib)
+
+  return viewerModule
+}
 
 export default class extends Controller {
   connect() {
@@ -41,19 +39,32 @@ export default class extends Controller {
     // with the layer ids the outline before it left behind
     this.generation = 0
 
-    // Create the preview and add to the DOM. We don't support dark mode overall
-    // in sul-embed, so force light mode in the preview.
-    this.preview = document.createElement("ogm-preview")
-    this.preview.theme = "light"
-    this.el.appendChild(this.preview)
+    this.whenVisible(() => {
+      // For restricted content, outline where the record is until auth succeeds.
+      // For public content, load the visualization immediately.
+      if (this.restricted) {
+        this.showLocation()
+      } else {
+        this.showVisualization()
+      }
+    })
+  }
 
-    // For restricted content, outline where the record is until auth succeeds.
-    // For public content, load the visualization immediately.
-    if (this.restricted) {
-      this.showLocation()
-    } else {
-      this.showVisualization()
-    }
+  // Nothing is fetched and no element is built for a map nobody is looking at. A geo record's map is
+  // the whole page, so this runs straight away; a georeferenced scan's map waits in a tab behind the
+  // image until someone opens it. Keyed on the panel being hidden because that is exactly what
+  // tab_controller toggles, so there is no second signal to keep in step with it.
+  whenVisible(callback) {
+    const panel = this.element.closest("[role=tabpanel]")
+    if (!panel?.hidden) return callback()
+
+    this.panelObserver = new MutationObserver(() => {
+      if (panel.hidden) return
+
+      this.panelObserver.disconnect()
+      callback()
+    })
+    this.panelObserver.observe(panel, { attributeFilter: ["hidden"] })
   }
 
   // Called after authorization success (by stimulus) for restricted content.
@@ -87,6 +98,7 @@ export default class extends Controller {
   }
 
   disconnect() {
+    this.panelObserver?.disconnect()
     this.preview?.remove()
   }
 
@@ -139,24 +151,21 @@ export default class extends Controller {
     }
   }
 
-  // Which of the data attributes this record carries, and the resource to read it with. A
-  // georeferenced scan is the one that doesn't name its own file: the annotation lives inside the
-  // IIIF manifest, so the manifest is what gets read and data-annotations-url only says that there
-  // is one to find.
+  // Which of the data attributes this record carries, and the resource to read it with.
   source() {
     return SOURCES.find(({ key }) => this.dataAttributes[key])
   }
 
   // Build the resource this record points at, or nothing if it points at none - in which case the
   // outline of where it is stays up, the same as it did before.
-  buildResource() {
+  buildResource(viewer) {
     const source = this.source()
     if (!source) return undefined
 
-    const url = this.dataAttributes[source.urlKey ?? source.key]
+    const url = this.dataAttributes[source.key]
     if (!url) return undefined
 
-    return new source.Resource(
+    return new viewer[source.resource](
       `sul-embed-geo-${this.generation++}`,
       url,
       this.boundingBox(),
@@ -165,28 +174,47 @@ export default class extends Controller {
   }
 
   async showVisualization() {
-    const resource = this.buildResource()
+    const viewer = await loadViewer()
+    const resource = this.buildResource(viewer)
     if (!resource) return this.showLocation()
 
     await this.showResource(resource)
   }
 
   // Hand the preview whichever of the resource's previews draws a map. Usually there is exactly one;
-  // a georeferenced manifest offers the scan as an image first and the map second, and here it is
-  // the map we came for - the image is what the IIIF viewer is already for.
+  // a georeferenced scan offers the image first and the map second, and here it is the map we came
+  // for - the image is what the viewer in the next tab already is. A resource that offers no map at
+  // all falls back to the outline, which is honest about knowing only where the thing is; showing
+  // the image instead would put the same scan in both tabs and call one of them a map.
   async showResource(resource) {
-    const previewers = await previewersFor(resource)
-    const previewer =
-      previewers.find(candidate => candidate.renderer === "map") ??
-      previewers[0]
-    if (!previewer) return
+    const viewer = await loadViewer()
+    const previewers = await viewer.previewersFor(resource)
+    const previewer = previewers.find(candidate => candidate.renderer === "map")
+    if (!previewer) return this.showLocation()
 
-    // A DOM property, never an attribute - a previewer is an object. Set after the element is
-    // defined and mounted: assigning before the map has loaded its style reaches addSource() too
-    // early and MapLibre refuses with "Style is not done loading."
+    await this.attach(previewer)
+  }
+
+  // A DOM property, never an attribute - a previewer is an object. Set after the element is defined
+  // and mounted: assigning before the map has loaded its style reaches addSource() too early and
+  // MapLibre refuses with "Style is not done loading."
+  async attach(previewer) {
+    const preview = this.previewElement()
     await customElements.whenDefined("ogm-preview")
-    await this.preview.componentOnReady?.()
-    this.preview.previewer = previewer
+    await preview.componentOnReady?.()
+    preview.previewer = previewer
+  }
+
+  // Built on first use rather than in connect(), so a map that is never looked at never reaches the
+  // DOM at all. We don't support dark mode overall in sul-embed, so force light mode in the preview.
+  previewElement() {
+    if (!this.preview) {
+      this.preview = document.createElement("ogm-preview")
+      this.preview.theme = "light"
+      this.el.appendChild(this.preview)
+    }
+
+    return this.preview
   }
 
   // Where the record is, when what it holds can't be shown: restricted content waiting on
@@ -195,13 +223,17 @@ export default class extends Controller {
   // around the extent rather than as data filling it - which is the difference between saying where a
   // thing is and appearing to show it. Nothing to click either: the box carries no properties, so a
   // popup would open on an empty table.
-  showLocation() {
+  async showLocation() {
     const bounds = this.boundingBox()
     if (!bounds) return
 
-    this.showResource(
-      new LocationResource(`sul-embed-geo-${this.generation++}`, bounds),
+    // Straight to its previewer rather than back through showResource, which would come round here
+    // again if it ever found no map to draw.
+    const viewer = await loadViewer()
+    const [previewer] = await viewer.previewersFor(
+      new viewer.LocationResource(`sul-embed-geo-${this.generation++}`, bounds),
     )
+    if (previewer) await this.attach(previewer)
   }
 
   // Bounding box is stored in Leaflet format: [[south, west], [north, east]]

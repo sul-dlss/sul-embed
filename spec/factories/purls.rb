@@ -58,6 +58,20 @@ FactoryBot.define do
       contents { [build(:resource, :file, files: [build(:resource_file, :world_downloadable, :view_world, filename: 'data.zip'), build(:resource_file, :world_downloadable, :view_world, filename: 'data_EPSG_4326.zip')]), build(:resource, :image)] }
     end
 
+    trait :georeferenced_map do
+      druid { 'bb013fz9675' }
+      type { 'map' }
+      bounding_box { [['49.881111', '-6.983889'], ['55.811111', '2.076667']] }
+      download { 'world' }
+      view { 'world' }
+      contents do
+        [build(:resource, :image,
+               files: [build(:resource_file, :image, :world_downloadable, :view_world, druid: 'bb013fz9675'),
+                       build(:resource_file, :georeference_annotations, :world_downloadable, :view_world,
+                             druid: 'bb013fz9675')])]
+      end
+    end
+
     trait :media do
       type { 'media' }
     end

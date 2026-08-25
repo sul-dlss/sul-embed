@@ -30,6 +30,8 @@ sandbox:
       purl: bc592pz8308
     - label: Map Multi-image
       purl: bc151bq1744
+    - label: Map with IIIF georeference annotation
+      purl: bb013fz9675
     - label: location restricted - spec
       purl: bp158wj7223
     - label: parent record. 90 viewable children
@@ -133,8 +135,6 @@ sandbox:
       purl: bb021mm7809
     - label: GeoTIFF (EPSG::4326, 'nodata' configured)
       purl: kq996gp6880
-    - label: IIIF map with georeference annotation
-      purl: bb013fz9675
   document:
     - label: single file, world
       purl: bh502xm3351

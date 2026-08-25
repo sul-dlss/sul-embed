@@ -49,7 +49,7 @@ RSpec.describe Embed::ViewerFactory do
                         ])
       end
 
-      it { is_expected.to be_a Embed::Viewer::Geo }
+      it { is_expected.to be_a Embed::Viewer::MiradorViewer }
     end
   end
 end
