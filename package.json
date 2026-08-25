@@ -30,6 +30,7 @@
     "mirador-dl-plugin": "^1.0.0",
     "mirador-image-tools": "^1.0.0",
     "mirador-share-plugin": "^1.0.0",
+    "ogm-viewer": "1.0.0",
     "prop-types": "^15.7.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

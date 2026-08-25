@@ -12,6 +12,7 @@
   --ogm-data-color: #006cb8;
   --ogm-invalid-color: #b1040e;
   --ogm-selected-color: yellow;
+  --ogm-highlight-color: #e98300;
   --ogm-data-opacity: 0.75;
   --ogm-bounds-opacity: 0.2;
 }
