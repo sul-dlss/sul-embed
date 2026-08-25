@@ -17,6 +17,7 @@ import comparisonPlugin from "@/mirador/plugins/comparisonPlugin.jsx"
 import analyticsPlugin from "@/mirador/plugins/analyticsPlugin.js"
 import xywhPlugin from "@/mirador/plugins/xywhPlugin.js"
 import customMenuPlugin from "@/mirador/plugins/customMenuPlugin.jsx"
+import georeferencePlugin from "@/mirador/plugins/georeferencePlugin.jsx"
 
 export default {
   init: function () {
@@ -26,6 +27,10 @@ export default {
     const showAttribution = data.showAttribution === "true"
     const hideWindowTitle = data.hideTitle === "true"
     const enableComparison = data.enableComparison === "true"
+    // Set when the object carries a georeference annotation, which says where on a map the scan
+    // belongs. The scan is still what the object is, so the map joins it as a second view of the
+    // same window rather than replacing it or living in a viewer of its own.
+    const georeferenceUrl = data.georeferenceUrl
 
     // Determine which sidebar panel to show
     let sideBarPanel = "info"
@@ -105,6 +110,15 @@ export default {
       },
       [
         ...(enableComparison ? comparisonPlugin : []),
+        ...(georeferenceUrl
+          ? [
+              georeferencePlugin({
+                annotationUrl: georeferenceUrl,
+                manifestUrl: data.iiif3Manifest,
+                labels: JSON.parse(data.viewLabels),
+              }),
+            ]
+          : []),
         analyticsPlugin,
         xywhPlugin,
         customMenuPlugin,
