@@ -7,7 +7,7 @@ export default class extends Controller {
     const fileUri = evt.detail.fileUri
     const objectUrl = new URL(fileUri)
     objectUrl.searchParams.set("time", Date.now())
-    if (this.hasPageValue) objectUrl.searchParams.set("page", this.pageValue)
+    if (this.hasPageValue) objectUrl.hash = `page=${this.pageValue}`
 
     this.element.innerHTML = `
       <object data="${objectUrl}" type="application/pdf" style="height: 100%; width: 100%">
