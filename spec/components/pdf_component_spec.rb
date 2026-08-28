@@ -39,6 +39,14 @@ RSpec.describe PdfComponent, type: :component do
     end
   end
 
+  context 'when a canvas index is passed' do
+    let(:embed_request) { Embed::Request.new(url:, canvas_index: '3') }
+
+    it 'passes the one-based PDF page to the PDF controller' do
+      expect(page).to have_css('.sul-embed-pdf[data-pdf-page-value="4"]', visible: :all)
+    end
+  end
+
   context 'when the browser is chrome' do
     let(:user_agent_string) { 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36' }
 
