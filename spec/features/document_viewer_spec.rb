@@ -31,7 +31,10 @@ RSpec.describe 'PDF Viewer', :js do
           }))
         JAVASCRIPT
 
-        expect(page).to have_css('object[data$="&page=4"]', visible: :all)
+        object = page.find('object', visible: :all)
+        expect(object[:data]).to match(
+          %r{\Ahttps://stacks\.stanford\.edu/file/xk848ts1579/Forecasting_Effective_Digital_Libs\.pdf\?time=\d+#page=4\z}
+        )
       end
     end
   end
