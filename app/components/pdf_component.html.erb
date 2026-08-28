@@ -19,6 +19,9 @@
       <div style="display: flex; flex-direction: column; height: 100%">
         <div class="sul-embed-pdf" style="height: 100%"
           data-controller="pdf"
+          <% if viewer.page %>
+            data-pdf-page-value="<%= viewer.page %>"
+          <% end %>
           data-action="thumbnail-clicked@window->file-auth#authFileAndDisplay iiif-manifest-received@window->file-auth#parseFiles auth-success@window->pdf#show">
         </div>
       </div>

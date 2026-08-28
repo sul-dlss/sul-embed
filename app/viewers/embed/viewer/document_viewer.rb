@@ -22,6 +22,11 @@ module Embed
       def fullscreen?
         true
       end
+
+      def page
+        canvas_index = Integer(embed_request.canvas_index, exception: false)
+        canvas_index + 1 if canvas_index && canvas_index >= 0
+      end
     end
   end
 end
