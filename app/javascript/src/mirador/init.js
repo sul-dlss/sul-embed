@@ -11,6 +11,7 @@ import {
 
 import { sulTheme, viewerViews, defaultWorkspace } from "@/mirador/config.js"
 import { handleViewerPostMessage } from "@/mirador/postMessageHandler.js"
+import { keepRequestedCanvasThroughInitialSearch } from "@/mirador/initialSearchCanvas.js"
 
 import comparisonPlugin from "@/mirador/plugins/comparisonPlugin.jsx"
 import analyticsPlugin from "@/mirador/plugins/analyticsPlugin.js"
@@ -31,6 +32,12 @@ export default {
     if (data.search?.length > 0) sideBarPanel = "search"
     if (showAttribution) sideBarPanel = "attribution"
 
+    // An embed that asks for both a starting canvas and a search term wants to
+    // land on that canvas with the term highlighted, but Mirador would jump to
+    // the first hit in the document instead. See initialSearchCanvas.js.
+    const searchWithinRequestedCanvas =
+      data.search?.length > 0 && Boolean(data.canvasId || data.canvasIndex)
+
     const viewerInstance = Mirador.viewer(
       {
         id: "sul-embed-mirador",
@@ -39,6 +46,9 @@ export default {
         windows: [
           {
             id: "main",
+            ...(searchWithinRequestedCanvas && {
+              switchCanvasOnSearch: false,
+            }),
             loadedManifest: data.miradorUri,
             canvasIndex: Number(data.canvasIndex),
             canvasId: data.canvasId,
@@ -105,6 +115,10 @@ export default {
         miradorDownloadDialogPlugin,
       ],
     )
+
+    if (searchWithinRequestedCanvas) {
+      keepRequestedCanvasThroughInitialSearch(viewerInstance.store, "main")
+    }
 
     handleViewerPostMessage(viewerInstance)
   },
