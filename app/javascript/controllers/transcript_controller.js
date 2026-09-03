@@ -1,176 +1,138 @@
 import { Controller } from "@hotwired/stimulus"
-import videojs from "video.js"
+import { captionCredentials, fetchCues } from "src/modules/captions"
 
-// This is tightly coupled to VideoJS's tracks implementation, because VideoJS removes the tracks from the
-// native player when it initializes.  This depends on the media_tag_controller.js emitting a custom media-loaded
-// event.
+// This depends on the media player controller emitting a custom media-loaded event.
+//
+// The transcript reads the caption files the server listed on the media element and fetches
+// them itself. It deliberately does not read the player's text tracks: the player enables at
+// most one caption track at a time and a disabled track exposes no cues, so the tracks can
+// only describe the language currently on screen.
 export default class extends Controller {
   static targets = ["outlet", "autoscroll", "button", "captionLanguageSelect"]
 
-  // When the media-loaded event occurs, store the handle to the player
-  persistPlayer(evt) {
-    this.player = evt.detail
+  initialize() {
+    this.captions = []
+    this.transcripts = {}
   }
 
-  // We can't load right away, because the VTT tracks may not have been parsed yet.
-  // This function is triggered by the 'media-data-loaded' event which is triggered
-  // by the 'loadeddata' event on the first track.
-  async load() {
-    // Return if this method has already been called, there are no caption tracks
-    // or no cues for the tracks.  In the case of Safari, we need to wait to check,
-    // hence the async/await combination for checkCues.
-    if (this.player.loaded || !(await this.checkCues())) return
+  // When the media-loaded event occurs, store the handle to the player
+  persistPlayer(evt) {
+    this.setPlayer(evt.detail)
+  }
 
+  // Point the transcript at a media element. Transcripts are cached per media element, so
+  // pointing at a different one starts over.
+  setPlayer(player) {
+    if (this.player === player) return
+
+    this.player = player
+    this.captions = JSON.parse(player?.dataset.captions || "[]")
+    this.transcripts = {}
+    this.renderedTranscript = null
+    this.renderedLanguage = null
+  }
+
+  // This function is triggered by the 'media-data-loaded' event, which is triggered by the
+  // 'loadeddata' event. We wait for it rather than acting on connect because restricted
+  // media only gets that far once the viewer is authorized to read its caption files.
+  load(evt) {
+    // Prefer the player carried on the event so we don't depend on the media-loaded
+    // (persistPlayer) event having fired first.
+    if (evt?.detail) this.setPlayer(evt.detail)
+
+    // Return if this method has already been called or the item has no captions.
+    if (!this.player || this.player.loaded || this.captions.length === 0) return
+
+    this.player.loaded = true
     this.revealButton()
     this.setupTranscriptLanguageSwitching()
-    this.renderCues()
-    this.player.loaded = true
+    return this.renderCues()
   }
 
   // event called when switch-transcript event is fired.
   // This really only happens when there are more than one media item with captions.
   switchTranscript(evt) {
-    this.player = evt.detail
+    this.setPlayer(evt.detail)
     this.setupTranscriptLanguageSwitching()
-    this.renderCues()
-  }
-
-  // Safari cues require special handling.
-  // We want the track cues to be available so we can properly generate the transcript sidebar language dropdown
-  // if there is more than one language track.
-  convertDisabledTracks() {
-    const captions = this.player
-      .remoteTextTracks()
-      ?.tracks_.filter(track => track.kind === "captions")
-    captions.forEach(track => {
-      if (track.mode === "disabled") {
-        track.mode = "hidden"
-      }
-    })
-  }
-
-  // This function is only called on load and allows us to check Safari in a custom way
-  async checkCues() {
-    if (videojs.browser.IS_ANY_SAFARI) {
-      return await this.cuesPromise()
-    } else {
-      // Carry on as usual if the browser isn't Safari
-      return this.currentCues()
-    }
-  }
-
-  // To enable tracks to be readable in Safari, we must change their mode to hidden and then wait
-  // before can check the cues.
-  cuesPromise() {
-    return new Promise((resolve, reject) => {
-      // Change any disabled tracks to hidden mode to enable getting their cues
-      this.convertDisabledTracks()
-      // We need to wait before we check for cues, since they won't be immediately available
-      setTimeout(() => {
-        resolve(this.currentCues())
-      }, 200)
-    })
-  }
-
-  // Tracks may be of different kinds.
-  // Retrieve tracks that are of kind "caption" which also have associated cues
-  get captionTracks() {
-    // The documentation recommends using remoteTextTracks() instead of textTracks().
-    // Also, using this method allows the change to text track mode to 'hidden'
-    // to reveal the cues for text tracks in Safari, whereas directly using
-    // this.player.textTracks_ was not allowing for this change to take effect.
-    const tracks = this.player.remoteTextTracks()?.tracks_
-
-    if (!tracks) return []
-
-    const captions = tracks.filter(track => track.kind === "captions")
-
-    // captionTracks is called multiple times and users may select and deselect
-    // captions in the video player itself. For Safari, we want to continue
-    // changing disabled mode to "hidden" to prevent losing cue information.
-    if (videojs.browser.IS_ANY_SAFARI) {
-      this.convertDisabledTracks()
-      // the function this.trackCues returns the wrong number of captions when in Safari
-      // this has something to do with loadedmetadata triggering before all the captions have loaded.
-      // This is a temporary fix. We really should figure out a way to update this function
-      return captions
-    }
-    // Return caption tracks that have associated cues
-    return captions.filter(track => this.trackCues(track).length)
-  }
-
-  get cuesByLanguage() {
-    const cues = {}
-    this.captionTracks.forEach(track => {
-      // Retreive the cues for this track
-      const list = this.trackCues(track)
-      const cueStartTimes =
-        list.length === 0 ? undefined : list.map(cue => cue.startTime)
-
-      cues[track.language] = {
-        list,
-        cueStartTimes,
-        minStartTime:
-          list.length === 0 ? 0 : Math.min.apply(Math, cueStartTimes),
-        lastCueEndTime:
-          list.length === 0
-            ? 0
-            : Math.max.apply(
-                Math,
-                list.map(cue => cue.endTime),
-              ),
-        asHtml: list.map(cue => this.buildCue(cue)).join(""),
-      }
-    })
-
-    return cues
-  }
-
-  // Different browsers may provide different types of objects for TextTrackCueList.
-  // For example, Safari does not recognize track.cues.cues_.
-  // For Firefox/Chrome, track.cues are not iterable, but track.cues[n] will work, where n is an integer.
-  // We will map the list to an array, which will allow the return values to be filterable/iterable.
-  trackCues(track) {
-    let mappedCues = []
-    if (track && track?.cues && track.cues?.length) {
-      for (let x = 0; x < track.cues.length; x++) {
-        mappedCues.push(track.cues[x])
-      }
-    }
-    return mappedCues
-  }
-
-  currentCues() {
-    // We need to check if there are captions for multiple videos with mixed languages.
-    // for example if video 1 has english and russian captions and video 2 has spanish and english captions
-    // if we switched to russian, this.selectedLanguage = 'ru', but if we then switch to video 2
-    // it won't have any captions in russian.
-    // https://github.com/sul-dlss/sul-embed/issues/2293
-    return this.selectedLanguage && this.cuesByLanguage[this.selectedLanguage]
-      ? this.cuesByLanguage[this.selectedLanguage]
-      : Object.values(this.cuesByLanguage)[0]
-  }
-
-  renderCues() {
-    this.outletTarget.innerHTML = this.currentCues().asHtml
+    return this.renderCues()
   }
 
   selectLanguage(evt) {
     this.selectedLanguage = evt.target.value
-    this.renderCues()
+    return this.renderCues()
+  }
+
+  // The language to display: the one the user picked when this media has captions for it,
+  // otherwise the first one.
+  // We need to check if there are captions for multiple videos with mixed languages.
+  // for example if video 1 has english and russian captions and video 2 has spanish and english captions
+  // if we switched to russian, this.selectedLanguage = 'ru', but if we then switch to video 2
+  // it won't have any captions in russian.
+  // https://github.com/sul-dlss/sul-embed/issues/2293
+  get transcriptLanguage() {
+    const languages = this.captions.map(caption => caption.language)
+    if (languages.includes(this.selectedLanguage)) return this.selectedLanguage
+
+    return languages[0]
+  }
+
+  async renderCues() {
+    const language = this.transcriptLanguage
+    const transcript = await this.transcriptFor(language)
+
+    // Leave whatever is on screen alone if we couldn't read the file, rather than replacing
+    // a readable transcript with nothing. Selecting the language again retries the fetch.
+    if (!transcript) return
+
+    this.renderedLanguage = language
+    this.renderedTranscript = transcript
+    this.outletTarget.innerHTML = transcript.asHtml
+  }
+
+  // Cached per language, and the cache holds the promise so that switching back and forth
+  // doesn't refetch. A failed fetch is dropped from the cache so it can be retried.
+  transcriptFor(language) {
+    if (!(language in this.transcripts)) {
+      this.transcripts[language] = this.buildTranscript(language).catch(
+        error => {
+          delete this.transcripts[language]
+          console.error(error)
+          return null
+        },
+      )
+    }
+
+    return this.transcripts[language]
+  }
+
+  async buildTranscript(language) {
+    const caption = this.captions.find(file => file.language === language)
+    if (!caption) return null
+
+    const cues = await fetchCues(caption.url, captionCredentials(this.player))
+    const cueStartTimes = cues.map(cue => cue.startTime)
+
+    return {
+      cues,
+      cueStartTimes,
+      // minStartTime and lastCueEndTime represent the starting and end point of all cues
+      minStartTime: cues.length === 0 ? 0 : Math.min(...cueStartTimes),
+      lastCueEndTime:
+        cues.length === 0 ? 0 : Math.max(...cues.map(cue => cue.endTime)),
+      asHtml: cues.map(cue => this.buildCue(cue)).join(""),
+    }
   }
 
   setupTranscriptLanguageSwitching() {
-    this.captionLanguageSelectTarget.innerHTML = this.captionTracks
-      .map(
-        track =>
-          `<option value="${track.language}" ${this.selectedDropdownLang(track.language) ? " selected" : ""}>${track.label}</option>`,
-      )
-      .join("")
-  }
+    const language = this.transcriptLanguage
 
-  selectedDropdownLang(language) {
-    return language == this.selectedLanguage
+    this.captionLanguageSelectTarget.replaceChildren(
+      ...this.captions.map(caption => {
+        const option = new Option(caption.label, caption.language)
+        option.selected = caption.language === language
+        return option
+      }),
+    )
   }
 
   buildCue(cue) {
@@ -190,26 +152,26 @@ export default class extends Controller {
   }
 
   highlightCue(evt) {
-    const cues = this.currentCues()
+    const transcript = this.renderedTranscript
 
-    // For transcript cue highlighting to take effect, the companion window should be showing the transcript
-    // and there must be cues present within the transcript.
-    if (!this.player.loaded || cues.list.length === 0) return
+    // For transcript cue highlighting to take effect, the companion window should be showing
+    // the transcript and there must be cues present within the transcript.
+    if (!transcript || transcript.cues.length === 0) return
 
-    // this.minStartTime and this.lastCueEndTime represent the starting and end point of all cues
-    if (evt.detail >= cues.minStartTime && evt.detail <= cues.lastCueEndTime) {
+    // minStartTime and lastCueEndTime represent the starting and end point of all cues
+    if (
+      evt.detail >= transcript.minStartTime &&
+      evt.detail <= transcript.lastCueEndTime
+    ) {
       // Retrieve the last cue start time less than or equal to the current video time
       const startTime = Math.max.apply(
         Math,
-        cues.cueStartTimes.filter(x => x <= evt.detail),
+        transcript.cueStartTimes.filter(x => x <= evt.detail),
       )
       // Find the cue element in the transcript that corresponds to this start time
       const cueElement = this.outletTarget.querySelector(
         `[data-cue-start-value="${startTime}"]`,
       )
-      // Handling a case where there is a mismatch between the assumed start time and the cues we have
-      // For example, a multi-lingual caption situation in Safari where the transcript loads for only the
-      // language for the selected caption.
       if (cueElement) {
         // Remove highlighting from all the other cue elements
         this.removeAllCueHighlights()
@@ -226,7 +188,7 @@ export default class extends Controller {
             inline: "nearest",
           })
       }
-    } else if (evt.detail > cues.lastCueEndTime) {
+    } else if (evt.detail > transcript.lastCueEndTime) {
       //After we reach the end time of the last transcript, remove all the highlighting
       this.removeAllCueHighlights()
     }

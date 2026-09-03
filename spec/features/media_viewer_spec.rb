@@ -19,7 +19,7 @@ RSpec.describe 'Media viewer', :js do
 
   context 'with multiple A/V files' do
     # The ajax request that displays the video does not fire in this context
-    # so we are checking for a non-visible video in the first case (even though it should be visible)
+    # so we are checking for a non-visible player in the first case (even though it should be visible)
 
     # the object-content panel and tab are selected by default
     it 'selects the object-content tab by default' do
@@ -55,7 +55,9 @@ RSpec.describe 'Media viewer', :js do
       click_on 'Toggle sidebar'
       expect(page).to have_no_css 'aside.open'
 
-      expect(page).to have_css('video', visible: :all)
+      expect(page).to have_css('hlsjs-video', visible: :all)
+      expect(page.evaluate_script("customElements.get('video-player') !== undefined")).to be true
+      expect(page.evaluate_script("customElements.get('hlsjs-video') !== undefined")).to be true
     end
   end
 
