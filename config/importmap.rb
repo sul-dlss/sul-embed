@@ -45,5 +45,5 @@ pin "popper", to: 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/p
 # Two pins that go into the same location: one is the components, the other is
 # the classes used to build Resources and Previewers to put into them. Pinning
 # into the same path means we only get one copy of maplibre-gl.
-pin "ogm-viewer", to: "https://cdn.jsdelivr.net/npm/ogm-viewer@0.10.0/dist/components/ogm-viewer.js"
-pin "ogm-viewer/lib", to: "https://cdn.jsdelivr.net/npm/ogm-viewer@0.10.0/dist/components/index.js"
+pin "ogm-viewer", to: "https://cdn.jsdelivr.net/npm/ogm-viewer@1.2.0/dist/components/ogm-viewer.js"
+pin "ogm-viewer/lib", to: "https://cdn.jsdelivr.net/npm/ogm-viewer@1.2.0/dist/components/index.js"
