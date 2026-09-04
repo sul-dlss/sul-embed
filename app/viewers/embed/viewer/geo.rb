@@ -34,12 +34,6 @@ module Embed
           options['data-pmtiles'] = pmtiles.file_url
         elsif cog?
           options['data-cog-url'] = cog_url
-        elsif georeference_annotations?
-          options['data-annotations-url'] = georeference_annotations_url
-          # TODO: shift handling of this back to the Mirador viewer, and
-          # add a map tab for it, so that we aren't handling IIIF objects
-          # in this path. See: https://github.com/sul-dlss/sul-embed/issues/3124
-          options['data-iiif-manifest'] = @purl_object.iiif_v3_manifest_url
         end
         options
       end
@@ -78,14 +72,6 @@ module Embed
 
       def cog?
         cog_url.present?
-      end
-
-      def georeference_annotations_url
-        @georeference_annotations_url ||= purl_object.downloadable_files.find(&:georeference_annotations?)&.file_url
-      end
-
-      def georeference_annotations?
-        georeference_annotations_url.present?
       end
 
       # Returns true or false whether the viewer should display the Download All

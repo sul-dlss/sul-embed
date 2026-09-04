@@ -14,23 +14,15 @@ module Embed
 
     private
 
-    def georeferenced?
-      @embed_request.purl_object.iiif_georeference_annotations?
-    end
-
     def viewer_class # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
       case @embed_request.purl_object.type
       when 'file'
         Embed::Viewer::File
       when 'geo'
         Embed::Viewer::Geo
-      when 'map'
-        if georeferenced?
-          Embed::Viewer::Geo
-        else
-          Embed::Viewer::MiradorViewer
-        end
-      when 'image', 'manuscript', 'book'
+      # A map includes a georeferenced scan, which is still an image object; the map it belongs on
+      # is a second view inside Mirador rather than a viewer of its own. See georeferencePlugin.
+      when 'image', 'manuscript', 'book', 'map'
         Embed::Viewer::MiradorViewer
       when 'document'
         Embed::Viewer::DocumentViewer
