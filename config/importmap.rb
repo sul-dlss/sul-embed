@@ -42,18 +42,15 @@ pin "@google/model-viewer", to: "https://cdn.jsdelivr.net/npm/@google/model-view
 pin "three", to: "https://ga.jspm.io/npm:three@0.163.0/build/three.module.js"
 pin "popper", to: 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.js'
 
-# Two pins that go into the same location: one is the components, the other is
-# the classes used to build Resources and Previewers to put into them. Pinning
-# into the same path means we only get one copy of maplibre-gl.
-#
-# The version is read from package.json rather than written here, because Mirador's georeference tab
-# imports the same library as a bundled dependency and Vite resolves that from package.json. Declared
-# twice, a bump to one alone would serve two different viewers to two views of one object. Vendoring
-# would remove the URL entirely, but this library's dist is 64 chunks importing each other by
-# relative path, and Propshaft digests filenames without rewriting JS imports - so every chunk but
-# the entry would 404 once precompiled.
+# The mirador viewer needs a local copy of ogm-viewer in node_modules to bundle,
+# but the geo viewer uses importmaps, and Propshaft can't serve the node_modules
+# version in a way that plays nice in the browser. Since we're stuck with two
+# copies, make the package.json version authoritative, so they don't get out of sync.
 ogm_viewer_version = JSON.parse(Rails.root.join('package.json').read).fetch('dependencies').fetch('ogm-viewer')
 ogm_viewer = "https://cdn.jsdelivr.net/npm/ogm-viewer@#{ogm_viewer_version}/dist/components"
 
+# Two pins that go into the same location: one is the components, the other is
+# the classes used to build Resources and Previewers to put into them. Pinning
+# into the same path means we only get one copy of maplibre-gl.
 pin "ogm-viewer", to: "#{ogm_viewer}/ogm-viewer.js"
 pin "ogm-viewer/lib", to: "#{ogm_viewer}/index.js"
