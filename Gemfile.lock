@@ -183,7 +183,7 @@ GEM
       reline (>= 0.4.2)
     iso8601 (0.13.0)
     janeway-jsonpath (1.1.0)
-    json (3.0.0)
+    json (2.21.2)
     language_server-protocol (3.17.0.6)
     lint_roller (1.1.0)
     logger (1.7.0)
@@ -454,6 +454,7 @@ DEPENDENCIES
   high_voltage
   honeybadger
   importmap-rails (~> 2.0)
+  json (~> 2.0)
   newrelic_rpm
   nokogiri (>= 1.7.1)
   okcomputer
