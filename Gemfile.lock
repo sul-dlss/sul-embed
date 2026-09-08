@@ -84,7 +84,7 @@ GEM
     bcrypt_pbkdf (1.1.2)
     benchmark (0.5.0)
     bigdecimal (4.1.2)
-    bootsnap (1.25.0)
+    bootsnap (1.26.0)
       msgpack (~> 1.5)
     builder (3.3.0)
     capistrano (3.20.1)
@@ -240,7 +240,7 @@ GEM
     okcomputer (1.19.2)
       benchmark
     ostruct (0.6.3)
-    parallel (2.1.0)
+    parallel (2.2.0)
     parser (3.3.12.0)
       ast (~> 2.4.1)
       racc
@@ -257,7 +257,7 @@ GEM
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.7)
-    rack-proxy (1.0.1)
+    rack-proxy (2.0.0)
       rack (>= 2.0, < 4)
     rack-session (2.1.2)
       base64 (>= 0.1.0)
@@ -371,7 +371,7 @@ GEM
       rubocop (~> 1.72, >= 1.72.1)
       rubocop-rspec (~> 3.5)
     ruby-progressbar (1.13.0)
-    rubyzip (3.5.0)
+    rubyzip (3.6.0)
     securerandom (0.4.1)
     selenium-webdriver (4.48.0)
       base64 (~> 0.2)
@@ -454,6 +454,7 @@ DEPENDENCIES
   high_voltage
   honeybadger
   importmap-rails (~> 2.0)
+  json (~> 2.0)
   newrelic_rpm
   nokogiri (>= 1.7.1)
   okcomputer
@@ -476,4 +477,4 @@ DEPENDENCIES
   webmock (~> 3.19)
 
 BUNDLED WITH
-  4.0.19
+  4.0.20
