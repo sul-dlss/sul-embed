@@ -120,13 +120,19 @@ export default class extends Controller {
     return null
   }
 
-  // Applied to every request the resource makes and, once its previewer attaches, to MapLibre's own
-  // tile requests too. Credentials rather than the bearer token we hold: stacks answers a preflight
-  // allowing Range and not Authorization, and it only sends back an allow-origin a credentialed
-  // request can use when the Origin is one it knows - so a token would be refused before it was read.
-  requestTransform() {
+  // Returns a function that will get applied to every request the Geo viewer
+  // makes on our behalf – the preview data, but also basemap tiles, sprites,
+  // etc. The applied transform has to check where each request is going.
+  requestTransform(stacksUrl) {
+    // Bail out early if there's no credentials to send and leave the request alone
     if (!this.authToken) return undefined
-    return () => ({ credentials: "include" })
+
+    // Infer the stacks host from the requested data URL (stage, prod, etc.)
+    const stacksEnv = new URL(stacksUrl).origin
+
+    // Our applied transform: send credentials if the request is going to stacks.
+    return url =>
+      url.startsWith(stacksEnv) ? { credentials: "include" } : undefined
   }
 
   // Replace the data-attribute URL matching fileUri with the authorized location
@@ -169,7 +175,7 @@ export default class extends Controller {
       `sul-embed-geo-${this.generation++}`,
       url,
       this.boundingBox(),
-      this.requestTransform(),
+      this.requestTransform(url),
     )
   }
 
