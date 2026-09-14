@@ -97,7 +97,7 @@ module Embed
     end
 
     def manifest_json_url
-      "#{Settings.purl_url}/#{druid}/iiif/manifest"
+      "#{Settings.purl_url}/#{druid}/iiif3/manifest"
     end
 
     def manifest_json_response # rubocop:disable Metrics/MethodLength
