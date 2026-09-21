@@ -15,7 +15,7 @@ class MediaComponent < ViewComponent::Base
 
     return unless downloadable_files.any? { it.caption? && it.stanford_only? }
 
-    'Login in to view transcript'
+    'Login to view transcript'
   end
 
   def resources_with_primary_file
