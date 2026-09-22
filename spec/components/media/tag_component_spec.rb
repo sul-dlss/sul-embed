@@ -81,6 +81,27 @@ RSpec.describe Media::TagComponent, type: :component do
     end
   end
 
+  context 'with PDF files within media objects' do
+    let(:resource) { build(:resource, :media_pdf) }
+
+    it 'renders the built in PDF viewer rather than OpenSeadragon' do
+      expect(page).to have_css('div .sul-embed-pdf[data-controller="pdf"]')
+      expect(page).to have_no_css('div .osd')
+    end
+
+    context 'when the resource also has a jp2 thumbnail' do
+      let(:resource) do
+        build(:resource, :media_pdf, files: [build(:media_file, :pdf, :world_downloadable),
+                                             build(:media_file, :image, filename: 'pdf_1.jp2')])
+      end
+
+      it 'uses the thumbnail in the content list' do
+        object = page.find('[data-media-wrapper-index-value="0"]')
+        expect(object['data-thumbnail-url']).to match(%r{%2Fpdf_1/square/74,73/})
+      end
+    end
+  end
+
   describe 'with a poster' do
     context 'when a file level thumbnail is present' do
       let(:resource) { build(:resource, :video) }

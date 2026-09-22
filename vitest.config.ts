@@ -12,6 +12,9 @@ export default defineConfig({
   resolve: {
     alias: {
       "@tests": fileURLToPath(new URL("./spec/javascript", import.meta.url)),
+      "@hotwired/stimulus": fileURLToPath(
+        new URL("./spec/javascript/stubs/stimulus.js", import.meta.url),
+      ),
       "@": path.resolve(__dirname, "app/javascript/src"),
     },
   },

@@ -98,7 +98,8 @@
     width: 100%;
   }
 
-  .osd {
+  .osd,
+  .sul-embed-pdf {
     height: 100%;
     width: 100%;
   }
