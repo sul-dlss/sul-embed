@@ -10,36 +10,52 @@ module Media
     # @param [Purl::Resource] resource This resource is expected to have a primary file.
     # @param [#index] resource_iteration Information about what part of the collection we are in
     # @param [String] druid the object identifier
-    def initialize(resource:, resource_iteration:, druid:)
+    # @param [Integer] selected_index the offset of the resource the viewer opens on
+    # @param [Integer, nil] page the one-based page a PDF should open to
+    def initialize(resource:, resource_iteration:, druid:, selected_index: 0, page: nil)
       @resource = resource
       @file = resource.primary_file
       @resource_iteration = resource_iteration
       @druid = druid
+      @selected_index = selected_index
+      @page = page
     end
 
-    attr_reader :file, :druid
+    attr_reader :file, :druid, :page
 
     delegate :type, to: :@resource
+    delegate :primary_file_url, to: :@resource
+
+    # Whether this is the resource the viewer opens on
+    def selected?
+      @resource_iteration.index == @selected_index
+    end
 
     def call
       return media_element if audio_or_video?
-      return render PdfComponent.new(file:, type:, thumbnail: thumbnail_url, **iteration) if file.pdf?
+      return render PdfComponent.new(slot: slot(thumbnail_url), page:) if file.pdf?
 
-      render PreviewImageComponent.new(druid:, file:, type:, **iteration)
+      # An image resource carries no separate thumbnail file; it is its own thumbnail
+      render PreviewImageComponent.new(druid:, slot: slot(own_thumbnail_url))
     end
 
     def audio_or_video?
       SUPPORTED_MEDIA_TYPES.include?(type.to_sym)
     end
 
-    # Where this resource sits within the collection of resources on the object
-    def iteration
-      { resource_index: @resource_iteration.index, size: @resource_iteration.size }
+    # @param [String, nil] thumbnail the image the content list shows for this resource
+    def slot(thumbnail)
+      Slot.new(file:, type:, file_uri: primary_file_url, thumbnail:, selected: selected?,
+               index: @resource_iteration.index, size: @resource_iteration.size)
     end
 
+    # the 74,73 size accounts for the additional pixel size returned by the image server
     def thumbnail_url
-      # the 74,73 size accounts for the additional pixel size returned by the image server
       stacks_square_url(druid, @resource.thumbnail.title, size: '74,73') if @resource.thumbnail
+    end
+
+    def own_thumbnail_url
+      stacks_square_url(druid, file.title, size: '74,73')
     end
 
     def poster_url_for
@@ -53,23 +69,13 @@ module Media
     end
 
     def default_poster
-      return default_audio_thumbnail if type == 'audio'
+      return asset_url('waveform-audio-poster.svg') if type == 'audio'
 
-      return default_video_thumbnail unless @file.world_viewable?
-
-      nil
-    end
-
-    def default_audio_thumbnail
-      asset_url('waveform-audio-poster.svg')
-    end
-
-    def default_video_thumbnail
-      asset_url('locked-media-poster.svg')
+      asset_url('locked-media-poster.svg') unless @file.world_viewable?
     end
 
     def media_element # rubocop:disable Metrics/MethodLength
-      render WrapperComponent.new(thumbnail: thumbnail_url, file:, type:, **iteration) do
+      render WrapperComponent.new(slot: slot(thumbnail_url)) do
         # We use this div, to hold stimulus controller/actions, because videoJS duplicates these attributes if they are
         # on the <video> tag directly
         tag.div(

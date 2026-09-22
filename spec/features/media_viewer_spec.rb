@@ -12,9 +12,11 @@ RSpec.describe 'Media viewer', :js do
           ])
   end
 
+  let(:query) { {} }
+
   before do
     allow(Embed::Purl).to receive(:find).and_return(purl)
-    visit_iframe_response
+    visit iframe_path(url: "#{Settings.purl_url}/ignored", **query)
   end
 
   context 'with multiple A/V files' do
@@ -98,6 +100,49 @@ RSpec.describe 'Media viewer', :js do
 
         expect(page).to have_css('.pdf-thumbnail-icon', visible: :all)
         expect(page).to have_text('Program Notes')
+      end
+    end
+  end
+
+  context 'when a filename is requested' do
+    let(:purl) do
+      build(:purl, :video,
+            contents: [
+              build(:resource, :video),
+              build(:resource, :media_pdf)
+            ])
+    end
+    let(:query) { { filename: 'program_notes.pdf' } }
+
+    it 'opens on that file rather than the first one' do
+      # The PDF is on screen and the video it would otherwise have opened on is not
+      expect(page).to have_css('div .sul-embed-pdf', visible: :visible)
+      expect(page).to have_css('[data-media-wrapper-index-value="0"]', visible: :hidden)
+
+      within 'aside.open' do
+        click_on 'Content'
+        expect(page).to have_css('.media-thumb.active', text: 'Program Notes')
+      end
+    end
+
+    it 'does not request a page when none was asked for' do
+      expect(page).to have_no_css('.sul-embed-pdf[data-pdf-page-value]', visible: :all)
+    end
+
+    context 'with a page' do
+      let(:query) { { filename: 'program_notes.pdf', page: '4' } }
+
+      it 'passes the page through to the PDF viewer' do
+        expect(page).to have_css('.sul-embed-pdf[data-pdf-page-value="4"]', visible: :all)
+      end
+    end
+
+    context 'when the filename is not on the object' do
+      let(:query) { { filename: 'nope.pdf' } }
+
+      it 'falls back to the first resource' do
+        expect(page).to have_css('[data-media-wrapper-index-value="0"]', visible: :visible)
+        expect(page).to have_css('div .sul-embed-pdf', visible: :hidden)
       end
     end
   end

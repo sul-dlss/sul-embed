@@ -66,6 +66,16 @@ module Embed
       params[:min_files_to_search]
     end
 
+    # @return [String, nil] the name of the file the viewer should open on
+    def filename
+      params[:filename]
+    end
+
+    # @return [String, nil] the one-based page the viewer should open a PDF to
+    def page
+      params[:page]
+    end
+
     def object_druid
       url_path_segments[0]
     end
@@ -87,6 +97,7 @@ module Embed
       p = params.slice(
         :hide_title, :hide_embed, :hide_search, :hide_download,
         :min_files_to_search,
+        :filename, :page,
         :canvas_id, :canvas_index,
         :search, :suggested_search,
         :enable_comparison,

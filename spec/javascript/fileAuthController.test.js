@@ -57,18 +57,40 @@ describe("FileAuthController", () => {
       expect(controller.documents).toContain(TRANSCRIPT)
     })
 
-    it("logs in for the first canvas rather than a manifest level rendering resource", () => {
+    it("tolerates a manifest with no rendering resources", () => {
+      const controller = buildController()
+      controller.parseFiles({ detail: { items: manifest.items } })
+
+      expect(controller.documents).toEqual([AUDIO, PHOTO, JP2])
+    })
+  })
+
+  describe("selectedDocument", () => {
+    it("opens on the first canvas when the viewer named no file", () => {
       const controller = buildController()
       controller.parseFiles({ detail: manifest })
 
       expect(controller.maybeDrawContentResource).toHaveBeenCalledWith(AUDIO)
     })
 
-    it("tolerates a manifest with no rendering resources", () => {
+    it("opens on the file the viewer named", () => {
       const controller = buildController()
-      controller.parseFiles({ detail: { items: manifest.items } })
+      controller.selectedFileUrlValue = TRANSCRIPT.id
+      controller.hasSelectedFileUrlValue = true
+      controller.parseFiles({ detail: manifest })
 
-      expect(controller.documents).toEqual([AUDIO, PHOTO, JP2])
+      expect(controller.maybeDrawContentResource).toHaveBeenCalledWith(
+        TRANSCRIPT,
+      )
+    })
+
+    it("falls back to the first canvas when the named file is not in the manifest", () => {
+      const controller = buildController()
+      controller.selectedFileUrlValue = "https://example.com/missing.pdf"
+      controller.hasSelectedFileUrlValue = true
+      controller.parseFiles({ detail: manifest })
+
+      expect(controller.maybeDrawContentResource).toHaveBeenCalledWith(AUDIO)
     })
   })
 
