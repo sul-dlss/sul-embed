@@ -3,9 +3,12 @@
 class CompanionWindowsComponent < ViewComponent::Base
   # @param [#purl_object] viewer
   # @param [String] stimulus_controller any extra stimulus controllers to initialize on the component.
-  def initialize(viewer:, stimulus_controller: '')
+  # @param [Hash] data any extra data attributes for the outer container, typically stimulus values
+  #               for the controllers named in stimulus_controller.
+  def initialize(viewer:, stimulus_controller: '', data: {})
     @viewer = viewer
     @stimulus_controller = stimulus_controller
+    @data = data
   end
 
   renders_many :header_buttons
@@ -60,12 +63,15 @@ class CompanionWindowsComponent < ViewComponent::Base
     {
       controller: controllers,
       iiif_manifest_loader_iiif_manifest_value: iiif_v3_manifest_url,
-      companion_window_auto_expand_value: render_content_list_panel?
-    }.tap do |data|
-      if fullscreen?
-        data[:fullscreen_target] = 'area'
-        data[:fullscreen_close_value] = 'Exit full screen'
-      end
-    end
+      companion_window_auto_expand_value: render_content_list_panel?,
+      **fullscreen_data,
+      **@data
+    }
+  end
+
+  def fullscreen_data
+    return {} unless fullscreen?
+
+    { fullscreen_target: 'area', fullscreen_close_value: 'Exit full screen' }
   end
 end

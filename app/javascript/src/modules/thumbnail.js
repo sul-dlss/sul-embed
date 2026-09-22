@@ -7,6 +7,7 @@ export default class {
     thumbnailUrl,
     defaultIcon,
     isLocationRestricted,
+    isSelected,
     fileLabel,
   }) {
     this.fileUri = fileUri
@@ -14,11 +15,12 @@ export default class {
     this.thumbnailUrl = thumbnailUrl
     this.defaultIcon = defaultIcon
     this.isLocationRestricted = isLocationRestricted
+    this.isSelected = isSelected
     this.fileLabel = fileLabel
   }
 
   build(index) {
-    const activeClass = index === 0 ? "active" : ""
+    const activeClass = this.isSelected ? "active" : ""
     let labelClass = "text"
     let stanfordOnlyScreenreaderText = ""
     if (this.isStanfordOnly) {

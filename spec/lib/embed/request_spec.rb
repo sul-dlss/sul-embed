@@ -101,6 +101,26 @@ RSpec.describe Embed::Request do
     end
   end
 
+  describe 'filename' do
+    it 'passes through the filename param' do
+      expect(described_class.new(url: purl, filename: 'notes.pdf').filename).to eq 'notes.pdf'
+    end
+
+    it 'is nil when not provided' do
+      expect(described_class.new(url: purl).filename).to be_nil
+    end
+  end
+
+  describe 'page' do
+    it 'passes through the page param' do
+      expect(described_class.new(url: purl, page: '4').page).to eq '4'
+    end
+
+    it 'is nil when not provided' do
+      expect(described_class.new(url: purl).page).to be_nil
+    end
+  end
+
   describe 'canvas_index' do
     it 'passes through the canvas_index param' do
       expect(described_class.new(url: purl, canvas_index: 3).canvas_index).to eq 3
