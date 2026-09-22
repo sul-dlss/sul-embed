@@ -62,7 +62,7 @@ export default class extends Controller {
   // To enable tracks to be readable in Safari, we must change their mode to hidden and then wait
   // before can check the cues.
   cuesPromise() {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       // Change any disabled tracks to hidden mode to enable getting their cues
       this.convertDisabledTracks()
       // We need to wait before we check for cues, since they won't be immediately available

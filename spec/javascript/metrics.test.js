@@ -4,7 +4,7 @@ import { trackView } from "@/modules/metrics.js"
 describe("trackView", () => {
   beforeEach(() => {
     // Reset global ahoy mock before each test
-    global.ahoy = { trackView: vi.fn() }
+    window.ahoy = { trackView: vi.fn() }
 
     // Mock document.referrer
     Object.defineProperty(document, "referrer", {
@@ -21,7 +21,7 @@ describe("trackView", () => {
   it("calls ahoy.trackView with correct event parameters", () => {
     trackView()
 
-    expect(global.ahoy.trackView).toHaveBeenCalledWith({
+    expect(window.ahoy.trackView).toHaveBeenCalledWith({
       url: "https://example.com/some/path",
       page: "/some/path",
       druid: "ab123cd4567",

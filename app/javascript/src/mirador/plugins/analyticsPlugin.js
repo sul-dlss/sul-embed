@@ -404,7 +404,7 @@ function* onTokenFailure({ type, authId }) {
   })
 }
 
-function* sendAnalyticsEvent({ payload }) {
+function sendAnalyticsEvent({ payload }) {
   const {
     eventAction,
     eventCategory,

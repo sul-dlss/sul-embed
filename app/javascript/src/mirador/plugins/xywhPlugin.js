@@ -71,7 +71,7 @@ function XywhDataAttributePlugin({ viewer, windowId }) {
     return () => {
       viewer.removeHandler("animation-finish", onViewportChange)
     }
-  }, [viewer, onViewportChange, windowId])
+  }, [viewer, windowId])
 
   return null
 }

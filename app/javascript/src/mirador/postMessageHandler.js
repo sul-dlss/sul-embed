@@ -9,7 +9,7 @@ export function handleViewerPostMessage(viewerInstance) {
     const isStanfordOrigin = /(stanford\.edu|[\w-]+\.stanford\.edu)/.test(
       event.origin,
     )
-    const isDev = process.env.RAILS_ENV === "development"
+    const isDev = import.meta.env.DEV
 
     if (!isStanfordOrigin && !isDev) return
     if (!event?.data) return
