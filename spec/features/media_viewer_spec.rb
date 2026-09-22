@@ -81,6 +81,27 @@ RSpec.describe 'Media viewer', :js do
     end
   end
 
+  context 'with a PDF within a media object' do
+    let(:purl) do
+      build(:purl, :video,
+            contents: [
+              build(:resource, :video),
+              build(:resource, :media_pdf)
+            ])
+    end
+
+    it 'includes the PDF as a top level object using the built in PDF viewer' do
+      expect(page).to have_css('div .sul-embed-pdf', visible: :hidden)
+
+      within 'aside.open' do
+        click_on 'Content'
+
+        expect(page).to have_css('.pdf-thumbnail-icon', visible: :all)
+        expect(page).to have_text('Program Notes')
+      end
+    end
+  end
+
   context 'with long titles' do
     let(:purl) do
       build(:purl, :video, contents: [

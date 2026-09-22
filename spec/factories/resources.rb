@@ -43,5 +43,12 @@ FactoryBot.define do
       description { 'Image of media (1 of 1)' }
       files { [build(:resource_file, :image)] }
     end
+
+    # A PDF (e.g. program notes) accompanying a media object
+    trait :media_pdf do
+      type { 'file' }
+      description { 'Program Notes' }
+      files { [build(:media_file, :pdf, :world_downloadable)] }
+    end
   end
 end
