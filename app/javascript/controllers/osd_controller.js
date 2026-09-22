@@ -13,10 +13,13 @@ export default class extends Controller {
     // https://github.com/ProjectMirador/mirador/issues/3789
 
     // setTimeout is needed, because without it, the viewer initializes before the drawer fully opens and the zoom is off.
-    if (this.element.dataset.index == 0) {
+    if (this.element.dataset.selected === "true") {
       setTimeout(() => {
         const event = new CustomEvent("thumbnail-clicked", {
-          detail: { index: 0, fileUri: this.urlValue },
+          detail: {
+            index: Number(this.element.dataset.index),
+            fileUri: this.urlValue,
+          },
         })
         this.initializeViewer(event)
       }, 500)

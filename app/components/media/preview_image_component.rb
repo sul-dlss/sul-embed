@@ -6,26 +6,21 @@ module Media
     include Embed::StacksImage
 
     # @param [String] druid the object identifier
-    # @param [ResourceFile] file the file to display
-    # @param [Integer] resource_index the offset of this resource in the purl
-    # @param [String] type the type of resource (either audio or video), used to determine which icon to show
-    def initialize(druid:, file:, resource_index:, type:, size:)
+    # @param [Media::Slot] slot the resource this component draws
+    def initialize(druid:, slot:)
       @druid = druid
-      @file = file
-      @resource_index = resource_index
-      @type = type
-      @size = size
+      @slot = slot
     end
 
-    attr_reader :resource_index, :druid, :file, :type, :size
+    attr_reader :druid, :slot
+
+    delegate :file, :index, :selected?, to: :slot
 
     def call
-      # the 74,73 size accounts for the additional pixel size returned by the image server
-      thumb_url = stacks_square_url(druid, file.title, size: '74,73')
-      render WrapperComponent.new(thumbnail: thumb_url, file:, type:, resource_index:, size:) do
-        tag.div(class: 'osd', id: "openseadragon-#{resource_index}",
+      render WrapperComponent.new(slot:) do
+        tag.div(class: 'osd', id: "openseadragon-#{index}",
                 data: { controller: 'osd', osd_url_value:, osd_nav_images_value:,
-                        index: resource_index,
+                        index:, selected: selected?,
                         action: 'thumbnail-clicked@window->osd#initializeViewer' })
       end
     end
