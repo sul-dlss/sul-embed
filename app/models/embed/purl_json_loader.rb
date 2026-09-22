@@ -37,11 +37,11 @@ module Embed
     end
 
     def etag
-      http_response&.headers&.fetch('ETag', nil)
+      http_response.headers.fetch('ETag', nil)
     end
 
     def last_modified
-      header = http_response&.headers&.fetch('Last-Modified', nil)
+      header = http_response.headers.fetch('Last-Modified', nil)
       return unless header
 
       Time.rfc2822(header)
@@ -129,28 +129,11 @@ module Embed
     end
 
     def http_response
-      @http_response ||= begin
-        conn = Faraday.new(url: purl_json_url)
-
-        conn.get do |request|
-          request.options.timeout = Settings.purl_read_timeout
-          request.options.open_timeout = Settings.purl_conn_timeout
-        end
-      end
+      @http_response ||= PurlClient.new(url: purl_json_url).response
     end
 
     def response
-      @response ||=
-        begin
-          unless http_response.success?
-            raise Purl::ResourceNotAvailable,
-                  "Resource unavailable #{purl_json_url} (status: #{http_response.status})"
-          end
-
-          http_response.body
-        end
-    rescue Faraday::ConnectionFailed, Faraday::TimeoutError
-      raise Purl::ResourceNotAvailable, "Resource unavailable #{purl_json_url} (connection error)"
+      @response ||= http_response.body
     end
   end
 end
