@@ -18,6 +18,8 @@ primary_mimetypes:
     - audio/aac
     - audio/mpeg
     - audio/mp4
+  file:
+    - application/pdf
   image:
     - image/jp2
   video:

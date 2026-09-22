@@ -1,10 +1,15 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static values = { page: Number }
+  static values = { page: Number, uri: String }
 
   show(evt) {
     const fileUri = evt.detail.fileUri
+    // The Document viewer has a single element that renders whichever PDF was authorized, so it
+    // sets no uri value. The media viewer has one element per resource, so each one declares the
+    // file it is responsible for and ignores auth-success events meant for its siblings.
+    if (this.hasUriValue && fileUri !== this.uriValue) return
+
     const objectUrl = new URL(fileUri)
     objectUrl.searchParams.set("time", Date.now())
     if (this.hasPageValue) objectUrl.hash = `page=${this.pageValue}`
