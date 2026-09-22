@@ -22,7 +22,7 @@ export default class extends Controller {
     }
   }
 
-  toggleLeft(evt) {
+  toggleLeft() {
     const button = this.toggleButtonTarget
     button.disabled = true // Prevent additional clicks until all mutations are complete.
     let action

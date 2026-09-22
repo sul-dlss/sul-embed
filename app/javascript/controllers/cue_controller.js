@@ -6,7 +6,7 @@ export default class extends Controller {
     start: String,
     end: String,
   }
-  jump(evt) {
+  jump() {
     const event = new CustomEvent("media-seek", { detail: this.startValue })
     window.dispatchEvent(event)
   }

@@ -1,5 +1,5 @@
 import { describe, it, vi, beforeEach, afterEach, expect } from "vitest"
-import { render, cleanup } from "@testing-library/react"
+import { render } from "@testing-library/react"
 import xywhPlugin from "@/mirador/plugins/xywhPlugin.js"
 const XywhPluginComponent = xywhPlugin[0].component
 
@@ -21,13 +21,12 @@ describe("xywhPlugin", () => {
   })
 
   afterEach(() => {
-    cleanup()
     vi.clearAllMocks()
   })
 
   it("sets data-parent-window-id attribute on mount", () => {
     render(<XywhPluginComponent viewer={viewerMock} windowId="abc123" />)
-    expect(parentNode.getAttribute("data-parent-window-id")).toBe("abc123")
+    expect(parentNode).toHaveAttribute("data-parent-window-id", "abc123")
   })
 
   it("adds animation-finish handler on mount", () => {
@@ -72,7 +71,8 @@ describe("xywhPlugin", () => {
     animationFinishHandler(mockEvent)
 
     // Check that the attribute was set correctly
-    expect(parentNode.getAttribute("data-full-image")).toBe(
+    expect(parentNode).toHaveAttribute(
+      "data-full-image",
       "http://example.com/image/0,0,100,200/full/0/default.jpg",
     )
   })
@@ -118,7 +118,7 @@ describe("xywhPlugin", () => {
     )
 
     // Ensure no data-full-image attribute was set
-    expect(parentNode.hasAttribute("data-full-image")).toBe(false)
+    expect(parentNode).not.toHaveAttribute("data-full-image")
 
     consoleErrorSpy.mockRestore()
   })

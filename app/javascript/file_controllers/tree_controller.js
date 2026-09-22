@@ -132,7 +132,7 @@ export default class extends Controller {
         event.preventDefault()
         this.toggle(event)
         break
-      case event.key === "Enter" && this.isLeaf(event.target):
+      case event.key === "Enter" && this.isLeaf(event.target): {
         // Perform the default action (download the file)
         const downloadElement = this.downloadElement(event.target)
         if (!downloadElement) break
@@ -140,6 +140,7 @@ export default class extends Controller {
         event.preventDefault()
         downloadElement.click()
         break
+      }
       case event.key === "ArrowRight" && this.isClosedBranch(event.target):
         // When a closed node, opens the node
         event.preventDefault()
@@ -156,7 +157,7 @@ export default class extends Controller {
         this.toggle(event)
         break
       case event.key === "ArrowLeft" &&
-        event.target.getAttribute("aria-level") > 1:
+        event.target.getAttribute("aria-level") > 1: {
         // When a closed node, moves focus to the node's parent node
         const parentBranchRowElement = this.parentBranchRowElement(event.target)
         if (!parentBranchRowElement) break
@@ -164,7 +165,8 @@ export default class extends Controller {
         event.preventDefault()
         parentBranchRowElement.focus()
         break
-      case event.key === "ArrowUp":
+      }
+      case event.key === "ArrowUp": {
         // Move to the previous node without opening or closing
         const previousRowElement = this.previousBranchRowElement(event.target)
         if (!previousRowElement) break
@@ -172,7 +174,8 @@ export default class extends Controller {
         event.preventDefault()
         previousRowElement.focus()
         break
-      case event.key === "ArrowDown":
+      }
+      case event.key === "ArrowDown": {
         // Move to the next node without opening or closing
         const nextRowElement = this.nextBranchRowElement(event.target)
         if (!nextRowElement) break
@@ -180,17 +183,19 @@ export default class extends Controller {
         event.preventDefault()
         nextRowElement.focus()
         break
+      }
       case event.key === "Home":
         // Move to the first node without opening or closing
         event.preventDefault()
         this.visibleRows[0].focus()
         break
-      case event.key === "End":
+      case event.key === "End": {
         // Move to the last node without opening or closing
         event.preventDefault()
         const rowElements = this.visibleRows
         rowElements[rowElements.length - 1].focus()
         break
+      }
     }
   }
 

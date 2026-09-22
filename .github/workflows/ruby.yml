@@ -39,6 +39,17 @@ jobs:
       - name: Check JavaScript formatting
         run: yarn format:check
 
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: yarn install --frozen-lockfile
+      - name: Lint JavaScript
+        run: yarn lint
+
   javascript:
     runs-on: ubuntu-latest
     steps:

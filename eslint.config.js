@@ -9,12 +9,7 @@ import prettier from "eslint-config-prettier"
 
 export default [
   {
-    ignores: [
-      "vendor/**",
-      "public/**",
-      "tmp/**",
-      "app/javascript/controllers/**",
-    ],
+    ignores: ["vendor/**", "public/**", "tmp/**"],
   },
 
   js.configs.recommended,
@@ -46,6 +41,7 @@ export default [
     rules: {
       "no-console": "off",
       "no-underscore-dangle": "off",
+      "react/prop-types": "off",
       "sort-keys": "off",
     },
   },
@@ -63,8 +59,8 @@ export default [
     languageOptions: {
       globals: {
         ...globals.browser,
-        vi: true,
-        page: true,
+        ...globals.node,
+        ...globals.vitest,
       },
     },
   },

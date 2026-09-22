@@ -33,7 +33,6 @@ export default function CompareDialog({
       <form onSubmit={handleSubmit}>
         <DialogContent>
           <TextField
-            autoFocus
             fullWidth
             type="text"
             value={url}
