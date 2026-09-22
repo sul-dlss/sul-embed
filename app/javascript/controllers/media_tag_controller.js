@@ -20,6 +20,7 @@ export default class extends Controller {
         thumbnailUrl: dataset.thumbnailUrl,
         defaultIcon: dataset.defaultIcon,
         isLocationRestricted: dataset.locationRestricted === "true",
+        isSelected: dataset.selected === "true",
         fileLabel: dataset.fileLabel || "",
       }
     })
