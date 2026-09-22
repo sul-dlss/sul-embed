@@ -40,7 +40,7 @@ export default class extends Controller {
     const manifest = evt.detail
     const canvases = manifest.items
     this.addPostCallbackListener()
-    this.documents = canvases.flatMap(canvas => {
+    const canvasResources = canvases.flatMap(canvas => {
       const annotationPages = canvas.items
       const paintingResources = annotationPages.flatMap(annotationPage => {
         const paintingAnnotations = annotationPage.items.filter(
@@ -53,6 +53,10 @@ export default class extends Controller {
       const renderingResources = canvas.rendering || []
       return [...paintingResources, ...renderingResources]
     })
+    // Files that get no canvas of their own (e.g. a PDF transcript accompanying a
+    // media object) are published as manifest level rendering resources. Append
+    // rather than prepend, so the first canvas stays the resource we log in for.
+    this.documents = [...canvasResources, ...(manifest.rendering || [])]
     this.maybeDrawContentResource(this.documents[0]) // cause login to first resource
   }
 

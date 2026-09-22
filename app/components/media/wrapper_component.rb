@@ -52,6 +52,8 @@ module Media
     # What class to put on the icon in the "Media content" sidebar when there is no thumbnail
     # Used in media_tag_controller.js
     def default_icon
+      return 'pdf-thumbnail-icon' if @file.pdf?
+
       @type == 'audio' ? 'audio-thumbnail-icon' : 'video-thumbnail-icon'
     end
   end
