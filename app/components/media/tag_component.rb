@@ -22,12 +22,19 @@ module Media
     delegate :type, to: :@resource
 
     def call
-      if SUPPORTED_MEDIA_TYPES.include?(type.to_sym)
-        media_element
-      else
-        render PreviewImageComponent.new(druid:, file:, type:, size: @resource_iteration.size,
-                                         resource_index: @resource_iteration.index)
-      end
+      return media_element if audio_or_video?
+      return render PdfComponent.new(file:, type:, thumbnail: thumbnail_url, **iteration) if file.pdf?
+
+      render PreviewImageComponent.new(druid:, file:, type:, **iteration)
+    end
+
+    def audio_or_video?
+      SUPPORTED_MEDIA_TYPES.include?(type.to_sym)
+    end
+
+    # Where this resource sits within the collection of resources on the object
+    def iteration
+      { resource_index: @resource_iteration.index, size: @resource_iteration.size }
     end
 
     def thumbnail_url
@@ -62,9 +69,7 @@ module Media
     end
 
     def media_element # rubocop:disable Metrics/MethodLength
-      render WrapperComponent.new(thumbnail: thumbnail_url, file:, type:,
-                                  size: @resource_iteration.size,
-                                  resource_index: @resource_iteration.index) do
+      render WrapperComponent.new(thumbnail: thumbnail_url, file:, type:, **iteration) do
         # We use this div, to hold stimulus controller/actions, because videoJS duplicates these attributes if they are
         # on the <video> tag directly
         tag.div(
