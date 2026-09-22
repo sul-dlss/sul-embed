@@ -1,6 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+  static values = { selectedFileUrl: String }
+
   resources = {} // Hash of messageIds to resources
 
   addPostCallbackListener() {
@@ -57,7 +59,19 @@ export default class extends Controller {
     // media object) are published as manifest level rendering resources. Append
     // rather than prepend, so the first canvas stays the resource we log in for.
     this.documents = [...canvasResources, ...(manifest.rendering || [])]
-    this.maybeDrawContentResource(this.documents[0]) // cause login to first resource
+    this.maybeDrawContentResource(this.selectedDocument()) // cause login to the opening resource
+  }
+
+  // The resource the viewer opens on. A viewer can name one (see the filename URL parameter);
+  // otherwise, and whenever the named one is not in the manifest, we open on the first.
+  selectedDocument() {
+    if (!this.hasSelectedFileUrlValue) return this.documents[0]
+
+    return (
+      this.documents.find(
+        document => document.id === this.selectedFileUrlValue,
+      ) || this.documents[0]
+    )
   }
 
   // Triggered when clicking on a thumbnail

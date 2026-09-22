@@ -8,6 +8,7 @@ describe("Thumbnail", () => {
       thumbnailUrl: null,
       defaultIcon: "icon-class",
       isLocationRestricted: true,
+      isSelected: true,
       fileLabel:
         "A very long label that should be truncated properly in the markup",
     })
@@ -17,6 +18,14 @@ describe("Thumbnail", () => {
     expect(html).toContain("(Restricted)")
     expect(html).toContain("default-thumbnail-icon")
     expect(html).toContain("active")
+  })
+
+  it("highlights the entry the viewer opened on, whatever its position", () => {
+    const build = isSelected =>
+      new Thumbnail({ fileLabel: "label", isSelected }).build(3)
+
+    expect(build(true)).toContain("active")
+    expect(build(false)).not.toContain("active")
   })
 
   it("truncateWithEllipsis truncates text correctly", () => {

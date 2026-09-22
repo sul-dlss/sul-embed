@@ -3,6 +3,8 @@
 module Embed
   class Purl
     class Resource
+      include Embed::StacksImage
+
       # @param [String] druid identifier without a namespace
       # @param [String] type the resource type
       # @param [String] description the resource description
@@ -41,6 +43,18 @@ module Embed
 
       def primary_types
         @primary_types ||= Array(Settings.primary_mimetypes[type])
+      end
+
+      # The URL that identifies the primary file, both in the IIIF manifest and in the content
+      # list, so that a click in one can be matched up against the other. Images are the odd one
+      # out: the manifest paints them from the image server, so their file URL would not match.
+      #
+      # @return [String, nil]
+      def primary_file_url
+        return if primary_file.nil?
+        return primary_file.file_url unless type == 'image'
+
+        stacks_thumb_url(primary_file.druid, primary_file.filename, size: 'full')
       end
 
       # @return [ResourceFile]
