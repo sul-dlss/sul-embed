@@ -54,7 +54,7 @@ RSpec.describe MediaComponent, type: :component do
 
     it 'displays transcript sidebar with login message' do
       expect(page).to have_css('[aria-label="Transcript"]', visible: :all)
-      expect(page).to have_text('Login in to view transcript')
+      expect(page).to have_text('Login to view transcript')
     end
   end
 
