@@ -207,34 +207,29 @@ RSpec.describe Embed::Purl do
 
     let(:purl) { described_class.new(druid: '12345') }
 
-    context 'with a response' do
-      before do
-        allow_any_instance_of(Faraday::Connection).to receive(:get).and_return(response)
-      end
+    it 'returns the manifest body' do
+      stub_request(:get, 'https://purl.stanford.edu/12345/iiif/manifest')
+        .to_return(status: 200, body: '{}')
 
-      context 'when the status is success' do
-        let(:response) { instance_double(Faraday::Response, body: '{}', success?: true) }
-
-        it { is_expected.to eq '{}' }
-      end
-
-      context 'when the status is not success' do
-        let(:response) { instance_double(Faraday::Response, success?: false, status: 404) }
-
-        it 'raises an error' do
-          expect { fetch }.to raise_error(Embed::Purl::ResourceNotAvailable)
-        end
-      end
+      expect(fetch).to eq '{}'
     end
 
-    context 'with a timeout' do
-      before do
-        allow_any_instance_of(Faraday::Connection).to receive(:get).and_raise(Faraday::ConnectionFailed.new(''))
-      end
+    it 'raises an error when the response is unsuccessful' do
+      stub_request(:get, 'https://purl.stanford.edu/12345/iiif/manifest').to_return(status: 404)
 
-      it 'raises an error' do
-        expect { fetch }.to raise_error(Embed::Purl::ResourceNotAvailable)
-      end
+      expect { fetch }.to raise_error(
+        Embed::Purl::ResourceNotAvailable,
+        'Resource unavailable https://purl.stanford.edu/12345/iiif/manifest (status: 404)'
+      )
+    end
+
+    it 'raises an error when the request times out' do
+      stub_request(:get, 'https://purl.stanford.edu/12345/iiif/manifest').to_timeout
+
+      expect { fetch }.to raise_error(
+        Embed::Purl::ResourceNotAvailable,
+        'Resource unavailable https://purl.stanford.edu/12345/iiif/manifest (connection error)'
+      )
     end
   end
 end
