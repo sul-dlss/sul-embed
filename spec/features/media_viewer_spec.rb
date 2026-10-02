@@ -59,6 +59,53 @@ RSpec.describe 'Media viewer', :js do
     end
   end
 
+  it 'reconnects file authorization without rendering a disconnected request' do
+    result = page.evaluate_async_script(<<~JS)
+      const done = arguments[0]
+      const run = async () => {
+        const tick = () => new Promise(resolve => setTimeout(resolve, 0))
+        const element = document.createElement("div")
+        element.dataset.controller = "file-auth"
+        const files = []
+        const receive = event => {
+          event.stopImmediatePropagation()
+          files.push(event.detail.fileUri)
+        }
+        window.addEventListener("auth-success", receive, true)
+        const originalFetch = window.fetch
+        let complete, signal
+        try {
+          document.body.appendChild(element)
+          await tick()
+          const controller = window.Stimulus.getControllerForElementAndIdentifier(element, "file-auth")
+          window.fetch = (url, options) => {
+            signal = options.signal
+            return new Promise(resolve => { complete = resolve })
+          }
+          controller.parseFiles({ detail: { items: [{ rendering: [{
+            id: "https://example.com/pending",
+            service: [{ type: "AuthProbeService2", id: "https://example.com/probe" }]
+          }] }] } })
+          element.remove()
+          await tick()
+          complete({ json: async () => ({ status: 200 }) })
+          await tick()
+          document.body.appendChild(element)
+          await tick()
+          controller.parseFiles({ detail: { items: [{ rendering: [{ id: "https://example.com/public" }] }] } })
+          return { aborted: signal.aborted, files }
+        } finally {
+          element.remove()
+          window.fetch = originalFetch
+          window.removeEventListener("auth-success", receive, true)
+        }
+      }
+      run().then(done).catch(error => done({ error: error.message }))
+    JS
+
+    expect(result).to eq('aborted' => true, 'files' => ['https://example.com/public'])
+  end
+
   context 'with a previewable file within a media object' do
     let(:purl) do
       build(:purl, :video,

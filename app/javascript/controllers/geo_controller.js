@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus"
+import TokenStore from "src/modules/token_store"
 
 // Which data attribute holds the file, and what kind of thing is at it. Checked in this order, which
 // is the order the Ruby side writes them in (see Embed::Viewer::Geo#map_element_options) - a record
@@ -107,17 +108,9 @@ export default class extends Controller {
     return !!this.element.dataset.action
   }
 
-  // Read the IIIF auth v2 bearer token cached by file-auth-controller
+  // Share token validation and expiry handling with file authorization.
   get authToken() {
-    const json = localStorage.getItem("accessToken")
-    if (!json) return null
-    try {
-      const { accessToken, expires } = JSON.parse(json)
-      if (new Date() < new Date(expires)) return accessToken
-    } catch {
-      // ignore broken storage
-    }
-    return null
+    return new TokenStore().get()
   }
 
   // Returns a function that will get applied to every request the Geo viewer
