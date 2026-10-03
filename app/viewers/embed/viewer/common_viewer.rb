@@ -25,6 +25,12 @@ module Embed
         embed_request.maxwidth
       end
 
+      # @return [Integer, nil] the one-based page a PDF should open to, when a valid one was requested
+      def page
+        requested = Integer(embed_request.page, exception: false)
+        requested if requested&.positive?
+      end
+
       def external_url
         nil
       end
