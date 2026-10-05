@@ -1,4 +1,5 @@
-<%= render ::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'media-tag file-auth transcript') do |component| %>
+<%= render ::CompanionWindowsComponent.new(viewer:, stimulus_controller: 'media-tag file-auth transcript',
+                                           data: { file_auth_selected_file_url_value: selected_file_url }) do |component| %>
   <% component.with_header_button do %>
     <%= render CompanionWindows::ShareButtonComponent.new %>
   <% end %>
@@ -50,7 +51,7 @@
 
   <% component.with_body do %>
     <div data-controller="locked-media-poster" data-action="auth-success@window->locked-media-poster#hide thumbnail-clicked@window->file-auth#authFileAndDisplay" style="width: 100%; display: flex;">
-      <%= render Media::TagComponent.with_collection(resources_with_primary_file, druid:) %>
+      <%= render Media::TagComponent.with_collection(displayable_resources, druid:, selected_index:, page:) %>
     </div>
   <% end %>
 
