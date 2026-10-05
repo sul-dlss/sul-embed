@@ -5752,7 +5752,7 @@ uuid@^14.0.1:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-14.0.2.tgz#d5ae03e4db0881c87271f8b0b9bd7312d02c799a"
   integrity sha512-xZe/16rV4aa+HGSOCiY2YeLT1OybRLrrkL/Rqaq7p7GMVXjFh+6wN4oMYgjFmnSnhY8t6Xpdl2l9qmnHYuMHwQ==
 
-vite-plugin-ruby@^5.2.0:
+vite-plugin-ruby@^5.2.5:
   version "5.2.5"
   resolved "https://registry.yarnpkg.com/vite-plugin-ruby/-/vite-plugin-ruby-5.2.5.tgz#866f99bf008c6631d0e0c3379edb3561b73f38bb"
   integrity sha512-Oa1cmA7FobR49YcFPa+hvASenxd8tI1jQeOuDRJNh9gsbO8ugDCHI0zh75niQGq8cnMXriJfhJrPa2F2qDeA5Q==
