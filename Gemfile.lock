@@ -166,7 +166,7 @@ GEM
       activesupport (>= 6.1)
     hashdiff (1.2.1)
     high_voltage (5.0.0)
-    honeybadger (6.9.2)
+    honeybadger (6.9.3)
       logger
       ostruct
     i18n (1.15.2)
@@ -217,10 +217,10 @@ GEM
       net-ssh (>= 2.6.5, < 8.0.0)
     net-sftp (4.0.0)
       net-ssh (>= 5.0.0, < 8.0.0)
-    net-smtp (0.5.1)
+    net-smtp (0.5.2)
       net-protocol
-    net-ssh (7.3.3)
-    newrelic_rpm (10.8.0)
+    net-ssh (7.3.5)
+    newrelic_rpm (10.9.0)
       logger
     nio4r (2.7.5)
     nokogiri (1.19.4-aarch64-linux-gnu)
@@ -240,7 +240,7 @@ GEM
     okcomputer (1.20.0)
       benchmark
     ostruct (0.6.3)
-    parallel (2.2.0)
+    parallel (2.3.0)
     parser (3.3.12.0)
       ast (~> 2.4.1)
       racc
@@ -302,12 +302,12 @@ GEM
       logger
       prism (>= 1.6.0)
       tsort
-    rdoc (8.0.0)
+    rdoc (8.1.0)
       erb
       prism (>= 1.6.0)
       rbs (>= 4.0.0)
       tsort
-    regexp_parser (2.13.0)
+    regexp_parser (2.13.1)
     reline (0.7.0)
       io-console (~> 0.5)
     rexml (3.4.4)
@@ -373,10 +373,9 @@ GEM
     ruby-progressbar (1.13.0)
     rubyzip (3.7.0)
     securerandom (0.4.1)
-    selenium-webdriver (4.49.0)
+    selenium-webdriver (4.50.0)
       base64 (~> 0.2)
       logger (~> 1.4)
-      rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 4.0)
       websocket (~> 1.0)
     sshkit (1.25.1)
@@ -405,7 +404,7 @@ GEM
     vite_rails (3.11.1)
       railties (>= 5.1, < 9)
       vite_ruby (~> 3.0, >= 3.2.2)
-    vite_ruby (3.11.0)
+    vite_ruby (3.11.1)
       dry-cli (>= 0.7, < 2)
       logger (~> 1.6)
       mutex_m
@@ -477,4 +476,4 @@ DEPENDENCIES
   webmock (~> 3.19)
 
 BUNDLED WITH
-  4.0.21
+  4.0.22
