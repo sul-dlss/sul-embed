@@ -25,7 +25,7 @@ RSpec.describe Media::WrapperComponent, type: :component do
   describe 'data-default-icon attribute' do
     let(:file) do
       instance_double(Embed::Purl::ResourceFile, stanford_only?: false,
-                                                 view_location_restricted?: false, label_or_filename: 'ignored',
+                                                 view_location_restricted?: false, label_or_filename: 'ignored', pdf?: false,
                                                  file_url: 'https://sul-stacks-stage.stanford.edu/file/vv407rn1804/bb142ws0723_05_sl.mp4')
     end
 
@@ -48,13 +48,27 @@ RSpec.describe Media::WrapperComponent, type: :component do
         expect(page).to have_no_css('button[aria-label="Next item"][disabled]')
       end
     end
+
+    context 'with a PDF' do
+      let(:type) { 'file' }
+      let(:file) do
+        instance_double(Embed::Purl::ResourceFile, stanford_only?: false,
+                                                   view_location_restricted?: false, label_or_filename: 'ignored',
+                                                   pdf?: true,
+                                                   file_url: 'https://sul-stacks-stage.stanford.edu/file/vv407rn1804/notes.pdf')
+      end
+
+      it 'renders the page' do
+        expect(page).to have_css('[data-default-icon="pdf-thumbnail-icon"]')
+      end
+    end
   end
 
   describe 'data-stanford-only attribute' do
     context 'with Stanford only files' do
       let(:file) do
         instance_double(Embed::Purl::ResourceFile, stanford_only?: true,
-                                                   view_location_restricted?: false, label_or_filename: 'ignored',
+                                                   view_location_restricted?: false, label_or_filename: 'ignored', pdf?: false,
                                                    file_url: 'https://sul-stacks-stage.stanford.edu/file/vv407rn1804/bb142ws0723_05_sl.mp4')
       end
 
@@ -69,7 +83,7 @@ RSpec.describe Media::WrapperComponent, type: :component do
     context 'with public files' do
       let(:file) do
         instance_double(Embed::Purl::ResourceFile, stanford_only?: false,
-                                                   view_location_restricted?: false, label_or_filename: 'ignored',
+                                                   view_location_restricted?: false, label_or_filename: 'ignored', pdf?: false,
                                                    file_url: 'https://sul-stacks-stage.stanford.edu/file/vv407rn1804/bb142ws0723_05_sl.mp4')
       end
 
@@ -86,7 +100,7 @@ RSpec.describe Media::WrapperComponent, type: :component do
     context 'when view location restricted' do
       let(:file) do
         instance_double(Embed::Purl::ResourceFile, stanford_only?: false,
-                                                   view_location_restricted?: true, label_or_filename: 'ignored',
+                                                   view_location_restricted?: true, label_or_filename: 'ignored', pdf?: false,
                                                    file_url: 'https://sul-stacks-stage.stanford.edu/file/vv407rn1804/bb142ws0723_05_sl.mp4')
       end
 
@@ -101,7 +115,7 @@ RSpec.describe Media::WrapperComponent, type: :component do
     context 'when not location restricted' do
       let(:file) do
         instance_double(Embed::Purl::ResourceFile, stanford_only?: true,
-                                                   view_location_restricted?: false, label_or_filename: 'ignored',
+                                                   view_location_restricted?: false, label_or_filename: 'ignored', pdf?: false,
                                                    file_url: 'https://sul-stacks-stage.stanford.edu/file/vv407rn1804/bb142ws0723_05_sl.mp4')
       end
 

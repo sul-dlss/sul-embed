@@ -80,6 +80,13 @@ FactoryBot.define do
       size { 152_000_000 }
     end
 
+    trait :pdf do
+      mimetype { 'application/pdf' }
+      label { 'Program Notes' }
+      filename { 'program_notes.pdf' }
+      size { 12_345 }
+    end
+
     trait :caption do
       mimetype { 'text/vtt' }
       filename { 'abc_123_cap.vtt' }
