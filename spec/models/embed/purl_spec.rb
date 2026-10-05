@@ -199,7 +199,7 @@ RSpec.describe Embed::Purl do
 
     let(:purl) { described_class.new(druid: '12345') }
 
-    it { is_expected.to eq 'https://purl.stanford.edu/12345/iiif/manifest' }
+    it { is_expected.to eq 'https://purl.stanford.edu/12345/iiif3/manifest' }
   end
 
   describe '#manifest_json_response' do
