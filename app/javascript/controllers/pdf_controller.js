@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static values = { page: Number, uri: String }
+  static values = { page: Number, pageUri: String, uri: String }
 
   show(evt) {
     const fileUri = evt.detail.fileUri
@@ -12,7 +12,7 @@ export default class extends Controller {
 
     const objectUrl = new URL(fileUri)
     objectUrl.searchParams.set("time", Date.now())
-    if (this.hasPageValue) objectUrl.hash = `page=${this.pageValue}`
+    if (this.opensToPage(fileUri)) objectUrl.hash = `page=${this.pageValue}`
 
     this.element.innerHTML = `
       <object data="${objectUrl}" type="application/pdf" style="height: 100%; width: 100%">
@@ -24,5 +24,14 @@ export default class extends Controller {
         </div>
       </object>
     `
+  }
+
+  // Whether to open this PDF to the requested page. Because the Document viewer draws every PDF
+  // into the same element, it names the file the page belongs to (see pageUri), so that choosing
+  // another PDF from the content list opens it at the start rather than at that page.
+  opensToPage(fileUri) {
+    if (!this.hasPageValue) return false
+
+    return !this.hasPageUriValue || fileUri === this.pageUriValue
   }
 }
