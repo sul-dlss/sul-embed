@@ -3,12 +3,11 @@
 module Document
   # Draws the content list for the Document viewer
   class ContentListItemComponent < ViewComponent::Base
-    def initialize(content_list_item:, viewer:, content_list_item_counter:)
+    def initialize(content_list_item:, viewer:)
       @file = content_list_item
       @viewer = viewer
-      @index = content_list_item_counter
     end
-    attr_reader :file, :viewer, :index
+    attr_reader :file, :viewer
 
     def url
       file.file_url
@@ -18,9 +17,13 @@ module Document
       file.label_or_filename
     end
 
+    def selected?
+      url == viewer.selected_file_url
+    end
+
     def classes
       default_classes = 'file-thumb'
-      return default_classes unless index.zero?
+      return default_classes unless selected?
 
       "#{default_classes} active"
     end

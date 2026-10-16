@@ -39,11 +39,29 @@ RSpec.describe PdfComponent, type: :component do
     end
   end
 
+  it 'tells the file auth controller which PDF to open on' do
+    expect(page).to have_css(
+      '[data-file-auth-selected-file-url-value="https://stacks.stanford.edu/file/sq929fn8035/SC0097_2018-123_FA_ms_08.pdf"]',
+      visible: :all
+    )
+  end
+
+  it 'does not request a page when none was asked for' do
+    expect(page).to have_no_css('.sul-embed-pdf[data-pdf-page-value]', visible: :all)
+  end
+
   context 'when a canvas index is passed' do
     let(:embed_request) { Embed::Request.new(url:, canvas_index: '3') }
 
     it 'passes the one-based PDF page to the PDF controller' do
       expect(page).to have_css('.sul-embed-pdf[data-pdf-page-value="4"]', visible: :all)
+    end
+
+    it 'applies the page only to the PDF the viewer opens on' do
+      expect(page).to have_css(
+        '.sul-embed-pdf[data-pdf-page-uri-value="https://stacks.stanford.edu/file/sq929fn8035/SC0097_2018-123_FA_ms_08.pdf"]',
+        visible: :all
+      )
     end
   end
 
