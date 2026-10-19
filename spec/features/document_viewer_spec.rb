@@ -41,11 +41,11 @@ RSpec.describe 'PDF Viewer', :js do
 
   context 'with several PDFs' do
     let(:purl) do
-      build(:purl, :document, download: 'world', contents: [
-              build(:resource, :document, files: [issue(1)]),
-              build(:resource, :document, files: [issue(2)])
-            ])
+      build(:purl, :document, download: 'world', contents: issues.map do |number|
+        build(:resource, :document, files: [issue(number)])
+      end)
     end
+    let(:issues) { 1..2 }
 
     def issue(number)
       build(:resource_file, :document, :world_downloadable, filename: "issue-#{number}.pdf", label: "Issue #{number}")
@@ -57,7 +57,7 @@ RSpec.describe 'PDF Viewer', :js do
 
     # Stands in for the manifest the viewer would fetch from purl, which paints each PDF on a canvas
     def receive_manifest
-      canvases = [1, 2].map do |number|
+      canvases = issues.map do |number|
         { items: [{ items: [{ motivation: 'painting', body: { id: issue_url(number), format: 'application/pdf' } }] }] }
       end
       manifest = { items: canvases }.to_json
@@ -110,6 +110,32 @@ RSpec.describe 'PDF Viewer', :js do
         find('.file-thumb', text: 'Issue 1', visible: :all).execute_script('this.click()')
         expect(page).to have_css(%(.sul-embed-pdf object[data^="#{issue_url(1)}"]), visible: :all)
         expect(displayed_pdf).to match(/\A#{Regexp.escape(issue_url(1))}\?time=\d+\z/)
+      end
+    end
+
+    context 'when the requested PDF is far down a long content list' do
+      let(:issues) { 1..30 }
+      let(:query) { { filename: 'issue-30.pdf' } }
+
+      def active_item_in_view?
+        page.evaluate_script <<~JAVASCRIPT
+          (() => {
+            const item = document.querySelector("#content-list [role=tab].active")
+            const list = item.closest(".left-drawer-content").getBoundingClientRect()
+            const { top, bottom } = item.getBoundingClientRect()
+            return top >= list.top && bottom <= list.bottom
+          })()
+        JAVASCRIPT
+      end
+
+      it 'scrolls the content list to show it' do
+        within 'aside.open' do
+          expect(page).to have_css('.file-thumb.active', text: 'Issue 30')
+        end
+
+        page.document.synchronize do
+          raise Capybara::ExpectationNotMet, 'the active item is scrolled out of view' unless active_item_in_view?
+        end
       end
     end
   end

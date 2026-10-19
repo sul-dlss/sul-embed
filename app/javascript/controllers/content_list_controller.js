@@ -3,6 +3,54 @@ import Thumbnail from "src/modules/thumbnail"
 
 export default class extends Controller {
   static targets = ["listItem"]
+
+  // The viewer can open on an item far down a long list; we need to wait
+  // until it's onscreen and then scroll down to whatever item is active
+  connect() {
+    this.revealObserver = new ResizeObserver(() => this.revealActiveItem())
+    this.revealObserver.observe(this.element)
+  }
+
+  disconnect() {
+    this.revealObserver.disconnect()
+  }
+
+  // Scroll the list so that the active item is visible, once
+  revealActiveItem() {
+    const item = this.element.querySelector("[role=tab].active")
+    if (!item || item.getClientRects().length === 0) return
+
+    this.revealObserver.disconnect()
+    const container = this.scrollContainer()
+    if (!container) return
+
+    const itemRect = item.getBoundingClientRect()
+    const containerRect = container.getBoundingClientRect()
+    if (
+      itemRect.top >= containerRect.top &&
+      itemRect.bottom <= containerRect.bottom
+    )
+      return
+
+    // Scroll the list, not the page we're embedded in
+    container.scrollTop +=
+      itemRect.top -
+      containerRect.top -
+      (container.clientHeight - itemRect.height) / 2
+  }
+
+  // The nearest ancestor that scrolls the list, if it is long enough to need scrolling
+  scrollContainer() {
+    for (let el = this.element.parentElement; el; el = el.parentElement) {
+      const { overflowY } = getComputedStyle(el)
+      if (
+        ["auto", "scroll"].includes(overflowY) &&
+        el.scrollHeight > el.clientHeight
+      )
+        return el
+    }
+  }
+
   // This listens for a thumbnails-found event. Then it draws the media thumbnails in the contents panel
   drawThumbnails(evt) {
     const thumbnails = evt.detail.map((thumbnailData, index) =>
