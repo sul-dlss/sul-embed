@@ -317,7 +317,10 @@ export default class extends Controller {
   login(evt) {
     const windowReference = window.open(evt.params.url)
     let loginStart = Date.now()
-    console.debug("window reference", windowReference)
+    // Don't log windowReference itself: Honeybadger's console instrumentation serializes
+    // arguments, and walking a cross-origin Window throws a SecurityError in Safari,
+    // which aborts this method before the polling starts.
+    console.debug("login window opened:", Boolean(windowReference))
     let checkWindow = setInterval(() => {
       console.debug("in interval", Date.now() - loginStart)
       if (
