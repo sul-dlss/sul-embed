@@ -8,7 +8,8 @@ export default class extends Controller {
   addPostCallbackListener() {
     const permittedOrigins = [
       "https://stacks.stanford.edu",
-      "https://sul-stacks-stage.stanford.edu",
+      // sul-stacks-stage is an app node, stacks-stage is the LB. We need the LB if we want http2
+      "https://stacks-stage.stanford.edu",
       "https://stacks-uat.stanford.edu",
     ]
     window.addEventListener(
