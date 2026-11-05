@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import { reloadTextTracks } from "src/modules/reloadTextTracks"
+import { shiftCaptionsWithControls } from "src/modules/nativeCaptionPosition"
 
 export default class extends Controller {
   static values = {
@@ -9,6 +10,11 @@ export default class extends Controller {
   connect() {
     this.player = this.mediaElement()
     this.addPlayerEventListeners()
+    shiftCaptionsWithControls(
+      this.element.querySelector("video-skin"),
+      this.player,
+      { signal: this.listenerAbort.signal },
+    )
   }
 
   disconnect() {
