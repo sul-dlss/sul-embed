@@ -121,6 +121,22 @@ RSpec.describe Embed::Viewer::MiradorViewer do
       end
     end
 
+    context 'with a IIIF v3 manifest' do
+      let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/abc', canvas_id: 'something') }
+      let(:manifest_json_response) do
+        {
+          items: [
+            { 'id' => 'something' },
+            { 'id' => 'else' }
+          ]
+        }.to_json
+      end
+
+      it 'returns the canvas id' do
+        expect(mirador_viewer.canvas_id).to eq 'something'
+      end
+    end
+
     context 'with non-cocina canvas ids' do
       let(:request) { Embed::Request.new(url: 'http://purl.stanford.edu/gm059ft3590', canvas_id: 'https://purl.stanford.edu/gm059ft3590/iiif/canvas/gm059ft3590_1') }
       let(:manifest_json_response) do
