@@ -22,15 +22,15 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^7.0.0",
+    "@mui/icons-material": "^9.0.0",
     "@mui/material": "^9.0.0",
     "@mui/system": "^9.0.0",
     "dnd-core": "^16.0.1",
-    "mirador": "^4.0.0",
-    "mirador-dl-plugin": "^1.0.0",
-    "mirador-image-tools": "^1.0.0",
-    "mirador-share-plugin": "^1.0.0",
-    "ogm-viewer": "^1.4.0",
+    "mirador": "^4.3.0",
+    "mirador-dl-plugin": "^1.1.1",
+    "mirador-image-tools": "^1.0.2",
+    "mirador-share-plugin": "^1.0.2",
+    "ogm-viewer": "^1.8.0",
     "prop-types": "^15.7.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -62,5 +62,13 @@
     "vite-plugin-ruby": "^5.2.5",
     "vitest": "^4.1.2",
     "vitest-fetch-mock": "^0.4.2"
+  },
+  "overrides": {
+    "eslint-plugin-jsx-a11y": {
+      "eslint": "$eslint"
+    },
+    "eslint-plugin-react": {
+      "eslint": "$eslint"
+    }
   }
 }
