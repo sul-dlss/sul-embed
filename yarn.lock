@@ -267,7 +267,7 @@
   dependencies:
     "@babel/types" "^7.29.11"
 
-"@babel/runtime@^7.12.5", "@babel/runtime@^7.18.3", "@babel/runtime@^7.23.2", "@babel/runtime@^7.26.7", "@babel/runtime@^7.27.6", "@babel/runtime@^7.28.4", "@babel/runtime@^7.28.6", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.12.5", "@babel/runtime@^7.18.3", "@babel/runtime@^7.23.2", "@babel/runtime@^7.26.7", "@babel/runtime@^7.27.6", "@babel/runtime@^7.28.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.29.13"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.29.13.tgz#6b33e456181ff15b5585d932f3aebfc0669b32dd"
   integrity sha512-v+oN26xP4YIlQsbQ/CbTH1WG5m/l/DjKKZNy/Kp3f/AFvbgt7Em/D0FeMM3O2hX0YzeN2M16W8lOpyhIkfCBcQ==
@@ -1441,13 +1441,6 @@
   resolved "https://registry.yarnpkg.com/@mui/core-downloads-tracker/-/core-downloads-tracker-9.5.0.tgz#42d07b201a43020a579f448549462d60fe03db82"
   integrity sha512-PErEpl3Lp+1ZqWYKI7GQU8XSiciAFmLbUAZ7IoaUL598HLy1UAFuEUMEJu8yAS1v8vkXYzWprMVZzky4UwXoOA==
 
-"@mui/icons-material@^7.0.0":
-  version "7.3.11"
-  resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-7.3.11.tgz#dfea40829d1ca96c074c85093fdfe0de170af5ad"
-  integrity sha512-+hz5ilwHZ3djd5es3sCErLioqe/NhZcYTsV/TNXZAMdJdb23F4xzJjqnnZdnurc3S1+ietcssRNqieOhPQLZ7Q==
-  dependencies:
-    "@babel/runtime" "^7.28.6"
-
 "@mui/icons-material@^9.0.0":
   version "9.5.0"
   resolved "https://registry.yarnpkg.com/@mui/icons-material/-/icons-material-9.5.0.tgz#06bde090e09dec3219e0b1eef31a0e488bd056f0"
@@ -1844,9 +1837,9 @@
     "@babel/runtime" "^7.12.5"
 
 "@testing-library/user-event@^14.4.3":
-  version "14.6.8"
-  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-14.6.8.tgz#9433b5008d8aff4cdf60c177f5789ce32062b763"
-  integrity sha512-vgSSqnANMnkcYR/vUNDbwS7aM3OErRLNUG8vCVVlj4oc6cKffUrccX7UAS5AmJQQNZTSibi9z5GvvRZ0aYgUCQ==
+  version "14.6.9"
+  resolved "https://registry.yarnpkg.com/@testing-library/user-event/-/user-event-14.6.9.tgz#cc5205aadbcbfefd5e2f76a6cc5dc3cc3f4a4322"
+  integrity sha512-/8boTjZHNXFi8JGUI2Ev05cq0Szh0OX35Bamkq6CK1ne+l1Xm8BKE3+nGgsnFgaYk0MX67Vh59cZDsNz5lJJEg==
 
 "@turf/boolean-clockwise@7.4.0":
   version "7.4.0"
@@ -2893,9 +2886,9 @@ earcut@^3.2.4:
   integrity sha512-FHc6yNpnTORB0tM5kmZ03iD2mDuNakDE2lvf4Hw1XkfxtEHIGVi01B/GqUSwx+NcC1WGjidAfpTXzeALtPtfpg==
 
 electron-to-chromium@^1.5.464:
-  version "1.5.478"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.478.tgz#e1d6d5279242d2f90fa287a8343dc04ddc0c52ec"
-  integrity sha512-pftG+ma5Lm8O6/p45bhYT6StBN5ziQymaRzmCZwFl8DwWHKPPD93FdOmP1aqftcepolQYvrcyTLa17kE8Yf+jg==
+  version "1.5.479"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.5.479.tgz#879b8b0c0447b3d9beec2954eae77e7271844784"
+  integrity sha512-uAJdJQ7vHa4TvPfzt1TOqoRgHmav5gwmqHMPLxBH6m8Cbj5R9/z/rygTOQiZ8pe5g0ZAEogga1bP6HoKcOzx/Q==
 
 emoji-regex@^9.2.2:
   version "9.2.2"
@@ -3643,9 +3636,9 @@ immediate@~3.0.5:
   integrity sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==
 
 immer@^11.2.9:
-  version "11.2.9"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-11.2.9.tgz#025deddab07b73a87aaf99b6ecf2b53267da5ee2"
-  integrity sha512-IQ4UEtXjZjyefyWjtLEDXUSrF6T2hwjKPi6BIJl3bY/2XXW24d6cNGdXJSBOA/+KNnuiXkZY6DR0C3efolhitA==
+  version "11.2.10"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-11.2.10.tgz#fe5f3fa0c14882ed2dbca049866e43562247e252"
+  integrity sha512-pzANBj+0A9u+prdhBJ14DVi44vCvVUQzBa8DKt6I0AMCokPHtt722BK9IX5bFC70xUSU9TnzLRIJLTGqIzjEFw==
 
 immutability-helper@^3.1.1:
   version "3.1.1"
@@ -4344,17 +4337,17 @@ minimist@^1.2.8:
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.8.tgz#c1a464e7693302e082a075cee0c057741ac4772c"
   integrity sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==
 
-mirador-dl-plugin@^1.0.0:
+mirador-dl-plugin@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/mirador-dl-plugin/-/mirador-dl-plugin-1.1.2.tgz#9b480fe328f202fe7bb448facda9861ca20084a8"
   integrity sha512-TXT1VueCZQjPuBViMhoJVKAyUAfbG+WHXSU1xcl2aLIGgPGVZgeFWaA/BQxNQ8dt06kf8CmJHVfXfw1nhqvsMQ==
 
-mirador-image-tools@^1.0.0:
+mirador-image-tools@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/mirador-image-tools/-/mirador-image-tools-1.0.2.tgz#d0afea138ccaf30739b2f47babc9ff24156b49e1"
   integrity sha512-eU11OX1Vzv4JqNcRYzCmMYW+ixCMUH/ofZJrOJYyABbq31KU7xBlDpFTDO/7CvZgiqhpAx47iTD+DkVM5Ca8QQ==
 
-mirador-share-plugin@^1.0.0:
+mirador-share-plugin@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/mirador-share-plugin/-/mirador-share-plugin-1.0.2.tgz#a55c91c23b4bca4781de00ad5c71454ca6dca7b6"
   integrity sha512-T3R8+PSqI6nEiROj6s9NPUsC1wBcgUnCYTmc3fqljqCtmUYe+iHDpOwCmw+4nmoUPQ4+j313vhOSFxNF5a4Fvg==
@@ -4362,7 +4355,7 @@ mirador-share-plugin@^1.0.0:
     copy-to-clipboard "^3.3.0"
     notistack "^3.0.1"
 
-mirador@^4.0.0:
+mirador@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/mirador/-/mirador-4.3.0.tgz#3e18b15c0483ac6a35b933ff32c719b0ec742e01"
   integrity sha512-JyIs6ioMH+/4wlKdQhORd/Y4LUavWmn+itPevlxRkNK2xukGIXnl+QdWzE0mjG7YvgCauplywAShtAkgCllU+w==
@@ -4598,12 +4591,14 @@ obug@^2.0, obug@^2.1.1:
   resolved "https://registry.yarnpkg.com/obug/-/obug-2.2.1.tgz#9c453efeeda822050eb9774242e969c784d64d78"
   integrity sha512-XrsrhT5sybtKI6wakr2SPOlGZWWYbUXZ7a0jT8/QOeAPau+1X/bSegNe5YR75oJmEZQbKningirmGOEJCIk61Q==
 
-ogm-viewer@^1.4.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/ogm-viewer/-/ogm-viewer-1.7.0.tgz#969f2591e0fe050fc26648c4626833ed60895169"
-  integrity sha512-O6WxfZAJ14RVgl51oNVNkxUe52CJTtVtU7GwmefhXtmK9lNshtzmy4+Y2d8baHFtsKTgAPuFkB1+BV+mZGGCMw==
+ogm-viewer@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/ogm-viewer/-/ogm-viewer-1.8.0.tgz#2902e653db9669cca587f7902f48fccdbd380bcd"
+  integrity sha512-/gQF4EkRW0YqPQoSqaC3C9PCq+hmDpBVNJwT/ZjBvkai55X52dl3rmAcDP8QukVkhXLJIT+NibgkvC5dbluP3A==
   dependencies:
+    "@allmaps/annotation" "^1.0.0-beta.38"
     "@allmaps/background-color" "^1.0.0-beta.2"
+    "@allmaps/iiif-parser" "^1.0.0-beta.49"
     "@allmaps/maplibre" "^1.0.0-beta.44"
     "@awesome.me/webawesome" "^3.10.0"
     "@chunkd/middleware" "^11.3.0"
@@ -5902,9 +5897,9 @@ wkt-parser@1.5.5:
   integrity sha512-/zMYi94/7D7fxcOSlVmWn6vnOMj3Gq5d1xvVjaYOS9n6h0qOJ4I7YYVxBWYcH1vq9+suhqzXkn05Yx47zQNUIA==
 
 wkt-parser@^1.5.5:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/wkt-parser/-/wkt-parser-1.6.0.tgz#5b33a29aec216ea58082240f2f25fd6ac0d1d9c5"
-  integrity sha512-O2WMUagkdOKkgcfqZBUauysHVeifCwcs+zUd2QG7UIzVljLwK9g5xHUfL/TkQFwmQ3eF7oHFKGnMcb/kZdvbaw==
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/wkt-parser/-/wkt-parser-1.7.0.tgz#c592e92f104b175d53500cf701ca23a12852eaac"
+  integrity sha512-ATGmtsMiDRbrPG6U35JAjYcaMLPjqqhWSe6tJqgm8x/212hIEu+EwsOxKMmB3lC9H8t5Bghkvc0ETOa7bVUBxw==
 
 word-wrap@^1.2.5:
   version "1.2.5"
