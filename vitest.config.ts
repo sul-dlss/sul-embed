@@ -16,6 +16,8 @@ export default defineConfig({
         new URL("./spec/javascript/stubs/stimulus.js", import.meta.url),
       ),
       "@": path.resolve(__dirname, "app/javascript/src"),
+      // Matches the importmap pin used by the Stimulus controllers
+      src: path.resolve(__dirname, "app/javascript/src"),
     },
   },
   test: {

@@ -34,8 +34,7 @@ const manifest = {
 
 const buildController = () => {
   const controller = Object.create(FileAuthController.prototype)
-  controller.addPostCallbackListener = vi.fn()
-  controller.maybeDrawContentResource = vi.fn()
+  controller.client = { authorize: vi.fn() }
   return controller
 }
 
@@ -70,7 +69,7 @@ describe("FileAuthController", () => {
       const controller = buildController()
       controller.parseFiles({ detail: manifest })
 
-      expect(controller.maybeDrawContentResource).toHaveBeenCalledWith(AUDIO)
+      expect(controller.client.authorize).toHaveBeenCalledWith(AUDIO)
     })
 
     it("opens on the file the viewer named", () => {
@@ -79,9 +78,7 @@ describe("FileAuthController", () => {
       controller.hasSelectedFileUrlValue = true
       controller.parseFiles({ detail: manifest })
 
-      expect(controller.maybeDrawContentResource).toHaveBeenCalledWith(
-        TRANSCRIPT,
-      )
+      expect(controller.client.authorize).toHaveBeenCalledWith(TRANSCRIPT)
     })
 
     it("falls back to the first canvas when the named file is not in the manifest", () => {
@@ -90,7 +87,7 @@ describe("FileAuthController", () => {
       controller.hasSelectedFileUrlValue = true
       controller.parseFiles({ detail: manifest })
 
-      expect(controller.maybeDrawContentResource).toHaveBeenCalledWith(AUDIO)
+      expect(controller.client.authorize).toHaveBeenCalledWith(AUDIO)
     })
   })
 
@@ -98,13 +95,11 @@ describe("FileAuthController", () => {
     it("draws a manifest level rendering resource when its thumbnail is clicked", () => {
       const controller = buildController()
       controller.parseFiles({ detail: manifest })
-      controller.maybeDrawContentResource.mockClear()
+      controller.client.authorize.mockClear()
 
       controller.authFileAndDisplay({ detail: { fileUri: TRANSCRIPT.id } })
 
-      expect(controller.maybeDrawContentResource).toHaveBeenCalledWith(
-        TRANSCRIPT,
-      )
+      expect(controller.client.authorize).toHaveBeenCalledWith(TRANSCRIPT)
     })
   })
 })
