@@ -166,7 +166,7 @@ GEM
       activesupport (>= 6.1)
     hashdiff (1.2.2)
     high_voltage (5.0.0)
-    honeybadger (6.10.1)
+    honeybadger (6.10.2)
       logger
       ostruct
     i18n (1.15.2)
@@ -199,6 +199,7 @@ GEM
     marcel (1.2.1)
     matrix (0.4.3)
     mini_mime (1.1.5)
+    mini_portile2 (2.8.9)
     minitest (6.1.0)
       drb (~> 2.0)
       prism (>= 1.5, < 3)
@@ -214,7 +215,7 @@ GEM
       net-protocol
     net-protocol (0.4.0)
       timeout
-    net-scp (4.2.1)
+    net-scp (4.2.2)
       net-ssh (>= 2.6.5, < 9.0.0)
     net-sftp (4.1.1)
       net-ssh (>= 5.0.0, < 9.0.0)
@@ -226,6 +227,9 @@ GEM
     newrelic_rpm (10.9.1)
       logger
     nio4r (2.7.5)
+    nokogiri (1.19.7)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
     nokogiri (1.19.7-aarch64-linux-gnu)
       racc (~> 1.4)
     nokogiri (1.19.7-aarch64-linux-musl)
@@ -251,6 +255,7 @@ GEM
     pp (0.6.4)
       prettyprint
     prettyprint (0.2.1)
+    prism (2.1.0)
     prism (2.1.0-aarch64-linux-gnu)
     prism (2.1.0-aarch64-linux-musl)
     prism (2.1.0-arm-linux-gnu)
@@ -263,7 +268,7 @@ GEM
       activesupport (>= 7.0.0)
       rack
     public_suffix (7.0.5)
-    puma (7.2.1)
+    puma (7.2.2)
       nio4r (~> 2.0)
     racc (1.8.1)
     rack (3.2.8)
@@ -407,7 +412,7 @@ GEM
     unicode-emoji (4.3.0)
     uri (1.1.2)
     useragent (0.16.11)
-    view_component (4.23.0)
+    view_component (4.24.0)
       actionview (>= 7.1.0)
       activesupport (>= 7.1.0)
       prism (>= 1.0)
@@ -486,4 +491,4 @@ DEPENDENCIES
   webmock (~> 3.19)
 
 BUNDLED WITH
-  4.0.24
+  4.1.0
