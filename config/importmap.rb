@@ -16,7 +16,7 @@ pin_all_from 'app/javascript/src', under: 'src', to: 'src'
 pin "@videojs/html/video", to: "https://cdn.jsdelivr.net/npm/@videojs/cdn@10.3.0/video.js"
 pin "@videojs/html/media/hlsjs-video", to: "https://cdn.jsdelivr.net/npm/@videojs/cdn@10.3.0/media/hlsjs-video.js"
 
-pin "openseadragon", to: "https://ga.jspm.io/npm:openseadragon@4.1.0/build/openseadragon/openseadragon.js"
+pin "openseadragon", to: "https://ga.jspm.io/npm:openseadragon@6.1.1/build/openseadragon/openseadragon.js"
 pin "fscreen", to: "https://ga.jspm.io/npm:fscreen@1.2.0/dist/fscreen.cjs.js"
 pin "@google/model-viewer", to: "https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer-module.min.js"
 pin "three", to: "https://ga.jspm.io/npm:three@0.163.0/build/three.module.js"
