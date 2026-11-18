@@ -18,8 +18,8 @@ pin "@videojs/html/media/hlsjs-video", to: "https://cdn.jsdelivr.net/npm/@videoj
 
 pin "openseadragon", to: "https://ga.jspm.io/npm:openseadragon@4.1.0/build/openseadragon/openseadragon.js"
 pin "fscreen", to: "https://ga.jspm.io/npm:fscreen@1.2.0/dist/fscreen.cjs.js"
-pin "@google/model-viewer", to: "https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer-module.min.js"
-pin "three", to: "https://ga.jspm.io/npm:three@0.163.0/build/three.module.js"
+pin "@google/model-viewer", to: "https://cdn.jsdelivr.net/npm/@google/model-viewer@4.4.0/dist/model-viewer-module.min.js"
+pin "three", to: "https://ga.jspm.io/npm:three@0.183.0/build/three.module.js"
 pin "popper", to: 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/esm/popper.js'
 
 # The mirador viewer needs a local copy of ogm-viewer in node_modules to bundle,
