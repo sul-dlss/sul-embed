@@ -151,6 +151,16 @@ describe("AuthorizationClient", () => {
     expect(vi.getTimerCount()).toBe(0)
   })
 
+  it("ignores unrelated messages from the token service origin", async () => {
+    const { iframe } = await requestToken()
+    message(iframe, undefined, {
+      data: { cmd: "setTEIdentifier", teIdentifier: "abc123" },
+    })
+    await vi.advanceTimersByTimeAsync(0)
+    expect(tokenStore.set).not.toHaveBeenCalled()
+    expect(iframe.isConnected).toBe(true)
+  })
+
   it("reports token errors and allows login again", async () => {
     const { iframe, messageId } = await requestToken()
     message(iframe, messageId, {
