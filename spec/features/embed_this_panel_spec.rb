@@ -25,7 +25,7 @@ RSpec.describe 'embed this panel', :js do
         expect(textarea_value).to match(/<iframe.*marginheight="0"/m)
         expect(textarea_value).to match(/<iframe.*scrolling="no"/m)
         expect(textarea_value).to match(/<iframe.*allowfullscreen/m)
-        expect(textarea_value).to match(/<iframe.*height: 31.25rem; width: 100%;/m)
+        expect(textarea_value).to match(/<iframe.*height="500px" width="100%"/m)
         expect(textarea_value).to match('title="File viewer: Title of the object"')
 
         expect(page).to have_checked_field('embed')

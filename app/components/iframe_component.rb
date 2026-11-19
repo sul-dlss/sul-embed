@@ -10,10 +10,6 @@ class IframeComponent < ViewComponent::Base
   delegate :druid, :version_id, to: :purl_object
   attr_reader :version
 
-  def width_style
-    width || '100%'
-  end
-
   def src
     query_params = embed_request.as_url_params.merge(version ? { _v: version } : {}).to_query
     "#{iframe_url}?url=#{Settings.purl_url}/#{path_segments}&#{query_params}"
@@ -25,12 +21,8 @@ class IframeComponent < ViewComponent::Base
     segments.join('/')
   end
 
-  def style
-    "height: #{height}; width: #{width_style};"
-  end
-
   def call
-    tag.iframe(src:, style:, title: iframe_title,
+    tag.iframe(src:, height:, width:, title: iframe_title,
                frameborder: 0, marginwidth: 0, marginheight: 0, scrolling: 'no', allowfullscreen: true,
                allow: 'clipboard-write')
   end
