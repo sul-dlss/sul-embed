@@ -79,7 +79,7 @@ module Embed
     end
 
     def bounding_box
-      cocina_record.coordinates_as_bbox.first
+      cocina_record.extent.as_bbox
     end
 
     # Decode the value of geographic form with "type: 'type'", into a MapLibre layer type.
